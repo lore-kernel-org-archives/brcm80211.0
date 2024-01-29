@@ -1,179 +1,67 @@
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438F114A87
-	for <brcm80211@lists.linux.dev>; Sun, 28 Jan 2024 09:31:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD2D1156960;
+	Mon, 29 Jan 2024 16:29:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706434290; cv=none; b=RzvkpEiY7abLICZsgREVY3AX3m6wvhfOLj2h2R+wbjjGvEei5/Tm8vrMz4z7eMj8KMiU8LIfwtbUnQWxn9Wph5P+rVvd51/wsgDjaOivU9hc1Zz3t6Oq5Z9Hp/TdL5rkRoeU6NB5djkir13rsW8o19P7+IrjiV2xoz5rmZWHnaM=
+	t=1706545785; cv=none; b=HiAXDFLzUqHBNMNykTAslYvX6LK3ois/FoO3cyjs2/dfqsAZ69WVqcRUbmU93Mfq0CJRKFO/IUXjmpba99Gfepw10ePfltnJ79gAku7C96rm0fdk0lZhJTxlBsSpFU1HuB7Egr3VfQFDYjBPRWFkWmUpbX8dZyD3oacwdCkRBEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706434290; c=relaxed/simple;
-	bh=OLQVs7PP5ylYMP6IaKT2xq+sdPrXie7dj14V7jq54o8=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NOslNUCmnREiXrBek+ui/Crr8i9EUh4VCkFJ/+lt+ImMiII9c4sdcMx0BZ+KJAIbGWPlEHU8YjpFAsEc7uaRC1p7gSRzNGxLx/ZaxD62v+Ezx5aO9+TSNtwF9Dq+WsnoWjK2PC+sASBGO1OWU4AFNZqR4B9TgyMjRDtGqFfRqx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=Cnvhet0M; arc=none smtp.client-ip=209.85.221.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+	s=arc-20240116; t=1706545785; c=relaxed/simple;
+	bh=NqSOlR2pci3NKI5tDqkrXonYLQ+F4frw95VDMxivu8Y=;
+	h=Content-Type:MIME-Version:Subject:From:In-Reply-To:References:To:
+	 Cc:Message-ID:Date; b=OxADC26hSWGT27nWfYWPzj1Ir1CjtPnxYnU4YTrEPXMUgH+qVl64Jn+zQWKJTqY59Yq0/OUHjqODKwAu/0W32qqiIxY5vw/A3c/Xpd9akpzAZMmO4WBklSd9uj20vhoibRQaRtMaq5/SA1XNKW8j9r/bPIiNvhBX3lQPV3I/D6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X6oSvW+U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="Cnvhet0M"
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-33ae3cc8a6aso790442f8f.2
-        for <brcm80211@lists.linux.dev>; Sun, 28 Jan 2024 01:31:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1706434287; x=1707039087; darn=lists.linux.dev;
-        h=mime-version:references:in-reply-to:message-id:date:subject:cc:to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=CRQw5dQyFYztk6Y+pvzcEPYU43xosYehA4MOjqF0wdw=;
-        b=Cnvhet0MGWnLiFu9jkQvJnNbY9y7adicNzKTEclx2D/utv42W5a6GFCrbHmJ0JfEN2
-         SYuvz0mIsQXfMhPfpMmXvpJRZecx0mrhnX3442Fxn44qX+Za4mmDmQFsFLHAl12CXh90
-         LtoR67jcs3at4B/8t4a+6ljoicpvZsuUbz7l0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706434287; x=1707039087;
-        h=mime-version:references:in-reply-to:message-id:date:subject:cc:to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CRQw5dQyFYztk6Y+pvzcEPYU43xosYehA4MOjqF0wdw=;
-        b=rDEvrkUGv/5yOrpcdbDoXOuQj3UL1To/5iAw199wVQyCun3c0ujQlNuZvzCVP9eWBi
-         1nxbnuXDhGqakikSXdm5hi/wUPCQsg5RovFEDqffObY1QyqVjnCVuRPm5owQnp/kL6lZ
-         Sp95/1qqahmFDMXtS0JFLhUusQ1BeLCObS+ir8bOybDHdBUvQWmgtkFLG5zR17QLZ+Nq
-         ne22jK8VNI2rRUgjbS0VltiW0EMtoldkZIdHBJTQYLtVut5+qJeiix30cmDLcKP1l5Jt
-         IYcS62ACydLbsWUPJXJSuiFxGRNnF2RpHR97DGilX4Qmge4ME7hpa/mUTTEAZH3bAQ/0
-         mAIA==
-X-Gm-Message-State: AOJu0YwckyCg5xNk3TybD5zIGuv6Eif5QwX6AxsFvKldACsYmQgfgUKi
-	ATCva5AhsUO5b/S2szAzQlXUNgDJC5bD4QRGYdKYPeQktFyw2dcP0AK2HpFFRw==
-X-Google-Smtp-Source: AGHT+IE18tZIwqefwMMtIdJ4sa4RpqgMuaFU+2rbGqZhr1GP2/zjJs8umlKCGUL/Mmuly235mGLcBw==
-X-Received: by 2002:a5d:6584:0:b0:339:2c1a:5d76 with SMTP id q4-20020a5d6584000000b003392c1a5d76mr1980775wru.53.1706434287568;
-        Sun, 28 Jan 2024 01:31:27 -0800 (PST)
-Received: from bld-bun-02.bun.broadcom.net ([192.19.148.250])
-        by smtp.gmail.com with ESMTPSA id v1-20020a5d59c1000000b0033aeab6f75fsm838449wry.79.2024.01.28.01.31.25
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 28 Jan 2024 01:31:25 -0800 (PST)
-From: Arend van Spriel <arend.vanspriel@broadcom.com>
-To: Kalle Valo <kvalo@kernel.org>
-Cc: linux-wireless@vger.kernel.org,
-	brcm80211@lists.linux.dev,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Dmitry Antipov <dmantipov@yandex.ru>
-Subject: [PATCH 2/2] wifi: brcmfmac: fix copyright year mentioned in platform_data header
-Date: Sun, 28 Jan 2024 10:30:57 +0100
-Message-Id: <20240128093057.164791-3-arend.vanspriel@broadcom.com>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20240128093057.164791-1-arend.vanspriel@broadcom.com>
-References: <20240128093057.164791-1-arend.vanspriel@broadcom.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X6oSvW+U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D417C43390;
+	Mon, 29 Jan 2024 16:29:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1706545785;
+	bh=NqSOlR2pci3NKI5tDqkrXonYLQ+F4frw95VDMxivu8Y=;
+	h=Subject:From:In-Reply-To:References:To:Cc:Date:From;
+	b=X6oSvW+UV/lFHGaSgC5+VAqLHvGmUgF67Jj4BZFa/8sMR6zPVyGn5JXrLJd2Xk+kk
+	 mVr19iQRNxoymW27dY+RFYwgj2QXcmFqQULgKWEoAO6YrETQSb4K2htVkmcgEQ88a/
+	 v2QU2sx23W1EPoPtgHkgLDBbRNU28diJGrX3ppaWToXPSijsYSecWyt+cRspYu7dE5
+	 25ORGbPEpLzokEdzdVrXJnYY74lQSqGhARB9+eFVsR97+R6SinXPThDoJ1AxJztV0B
+	 8qeKffbOV57Lgysf+yz9/CAJE4szhDDrCdWv7YvvNkklld4BtNGMlf8nXA2vg5EOMn
+	 b+UG6/t+Wy89g==
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-	boundary="0000000000008f08c8060ffe31f6"
+Content-Transfer-Encoding: 7bit
+Subject: Re: [v3] MAINTAINERS: wifi: brcm80211: cleanup entry
+From: Kalle Valo <kvalo@kernel.org>
+In-Reply-To: <20240126105724.384063-1-arend.vanspriel@broadcom.com>
+References: <20240126105724.384063-1-arend.vanspriel@broadcom.com>
+To: Arend van Spriel <arend.vanspriel@broadcom.com>
+Cc: linux-wireless@vger.kernel.org,
+ Arend van Spriel <arend.vanspriel@broadcom.com>, brcm80211@lists.linux.dev
+User-Agent: pwcli/0.1.1-git (https://github.com/kvalo/pwcli/) Python/3.11.2
+Message-ID: <170654578211.2154127.3968638235616199834.kvalo@kernel.org>
+Date: Mon, 29 Jan 2024 16:29:44 +0000 (UTC)
 
---0000000000008f08c8060ffe31f6
-Content-Transfer-Encoding: 8bit
+Arend van Spriel <arend.vanspriel@broadcom.com> wrote:
 
-The driver found its inception a little after the year 201. According
-git blame output it was added in 2016 so lets go with that.
+> There has been some discussion about what is expected from
+> a maintainer and so a cleanup seems to be in order. A dedicated
+> mailing list has been created to discuss brcm80211 specific
+> development issues. Keeping the status as Supported although
+> help in maintaining this driver is welcomed.
+> 
+> Cc: brcm80211@lists.linux.dev
+> Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
 
-Fixes: 4d7928959832 ("brcmfmac: switch to new platform data")
-Reported-by: Dmitry Antipov <dmantipov@yandex.ru>
-Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
----
- include/linux/platform_data/brcmfmac.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Patch applied to wireless.git, thanks.
 
-diff --git a/include/linux/platform_data/brcmfmac.h b/include/linux/platform_data/brcmfmac.h
-index f922a192fe58..ec99b7b73d1d 100644
---- a/include/linux/platform_data/brcmfmac.h
-+++ b/include/linux/platform_data/brcmfmac.h
-@@ -1,5 +1,5 @@
- /*
-- * Copyright (c) 201 Broadcom Corporation
-+ * Copyright (c) 2016 Broadcom Corporation
-  *
-  * Permission to use, copy, modify, and/or distribute this software for any
-  * purpose with or without fee is hereby granted, provided that the above
+e4ad71e2367f MAINTAINERS: wifi: brcm80211: cleanup entry
+
 -- 
-2.32.0
+https://patchwork.kernel.org/project/linux-wireless/patch/20240126105724.384063-1-arend.vanspriel@broadcom.com/
 
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
---0000000000008f08c8060ffe31f6
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Description: S/MIME Cryptographic Signature
-
-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
-2Gzj3QNJRLsZu1TLyOyBBIr/BE7UiY3RabgRzknBGAPmzhS+fmyM8OtM5BYBsFBrSUFtZZO2p/tf
-Nbc24J2zf2peoZ8MK+7WQqummYlOnz+FyDkA9EybeNMcS5C+xi/PAgMBAAGjggHdMIIB2TAOBgNV
-HQ8BAf8EBAMCBaAwgaMGCCsGAQUFBwEBBIGWMIGTME4GCCsGAQUFBzAChkJodHRwOi8vc2VjdXJl
-Lmdsb2JhbHNpZ24uY29tL2NhY2VydC9nc2djY3IzcGVyc29uYWxzaWduMmNhMjAyMC5jcnQwQQYI
-KwYBBQUHMAGGNWh0dHA6Ly9vY3NwLmdsb2JhbHNpZ24uY29tL2dzZ2NjcjNwZXJzb25hbHNpZ24y
-Y2EyMDIwME0GA1UdIARGMEQwQgYKKwYBBAGgMgEoCjA0MDIGCCsGAQUFBwIBFiZodHRwczovL3d3
-dy5nbG9iYWxzaWduLmNvbS9yZXBvc2l0b3J5LzAJBgNVHRMEAjAAMEkGA1UdHwRCMEAwPqA8oDqG
-OGh0dHA6Ly9jcmwuZ2xvYmFsc2lnbi5jb20vZ3NnY2NyM3BlcnNvbmFsc2lnbjJjYTIwMjAuY3Js
-MCcGA1UdEQQgMB6BHGFyZW5kLnZhbnNwcmllbEBicm9hZGNvbS5jb20wEwYDVR0lBAwwCgYIKwYB
-BQUHAwQwHwYDVR0jBBgwFoAUljPR5lgXWzR1ioFWZNW+SN6hj88wHQYDVR0OBBYEFIikAXd8CEtv
-ZbDflDRnf3tuStPuMA0GCSqGSIb3DQEBCwUAA4IBAQCdS5XCYx6k2GGZui9DlFsFm75khkqAU7rT
-zBX04sJU1+B1wtgmWTVIzW7ugdtDZ4gzaV0S9xRhpDErjJaltxPbCylb1DEsLj+AIvBR34caW6ZG
-sQk444t0HPb29HnWYj+OllIGMbdJWr0/P95ZrKk2bP24ub3ZP/8SyzrohfIba9WZKMq6g2nTLZE3
-BtkeSGJx/8dy0h8YmRn+adOrxKXHxhSL8BNn8wsmIZyYWe6fRcBtO3Ks2DOLyHCdkoFlN8x9VUQF
-N2ulEgqCbRKkx+qNirW86eF138lr1gRxzclu/38ko//MmkAYR/+hP3WnBll7zbpIt0jc9wyFkSqH
-p8a1MYICbTCCAmkCAQEwazBbMQswCQYDVQQGEwJCRTEZMBcGA1UEChMQR2xvYmFsU2lnbiBudi1z
-YTExMC8GA1UEAxMoR2xvYmFsU2lnbiBHQ0MgUjMgUGVyc29uYWxTaWduIDIgQ0EgMjAyMAIMTv1t
-bpIzNUky46LXMA0GCWCGSAFlAwQCAQUAoIHUMC8GCSqGSIb3DQEJBDEiBCBgY2cyo7AAu0myT1g4
-GcyU99GRynsaZ51eCv9BcTnc5DAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJ
-BTEPFw0yNDAxMjgwOTMxMjdaMGkGCSqGSIb3DQEJDzFcMFowCwYJYIZIAWUDBAEqMAsGCWCGSAFl
-AwQBFjALBglghkgBZQMEAQIwCgYIKoZIhvcNAwcwCwYJKoZIhvcNAQEKMAsGCSqGSIb3DQEBBzAL
-BglghkgBZQMEAgEwDQYJKoZIhvcNAQEBBQAEggEAE92KfVJ48AvcSHLerRAeOkDiwPqwMAWxvGNm
-Z0S1II3eD6sV++6phtAb3Fxo9MaRFsAuDjOsQHZJf353HhCziAEeShXZpwB9A+b3oGB364s5myyI
-ShzjSWqF10cB+LIxJkso6UkhaKVrM04UDnble/h7STgQ8TeB9NkhdCSwBG1xKp5aA9PXec74b1a0
-KL6vh95kXV0FYwAhesPapt0pUKAUjllCiC2Er9ymnsHtqo0Ld25SsCNhw+FwsiPC9//Wt8r0J3hI
-qrREKmIFY8YmBqPDuS/KpzNAypHHmV7RQkvpwVQ9RQyHNziNnWkC5HgouuPaSL/BEczMeHxnGUYk
-2A==
---0000000000008f08c8060ffe31f6--
