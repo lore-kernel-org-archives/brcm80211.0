@@ -1,81 +1,103 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD83112F58A;
-	Fri, 16 Feb 2024 15:49:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B96E41369B4;
+	Fri, 16 Feb 2024 19:27:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708098561; cv=none; b=YmIS/yhPQH2fug4nrtpTtNfo5O1lB2yfuIoV4p4Mrrmvtmu4WRPX2I35RdUUL1TfN321fiFgYi9HOLgvxEy5mKZK39TNu23G6nPHeT9VQtg6Q9DqnXGh/gxBY0sS2TAPhKsSECyZ4bA6vbyXDx/soqq2syKWyIxBVp0pDD4DswA=
+	t=1708111679; cv=none; b=KEXWLBGcIgOBv7BLdKwuIgozaQkvHO9PgdddlHD81zNBzVRczctbjnVbPXSNub6JrZDdlkmGUcg2jBokm+dsl3weoqGkLr2JNFGwixR4GlYYYN2l1qaEDtbH1yec7pbMU2V7NQe3UlbxljysE7jsBLvM+q02TZj0yWhvCa3AQ5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708098561; c=relaxed/simple;
-	bh=hoWcoxaE9hHAP7DML157PhtnsOaCJzKVVuI8UORwRr0=;
-	h=Content-Type:MIME-Version:Subject:From:In-Reply-To:References:To:
-	 Cc:Message-ID:Date; b=M7TqodDgIiFxqvhXuG+yNdryIrgaWln8eGYUlSBVW02Ao80XMJf7uYK5odJBaCHpskGSkVTDv0cTS3E0/0XeNFOaKLdnaefFFxdHz0NPUf3OMLYL4pCXyIGlF6O33HpUCDMuI+B5TegRHZWofkBQOCgR3V5cjfkOv3MjXjW6GDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qzCS1Zj4; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1708111679; c=relaxed/simple;
+	bh=RQsL18uJ4AP9VuasXYeoSPuHa2JIzAuKp8EP2goIoE0=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=g8ifNsgUVUTIzpRHWO25+YXfAbhxzv7yUVSqM1QbBvOh65jQm6HrbYBgscImJLN58u26kEjc0/pKJ1+veNyGUgFucl5J/HDDDAhiDDPle/xC5KDZVzLcGnNti7uxRwrvqfgE8EA2gmbJumuo4vS3d9PqqVXpSINKxlJ0sq3r/V8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fSKUoWaD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qzCS1Zj4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3A60C433C7;
-	Fri, 16 Feb 2024 15:49:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fSKUoWaD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C61F3C433F1;
+	Fri, 16 Feb 2024 19:27:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708098561;
-	bh=hoWcoxaE9hHAP7DML157PhtnsOaCJzKVVuI8UORwRr0=;
-	h=Subject:From:In-Reply-To:References:To:Cc:Date:From;
-	b=qzCS1Zj4OpYfDwAJEGip/bFu3oVVNxDOTflazXII7mTfZLEPndyHMPfnwvH8vqj0Y
-	 BdAW/36WcT5OBpxX+HtFo2fcf5+bk6oNEue97HAFimXKDnKIlcKsqkrJ1FaOFAQmNk
-	 RLSTcQIiMq64ho4na5EgEaramAtiwI+Lugx8AeHe0uJGu9rYzkakyfje5ZHjGc34dy
-	 k7ukZuxDSD9ajx/CqAOqXnbOVcAg38KTIabvO7RYdSCYR0SXiVxEas0RCEmiRVaNIP
-	 Qirv99zXeh2X1a8nOdAo1VH8ApjFjigLFEOVBCoa3iXvH3+Vi2WyLHhirI1qfqSmAc
-	 hA4Is9wFOXdTw==
-Content-Type: text/plain; charset="utf-8"
+	s=k20201202; t=1708111679;
+	bh=RQsL18uJ4AP9VuasXYeoSPuHa2JIzAuKp8EP2goIoE0=;
+	h=Date:From:To:Cc:Subject:From;
+	b=fSKUoWaDgkqN32vCFJgZgd1Uv+x9ET8jzDE+DbDfrOf6gppkiraJqnfgaXr8OVA+G
+	 3p0n8kaJngJidrg9OuNAbj4Og9pguNB0NcjVvoMA9GwGo/seNBEztBrhsXtQ3TpfsO
+	 W4++v+wiAYMK50a+c5Mi5ssh3Cvfcig75BTHHz4lKhoYKO+ksshfTheA/wAeWwFMQW
+	 lzoBQ3nXthaSq9S5DU+qK1AWL/66QJ8JLC1KLQvJms3a3Bf0JEtbPGSm35RK/LzupH
+	 0MvOlHctGkyNCyM5/TpCsWoWscqPwNVTIN2gSMOmolib/QS2gLygIdPOUzSqH5Pt3E
+	 IXANjOCWtTktA==
+Date: Fri, 16 Feb 2024 13:27:56 -0600
+From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
+To: Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Kalle Valo <kvalo@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>
+Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com, linux-kernel@vger.kernel.org,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	linux-hardening@vger.kernel.org
+Subject: [PATCH][next] wifi: brcmfmac: fweh: Fix boot crash on Raspberry Pi 4
+Message-ID: <Zc+3PFCUvLoVlpg8@neat>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Subject: Re: wifi: brcmsmac: avoid function pointer casts
-From: Kalle Valo <kvalo@kernel.org>
-In-Reply-To: <20240213100548.457854-1-arnd@kernel.org>
-References: <20240213100548.457854-1-arnd@kernel.org>
-To: Arnd Bergmann <arnd@kernel.org>
-Cc: Arend van Spriel <arend.vanspriel@broadcom.com>,
- Nathan Chancellor <nathan@kernel.org>, Greg Kroah-Hartman <gregkh@suse.de>,
- Pieter-Paul Giesberts <pieterpg@broadcom.com>, Arnd Bergmann <arnd@arndb.de>,
- Nick Desaulniers <ndesaulniers@google.com>, Bill Wendling <morbo@google.com>,
- Justin Stitt <justinstitt@google.com>,
- Artem Chernyshev <artem.chernyshev@red-soft.ru>,
- Jonas Gorski <jonas.gorski@gmail.com>, linux-wireless@vger.kernel.org,
- brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com,
- linux-kernel@vger.kernel.org, llvm@lists.linux.dev
-User-Agent: pwcli/0.1.1-git (https://github.com/kvalo/pwcli/) Python/3.11.2
-Message-ID: <170809855575.4095987.6738667810057679701.kvalo@kernel.org>
-Date: Fri, 16 Feb 2024 15:49:17 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Arnd Bergmann <arnd@kernel.org> wrote:
+Fix boot crash on Raspberry Pi by moving the update to `event->datalen`
+before data is copied into flexible-array member `data` via `memcpy()`.
 
-> From: Arnd Bergmann <arnd@arndb.de>
-> 
-> An old cleanup went a little too far and causes a warning with clang-16
-> and higher as it breaks control flow integrity (KCFI) rules:
-> 
-> drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy_shim.c:64:34: error: cast from 'void (*)(struct brcms_phy *)' to 'void (*)(void *)' converts to incompatible function type [-Werror,-Wcast-function-type-strict]
->    64 |                         brcms_init_timer(physhim->wl, (void (*)(void *))fn,
->       |                                                       ^~~~~~~~~~~~~~~~~~~~
-> 
-> Change this one instance back to passing a void pointer so it can be
-> used with the timer callback interface.
-> 
-> Fixes: d89a4c80601d ("staging: brcm80211: removed void * from softmac phy")
-> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-> Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Flexible-array member `data` was annotated with `__counted_by(datalen)`
+in commit 62d19b358088 ("wifi: brcmfmac: fweh: Add __counted_by for
+struct brcmf_fweh_queue_item and use struct_size()"). The intention of
+this is to gain visibility into the size of `data` at run-time through
+its _counter_ (in this case `datalen`), and with this have its accesses
+bounds-checked at run-time via CONFIG_FORTIFY_SOURCE and
+CONFIG_UBSAN_BOUNDS.
 
-Patch applied to wireless-next.git, thanks.
+To effectively accomplish the above, we shall update the counter
+(`datalen`), before the first access to the flexible array (`data`),
+which was also done in the mentioned commit.
 
-e1ea6db35fc3 wifi: brcmsmac: avoid function pointer casts
+However, commit edec42821911 ("wifi: brcmfmac: allow per-vendor event
+handling") inadvertently caused a buffer overflow, detected by
+FORTIFY_SOURCE. It moved the `event->datalen = datalen;` update to after
+the first `data` access, at which point `event->datalen` was not yet
+updated from zero (after calling `kzalloc()`), leading to the overflow
+issue.
 
+This fix repositions the `event->datalen = datalen;` update before
+accessing `data`, restoring the intended buffer overflow protection. :)
+
+Fixes: edec42821911 ("wifi: brcmfmac: allow per-vendor event handling")
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Closes: https://gist.github.com/nathanchance/e22f681f3bfc467f15cdf6605021aaa6
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+---
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c
+index 0774f6c59226..f0b6a7607f16 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c
+@@ -497,12 +497,12 @@ void brcmf_fweh_process_event(struct brcmf_pub *drvr,
+ 		return;
+ 
+ 	event->code = fwevt_idx;
++	event->datalen = datalen;
+ 	event->ifidx = event_packet->msg.ifidx;
+ 
+ 	/* use memcpy to get aligned event message */
+ 	memcpy(&event->emsg, &event_packet->msg, sizeof(event->emsg));
+ 	memcpy(event->data, data, datalen);
+-	event->datalen = datalen;
+ 	memcpy(event->ifaddr, event_packet->eth.h_dest, ETH_ALEN);
+ 
+ 	brcmf_fweh_queue_event(fweh, event);
 -- 
-https://patchwork.kernel.org/project/linux-wireless/patch/20240213100548.457854-1-arnd@kernel.org/
-
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+2.34.1
 
