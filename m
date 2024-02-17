@@ -1,111 +1,63 @@
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from relay.hostedemail.com (smtprelay0016.hostedemail.com [216.40.44.16])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8802D1468FE
-	for <brcm80211@lists.linux.dev>; Fri, 16 Feb 2024 21:42:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B66D37E573
+	for <brcm80211@lists.linux.dev>; Sat, 17 Feb 2024 19:40:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708119753; cv=none; b=T69teZsK1iABlP96rxunxffofGhSdDlHbOsFe5JoPgqWhpGd5SxM7G1+PVpQLUbJfiVdeKbz2spmw1HN09d51O7rxYiPy2CPbk0FgP7gCyLLqtNlN8KB4rruBrW5Tb9pt7+1lkaDHgM2rQIXDudkBVbLew/SMXbo8Tiuf0Zbsr4=
+	t=1708198818; cv=none; b=uvEB6+xuiOJHkWOLoF4R9VM6uoyYTekrznt5bZfrquz5ADrtuiKuKHNFfgKUQs4IcPLYhwxMkuIAZrVM3fB4j4qxLNBkno28QX4qasn9f/dXGgJ9omW0kZp8JdrhyExd4oGFMg6nShKfdr9dF0VpEJS79y7ltdFY4PAl9+LuqqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708119753; c=relaxed/simple;
-	bh=4c3eMKTWbi+wcF5n+RJsW+tkHhjsCNbcJlVT2UgwhH8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=B/noHfbefNTjKhkPMG3mKEr/+AJVd54ftQxS8CozDlMeEuG9nMmxsew+sYB1+m1AoKe4SSo4qMnLX0xmDBU/DzXJ900rtS6OdMcuGrqj56mlYHU3t8BBkpFWmZCt4PxJGu/9IWNf9mQ21c8Rlyk9jGzGpWIhCDDYqSGo+OH5ps4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=fvf4EMZP; arc=none smtp.client-ip=209.85.210.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="fvf4EMZP"
-Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-6e0fc87fc2dso1639775b3a.3
-        for <brcm80211@lists.linux.dev>; Fri, 16 Feb 2024 13:42:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1708119751; x=1708724551; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=pmqvLalSTvjyY0hPo1vwRpJX0mbABPaN9LQ6zaR4OAw=;
-        b=fvf4EMZPRiLY0gv4Hr4RFQu1QZcUHOpsoZ2E2KbAAgqO5nE2mDuaceRAQg5DsXGUCl
-         msK1xAPpH+Zu89JwJVA/759j/JLS7rJ3BINPHRK7WKjmpDIOe7qWkg/41WmtUoQtfLZV
-         a46f+lpH0fCHA7NFyCaTsMOyxpCo3AKQcwh64=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708119751; x=1708724551;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pmqvLalSTvjyY0hPo1vwRpJX0mbABPaN9LQ6zaR4OAw=;
-        b=emv6Te+ACh5e1XGmhOrxytpqeJfHj7HFwiJbRHSVaFenueYzpyYbEPRz2k+fENOndu
-         NnNST3FakB12P5KR4YoL6C6GGBzCVWr2epURUYMSCJ6toXXeS9GHSm8BVv8f7i2x5JJW
-         ptWqhAQt79dfYTnV+xcf8zPGR6V4Sx6yalYN6hCN19ZQlksxFF7DvUf/8ck1Rbxw47hx
-         IB9iQQk0a9rJQTOYqmFE+nTX5/fAIGkkoz9sNFD+WQirODxJ/8yqLtdcdw+VaBCBdtxQ
-         1cpNEzLPA42mqM+EfcwSOC2OlPbdGhj1iSO0s9BhsJyj7PCr3DLiHkM3K2Q1u/8VBBb+
-         2cHQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVfBEx0eVfkuIQZHb1K+KtJIDt6m49rHbxEiulVs+YJpB7FKHvgHynkoEh2FXWLAPs+8mQnn+lMcCNm+N3jaQrjAfposa29bumY
-X-Gm-Message-State: AOJu0YyHIyCdEC3082pwipMVSoFeTbDfqfzD46DsCgYFb4CqhZzPpfQT
-	/He99HWP8hZNd3iloK1Agjl+6c0vllUplg5PxIutwOspI8eCj5nheLGfBQsnrw==
-X-Google-Smtp-Source: AGHT+IEXIq2vlhY0MRi3dbghbU5hzq6K5TiA/bjopoX0NzcTaYWwUJfK3zWU4HYBShZXvZGvCuUPfg==
-X-Received: by 2002:a17:90a:b902:b0:299:24ae:7ed9 with SMTP id p2-20020a17090ab90200b0029924ae7ed9mr5316353pjr.36.1708119750822;
-        Fri, 16 Feb 2024 13:42:30 -0800 (PST)
-Received: from www.outflux.net ([198.0.35.241])
-        by smtp.gmail.com with ESMTPSA id cz15-20020a17090ad44f00b0029703476e9bsm453747pjb.44.2024.02.16.13.42.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Feb 2024 13:42:30 -0800 (PST)
-Date: Fri, 16 Feb 2024 13:42:29 -0800
-From: Kees Cook <keescook@chromium.org>
-To: "Gustavo A. R. Silva" <gustavoars@kernel.org>
-Cc: Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Kalle Valo <kvalo@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
-	brcm80211-dev-list.pdl@broadcom.com, linux-kernel@vger.kernel.org,
-	linux-hardening@vger.kernel.org
-Subject: Re: [PATCH][next] wifi: brcmfmac: fweh: Fix boot crash on Raspberry
- Pi 4
-Message-ID: <202402161341.AC45AC7@keescook>
-References: <Zc+3PFCUvLoVlpg8@neat>
+	s=arc-20240116; t=1708198818; c=relaxed/simple;
+	bh=J2ytfZaYSAZQyO8x+e3VhJmlyC3h1laCCKwfpuUERQc=;
+	h=Message-ID:Subject:From:To:Cc:Date:Content-Type:MIME-Version; b=gh1D/w/jpx6GgKtKnA5RmSJfo5m4zWLXr33U0tLxcAgVhZ3wfWczfOHIXk79p3F51XV1Xg8HZl510eGcDtWufxua7EWCcuFC/5G+6X21aTIIept/7xFDCrHkHdtQKqaeHWi2z5N6to1E2c6NB2csLcNw78ZQuhcDlDGPV17cEYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=perches.com; spf=pass smtp.mailfrom=perches.com; arc=none smtp.client-ip=216.40.44.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=perches.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=perches.com
+Received: from omf17.hostedemail.com (a10.router.float.18 [10.200.18.1])
+	by unirelay09.hostedemail.com (Postfix) with ESMTP id BB95980326;
+	Sat, 17 Feb 2024 19:40:09 +0000 (UTC)
+Received: from [HIDDEN] (Authenticated sender: joe@perches.com) by omf17.hostedemail.com (Postfix) with ESMTPA id 6F6B01A;
+	Sat, 17 Feb 2024 19:40:07 +0000 (UTC)
+Message-ID: <7658242ceef838cc553cb3bbb63ede20d1bf9cb5.camel@perches.com>
+Subject: broadcom: brcmfmac, alloc without null test
+From: Joe Perches <joe@perches.com>
+To: Arend van Spriel <arend.vanspriel@broadcom.com>
+Cc: Kalle Valo <kvalo@kernel.org>, linux-wireless@vger.kernel.org, 
+	brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com, LKML
+	 <linux-kernel@vger.kernel.org>
+Date: Sat, 17 Feb 2024 11:40:06 -0800
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.48.4 (3.48.4-1.fc38) 
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Zc+3PFCUvLoVlpg8@neat>
+X-Stat-Signature: otkpsbwgsgz9cbsycrxaiy1huqbpt47z
+X-Rspamd-Server: rspamout07
+X-Rspamd-Queue-Id: 6F6B01A
+X-Session-Marker: 6A6F6540706572636865732E636F6D
+X-Session-ID: U2FsdGVkX1/0TOWJG50euXH/Y2/XmM/8hmtHbmXurDY=
+X-HE-Tag: 1708198807-741751
+X-HE-Meta: U2FsdGVkX1/XB7jer+wcyMGzLnQLgoWpYpVv5i9TuUVNqk4/ULH990HmWOgvHIw0rMyC68L0cVRGmiRbaYixVYJXY7ffNEfIrC8nX5bIcULM5qFE60Fbo+tDGD5VqkoZpOqNnrfSloZ3EP77X4xngZzOLasDZBSijvOphot0ffQuWSOWc2pautGfNknY6ncNejCdUb0hngLYygflM1AmPWGA12fpcSsYIkvk+CJ+kuP6s25rV0GZzrGZuZR+XE2FY6mooee56bWaD5LcoL3/WaO8X6IOscS/YPGOpSZoDSfMmVrw4u5OelvZlD2FLHsx
 
-On Fri, Feb 16, 2024 at 01:27:56PM -0600, Gustavo A. R. Silva wrote:
-> Fix boot crash on Raspberry Pi by moving the update to `event->datalen`
-> before data is copied into flexible-array member `data` via `memcpy()`.
-> 
-> Flexible-array member `data` was annotated with `__counted_by(datalen)`
-> in commit 62d19b358088 ("wifi: brcmfmac: fweh: Add __counted_by for
-> struct brcmf_fweh_queue_item and use struct_size()"). The intention of
-> this is to gain visibility into the size of `data` at run-time through
-> its _counter_ (in this case `datalen`), and with this have its accesses
-> bounds-checked at run-time via CONFIG_FORTIFY_SOURCE and
-> CONFIG_UBSAN_BOUNDS.
-> 
-> To effectively accomplish the above, we shall update the counter
-> (`datalen`), before the first access to the flexible array (`data`),
-> which was also done in the mentioned commit.
-> 
-> However, commit edec42821911 ("wifi: brcmfmac: allow per-vendor event
-> handling") inadvertently caused a buffer overflow, detected by
-> FORTIFY_SOURCE. It moved the `event->datalen = datalen;` update to after
-> the first `data` access, at which point `event->datalen` was not yet
-> updated from zero (after calling `kzalloc()`), leading to the overflow
-> issue.
-> 
-> This fix repositions the `event->datalen = datalen;` update before
-> accessing `data`, restoring the intended buffer overflow protection. :)
-> 
-> Fixes: edec42821911 ("wifi: brcmfmac: allow per-vendor event handling")
-> Reported-by: Nathan Chancellor <nathan@kernel.org>
-> Closes: https://gist.github.com/nathanchance/e22f681f3bfc467f15cdf6605021aaa6
-> Tested-by: Nathan Chancellor <nathan@kernel.org>
-> Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+There's a missing NULL alloc test here:
 
-Yup, this looks correct. Thanks!
+It doesn't appear obvious what a proper fix is.
 
-Reviewed-by: Kees Cook <keescook@chromium.org>
+diff -u -p ./drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c /t=
+mp/nothing/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+--- ./drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ /tmp/nothing/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.=
+c
+@@ -4308,7 +4308,6 @@ brcmf_pmksa_v3_op(struct brcmf_if *ifp,
+ 	int ret;
+=20
+ 	pmk_op =3D kzalloc(sizeof(*pmk_op), GFP_KERNEL);
+-	pmk_op->version =3D cpu_to_le16(BRCMF_PMKSA_VER_3);
+=20
+ 	if (!pmksa) {
+ 		/* Flush operation, operate on entire list */
 
--- 
-Kees Cook
