@@ -1,97 +1,92 @@
-Received: from zg8tndyumtaxlji0oc4xnzya.icoremail.net (zg8tndyumtaxlji0oc4xnzya.icoremail.net [46.101.248.176])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36B9454F96
-	for <brcm80211@lists.linux.dev>; Tue, 27 Feb 2024 08:06:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.101.248.176
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E98A13664A;
+	Tue, 27 Feb 2024 09:19:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709021226; cv=none; b=n17vfoVAbpGUuYsHJNIzATYLlryWUuIWghVEiqjs/eZfH9P8/6KNyJap5LBytLD80bbXNNUFR1AakW1RBekzWNPPCLLFuc8f7mYmEoYLz22N8nOwekxq5pr4qwm5TMmr0EjGD4drAMp+TwzwGR2XCdHpHNFy5p8XFhHNdgUU8tk=
+	t=1709025595; cv=none; b=kRjQJBpM4JLvEJHjMr9fRl0WIXVMeTPXiFETvlVcQloEq52DFxwkkH4vblNpho96u5SYusuhF/uRQs3pxRE+yM43GTOTGy7MeBPr8VA+unft2RE8Efhikcq42VMLjpG13VAjUMRFkhCyu8lwA0eDv7HWVTbSKXn353OZ3pYkexQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709021226; c=relaxed/simple;
-	bh=bn8lBdZvB6L2HQkh78StuFH3Cwbf8lGTxYiUbBqrdUk=;
-	h=From:To:Cc:Subject:Date:Message-Id; b=C45pUbw4z4ym3P5PYN2yPJspLA47ZIDMnN+Zrq75zg6tW5YiSzLptH8mVIkiDqMexyYwl+uT/Ia0R9+6zacxFnlPIIulJtmcISDtqXNYySNuI++VId1pQXkAMf9HvPNwSFOYO5GrfQ6VF5z9Xsd2C0PcSoYghxDC7wPAKEGhVHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=zju.edu.cn; spf=pass smtp.mailfrom=zju.edu.cn; arc=none smtp.client-ip=46.101.248.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=zju.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zju.edu.cn
-Received: from ubuntu.localdomain (unknown [218.12.19.154])
-	by mail-app2 (Coremail) with SMTP id by_KCgBnF6b2l91l841JAg--.21305S2;
-	Tue, 27 Feb 2024 16:06:27 +0800 (CST)
-From: Duoming Zhou <duoming@zju.edu.cn>
-To: linux-kernel@vger.kernel.org
-Cc: brcm80211-dev-list.pdl@broadcom.com,
-	brcm80211@lists.linux.dev,
-	linux-wireless@vger.kernel.org,
-	justinstitt@google.com,
-	john@keeping.me.uk,
-	quic_alokad@quicinc.com,
-	marcan@marcan.st,
-	johannes.berg@intel.com,
-	linus.walleij@linaro.org,
-	kvalo@kernel.org,
-	arend.vanspriel@broadcom.com,
-	Duoming Zhou <duoming@zju.edu.cn>
-Subject: [PATCH] wifi: brcm80211: handle pmk_op allocation failure
-Date: Tue, 27 Feb 2024 16:06:13 +0800
-Message-Id: <20240227080613.34001-1-duoming@zju.edu.cn>
-X-Mailer: git-send-email 2.17.1
-X-CM-TRANSID:by_KCgBnF6b2l91l841JAg--.21305S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7ZF43XrW3XrWUAry8Wr13twb_yoW8GFWkpw
-	s7GFyqyr1UWw4Skw45tFyvvryFga17K3sYkr4jy3s3uFZ3Gr1rJr48KFyFvFnYyr4ay3y2
-	vFWktF98Wr4DWw7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUU9j14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
-	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
-	1l84ACjcxK6xIIjxv20xvE14v26w1j6s0DM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26rxl
-	6s0DM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s
-	0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xII
-	jxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr
-	1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF7I0E8cxa
-	n2IY04v7MxkF7I0En4kS14v26r1q6r43MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4
-	AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE
-	17CEb7AF67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMI
-	IF0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4l
-	IxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvf
-	C2KfnxnUUI43ZEXa7VUbGQ6JUUUUU==
-X-CM-SenderInfo: qssqjiasttq6lmxovvfxof0/1tbiAwQEAWXc3dIQZQAcsd
+	s=arc-20240116; t=1709025595; c=relaxed/simple;
+	bh=4FKpQ2YxhRM1cS9JvwGrN9mJcPARYZbWsBsplFmE57w=;
+	h=Content-Type:MIME-Version:Subject:From:In-Reply-To:References:To:
+	 Cc:Message-ID:Date; b=fEeA84JfLENS1BPQgC0BKwZxPQZZv9y807U23SuNHDtIR4drXCmMmvUHKwxFBj8hyViROmS2V9zOKJz49HyTtnJfjJm5Lotk6/AmJQhsdFZXNRJ41j4PwI27FMT0jNYEScjeIoIjaa3CiHoc/Qm/NMJn0cWb9f+7j9x8YNCl5wI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jPM2wtJT; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jPM2wtJT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FEACC433F1;
+	Tue, 27 Feb 2024 09:19:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1709025595;
+	bh=4FKpQ2YxhRM1cS9JvwGrN9mJcPARYZbWsBsplFmE57w=;
+	h=Subject:From:In-Reply-To:References:To:Cc:Date:From;
+	b=jPM2wtJTHyWKh4fNtYM9y0G1BAyPnS/qGRUR/VbivdAJTPr7wGgbuuqenpnx+Te2X
+	 b/2ePMzsnfZWFfvZtKjuNvKLq9kIkzPYhBYJ703NFRQNusIT1AWV8ATgJjrY0IcpS9
+	 bgTKUDEEAzRqBBKgjJdTSd5wUxfMn2h9heYZ9D3H6DLfqWlqXR8gGYTX16I0eRj24d
+	 pcHUikBx7/0JgxKXaQ2kS974YfcU59GQh72M4Yc/CP/4tdUtEkiV/Nx/s7WsqWgZbQ
+	 wWcvZW65ZdwnZYRKWlbaOR+yRCOsTdKgmTqpriFzw7jT8Vjq9vkfat5IxsFo2t5JG+
+	 wX14nOE3RDc4g==
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH][next] wifi: brcmfmac: fweh: Fix boot crash on Raspberry
+ Pi 4
+From: Kalle Valo <kvalo@kernel.org>
+In-Reply-To: <Zc+3PFCUvLoVlpg8@neat>
+References: <Zc+3PFCUvLoVlpg8@neat>
+To: "Gustavo A. R. Silva" <gustavoars@kernel.org>
+Cc: Arend van Spriel <arend.vanspriel@broadcom.com>,
+ Nathan Chancellor <nathan@kernel.org>, linux-wireless@vger.kernel.org,
+ brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com,
+ linux-kernel@vger.kernel.org, "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+ linux-hardening@vger.kernel.org
+User-Agent: pwcli/0.1.1-git (https://github.com/kvalo/pwcli/) Python/3.11.2
+Message-ID: <170902559101.3280425.2706190192200235643.kvalo@kernel.org>
+Date: Tue, 27 Feb 2024 09:19:53 +0000 (UTC)
 
-The kzalloc() in brcmf_pmksa_v3_op() will return null if the
-physical memory has run out. As a result, if we dereference
-the null value, the null pointer dereference bug will happen.
+"Gustavo A. R. Silva" <gustavoars@kernel.org> wrote:
 
-Return -ENOMEM from brcmf_pmksa_v3_op() if kzalloc() fails
-for pmk_op.
+> Fix boot crash on Raspberry Pi by moving the update to `event->datalen`
+> before data is copied into flexible-array member `data` via `memcpy()`.
+> 
+> Flexible-array member `data` was annotated with `__counted_by(datalen)`
+> in commit 62d19b358088 ("wifi: brcmfmac: fweh: Add __counted_by for
+> struct brcmf_fweh_queue_item and use struct_size()"). The intention of
+> this is to gain visibility into the size of `data` at run-time through
+> its _counter_ (in this case `datalen`), and with this have its accesses
+> bounds-checked at run-time via CONFIG_FORTIFY_SOURCE and
+> CONFIG_UBSAN_BOUNDS.
+> 
+> To effectively accomplish the above, we shall update the counter
+> (`datalen`), before the first access to the flexible array (`data`),
+> which was also done in the mentioned commit.
+> 
+> However, commit edec42821911 ("wifi: brcmfmac: allow per-vendor event
+> handling") inadvertently caused a buffer overflow, detected by
+> FORTIFY_SOURCE. It moved the `event->datalen = datalen;` update to after
+> the first `data` access, at which point `event->datalen` was not yet
+> updated from zero (after calling `kzalloc()`), leading to the overflow
+> issue.
+> 
+> This fix repositions the `event->datalen = datalen;` update before
+> accessing `data`, restoring the intended buffer overflow protection. :)
+> 
+> Fixes: edec42821911 ("wifi: brcmfmac: allow per-vendor event handling")
+> Reported-by: Nathan Chancellor <nathan@kernel.org>
+> Closes: https://gist.github.com/nathanchance/e22f681f3bfc467f15cdf6605021aaa6
+> Tested-by: Nathan Chancellor <nathan@kernel.org>
+> Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+> Reviewed-by: Kees Cook <keescook@chromium.org>
 
-Fixes: a96202acaea4 ("wifi: brcmfmac: cfg80211: Add support for PMKID_V3 operations")
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
----
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 5 +++++
- 1 file changed, 5 insertions(+)
+Arend, ack?
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-index 28d6a30cc01..3b420b33188 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-@@ -4322,6 +4322,10 @@ brcmf_pmksa_v3_op(struct brcmf_if *ifp, struct cfg80211_pmksa *pmksa,
- 	int ret;
- 
- 	pmk_op = kzalloc(sizeof(*pmk_op), GFP_KERNEL);
-+	if (!pmk_op) {
-+		ret = -ENOMEM;
-+		goto out;
-+	}
- 	pmk_op->version = cpu_to_le16(BRCMF_PMKSA_VER_3);
- 
- 	if (!pmksa) {
-@@ -4340,6 +4344,7 @@ brcmf_pmksa_v3_op(struct brcmf_if *ifp, struct cfg80211_pmksa *pmksa,
- 	pmk_op->length = cpu_to_le16(length);
- 
- 	ret = brcmf_fil_iovar_data_set(ifp, "pmkid_info", pmk_op, sizeof(*pmk_op));
-+out:
- 	kfree(pmk_op);
- 	return ret;
- }
 -- 
-2.17.1
+https://patchwork.kernel.org/project/linux-wireless/patch/Zc+3PFCUvLoVlpg8@neat/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
