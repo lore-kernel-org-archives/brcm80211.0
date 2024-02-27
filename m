@@ -1,100 +1,95 @@
-Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net (zg8tmtyylji0my4xnjqumte4.icoremail.net [162.243.164.118])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B23EB13B2B4
-	for <brcm80211@lists.linux.dev>; Tue, 27 Feb 2024 13:51:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.243.164.118
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE435FBB3;
+	Tue, 27 Feb 2024 14:43:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041872; cv=none; b=SEzS6myu2jjOD8tR8Hi7hmSExTF9EdOfKHzT4wCv7QsBP+mtqjp1wk3mN9xA5h/2HlJWX5/tjDvY6r3EPZgwZo23dzqV4rZdszP5X917ROj0MP17HKfJTKk8iGFapaXUj+btoWFPkRNy0GvCz1MwMnVFgfK5IU3+ZRXidFzKDIA=
+	t=1709044987; cv=none; b=As5++8SCX5ZBrou5qmDruEe4I++PuY7+hqBbkWC/Ky2JRrnNZNzg7eGjovr35KkNb3RYUwl73EkBewLW3tf8piFzNhB4AtLQZykumOhArUhfNWrca3zTuj830GNG+Vp2aYf34oV4k8N/O8gK5yR3a2rEsJluizjJ8WXSqweSnBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041872; c=relaxed/simple;
-	bh=25KIikUSQM4AHnPVJzVUXiR8trFSdiqq3nXlzQll/2U=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=koI+AUyFF6aLflVf9rXgSk0svBG2CMDQJChhHwj05Jl25gA24PvqO+5mknCdKMC0k7tkzP8o4TBz4iAGHyi9WovGqfJdis7htBwOqQoFlsREb109o+jTYUIckLjUVcnwtTIjMJVoYNaJMhejG3Z2H2BsJCyl1YduaOHPVsbH6rM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=zju.edu.cn; spf=pass smtp.mailfrom=zju.edu.cn; arc=none smtp.client-ip=162.243.164.118
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=zju.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zju.edu.cn
-Received: from duoming$zju.edu.cn ( [124.236.128.238] ) by
- ajax-webmail-mail-app3 (Coremail) ; Tue, 27 Feb 2024 21:44:43 +0800
- (GMT+08:00)
-Date: Tue, 27 Feb 2024 21:44:43 +0800 (GMT+08:00)
-X-CM-HeaderCharset: UTF-8
-From: duoming@zju.edu.cn
-To: "Joe Perches" <joe@perches.com>
-Cc: "Arend van Spriel" <arend.vanspriel@broadcom.com>,
-	linux-kernel@vger.kernel.org, brcm80211-dev-list.pdl@broadcom.com,
-	brcm80211@lists.linux.dev, linux-wireless@vger.kernel.org,
-	justinstitt@google.com, john@keeping.me.uk, quic_alokad@quicinc.com,
-	marcan@marcan.st, johannes.berg@intel.com, linus.walleij@linaro.org,
-	kvalo@kernel.org
-Subject: Re: [PATCH] wifi: brcm80211: handle pmk_op allocation failure
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 2023.4-cmXT5 build
- 20231205(37e20f0e) Copyright (c) 2002-2024 www.mailtech.cn
- mispb-4df6dc2c-e274-4d1c-b502-72c5c3dfa9ce-zj.edu.cn
-In-Reply-To: <b0a352781f58a829deadffbe2ef2085c97c6ab32.camel@perches.com>
-References: <20240227080613.34001-1-duoming@zju.edu.cn>
- <87166784-79ab-4eb4-ad1e-af4bc31757b7@broadcom.com>
- <b0a352781f58a829deadffbe2ef2085c97c6ab32.camel@perches.com>
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+	s=arc-20240116; t=1709044987; c=relaxed/simple;
+	bh=DytXs2Kq0REoXTCul2OemM5lmaQM/IuOHuGspWgLqzE=;
+	h=Content-Type:MIME-Version:Subject:From:In-Reply-To:References:To:
+	 Cc:Message-ID:Date; b=qlftXM16u2YlCI19/aGUe2aAPGxYwDzxAlZI0QMgVv+X0WWes6T02BC6kHS8Zs6veVwwCLRbu4toI16J591RVrQ/nqh3dJYHK5Us0Te3XNDBiN4ieQtyzE6QL2nFjW6ZIXSAGWTSUo2AkcTaprD9pDvADViw6VIcwnPuJuA9IOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EbNUhTWr; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EbNUhTWr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81AC5C433F1;
+	Tue, 27 Feb 2024 14:43:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1709044986;
+	bh=DytXs2Kq0REoXTCul2OemM5lmaQM/IuOHuGspWgLqzE=;
+	h=Subject:From:In-Reply-To:References:To:Cc:Date:From;
+	b=EbNUhTWrqo+/uOMGcfFC5ZLud5wfMJbPHX8Otm3B0bpuLpcQ3IMmM+zlMSKf5Sn6z
+	 lvqLVvy7L6Z7skS7FNmTuqiz03t6SuTTHRTjXcsY0Et5wfVcs+D8cBCt4GmBjdr44s
+	 kQx9y0PKNpzvOO9a72dNEPyzfseNNNMNKTvsHWjxnaJpkUom7xBRPcfz6a6LC7LAzs
+	 ZGN+JQYRA1gbr+W4bzYJFKBD9GoLtd/w2U+4kEbFuHyvsIveXqj4xYaPG0HTy0BmrU
+	 i6+hCLqyBrWwjzF+cYrNSanCLqmWSXPhw6eg4UNevsFVK/MLqkX0ryXMs05kgQpoKk
+	 3onbxDufNjDTQ==
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <62bf57d8.2291.18deacf80c6.Coremail.duoming@zju.edu.cn>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:cC_KCgBHvTdM591lQACiAQ--.38834W
-X-CM-SenderInfo: qssqjiasttq6lmxovvfxof0/1tbiAwQEAWXc3dIZAwAAsu
-X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWxJw
-	CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
-	daVFxhVjvjDU=
+Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH][next] wifi: brcmfmac: fweh: Fix boot crash on Raspberry
+ Pi 4
+From: Kalle Valo <kvalo@kernel.org>
+In-Reply-To: <Zc+3PFCUvLoVlpg8@neat>
+References: <Zc+3PFCUvLoVlpg8@neat>
+To: "Gustavo A. R. Silva" <gustavoars@kernel.org>
+Cc: Arend van Spriel <arend.vanspriel@broadcom.com>,
+ Nathan Chancellor <nathan@kernel.org>, linux-wireless@vger.kernel.org,
+ brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com,
+ linux-kernel@vger.kernel.org, "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+ linux-hardening@vger.kernel.org
+User-Agent: pwcli/0.1.1-git (https://github.com/kvalo/pwcli/) Python/3.11.2
+Message-ID: <170904498245.3524945.4143383846872449498.kvalo@kernel.org>
+Date: Tue, 27 Feb 2024 14:43:04 +0000 (UTC)
 
-T24gVHVlLCAyNyBGZWIgMjAyNCAwMzo0MjoxMyAtMDgwMCBKb2UgUGVyY2hlcyB3cm90ZToKPiA+
-ID4gVGhlIGt6YWxsb2MoKSBpbiBicmNtZl9wbWtzYV92M19vcCgpIHdpbGwgcmV0dXJuIG51bGwg
-aWYgdGhlCj4gPiA+IHBoeXNpY2FsIG1lbW9yeSBoYXMgcnVuIG91dC4gQXMgYSByZXN1bHQsIGlm
-IHdlIGRlcmVmZXJlbmNlCj4gPiA+IHRoZSBudWxsIHZhbHVlLCB0aGUgbnVsbCBwb2ludGVyIGRl
-cmVmZXJlbmNlIGJ1ZyB3aWxsIGhhcHBlbi4KPiA+ID4gCj4gPiA+IFJldHVybiAtRU5PTUVNIGZy
-b20gYnJjbWZfcG1rc2FfdjNfb3AoKSBpZiBremFsbG9jKCkgZmFpbHMKPiA+ID4gZm9yIHBta19v
-cC4KPiA+IAo+ID4gTkFLIChzZWUgYmVsb3cpCj4gPiAKPiA+IEFsc28gdGhpcyBpc3N1ZSB3YXMg
-cmVwb3J0ZWQgZWFybGllciBieSBKb2UgUGVyY2hlcy4gTm90IHN1cmUgaWYgaGUgCj4gPiB3YW50
-cyB0byBiZSBtZW50aW9uZWQgYXMgc3VjaC4KPiAKPiBJIHRoaW5rIGl0J3MgdW5pbXBvcnRhbnQg
-dG8gYmUgbWVudGlvbmVkLgo+IAo+IEkgdGhpbmsgaXQncyBtb3JlIGltcG9ydGFudCB0aGF0IHRo
-ZSBjb2RlIGJlIHJlc2VhcmNoZWQKPiB0aGF0IHRoZSBzaW1wbGUgcmV0dXJuIG9mIC1FTk9NRU0g
-dGhlIGFwcHJvcHJpYXRlIGZpeAo+IGFuZCBpcyBoYW5kbGVkIGJ5IGFsbCBwb3NzaWJsZSBjYWxs
-ZXJzIG9mIHRoZSBmdW5jdGlvbi4KClRoZXJlIGFyZSB0aHJlZSBmdW5jdGlvbnMgdGhhdCBjYWxs
-IHRoZSBicmNtZl9wbWtzYV92M19vcCgpLAppbmNsdWRpbmcgYnJjbWZfY2ZnODAyMTFfc2V0X3Bt
-a3NhKCksIGJyY21mX2NmZzgwMjExX2RlbF9wbWtzYSgpCmFuZCBicmNtZl9jZmc4MDIxMV9mbHVz
-aF9wbWtzYSgpLiBUaGUgcmV0dXJuIHR5cGUgb2YgdGhlIGFib3ZlCnRocmVlIGZ1bmN0aW9ucyBp
-cyBzMzIuIElmIGJyY21mX3Bta3NhX3YzX29wKCkgcmV0dXJucyAtRU5PTUVNLAp0aGUgYWJvdmUg
-dGhyZWUgZnVuY3Rpb25zIHdpbGwgYWxzbyByZXR1cm4gLUVOT01FTS4gSXQgY291bGQgYmUKaGFu
-ZGxlZCBhcHByb3ByaWF0ZWx5IGJ5IHRoZSBjYWxsZXJzIG9mIHRoZSBmdW5jdGlvbi4gU28gSSB0
-aGluawp0aGUgc2ltcGxlIHJldHVybiBvZiAtRU5PTUVNIGlzIGFwcHJvcHJpYXRlLgoKPiA+ID4g
-Rml4ZXM6IGE5NjIwMmFjYWVhNCAoIndpZmk6IGJyY21mbWFjOiBjZmc4MDIxMTogQWRkIHN1cHBv
-cnQgZm9yIFBNS0lEX1YzIG9wZXJhdGlvbnMiKQo+ID4gPiBTaWduZWQtb2ZmLWJ5OiBEdW9taW5n
-IFpob3UgPGR1b21pbmdAemp1LmVkdS5jbj4KPiA+ID4gLS0tCj4gPiA+ICAgZHJpdmVycy9uZXQv
-d2lyZWxlc3MvYnJvYWRjb20vYnJjbTgwMjExL2JyY21mbWFjL2NmZzgwMjExLmMgfCA1ICsrKysr
-Cj4gPiA+ICAgMSBmaWxlIGNoYW5nZWQsIDUgaW5zZXJ0aW9ucygrKQo+ID4gPiAKPiA+ID4gZGlm
-ZiAtLWdpdCBhL2RyaXZlcnMvbmV0L3dpcmVsZXNzL2Jyb2FkY29tL2JyY204MDIxMS9icmNtZm1h
-Yy9jZmc4MDIxMS5jcSBiL2RyaXZlcnMvbmV0L3dpcmVsZXNzL2Jyb2FkY29tL2JyY204MDIxMS9i
-cmNtZm1hYy9jZmc4MDIxMS5jCj4gPiA+IGluZGV4IDI4ZDZhMzBjYzAxLi4zYjQyMGIzMzE4OCAx
-MDA2NDQKPiA+ID4gLS0tIGEvZHJpdmVycy9uZXQvd2lyZWxlc3MvYnJvYWRjb20vYnJjbTgwMjEx
-L2JyY21mbWFjL2NmZzgwMjExLmMKPiA+ID4gKysrIGIvZHJpdmVycy9uZXQvd2lyZWxlc3MvYnJv
-YWRjb20vYnJjbTgwMjExL2JyY21mbWFjL2NmZzgwMjExLmMKPiA+ID4gQEAgLTQzMjIsNiArNDMy
-MiwxMCBAQCBicmNtZl9wbWtzYV92M19vcChzdHJ1Y3QgYnJjbWZfaWYgKmlmcCwgc3RydWN0IGNm
-ZzgwMjExX3Bta3NhICpwbWtzYSwKPiA+ID4gICAJaW50IHJldDsKPiA+ID4gICAKPiA+ID4gICAJ
-cG1rX29wID0ga3phbGxvYyhzaXplb2YoKnBta19vcCksIEdGUF9LRVJORUwpOwo+ID4gPiArCWlm
-ICghcG1rX29wKSB7Cj4gPiA+ICsJCXJldCA9IC1FTk9NRU07Cj4gPiA+ICsJCWdvdG8gb3V0Owo+
-ID4gPiArCX0KPiA+IAo+ID4gVGhlcmUgaXMgcmVhbGx5IG5vIG5lZWQgdG8gaW50cm9kdWNlIGEg
-bmV3IGxhYmVsIGZvciB0aGlzLiBBbHRob3VnaCB5b3UgCj4gPiBjYW4ga2ZyZWUoKSBhIE5VTEwg
-cG9pbnRlciB0aGVyZSBpcyBubyBuZWVkIHRvIGRvIHNvIHdoZW4geW91IGtub3cgCj4gPiBhbHJl
-YWR5IGl0IGlzIE5VTEwuIEp1c3QgcmV0dXJuIC1FTk9NRU0gYW5kIGJlIGRvbmUgd2l0aCBpdC4K
-PiA+IAo+ID4gUmVnYXJkcywKPiA+IEFyZW5kCj4gPiAKPiA+ID4gICAJcG1rX29wLT52ZXJzaW9u
-ID0gY3B1X3RvX2xlMTYoQlJDTUZfUE1LU0FfVkVSXzMpOwo+ID4gPiAgIAo+ID4gPiAgIAlpZiAo
-IXBta3NhKSB7Cj4gPiA+IEBAIC00MzQwLDYgKzQzNDQsNyBAQCBicmNtZl9wbWtzYV92M19vcChz
-dHJ1Y3QgYnJjbWZfaWYgKmlmcCwgc3RydWN0IGNmZzgwMjExX3Bta3NhICpwbWtzYSwKPiA+ID4g
-ICAJcG1rX29wLT5sZW5ndGggPSBjcHVfdG9fbGUxNihsZW5ndGgpOwo+ID4gPiAgIAo+ID4gPiAg
-IAlyZXQgPSBicmNtZl9maWxfaW92YXJfZGF0YV9zZXQoaWZwLCAicG1raWRfaW5mbyIsIHBta19v
-cCwgc2l6ZW9mKCpwbWtfb3ApKTsKPiA+ID4gK291dDoKPiA+ID4gICAJa2ZyZWUocG1rX29wKTsK
-PiA+ID4gICAJcmV0dXJuIHJldDsKPiA+ID4gICB9CgpCZXN0IHJlZ2FyZHMsCkR1b21pbmcgWmhv
-dQo=
+"Gustavo A. R. Silva" <gustavoars@kernel.org> wrote:
+
+> Fix boot crash on Raspberry Pi by moving the update to `event->datalen`
+> before data is copied into flexible-array member `data` via `memcpy()`.
+> 
+> Flexible-array member `data` was annotated with `__counted_by(datalen)`
+> in commit 62d19b358088 ("wifi: brcmfmac: fweh: Add __counted_by for
+> struct brcmf_fweh_queue_item and use struct_size()"). The intention of
+> this is to gain visibility into the size of `data` at run-time through
+> its _counter_ (in this case `datalen`), and with this have its accesses
+> bounds-checked at run-time via CONFIG_FORTIFY_SOURCE and
+> CONFIG_UBSAN_BOUNDS.
+> 
+> To effectively accomplish the above, we shall update the counter
+> (`datalen`), before the first access to the flexible array (`data`),
+> which was also done in the mentioned commit.
+> 
+> However, commit edec42821911 ("wifi: brcmfmac: allow per-vendor event
+> handling") inadvertently caused a buffer overflow, detected by
+> FORTIFY_SOURCE. It moved the `event->datalen = datalen;` update to after
+> the first `data` access, at which point `event->datalen` was not yet
+> updated from zero (after calling `kzalloc()`), leading to the overflow
+> issue.
+> 
+> This fix repositions the `event->datalen = datalen;` update before
+> accessing `data`, restoring the intended buffer overflow protection. :)
+> 
+> Fixes: edec42821911 ("wifi: brcmfmac: allow per-vendor event handling")
+> Reported-by: Nathan Chancellor <nathan@kernel.org>
+> Closes: https://gist.github.com/nathanchance/e22f681f3bfc467f15cdf6605021aaa6
+> Tested-by: Nathan Chancellor <nathan@kernel.org>
+> Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+> Reviewed-by: Kees Cook <keescook@chromium.org>
+> Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+
+Patch applied to wireless-next.git, thanks.
+
+ec1aae190c77 wifi: brcmfmac: fweh: Fix boot crash on Raspberry Pi 4
+
+-- 
+https://patchwork.kernel.org/project/linux-wireless/patch/Zc+3PFCUvLoVlpg8@neat/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+
