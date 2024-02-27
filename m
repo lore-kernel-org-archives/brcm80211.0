@@ -1,56 +1,56 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04985139564
-	for <brcm80211@lists.linux.dev>; Tue, 27 Feb 2024 11:12:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEF12136651
+	for <brcm80211@lists.linux.dev>; Tue, 27 Feb 2024 11:21:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709032382; cv=none; b=ejLidXmvwxtbuMEyHLL5vnA1lHcXXPujQxhCv5TayONPc1wdCAdRO1kzKChS6LXnjJ3r8Ax+DWqt9BeKp0swPOvTP/aA385HdFAcUb1XJdxGB1ImyVZL26KcIiY+mEbERK2cQ/U7tjf0JAji5OomP+n/ZknbCp5EgHzryWwD1Gk=
+	t=1709032899; cv=none; b=uLq9GxZPaj5r13wGW0LzT+RBchTiAYR8+AZfEuUlVOM5k4ansgSMFXwJ+77ka+MYjdrbA7IT/iQ8FBoXJLIfTyukIbPMXgcw7mD5Ec57M5CjVc+TMQAiyprS+4nqYYuNkJO1L6yA0UfQXyxToEbsWs2NB9Cav8Lnej9EkXGQ9B8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709032382; c=relaxed/simple;
-	bh=ZG3VsTCEWdC4JNtpMivm5zpoN7EHrOJ0fmSYQtH7jg4=;
+	s=arc-20240116; t=1709032899; c=relaxed/simple;
+	bh=rVEnnKqbyLs6TAU/yjudvVfT/zIv1/up5cL7VgbDuFc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YyFfEiTrzXAAoKz9SS2wR0AVONfF5k0nXx6pS8LX1srvayRDeyIa/BslsO1rKuK6GrF62S+b3uGlYOd1hWTTCK+PPmsaId8oYT0sjFBQCLtHRRjqpWbiZdwjDIkOtxpsfwgWNvGJU9HEF0y78oK7zmlxZ9d+AlHFnc2enHv3ORU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=Yyo1Vla+; arc=none smtp.client-ip=209.85.221.47
+	 In-Reply-To:Content-Type; b=Qp6odvof3oZ3iM3f81WT3NuVhRT2vJ9yl6BNxQx0TpleYNOpG+pwMBaQl8Eye4xTYbCMF/9T6cfkLB36GxRCiPLkKbL9jwpIM7iZGiPWVflYRpANjhDpnNpNZsE1DDLjYsgjX8KMPE/qlV4AUwLe+6Lka9IchCYOvsoI9jNMOfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=CR6e7LUB; arc=none smtp.client-ip=209.85.214.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="Yyo1Vla+"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-33d28468666so3670582f8f.0
-        for <brcm80211@lists.linux.dev>; Tue, 27 Feb 2024 03:12:59 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="CR6e7LUB"
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-1dc91d2384cso19508045ad.1
+        for <brcm80211@lists.linux.dev>; Tue, 27 Feb 2024 03:21:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1709032378; x=1709637178; darn=lists.linux.dev;
+        d=broadcom.com; s=google; t=1709032897; x=1709637697; darn=lists.linux.dev;
         h=in-reply-to:autocrypt:from:references:cc:to:subject:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=7PtkrYCyaSJKWfPiF4b0plBi55lBVvaQHIsThZ9kwJM=;
-        b=Yyo1Vla+Rwvew3YJzYLFYOnaT4lo+SazACxkbfsGgYy6jIK2zDWsNpl+h6X2ZsW3rI
-         sRARYdfz0osprFz2/Cfyn15felj0K03V3tyCDgDkW0xrWZXMcgxAeSEwtumcWhhBNtEh
-         zKuhtZb6jVZFXDdLXGpkhQPih3eRPWoABz8fI=
+        bh=3nDh3bGPMowygehNlzITGiQX1nywlgvEft99cfM1Asc=;
+        b=CR6e7LUBt1dsPGyKsmB1yM7REZr1l5Ns0LXyybpsbQmExP8ckc7I174KN/Ht6fu49G
+         Dnhxn+4Vr6qJkv6Ie2T9vGoCC5YyMTGXCkQPH1PRMBJRTpF8Z66ghk5YIYp7OgdSxEoj
+         5wSoFGX0jqSj9DsBhqaaqVmK4hwL5hj1bcc7U=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709032378; x=1709637178;
+        d=1e100.net; s=20230601; t=1709032897; x=1709637697;
         h=in-reply-to:autocrypt:from:references:cc:to:subject:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=7PtkrYCyaSJKWfPiF4b0plBi55lBVvaQHIsThZ9kwJM=;
-        b=ZqeX0HCzDrLDHqooGPIVpscCP9XlNSFgLSbsveHbAdo6NA9a+LUExg4kozmoWHlsTg
-         rBSiuycmAt/O/aSNKNRRUQM4xQRoJVS4c/IrssjqrDlOMrKbkNX0NKMsWyA7hJyVs2As
-         qkBQ+2t72a5CLJfj+tUVGJ8nLXC6B1Op28yuZKpRv98bMJEPNCbL7yEUVj1+w2gOxVfm
-         lRUquU6tGXidBM0gjQNKLA3u7hCZrMTV8aNflqZx2vgl6N98AC48FpGrIRegesKfrqCi
-         eezRI7loJ6iYggr0OU4qTAY6g57eV7GdMUwtXQUKKHpARonhUujqf0UigJL5NpuUqxt9
-         +bsQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVfs01XDounf1pHDU7TlLJ+vROX4caIzprAlI+tRCODtmKNVYVkTZ2dstWj956N1EgmLImkQ1cLexpqo9gAcc9VmLYcuET6NSJm
-X-Gm-Message-State: AOJu0YwwUhsfFtTS4qVI5IT9jRzbKD/ac29nj00gHpIsuW7RXiAwgVfp
-	BibPxPCZlomFfIRRXjLqPCnSaBQ8eWs3KbmigNbbcrUAX09fj38yunZLsYdZSw==
-X-Google-Smtp-Source: AGHT+IHHvz90/p2Xwwzr4JipR+b7w6FewUofHz/rB0n3h35sC6WNGRzXnS1OB6r03nFrD5oDiv+SWA==
-X-Received: by 2002:adf:eecf:0:b0:33d:2474:5aa with SMTP id a15-20020adfeecf000000b0033d247405aamr6683014wrp.40.1709032378466;
-        Tue, 27 Feb 2024 03:12:58 -0800 (PST)
-Received: from [10.230.42.27] ([192.19.152.250])
-        by smtp.gmail.com with ESMTPSA id bu25-20020a056000079900b0033d8a17a710sm11352379wrb.88.2024.02.27.03.12.57
+        bh=3nDh3bGPMowygehNlzITGiQX1nywlgvEft99cfM1Asc=;
+        b=Q9IrupEDtR9tNPRBdXfiaHkbT/UHBykhFPXeXl/vb0yAehMDqhK8VBBglmDEPmxuYW
+         stLYlSC/s1aGs6vEyeHLAxQNK9jwuDrfB5V4uEWW3G1T55b8W7Ms92yBxnGyCglQ/0yA
+         eF6ROmRInb1FeYN4GffSiClCvJMwdsrtFXCYk8bHd6b7Zut8eGr25kTwX3AcztugoKet
+         GtellCxuqKzgZ4bdH3J72zHdj9tCUjFTq/ODs3KRUvQ5ONLiljqOP5zDwh5v2oPlsD5F
+         b96tyR2pjQpIgbPa7ORvkWx7GP3BYXFYYifuRc02CiGIktvnLLNEeMmFhU/jQEv5VeZ3
+         5b/Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVBsVopOXMDGJMwLJKJhDVFCfoEVUOhJNiJX/jZOBD0EPaVJWcZKKe/Rt6T2Oe7DEBjHOp41CU9/J1Wc3h4jlh3du/G4xBZG/uX
+X-Gm-Message-State: AOJu0YxweSv0HTL1noEgJtYOSFeDjshwy8Y635vS3TMKTwQAVougN2E7
+	sJTUkjn+6ssD+7Z5cu0suVVjVdz2iI5vqbfuywsn7ZfhrfiArpfywe2zcegdrA==
+X-Google-Smtp-Source: AGHT+IHNOO6c5LUy+ZeLjAopaBAvczytLJXq8nStdqrIzyWFGz7r6oUNPNt3l6sBvq80YGMJjc/+2g==
+X-Received: by 2002:a17:902:eb89:b0:1dc:a5fd:6de9 with SMTP id q9-20020a170902eb8900b001dca5fd6de9mr4986194plg.12.1709032897233;
+        Tue, 27 Feb 2024 03:21:37 -0800 (PST)
+Received: from [192.168.178.55] (f215227.upc-f.chello.nl. [80.56.215.227])
+        by smtp.gmail.com with ESMTPSA id g17-20020a170902c99100b001d6ee9d8957sm1300606plc.281.2024.02.27.03.21.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Feb 2024 03:12:58 -0800 (PST)
-Message-ID: <356ec25f-b5e0-4b1b-bd0a-0d6cb9ae3c0c@broadcom.com>
-Date: Tue, 27 Feb 2024 12:12:57 +0100
+        Tue, 27 Feb 2024 03:21:36 -0800 (PST)
+Message-ID: <87166784-79ab-4eb4-ad1e-af4bc31757b7@broadcom.com>
+Date: Tue, 27 Feb 2024 12:21:31 +0100
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -58,15 +58,13 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH][next] wifi: brcmfmac: fweh: Fix boot crash on Raspberry
- Pi 4
-To: Kalle Valo <kvalo@kernel.org>, "Gustavo A. R. Silva"
- <gustavoars@kernel.org>
-Cc: Nathan Chancellor <nathan@kernel.org>, linux-wireless@vger.kernel.org,
- brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com,
- linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
-References: <Zc+3PFCUvLoVlpg8@neat>
- <170902559101.3280425.2706190192200235643.kvalo@kernel.org>
+Subject: Re: [PATCH] wifi: brcm80211: handle pmk_op allocation failure
+To: Duoming Zhou <duoming@zju.edu.cn>, linux-kernel@vger.kernel.org
+Cc: brcm80211-dev-list.pdl@broadcom.com, brcm80211@lists.linux.dev,
+ linux-wireless@vger.kernel.org, justinstitt@google.com, john@keeping.me.uk,
+ quic_alokad@quicinc.com, marcan@marcan.st, johannes.berg@intel.com,
+ linus.walleij@linaro.org, kvalo@kernel.org, Joe Perches <joe@perches.com>
+References: <20240227080613.34001-1-duoming@zju.edu.cn>
 From: Arend van Spriel <arend.vanspriel@broadcom.com>
 Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
  xsFNBGP96SABEACfErEjSRi7TA1ttHYaUM3GuirbgqrNvQ41UJs1ag1T0TeyINqG+s6aFuO8
@@ -111,59 +109,67 @@ Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
  NKowQLrlMBGXT4NnRNV0+yHmusXPOPIqQCKEtbWSx9s2slQxmXukPYvLnuRJqkPkvrTgjn5d
  eSE0Dkhni4292/Nn/TnZf5mxCNWH1p3dz/vrT6EIYk2GSJgCLoTkCcqaM6+5E4IwgYOq3UYu
  AAgeEbPV1QeTVAPrntrLb0t0U5vdwG7Xl40baV9OydTv7ghjYZU349w1d5mdxg==
-In-Reply-To: <170902559101.3280425.2706190192200235643.kvalo@kernel.org>
+In-Reply-To: <20240227080613.34001-1-duoming@zju.edu.cn>
 Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-	boundary="000000000000d8956606125b1bde"
+	boundary="000000000000c6506e06125b3a42"
 
---000000000000d8956606125b1bde
+--000000000000c6506e06125b3a42
 Content-Language: en-US
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 2/27/2024 10:19 AM, Kalle Valo wrote:
-> "Gustavo A. R. Silva" <gustavoars@kernel.org> wrote:
+On 2/27/2024 9:06 AM, Duoming Zhou wrote:
+> The kzalloc() in brcmf_pmksa_v3_op() will return null if the
+> physical memory has run out. As a result, if we dereference
+> the null value, the null pointer dereference bug will happen.
 > 
->> Fix boot crash on Raspberry Pi by moving the update to `event->datalen`
->> before data is copied into flexible-array member `data` via `memcpy()`.
->>
->> Flexible-array member `data` was annotated with `__counted_by(datalen)`
->> in commit 62d19b358088 ("wifi: brcmfmac: fweh: Add __counted_by for
->> struct brcmf_fweh_queue_item and use struct_size()"). The intention of
->> this is to gain visibility into the size of `data` at run-time through
->> its _counter_ (in this case `datalen`), and with this have its accesses
->> bounds-checked at run-time via CONFIG_FORTIFY_SOURCE and
->> CONFIG_UBSAN_BOUNDS.
->>
->> To effectively accomplish the above, we shall update the counter
->> (`datalen`), before the first access to the flexible array (`data`),
->> which was also done in the mentioned commit.
->>
->> However, commit edec42821911 ("wifi: brcmfmac: allow per-vendor event
->> handling") inadvertently caused a buffer overflow, detected by
->> FORTIFY_SOURCE. It moved the `event->datalen = datalen;` update to after
->> the first `data` access, at which point `event->datalen` was not yet
->> updated from zero (after calling `kzalloc()`), leading to the overflow
->> issue.
->>
->> This fix repositions the `event->datalen = datalen;` update before
->> accessing `data`, restoring the intended buffer overflow protection. :)
->>
->> Fixes: edec42821911 ("wifi: brcmfmac: allow per-vendor event handling")
->> Reported-by: Nathan Chancellor <nathan@kernel.org>
->> Closes: https://gist.github.com/nathanchance/e22f681f3bfc467f15cdf6605021aaa6
->> Tested-by: Nathan Chancellor <nathan@kernel.org>
->> Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
->> Reviewed-by: Kees Cook <keescook@chromium.org>
+> Return -ENOMEM from brcmf_pmksa_v3_op() if kzalloc() fails
+> for pmk_op.
+
+NAK (see below)
+
+Also this issue was reported earlier by Joe Perches. Not sure if he 
+wants to be mentioned as such.
+
+> Fixes: a96202acaea4 ("wifi: brcmfmac: cfg80211: Add support for PMKID_V3 operations")
+> Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+> ---
+>   drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 5 +++++
+>   1 file changed, 5 insertions(+)
 > 
-> Arend, ack?
+> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+> index 28d6a30cc01..3b420b33188 100644
+> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+> @@ -4322,6 +4322,10 @@ brcmf_pmksa_v3_op(struct brcmf_if *ifp, struct cfg80211_pmksa *pmksa,
+>   	int ret;
+>   
+>   	pmk_op = kzalloc(sizeof(*pmk_op), GFP_KERNEL);
+> +	if (!pmk_op) {
+> +		ret = -ENOMEM;
+> +		goto out;
+> +	}
 
-Figured Kees Cook was the trumping authority here, but here it is:
+There is really no need to introduce a new label for this. Although you 
+can kfree() a NULL pointer there is no need to do so when you know 
+already it is NULL. Just return -ENOMEM and be done with it.
 
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Regards,
+Arend
 
-Gr. AvS
+>   	pmk_op->version = cpu_to_le16(BRCMF_PMKSA_VER_3);
+>   
+>   	if (!pmksa) {
+> @@ -4340,6 +4344,7 @@ brcmf_pmksa_v3_op(struct brcmf_if *ifp, struct cfg80211_pmksa *pmksa,
+>   	pmk_op->length = cpu_to_le16(length);
+>   
+>   	ret = brcmf_fil_iovar_data_set(ifp, "pmkid_info", pmk_op, sizeof(*pmk_op));
+> +out:
+>   	kfree(pmk_op);
+>   	return ret;
+>   }
 
---000000000000d8956606125b1bde
+--000000000000c6506e06125b3a42
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -234,14 +240,14 @@ BtkeSGJx/8dy0h8YmRn+adOrxKXHxhSL8BNn8wsmIZyYWe6fRcBtO3Ks2DOLyHCdkoFlN8x9VUQF
 N2ulEgqCbRKkx+qNirW86eF138lr1gRxzclu/38ko//MmkAYR/+hP3WnBll7zbpIt0jc9wyFkSqH
 p8a1MYICbTCCAmkCAQEwazBbMQswCQYDVQQGEwJCRTEZMBcGA1UEChMQR2xvYmFsU2lnbiBudi1z
 YTExMC8GA1UEAxMoR2xvYmFsU2lnbiBHQ0MgUjMgUGVyc29uYWxTaWduIDIgQ0EgMjAyMAIMTv1t
-bpIzNUky46LXMA0GCWCGSAFlAwQCAQUAoIHUMC8GCSqGSIb3DQEJBDEiBCCwydhRWMdgWfTIWju3
-3ooZ+RvfBqj0Yqh+AqxYEhHj7jAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJ
-BTEPFw0yNDAyMjcxMTEyNThaMGkGCSqGSIb3DQEJDzFcMFowCwYJYIZIAWUDBAEqMAsGCWCGSAFl
+bpIzNUky46LXMA0GCWCGSAFlAwQCAQUAoIHUMC8GCSqGSIb3DQEJBDEiBCALuUlj37d9AFOB425S
+sRANuxKpgzBMRYU5uEOG0yN5sjAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJ
+BTEPFw0yNDAyMjcxMTIxMzdaMGkGCSqGSIb3DQEJDzFcMFowCwYJYIZIAWUDBAEqMAsGCWCGSAFl
 AwQBFjALBglghkgBZQMEAQIwCgYIKoZIhvcNAwcwCwYJKoZIhvcNAQEKMAsGCSqGSIb3DQEBBzAL
-BglghkgBZQMEAgEwDQYJKoZIhvcNAQEBBQAEggEAH9kljoXCXD9T2daecWDCoLsCeLqmPgrSKKZv
-08GL68CAu2cOBUu/IuXlOTBnqJ4qhBHQkZsSlc86zXAtxdTrrMOXEDkBf3ZZkjPGSuP4DaDuncBT
-iM9gVjHzcTew7J3MrVF8Y2Ps5ud6xk9Gx7GME8M79TIHA4Da4ke95/sYWFUxMLN/KUkxi3Vha0n5
-r09LLTBmC8OUwieY8J6v9rIBJ57SOs1CA7ygFgY10MtTNjRxnsEGJfUP4kBNQgqmbE2fu3/ySKkq
-3vIo/qhLQNO61isDUdCJVpLLXZB+CFCjnnLqfvuqOYNcdUKisUafDW8CtFH4UWfBfmXVo6DIk6ph
-wg==
---000000000000d8956606125b1bde--
+BglghkgBZQMEAgEwDQYJKoZIhvcNAQEBBQAEggEA3BsIA3jfXlT9Ad4+f00zDDfOGlRl0m8fyd5K
+z4K1g3d9/pxvNKO0ee+TnH7kisYAEUYNy16+jqd5jHsf91BgH7pVKNTupoSjqnEcC6ghIsoife3n
+UD+OCOu0a+woDrhy6WgMn3tM6ryHfIDNAMOk5qDe5iH6YS084ynt4N6kbnTTsvjj1ft6M3Ug8mnV
+FxR/vx1TVYiHYX1BGwDtebJaLb7PvRw0PmbfMOSRYTwVeUC42zQdLqpPvQib/av7SwyxunI9oy6i
+geG5nVKTSSNSBSQzpaq248oVGdEdnT47J2hC5Ow0+lpBdqHwfvjiIciQ/ahAj4OjNKffzgTFrXNk
+sg==
+--000000000000c6506e06125b3a42--
