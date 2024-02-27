@@ -1,116 +1,100 @@
-Received: from relay.hostedemail.com (smtprelay0011.hostedemail.com [216.40.44.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A4FA13958B
-	for <brcm80211@lists.linux.dev>; Tue, 27 Feb 2024 11:42:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.11
+Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net (zg8tmtyylji0my4xnjqumte4.icoremail.net [162.243.164.118])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B23EB13B2B4
+	for <brcm80211@lists.linux.dev>; Tue, 27 Feb 2024 13:51:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.243.164.118
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709034147; cv=none; b=h5aDv3Y3IBsR82FYzdCr4mIDzGuq4iaLTXpQlpwHwxMBuGlL5MTr6rNbbiIVyXwRiX+jve1yE1jUvyGK5oPSZbaL/MRtUsm1m3FJvxoqc+qg5/weGqU/kXW2P6vQ+X8fdbvr2Pp1Sx4lxxyxzyhNIcd+N5uE6scPE+wiifZ1DnM=
+	t=1709041872; cv=none; b=SEzS6myu2jjOD8tR8Hi7hmSExTF9EdOfKHzT4wCv7QsBP+mtqjp1wk3mN9xA5h/2HlJWX5/tjDvY6r3EPZgwZo23dzqV4rZdszP5X917ROj0MP17HKfJTKk8iGFapaXUj+btoWFPkRNy0GvCz1MwMnVFgfK5IU3+ZRXidFzKDIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709034147; c=relaxed/simple;
-	bh=ycpsLMGqKQfrLYCH+x1HWi2wiMddtCqg7V3YbCTEAC4=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=od+s689A1CrA/WaBI+7a02F4s8+fIs0CrhC8G4jhY1KN5AtxF4Pph6S+6IMVgQTlltwq8PlPs30Ijs+rZ1rFxXCYfv7EKMtCbFLfpgwS5SaK/r9U/J9A24MtkP8FOQkIrCE8rVUqV/XqXhNWH6SYLw/Qd6/xIGtwXB3FgPxABPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=perches.com; spf=pass smtp.mailfrom=perches.com; arc=none smtp.client-ip=216.40.44.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=perches.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=perches.com
-Received: from omf09.hostedemail.com (a10.router.float.18 [10.200.18.1])
-	by unirelay06.hostedemail.com (Postfix) with ESMTP id E681EA0EEC;
-	Tue, 27 Feb 2024 11:42:17 +0000 (UTC)
-Received: from [HIDDEN] (Authenticated sender: joe@perches.com) by omf09.hostedemail.com (Postfix) with ESMTPA id 4AD102002A;
-	Tue, 27 Feb 2024 11:42:14 +0000 (UTC)
-Message-ID: <b0a352781f58a829deadffbe2ef2085c97c6ab32.camel@perches.com>
+	s=arc-20240116; t=1709041872; c=relaxed/simple;
+	bh=25KIikUSQM4AHnPVJzVUXiR8trFSdiqq3nXlzQll/2U=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID; b=koI+AUyFF6aLflVf9rXgSk0svBG2CMDQJChhHwj05Jl25gA24PvqO+5mknCdKMC0k7tkzP8o4TBz4iAGHyi9WovGqfJdis7htBwOqQoFlsREb109o+jTYUIckLjUVcnwtTIjMJVoYNaJMhejG3Z2H2BsJCyl1YduaOHPVsbH6rM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=zju.edu.cn; spf=pass smtp.mailfrom=zju.edu.cn; arc=none smtp.client-ip=162.243.164.118
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=zju.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zju.edu.cn
+Received: from duoming$zju.edu.cn ( [124.236.128.238] ) by
+ ajax-webmail-mail-app3 (Coremail) ; Tue, 27 Feb 2024 21:44:43 +0800
+ (GMT+08:00)
+Date: Tue, 27 Feb 2024 21:44:43 +0800 (GMT+08:00)
+X-CM-HeaderCharset: UTF-8
+From: duoming@zju.edu.cn
+To: "Joe Perches" <joe@perches.com>
+Cc: "Arend van Spriel" <arend.vanspriel@broadcom.com>,
+	linux-kernel@vger.kernel.org, brcm80211-dev-list.pdl@broadcom.com,
+	brcm80211@lists.linux.dev, linux-wireless@vger.kernel.org,
+	justinstitt@google.com, john@keeping.me.uk, quic_alokad@quicinc.com,
+	marcan@marcan.st, johannes.berg@intel.com, linus.walleij@linaro.org,
+	kvalo@kernel.org
 Subject: Re: [PATCH] wifi: brcm80211: handle pmk_op allocation failure
-From: Joe Perches <joe@perches.com>
-To: Arend van Spriel <arend.vanspriel@broadcom.com>, Duoming Zhou
-	 <duoming@zju.edu.cn>, linux-kernel@vger.kernel.org
-Cc: brcm80211-dev-list.pdl@broadcom.com, brcm80211@lists.linux.dev, 
- linux-wireless@vger.kernel.org, justinstitt@google.com, john@keeping.me.uk,
-  quic_alokad@quicinc.com, marcan@marcan.st, johannes.berg@intel.com, 
- linus.walleij@linaro.org, kvalo@kernel.org
-Date: Tue, 27 Feb 2024 03:42:13 -0800
-In-Reply-To: <87166784-79ab-4eb4-ad1e-af4bc31757b7@broadcom.com>
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version 2023.4-cmXT5 build
+ 20231205(37e20f0e) Copyright (c) 2002-2024 www.mailtech.cn
+ mispb-4df6dc2c-e274-4d1c-b502-72c5c3dfa9ce-zj.edu.cn
+In-Reply-To: <b0a352781f58a829deadffbe2ef2085c97c6ab32.camel@perches.com>
 References: <20240227080613.34001-1-duoming@zju.edu.cn>
-	 <87166784-79ab-4eb4-ad1e-af4bc31757b7@broadcom.com>
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.48.4 (3.48.4-1.fc38) 
+ <87166784-79ab-4eb4-ad1e-af4bc31757b7@broadcom.com>
+ <b0a352781f58a829deadffbe2ef2085c97c6ab32.camel@perches.com>
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Rspamd-Queue-Id: 4AD102002A
-X-Stat-Signature: edoqsgf7ic6us6cah63pub7niog877mg
-X-Rspamd-Server: rspamout01
-X-Session-Marker: 6A6F6540706572636865732E636F6D
-X-Session-ID: U2FsdGVkX1/WU0+q9CP9YB3iZf4lKGg5gQDCP5sOEeA=
-X-HE-Tag: 1709034134-96182
-X-HE-Meta: U2FsdGVkX19TCIOBunB/trdZTRgi6R4E3PcqVCwEybxKePZ9o1W7it2/qFbLqYIs53EHyYYfFl8x0B7R0mINy3zRdpVuP62lhcb9V7LUa22u8kjylexBvXmWH/ecs+KGvdffoGc3N21S68SK05i+3sCg4yJKblnZZTtR9y3ZFxqx/XrR2Fx8zpCVrwxACFBpbGXXmULsj5PWzCO+8qQ4Sf5JJkE5OuwhWad6Y21UZJOdYOUuHe1DnpGQYM0ZOzykoLlS5HlC4zSAApnXrYm04btVQnyvH/v0N3YQ+i4aW6ciBJ22DDCTQgzDCFICBj+o
+Message-ID: <62bf57d8.2291.18deacf80c6.Coremail.duoming@zju.edu.cn>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID:cC_KCgBHvTdM591lQACiAQ--.38834W
+X-CM-SenderInfo: qssqjiasttq6lmxovvfxof0/1tbiAwQEAWXc3dIZAwAAsu
+X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWxJw
+	CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
+	daVFxhVjvjDU=
 
-On Tue, 2024-02-27 at 12:21 +0100, Arend van Spriel wrote:
-> On 2/27/2024 9:06 AM, Duoming Zhou wrote:
-> > The kzalloc() in brcmf_pmksa_v3_op() will return null if the
-> > physical memory has run out. As a result, if we dereference
-> > the null value, the null pointer dereference bug will happen.
-> >=20
-> > Return -ENOMEM from brcmf_pmksa_v3_op() if kzalloc() fails
-> > for pmk_op.
->=20
-> NAK (see below)
->=20
-> Also this issue was reported earlier by Joe Perches. Not sure if he=20
-> wants to be mentioned as such.
-
-I think it's unimportant to be mentioned.
-
-I think it's more important that the code be researched
-that the simple return of -ENOMEM the appropriate fix
-and is handled by all possible callers of the function.
-
->=20
-> > Fixes: a96202acaea4 ("wifi: brcmfmac: cfg80211: Add support for PMKID_V=
-3 operations")
-> > Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-> > ---
-> >   drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 5 +++++
-> >   1 file changed, 5 insertions(+)
-> >=20
-> > diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.=
-cq b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-> > index 28d6a30cc01..3b420b33188 100644
-> > --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-> > +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-> > @@ -4322,6 +4322,10 @@ brcmf_pmksa_v3_op(struct brcmf_if *ifp, struct c=
-fg80211_pmksa *pmksa,
-> >   	int ret;
-> >  =20
-> >   	pmk_op =3D kzalloc(sizeof(*pmk_op), GFP_KERNEL);
-> > +	if (!pmk_op) {
-> > +		ret =3D -ENOMEM;
-> > +		goto out;
-> > +	}
->=20
-> There is really no need to introduce a new label for this. Although you=
-=20
-> can kfree() a NULL pointer there is no need to do so when you know=20
-> already it is NULL. Just return -ENOMEM and be done with it.
->=20
-> Regards,
-> Arend
->=20
-> >   	pmk_op->version =3D cpu_to_le16(BRCMF_PMKSA_VER_3);
-> >  =20
-> >   	if (!pmksa) {
-> > @@ -4340,6 +4344,7 @@ brcmf_pmksa_v3_op(struct brcmf_if *ifp, struct cf=
-g80211_pmksa *pmksa,
-> >   	pmk_op->length =3D cpu_to_le16(length);
-> >  =20
-> >   	ret =3D brcmf_fil_iovar_data_set(ifp, "pmkid_info", pmk_op, sizeof(*=
-pmk_op));
-> > +out:
-> >   	kfree(pmk_op);
-> >   	return ret;
-> >   }
-
+T24gVHVlLCAyNyBGZWIgMjAyNCAwMzo0MjoxMyAtMDgwMCBKb2UgUGVyY2hlcyB3cm90ZToKPiA+
+ID4gVGhlIGt6YWxsb2MoKSBpbiBicmNtZl9wbWtzYV92M19vcCgpIHdpbGwgcmV0dXJuIG51bGwg
+aWYgdGhlCj4gPiA+IHBoeXNpY2FsIG1lbW9yeSBoYXMgcnVuIG91dC4gQXMgYSByZXN1bHQsIGlm
+IHdlIGRlcmVmZXJlbmNlCj4gPiA+IHRoZSBudWxsIHZhbHVlLCB0aGUgbnVsbCBwb2ludGVyIGRl
+cmVmZXJlbmNlIGJ1ZyB3aWxsIGhhcHBlbi4KPiA+ID4gCj4gPiA+IFJldHVybiAtRU5PTUVNIGZy
+b20gYnJjbWZfcG1rc2FfdjNfb3AoKSBpZiBremFsbG9jKCkgZmFpbHMKPiA+ID4gZm9yIHBta19v
+cC4KPiA+IAo+ID4gTkFLIChzZWUgYmVsb3cpCj4gPiAKPiA+IEFsc28gdGhpcyBpc3N1ZSB3YXMg
+cmVwb3J0ZWQgZWFybGllciBieSBKb2UgUGVyY2hlcy4gTm90IHN1cmUgaWYgaGUgCj4gPiB3YW50
+cyB0byBiZSBtZW50aW9uZWQgYXMgc3VjaC4KPiAKPiBJIHRoaW5rIGl0J3MgdW5pbXBvcnRhbnQg
+dG8gYmUgbWVudGlvbmVkLgo+IAo+IEkgdGhpbmsgaXQncyBtb3JlIGltcG9ydGFudCB0aGF0IHRo
+ZSBjb2RlIGJlIHJlc2VhcmNoZWQKPiB0aGF0IHRoZSBzaW1wbGUgcmV0dXJuIG9mIC1FTk9NRU0g
+dGhlIGFwcHJvcHJpYXRlIGZpeAo+IGFuZCBpcyBoYW5kbGVkIGJ5IGFsbCBwb3NzaWJsZSBjYWxs
+ZXJzIG9mIHRoZSBmdW5jdGlvbi4KClRoZXJlIGFyZSB0aHJlZSBmdW5jdGlvbnMgdGhhdCBjYWxs
+IHRoZSBicmNtZl9wbWtzYV92M19vcCgpLAppbmNsdWRpbmcgYnJjbWZfY2ZnODAyMTFfc2V0X3Bt
+a3NhKCksIGJyY21mX2NmZzgwMjExX2RlbF9wbWtzYSgpCmFuZCBicmNtZl9jZmc4MDIxMV9mbHVz
+aF9wbWtzYSgpLiBUaGUgcmV0dXJuIHR5cGUgb2YgdGhlIGFib3ZlCnRocmVlIGZ1bmN0aW9ucyBp
+cyBzMzIuIElmIGJyY21mX3Bta3NhX3YzX29wKCkgcmV0dXJucyAtRU5PTUVNLAp0aGUgYWJvdmUg
+dGhyZWUgZnVuY3Rpb25zIHdpbGwgYWxzbyByZXR1cm4gLUVOT01FTS4gSXQgY291bGQgYmUKaGFu
+ZGxlZCBhcHByb3ByaWF0ZWx5IGJ5IHRoZSBjYWxsZXJzIG9mIHRoZSBmdW5jdGlvbi4gU28gSSB0
+aGluawp0aGUgc2ltcGxlIHJldHVybiBvZiAtRU5PTUVNIGlzIGFwcHJvcHJpYXRlLgoKPiA+ID4g
+Rml4ZXM6IGE5NjIwMmFjYWVhNCAoIndpZmk6IGJyY21mbWFjOiBjZmc4MDIxMTogQWRkIHN1cHBv
+cnQgZm9yIFBNS0lEX1YzIG9wZXJhdGlvbnMiKQo+ID4gPiBTaWduZWQtb2ZmLWJ5OiBEdW9taW5n
+IFpob3UgPGR1b21pbmdAemp1LmVkdS5jbj4KPiA+ID4gLS0tCj4gPiA+ICAgZHJpdmVycy9uZXQv
+d2lyZWxlc3MvYnJvYWRjb20vYnJjbTgwMjExL2JyY21mbWFjL2NmZzgwMjExLmMgfCA1ICsrKysr
+Cj4gPiA+ICAgMSBmaWxlIGNoYW5nZWQsIDUgaW5zZXJ0aW9ucygrKQo+ID4gPiAKPiA+ID4gZGlm
+ZiAtLWdpdCBhL2RyaXZlcnMvbmV0L3dpcmVsZXNzL2Jyb2FkY29tL2JyY204MDIxMS9icmNtZm1h
+Yy9jZmc4MDIxMS5jcSBiL2RyaXZlcnMvbmV0L3dpcmVsZXNzL2Jyb2FkY29tL2JyY204MDIxMS9i
+cmNtZm1hYy9jZmc4MDIxMS5jCj4gPiA+IGluZGV4IDI4ZDZhMzBjYzAxLi4zYjQyMGIzMzE4OCAx
+MDA2NDQKPiA+ID4gLS0tIGEvZHJpdmVycy9uZXQvd2lyZWxlc3MvYnJvYWRjb20vYnJjbTgwMjEx
+L2JyY21mbWFjL2NmZzgwMjExLmMKPiA+ID4gKysrIGIvZHJpdmVycy9uZXQvd2lyZWxlc3MvYnJv
+YWRjb20vYnJjbTgwMjExL2JyY21mbWFjL2NmZzgwMjExLmMKPiA+ID4gQEAgLTQzMjIsNiArNDMy
+MiwxMCBAQCBicmNtZl9wbWtzYV92M19vcChzdHJ1Y3QgYnJjbWZfaWYgKmlmcCwgc3RydWN0IGNm
+ZzgwMjExX3Bta3NhICpwbWtzYSwKPiA+ID4gICAJaW50IHJldDsKPiA+ID4gICAKPiA+ID4gICAJ
+cG1rX29wID0ga3phbGxvYyhzaXplb2YoKnBta19vcCksIEdGUF9LRVJORUwpOwo+ID4gPiArCWlm
+ICghcG1rX29wKSB7Cj4gPiA+ICsJCXJldCA9IC1FTk9NRU07Cj4gPiA+ICsJCWdvdG8gb3V0Owo+
+ID4gPiArCX0KPiA+IAo+ID4gVGhlcmUgaXMgcmVhbGx5IG5vIG5lZWQgdG8gaW50cm9kdWNlIGEg
+bmV3IGxhYmVsIGZvciB0aGlzLiBBbHRob3VnaCB5b3UgCj4gPiBjYW4ga2ZyZWUoKSBhIE5VTEwg
+cG9pbnRlciB0aGVyZSBpcyBubyBuZWVkIHRvIGRvIHNvIHdoZW4geW91IGtub3cgCj4gPiBhbHJl
+YWR5IGl0IGlzIE5VTEwuIEp1c3QgcmV0dXJuIC1FTk9NRU0gYW5kIGJlIGRvbmUgd2l0aCBpdC4K
+PiA+IAo+ID4gUmVnYXJkcywKPiA+IEFyZW5kCj4gPiAKPiA+ID4gICAJcG1rX29wLT52ZXJzaW9u
+ID0gY3B1X3RvX2xlMTYoQlJDTUZfUE1LU0FfVkVSXzMpOwo+ID4gPiAgIAo+ID4gPiAgIAlpZiAo
+IXBta3NhKSB7Cj4gPiA+IEBAIC00MzQwLDYgKzQzNDQsNyBAQCBicmNtZl9wbWtzYV92M19vcChz
+dHJ1Y3QgYnJjbWZfaWYgKmlmcCwgc3RydWN0IGNmZzgwMjExX3Bta3NhICpwbWtzYSwKPiA+ID4g
+ICAJcG1rX29wLT5sZW5ndGggPSBjcHVfdG9fbGUxNihsZW5ndGgpOwo+ID4gPiAgIAo+ID4gPiAg
+IAlyZXQgPSBicmNtZl9maWxfaW92YXJfZGF0YV9zZXQoaWZwLCAicG1raWRfaW5mbyIsIHBta19v
+cCwgc2l6ZW9mKCpwbWtfb3ApKTsKPiA+ID4gK291dDoKPiA+ID4gICAJa2ZyZWUocG1rX29wKTsK
+PiA+ID4gICAJcmV0dXJuIHJldDsKPiA+ID4gICB9CgpCZXN0IHJlZ2FyZHMsCkR1b21pbmcgWmhv
+dQo=
