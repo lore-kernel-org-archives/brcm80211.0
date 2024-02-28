@@ -1,57 +1,56 @@
-Received: from mail-io1-f53.google.com (mail-io1-f53.google.com [209.85.166.53])
+Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A36E5145B29
-	for <brcm80211@lists.linux.dev>; Wed, 28 Feb 2024 11:22:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB6661482FC
+	for <brcm80211@lists.linux.dev>; Wed, 28 Feb 2024 12:54:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709119355; cv=none; b=EkGh5va1iFU1hQnojg9qKM2pqknCXvVHpQIXvX2Pm+PMEphSRUWayaWrvY1mcIl2AQrd04yhJ5l4MpPT6TY8hFfNJgsL5E6evpqoqflF3y9+VxkK483AdywwrYOXZkeFNTRfZfaXlMjZ+auoDgKBzyfnlwlm01+5ctLCjmfKo+g=
+	t=1709124889; cv=none; b=YnYigxJ8rxQ4DJlUxFI4UMDFOe6jCl9HV/ZFsKA82dbT72TnAVRioM7CDkjtxOVB4jOcAGwnJMNgGH2IxZRGaVOuuaMwKHD5yLRnrJQXXTwXTHUfA633q5OG+9D6DT9/g1H9h2d+i1F8ahn+U5vAN8RsT4PbVVE9ISwpts+xI2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709119355; c=relaxed/simple;
-	bh=T1QZiSXqfIiRHpiy1CCInhxcHSQxd8paTHvCxfrrRTM=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=hgpuXZOSkGwPDtzdXv+MsjmKv5XIH/DM7GLHW9dnMI9drkVkxE2SFMCZpUFem8UPB8VWVwhZRPUkWSURBtGOLVwE0NTNfps+KG6u2hH8lveCGu8tOf6FnSMVbiu7gxFSVP22iyoMIPK+O1FxlpsQeGo7Te1ADCwyK0x6gORsNwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=URy8IH9a; arc=none smtp.client-ip=209.85.166.53
+	s=arc-20240116; t=1709124889; c=relaxed/simple;
+	bh=r26hiaCt0VaT8qQpWxs/DEiVL1IVTqvdT+a2iGz0GTs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=HpB1hYvvl06JqR6b5ZKS7oAlxyt2RVyWeaUE+0ihWTRAB+1HYkoKZ2YCFBbICqobtXmmeBFuu3n5/KVqP6bvZGdoBr71hFB5iJOzANIr4xVvjrvzLsKdUEDKBg7/bcpAfM9pmBN2TdzfF8n2u5EDfC8tpE8KpB/PyaRMsEq2sFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=SQqeOneH; arc=none smtp.client-ip=209.85.219.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="URy8IH9a"
-Received: by mail-io1-f53.google.com with SMTP id ca18e2360f4ac-7c7701f95b6so20639439f.1
-        for <brcm80211@lists.linux.dev>; Wed, 28 Feb 2024 03:22:33 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="SQqeOneH"
+Received: by mail-qv1-f41.google.com with SMTP id 6a1803df08f44-68f9e399c91so36177716d6.2
+        for <brcm80211@lists.linux.dev>; Wed, 28 Feb 2024 04:54:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1709119351; x=1709724151; darn=lists.linux.dev;
-        h=in-reply-to:autocrypt:references:cc:to:from:subject:user-agent
+        d=broadcom.com; s=google; t=1709124887; x=1709729687; darn=lists.linux.dev;
+        h=in-reply-to:autocrypt:from:references:cc:to:subject:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=by6R1yq0Gjf/ygtLBIBl7rCFc+qsJKDZNK6+iuP0kW0=;
-        b=URy8IH9aWsvwpHtTcszFCmwGTKat4UHqsptrcPuNdYKCYGoldHzcTrojbiXEz3FCF3
-         oDij2Y5RQFASz44rOpyzBsEor+41d1LzfS8o66yUarwOEEzCOIdBoB6lrStmAYqOz+gI
-         9nfeJtdIKqkX8RCWzSNeviP5G8Bv4xPTkiKsI=
+        bh=DqibiINDQIVVR/SuNDuitBt8Z6i8XLnMU3vBjTJSc3A=;
+        b=SQqeOneHcR/FaLSiYwk3N8Z+wBCZ4MSKCJL0vg93mdfFIadSekJIZFKzagAUoGeimx
+         ICcHqiNci79ODKb5e5IgLd2RoftL/d8t9iXqjmOartCytX/t6M4AF1+H3WIK17jQm/Iq
+         awcbpVtws7VUhxqcLbaTGSppROrge+xMvc8w8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709119351; x=1709724151;
-        h=in-reply-to:autocrypt:references:cc:to:from:subject:user-agent
+        d=1e100.net; s=20230601; t=1709124887; x=1709729687;
+        h=in-reply-to:autocrypt:from:references:cc:to:subject:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=by6R1yq0Gjf/ygtLBIBl7rCFc+qsJKDZNK6+iuP0kW0=;
-        b=jVxe4HUkPvMGM4nmwyWtfrFyhoL8noyyldMAkqRtrc4gVvOPIOI+zNPNDwTki9QTFK
-         FAWFzyWhGaFR9hA+NqQvWPf8KeBgVTxgYxgS2PIqr2oNCMIRWecJW4NyNehDSQpLshzi
-         /LtsD6XUE4OjFC/9vls7d6/akkxREHNSujp7hkv18cLEN1jmcdrjtCFVRicRMhi37fyh
-         4a/1oA9nhg1gWMt8pSv8lAW0vx80JVI9wgQTO1+KA6gDZP9aHfzEWdu6fRsAWYSEPRGH
-         15X495rzA6/x9qmaIIZBOs0bh2jVL8ZGeh4TqKQspvNOXaN4dKzMaeXAq/Sxr6CdNDKA
-         gQKw==
-X-Gm-Message-State: AOJu0YzMMwnHZkvYUdNuJB/KhlJYkwIqRelYeDZ6yJpv7u77RRCynryE
-	47sZbTiKSIlXjC6A6FSalFbQCF4N6EH/GI17qmrUsCUjXPD3kxwWtjaRh72vtUfcnLK9nWpkfq8
-	rUkfkCWmdt3FQCI0Quf43wkmJ6n2cd+ExLKVhw2MwNtdWTIMLU6iGuBAyfzeD4z4kiUKosmD1JQ
-	KMQTfqu9hiYhRUog9LX0xb1CuZGJ9QKwXHV+RLSqlWj7V8foc8dS0dsEH4
-X-Google-Smtp-Source: AGHT+IGl4uuMPkAmqoGOBcvW5AuknW6n/+aQY3MReu7fZws7hncLp3IrK0WMujc10e/WVvlIURF3iQ==
-X-Received: by 2002:a05:6e02:1d17:b0:365:6:b56b with SMTP id i23-20020a056e021d1700b003650006b56bmr2212195ila.8.1709119351107;
-        Wed, 28 Feb 2024 03:22:31 -0800 (PST)
+        bh=DqibiINDQIVVR/SuNDuitBt8Z6i8XLnMU3vBjTJSc3A=;
+        b=nPsjfXG2xhZhn5m9Ifn9be9R0BdGk48CTmoxX619AIqpU4TknoIV9N1cn4bkKlPHkV
+         L58UBcRsUln5wcdnA8N/ArlzFI1CAhAfcbz5YbAP5sjocY0ayd0RDjjAJKtiifGJ3K9+
+         rg6VRggDkEYjkElQIZ+4ayLP3dm0MAhBLV6IUo392lc26XmhJvpDtf2c3fLknOSRnDXm
+         4HwK9JdHgSWAHlZ8qbs8pcx04poHjNkUWS7VVqcEPZ+wwrej882F9pVlp6WnJ35atLlh
+         j4DfAcndiYQjz7MFCzIsfjVqSMEBGW/KU+XEFHNgsOChiOT2HcmxIWVKzYq0KC1VDT3Y
+         Nh2A==
+X-Forwarded-Encrypted: i=1; AJvYcCUylSq1Sg2FoX3P9s2H0YZNc4cyL2qOKCAh+24waulkyVlu8ZxnJcTQUpT6gsEcRDF6yQHFWrEh49c0PyuvavmjKyfwoX7kG99L
+X-Gm-Message-State: AOJu0YzizcR7/Z3EJH22XViJqY6U+DHuXwDTgmMBO9ktN5H7tAOEq8Gw
+	2p1yLMEsOwMbQCDLTl0JL2mw2OkoNeHPDDfj1IPeeg51fMdXkMUuzYV3uWZKiA==
+X-Google-Smtp-Source: AGHT+IEEkRjp/Tf8PyTixQfGeuF21+b/o7akS0WyB77yKWd2wJGvmL1PalrzZzmImr+Ib1HxPJvADg==
+X-Received: by 2002:a05:6214:5287:b0:68f:6e0a:d47d with SMTP id kj7-20020a056214528700b0068f6e0ad47dmr5581996qvb.49.1709124886786;
+        Wed, 28 Feb 2024 04:54:46 -0800 (PST)
 Received: from [10.176.68.61] ([192.19.148.250])
-        by smtp.gmail.com with ESMTPSA id u14-20020a056e02110e00b0036581060910sm2738221ilk.6.2024.02.28.03.22.28
+        by smtp.gmail.com with ESMTPSA id kv5-20020a056214534500b0068d191dfa9fsm5197366qvb.94.2024.02.28.04.54.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Feb 2024 03:22:30 -0800 (PST)
-Message-ID: <3adb7d3e-8558-4a17-9e49-9579a8700613@broadcom.com>
-Date: Wed, 28 Feb 2024 12:22:27 +0100
+        Wed, 28 Feb 2024 04:54:46 -0800 (PST)
+Message-ID: <bca41096-0011-4a19-8c31-3273749e92fe@broadcom.com>
+Date: Wed, 28 Feb 2024 13:54:43 +0100
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -59,15 +58,15 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: brcm80211 maintainer/tester
+Subject: Re: [PATCH v2] wifi: brcm80211: handle pmk_op allocation failure
+To: Duoming Zhou <duoming@zju.edu.cn>, linux-kernel@vger.kernel.org
+Cc: brcm80211-dev-list.pdl@broadcom.com, brcm80211@lists.linux.dev,
+ linux-wireless@vger.kernel.org, justinstitt@google.com,
+ jisoo.jang@yonsei.ac.kr, petr.tesarik.ext@huawei.com,
+ quic_alokad@quicinc.com, hdegoede@redhat.com, keescook@chromium.org,
+ johannes.berg@intel.com, kvalo@kernel.org
+References: <20240228063408.7006-1-duoming@zju.edu.cn>
 From: Arend van Spriel <arend.vanspriel@broadcom.com>
-To: brcm80211@lists.linux.dev
-Cc: linux-wireless <linux-wireless@vger.kernel.org>,
- Fernando Piacente <nandopiacente@gmail.com>, Paolo Perego <pperego@suse.de>,
- Sreekanth <chvsreekanth@gmail.com>, Izabela Bakollari <ibakolla@redhat.com>,
- Daniel Berlin <dberlin@dberlin.org>, Hector Martin <marcan@marcan.st>,
- Peter Robinson <pbrobinson@gmail.com>, ecurtin@redhat.com
-References: <6f4ff9a5-ac59-4fad-9875-8b340755e6ec@broadcom.com>
 Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
  xsFNBGP96SABEACfErEjSRi7TA1ttHYaUM3GuirbgqrNvQ41UJs1ag1T0TeyINqG+s6aFuO8
  evRHRnyAqTjMQoo4tkfy21XQX/OsBlgvMeNzfs6jnVwlCVrhqPkX5g5GaXJnO3c4AvXHyWik
@@ -111,36 +110,37 @@ Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
  NKowQLrlMBGXT4NnRNV0+yHmusXPOPIqQCKEtbWSx9s2slQxmXukPYvLnuRJqkPkvrTgjn5d
  eSE0Dkhni4292/Nn/TnZf5mxCNWH1p3dz/vrT6EIYk2GSJgCLoTkCcqaM6+5E4IwgYOq3UYu
  AAgeEbPV1QeTVAPrntrLb0t0U5vdwG7Xl40baV9OydTv7ghjYZU349w1d5mdxg==
-In-Reply-To: <6f4ff9a5-ac59-4fad-9875-8b340755e6ec@broadcom.com>
+In-Reply-To: <20240228063408.7006-1-duoming@zju.edu.cn>
 Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-	boundary="000000000000d3109d06126f5beb"
+	boundary="000000000000c58b3c061270a54b"
 
---000000000000d3109d06126f5beb
+--000000000000c58b3c061270a54b
 Content-Language: en-US
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 2/13/2024 9:14 PM, Arend van Spriel wrote:
-> Cc'ing a list of names collected from recent email exchanges. Eric 
-> Curtin listed most in his email [1]. On the brcm80211 wireless wiki [2] 
-> I have added a section "Get Involved" with a currently empty table. It 
-> would be great if we can fill it with co-maintainers and regression 
-> testers. You are welcome to update the table yourself or simply sent me 
-> an email with the role (co-maintainer/regression tester) and the devices 
-> you have available for testing patches.
+On 2/28/2024 7:34 AM, Duoming Zhou wrote:
+> The kzalloc() in brcmf_pmksa_v3_op() will return null if the
+> physical memory has run out. As a result, if we dereference
+> the null value, the null pointer dereference bug will happen.
+> 
+> Return -ENOMEM from brcmf_pmksa_v3_op() if kzalloc() fails
+> for pmk_op.
+> 
+> Fixes: a96202acaea4 ("wifi: brcmfmac: cfg80211: Add support for PMKID_V3 operations")
 
-I added myself to the table and found that Izabela was also listed. 
-Thanks for joining. Hopefully the table will grow so we have test 
-coverage for all vendors and/or devices for which the brcmfmac is used.
+Thanks!
 
-Regards,
-Arend
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+> Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+> ---
+> Changes in v2:
+>    - Drop the new label and just return -ENOMEM.
+> 
+>   drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 3 +++
+>   1 file changed, 3 insertions(+)
 
-> [1] 
-> https://lore.kernel.org/all/?q=CAOgh=Fy2CUxhU7=0JfY+y1Bc59Pz+mVMbEYvMJ0zL7Z=s4LSug@mail.gmail.com
-> [2] https://wireless.wiki.kernel.org/en/users/drivers/brcm80211
-
---000000000000d3109d06126f5beb
+--000000000000c58b3c061270a54b
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -211,14 +211,14 @@ BtkeSGJx/8dy0h8YmRn+adOrxKXHxhSL8BNn8wsmIZyYWe6fRcBtO3Ks2DOLyHCdkoFlN8x9VUQF
 N2ulEgqCbRKkx+qNirW86eF138lr1gRxzclu/38ko//MmkAYR/+hP3WnBll7zbpIt0jc9wyFkSqH
 p8a1MYICbTCCAmkCAQEwazBbMQswCQYDVQQGEwJCRTEZMBcGA1UEChMQR2xvYmFsU2lnbiBudi1z
 YTExMC8GA1UEAxMoR2xvYmFsU2lnbiBHQ0MgUjMgUGVyc29uYWxTaWduIDIgQ0EgMjAyMAIMTv1t
-bpIzNUky46LXMA0GCWCGSAFlAwQCAQUAoIHUMC8GCSqGSIb3DQEJBDEiBCB0JJ5YJ0xuFy8pnGCo
-KnAox+2nSKu693h5c6pRwmnIQDAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJ
-BTEPFw0yNDAyMjgxMTIyMzFaMGkGCSqGSIb3DQEJDzFcMFowCwYJYIZIAWUDBAEqMAsGCWCGSAFl
+bpIzNUky46LXMA0GCWCGSAFlAwQCAQUAoIHUMC8GCSqGSIb3DQEJBDEiBCABLi9H0eyyr3VgkFHM
+6yUdmm5s2zPdlqaG8JVww3FQ/zAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJ
+BTEPFw0yNDAyMjgxMjU0NDdaMGkGCSqGSIb3DQEJDzFcMFowCwYJYIZIAWUDBAEqMAsGCWCGSAFl
 AwQBFjALBglghkgBZQMEAQIwCgYIKoZIhvcNAwcwCwYJKoZIhvcNAQEKMAsGCSqGSIb3DQEBBzAL
-BglghkgBZQMEAgEwDQYJKoZIhvcNAQEBBQAEggEA4e/pC82SojgUJcVQuVUQFAYirEgxiqrwCL/M
-p8r8d6zv60QFWH5k5cpW9DecP3YBxRolkr03fccFl7dEZPydC9vsDq26Cj9qcGRGKbDqw2gZn0AQ
-PnbWT4rk3VJCZDHBM/zNjw2LYl4euTGRUW7WSYS9pXXn/ph89JGbJZmdpy+K/xsho7GczeS8rhna
-pgcrMc9yQeLq4zQ+N3dfsRnHFLWq2vBKI6oulGfhgpwyJhTE3YvMYToRS83qRDVS/R6CAH7Sat7N
-l4EnphvfYAbAHUKdVoppuv8LQMGUtkAhNVVfP+SNaOGr9OE/2OyIig13wTaOZ5d5WDPz4pXWufPn
-IA==
---000000000000d3109d06126f5beb--
+BglghkgBZQMEAgEwDQYJKoZIhvcNAQEBBQAEggEAfH+k1ktzy1070OarZ4D5Fn7KR6YQKlfRrUDD
+PfiCVNUmzYX9BHpC5l0dHDv6DQjn78Usu6/TzYVo2cd2aLI6XEoDMZu5sDdzHhRfAQfjXGsiVmNN
+UY9pWb+5Gq9z/wkgh6eqG+wIkho+gfVXiKaeZkivHk000c39qQ06MmsPlMSNc5K/ZJHg5SG4VkH3
+6/UeQ+aWUeNrJ86Dl+gh8VJvh9xtFvmtHt/i3iWfl7HaUujPqNcoQsQ4v8qbc/SG+KrPNy1VEVnr
+FT8Civ9UUhNti9TjqfGv67MwcRvn67oAQxcMOwb/6+zum1fgiCWUOTIrK7yQZNKyWZ9QqhrL7+Dk
+LA==
+--000000000000c58b3c061270a54b--
