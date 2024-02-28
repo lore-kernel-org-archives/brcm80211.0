@@ -1,86 +1,92 @@
-Received: from relay.hostedemail.com (smtprelay0015.hostedemail.com [216.40.44.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEA67376
-	for <brcm80211@lists.linux.dev>; Tue, 27 Feb 2024 19:58:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.15
+Received: from azure-sdnproxy.icoremail.net (azure-sdnproxy.icoremail.net [20.231.56.155])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3DDFC21370
+	for <brcm80211@lists.linux.dev>; Wed, 28 Feb 2024 06:34:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=20.231.56.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709063925; cv=none; b=ehL3CUSiJ1zStF1pTib8aX9rqUFrzQG6RGrDGR9yBMpHnnY6P4/tSSeSnmvF/klWJ93cykWJx0FBNWO4pMg187q2xxuQlgL3icjpGBEwFGQe5CPtPtBsov4wWQePQbnMp9OaOK758kVLIBIhi9hfijE3f6za0ca2IpbVn2nAVNg=
+	t=1709102085; cv=none; b=fX0cEfolWeA05/O2w1bz4jy0fvBM7Z4F6M61TJVqZsxZM4KGzKxy/quICIP7NmBF3zPF09teLQfb6GJVvIkpvYKeDWmdpIJzH+xHrDAMK7XGG5pzB+Awob0WU3F7McAZAJQOJDn1ElckZ4kBHcm1dgR+WDCX+3yObn1LpePXV7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709063925; c=relaxed/simple;
-	bh=P4sD4HUPQfVisayH8Xs+cN1CttbdVsl7C2KwjoNCd/c=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=fMj/XdaBQvOHKavhYsDbB2k0/pIj7BIOcoPTBLrLi+sWwN8Rm/Acos/BvAYMaPb6sarMlhcfR5KxYhE/4gnJqI910tIXae9f4C1OpKzmnNMjAVrNMy6jeC1YfpaKqL72XfQOzGyC6qO+3eZynkpbVUY0ovk9Bg+wpmZLc618Ads=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=perches.com; spf=pass smtp.mailfrom=perches.com; arc=none smtp.client-ip=216.40.44.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=perches.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=perches.com
-Received: from omf16.hostedemail.com (a10.router.float.18 [10.200.18.1])
-	by unirelay01.hostedemail.com (Postfix) with ESMTP id F25BB1C100D;
-	Tue, 27 Feb 2024 19:58:35 +0000 (UTC)
-Received: from [HIDDEN] (Authenticated sender: joe@perches.com) by omf16.hostedemail.com (Postfix) with ESMTPA id 7918F2000F;
-	Tue, 27 Feb 2024 19:58:31 +0000 (UTC)
-Message-ID: <421ad59de37ac6bb52c95dde2e3d4bb28590ecca.camel@perches.com>
-Subject: Re: [PATCH] wifi: brcm80211: handle pmk_op allocation failure
-From: Joe Perches <joe@perches.com>
-To: Arend van Spriel <arend.vanspriel@broadcom.com>, Duoming Zhou
-	 <duoming@zju.edu.cn>, linux-kernel@vger.kernel.org
-Cc: brcm80211-dev-list.pdl@broadcom.com, brcm80211@lists.linux.dev, 
- linux-wireless@vger.kernel.org, justinstitt@google.com, john@keeping.me.uk,
-  quic_alokad@quicinc.com, marcan@marcan.st, johannes.berg@intel.com, 
- linus.walleij@linaro.org, kvalo@kernel.org
-Date: Tue, 27 Feb 2024 11:58:30 -0800
-In-Reply-To: <d5ce0495-2f18-4176-90e5-7bba76132ea1@broadcom.com>
-References: <20240227080613.34001-1-duoming@zju.edu.cn>
-	 <87166784-79ab-4eb4-ad1e-af4bc31757b7@broadcom.com>
-	 <b0a352781f58a829deadffbe2ef2085c97c6ab32.camel@perches.com>
-	 <d5ce0495-2f18-4176-90e5-7bba76132ea1@broadcom.com>
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.48.4 (3.48.4-1.fc38) 
+	s=arc-20240116; t=1709102085; c=relaxed/simple;
+	bh=BtgjlI5R/JINMM0XHTf7xkkI6D/GSjgXYOSNCXC+TyU=;
+	h=From:To:Cc:Subject:Date:Message-Id; b=O7zpu1sHAYz452sCUVz1AJ7hpnbEPSKCdKlMVDmv9F5tCvKL0W6ueTdVnNEjb27gpFTXoyxAn3mQeTOW+lb69PdZyZqhcPbEe8i1jXqiSh/XGplZLMIzHcvmmFWb4E+AkoRueG64eMcao7pC0neIpVRouf22iAoPBmPEc8b2yjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=zju.edu.cn; spf=pass smtp.mailfrom=zju.edu.cn; arc=none smtp.client-ip=20.231.56.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=zju.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zju.edu.cn
+Received: from ubuntu.localdomain (unknown [218.12.17.192])
+	by mail-app4 (Coremail) with SMTP id cS_KCgAXD33h095lH7WxAQ--.53491S2;
+	Wed, 28 Feb 2024 14:34:23 +0800 (CST)
+From: Duoming Zhou <duoming@zju.edu.cn>
+To: linux-kernel@vger.kernel.org
+Cc: brcm80211-dev-list.pdl@broadcom.com,
+	brcm80211@lists.linux.dev,
+	linux-wireless@vger.kernel.org,
+	justinstitt@google.com,
+	jisoo.jang@yonsei.ac.kr,
+	petr.tesarik.ext@huawei.com,
+	quic_alokad@quicinc.com,
+	hdegoede@redhat.com,
+	keescook@chromium.org,
+	johannes.berg@intel.com,
+	kvalo@kernel.org,
+	arend.vanspriel@broadcom.com,
+	Duoming Zhou <duoming@zju.edu.cn>
+Subject: [PATCH v2] wifi: brcm80211: handle pmk_op allocation failure
+Date: Wed, 28 Feb 2024 14:34:08 +0800
+Message-Id: <20240228063408.7006-1-duoming@zju.edu.cn>
+X-Mailer: git-send-email 2.17.1
+X-CM-TRANSID:cS_KCgAXD33h095lH7WxAQ--.53491S2
+X-Coremail-Antispam: 1UD129KBjvdXoW7XFyDAF1UAr4kCw1xuFyrtFb_yoWkKFX_KF
+	40vwnrJr1rKryvgryDZwsrXrZYkF1vqrZ7GrnFvayfAayrJrWUKrs5ZF98Aw47WFZFgFn8
+	uw4UX34rG34YqjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+	9fnUUIcSsGvfJTRUUUb3xFF20E14v26r4j6ryUM7CY07I20VC2zVCF04k26cxKx2IYs7xG
+	6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
+	A2z4x0Y4vE2Ix0cI8IcVAFwI0_tr0E3s1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Cr1j
+	6rxdM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s
+	0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xII
+	jxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr
+	1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF7I0E8cxa
+	n2IY04v7MxkF7I0En4kS14v26r1q6r43MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4
+	AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE
+	17CEb7AF67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMI
+	IF0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4l
+	IxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvf
+	C2KfnxnUUI43ZEXa7VUbGQ6JUUUUU==
+X-CM-SenderInfo: qssqjiasttq6lmxovvfxof0/1tbiAwIFAWXeL1IIMwAGs+
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-X-Rspamd-Queue-Id: 7918F2000F
-X-Stat-Signature: 5ecpjek1crfwbbitof44ux9oq795j1oo
-X-Rspamd-Server: rspamout05
-X-Session-Marker: 6A6F6540706572636865732E636F6D
-X-Session-ID: U2FsdGVkX196uCPc1Mhr+W6xRTIiGgxS4/v22vRLx4Y=
-X-HE-Tag: 1709063911-815136
-X-HE-Meta: U2FsdGVkX1/eFvup7WVqYePDzElmDFKyTelnhnAvhZBAaG9nRU/946LUePwJqVPgeDaVi6NNnZR6oQ5clfR/7HRIIAmaPHKnpYGEEIGRjrY2lCmChwJGR31H8bfb2scA+M4gjeceuQGuY/5aJ9uylZKxYGL5j+aKZLSbbS3TF+s47nvl0d+diQafbBT9HSfzF/ZP+ZrBZvSqjXG6yPll4EYxlGDYjbJVJlPs26XPoitAuHsXlhwUfVh4XJ+M4NVI7xxvYaHi9+8DATgbWWEpgDt1zEpJunjTZ3QO/hYhjc1kVYX0BpvCZ9AuGGdPBCIGtBH6GYui4GbVkYfIjBK3Ud0zK5VmJiXC86GH85y2NT3aFEJ+zmRngH1mrQakLgJ9GFFEjdiIEAf+Dt6Nc+7YQG3vRcu0ZKtxeFUgaBxbkIi1YGl/ueclBzjntDxo38smjnqxAscgBXVOeoswPn0GSQ==
 
-On Tue, 2024-02-27 at 20:40 +0100, Arend van Spriel wrote:
-> On 2/27/2024 12:42 PM, Joe Perches wrote:
-> > On Tue, 2024-02-27 at 12:21 +0100, Arend van Spriel wrote:
-> > > On 2/27/2024 9:06 AM, Duoming Zhou wrote:
-> > > > The kzalloc() in brcmf_pmksa_v3_op() will return null if the
-> > > > physical memory has run out. As a result, if we dereference
-> > > > the null value, the null pointer dereference bug will happen.
-> > > >=20
-> > > > Return -ENOMEM from brcmf_pmksa_v3_op() if kzalloc() fails
-> > > > for pmk_op.
-> > >=20
-> > > NAK (see below)
-> > >=20
-> > > Also this issue was reported earlier by Joe Perches. Not sure if he
-> > > wants to be mentioned as such.
-> >=20
-> > I think it's unimportant to be mentioned.
-> >=20
-> > I think it's more important that the code be researched
-> > that the simple return of -ENOMEM the appropriate fix
-> > and is handled by all possible callers of the function.
->=20
-> Right. That is what I did after which I replied on Feb 18 to your email.
->=20
-> https://lore.kernel.org/all/3e1f11b3-a689-4c8e-bfda-b43649db7106@broadcom=
-.com/
->=20
+The kzalloc() in brcmf_pmksa_v3_op() will return null if the
+physical memory has run out. As a result, if we dereference
+the null value, the null pointer dereference bug will happen.
 
-Right, I did that as well, but I didn't look up
-the entire calling tree.
+Return -ENOMEM from brcmf_pmksa_v3_op() if kzalloc() fails
+for pmk_op.
 
-It likely works.  It's also likely better than
-the write through of the null pointer.
+Fixes: a96202acaea4 ("wifi: brcmfmac: cfg80211: Add support for PMKID_V3 operations")
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+---
+Changes in v2:
+  - Drop the new label and just return -ENOMEM.
+
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+index 28d6a30cc01..7af6d6448b9 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -4322,6 +4322,9 @@ brcmf_pmksa_v3_op(struct brcmf_if *ifp, struct cfg80211_pmksa *pmksa,
+ 	int ret;
+ 
+ 	pmk_op = kzalloc(sizeof(*pmk_op), GFP_KERNEL);
++	if (!pmk_op)
++		ret = -ENOMEM;
++
+ 	pmk_op->version = cpu_to_le16(BRCMF_PMKSA_VER_3);
+ 
+ 	if (!pmksa) {
+-- 
+2.17.1
+
