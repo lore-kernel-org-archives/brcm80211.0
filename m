@@ -1,90 +1,85 @@
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53C8D2572
-	for <brcm80211@lists.linux.dev>; Fri,  1 Mar 2024 00:40:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
+Received: from azure-sdnproxy.icoremail.net (azure-sdnproxy.icoremail.net [207.46.229.174])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9EE06EB53
+	for <brcm80211@lists.linux.dev>; Fri,  1 Mar 2024 13:52:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=207.46.229.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709253639; cv=none; b=WyqmlQlzxGsBZYerg4atN7TQRa4NJyZZnr+dvSuXPTwLSht2+zs22ZIk3xQyNeq98en8rz4wigIxUp1PruCvIwR39t6WAW7MDBG2QQPOV8W3v6oro5RpAkzyegDTgnRlkAHGRw5fspMs8LQPJcFHGjXebHcBiIue+AWUX3VIktk=
+	t=1709301126; cv=none; b=fi0WTtBXYBzyRAN7yLxJLdqqS9RxtL9h+r1hQ9v0HyzpuwbThxcPf3At97B/d+1Z3Wj+PF1WTDfsf3QE4X9W88O9VrkqFr2qJfCfv1pGau0rasQq4i9o1hK11Na0nmuNumJlUNmF6eMvdHPjpAeDcuFsHtwLpDV+DEFrrEZjg+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709253639; c=relaxed/simple;
-	bh=muLgGupmanQwoOkaJ46uTZdhMTCwpFMyxV8hvto3RLU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=L3BXjRj/ylZmZiOAT1St/Y1YoZBmedOqztIrRWCQc3F87RvUikzm9BVxAuLz2D/MuOpdBiKa/O+g3+tuNngPY1kQdChMx0KZX90zWIdmFjo+ER44AyK9zsPtitzNChgYw6iOOFIxJmSd6ZXdlA+NCNnKRlk3AAFwTkPXWuIRJhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=PrWG+eTg; arc=none smtp.client-ip=209.85.210.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="PrWG+eTg"
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-6e558a67f70so1558606b3a.0
-        for <brcm80211@lists.linux.dev>; Thu, 29 Feb 2024 16:40:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1709253637; x=1709858437; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=uLux+aUHo/V4i5EAKecz3RknuLa58zL1C1hJWsd2v88=;
-        b=PrWG+eTgy23KR2l+vtH0Bba1O1rr/XuxQ9SF/TdRazLkrikRaaN5yFR2CTyxQKRVrX
-         oUEVnyx4XKTxPXMOWV5JGX+RsvU2QzfAlRAUiApVQ9rF67+MigDlj68vv1TEXEm1ak+/
-         QNNdZb7LSWOc2zODvSQnjWEe2n8ouwxI4hGbQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709253637; x=1709858437;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uLux+aUHo/V4i5EAKecz3RknuLa58zL1C1hJWsd2v88=;
-        b=kyn5tz5ahRx1Y5k+gCX4P43/pdpXk8+JGRCqDzwG/Wo4HfmAhcaT7FxQBhP4OyFEtB
-         DQatRpLbbCFOsIYMWe1YXPemBhnhWBkLp2JrU6PSLZcCXaicKyjdrtqDggS/RzWozyxE
-         /PcM6y9iBu5oWoYzh4PNQbCgQj0AH4ST/METc7rxWw2h0uBwvpUALdU/CIbhrkWk4gIw
-         efMrmog1sYwlU/4qZkUpA5bgZMKj5aZgvrA/ZEIjwBanrMy5eQHFUmxRleOqpW4qjHg0
-         JIBhDOO9RGGZ5f5Jo+F/96gbSBuIelN/K0bF9T9pxdJ9J6eQDABtfzpe4H3m7PlqQ5Aq
-         ekzA==
-X-Forwarded-Encrypted: i=1; AJvYcCWbNLBY4Jey1QwsK6NOTcT3dOLCYoqTnNzb5bpkf94Wbr9YIQCULZLs4/ApTTYBRyO0k3WvxQHhVeYgMiGpoxBAfiV1w8UXi9M3
-X-Gm-Message-State: AOJu0YycWr8jOVvIT2qqV7GPzjXhszQoE2+gw2/zrH1NBmInjEuobVn+
-	81X0/ED04E8UNIlsklRUiYhd+sjX1cqeLw41E+3A6JLZe9VVbopoQhZiC9QfKA==
-X-Google-Smtp-Source: AGHT+IHFUeR1ugKofHFnvWfCfO87r1lfl6kXIYM4J/RlEeAi/4GNXDb6FENvl1zIyk1SVIFJGbZskA==
-X-Received: by 2002:a05:6a20:1582:b0:1a0:d57b:1c93 with SMTP id h2-20020a056a20158200b001a0d57b1c93mr50622pzj.33.1709253637593;
-        Thu, 29 Feb 2024 16:40:37 -0800 (PST)
-Received: from www.outflux.net ([198.0.35.241])
-        by smtp.gmail.com with ESMTPSA id w8-20020a17090ad60800b00296a23e407csm4249537pju.7.2024.02.29.16.40.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Feb 2024 16:40:37 -0800 (PST)
-Date: Thu, 29 Feb 2024 16:40:36 -0800
-From: Kees Cook <keescook@chromium.org>
-To: Duoming Zhou <duoming@zju.edu.cn>
-Cc: linux-kernel@vger.kernel.org, brcm80211-dev-list.pdl@broadcom.com,
-	brcm80211@lists.linux.dev, linux-wireless@vger.kernel.org,
-	justinstitt@google.com, quic_alokad@quicinc.com,
-	jisoo.jang@yonsei.ac.kr, petr.tesarik.ext@huawei.com,
-	hdegoede@redhat.com, johannes.berg@intel.com, kvalo@kernel.org,
-	arend.vanspriel@broadcom.com
-Subject: Re: [PATCH v3] wifi: brcm80211: handle pmk_op allocation failure
-Message-ID: <202402291640.9AAD719D3@keescook>
-References: <20240229103153.18533-1-duoming@zju.edu.cn>
+	s=arc-20240116; t=1709301126; c=relaxed/simple;
+	bh=Vvdvmn75+7dlWtviPz9CBYNJ1bczhRoIOAinCLpgtxk=;
+	h=From:To:Cc:Subject:Date:Message-Id; b=XtDz63BTP0AqSZJUlyzyJig5fhvPO/3DuvDKbYyjVVYyg/HeOFqYDeQuwMXTgmNkzcBYRlYiZH/zS71bnBbdXPpr4NFYIIQPyg2DS39IWBS4db673+An9aHPGlQTBR0JVON0MBlSygSZsg60lFlVpoPp8Ml81yEALquH2xWDj3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=zju.edu.cn; spf=pass smtp.mailfrom=zju.edu.cn; arc=none smtp.client-ip=207.46.229.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=zju.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zju.edu.cn
+Received: from ubuntu.localdomain (unknown [218.12.19.153])
+	by mail-app2 (Coremail) with SMTP id by_KCgBXmahn3eFl7391Ag--.39411S2;
+	Fri, 01 Mar 2024 21:51:45 +0800 (CST)
+From: Duoming Zhou <duoming@zju.edu.cn>
+To: linux-kernel@vger.kernel.org
+Cc: arend.vanspriel@broadcom.com,
+	kvalo@kernel.org,
+	konrad.dybcio@linaro.org,
+	hdegoede@redhat.com,
+	minipli@grsecurity.net,
+	linux-wireless@vger.kernel.org,
+	brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com,
+	Duoming Zhou <duoming@zju.edu.cn>
+Subject: [PATCH] wifi: brcmfmac: pcie: handle randbuf allocation failure
+Date: Fri,  1 Mar 2024 21:51:34 +0800
+Message-Id: <20240301135134.29577-1-duoming@zju.edu.cn>
+X-Mailer: git-send-email 2.17.1
+X-CM-TRANSID:by_KCgBXmahn3eFl7391Ag--.39411S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7XFW3ury5uw18Zw1fJFWDArb_yoW8JF18pa
+	yfJFyjkr1UWw4F9a98GFWxCryYv3ZIy3y2gr4xu3s3uryrAFyFkry0kFyI9r1UCr4Iya47
+	tFWUtrnxWFsxJ37anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUU9Y14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+	1l84ACjcxK6xIIjxv20xvE14v26w1j6s0DM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4U
+	JVWxJr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Gc
+	CE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E
+	2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJV
+	W8JwACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lFIxGxcIEc7CjxVA2
+	Y2ka0xkIwI1lc7CjxVAaw2AFwI0_Jw0_GFyl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x
+	0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2
+	zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF
+	4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWU
+	CwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCT
+	nIWIevJa73UjIFyTuYvjfUonmRUUUUU
+X-CM-SenderInfo: qssqjiasttq6lmxovvfxof0/1tbiAwUHAWXg0lMPlwA1sp
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240229103153.18533-1-duoming@zju.edu.cn>
 
-On Thu, Feb 29, 2024 at 06:31:53PM +0800, Duoming Zhou wrote:
-> The kzalloc() in brcmf_pmksa_v3_op() will return null if the
-> physical memory has run out. As a result, if we dereference
-> the null value, the null pointer dereference bug will happen.
-> 
-> Return -ENOMEM from brcmf_pmksa_v3_op() if kzalloc() fails
-> for pmk_op.
-> 
-> Fixes: a96202acaea4 ("wifi: brcmfmac: cfg80211: Add support for PMKID_V3 operations")
-> Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-> Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+The kzalloc() in brcmf_pcie_download_fw_nvram() will return
+null if the physical memory has run out. As a result, if we
+use get_random_bytes() to generate random bytes in the randbuf,
+the null pointer dereference bug will happen.
 
-Thanks for the respin! :)
+Return -ENOMEM from brcmf_pcie_download_fw_nvram() if kzalloc()
+fails for randbuf.
 
-Reviewed-by: Kees Cook <keescook@chromium.org>
+Fixes: 91918ce88d9f ("wifi: brcmfmac: pcie: Provide a buffer of random bytes to the device")
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+---
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+index d7fb88bb6ae..5ab9c902e49 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+@@ -1730,6 +1730,8 @@ static int brcmf_pcie_download_fw_nvram(struct brcmf_pciedev_info *devinfo,
+ 
+ 			address -= rand_len;
+ 			randbuf = kzalloc(rand_len, GFP_KERNEL);
++			if (!randbuf)
++				return -ENOMEM;
+ 			get_random_bytes(randbuf, rand_len);
+ 			memcpy_toio(devinfo->tcm + address, randbuf, rand_len);
+ 			kfree(randbuf);
 -- 
-Kees Cook
+2.17.1
+
