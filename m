@@ -1,121 +1,258 @@
-Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25CE9608F1
-	for <brcm80211@lists.linux.dev>; Wed,  6 Mar 2024 11:08:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.111.4.27
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 455FF13173B
+	for <brcm80211@lists.linux.dev>; Wed,  6 Mar 2024 12:53:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709723284; cv=none; b=XEZcOGS48izS/96Pa/zpRUkwI7zEUDUKMgtD+keJ/tyfuppYoDcGaYW0KiK3UDb2U+7Jq9dmHV4e2l76TrQE+JfWZ2bwOJY+0fArZTusKPsQsM5BMfxTHb530UmerwnVgXygaO8v7PoZTjeAqKW65UvZYydvOjjPapKAqLb5SQY=
+	t=1709729604; cv=none; b=UjAh1XR11EOkbTbAEIt111Lse5QwcD/8k49e2H/K+NXE/6Q8MeChE5JfDgXvWvWlBpfdB1svUMUOmOYy2c69ZHxcLc9rljVgENAd+jMwtcwTWIOk7kJztX6lSEhAuHb/1s2YbYaGQSJtT4KciEwu1lnePuAKgoqsOlJd4sREt2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709723284; c=relaxed/simple;
-	bh=OqMO2VZ9+NkraavKMpj7YCo7wGGKSX6RdZNwg85E+u0=;
-	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
-	 Subject:Content-Type; b=NyNAnzbIKzF1GSsODOujpQNyTTsKh7ZWnoPRN4H2SmAWcEWA0uu9v+CG0FK6Pru7MTxG6ya6fdIMJ8tKX9Kbu8ONxyidS4sKOdgI3bEHwPu6Yg4v0MM3Pl3KGXZI3aj3hlOeQMesMNr6u/hfbZGa7cTQUP6yKk8T2NTqxVtJSBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de; spf=pass smtp.mailfrom=arndb.de; dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b=zaRBYVkC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bBCOsQLP; arc=none smtp.client-ip=66.111.4.27
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
+	s=arc-20240116; t=1709729604; c=relaxed/simple;
+	bh=254vPKt2/HpgOd00wY67COgTVKxn0V020gy3DT8fvJc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=GW/P4fpkk7FROjYESHX/Ja4j1HdjVarP5THS0Cj2hHKRin4nOe326B6enU86L2Ff3t9RVoXJyheCzdeQyRnVyDdZnwskwomhdBScmD5QfBkNMnm8cUA9oUli3OAPk3pFakgSm16STEI0NJG7aAfi3CHuKE++3a39nl8JTWll4HI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=F7lpnSnN; arc=none smtp.client-ip=209.85.160.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b="zaRBYVkC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bBCOsQLP"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.nyi.internal (Postfix) with ESMTP id 0E68C5C0066;
-	Wed,  6 Mar 2024 06:08:02 -0500 (EST)
-Received: from imap51 ([10.202.2.101])
-  by compute5.internal (MEProxy); Wed, 06 Mar 2024 06:08:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1709723282; x=1709809682; bh=fUsUAJrOiD
-	qHwZ9WYNhbZNn8z+ZSepwpmCgyLjJuqOQ=; b=zaRBYVkCb+RwVGFLLyZu8DYOGJ
-	X4qGta3SKPTWLz6JRLLrZHJaJEN0z/XYF3S1/GTSzw/5XXPa/uJqhaN3SAfbH4mK
-	NzZIu6Bb0E+6p+dFvkI5+fCYJ8I4DtAV8E7Bw0baZbX74V09Uu5pyRNJk2UHtrZW
-	C+7+nLardTjCissS5DYOy7jcCbbkX0nn7l7Mr2Sa3a4up6OenqwyU2/XphcilYUY
-	NsBpdBEcS+pyMMIRssrHQ0U39iBD4W7/ek3mq6k2nyrGs1k9u5Opp/ILPIoc+q92
-	8Dga0BzqwqXOTOPTn9dE276l/zrO2bQMCO9v8G1DS+x/SJxv3JrnQF9We48w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1709723282; x=1709809682; bh=fUsUAJrOiDqHwZ9WYNhbZNn8z+ZS
-	epwpmCgyLjJuqOQ=; b=bBCOsQLPIf3w+a6UR5ZM0l+OjhoSM+8NKYUVrjH+oTcO
-	wZxLQU4fkzopoPPk8uNckoXUEmAeP5XoUDDcaqemSU25adTpNdVq3SYTa2PJvIXw
-	M8GCfDwUQhrer5chpUEcYzVvLxLlWfThgWGfIIHcj5C54w1KFqxow4lhKboZLKSh
-	2VKClzql0uFpvW30O1OVbRMqTN+mUunR7QhwT2lhACm2Mnk360OcY7kfMGm8ezKo
-	0uZtsAhXfEAOu3189ym3HbiEghG2DSDcdgKj9S2LA/tm9cmFhYdK4qFmQU5ZKumW
-	ca1QSRQAad14WUELVHAIuG0tfk1n0t/+ExNcMSreog==
-X-ME-Sender: <xms:kU7oZcw-tfOCkjiogNFdzwXY_MnI-1BuEaUEhKmBlG74efDScbbFuw>
-    <xme:kU7oZQQhna506tKK05OmEXQxRBS3Ulf4puq4zO3XPs0KCnzfOXR7aq3rOC19ZSfTk
-    FDwjQc_nejarWgyXAM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledriedugddvvdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdetrhhn
-    ugcuuegvrhhgmhgrnhhnfdcuoegrrhhnugesrghrnhgusgdruggvqeenucggtffrrghtth
-    gvrhhnpeffheeugeetiefhgeethfejgfdtuefggeejleehjeeutefhfeeggefhkedtkeet
-    ffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrrh
-    hnugesrghrnhgusgdruggv
-X-ME-Proxy: <xmx:kU7oZeX-oGMGuz6jZTS_r_NMpIjUX06xk4kRVLLPintXXwunQb_u6w>
-    <xmx:kU7oZaixjebDSSqiochYKLWJ48dblQY8k4WzvqrEtn9QtBEEaIfd6g>
-    <xmx:kU7oZeBYFStfr4IpRofLNolW1KgDEDYHf78AoV6tcnemr3Uxg5P8ig>
-    <xmx:kk7oZa1qUSVNXlLRMZbPrW5a2C1cGadbLruumz0CvpdWIPt8GUyXpA>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id 7032AB60093; Wed,  6 Mar 2024 06:08:01 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-208-g3f1d79aedb-fm-20240301.002-g3f1d79ae
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="F7lpnSnN"
+Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-42e7ed64b5fso24014841cf.1
+        for <brcm80211@lists.linux.dev>; Wed, 06 Mar 2024 04:53:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google; t=1709729602; x=1710334402; darn=lists.linux.dev;
+        h=in-reply-to:autocrypt:from:references:cc:to:subject:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=05vEVEtQVZ8c7BLc0sjpl/GkkhUEl6//UPe8bEW0HUE=;
+        b=F7lpnSnNhr1ctEUgXvhg8wNWeyvljYkey2YjsBEQGJN0RVl6NBGI5Y+NrTWRSNMAug
+         nuEhubzyCHeivexcg+LPCl1mH0PP6k2MulxUeD/49HLngC7Nw3/cQt6lrYIF9uqcDxkc
+         jzuZmEbQ55q5+/XxZGM2xt3B3qVXPIYuZ/Qgw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709729602; x=1710334402;
+        h=in-reply-to:autocrypt:from:references:cc:to:subject:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=05vEVEtQVZ8c7BLc0sjpl/GkkhUEl6//UPe8bEW0HUE=;
+        b=vcPhF6SAJKKO4Ew5NUnEPIgqWJlGNX87CrpwFbxo0LtNbCBjpRASWMXkH0jVdRnxrc
+         LD1AoEv+S1oOjCZSMg/GkLiQMBf+zJgf0rKPLl1sTBoRJYxqu9nd29JNoupimPJZbiXL
+         jHHk+Ysdh2RzsDQB+WvE4ZRx6Ip/xNVJs/Rxk6rcgr+TGN/QpI96N3mF1dm7oro/WPyG
+         UFW2LqTWOmmELVUtYeGm87VFwl9w8N7OfeHALfELNPO3wGBE+e7VFEOTwANjiUagn90v
+         SNkuKLaq2W+J2hUYbHa41LBDaUFoU28P58C/c71jUXah2hEwBQGWlFgsbmrn0B380Z4C
+         2V3A==
+X-Forwarded-Encrypted: i=1; AJvYcCU86aSh8jxg+S13CMTxbRaOWn+8KifNyG5DFzYCFE+Z2SD9rephvraOVqB2bbFJ90gC/d8Xs360VXWfOKYZXOo+Fb9WoMKa0/d9
+X-Gm-Message-State: AOJu0YxwdZIG6LlQZ36XfvFwCs+JjwHVwdNAjdQREQm8i1xUR84zRtjt
+	JeU+cGAxW4L4GeSYClY5PjHBSRP64IsqEn4owP/66BGYA48SkUXxISlOX6qlDA==
+X-Google-Smtp-Source: AGHT+IHHs7KNW0R4O+ivvfcIe4jReNTOwu7CO+VZqaMOxuZZ2z3SP2EilaheJyO970wVGr7l66+QFg==
+X-Received: by 2002:ac8:5993:0:b0:42e:f85d:4f41 with SMTP id e19-20020ac85993000000b0042ef85d4f41mr5421324qte.56.1709729602224;
+        Wed, 06 Mar 2024 04:53:22 -0800 (PST)
+Received: from [10.176.68.61] ([192.19.148.250])
+        by smtp.gmail.com with ESMTPSA id n9-20020ac85a09000000b0042efa065946sm2172607qta.6.2024.03.06.04.53.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 06 Mar 2024 04:53:21 -0800 (PST)
+Message-ID: <29de0b03-f65b-4918-ab5b-28dfd1c16a5d@broadcom.com>
+Date: Wed, 6 Mar 2024 13:53:19 +0100
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-Id: <3d433b58-384f-452e-904d-62e23b3b5a0b@app.fastmail.com>
-In-Reply-To: <87h6hjhbqy.fsf@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] wifi: brcmfmac: pcie: handle randbuf allocation failure
+To: Arnd Bergmann <arnd@arndb.de>, Kalle Valo <kvalo@kernel.org>
+Cc: Duoming Zhou <duoming@zju.edu.cn>, linux-kernel@vger.kernel.org,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Hans de Goede
+ <hdegoede@redhat.com>, minipli@grsecurity.net,
+ linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
+ brcm80211-dev-list.pdl@broadcom.com
 References: <20240301135134.29577-1-duoming@zju.edu.cn>
  <fdaefac9-1d02-4424-b893-4306b97028ca@broadcom.com>
  <87h6hjhbqy.fsf@kernel.org>
-Date: Wed, 06 Mar 2024 12:07:41 +0100
-From: "Arnd Bergmann" <arnd@arndb.de>
-To: "Kalle Valo" <kvalo@kernel.org>,
- "Arend van Spriel" <arend.vanspriel@broadcom.com>
-Cc: "Duoming Zhou" <duoming@zju.edu.cn>, linux-kernel@vger.kernel.org,
- "Konrad Dybcio" <konrad.dybcio@linaro.org>,
- "Hans de Goede" <hdegoede@redhat.com>, minipli@grsecurity.net,
- linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
- brcm80211-dev-list.pdl@broadcom.com
-Subject: Re: [PATCH] wifi: brcmfmac: pcie: handle randbuf allocation failure
-Content-Type: text/plain
+ <3d433b58-384f-452e-904d-62e23b3b5a0b@app.fastmail.com>
+From: Arend van Spriel <arend.vanspriel@broadcom.com>
+Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
+ 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
+In-Reply-To: <3d433b58-384f-452e-904d-62e23b3b5a0b@app.fastmail.com>
+Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
+	boundary="0000000000009f603f0612fd716c"
 
-On Wed, Mar 6, 2024, at 11:53, Kalle Valo wrote:
-> Arend van Spriel <arend.vanspriel@broadcom.com> writes:
->
->> On 3/1/2024 2:51 PM, Duoming Zhou wrote:
->>> The kzalloc() in brcmf_pcie_download_fw_nvram() will return
->>> null if the physical memory has run out. As a result, if we
->>> use get_random_bytes() to generate random bytes in the randbuf,
->>> the null pointer dereference bug will happen.
->>> Return -ENOMEM from brcmf_pcie_download_fw_nvram() if kzalloc()
->>> fails for randbuf.
->>> Fixes: 91918ce88d9f ("wifi: brcmfmac: pcie: Provide a buffer of
->>> random bytes to the device")
+--0000000000009f603f0612fd716c
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+
+On 3/6/2024 12:07 PM, Arnd Bergmann wrote:
+> On Wed, Mar 6, 2024, at 11:53, Kalle Valo wrote:
+>> Arend van Spriel <arend.vanspriel@broadcom.com> writes:
 >>
->> Looks good to me. Looking for kernel guideline about stack usage to
->> determine whether it would be ok to just use buffer on stack. Does
->> anyone know. This one is 256 bytes so I guess the allocation is
->> warranted here.
->
-> Arnd, what do you suggest? Do we have any documentation or guidelines
-> anywhere?
+>>> On 3/1/2024 2:51 PM, Duoming Zhou wrote:
+>>>> The kzalloc() in brcmf_pcie_download_fw_nvram() will return
+>>>> null if the physical memory has run out. As a result, if we
+>>>> use get_random_bytes() to generate random bytes in the randbuf,
+>>>> the null pointer dereference bug will happen.
+>>>> Return -ENOMEM from brcmf_pcie_download_fw_nvram() if kzalloc()
+>>>> fails for randbuf.
+>>>> Fixes: 91918ce88d9f ("wifi: brcmfmac: pcie: Provide a buffer of
+>>>> random bytes to the device")
+>>>
+>>> Looks good to me. Looking for kernel guideline about stack usage to
+>>> determine whether it would be ok to just use buffer on stack. Does
+>>> anyone know. This one is 256 bytes so I guess the allocation is
+>>> warranted here.
+>>
+>> Arnd, what do you suggest? Do we have any documentation or guidelines
+>> anywhere?
+> 
+> I don't think we have anything document about this. I usually
+> consider anything more than half a kilobyte as excessive,
+> even though the warning limit is higher.
+> 
+> 256 bytes is usually fine, but in this case I would split out
+> the basic block that does this into a separate function
+> so it does not share the stack frame with other leaf functions
+> below brcmf_pcie_download_fw_nvram(). It might also be justified
+> to then mark it as noinline_for_stack.
 
-I don't think we have anything document about this. I usually
-consider anything more than half a kilobyte as excessive,
-even though the warning limit is higher.
+Thanks, Arnd
 
-256 bytes is usually fine, but in this case I would split out
-the basic block that does this into a separate function
-so it does not share the stack frame with other leaf functions
-below brcmf_pcie_download_fw_nvram(). It might also be justified
-to then mark it as noinline_for_stack.
+Makes sense.
 
-      Arnd
+@Duoming Zhou,
+
+Can you provide a v2 with separate function using buffer on stack?
+
+static noinline_for_stack
+void brcmf_pcie_provide_random_bytes(struct brcmf_pciedev_info *devinfo, 
+u32 address)
+{
+	u8 randbuf[BRCMF_RANDOM_SEED_LENGTH];
+	:
+	:
+}
+
+Regards,
+Arend
+
+--0000000000009f603f0612fd716c
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Description: S/MIME Cryptographic Signature
+
+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
+2Gzj3QNJRLsZu1TLyOyBBIr/BE7UiY3RabgRzknBGAPmzhS+fmyM8OtM5BYBsFBrSUFtZZO2p/tf
+Nbc24J2zf2peoZ8MK+7WQqummYlOnz+FyDkA9EybeNMcS5C+xi/PAgMBAAGjggHdMIIB2TAOBgNV
+HQ8BAf8EBAMCBaAwgaMGCCsGAQUFBwEBBIGWMIGTME4GCCsGAQUFBzAChkJodHRwOi8vc2VjdXJl
+Lmdsb2JhbHNpZ24uY29tL2NhY2VydC9nc2djY3IzcGVyc29uYWxzaWduMmNhMjAyMC5jcnQwQQYI
+KwYBBQUHMAGGNWh0dHA6Ly9vY3NwLmdsb2JhbHNpZ24uY29tL2dzZ2NjcjNwZXJzb25hbHNpZ24y
+Y2EyMDIwME0GA1UdIARGMEQwQgYKKwYBBAGgMgEoCjA0MDIGCCsGAQUFBwIBFiZodHRwczovL3d3
+dy5nbG9iYWxzaWduLmNvbS9yZXBvc2l0b3J5LzAJBgNVHRMEAjAAMEkGA1UdHwRCMEAwPqA8oDqG
+OGh0dHA6Ly9jcmwuZ2xvYmFsc2lnbi5jb20vZ3NnY2NyM3BlcnNvbmFsc2lnbjJjYTIwMjAuY3Js
+MCcGA1UdEQQgMB6BHGFyZW5kLnZhbnNwcmllbEBicm9hZGNvbS5jb20wEwYDVR0lBAwwCgYIKwYB
+BQUHAwQwHwYDVR0jBBgwFoAUljPR5lgXWzR1ioFWZNW+SN6hj88wHQYDVR0OBBYEFIikAXd8CEtv
+ZbDflDRnf3tuStPuMA0GCSqGSIb3DQEBCwUAA4IBAQCdS5XCYx6k2GGZui9DlFsFm75khkqAU7rT
+zBX04sJU1+B1wtgmWTVIzW7ugdtDZ4gzaV0S9xRhpDErjJaltxPbCylb1DEsLj+AIvBR34caW6ZG
+sQk444t0HPb29HnWYj+OllIGMbdJWr0/P95ZrKk2bP24ub3ZP/8SyzrohfIba9WZKMq6g2nTLZE3
+BtkeSGJx/8dy0h8YmRn+adOrxKXHxhSL8BNn8wsmIZyYWe6fRcBtO3Ks2DOLyHCdkoFlN8x9VUQF
+N2ulEgqCbRKkx+qNirW86eF138lr1gRxzclu/38ko//MmkAYR/+hP3WnBll7zbpIt0jc9wyFkSqH
+p8a1MYICbTCCAmkCAQEwazBbMQswCQYDVQQGEwJCRTEZMBcGA1UEChMQR2xvYmFsU2lnbiBudi1z
+YTExMC8GA1UEAxMoR2xvYmFsU2lnbiBHQ0MgUjMgUGVyc29uYWxTaWduIDIgQ0EgMjAyMAIMTv1t
+bpIzNUky46LXMA0GCWCGSAFlAwQCAQUAoIHUMC8GCSqGSIb3DQEJBDEiBCBcHj7ZvaXFtiaZbdOC
+oy78p528VoWHs1DYoddJyNhXHDAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJ
+BTEPFw0yNDAzMDYxMjUzMjJaMGkGCSqGSIb3DQEJDzFcMFowCwYJYIZIAWUDBAEqMAsGCWCGSAFl
+AwQBFjALBglghkgBZQMEAQIwCgYIKoZIhvcNAwcwCwYJKoZIhvcNAQEKMAsGCSqGSIb3DQEBBzAL
+BglghkgBZQMEAgEwDQYJKoZIhvcNAQEBBQAEggEAJ6IWC3REC9BVCMnsYnlUkFfMJspiO/Ijt5fv
+JFlinvftLQyRtjguWV7fW3ohRiAmu/LKwMc2wBRlh5NdO8L0zV1E79pOT/XeyDUotyeY0EsuoAEf
+cFwmCGS0b1DYEkKOt7lx7hJcgzxbzi8aHixkUI2ReDOyRrZgn6/2SPpRuEoAvJNaQQymXh2RdSpA
+lYTc/OnXx3N9qkDRgBBteMf06/KM+1rgdeq1i1e0xoTTlaO91w4k92yTQiGIAQZ0MYe0YhRrM307
+Qr81ZztL/DuToj4j0w0+D9cCXS9iJVj91bpE1qHdEjfFHrXnHQ/2/gfDvhO1BmSsmDlSxfp5ll0O
+WQ==
+--0000000000009f603f0612fd716c--
