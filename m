@@ -1,135 +1,79 @@
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDE6D79B9D
-	for <brcm80211@lists.linux.dev>; Tue,  2 Apr 2024 10:57:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E024A146D65;
+	Wed,  3 Apr 2024 13:53:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712055468; cv=none; b=pmZ9HEb8bqxSPfazM2nkKwUV2m8TqbDJBoWwjNGElMen9UUB/Wyg0yq/jo4tdOtqRRjZx9MPZP3Gvh7IEkA5/umI+t55HObKvnjzbi69p4T2N5Ji5TD21Y20hpYlr97JRg5QvN+0TSd78EDQkh5ETBvzunXgnVQSmK9/8Oxg+ao=
+	t=1712152426; cv=none; b=lTs7uHKoo1pmC729uG5w8JTwv+KSNcZw4s1gpCQ3nE4uUF9T2cBnQoeetUWtSIa4uT2DLzJfksSEPEvogcHScZZyU/aOBADNNpZicPxWsBjyuUjRhChDHXeIrt3fPS5S8fvoFaLwbuw6XHWaARg2m4teOAkIeRGu8nuc9rYyoNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712055468; c=relaxed/simple;
-	bh=Hr7Xp50rW+8exIfPBdNB+2gt14zjJGKAfeBvyG31h3c=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZNyKZfuuwN7SLLesEGSy2idfTKCrnjBw3JeQS1KBkXUTfJcrgDOq5vCCmz/UHK4fc7sRrGgnw+Lnv5CB/RiLede4QAA/0snM0FTqqPycn21eX+ABLfL0AyuNZNBZnTU7ZGgC2Y6a14IfBtn0YG0ep9L9qQwfT5OTawhMBD2Lqxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CCT8nq2F; arc=none smtp.client-ip=209.85.128.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1712152426; c=relaxed/simple;
+	bh=m0lorB2MbPpc2sRbPkYyOS6AnvFCBRgPrepaAMOzzv0=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=oYzWv8jVZtcGrsk49SimKRqwzOBoOun6TKmnduua/18m02j6YF0vaZ6+FI23KJbUUmkw2i5kAvxfx9sVk05Ha7HUFqEWTA0JaTjVRo7Zf5b8desBoDvl13dej31VIQOVuBcG2EEh9AgeTv2swbuCksywFGKmTdX1An0hyF34oW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YOic17JM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CCT8nq2F"
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-6153e169066so1170837b3.3
-        for <brcm80211@lists.linux.dev>; Tue, 02 Apr 2024 03:57:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712055466; x=1712660266; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=heR2AZ16RGjephYYk3nVkJQSU4kssIE/CVztHg4PbLw=;
-        b=CCT8nq2FnQMkgN0u2G98F75R+wTyprbWoKaTgz6PtlydPW2e+DVSPC0xPkHEVlO3hx
-         q2PpKzzB7uxjRN+dVW+Qfykkw1z8HU0sG8/XUOm5c9HgcxK/Qbz6AW5DekqAH9NLh8/d
-         Se0/okXhMjdeH8my3z8QwvHvZs9o+xycVUJlHnX7u6zMVQjunAxypZpfs0Tur1zxAxkc
-         G0zuNIx2lRyjdTQM2k0gFrw0z2RTXg9EQaHfkExjFdOuAbPbkJV0hexMoiJtV6PBszXp
-         MDouXM3VGjscZiimff+BBhKAaSj4H8w/kR1/4ibHAAE0a0UK9I1Rnmnai0yD1eooyyg4
-         I6vQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712055466; x=1712660266;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=heR2AZ16RGjephYYk3nVkJQSU4kssIE/CVztHg4PbLw=;
-        b=fLpu7SAqO6veEB3VTpwbr76DKMMi5ro3UrBFQySZQcKzIKjtl9GFcwkhfnaMrgotgg
-         Vdrak1WEzdw6a4h99gtUUUGo7xVG/e2QCPWWCf82CX9MS2dB64F5/QBwar9y/HsCqq0B
-         +A/lhYvAdlMFO4OPXSh39BznWn6E3Xl/lYzYerFqYI+j9s/P1Pyuaj2zsPcTdlZOrq6s
-         ykzc922TqZH/+Q2jM/Xmm47LvEJmwEp7leGscbVAJL9/5YsGXkcU3AqQbf+0B3JuzUh2
-         XCV6B56IfpzAFxXbTBmvztve14Csv5jWIYehYcbjJrAstoosWhp+yENh8/cEIEENQzZ+
-         z/gA==
-X-Forwarded-Encrypted: i=1; AJvYcCUbQLag5+FNuGNslEnCXpntvYsf2t/LN4/hSiruCMGPOXYgeS3hjpTDzOIz7o4FvyGDglXEcMIvMBdw3pIyUepf1rVC084S98nd
-X-Gm-Message-State: AOJu0Yyk/UVFLGmw7ZYN8YKEpDXRpIqbdoJjvh1YuW4SOwqGG99UlLE6
-	nr4ncfOhg/tQPY/JurMXrQkwpsXHf00nAcHAe3ZFRcl1J/AhZb5fpd311hSE8N+heCBhWtrIzSA
-	+aQzgNpAvZnEzFENZKn62OxJfAqbl7LqG+RZC0g==
-X-Google-Smtp-Source: AGHT+IG0hl043sikYSStWfJMtXPIZPLFFTefeWAq9LsJotUVsTuh5FFEl/udwTnzeyfi+7Th8cC2dNNikPb4b1WN2ok=
-X-Received: by 2002:a81:5d45:0:b0:608:e133:7ece with SMTP id
- r66-20020a815d45000000b00608e1337ecemr11694233ywb.36.1712055465511; Tue, 02
- Apr 2024 03:57:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YOic17JM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77C15C433F1;
+	Wed,  3 Apr 2024 13:53:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712152425;
+	bh=m0lorB2MbPpc2sRbPkYyOS6AnvFCBRgPrepaAMOzzv0=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+	b=YOic17JM08kzLf6HccVjw0tiON+A4lbyi59R2hAAwcWksGE4hL4QskZ99Ec4ieQLy
+	 mQ+6OAGCtxnVIXaOBXRMjXkrFLFoJoy0BrmmDWc41/Z2tLnKK0nUKvRqUvLacufSmW
+	 vXgnmo1FsVfofAq7Zfl5lRm0yxpoPs2kb/WGpMI8VUTznZsVpIX48OOtr3aWlW1t9j
+	 3qIQUzwDyJUFRzhLJuBniJFjnSxtMGNxasSB5803FWt+k1J/4tGFtaXTdNpHZl9dKB
+	 wjN2QHlTeDnJVocdcLi2LXzgfrx2ePZRajTehI4211rdxcvbC3pfc6FraLlELkOA3g
+	 11XkAwGd8DwYg==
+From: Kalle Valo <kvalo@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Ulf Hansson <ulf.hansson@linaro.org>,  Marcel Holtmann
+ <marcel@holtmann.org>,  Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+  Matthias Brugger <matthias.bgg@gmail.com>,  AngeloGioacchino Del Regno
+ <angelogioacchino.delregno@collabora.com>,  Jeff Johnson
+ <jjohnson@kernel.org>,  Arend van Spriel <arend.vanspriel@broadcom.com>,
+  Brian Norris <briannorris@chromium.org>,  =?utf-8?B?SsOpcsO0bWU=?=
+ Pouiller
+ <jerome.pouiller@silabs.com>,  linux-mmc@vger.kernel.org,
+  linux-kernel@vger.kernel.org,  linux-bluetooth@vger.kernel.org,
+  linux-arm-kernel@lists.infradead.org,
+  linux-mediatek@lists.infradead.org,  linux-wireless@vger.kernel.org,
+  ath10k@lists.infradead.org,  brcm80211@lists.linux.dev,
+  brcm80211-dev-list.pdl@broadcom.com
+Subject: Re: [PATCH 6/7] wifi: marvell: mwifiex: drop driver owner
+ initialization
+References: <20240329-module-owner-sdio-v1-0-e4010b11ccaa@linaro.org>
+	<20240329-module-owner-sdio-v1-6-e4010b11ccaa@linaro.org>
+Date: Wed, 03 Apr 2024 16:53:39 +0300
+In-Reply-To: <20240329-module-owner-sdio-v1-6-e4010b11ccaa@linaro.org>
+	(Krzysztof Kozlowski's message of "Fri, 29 Mar 2024 18:24:36 +0100")
+Message-ID: <87frw25z8c.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240329-module-owner-sdio-v1-0-e4010b11ccaa@linaro.org>
-In-Reply-To: <20240329-module-owner-sdio-v1-0-e4010b11ccaa@linaro.org>
-From: Ulf Hansson <ulf.hansson@linaro.org>
-Date: Tue, 2 Apr 2024 12:57:09 +0200
-Message-ID: <CAPDyKFqct4ZV3UbTzWKO08MzDTm_BX6K02kefV26mEain0SXqA@mail.gmail.com>
-Subject: Re: [PATCH 0/7] mmc/wifi/bluetooth: store owner from modules with sdio_register_driver()
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
-	Matthias Brugger <matthias.bgg@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Kalle Valo <kvalo@kernel.org>, 
-	Jeff Johnson <jjohnson@kernel.org>, Arend van Spriel <arend.vanspriel@broadcom.com>, 
-	Brian Norris <briannorris@chromium.org>, =?UTF-8?B?SsOpcsO0bWUgUG91aWxsZXI=?= <jerome.pouiller@silabs.com>, 
-	linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-bluetooth@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-mediatek@lists.infradead.org, linux-wireless@vger.kernel.org, 
-	ath10k@lists.infradead.org, brcm80211@lists.linux.dev, 
-	brcm80211-dev-list.pdl@broadcom.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-On Fri, 29 Mar 2024 at 18:24, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> Merging
-> =======
-> All further patches depend on the first patch.  Everything could go via
-> one tree, e.g. MMC, or the cleanup patches removing owner would wait a
-> cycle.
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> writes:
 
-Patch 1 applied for next, thanks!
+> Core in sdio_register_driver() already sets the .owner, so driver does
+> not need to.
+>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-I can certainly pick the remaining in the series through my mmc tree,
-but waiting a bit to queue them up to allow some more acks to be
-received.
+The preferred title format is:
 
-Kind regards
-Uffe
+wifi: mwifiex: drop driver owner initialization
 
+But that's just cosmetics. Feel free to take this via sdio tree:
 
->
-> Description
-> ===========
-> Modules registering driver with sdio_register_driver() might
-> forget to set .owner field.
->
-> Solve the problem by moving this task away from the drivers to the core
-> code, just like we did for platform_driver in commit 9447057eaff8
-> ("platform_device: use a macro instead of platform_driver_register").
->
-> Best regards,
-> Krzysztof
->
-> ---
-> Krzysztof Kozlowski (7):
->       mmc: sdio: store owner from modules with sdio_register_driver()
->       bluetooth: btmrvl_sdio: drop driver owner initialization
->       bluetooth: btmtksdio: drop driver owner initialization
->       wifi: ath10k: sdio: drop driver owner initialization
->       wifi: brcm80211: drop driver owner initialization
->       wifi: marvell: mwifiex: drop driver owner initialization
->       wifi: silabs: wfx: drop driver owner initialization
->
->  drivers/bluetooth/btmrvl_sdio.c                           | 1 -
->  drivers/bluetooth/btmtksdio.c                             | 1 -
->  drivers/mmc/core/sdio_bus.c                               | 9 ++++++---
->  drivers/net/wireless/ath/ath10k/sdio.c                    | 1 -
->  drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c | 1 -
->  drivers/net/wireless/marvell/mwifiex/sdio.c               | 1 -
->  drivers/net/wireless/silabs/wfx/bus_sdio.c                | 1 -
->  include/linux/mmc/sdio_func.h                             | 5 ++++-
->  8 files changed, 10 insertions(+), 10 deletions(-)
-> ---
-> base-commit: 087c142b2b04898c897aa77938d05a93907150e5
-> change-id: 20240329-module-owner-sdio-abd5de3f1d74
->
-> Best regards,
-> --
-> Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->
+Acked-by: Kalle Valo <kvalo@kernel.org>
+
+-- 
+https://patchwork.kernel.org/project/linux-wireless/list/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
