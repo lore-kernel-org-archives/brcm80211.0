@@ -1,100 +1,107 @@
-Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83D0A74E11
-	for <brcm80211@lists.linux.dev>; Thu,  4 Apr 2024 09:31:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F21581DA5E
+	for <brcm80211@lists.linux.dev>; Mon,  8 Apr 2024 23:17:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712223094; cv=none; b=rWW3GEJMc/1f5HmFuu3ElvBtpRexlLOwz0lI10xSLxS+Z9H4A4Ao4i81drm0COECjmbaYUlngsInTBEZ37y4SnUyB96YhJDC1KOAPupjX/MeL7dJWBaorstNB78BpCY7JZfZsXdKvHh8ygw9hWaKhVqnUeiHpakebE9HLVs5n5o=
+	t=1712618260; cv=none; b=hvt4DRd24MdQS+NkgsEs3KaDUJT8U1qfBk5CquiCB6rcbl9qE29rzttdTJCWyuvstVPTp16tPC4mGgaRlgLuDEMAuEoF9IXSbGGYq6luv3iLnrnpO6RX+LSVK8ZUVVyW6/pS4EjlCYbNgXdCPf7EQ63zmGkUs63+DuGQHdspiPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712223094; c=relaxed/simple;
-	bh=eal+hbwuJR0GkxwgPiJg2NCYAvGM7tKiSJzcHq0j6dA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GGDu39kOOYYBTrgxVuEEeYsSH9NqfXMNATNNl/MffW/sO7CBxulMij+aD6K64wo2qV6NL802O00WeB8dPfbXtmV4kc1xHSOSq9gjJ/rGarkeG1cg6OjQcE2qn0QMciCWyAuylcxB9N0ZNT50RA3/WWEcUYctE+5T2CpuLf4ntt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=A5tTMTPy; arc=none smtp.client-ip=209.85.219.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1712618260; c=relaxed/simple;
+	bh=OZrzEFdKvPOSNSciBqI9vzb5cQOAqSfgD21/jOJfMKk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=jBzXD+Fk8alie4xHRqssucJ3Wb6YfKM103Xbbi9yHfoUwtIa/K/1d8CHhMraHrLbRvQ3wBgwH9EqTozkYuat+q92OUT0NE9RH0y05ZzGPnYCqZc0HWejbKotl9iEir3tCSWuhGnG8rH1d0UyHjcc1RfVwBI9AbHfEkMVXRMVdDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=mXCvlBh/; arc=none smtp.client-ip=198.175.65.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="A5tTMTPy"
-Received: by mail-yb1-f169.google.com with SMTP id 3f1490d57ef6-dcc84ae94c1so883057276.1
-        for <brcm80211@lists.linux.dev>; Thu, 04 Apr 2024 02:31:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712223091; x=1712827891; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=QJzdwgYqSiXBG2wAbt+70V3f0hLZ0hXphRY5qJD39hQ=;
-        b=A5tTMTPyfmn0zj0WbJeWsZ6FpKAh4r+0C2Ao4DgzE0nNlcULI7aDhTQ2u/dQlDd2nW
-         d2pBjgj66bLDYxL7H5EpMdi7py91WZH/ScpTaZk32wDmN/AHtQCvm7hw80hbPuXhBlEb
-         cKCUa/1h+98CKXitKq9WS3upcThg7Om3oN0Rnr2r/XHyfrzA99BnQ7R72j1nASJq7prm
-         9DjNWy++wKSrX9cAL9gUezSnqUHHXQ7uuDP/0PU/vZjpSGw0q9dqEtDHWs5ZDnSE+bLC
-         KDvf+Qz1V/1eyhPqA8yLtiCwyhXALd4KQDQaZJdi6tbJ2tswNwjT+eYSvU4vOPoDe/HY
-         wiUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712223091; x=1712827891;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QJzdwgYqSiXBG2wAbt+70V3f0hLZ0hXphRY5qJD39hQ=;
-        b=BMj9z5l6wj7RP/gCLFbVwaNA8G+LYRuRjvIHdcq2CwV5Sy/WIE32eZgY3tjS3dgHmC
-         5lOnHqxW+nSVfH8+ny75G+lKIpC5RWXKbYImgiLn2PJWACizewOSgPlZtcg8ceFVdyF8
-         dK6IlurGyk0/8EDJkc+WQB3t5BidAF1Q5ywVVeB5TB2CflAJtsqMoInxz4HDLC69ahY1
-         cokYVV8oESCvrI9Qq0NjIAHWAQGM03LqeWuH2+yEk9u9gja7Ic+3j+dPGZrqQ92ejXNE
-         0Wd7P3kIF/m8ggG/mUVgvvre0CEqil2iESOBWwa4Uha8WLTb7VHH58m3PVXPJqCQ71ZN
-         TjrA==
-X-Forwarded-Encrypted: i=1; AJvYcCU5ukfrkosvPeWQLkl5M3hIwvOOtarfQhOQ7qNWHJtga8rGnds5vN/jH9rWJi7Faa/OryIZQZ+aeDUUaUVZmLHn1Xq3LdCOmp0E
-X-Gm-Message-State: AOJu0YzAxezgJHGZec0ct5FKT0bcf6ftMHFMeEcjFUAkcLkiky/tENV+
-	3ry0kjbHFUzqyKiDmA7z0mnqLxzjhbFUF4rOiVK/QcIjGfqMO5HbV622kKOVZG2DUNh+YFHpSXP
-	nJi55zKIa4KN/h711rRGT1EfZvRgxgKxpwEnWmA==
-X-Google-Smtp-Source: AGHT+IHTXtbKZV4PRrgxvlL/R1tUqcSFTjPcwK6//feDtYUO9NjrShijYYET6/+oeV22B9HIEQVjv5iZuw/cw+hBGTs=
-X-Received: by 2002:a25:ac04:0:b0:dc7:423c:b8aa with SMTP id
- w4-20020a25ac04000000b00dc7423cb8aamr1828891ybi.12.1712223091503; Thu, 04 Apr
- 2024 02:31:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="mXCvlBh/"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1712618260; x=1744154260;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=OZrzEFdKvPOSNSciBqI9vzb5cQOAqSfgD21/jOJfMKk=;
+  b=mXCvlBh/oijWL0CD8eO9l1Z8ucmzYgi06OQJl+qgBkuNjDiRag8Jhro/
+   Tg8I8fiZKqAMzLUH6pQmc+ZNGS8XK69ZpbaAn9cHPV3Saa+4nMJBNaZ5q
+   93OIkfCd5Eq9Wi8rQP/7q365wGIBLjFqhHnu7BOf6gKciEgDVH5rBALon
+   yjUwLs/yaz5+cK0hfT5HAt8FiT15h8KCSqW9eupoz0FwRdYZc7Ii7cO1B
+   FfMVn26cumzlgbIFE7KXRwtr38QDhIch39e1GAY0fRzRYmuR0xJ7U6Ldx
+   QR2ogDFcsHzS9pSF8l2jHLxWDNKQA9lEdknpExD6LWooPgQdS9hbxQpBN
+   Q==;
+X-CSE-ConnectionGUID: xV/8S1EuQPCHgjzdclzXCw==
+X-CSE-MsgGUID: Hs3U5EBvR9uUJPosmTnKaw==
+X-IronPort-AV: E=McAfee;i="6600,9927,11038"; a="7831110"
+X-IronPort-AV: E=Sophos;i="6.07,187,1708416000"; 
+   d="scan'208";a="7831110"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Apr 2024 16:17:39 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,11038"; a="937092374"
+X-IronPort-AV: E=Sophos;i="6.07,187,1708416000"; 
+   d="scan'208";a="937092374"
+Received: from black.fi.intel.com ([10.237.72.28])
+  by fmsmga001.fm.intel.com with ESMTP; 08 Apr 2024 16:17:34 -0700
+Received: by black.fi.intel.com (Postfix, from userid 1003)
+	id BDB2312C; Tue,  9 Apr 2024 02:17:33 +0300 (EEST)
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Kent Gibson <warthog618@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	linux-gpio@vger.kernel.org,
+	linux-acpi@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-wireless@vger.kernel.org,
+	brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com
+Cc: Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Kalle Valo <kvalo@kernel.org>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>
+Subject: [PATCH v2 0/2] gpiolib: Fix gpio_lookup_flags mess and add Return sections
+Date: Tue,  9 Apr 2024 02:12:49 +0300
+Message-ID: <20240408231727.396452-1-andriy.shevchenko@linux.intel.com>
+X-Mailer: git-send-email 2.43.0.rc1.1.gbec44491f096
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240403-module-owner-sdio-v2-0-ae46d6b955eb@linaro.org>
-In-Reply-To: <20240403-module-owner-sdio-v2-0-ae46d6b955eb@linaro.org>
-From: Ulf Hansson <ulf.hansson@linaro.org>
-Date: Thu, 4 Apr 2024 11:30:54 +0200
-Message-ID: <CAPDyKFodTh-KN+=b1B3V+7aNEoR0SPo5-xjFaWu=gYEtsDy1pQ@mail.gmail.com>
-Subject: Re: [PATCH v2 0/7] mmc/wifi/bluetooth: store owner from modules with sdio_register_driver()
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
-	Matthias Brugger <matthias.bgg@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Kalle Valo <kvalo@kernel.org>, 
-	Jeff Johnson <jjohnson@kernel.org>, Arend van Spriel <arend.vanspriel@broadcom.com>, 
-	Brian Norris <briannorris@chromium.org>, Francesco Dolcini <francesco@dolcini.it>, 
-	=?UTF-8?B?SsOpcsO0bWUgUG91aWxsZXI=?= <jerome.pouiller@silabs.com>, 
-	linux-mmc@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-mediatek@lists.infradead.org, linux-wireless@vger.kernel.org, 
-	ath10k@lists.infradead.org, brcm80211@lists.linux.dev, 
-	brcm80211-dev-list.pdl@broadcom.com, Jeff Johnson <quic_jjohnson@quicinc.com>, 
-	Francesco Dolcini <francesco.dolcini@toradex.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-On Wed, 3 Apr 2024 at 16:17, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> Changes in v2:
-> 1. Add "wifi: ath10k: sdio: simplify module initialization" patch, from
->    my other patchset to avoid conflicts.
-> 2. Add Acks/Rb tags.
-> 3. Drop applied SDIO patch, which was the dependency for the rest
->    cleanups.
-> 4. Update subjects according to feedback.
-> - Link to v1: https://lore.kernel.org/r/20240329-module-owner-sdio-v1-0-e4010b11ccaa@linaro.org
->
-> Merging
-> =======
-> With Acks from Kalle, please take entire set via mmc/sdio.
+While reviewing another patch I have realised that enum
+gpio_lookup_flags messes up with GPIO_* flags definitions.
+Hence the first patch fix. Second one is an updated version
+of adding Return sections to the kernel-doc.
 
-The series applied for next, thanks!
+The series is made in assumption that the patches will land in this
+order, but if applied separately, e.g., one to for-current and one to
+for-next branches, no conflicts should appear.
 
-[...]
+In v2:
+- new patch 1
+- replaces error-code by errno (Randy)
+- added tags to patch 2 (Randy)
 
-Kind regards
-Uffe
+Andy Shevchenko (2):
+  gpiolib: Fix a mess with the GPIO_* flags
+  gpiolib: Update the kernel documentation - add Return sections
+
+ drivers/gpio/gpiolib-acpi.c                   |  22 ++-
+ drivers/gpio/gpiolib-cdev.c                   |   8 +-
+ drivers/gpio/gpiolib-devres.c                 |  44 ++++-
+ drivers/gpio/gpiolib-legacy.c                 |   3 +
+ drivers/gpio/gpiolib-of.c                     |  53 ++++--
+ drivers/gpio/gpiolib-swnode.c                 |   4 +-
+ drivers/gpio/gpiolib-sysfs.c                  |   6 +-
+ drivers/gpio/gpiolib.c                        | 165 ++++++++++++++----
+ .../broadcom/brcm80211/brcmsmac/led.c         |   2 +-
+ include/linux/gpio/driver.h                   |   3 +-
+ include/linux/gpio/machine.h                  |  20 +--
+ 11 files changed, 245 insertions(+), 85 deletions(-)
+
+-- 
+2.43.0.rc1.1.gbec44491f096
+
