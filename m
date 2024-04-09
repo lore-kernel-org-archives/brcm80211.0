@@ -1,53 +1,53 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C2182B2DD;
-	Tue,  9 Apr 2024 04:38:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68FF67CF17;
+	Tue,  9 Apr 2024 08:12:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712637527; cv=none; b=qjyTL55i6QM1+iSFoODcooHNv2WzgnmRNQMdNXxZxt/RThbOYNMQbOaeXqCi3GeywSIFAP/tw95RHnfYObzhjp5WpCUY6kKbZP5pHXBGIZNPILRYaS67PLOs5TyffvEXH+copqw3HgbKNn2bJgbinUyN4noiGPwI8S2iu/rPZVY=
+	t=1712650382; cv=none; b=b8t9nctnd5Ua6Vck6mHGsBbq18c9UAQPqNxQ9/365fW0A9BUdXtvGCzdzXonJDaA3ec9tbG45EUGl0wtBNeF/pJdrz39iRxnIG1jiuoaVWZ8OmHF+LBFUn4iI/RvAG2CoD+q5OX8HYJ6ZwqsWOLsMkxCS374Fz387nPJCKRokmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712637527; c=relaxed/simple;
-	bh=FwDRjCBN71NNWbuqJwe1vhuFGM+457CREEz1uKWOfUI=;
+	s=arc-20240116; t=1712650382; c=relaxed/simple;
+	bh=jFMEUXcHKpY2CByBls3VxrCp6NDpZv4FstKTHJezeYE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FniVyaY56nXMfGM/Wq7cgPNtJ/msP4YU1AXyWeRm4zaFZkf8jHOhXtU6o1eeFJnygve/0pSJ8tj/yVjXn78fQtBTTTDIH0laiGGeQtGTqp+5tJszGD2J8UnviX98MAu5dcz9yEzlEHt/IkORcZQtqgXFEzGGaXGqND+dh91m9YE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=oAMAo2iP; arc=none smtp.client-ip=192.198.163.8
+	 Content-Type:Content-Disposition:In-Reply-To; b=bO8NaMn/5GC7sOi2JJoCK4mzgc/nwgrQwzUmWpJDVobgOokH1BN/oPGPiosUSlWhHfHdMzOm49b0hpDgxJwc6AJsT8e6OV7zptmLHtMqN0pyTIqsxyjHG4cHDOvNMuPjRKy9iTBhvEdJlMtdaSvb2fkEoCH0aWg0LD4pfVGT8Pc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=XsW/77te; arc=none smtp.client-ip=198.175.65.14
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="oAMAo2iP"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="XsW/77te"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1712637524; x=1744173524;
+  t=1712650379; x=1744186379;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=FwDRjCBN71NNWbuqJwe1vhuFGM+457CREEz1uKWOfUI=;
-  b=oAMAo2iPP3fui8EI/E5HMMr5k0Xf2FGzQk6JjabSMxQuaalq8AYxM24p
-   z7w4t0bubp5QC7co71gKnTKnA7IPQ2gBOmJo6vUp3UkfJ/50pnSOfcYyU
-   Y5y+3ew7vzyzVhFS06TzuZ55/V1ha0GqSrfkiH5V6i4aJ7QJFeX2Buevf
-   pQrcnfA7G4KDgpFDCHEHVkN11hFZXqFlqX9ubSlK38FCWZaEhT88qJFQL
-   jFO1XMIsiPeEaGOvIZdWV1jzxHVeThA/GNHSFPf8AkUF7FnBWVo/UrZyE
-   KsHILzX2/8PpL1xog+NPFA0BWrwAKb26mau/07+HWGpPUX6Ptc32YVVo7
-   w==;
-X-CSE-ConnectionGUID: SREYXGlmSfWAtArseowN2w==
-X-CSE-MsgGUID: /AAT5vJMRaa3YftCtPe0HQ==
-X-IronPort-AV: E=McAfee;i="6600,9927,11038"; a="25440831"
-X-IronPort-AV: E=Sophos;i="6.07,188,1708416000"; 
-   d="scan'208";a="25440831"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
-  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Apr 2024 21:38:44 -0700
-X-CSE-ConnectionGUID: e33hYWNgRzu9vk7HTBhA9w==
-X-CSE-MsgGUID: n4YA2P8CTm+jg8h8Evwn1Q==
+  bh=jFMEUXcHKpY2CByBls3VxrCp6NDpZv4FstKTHJezeYE=;
+  b=XsW/77tez4K8q8LiVjasJhUxS6Oh1+EIoW5sHLEFgngHYqEhCzY++HO2
+   H8zNmZJ28iu+nC4VhOcfp4VI8Aykz92lWrW1E2FEu0LWz9a/ZRVsAE0MD
+   h90UZkM2Zz+9E8rnq64kpswuGwmr8rmiL1woKwwIKxI+2czHMuPOUysDT
+   5A7IOuirel0a2TktbH0j+D0ZTppbEpVrHKybkqbpkO40AP3i2A6lNM0Xf
+   V/I8YBzQTfD6+8D191O/JTRaBphAFMnlfWsNEPNGKz6WRJFdC2I/Bxdjc
+   WDTNesGEQ+nBWpiGtrAlNEEcLY+gTya0T+U2bbBcwiwYllY9Qyi6B1Unq
+   A==;
+X-CSE-ConnectionGUID: Uh7sM2nWScyvaHdwPEoBLQ==
+X-CSE-MsgGUID: hd09FJWqRm6TDzrSN7Qxsw==
+X-IronPort-AV: E=McAfee;i="6600,9927,11038"; a="11794490"
+X-IronPort-AV: E=Sophos;i="6.07,189,1708416000"; 
+   d="scan'208";a="11794490"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Apr 2024 01:12:59 -0700
+X-CSE-ConnectionGUID: 9hBXjKEUT462toanihZRYw==
+X-CSE-MsgGUID: CBkeg03FRrWz4l8Ovm+pwg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,188,1708416000"; 
-   d="scan'208";a="20017073"
+X-IronPort-AV: E=Sophos;i="6.07,189,1708416000"; 
+   d="scan'208";a="20041447"
 Received: from lkp-server01.sh.intel.com (HELO e61807b1d151) ([10.239.97.150])
-  by orviesa009.jf.intel.com with ESMTP; 08 Apr 2024 21:38:40 -0700
+  by orviesa010.jf.intel.com with ESMTP; 09 Apr 2024 01:12:54 -0700
 Received: from kbuild by e61807b1d151 with local (Exim 4.96)
 	(envelope-from <lkp@intel.com>)
-	id 1ru3Fm-0005jy-0R;
-	Tue, 09 Apr 2024 04:38:38 +0000
-Date: Tue, 9 Apr 2024 12:38:35 +0800
+	id 1ru6b6-0005sv-1j;
+	Tue, 09 Apr 2024 08:12:52 +0000
+Date: Tue, 9 Apr 2024 16:12:27 +0800
 From: kernel test robot <lkp@intel.com>
 To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
@@ -56,13 +56,13 @@ To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	linux-gpio@vger.kernel.org, linux-acpi@vger.kernel.org,
 	linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org,
 	brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com
-Cc: oe-kbuild-all@lists.linux.dev,
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
 	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Arend van Spriel <arend.vanspriel@broadcom.com>,
 	Kalle Valo <kvalo@kernel.org>,
 	Charles Keepax <ckeepax@opensource.cirrus.com>
 Subject: Re: [PATCH v2 1/2] gpiolib: Fix a mess with the GPIO_* flags
-Message-ID: <202404091205.rnu1DOaq-lkp@intel.com>
+Message-ID: <202404091557.rf8NTu9B-lkp@intel.com>
 References: <20240408231727.396452-2-andriy.shevchenko@linux.intel.com>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
@@ -79,7 +79,7 @@ Hi Andy,
 kernel test robot noticed the following build warnings:
 
 [auto build test WARNING on brgl/gpio/for-next]
-[also build test WARNING on wireless-next/main wireless/main linus/master v6.9-rc3 next-20240408]
+[also build test WARNING on wireless-next/main wireless/main linus/master v6.9-rc3 next-20240409]
 [If your patch is applied to the wrong git tree, kindly drop us a note.
 And when submitting patch, we suggest to use '--base' as documented in
 https://git-scm.com/docs/git-format-patch#_base_tree_information]
@@ -88,33 +88,34 @@ url:    https://github.com/intel-lab-lkp/linux/commits/Andy-Shevchenko/gpiolib-F
 base:   https://git.kernel.org/pub/scm/linux/kernel/git/brgl/linux.git gpio/for-next
 patch link:    https://lore.kernel.org/r/20240408231727.396452-2-andriy.shevchenko%40linux.intel.com
 patch subject: [PATCH v2 1/2] gpiolib: Fix a mess with the GPIO_* flags
-config: i386-allmodconfig (https://download.01.org/0day-ci/archive/20240409/202404091205.rnu1DOaq-lkp@intel.com/config)
-compiler: gcc-13 (Ubuntu 13.2.0-4ubuntu3) 13.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240409/202404091205.rnu1DOaq-lkp@intel.com/reproduce)
+config: i386-buildonly-randconfig-002-20240409 (https://download.01.org/0day-ci/archive/20240409/202404091557.rf8NTu9B-lkp@intel.com/config)
+compiler: clang version 17.0.6 (https://github.com/llvm/llvm-project 6009708b4367171ccdbf4b5905cb6a803753fe18)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240409/202404091557.rf8NTu9B-lkp@intel.com/reproduce)
 
 If you fix the issue in a separate patch/commit (i.e. not just a new version of
 the same patch/commit), kindly add following tags
 | Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202404091205.rnu1DOaq-lkp@intel.com/
+| Closes: https://lore.kernel.org/oe-kbuild-all/202404091557.rf8NTu9B-lkp@intel.com/
 
 All warnings (new ones prefixed by >>):
 
-   In file included from arch/x86/include/asm/geode.h:12,
-                    from arch/x86/platform/geode/alix.c:28:
->> include/linux/cs5535.h:149: warning: "GPIO_PULL_UP" redefined
+   In file included from arch/x86/platform/geode/net5501.c:25:
+   In file included from arch/x86/include/asm/geode.h:12:
+>> include/linux/cs5535.h:149:9: warning: 'GPIO_PULL_UP' macro redefined [-Wmacro-redefined]
      149 | #define GPIO_PULL_UP            0x18
-         | 
-   In file included from include/linux/gpio/machine.h:5,
-                    from arch/x86/platform/geode/alix.c:25:
-   include/dt-bindings/gpio/gpio.h:37: note: this is the location of the previous definition
+         |         ^
+   include/dt-bindings/gpio/gpio.h:37:9: note: previous definition is here
       37 | #define GPIO_PULL_UP 16
-         | 
->> include/linux/cs5535.h:150: warning: "GPIO_PULL_DOWN" redefined
+         |         ^
+   In file included from arch/x86/platform/geode/net5501.c:25:
+   In file included from arch/x86/include/asm/geode.h:12:
+>> include/linux/cs5535.h:150:9: warning: 'GPIO_PULL_DOWN' macro redefined [-Wmacro-redefined]
      150 | #define GPIO_PULL_DOWN          0x1C
-         | 
-   include/dt-bindings/gpio/gpio.h:40: note: this is the location of the previous definition
+         |         ^
+   include/dt-bindings/gpio/gpio.h:40:9: note: previous definition is here
       40 | #define GPIO_PULL_DOWN 32
-         | 
+         |         ^
+   2 warnings generated.
 
 
 vim +/GPIO_PULL_UP +149 include/linux/cs5535.h
