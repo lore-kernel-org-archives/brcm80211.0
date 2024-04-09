@@ -1,97 +1,105 @@
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A00D512FF9A
-	for <brcm80211@lists.linux.dev>; Tue,  9 Apr 2024 14:01:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F379127B67
+	for <brcm80211@lists.linux.dev>; Tue,  9 Apr 2024 14:06:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712671318; cv=none; b=FgP4dFVHJNYBbS2FHanTGViUmWVza2dDfbT60Mjwn1kX63DRTRxs5ux7aEcxMKvm7WDKPnZGJRLeI3uVPFGvafj9TN8LI8x4U7Nbh/mK6aXVvajzcHTFLi9fEO896oboUAbPpeDYMjwCRC7bv/qmOgFQz9VjwXAE8RNxGvf+i3g=
+	t=1712671610; cv=none; b=p1oiaCLOvjjEf2mTLWvEJKV8he4tw3rv/XPO2UTFbrn5m3tmUbXZG6a2xyRW0R1A9hlUfvSzuiICWLpTz0GGRp5kt9X/pUFopTfIOP+WE9B+iW4waPAdIxvCKKApDGyKR1zmdSgunk0G2xmHJeEmMV88Kuz3wXuA4eWuNPDodd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712671318; c=relaxed/simple;
-	bh=WVcmmCzMCx0qOzeVSGr+rFq9VNZEW9SgsVKpHYBH4Jo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=K+L6kd8ZDl79lcJNMBNAjUVjJfDTEeSrEfYeVWshIN+hJMmguhq/lcMrQM1Ywn5u+/K++xvRuUYupQmriCuiACuSHycCfxjfmIDARSgdGCMWi8CkxEVX1tJHLoP44GI9fHRllfqYDE2hCl96E0uml+O/LL5XnRnePil5FP8Fjbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=D0agwPwN; arc=none smtp.client-ip=209.85.208.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+	s=arc-20240116; t=1712671610; c=relaxed/simple;
+	bh=P1gNeYkG5bwZnGH03ghwXER+cIJuJOAxd+xPMYGlaCI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Y6F8LsTSHyx0RvBXAJB2yIrI+U2ZQVLc610o7F3SAjp3lN8wTzPAqwzagTFJLTxqyREn6KpjEsuRu7vH4EwJvX8Tg6Ie8OIi89tNwCaJYp2XGhD4wqOtmiBNBq7aERvnazGNRTxv3jGjk6qOBZg6kArgZXHxN4Ig8cHoli+0Q+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=CECIG6Ph; arc=none smtp.client-ip=198.175.65.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="D0agwPwN"
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2d4886a1cb4so68301241fa.0
-        for <brcm80211@lists.linux.dev>; Tue, 09 Apr 2024 07:01:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1712671315; x=1713276115; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WVcmmCzMCx0qOzeVSGr+rFq9VNZEW9SgsVKpHYBH4Jo=;
-        b=D0agwPwNYopqrOUPye9G1DLC05WzY/waPMG9Go4jdNATt+8oLk1HqntCbrn3kKDE6x
-         0enHMyvkqJwsn6rRDAKzZb+lWzHPl8MsJG88k/0BEMJdrL1qgPREBYj8tWSDXJmFh94V
-         LcFksypmRazhQAjEhlhyfA0cNIbLBakfrnLgHogcxRK3Q97ez9YfHxsfuAGjUR//pBf0
-         WYsEJyj/ngR7zJhDZrbrge+zLmrjB7mw1UGyiiP+xQGDroo4wQ7Ix5AbFzSrcvOMcF42
-         FTIPbKRsNq0D3zjawZGz62h9iYx1Ichx95uTG4eMvaz41oWAdRCrn7cOJvF22vECk+kc
-         9r4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712671315; x=1713276115;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=WVcmmCzMCx0qOzeVSGr+rFq9VNZEW9SgsVKpHYBH4Jo=;
-        b=kSoyLJGPBYseDB2Fbmuzj17RbsRuWzvCeY1YDfiqcRxEAZN94pEezfju5e+uoeRdUJ
-         X+xdoQf2DX5mmcFnUSjT+imIhfJvzRQDOjzPKgiOkgH0YSJ9pGtnDdxozEe7zExO2th3
-         VyvFgaPkhY3c9Lw5BS7VPHSFMiAFw+nJHncmAWW3ffSGddMJlUR89bCvTXHmvL+rrzKP
-         bBRUSXVNDzTUpsfa4GH3Wl3lbhVI18K9+zLHHvDPTzmYMcA/SP4OrtnLVaLGW/MX5uKU
-         gRWLVxKr2ygaL99MLQ8D3pCrhweQCFfrK5GQSYn3rOcznal2ZuNEZS1PBGjSk9gPoElU
-         RfIg==
-X-Forwarded-Encrypted: i=1; AJvYcCX4zWVHowT9QAifeAQ0pOBWc27ee+F9HORCghQU25NTuWcObyWrI275klvaBnx732TrHS1IXQJV1vWdKvNIR1jYyohDbAXy1r8S
-X-Gm-Message-State: AOJu0YwgyqpQMnPv3DsPICRVdXhaIpteW1wOiRBKTEuYCygDnefP847P
-	BT3fXGjr1hCkR/aEICWH5dOMg2rcaUZSM7kTuswFRYSE9n3nOiKksDvVQutLcGP3HjDVNKZ5MZY
-	b9fS7XWLuORBFllUHoD724pXE64qDbO8p7GdlCQ==
-X-Google-Smtp-Source: AGHT+IE0BTLqNhCg/BINBcFyauRaMvF/trglatuDvkvJ1Zps7+gNBKvwiRvgYkhWF8C4ymW2ozFLRyADZMwLTSRX/9s=
-X-Received: by 2002:a2e:87ce:0:b0:2d6:dac4:7d4f with SMTP id
- v14-20020a2e87ce000000b002d6dac47d4fmr10185577ljj.4.1712671314663; Tue, 09
- Apr 2024 07:01:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="CECIG6Ph"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1712671609; x=1744207609;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=P1gNeYkG5bwZnGH03ghwXER+cIJuJOAxd+xPMYGlaCI=;
+  b=CECIG6PhoJPLrdMzNAIV1vmPfiYCQtMiWvTM4ql0OtwlGymCTeAxjiGl
+   6NkPEJukJMAqQ0XPJuNLBMFbRDtBlXdcYoLhQSMN96M8yVVXq+RSeN0Ye
+   N3YcO4dt/o1y4GAN0vBC+BvWYOZA4DTSTSYmdbgAkTMpctR/LDQjF7sif
+   Ex6XipHnLVCQam89eknrWefYdUUgO9+XQMjXJ9HAuF72uHCMmcWN7yFAB
+   75l8MSk3O8dWYDo6LK0fRCn57/oxTADUveLQp2oOHOnE160bHYD6yH7AD
+   M5iuaSQYCm49MCYBRWyTsOH2CRgfZyScy1Afl9jtmnKHVkUWdP/4EgACN
+   g==;
+X-CSE-ConnectionGUID: Pwz9nTwvS4CCBtek9IwRcg==
+X-CSE-MsgGUID: 0DGcbBAoSJidXdO7Mcz2bg==
+X-IronPort-AV: E=McAfee;i="6600,9927,11039"; a="11824769"
+X-IronPort-AV: E=Sophos;i="6.07,189,1708416000"; 
+   d="scan'208";a="11824769"
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Apr 2024 07:06:47 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,11039"; a="915400773"
+X-IronPort-AV: E=Sophos;i="6.07,189,1708416000"; 
+   d="scan'208";a="915400773"
+Received: from smile.fi.intel.com (HELO smile) ([10.237.72.54])
+  by fmsmga002.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Apr 2024 07:06:44 -0700
+Received: from andy by smile with local (Exim 4.97)
+	(envelope-from <andriy.shevchenko@linux.intel.com>)
+	id 1ruC7V-00000002p7w-0HJf;
+	Tue, 09 Apr 2024 17:06:41 +0300
+Date: Tue, 9 Apr 2024 17:06:40 +0300
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Kent Gibson <warthog618@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	linux-gpio@vger.kernel.org, linux-acpi@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org,
+	brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Kalle Valo <kvalo@kernel.org>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Randy Dunlap <rdunlap@infradead.org>
+Subject: Re: [PATCH v2 2/2] gpiolib: Update the kernel documentation - add
+ Return sections
+Message-ID: <ZhVLcNI3rRhWs9_D@smile.fi.intel.com>
+References: <20240408231727.396452-1-andriy.shevchenko@linux.intel.com>
+ <20240408231727.396452-3-andriy.shevchenko@linux.intel.com>
+ <ZhU57jB_pVvDz0ZR@smile.fi.intel.com>
+ <CAMRc=Mdzc2gSEX0h0Uwcxr2qMgwLLXfhJda=3AkNNYsDBQre7A@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240408231727.396452-1-andriy.shevchenko@linux.intel.com>
- <20240408231727.396452-3-andriy.shevchenko@linux.intel.com> <ZhU57jB_pVvDz0ZR@smile.fi.intel.com>
-In-Reply-To: <ZhU57jB_pVvDz0ZR@smile.fi.intel.com>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Tue, 9 Apr 2024 16:01:43 +0200
-Message-ID: <CAMRc=Mdzc2gSEX0h0Uwcxr2qMgwLLXfhJda=3AkNNYsDBQre7A@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] gpiolib: Update the kernel documentation - add
- Return sections
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Kent Gibson <warthog618@gmail.com>, 
-	Linus Walleij <linus.walleij@linaro.org>, linux-gpio@vger.kernel.org, 
-	linux-acpi@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev, 
-	brcm80211-dev-list.pdl@broadcom.com, 
-	Mika Westerberg <mika.westerberg@linux.intel.com>, 
-	Arend van Spriel <arend.vanspriel@broadcom.com>, Kalle Valo <kvalo@kernel.org>, 
-	Charles Keepax <ckeepax@opensource.cirrus.com>, Randy Dunlap <rdunlap@infradead.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAMRc=Mdzc2gSEX0h0Uwcxr2qMgwLLXfhJda=3AkNNYsDBQre7A@mail.gmail.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 
-On Tue, Apr 9, 2024 at 2:52=E2=80=AFPM Andy Shevchenko
-<andriy.shevchenko@linux.intel.com> wrote:
->
-> On Tue, Apr 09, 2024 at 02:12:51AM +0300, Andy Shevchenko wrote:
-> > $ scripts/kernel-doc -v -none -Wall drivers/gpio/gpiolib* 2>&1 | grep -=
-w warning | wc -l
-> > 67
+On Tue, Apr 09, 2024 at 04:01:43PM +0200, Bartosz Golaszewski wrote:
+> On Tue, Apr 9, 2024 at 2:52 PM Andy Shevchenko
+> <andriy.shevchenko@linux.intel.com> wrote:
 > >
-> > Fix these by adding Return sections. While at it, make sure all of
-> > Return sections use the same style.
->
-> Since there shouldn't be hard dependency to the first one, can you consid=
-er
-> applying this one, so it unblocks me?
->
+> > On Tue, Apr 09, 2024 at 02:12:51AM +0300, Andy Shevchenko wrote:
+> > > $ scripts/kernel-doc -v -none -Wall drivers/gpio/gpiolib* 2>&1 | grep -w warning | wc -l
+> > > 67
+> > >
+> > > Fix these by adding Return sections. While at it, make sure all of
+> > > Return sections use the same style.
+> >
+> > Since there shouldn't be hard dependency to the first one, can you consider
+> > applying this one, so it unblocks me?
+> 
+> I'm not sure what the resolution is for % and HTML <font> tags in the end?
 
-I'm not sure what the resolution is for % and HTML <font> tags in the end?
+Most of the constants are without %, so less churn now is to drop %.
+If you think otherwise, please, fix it and I will rebase my patches later.
 
-Bart
+-- 
+With Best Regards,
+Andy Shevchenko
+
+
