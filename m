@@ -1,149 +1,112 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68FF67CF17;
-	Tue,  9 Apr 2024 08:12:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA8F7F7EE
+	for <brcm80211@lists.linux.dev>; Tue,  9 Apr 2024 09:42:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712650382; cv=none; b=b8t9nctnd5Ua6Vck6mHGsBbq18c9UAQPqNxQ9/365fW0A9BUdXtvGCzdzXonJDaA3ec9tbG45EUGl0wtBNeF/pJdrz39iRxnIG1jiuoaVWZ8OmHF+LBFUn4iI/RvAG2CoD+q5OX8HYJ6ZwqsWOLsMkxCS374Fz387nPJCKRokmI=
+	t=1712655772; cv=none; b=JZZdkN6/aYB9nIrh02+tsyjO7nZwlM9dyFtp6z9J6td2b73gHnsKUZqUpeNyhuhGr8c8JUTBRds4rjqv1uK1CpOGcvx4autUCzmKq73DCXC4BR/Z8L4l8m3Rw3Pmz98LvVcfuzrDFxV6iAlnlYt3ZYcl9GwecacVSFsNu10ZNKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712650382; c=relaxed/simple;
-	bh=jFMEUXcHKpY2CByBls3VxrCp6NDpZv4FstKTHJezeYE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bO8NaMn/5GC7sOi2JJoCK4mzgc/nwgrQwzUmWpJDVobgOokH1BN/oPGPiosUSlWhHfHdMzOm49b0hpDgxJwc6AJsT8e6OV7zptmLHtMqN0pyTIqsxyjHG4cHDOvNMuPjRKy9iTBhvEdJlMtdaSvb2fkEoCH0aWg0LD4pfVGT8Pc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=XsW/77te; arc=none smtp.client-ip=198.175.65.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1712655772; c=relaxed/simple;
+	bh=ytL7QdYp2hCqyew7adjYY1rWgd8CDCZw9v1gyruAj60=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=aVFv9G8ekX3Rkj8yg/AGuPuifRO2ta7xssfuFxbD/7J91PVzZnfLrDPSKWLWtmag6Jmu5vcxXjMW5cWsvn7GujgOKNdTK4gICczS93bbaK7p6fnasEw4whO2FOgdweyMeOL21PnV43IbK1GTLCt+6lVKlv1MH2Kea5YXPKqAyiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=UA17TF8R; arc=none smtp.client-ip=209.85.208.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="XsW/77te"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1712650379; x=1744186379;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=jFMEUXcHKpY2CByBls3VxrCp6NDpZv4FstKTHJezeYE=;
-  b=XsW/77tez4K8q8LiVjasJhUxS6Oh1+EIoW5sHLEFgngHYqEhCzY++HO2
-   H8zNmZJ28iu+nC4VhOcfp4VI8Aykz92lWrW1E2FEu0LWz9a/ZRVsAE0MD
-   h90UZkM2Zz+9E8rnq64kpswuGwmr8rmiL1woKwwIKxI+2czHMuPOUysDT
-   5A7IOuirel0a2TktbH0j+D0ZTppbEpVrHKybkqbpkO40AP3i2A6lNM0Xf
-   V/I8YBzQTfD6+8D191O/JTRaBphAFMnlfWsNEPNGKz6WRJFdC2I/Bxdjc
-   WDTNesGEQ+nBWpiGtrAlNEEcLY+gTya0T+U2bbBcwiwYllY9Qyi6B1Unq
-   A==;
-X-CSE-ConnectionGUID: Uh7sM2nWScyvaHdwPEoBLQ==
-X-CSE-MsgGUID: hd09FJWqRm6TDzrSN7Qxsw==
-X-IronPort-AV: E=McAfee;i="6600,9927,11038"; a="11794490"
-X-IronPort-AV: E=Sophos;i="6.07,189,1708416000"; 
-   d="scan'208";a="11794490"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
-  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Apr 2024 01:12:59 -0700
-X-CSE-ConnectionGUID: 9hBXjKEUT462toanihZRYw==
-X-CSE-MsgGUID: CBkeg03FRrWz4l8Ovm+pwg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,189,1708416000"; 
-   d="scan'208";a="20041447"
-Received: from lkp-server01.sh.intel.com (HELO e61807b1d151) ([10.239.97.150])
-  by orviesa010.jf.intel.com with ESMTP; 09 Apr 2024 01:12:54 -0700
-Received: from kbuild by e61807b1d151 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1ru6b6-0005sv-1j;
-	Tue, 09 Apr 2024 08:12:52 +0000
-Date: Tue, 9 Apr 2024 16:12:27 +0800
-From: kernel test robot <lkp@intel.com>
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Kent Gibson <warthog618@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	linux-gpio@vger.kernel.org, linux-acpi@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org,
-	brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Kalle Valo <kvalo@kernel.org>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>
-Subject: Re: [PATCH v2 1/2] gpiolib: Fix a mess with the GPIO_* flags
-Message-ID: <202404091557.rf8NTu9B-lkp@intel.com>
-References: <20240408231727.396452-2-andriy.shevchenko@linux.intel.com>
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="UA17TF8R"
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2d4a8bddc21so76311391fa.0
+        for <brcm80211@lists.linux.dev>; Tue, 09 Apr 2024 02:42:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1712655768; x=1713260568; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=FRkNsSj/lYNCA3MRycU0zvpqCVRND9tlWV8O4KsTnlc=;
+        b=UA17TF8Rf4EEkDhpAzANn8UbNImlG2aXGGPC+zOZ22iM7TSQgDn2cy6LFANwoVUwo6
+         nIp7WQWMYgXlVJGA2c27x42gGmRw3mZmE9k6HrF6XJdIvdO+4+VlPmYd8VnzrkvWhO6P
+         T2WrPPBooWDxQLNT0Lv6L60LLvBXqrFdJjkQav12iytP6kurTE1BO9CA3sJsDMTBPq2L
+         SAuag9Bl9T5iX8yxX+j0gmtIHNZZ+NDSutoG+8OTbIZtpRx7zPpvbFLqwl9HSnPT3LIu
+         03t6+mZz2HpZpeGstD1Hit5fNiK5LtFX8mfNZXM6sixgUeWMsijpr8Xj1iEadHEmv+Nl
+         RqjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712655768; x=1713260568;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=FRkNsSj/lYNCA3MRycU0zvpqCVRND9tlWV8O4KsTnlc=;
+        b=pe+bjhs6Alg6I4dRwWuH9iRzihLRbv2UYTGe+6K5EGTSzUQeUNXQnM5+aen5rwR2qw
+         D48Xw3FokXyGWl8Nyoog3wgg+z1ATQzyS4xyJ2ArO1KZzMeTSKbz7eb8Y4qng8G6ugit
+         xcsgGrwWYJ0dkPWJKv3B2qOYxpYyi4lSxIIs1S6t/ixNZbNGVIvQ7YXIcrMFPNGEA/p1
+         i7WTxg4AtlJ45mZd3mQH80+a3YGhFR+jyUaXTN0Qs+K+GX4vB5OFx8l5+NH0/NG/MOts
+         blQXKVW5WT+swWvhOQwwLYe7DBDszpLtQybdfo+lPiw8+OCUNI69gsoDJNHb0Z/Syi3i
+         y1VQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWUtktN+xzBChKxMHbc8ualMaH9EoC469rAkdzezuuGGrhgFkKzYUsaJLtgmGcODa17WMjCMkQw2Kfj0HhT7qUs0LRaED4L1BzY
+X-Gm-Message-State: AOJu0YzYTXyTvo9kRkaVqPvDtd6/Q8+2O7GmPZzpZ63ZSX2Z4HkOn7Cm
+	TIZErmpH2EuqTtZJ8WrY0rDpnjRTgiK8cGkGnn6Oz4etnZDVz35703jVvjTfQp7ME0IciEAaym/
+	3SxPHwJ+hJJFtkf0353e8c8GFJAyPyzqo7fKEgA==
+X-Google-Smtp-Source: AGHT+IGLok3BTsdCtcp+mQF0FlIfpGRtTXkNrJj6FjV/E2JhCIYngUvEmtKxHaZSUGiU6FzXlS6ipOOBorjeZLPGLJA=
+X-Received: by 2002:a2e:854c:0:b0:2d8:5af9:9097 with SMTP id
+ u12-20020a2e854c000000b002d85af99097mr6406610ljj.42.1712655768359; Tue, 09
+ Apr 2024 02:42:48 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <20240408231727.396452-1-andriy.shevchenko@linux.intel.com> <20240408231727.396452-2-andriy.shevchenko@linux.intel.com>
 In-Reply-To: <20240408231727.396452-2-andriy.shevchenko@linux.intel.com>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Tue, 9 Apr 2024 11:42:37 +0200
+Message-ID: <CAMRc=Mf73fFHo83gNvDXGy9BosB1MNz_=8kt56hLA12bPBb8CA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] gpiolib: Fix a mess with the GPIO_* flags
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Kent Gibson <warthog618@gmail.com>, 
+	Linus Walleij <linus.walleij@linaro.org>, linux-gpio@vger.kernel.org, 
+	linux-acpi@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev, 
+	brcm80211-dev-list.pdl@broadcom.com, 
+	Mika Westerberg <mika.westerberg@linux.intel.com>, 
+	Arend van Spriel <arend.vanspriel@broadcom.com>, Kalle Valo <kvalo@kernel.org>, 
+	Charles Keepax <ckeepax@opensource.cirrus.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Andy,
+On Tue, Apr 9, 2024 at 1:17=E2=80=AFAM Andy Shevchenko
+<andriy.shevchenko@linux.intel.com> wrote:
+>
+> The GPIO_* flag definitions are *almost* duplicated in two files
+> (with unmatches OPEN_SOURCE / OPEN_DRAIN). Moreover, some code relies
+> on one set of definitions while the rest is on the other. Clean up
+> this mess by providing only one source of the definitions to all.
+>
+> Fixes: b424808115cb ("brcm80211: brcmsmac: Move LEDs to GPIO descriptors"=
+)
+> Fixes: 5923ea6c2ce6 ("gpio: pass lookup and descriptor flags to request_o=
+wn")
+> Fixes: fed7026adc7c ("gpiolib: Make use of enum gpio_lookup_flags consist=
+ent")
+> Fixes: 4c0facddb7d8 ("gpio: core: Decouple open drain/source flag with ac=
+tive low/high")
+> Fixes: 69d301fdd196 ("gpio: add DT bindings for existing consumer flags")
+> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+> ---
+>  drivers/gpio/gpiolib-of.c                     |  5 ++---
+>  drivers/gpio/gpiolib.c                        |  8 +++-----
+>  .../broadcom/brcm80211/brcmsmac/led.c         |  2 +-
+>  include/linux/gpio/driver.h                   |  3 +--
+>  include/linux/gpio/machine.h                  | 20 +++++--------------
+>  5 files changed, 12 insertions(+), 26 deletions(-)
+>
 
-kernel test robot noticed the following build warnings:
+I don't think ./dt-bindings/gpio/gpio.h is the right source of these
+defines for everyone - including non-OF systems. I would prefer the
+ones in include/linux/gpio/machine.h be the upstream source but then
+headers in include/dt-bindings/ cannot include them so my second-best
+suggestion is to rename the ones in include/linux/gpio/machine.h and
+treewide too. In general values from ./dt-bindings/gpio/gpio.h should
+only be used in DTS sources and gpiolib-of code.
 
-[auto build test WARNING on brgl/gpio/for-next]
-[also build test WARNING on wireless-next/main wireless/main linus/master v6.9-rc3 next-20240409]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Andy-Shevchenko/gpiolib-Fix-a-mess-with-the-GPIO_-flags/20240409-071911
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/brgl/linux.git gpio/for-next
-patch link:    https://lore.kernel.org/r/20240408231727.396452-2-andriy.shevchenko%40linux.intel.com
-patch subject: [PATCH v2 1/2] gpiolib: Fix a mess with the GPIO_* flags
-config: i386-buildonly-randconfig-002-20240409 (https://download.01.org/0day-ci/archive/20240409/202404091557.rf8NTu9B-lkp@intel.com/config)
-compiler: clang version 17.0.6 (https://github.com/llvm/llvm-project 6009708b4367171ccdbf4b5905cb6a803753fe18)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240409/202404091557.rf8NTu9B-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202404091557.rf8NTu9B-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
-   In file included from arch/x86/platform/geode/net5501.c:25:
-   In file included from arch/x86/include/asm/geode.h:12:
->> include/linux/cs5535.h:149:9: warning: 'GPIO_PULL_UP' macro redefined [-Wmacro-redefined]
-     149 | #define GPIO_PULL_UP            0x18
-         |         ^
-   include/dt-bindings/gpio/gpio.h:37:9: note: previous definition is here
-      37 | #define GPIO_PULL_UP 16
-         |         ^
-   In file included from arch/x86/platform/geode/net5501.c:25:
-   In file included from arch/x86/include/asm/geode.h:12:
->> include/linux/cs5535.h:150:9: warning: 'GPIO_PULL_DOWN' macro redefined [-Wmacro-redefined]
-     150 | #define GPIO_PULL_DOWN          0x1C
-         |         ^
-   include/dt-bindings/gpio/gpio.h:40:9: note: previous definition is here
-      40 | #define GPIO_PULL_DOWN 32
-         |         ^
-   2 warnings generated.
-
-
-vim +/GPIO_PULL_UP +149 include/linux/cs5535.h
-
-f060f27007b393 Andres Salomon 2009-12-14  141  
-5f0a96b044d8ed Andres Salomon 2009-12-14  142  /* GPIOs */
-5f0a96b044d8ed Andres Salomon 2009-12-14  143  #define GPIO_OUTPUT_VAL		0x00
-5f0a96b044d8ed Andres Salomon 2009-12-14  144  #define GPIO_OUTPUT_ENABLE	0x04
-5f0a96b044d8ed Andres Salomon 2009-12-14  145  #define GPIO_OUTPUT_OPEN_DRAIN	0x08
-5f0a96b044d8ed Andres Salomon 2009-12-14  146  #define GPIO_OUTPUT_INVERT	0x0C
-5f0a96b044d8ed Andres Salomon 2009-12-14  147  #define GPIO_OUTPUT_AUX1	0x10
-5f0a96b044d8ed Andres Salomon 2009-12-14  148  #define GPIO_OUTPUT_AUX2	0x14
-5f0a96b044d8ed Andres Salomon 2009-12-14 @149  #define GPIO_PULL_UP		0x18
-5f0a96b044d8ed Andres Salomon 2009-12-14 @150  #define GPIO_PULL_DOWN		0x1C
-5f0a96b044d8ed Andres Salomon 2009-12-14  151  #define GPIO_INPUT_ENABLE	0x20
-5f0a96b044d8ed Andres Salomon 2009-12-14  152  #define GPIO_INPUT_INVERT	0x24
-5f0a96b044d8ed Andres Salomon 2009-12-14  153  #define GPIO_INPUT_FILTER	0x28
-5f0a96b044d8ed Andres Salomon 2009-12-14  154  #define GPIO_INPUT_EVENT_COUNT	0x2C
-5f0a96b044d8ed Andres Salomon 2009-12-14  155  #define GPIO_READ_BACK		0x30
-5f0a96b044d8ed Andres Salomon 2009-12-14  156  #define GPIO_INPUT_AUX1		0x34
-5f0a96b044d8ed Andres Salomon 2009-12-14  157  #define GPIO_EVENTS_ENABLE	0x38
-5f0a96b044d8ed Andres Salomon 2009-12-14  158  #define GPIO_LOCK_ENABLE	0x3C
-5f0a96b044d8ed Andres Salomon 2009-12-14  159  #define GPIO_POSITIVE_EDGE_EN	0x40
-5f0a96b044d8ed Andres Salomon 2009-12-14  160  #define GPIO_NEGATIVE_EDGE_EN	0x44
-5f0a96b044d8ed Andres Salomon 2009-12-14  161  #define GPIO_POSITIVE_EDGE_STS	0x48
-5f0a96b044d8ed Andres Salomon 2009-12-14  162  #define GPIO_NEGATIVE_EDGE_STS	0x4C
-5f0a96b044d8ed Andres Salomon 2009-12-14  163  
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Bart
