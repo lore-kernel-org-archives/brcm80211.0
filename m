@@ -1,172 +1,146 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D71F65914E
-	for <brcm80211@lists.linux.dev>; Fri, 12 Apr 2024 15:25:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA4D14F9F0
+	for <brcm80211@lists.linux.dev>; Fri, 12 Apr 2024 19:44:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712935537; cv=none; b=eXCyGl4AHQBOd5VbEjRkqvg+veAztgUvxDAVmRYZJgGCUfjmxLFMnPSxWJAp9Z0/COfi0XkpJ1GvwoZPmUSykZY2//J2Y4XCFPrh3Czx/beoXymhGH9lNciahVD2zXIS326TvotTA6w+O7IXXJgYTwT7nyd5THs/td4lxBw69x8=
+	t=1712951044; cv=none; b=jj4dnvBMqYaTbLnXYZ45ZQKIHxefCuv0Ht7KYmO68gyHQsyHjgWQc6lS/nmEacsJ3YnBtLvfuPmXI30f8PEXyDT4vX8/o/y1yuG1o5r+U918lBmOTOsxJUi1uhv0iubFCfnwEQXpdQrLvncT4FaC6dqMISsZBL6xCMykBNTcyWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712935537; c=relaxed/simple;
-	bh=S7VlHsyelUFtnPDVEGGP64cpKaza4iYLGNQG1vXStlA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mNOHb/uDK0Cf7Pk2rw841+QsDHhK/WUcF4nwMTCfQvpT/2v9BhyjwdrXbK2LSI8PsrmwJcEcsaYAjmncMAaeLsOM2VLyu6kOBdzeG1gbhGk7F7o2Y2CPokAGZnostI0ehSA97xTdZg7gLzwNMOZ3yrZw8dv4+WKs8+nI3S+mkoQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=GKnYZYTU; arc=none smtp.client-ip=198.175.65.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1712951044; c=relaxed/simple;
+	bh=IoHqwPR/3f4QWQcrX8xBsgDz0K3wdj+JCIyUfWJkskQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=sQ4peKZEwg0MeetPj7yLNY5LBUuDnJyNGCMrAVr4MPB6uG+LKquJxmkCPoA9Sbo7faPCPX1ebmW2ygN7G2iqzcq7XoxY7U134Ah9W6B2r64ZNkDq9NGDFG1fsjHy2bUCvWDQt8JEb9u9ear9pLJLozSDoVqSdD6IZ1x1t9LXFI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=TkUftyBn; arc=none smtp.client-ip=209.85.208.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GKnYZYTU"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1712935536; x=1744471536;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=S7VlHsyelUFtnPDVEGGP64cpKaza4iYLGNQG1vXStlA=;
-  b=GKnYZYTUGebXahtTGce3t5k6JuuhXvYEj02j4Lk0Z3Mf8YYAIDPWsXMh
-   gdDegLjNwzlroCSuwWARR+1nN6qoOEkjarP/expL0ZxuohDwqk3byO7er
-   635GJULo6BDyoDXEeWN8cSS0VKwwyiKxTStCNPjaw0N/v29QJ5X/awSaR
-   /i2erpSB6nH6kfGf1fQ2FH7gSQYBs8rfrW6+eLpz1qlRm5p4n/TSX4dBd
-   Fgz4i+pJIK3+r/gTCkqKE+/osIAwWubarFn4XUBbRpv5p4b16gLNdy9q5
-   0TScxHKsWTiRjs+O71Uh5cVs8WUhKgEEnPykJMsi6S6E/kULjcJ29yMVe
-   A==;
-X-CSE-ConnectionGUID: 3bjaB2QlQP2uOE+3UB+cNQ==
-X-CSE-MsgGUID: ax2v7NWhTNynnM5yMhqVlg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11042"; a="8501293"
-X-IronPort-AV: E=Sophos;i="6.07,196,1708416000"; 
-   d="scan'208";a="8501293"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Apr 2024 08:25:35 -0700
-X-CSE-ConnectionGUID: Ja/542BbQrK9JUasDdDx8A==
-X-CSE-MsgGUID: wm3UbjEVTWmdccyxEx2mtQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,196,1708416000"; 
-   d="scan'208";a="44521129"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by fmviesa002.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Apr 2024 08:25:31 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.97)
-	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1rvImP-00000003giR-0AId;
-	Fri, 12 Apr 2024 18:25:29 +0300
-Date: Fri, 12 Apr 2024 18:25:28 +0300
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Linus Walleij <linus.walleij@linaro.org>
-Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Kent Gibson <warthog618@gmail.com>, linux-gpio@vger.kernel.org,
-	linux-acpi@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
-	brcm80211-dev-list.pdl@broadcom.com,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Kalle Valo <kvalo@kernel.org>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>
-Subject: Re: [PATCH v2 1/2] gpiolib: Fix a mess with the GPIO_* flags
-Message-ID: <ZhlSaFWlbE6OS7om@smile.fi.intel.com>
-References: <20240408231727.396452-1-andriy.shevchenko@linux.intel.com>
- <20240408231727.396452-2-andriy.shevchenko@linux.intel.com>
- <CACRpkdYaXVvtt3b9rFxU4ZNShD17Bm4XU9X3h4dY501iJy3kPA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="TkUftyBn"
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2d715638540so14699171fa.3
+        for <brcm80211@lists.linux.dev>; Fri, 12 Apr 2024 12:44:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1712951041; x=1713555841; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IoHqwPR/3f4QWQcrX8xBsgDz0K3wdj+JCIyUfWJkskQ=;
+        b=TkUftyBn+3NiW6QWzA7zw1P9uSAOA3x6TOThNHwOwZiAm67m21q+tbmQxFMYYiCIt7
+         c0KYEEwKPcL5r6mUVLaTAUZx2KHMt2bIto7pCAownJNm+O/jhfR8KxYKiRPGxOfSUs5J
+         35A27n3UscW9kqmrO/N/YjEh1LOVeRQnsrS3k+KmnDDademKln0ixg1EOMuU3Ao91AOu
+         CoxMIzquqGn989dvCII7bcTzIWINlkBLVMLiUc9qk2aEcoYSNVBbB1s0m5qKNr2uOcjO
+         Gcd394QypvJ8+pl7TtP/499QMCz3nVh9HlVbUxiai/PbIDANSkOeUgjKI4ARKjS4HNoG
+         3MaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1712951041; x=1713555841;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=IoHqwPR/3f4QWQcrX8xBsgDz0K3wdj+JCIyUfWJkskQ=;
+        b=bNKdrajpS0iKsxNSEAW2m6ctE4sFpaocd/Nm7ypbQZnrKviVWS62cIO6HVxflZ5r1r
+         PHEc7LHVd9NseHuH/MuzVwRn2abhxi4u862OHqzwW3CFSUcswyji+InCTcMxNrePw7NC
+         1b0oiBbsq1cFSxSB9TgeoCPKvvSFQKywLxy7pj21/tEGT5pZlabgzFu2PbHkvfK9cChK
+         kwAJTk4NkDw+keNMruY7GM8lf8EtdFSZNouNt0+znM6vQYT8/xJupjK7YTbgWPj3da7X
+         kZIkU8Gj4xs+KYDS51vjAPF2PUZ+kDMIi0FZF06oQpcECuVu+7UOCdgORKfxzplFdkyH
+         W64A==
+X-Forwarded-Encrypted: i=1; AJvYcCXFl5DH/1q3dWbAhh2r5sGCb5OdLEjqMi35lLgEt3KEcLbUQSNjDRE6kqWalakLX0LbBQt9IDUk3CExavvCYlZfEQnOin3wMF+8
+X-Gm-Message-State: AOJu0Yz1jwgMIoz+HIm+GPoIBxeLGlf2myGEGW09b/7NPRKNM2/UobrM
+	8C1WUGzCZ+M1MJe+j8jEXHUguZeh2EuxQlE8M92Ct/RV9T4fBOlhX7wZkAoFuUKnxo1ASwmZLzu
+	1n6RR5s/jXQeyBRG7LEZUOiei3giV9leut/Asew==
+X-Google-Smtp-Source: AGHT+IHDFaXNrNG2VuRajk4e/f9G/kVH1bAxuITsKhrhrInNpB6M6fKmkwCUyUP9OKMFBkar1WsP6Ai0nTF3XOH1wOg=
+X-Received: by 2002:a2e:a370:0:b0:2d8:8b7:76e3 with SMTP id
+ i16-20020a2ea370000000b002d808b776e3mr2331884ljn.11.1712951041199; Fri, 12
+ Apr 2024 12:44:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACRpkdYaXVvtt3b9rFxU4ZNShD17Bm4XU9X3h4dY501iJy3kPA@mail.gmail.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+References: <20240408231727.396452-1-andriy.shevchenko@linux.intel.com>
+ <20240408231727.396452-2-andriy.shevchenko@linux.intel.com>
+ <CACRpkdYaXVvtt3b9rFxU4ZNShD17Bm4XU9X3h4dY501iJy3kPA@mail.gmail.com> <ZhlSaFWlbE6OS7om@smile.fi.intel.com>
+In-Reply-To: <ZhlSaFWlbE6OS7om@smile.fi.intel.com>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Fri, 12 Apr 2024 21:43:50 +0200
+Message-ID: <CAMRc=Me489H-mTfT1hfUsY47iKwoaVsf6sgkiBwBVkxJOBo9UA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] gpiolib: Fix a mess with the GPIO_* flags
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Linus Walleij <linus.walleij@linaro.org>, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Kent Gibson <warthog618@gmail.com>, 
+	linux-gpio@vger.kernel.org, linux-acpi@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org, 
+	brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com, 
+	Mika Westerberg <mika.westerberg@linux.intel.com>, 
+	Arend van Spriel <arend.vanspriel@broadcom.com>, Kalle Valo <kvalo@kernel.org>, 
+	Charles Keepax <ckeepax@opensource.cirrus.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Apr 12, 2024 at 10:20:24AM +0200, Linus Walleij wrote:
-> On Tue, Apr 9, 2024 at 1:17 AM Andy Shevchenko
-> <andriy.shevchenko@linux.intel.com> wrote:
-> 
-> > The GPIO_* flag definitions are *almost* duplicated in two files
-> > (with unmatches OPEN_SOURCE / OPEN_DRAIN). Moreover, some code relies
-> > on one set of definitions while the rest is on the other. Clean up
-> > this mess by providing only one source of the definitions to all.
+On Fri, Apr 12, 2024 at 5:25=E2=80=AFPM Andy Shevchenko
+<andriy.shevchenko@linux.intel.com> wrote:
+>
+> On Fri, Apr 12, 2024 at 10:20:24AM +0200, Linus Walleij wrote:
+> > On Tue, Apr 9, 2024 at 1:17=E2=80=AFAM Andy Shevchenko
+> > <andriy.shevchenko@linux.intel.com> wrote:
 > >
-> > Fixes: b424808115cb ("brcm80211: brcmsmac: Move LEDs to GPIO descriptors")
-> > Fixes: 5923ea6c2ce6 ("gpio: pass lookup and descriptor flags to request_own")
-> > Fixes: fed7026adc7c ("gpiolib: Make use of enum gpio_lookup_flags consistent")
-> > Fixes: 4c0facddb7d8 ("gpio: core: Decouple open drain/source flag with active low/high")
-> > Fixes: 69d301fdd196 ("gpio: add DT bindings for existing consumer flags")
-> > Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-> 
-> The way the line lookup flags ("lflags") were conceived was through
-> support for non-DT systems using descriptor tables, and that is how
-> enum gpio_lookup_flags came to be.
-> 
-> When OF support was added it was bolted on on the side, in essence
-> assuming that the DT/OF ABI was completely separate (and they/we
-> sure like to think about it that way...) and thus needed translation from
-> OF flags to kernel-internal enum gpio_lookup_flags.
-> 
-> The way *I* thought about this when writing it was certainly that the
-> DT bindings was a separate thing (<dt-bindings/*.h> didn't even exist
-> at the time I think) and that translation from OF to kernel-internal
-> lflags would happen in *one* place.
-> 
-> The main reasoning still holds: the OF define is an ABI, so it can
-> *never* be changed, but the enum gpio_lookup_flags is subject to
-> Documentation/process/stable-api-nonsense.rst and that means
-> that if we want to swap around the order of the definitions we can.
-> 
-> But admittedly this is a bit over-belief in process and separation of
-> concerns and practical matters may be something else...
+> > > The GPIO_* flag definitions are *almost* duplicated in two files
+> > > (with unmatches OPEN_SOURCE / OPEN_DRAIN). Moreover, some code relies
+> > > on one set of definitions while the rest is on the other. Clean up
+> > > this mess by providing only one source of the definitions to all.
+> > >
+> > > Fixes: b424808115cb ("brcm80211: brcmsmac: Move LEDs to GPIO descript=
+ors")
+> > > Fixes: 5923ea6c2ce6 ("gpio: pass lookup and descriptor flags to reque=
+st_own")
+> > > Fixes: fed7026adc7c ("gpiolib: Make use of enum gpio_lookup_flags con=
+sistent")
+> > > Fixes: 4c0facddb7d8 ("gpio: core: Decouple open drain/source flag wit=
+h active low/high")
+> > > Fixes: 69d301fdd196 ("gpio: add DT bindings for existing consumer fla=
+gs")
+> > > Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+> >
+> > The way the line lookup flags ("lflags") were conceived was through
+> > support for non-DT systems using descriptor tables, and that is how
+> > enum gpio_lookup_flags came to be.
+> >
+> > When OF support was added it was bolted on on the side, in essence
+> > assuming that the DT/OF ABI was completely separate (and they/we
+> > sure like to think about it that way...) and thus needed translation fr=
+om
+> > OF flags to kernel-internal enum gpio_lookup_flags.
+> >
+> > The way *I* thought about this when writing it was certainly that the
+> > DT bindings was a separate thing (<dt-bindings/*.h> didn't even exist
+> > at the time I think) and that translation from OF to kernel-internal
+> > lflags would happen in *one* place.
+> >
+> > The main reasoning still holds: the OF define is an ABI, so it can
+> > *never* be changed, but the enum gpio_lookup_flags is subject to
+> > Documentation/process/stable-api-nonsense.rst and that means
+> > that if we want to swap around the order of the definitions we can.
+> >
+> > But admittedly this is a bit over-belief in process and separation of
+> > concerns and practical matters may be something else...
+>
+> Got it. But we have a name clash and the mess added to the users.
+> I can redo this to separate these entities.
+>
+> Note, that there is code in the kernel that *does* use
+> #include <dt-bindings/*.h>
+> for Linux internals.
+>
 
-Got it. But we have a name clash and the mess added to the users.
-I can redo this to separate these entities.
+Well, then they are wrong. We should convert them to using
+linux/gpio/machine.h first. Or even put these defines elsewhere
+depending on what these drivers are using it for in general. Maybe
+machine.h is not the right place. Then once that's figured out, we can
+start renaming the constants.
 
-Note, that there is code in the kernel that *does* use
-#include <dt-bindings/*.h>
-for Linux internals.
+IIUC include/dt-bindings/ headers should only be used by DT sources
+and code that parses the OF properties.
 
-$ git grep -lw '^#include <dt-bindings/.*\.h>' -- drivers/ | xargs dirname | cut -f 1,2 -d '/' | sort -u
-drivers/bus
-drivers/clk
-drivers/clocksource
-drivers/cpufreq
-drivers/dma
-drivers/firmware
-drivers/gpio
-drivers/gpu
-drivers/hwtracing
-drivers/i2c
-drivers/iio
-drivers/input
-drivers/interconnect
-drivers/iommu
-drivers/irqchip
-drivers/leds
-drivers/mailbox
-drivers/media
-drivers/memory
-drivers/mfd
-drivers/net
-drivers/phy
-drivers/pinctrl
-drivers/platform
-drivers/pmdomain
-drivers/power
-drivers/pwm
-drivers/regulator
-drivers/remoteproc
-drivers/reset
-drivers/rtc
-drivers/soc
-drivers/spmi
-drivers/thermal
-drivers/tty
-drivers/video
-drivers/watchdog
+But it seems to me that we need to inspect these users, we cannot just
+automatically convert them at once, this is asking for trouble IMO.
 
-P.S>
-One of the patch this tries to fix is yours IIRC :-)
-
-
--- 
-With Best Regards,
-Andy Shevchenko
-
-
+Bart
