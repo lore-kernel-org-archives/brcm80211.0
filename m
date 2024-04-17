@@ -1,139 +1,167 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE53FE572
-	for <brcm80211@lists.linux.dev>; Wed, 17 Apr 2024 08:45:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6147F9C1
+	for <brcm80211@lists.linux.dev>; Wed, 17 Apr 2024 18:40:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713343549; cv=none; b=VnF4xPVuBH2OHjKQMzMK+k7iE7jXzBP7KTl2hWx0PTa8yoCmDlULknFpPGe/fsa6OhScZnq8L8C57Ia+2X8zO2lejc2f12jYN4pU8gI7Sgvud7cOMidoVPmgyuVpsnaFNWS0Co8tdCpaY1sBEgBVl+iata1zyy8MP67Yf1NONQs=
+	t=1713379208; cv=none; b=kBCVIzKT14dp07pcZrHQvTlFpb1cHSkWqAA5JtWROrwSS3B7CUw3dHs3bWZfpHFelVxRHGJLpGIlRM473N3tmJ3Q6WmgYdOiwcpq1BSuhkzbuj8F1XTEzpfL3UpFCGI+Oxqsg4lx0OnRZx/BpqATo+y1zAuTZhVuqx2aTSZetk8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713343549; c=relaxed/simple;
-	bh=DGDR1TQ4GEjxmU4I2WPT0qXg9Na4g1DIFeR8IF/YkD0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=a24zuUOzSgRlbsH3puNtsPnBxlX9DjNdFT2To3q2Q+N8kgWafTR9l8SWWXnTpni/uxGXf+1/XnQ6FsS0c+JSi+nO7lHgE0s2DwOZBxjbbSy3+tGwHCherwnsTpwM5zssU6WBotqkzBvZ+eX+oJSRuluoI9KnOFiFVBHf/uLmj0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=GhGeig84; arc=none smtp.client-ip=192.198.163.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1713379208; c=relaxed/simple;
+	bh=OhXYRkHlutJXyjU0T9+kwMcG8LQ8HZDcv6iWC6fQg0Y=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=j4eJLXiyUcdse6FEedODNgmZmLiNEL+C3FHsCbB44FzDJXINzpwSbcRtV+eIiC8PRjUiYZPjDDWWRm/DNo1Rychbryhg54mb0lvGqWA9AEiyD/3sMaDO0z8wTll20PlM+1n/rD0VTQ2opUJqnVe+9ZpHwlAGXMxW49YODEZr5/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=q3hQ10tj; arc=none smtp.client-ip=209.85.167.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GhGeig84"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1713343548; x=1744879548;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=DGDR1TQ4GEjxmU4I2WPT0qXg9Na4g1DIFeR8IF/YkD0=;
-  b=GhGeig84DsTiVdutiwJ+Ewn6IamIo84eBp2eY9pYIwPdxTrWxE4FrZ8y
-   C4u0ToVbIdt6YW4vUrpOw7rGNxXxvqQJg3FfERJNI/5+PfFoN3EJK7URl
-   p8jFSeRyQPbP5mLXTsE8kc0SMFUCoYuDuV3PMDUPhVDhWwhTagfGMybIP
-   EnvBeUuwdwhml2QYcdpNCv3g3JpW4Ec7RdBKVF6fljUDasX1zUAihj37f
-   7jfF71gorbzNem3l8zxq5b8e8rnNO32+cKwMz3R1vf81P7AOWd1hPWq6E
-   5IcT8mGCf3fqV5/pHADunkIVtHsa8vfDssa455+peYptT5iTbhYOE1qcd
-   A==;
-X-CSE-ConnectionGUID: Frv/Z05SRp2kR/R2Rch2og==
-X-CSE-MsgGUID: rcJ/CtBGT/Ozfn7nbm9seg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11046"; a="9042934"
-X-IronPort-AV: E=Sophos;i="6.07,208,1708416000"; 
-   d="scan'208";a="9042934"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
-  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Apr 2024 01:45:46 -0700
-X-CSE-ConnectionGUID: ECKDBFvHTOS9kjeT29b6JQ==
-X-CSE-MsgGUID: VqHYRbHcT+eYQVnX3Br7UQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,208,1708416000"; 
-   d="scan'208";a="53520463"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by orviesa002.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Apr 2024 01:45:40 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.97)
-	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1rx0vA-00000004y1K-2EOo;
-	Wed, 17 Apr 2024 11:45:36 +0300
-Date: Wed, 17 Apr 2024 11:45:36 +0300
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Linus Walleij <linus.walleij@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Kent Gibson <warthog618@gmail.com>, linux-gpio@vger.kernel.org,
-	linux-acpi@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
-	brcm80211-dev-list.pdl@broadcom.com,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Kalle Valo <kvalo@kernel.org>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>
-Subject: Re: [PATCH v2 1/2] gpiolib: Fix a mess with the GPIO_* flags
-Message-ID: <Zh-MMAjf6hhNOCpL@smile.fi.intel.com>
-References: <20240408231727.396452-1-andriy.shevchenko@linux.intel.com>
- <20240408231727.396452-2-andriy.shevchenko@linux.intel.com>
- <CACRpkdYaXVvtt3b9rFxU4ZNShD17Bm4XU9X3h4dY501iJy3kPA@mail.gmail.com>
- <ZhlSaFWlbE6OS7om@smile.fi.intel.com>
- <CAMRc=Me489H-mTfT1hfUsY47iKwoaVsf6sgkiBwBVkxJOBo9UA@mail.gmail.com>
- <CACRpkdZRp-DFQgb3=Ut27DHd1w11_aEY0HbLjJHob=C5Ek-dyw@mail.gmail.com>
- <Zh6FkejXcwBTAqIR@smile.fi.intel.com>
- <CAMRc=MeXV4_MT5_DKYtHqO+324dFJnr+Y1UtR9w9mj-y2OOqAw@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="q3hQ10tj"
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-518d98b9620so4973808e87.3
+        for <brcm80211@lists.linux.dev>; Wed, 17 Apr 2024 11:40:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1713379204; x=1713984004; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=R07SR/oel+G1qKlnViSta7s+zv+5bXS+VJuTgJczuYo=;
+        b=q3hQ10tjuO4Pv0J/+rL6j60R2Lk+MepImV469rcfYlvTnDt9/H20amWYmx6Oqqttje
+         v+TmwII+yAkpbabO7ZC4gM/OPkAvis5HAtVixbL22lPd9tiLMavxlMD32vwbnQzXQKgX
+         hrKYfGzCGiDB9YYojkguJRIKeqcBylcI5w2t/aFnDapnDfxGI4L1Fi3pJy+sCMSfAnt2
+         3mKVxFVRt/UPPFTKxVM1kfR/BY6/2qULzuvam5ct1Y4Sytb0S+Rk/kYgJtZO3XrM336G
+         qmKCNbeYvKV/4sYy9EiMQ5x7GIfX3T70mPeZHBzGhF3e+7ayq6bqVjSOyE1RXCazlnVE
+         k07A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713379204; x=1713984004;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=R07SR/oel+G1qKlnViSta7s+zv+5bXS+VJuTgJczuYo=;
+        b=Enf/cvmpshqLUIRLefVcMcqIogdU5K5k+D+nha0BoowCKdBkgMM3lHcpdWrfojcESy
+         pA7s5lJ50Pl9aebH+NM2Sc58ZLBejfFmKyBfsjEgBfNfpkl6wx4q4a2Be9OGPEUQaTv5
+         YZkNV2X8zqrqJpJ3fRQHUBWvu/N3ht7z1gUKlvAouHUxOmeO0ymZTXyYYy5RvqzcoVP1
+         4WiK4kNjckOzUs+z0ovB6WMmGEJ61iMG5gJoO4fRZbXcwjrt4yNEDX49ieinEkfYvkyp
+         RW78sHfDM/e9zo0kdvMLM8iXWqEQPdx5MYlTcRpA5fp8skfcsgahz/IdyVbc/Gc4JKJ9
+         vSYg==
+X-Forwarded-Encrypted: i=1; AJvYcCWb33tRXZCagc/V4S0ZHmqLv/nAB60wUgk6iLXnL9rxUD4mf2u/WV+yD86PgTIndVsXiRlof33ayf9WNgrwQkpGVP0R+8gt6xD0
+X-Gm-Message-State: AOJu0Yza4agA2xtTEKmL9ALw8uQRfFuCZUPpkKq/kBOMk0dTnfntYpDV
+	q/y2ti8yKXTebbSe55dd45WV11Lpx38mO1n6pOPz4kMbsICXWcuM3t0y7KLcN1Vvd3SOLCHnzt+
+	Sphmpl+XqsxbtNnsJMSpdGqLK6jkfHw+oBpMwnA==
+X-Google-Smtp-Source: AGHT+IEcpfs5dpdJJqkCkXSkIR3lyitrJXuKfTPscTjfOwhlfTaeK+LO1vx1F850KkaaLSUV5ElUSJ1vut4ebqszoJs=
+X-Received: by 2002:a19:740a:0:b0:513:5fb0:c5ad with SMTP id
+ v10-20020a19740a000000b005135fb0c5admr89280lfe.17.1713379203946; Wed, 17 Apr
+ 2024 11:40:03 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAMRc=MeXV4_MT5_DKYtHqO+324dFJnr+Y1UtR9w9mj-y2OOqAw@mail.gmail.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+References: <20240408231727.396452-1-andriy.shevchenko@linux.intel.com>
+ <20240408231727.396452-2-andriy.shevchenko@linux.intel.com>
+ <CACRpkdYaXVvtt3b9rFxU4ZNShD17Bm4XU9X3h4dY501iJy3kPA@mail.gmail.com>
+ <ZhlSaFWlbE6OS7om@smile.fi.intel.com> <CAMRc=Me489H-mTfT1hfUsY47iKwoaVsf6sgkiBwBVkxJOBo9UA@mail.gmail.com>
+ <CACRpkdZRp-DFQgb3=Ut27DHd1w11_aEY0HbLjJHob=C5Ek-dyw@mail.gmail.com>
+ <Zh6FkejXcwBTAqIR@smile.fi.intel.com> <CAMRc=MeXV4_MT5_DKYtHqO+324dFJnr+Y1UtR9w9mj-y2OOqAw@mail.gmail.com>
+ <Zh-MMAjf6hhNOCpL@smile.fi.intel.com>
+In-Reply-To: <Zh-MMAjf6hhNOCpL@smile.fi.intel.com>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Wed, 17 Apr 2024 20:39:52 +0200
+Message-ID: <CAMRc=MfJdfwP7=a3govCcj8XHR7uPwCf2BA+BiWqif74pW5u8A@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] gpiolib: Fix a mess with the GPIO_* flags
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Kent Gibson <warthog618@gmail.com>, 
+	linux-gpio@vger.kernel.org, linux-acpi@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org, 
+	brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com, 
+	Mika Westerberg <mika.westerberg@linux.intel.com>, 
+	Arend van Spriel <arend.vanspriel@broadcom.com>, Kalle Valo <kvalo@kernel.org>, 
+	Charles Keepax <ckeepax@opensource.cirrus.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Apr 16, 2024 at 11:07:58PM +0200, Bartosz Golaszewski wrote:
-> On Tue, Apr 16, 2024 at 4:05 PM Andy Shevchenko
-> <andriy.shevchenko@linux.intel.com> wrote:
+On Wed, Apr 17, 2024 at 10:45=E2=80=AFAM Andy Shevchenko
+<andriy.shevchenko@linux.intel.com> wrote:
+>
+> On Tue, Apr 16, 2024 at 11:07:58PM +0200, Bartosz Golaszewski wrote:
+> > On Tue, Apr 16, 2024 at 4:05=E2=80=AFPM Andy Shevchenko
+> > <andriy.shevchenko@linux.intel.com> wrote:
+> > >
+> > > On Tue, Apr 16, 2024 at 02:22:09PM +0200, Linus Walleij wrote:
+> > > > On Fri, Apr 12, 2024 at 9:44=E2=80=AFPM Bartosz Golaszewski <brgl@b=
+gdev.pl> wrote:
+> > > >
+> > > > > IIUC include/dt-bindings/ headers should only be used by DT sourc=
+es
+> > > > > and code that parses the OF properties.
+> > > >
+> > > > That's what I have come to understand as well.
+> > > >
+> > > > I wonder if there is something that can be done to enforce it?
+> > > >
+> > > > Ideally the code that parses OF properties should have to
+> > > > opt in to get access to the <dt-bindings/*> namespace.
+> > >
+> > > Whatever you, guys, come up with as a solution, can it be fixed soone=
+r than later?
+> > > I mean, I would appreciate if somebody got it done for v6.9-rcX/v6.10=
+-rc1 so we don't
+> > > need to look into this again.
 > >
-> > On Tue, Apr 16, 2024 at 02:22:09PM +0200, Linus Walleij wrote:
-> > > On Fri, Apr 12, 2024 at 9:44 PM Bartosz Golaszewski <brgl@bgdev.pl> wrote:
-> > >
-> > > > IIUC include/dt-bindings/ headers should only be used by DT sources
-> > > > and code that parses the OF properties.
-> > >
-> > > That's what I have come to understand as well.
-> > >
-> > > I wonder if there is something that can be done to enforce it?
-> > >
-> > > Ideally the code that parses OF properties should have to
-> > > opt in to get access to the <dt-bindings/*> namespace.
+> > I'm not sure you got what I was saying. I don't think this can be
+> > fixed quickly. This is just another bunch of technical debt that will
+> > have to be addressed carefully on a case-by-case basis and run through
+> > autobuilders in all possible configurations.
 > >
-> > Whatever you, guys, come up with as a solution, can it be fixed sooner than later?
-> > I mean, I would appreciate if somebody got it done for v6.9-rcX/v6.10-rc1 so we don't
-> > need to look into this again.
-> 
-> I'm not sure you got what I was saying. I don't think this can be
-> fixed quickly. This is just another bunch of technical debt that will
-> have to be addressed carefully on a case-by-case basis and run through
-> autobuilders in all possible configurations.
-> 
-> This type of include-related issues is always brittle and will lead to
-> build failures if we don't consider our moves.
+> > This type of include-related issues is always brittle and will lead to
+> > build failures if we don't consider our moves.
+>
+> I proposed a quick fix which was rejected. I think this is still doable i=
+n a
+> few steps:
+>
 
-I proposed a quick fix which was rejected. I think this is still doable in a
-few steps:
+You having proposed a quick fix is not a reason for me to either apply
+it immediately OR equally promptly provide a proper solution myself.
 
-- align constant values in DT and enum
-- drop usage of DT in the kernel code (That's what you want IIUC, however
-  I disagree with this from technical perspective as DT constants can be used
-  in the code as long as they are mapped 1:1 to what code does. That's current
-  state of affairs. OTOH semantically this may be an issue.)
-- restore enum usage treewide (?)
+> - align constant values in DT and enum
+> - drop usage of DT in the kernel code (That's what you want IIUC, however
+>   I disagree with this from technical perspective as DT constants can be =
+used
+>   in the code as long as they are mapped 1:1 to what code does. That's cu=
+rrent
+>   state of affairs. OTOH semantically this may be an issue.)
 
-Again, the problem now is only in open source / open drain configurations
-and there are only a few users of these flags _in kernel_. I do not see
-why it can not be done in one or two evenings time range.
+It's against the convention of only using dt-bindings headers as I
+described before. I disagree with your proposition and it seems to me
+Linus backed me up on this.
 
-P.S>
-Most of the time I spent when prepared the proposed fix is digging the history
-and trying to understand how comes that we have desynchronisation of the values
-over the time. The output of that is the list of Fixes tags.
+> - restore enum usage treewide (?)
+>
+> Again, the problem now is only in open source / open drain configurations
+> and there are only a few users of these flags _in kernel_. I do not see
+> why it can not be done in one or two evenings time range.
+>
 
--- 
-With Best Regards,
-Andy Shevchenko
+So you know what needs doing. I'm at a conference now, I'll be off for
+a week in April and I also have another conference scheduled for May.
+If you believe this needs addressing urgently, then I suggest you do
+it right. Otherwise, I'll get to it when I have the time.
+Unfortunately my TODO list runneth over. :(
 
+But I have to say, I suspect it won't be as easy as you present it
+because we have so many build configs that may fail.
 
+> P.S>
+> Most of the time I spent when prepared the proposed fix is digging the hi=
+story
+> and trying to understand how comes that we have desynchronisation of the =
+values
+> over the time. The output of that is the list of Fixes tags.
+>
+
+Thank you, this history is useful and should make its way into git
+history when we fix this issue.
+
+Bart
