@@ -1,108 +1,88 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.smtpout.orange.fr (smtp-24.smtpout.orange.fr [80.12.242.24])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A912486278
-	for <brcm80211@lists.linux.dev>; Fri, 19 Apr 2024 13:38:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A53784E1D
+	for <brcm80211@lists.linux.dev>; Thu, 25 Apr 2024 09:22:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.12.242.24
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713533922; cv=none; b=n0yZKTQ9+wmTUDdwlGO/GC0trdA4wPKWX4aeR0Manmp1kbbDAw4fmYcqJqwnFtv9KROwZ3B4fZ/HEaxwl5y4CvudzDX4LAbI4ndVN1mkfGF5ps3a9mDYHWwdHCNxR6SVued8akcTCw+q+QluNVQnYJyadvBbDAiom1MEwE5sv0Y=
+	t=1714036939; cv=none; b=VvALE2ru1y3DziU3NURDEUxAlYiUMUyn003tFGdS+qITWM8NpH3wH4bYVKuqlVPK/hYSrVEszN0UNXZ7jjM+KKUeayZY8AfdOe28uTru7cGXalPNnYoAFeUEkOdAlcDXyCFqc5dbPfwJYxY0RDqU5W89HMioSKIivYhsPCCPVM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713533922; c=relaxed/simple;
-	bh=jwbsC0fD3tXEBhZ8hH6zm5PCin5s6aGx9uVnk3yGJoE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hI7izlORX3CLzdXG3XhWIM0QS/MRry7AYkkvPb/WYHY9Pmv4UI2o6mHUBX7wNN0XPWkG3j837EzzC7BoQJSwLFgZBNFL4/h8QCdaLbv+PMRJxWqP2MYmOestg17GngxbGIXbPXmOSlSNOMCaEiGbNTeqDAc1iWeZuFeX/TmEw1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=WsUsr1Yc; arc=none smtp.client-ip=192.198.163.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1714036939; c=relaxed/simple;
+	bh=RYYr6S3bqZ2+QnlX4wSrGo/4TtP3354taVowvs3jNII=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=f+Lp/nz/pwY443Lko9ncmAE4ARXqe3ouOAWwmcUZxonys0Cwnb/love5V9Y1diMkEyvUuGMMB41x90StnNAfBCw9jJF/UU0BCv2MdnddRWujcLRbISoEAeJ2+RsTVa3GaNf5MlRjWzi19j/lLowXTK7CaGjNg/8Nvp9MNx5D3jI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr; spf=pass smtp.mailfrom=wanadoo.fr; dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b=SQCW1HKM; arc=none smtp.client-ip=80.12.242.24
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wanadoo.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="WsUsr1Yc"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1713533920; x=1745069920;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=jwbsC0fD3tXEBhZ8hH6zm5PCin5s6aGx9uVnk3yGJoE=;
-  b=WsUsr1YcUwFELYGPtH/dQoj8amASqcfIAnziqB0+uQXhVusUgogJC9qR
-   SittbFdvzA8zzqX9hInxNmxYAu5ecMp0qW7IRZY27Sv8l8QoUIHO5KCwQ
-   AA0BzTFVYgU9kds9fTXy96Ao0iEcnZVzEvuW2tCyFH6zLsBvf1gknCGCn
-   W1tb8qUohWz/pfOQxfDcput96C1uQPhWTB9NxqaD+BFpJ1YhlRHbwP7uL
-   o3N6oMLvoa2Bn/lhOwyVW66toSexVxQKlUrBwyPWIbDD8IVtQs/nZWIbc
-   nzKwalQuNKOAjkLDIyNBHCn9tuQ88gYo174/Lkp0BVUJ3hUIZg6CVyj2j
-   Q==;
-X-CSE-ConnectionGUID: ppNw5bD6R+eEXlf6cpq5VA==
-X-CSE-MsgGUID: olqZCUtURoiFgmbS4sZreg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11049"; a="19830667"
-X-IronPort-AV: E=Sophos;i="6.07,213,1708416000"; 
-   d="scan'208";a="19830667"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Apr 2024 06:38:39 -0700
-X-CSE-ConnectionGUID: xGTWUNaqTR+mk2e2Z+b4iA==
-X-CSE-MsgGUID: KBwfq0d6RR2PTnL9rUFSXw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,213,1708416000"; 
-   d="scan'208";a="60781831"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by orviesa001.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Apr 2024 06:38:36 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.97)
-	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1rxoRk-00000000jUd-2VWl;
-	Fri, 19 Apr 2024 16:38:32 +0300
-Date: Fri, 19 Apr 2024 16:38:32 +0300
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Linus Walleij <linus.walleij@linaro.org>
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>, Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Kent Gibson <warthog618@gmail.com>, linux-gpio@vger.kernel.org,
-	linux-acpi@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
-	brcm80211-dev-list.pdl@broadcom.com,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Kalle Valo <kvalo@kernel.org>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>
-Subject: Re: [PATCH v2 1/2] gpiolib: Fix a mess with the GPIO_* flags
-Message-ID: <ZiJz2KP8uNkwZ3vD@smile.fi.intel.com>
-References: <20240408231727.396452-2-andriy.shevchenko@linux.intel.com>
- <CACRpkdYaXVvtt3b9rFxU4ZNShD17Bm4XU9X3h4dY501iJy3kPA@mail.gmail.com>
- <ZhlSaFWlbE6OS7om@smile.fi.intel.com>
- <CAMRc=Me489H-mTfT1hfUsY47iKwoaVsf6sgkiBwBVkxJOBo9UA@mail.gmail.com>
- <CACRpkdZRp-DFQgb3=Ut27DHd1w11_aEY0HbLjJHob=C5Ek-dyw@mail.gmail.com>
- <Zh6FkejXcwBTAqIR@smile.fi.intel.com>
- <CAMRc=MeXV4_MT5_DKYtHqO+324dFJnr+Y1UtR9w9mj-y2OOqAw@mail.gmail.com>
- <Zh-MMAjf6hhNOCpL@smile.fi.intel.com>
- <CAMRc=MfJdfwP7=a3govCcj8XHR7uPwCf2BA+BiWqif74pW5u8A@mail.gmail.com>
- <CACRpkdYHuw1K1VYbTH3YzvmZevt_whNsd1ce58wCSd1+B1np5A@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b="SQCW1HKM"
+Received: from localhost.localdomain ([86.243.17.157])
+	by smtp.orange.fr with ESMTPA
+	id zvJ0rM6x8hCCizvJ0ro486; Thu, 25 Apr 2024 11:22:14 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
+	s=t20230301; t=1714036935;
+	bh=0dK7ZlaT22HaVkIUWpHsgyaYXot/beEkT5cEKEbeojE=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version;
+	b=SQCW1HKMP2RBYzYCQ9nkbddK3Vl/LthtQ7dKCnfdETna+aKi4FfaaUqhjWm6ayYGY
+	 NyQ4QSZgttrMpJaFgSiNKL/EO/xWEOt/dxiqX1HjBzOp9mgMzBQRTx5LAOUTWNGDfp
+	 9hRD7JheJKT0+eIUYLv715wKaiAbiHbJO3bL8Uzvekczvv1mCZPRYH73c+yZg8ry+c
+	 dHtgpWcG/bksAZVi5Mhx7jcle7xYOxdY4O74umVekR1zqmvvIsjqxw0fPQ1kuM9FvG
+	 FVgrGw8kwGuqIw29mw9A5Zwes+wur4j6leRnzax6zFgSo2riqMmOpz6862PPva/e1K
+	 YJLdTPqn8H7rQ==
+X-ME-Helo: localhost.localdomain
+X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
+X-ME-Date: Thu, 25 Apr 2024 11:22:15 +0200
+X-ME-IP: 86.243.17.157
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+To: Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Kalle Valo <kvalo@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
+	kernel-janitors@vger.kernel.org,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	linux-wireless@vger.kernel.org,
+	brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com
+Subject: [PATCH] wifi: brcmsmac: ampdu: remove unused cb_del_ampdu_pars struct
+Date: Thu, 25 Apr 2024 11:22:03 +0200
+Message-ID: <fa3b190b6e9cba65ecc36fc93121c6ed8704f704.1714036681.git.christophe.jaillet@wanadoo.fr>
+X-Mailer: git-send-email 2.44.0
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACRpkdYHuw1K1VYbTH3YzvmZevt_whNsd1ce58wCSd1+B1np5A@mail.gmail.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 
-On Fri, Apr 19, 2024 at 03:29:13PM +0200, Linus Walleij wrote:
-> On Wed, Apr 17, 2024 at 8:40 PM Bartosz Golaszewski <brgl@bgdev.pl> wrote:
-> 
-> > Unfortunately my TODO list runneth over. :(
-> 
-> When in situations like this, patch the objective into
-> drivers/gpio/TODO so others can pick it up, that's why
-> I created the file, and it has actually helped a bit!
-> 
-> IMO you don't even need to send edits to this file for
-> review, it's just a work document. Just edit and commit
-> it in your tree.
+struct cb_del_ampdu_pars was added in the initial commit 5b435de0d7868
+("net: wireless: add brcm80211 drivers") and its only usage was removed in
+commit e041f65d5f00 ("brcmsmac: Remove internal tx queue").
 
-Btw, good point and thanks for the reminder, I believe I also can use it,
-but in my case I probably need to send a formal patch :-)
+Remove the structure definition now. This saves a few lines of code.
 
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+---
+Compile tested only
+---
+ drivers/net/wireless/broadcom/brcm80211/brcmsmac/ampdu.c | 6 ------
+ 1 file changed, 6 deletions(-)
+
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/ampdu.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/ampdu.c
+index e859075db716..c3376f887114 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/ampdu.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/ampdu.c
+@@ -143,12 +143,6 @@ struct ampdu_info {
+ 	struct brcms_fifo_info fifo_tb[NUM_FFPLD_FIFO];
+ };
+ 
+-/* used for flushing ampdu packets */
+-struct cb_del_ampdu_pars {
+-	struct ieee80211_sta *sta;
+-	u16 tid;
+-};
+-
+ static void brcms_c_scb_ampdu_update_max_txlen(struct ampdu_info *ampdu, u8 dur)
+ {
+ 	u32 rate, mcs;
 -- 
-With Best Regards,
-Andy Shevchenko
-
+2.44.0
 
