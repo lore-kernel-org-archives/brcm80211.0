@@ -1,36 +1,36 @@
-Received: from smtp.smtpout.orange.fr (smtp-24.smtpout.orange.fr [80.12.242.24])
+Received: from smtp.smtpout.orange.fr (smtp-13.smtpout.orange.fr [80.12.242.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A53784E1D
-	for <brcm80211@lists.linux.dev>; Thu, 25 Apr 2024 09:22:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.12.242.24
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4388184E0D
+	for <brcm80211@lists.linux.dev>; Thu, 25 Apr 2024 10:03:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.12.242.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714036939; cv=none; b=VvALE2ru1y3DziU3NURDEUxAlYiUMUyn003tFGdS+qITWM8NpH3wH4bYVKuqlVPK/hYSrVEszN0UNXZ7jjM+KKUeayZY8AfdOe28uTru7cGXalPNnYoAFeUEkOdAlcDXyCFqc5dbPfwJYxY0RDqU5W89HMioSKIivYhsPCCPVM0=
+	t=1714039436; cv=none; b=u21vnROP0uKTczXKPZkgkAx8OZKbQBmFXcLz7D1bimME3M9467oB2gKRiwf5xj6f6l7gJEiGA9BMDfnAVGHol/tADrNJPUc/NwrhREX4gT0g696NrGn68KV1EZBInWZdo94r1DSyalj+q6VKoQu7d0JsaRXci7mv8mv9PqcpB0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714036939; c=relaxed/simple;
-	bh=RYYr6S3bqZ2+QnlX4wSrGo/4TtP3354taVowvs3jNII=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=f+Lp/nz/pwY443Lko9ncmAE4ARXqe3ouOAWwmcUZxonys0Cwnb/love5V9Y1diMkEyvUuGMMB41x90StnNAfBCw9jJF/UU0BCv2MdnddRWujcLRbISoEAeJ2+RsTVa3GaNf5MlRjWzi19j/lLowXTK7CaGjNg/8Nvp9MNx5D3jI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr; spf=pass smtp.mailfrom=wanadoo.fr; dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b=SQCW1HKM; arc=none smtp.client-ip=80.12.242.24
+	s=arc-20240116; t=1714039436; c=relaxed/simple;
+	bh=7GYrDHi2wc98+LxSD11rnonpx3B7ff5rAPOELGHgubk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=YDeDGhoUmE0jKFchEP4WYDc4sOnTKPrNVHL+Z11FirttnZYZUyWNaLSEzJN/tdk7HDoL1YGoHVIBcrwyfB/vrl8FEkP1zAUV8dGhY3KHZYZ8HFksL2mAL+mP5/5KbLp+gBFZdFdghPpLDrWba/yb3KPgVBpQRpjrb1KxSzHKH9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr; spf=pass smtp.mailfrom=wanadoo.fr; dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b=QlStIszc; arc=none smtp.client-ip=80.12.242.13
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wanadoo.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b="SQCW1HKM"
+	dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b="QlStIszc"
 Received: from localhost.localdomain ([86.243.17.157])
 	by smtp.orange.fr with ESMTPA
-	id zvJ0rM6x8hCCizvJ0ro486; Thu, 25 Apr 2024 11:22:14 +0200
+	id zvxAr3Z51CEcGzvxAryaUS; Thu, 25 Apr 2024 12:03:45 +0200
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
-	s=t20230301; t=1714036935;
-	bh=0dK7ZlaT22HaVkIUWpHsgyaYXot/beEkT5cEKEbeojE=;
+	s=t20230301; t=1714039425;
+	bh=4dV+3BwCxRrU83DUCeOBwVJF38fNi8MvgvnSmXXVELI=;
 	h=From:To:Subject:Date:Message-ID:MIME-Version;
-	b=SQCW1HKMP2RBYzYCQ9nkbddK3Vl/LthtQ7dKCnfdETna+aKi4FfaaUqhjWm6ayYGY
-	 NyQ4QSZgttrMpJaFgSiNKL/EO/xWEOt/dxiqX1HjBzOp9mgMzBQRTx5LAOUTWNGDfp
-	 9hRD7JheJKT0+eIUYLv715wKaiAbiHbJO3bL8Uzvekczvv1mCZPRYH73c+yZg8ry+c
-	 dHtgpWcG/bksAZVi5Mhx7jcle7xYOxdY4O74umVekR1zqmvvIsjqxw0fPQ1kuM9FvG
-	 FVgrGw8kwGuqIw29mw9A5Zwes+wur4j6leRnzax6zFgSo2riqMmOpz6862PPva/e1K
-	 YJLdTPqn8H7rQ==
+	b=QlStIszc4Xr3fHlScsb3ATG/XjVV5B9xVmfLF6iB1o7JoWR0q8XYFM7FE3eMFe0Op
+	 xPGV5wq9+VY0SF/Fm2CO/kLK+VE6dqkVKW2jNJOrzni20viGhc0ORVD7gr/Z12D4WX
+	 s1JxBsRX0vkLfI3eXcbeiEPO6yhw1f3mY9EjjZ0/rdf/jjIGnfPo19KutPamSsRije
+	 I6UiAXYy6S6ZxVr1U4A+NTmMsckpci6Y2Ne002NU+AHp/MGRy1Hqg9eq9UULY3paRi
+	 6/RIuzaisV0Oc+csj4vopJNZU9TcB8g/84a+udD5r8FMtOfW/tjbUXNSL3aE+YOO2q
+	 vPoe4D0iZepPw==
 X-ME-Helo: localhost.localdomain
 X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
-X-ME-Date: Thu, 25 Apr 2024 11:22:15 +0200
+X-ME-Date: Thu, 25 Apr 2024 12:03:45 +0200
 X-ME-IP: 86.243.17.157
 From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 To: Arend van Spriel <arend.vanspriel@broadcom.com>,
@@ -41,9 +41,9 @@ Cc: linux-kernel@vger.kernel.org,
 	linux-wireless@vger.kernel.org,
 	brcm80211@lists.linux.dev,
 	brcm80211-dev-list.pdl@broadcom.com
-Subject: [PATCH] wifi: brcmsmac: ampdu: remove unused cb_del_ampdu_pars struct
-Date: Thu, 25 Apr 2024 11:22:03 +0200
-Message-ID: <fa3b190b6e9cba65ecc36fc93121c6ed8704f704.1714036681.git.christophe.jaillet@wanadoo.fr>
+Subject: [PATCH] wifi: brcmfmac: remove unused brcmf_usb_image struct
+Date: Thu, 25 Apr 2024 12:03:18 +0200
+Message-ID: <23afd8c1733ad087ce2399a07a30d689aef861d5.1714039373.git.christophe.jaillet@wanadoo.fr>
 X-Mailer: git-send-email 2.44.0
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
@@ -53,9 +53,13 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-struct cb_del_ampdu_pars was added in the initial commit 5b435de0d7868
-("net: wireless: add brcm80211 drivers") and its only usage was removed in
-commit e041f65d5f00 ("brcmsmac: Remove internal tx queue").
+struct brcmf_usb_image was added in the initial commit 71bb244ba2fd5
+("brcm80211: fmac: add USB support for bcm43235/6/8 chipsets") and updated
+in commit 803599d40418 ("brcmfmac: store usb fw images in local linked
+list.")
+
+Its only usage was removed in commit 52f98a57d8c1 ("brcmfmac: remove
+firmware list from USB driver").
 
 Remove the structure definition now. This saves a few lines of code.
 
@@ -63,26 +67,27 @@ Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 ---
 Compile tested only
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmsmac/ampdu.c | 6 ------
- 1 file changed, 6 deletions(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c | 7 -------
+ 1 file changed, 7 deletions(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/ampdu.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/ampdu.c
-index e859075db716..c3376f887114 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/ampdu.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/ampdu.c
-@@ -143,12 +143,6 @@ struct ampdu_info {
- 	struct brcms_fifo_info fifo_tb[NUM_FFPLD_FIFO];
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
+index 0ccf735316c2..9a105e6debe1 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
+@@ -117,13 +117,6 @@ struct bootrom_id_le {
+ 	__le32 boardrev;	/* Board revision */
  };
  
--/* used for flushing ampdu packets */
--struct cb_del_ampdu_pars {
--	struct ieee80211_sta *sta;
--	u16 tid;
+-struct brcmf_usb_image {
+-	struct list_head list;
+-	s8 *fwname;
+-	u8 *image;
+-	int image_len;
 -};
 -
- static void brcms_c_scb_ampdu_update_max_txlen(struct ampdu_info *ampdu, u8 dur)
- {
- 	u32 rate, mcs;
+ struct brcmf_usbdev_info {
+ 	struct brcmf_usbdev bus_pub; /* MUST BE FIRST */
+ 	spinlock_t qlock;
 -- 
 2.44.0
 
