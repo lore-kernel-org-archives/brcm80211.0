@@ -1,56 +1,56 @@
-Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCEB622EE9
-	for <brcm80211@lists.linux.dev>; Thu, 25 Apr 2024 11:48:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8287A84FD6
+	for <brcm80211@lists.linux.dev>; Thu, 25 Apr 2024 11:49:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714045688; cv=none; b=VdYvBXUAjFZJ/DrZ7arJsOF18WBMSjkgkQf/lESZHPQTQkjQFWoHmA5MvYpeK9AQ9XKq7dhtgdnBE8J5OHqI2OXMvPoysg2LofnQJGvN1ByrmleBciGBfw9wlVuwkOOebY38iok00l9ru3FMV48OCpIQLhHiZk6jevyawxPkxGk=
+	t=1714045781; cv=none; b=tR5GhKp8rs1HQRxFcBnWA264ST9yuOcb/AV+pxwQHFljD/7itNWP5oLwXu8DrU3yQ1XZtlGwNaWwGGIbQwPcPEEBZNv5ys/jO6gLKAZpj5Y/x8cw6ZwlwOQc2EvD5SMrTB4wKXxKSNjaltr5i5JJCmSqNNzxoXu8zifqSvjcfJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714045688; c=relaxed/simple;
-	bh=ul9l8Pr3sodmiZdRPi5njSzVZcTju+s6ZNyqbmOwkRk=;
+	s=arc-20240116; t=1714045781; c=relaxed/simple;
+	bh=uPLKKBvgVFye0xREJU6INlNtjU8NQqWadu9I120vQog=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LegXDBnq+VEawfN9nYpY4C0eNTUvJgrSaHxRFZUM3O4X4JKwKAo3XUFiSnxaylv4I8gvfxJWiiROWRdGE/iOiVbsYMjKqYZc/Ko/saGg04JKpWltrakv7EuWhzZewLb0mAlzIt3vwsdhPGf4jkPGj9tqYG41Q96P8zb3Uqyykiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=KB8G9K2O; arc=none smtp.client-ip=209.85.215.180
+	 In-Reply-To:Content-Type; b=rxhOo6hIn8GgaqGP1MH+sWMpfhInCg41nlt3jIWNN5CdMzyOA1UMXLm9qX6anCwvU/C153oIV7E3ILYH+vdBZZr9STImQ/jpE15HlnfiOE5nXFR7inYCcpJ8r1jJMXQTG+BqIlf7Qmav0SSael1ZRC4GJicyGeFnI66C04WXMjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=SOCZVeQ5; arc=none smtp.client-ip=209.85.214.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="KB8G9K2O"
-Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-5dbf7b74402so641049a12.0
-        for <brcm80211@lists.linux.dev>; Thu, 25 Apr 2024 04:48:06 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="SOCZVeQ5"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-1e3c9300c65so7219325ad.0
+        for <brcm80211@lists.linux.dev>; Thu, 25 Apr 2024 04:49:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1714045686; x=1714650486; darn=lists.linux.dev;
+        d=broadcom.com; s=google; t=1714045778; x=1714650578; darn=lists.linux.dev;
         h=in-reply-to:autocrypt:from:references:cc:to:subject:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=f485i9Vcjw3I7L7mZrCo1Y+HudDZ/14sTDPoEFw3/Nk=;
-        b=KB8G9K2O9/YldjqZ+po1/UMzD6EGSj4avf1YyGlc7uhOlq673Ehkxzk+AlVKZ+tm4C
-         eqPpyGZ0Se15RgMG5F4bMqNHDzxOAJXPaSHx8o7sp2wvhYcj5EfqOlA51Nsa44ADFhYd
-         M95I2v6a8bsghf8wjlOz0Se35PPqwVHN+L9DM=
+        bh=3KHIBxRR+WSnf2JlFa9Kj4soHfcSUdltXz+Jdxa54uc=;
+        b=SOCZVeQ570A6npwbOdHm2Gr3qXfWuOn6J6Xgwqsh4CIzyeT83t7CzfS5Aln87Quzoa
+         7Xh4MkiKDfQmNZieZfHjLhJ8dWv8ktVts4KFb9GVMEaCRdWUUlFub/h6sVPT3zcxAjw9
+         KCWOBaO+pt8ThxLYA8gHiGufP1nrRDznFf/M0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714045686; x=1714650486;
+        d=1e100.net; s=20230601; t=1714045778; x=1714650578;
         h=in-reply-to:autocrypt:from:references:cc:to:subject:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=f485i9Vcjw3I7L7mZrCo1Y+HudDZ/14sTDPoEFw3/Nk=;
-        b=PUM06TGm3tiWky1B7Y92OHIWzZumaQdzBfd5okZqLJx7N3oJeeLk4MsKSVUR1SDlqg
-         qXGe2hQF6upIISpQfiN1SrGotDy4Fh4ek4EBwAQwFEJWo48w/uKZ8u/1j22OS/FPii9u
-         z2BOatd3db9JcdigIC3+npAU+ML0v29TYFoEvrMDBkkZursY6TDV2MJ/iMFkkq10KIvW
-         ZadoW0jxGf2PDQ8rTXUx0ERgbTA2DpqvCl+n4WAa4JSgfMeO5zdckZzySKS1CafB0Cic
-         ymoigWTNzWrEJGGprrUqVcfCCE2gFMqr+37SKnXiGpfZt/AL7nFNBmwZtjy9KVRBPlu9
-         lMQg==
-X-Forwarded-Encrypted: i=1; AJvYcCXZLQZvfu9g3C0AM+l5sXiSBpOR9JjV+4Ez99tFOhtfiAvAOfilQ2UertirNTa96F20b6Cpo0mqjNchyCLpozZi1sU8yFpiWaij
-X-Gm-Message-State: AOJu0YwTGyb0nFDYVPcC8JPk7SrCs0LFrYTOksdktSiIcOCriOxNmxC2
-	6mUeVPUJQTStUx8PpLq1kjhjg/sABk+zSTraE35649MLol2Swz3tf6AsRV4Pag==
-X-Google-Smtp-Source: AGHT+IG4rxEoIT1sBKl5Z42Y50ieKK3O8ZT5Q8SWBYDNTcpJotrlTjKFDFPiM81bAuQoMRFF1zo6zQ==
-X-Received: by 2002:a17:90a:6048:b0:2a5:5a2c:6066 with SMTP id h8-20020a17090a604800b002a55a2c6066mr5240829pjm.37.1714045686169;
-        Thu, 25 Apr 2024 04:48:06 -0700 (PDT)
+        bh=3KHIBxRR+WSnf2JlFa9Kj4soHfcSUdltXz+Jdxa54uc=;
+        b=Y2RcfsWC1hVtDBKGW8qTYdpaOkcpFAsgKXIviAD36y1JttzfIxTxvFEd9AqNwzk1CG
+         q6JFLWL/y/yyeHr+Lgf207ELYwTInjJAtXgCok6aERD487yEZRwzr5kGmBnIjYNV40Jp
+         +8MNBvBqcR0UV+oTHDFwdgOuVRety+aG2CDbeckPzvT21ASLuuTroAMUnjUuJ4nCWCDI
+         57JgzG5XgAGBFCnynKBIF03k7KLT7NoRwQkyz3EXey/sfbq81Tt1IocGg+GX1KsnpJff
+         7HUA8tf3Pow/tZJSqACqdZDtRWJKq2H4c7MkQHWYBnsLebHRRwPII+VIeBzDZIcf5VBP
+         eUsA==
+X-Forwarded-Encrypted: i=1; AJvYcCU+MUod88uHK3Zi042rYx9bdUWg6N5Uxk4taoBjFGZRJux96/H/H/JPinm5GTlujMV7P3BicNdt/03qqTDxiLfOCG63zIhPa5pq
+X-Gm-Message-State: AOJu0Yw2WipP7CocuGyBki+geo3rMrdpHBHDKVzQSSdHRIGiHFzSifIf
+	mWK+hVyPZNcn8kp3Ir00Rcny2pkdgqM0HppmmcERVRwHZ8Ic7p3TNZuwlBmBDA==
+X-Google-Smtp-Source: AGHT+IFesBfXUKFB9PbMXgNLvo4aipzRs32Aq7/w2bnlXkC5AGdKmswR6DQZGs5wfJZ6nHwFmFWLDw==
+X-Received: by 2002:a17:902:e542:b0:1e4:32b9:c39d with SMTP id n2-20020a170902e54200b001e432b9c39dmr6348657plf.13.1714045777814;
+        Thu, 25 Apr 2024 04:49:37 -0700 (PDT)
 Received: from [10.176.68.61] ([192.19.176.250])
-        by smtp.gmail.com with ESMTPSA id i8-20020a17090a718800b002a2e6152f55sm14478447pjk.25.2024.04.25.04.48.02
+        by smtp.gmail.com with ESMTPSA id l6-20020a170903244600b001ea963d0d58sm1867265pls.137.2024.04.25.04.49.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 Apr 2024 04:48:04 -0700 (PDT)
-Message-ID: <65b37377-3bde-4f09-aae9-ca721494e981@broadcom.com>
-Date: Thu, 25 Apr 2024 13:47:59 +0200
+        Thu, 25 Apr 2024 04:49:37 -0700 (PDT)
+Message-ID: <71e03d9f-32ae-4cdb-982e-4ea0b8c699b8@broadcom.com>
+Date: Thu, 25 Apr 2024 13:49:33 +0200
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -58,14 +58,13 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] wifi: brcmsmac: ampdu: remove unused cb_del_ampdu_pars
- struct
+Subject: Re: [PATCH] wifi: brcmfmac: remove unused brcmf_usb_image struct
 To: Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
  Kalle Valo <kvalo@kernel.org>
 Cc: linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org,
  linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
  brcm80211-dev-list.pdl@broadcom.com
-References: <fa3b190b6e9cba65ecc36fc93121c6ed8704f704.1714036681.git.christophe.jaillet@wanadoo.fr>
+References: <23afd8c1733ad087ce2399a07a30d689aef861d5.1714039373.git.christophe.jaillet@wanadoo.fr>
 From: Arend van Spriel <arend.vanspriel@broadcom.com>
 Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
  xsFNBGP96SABEACfErEjSRi7TA1ttHYaUM3GuirbgqrNvQ41UJs1ag1T0TeyINqG+s6aFuO8
@@ -110,33 +109,56 @@ Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
  NKowQLrlMBGXT4NnRNV0+yHmusXPOPIqQCKEtbWSx9s2slQxmXukPYvLnuRJqkPkvrTgjn5d
  eSE0Dkhni4292/Nn/TnZf5mxCNWH1p3dz/vrT6EIYk2GSJgCLoTkCcqaM6+5E4IwgYOq3UYu
  AAgeEbPV1QeTVAPrntrLb0t0U5vdwG7Xl40baV9OydTv7ghjYZU349w1d5mdxg==
-In-Reply-To: <fa3b190b6e9cba65ecc36fc93121c6ed8704f704.1714036681.git.christophe.jaillet@wanadoo.fr>
+In-Reply-To: <23afd8c1733ad087ce2399a07a30d689aef861d5.1714039373.git.christophe.jaillet@wanadoo.fr>
 Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-	boundary="0000000000004716a80616ea5c08"
+	boundary="000000000000be57bd0616ea6103"
 
---0000000000004716a80616ea5c08
+--000000000000be57bd0616ea6103
 Content-Language: en-US
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 4/25/2024 11:22 AM, Christophe JAILLET wrote:
-> struct cb_del_ampdu_pars was added in the initial commit 5b435de0d7868
-> ("net: wireless: add brcm80211 drivers") and its only usage was removed in
-> commit e041f65d5f00 ("brcmsmac: Remove internal tx queue").
+On 4/25/2024 12:03 PM, Christophe JAILLET wrote:
+> struct brcmf_usb_image was added in the initial commit 71bb244ba2fd5
+> ("brcm80211: fmac: add USB support for bcm43235/6/8 chipsets") and updated
+> in commit 803599d40418 ("brcmfmac: store usb fw images in local linked
+> list.")
+> 
+> Its only usage was removed in commit 52f98a57d8c1 ("brcmfmac: remove
+> firmware list from USB driver").
 > 
 > Remove the structure definition now. This saves a few lines of code.
 
-Thanks. Looks good to me.
+Thanks for the cleanup/
 
 Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
 > Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 > ---
 > Compile tested only
 > ---
->   drivers/net/wireless/broadcom/brcm80211/brcmsmac/ampdu.c | 6 ------
->   1 file changed, 6 deletions(-)
+>   drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c | 7 -------
+>   1 file changed, 7 deletions(-)
+> 
+> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
+> index 0ccf735316c2..9a105e6debe1 100644
+> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
+> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
+> @@ -117,13 +117,6 @@ struct bootrom_id_le {
+>   	__le32 boardrev;	/* Board revision */
+>   };
+>   
+> -struct brcmf_usb_image {
+> -	struct list_head list;
+> -	s8 *fwname;
+> -	u8 *image;
+> -	int image_len;
+> -};
+> -
+>   struct brcmf_usbdev_info {
+>   	struct brcmf_usbdev bus_pub; /* MUST BE FIRST */
+>   	spinlock_t qlock;
 
---0000000000004716a80616ea5c08
+--000000000000be57bd0616ea6103
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -207,14 +229,14 @@ BtkeSGJx/8dy0h8YmRn+adOrxKXHxhSL8BNn8wsmIZyYWe6fRcBtO3Ks2DOLyHCdkoFlN8x9VUQF
 N2ulEgqCbRKkx+qNirW86eF138lr1gRxzclu/38ko//MmkAYR/+hP3WnBll7zbpIt0jc9wyFkSqH
 p8a1MYICbTCCAmkCAQEwazBbMQswCQYDVQQGEwJCRTEZMBcGA1UEChMQR2xvYmFsU2lnbiBudi1z
 YTExMC8GA1UEAxMoR2xvYmFsU2lnbiBHQ0MgUjMgUGVyc29uYWxTaWduIDIgQ0EgMjAyMAIMTv1t
-bpIzNUky46LXMA0GCWCGSAFlAwQCAQUAoIHUMC8GCSqGSIb3DQEJBDEiBCCfSOdmqDy3KsFQQO+5
-qshRzgyQCg0yhNAh28cfyx/mRjAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJ
-BTEPFw0yNDA0MjUxMTQ4MDZaMGkGCSqGSIb3DQEJDzFcMFowCwYJYIZIAWUDBAEqMAsGCWCGSAFl
+bpIzNUky46LXMA0GCWCGSAFlAwQCAQUAoIHUMC8GCSqGSIb3DQEJBDEiBCDTB5rMd0CX9Oc5uJrK
+JsrgGiMmr2sg/rJg69PvpQoNATAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJ
+BTEPFw0yNDA0MjUxMTQ5MzhaMGkGCSqGSIb3DQEJDzFcMFowCwYJYIZIAWUDBAEqMAsGCWCGSAFl
 AwQBFjALBglghkgBZQMEAQIwCgYIKoZIhvcNAwcwCwYJKoZIhvcNAQEKMAsGCSqGSIb3DQEBBzAL
-BglghkgBZQMEAgEwDQYJKoZIhvcNAQEBBQAEggEANtSmO3GZMPbPlsrzCzC+52X3Y5W7bXiNnb5M
-LI9G/T1BvgUkSqa8G+CB4Wk/dfJPaqlFjT98tEZLkgyrFhNtksl6FDppr/xSLWf7uSz4Ocx23JLT
-mz/IBRdtkglLiQCdgLkk2LOUMeZnH+mTsNVMCJRWjkQNpfKmeoXI1V1b0LuIKdOOvxpG2Y9BJoS3
-slXc5wv5ixjSuu9QPCo5DnCpvyY35wk+b400cTmb1m3+knmc/yncZ+WwQ6OAIfGtS029vsPoIo6a
-fqOnMaKiU9w2b96fhnwU/o/kd+YmE57WVIyO7ZwsCpieVZIuz9pK5Uwp7N6b4AgDvFKDFBJD7+kD
-WA==
---0000000000004716a80616ea5c08--
+BglghkgBZQMEAgEwDQYJKoZIhvcNAQEBBQAEggEAG3sJx8IAVYN7qpm35d2f8JBmLz1UNoOx3sPv
+4ZJlor8Bx7/K6xiLe0GgnTvWApAxFspTWuPXukqoHZkY93e8bcqtZSetZLECbpOzaqZDoO435PBQ
+aGavjQlM8/zhWBmbyMSBy+KIokR8rvH7ETY6FaiHb5FO5rmwXKrfyKD8NFEzwTvkZm6VPZiiAatJ
+iM6h6XHUJbMoTYuU8gvHhreGoFOelZ+ZBspG+qdqXh6PRcE4cwxckYrYxIKUn+LVnxGLwIBZgEsp
+qDoQpbwT9vuBLEM/5Rv55ZBWxeNHqtAjrYXJUz09rwVjs1BzyyvOfdb4OCFxMXc8aBPDqQBsadaF
+4A==
+--000000000000be57bd0616ea6103--
