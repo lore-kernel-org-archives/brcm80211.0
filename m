@@ -1,192 +1,427 @@
-Received: from mail-oo1-f45.google.com (mail-oo1-f45.google.com [209.85.161.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from EUR04-DB3-obe.outbound.protection.outlook.com (mail-db3eur04olkn2029.outbound.protection.outlook.com [40.92.74.29])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4D03653;
-	Sat, 18 May 2024 01:25:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.45
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715995514; cv=none; b=g/84IcyJeQJwhKwS11O8Z03HJqoIzYWm7bOUAsQxTRFLSYOyZrpFIVvx7v+ceCHLWq+07R1pETY+ubwoS1QvKC4Rankq6AzLQxFuC3tV9v/cH1gB0vqydtZtutUC2p4xRKo8ZORczAhwn1CtMihnuOxpHkNV3CY2hPlCOI3eUdg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715995514; c=relaxed/simple;
-	bh=c5iU4d0KugAsNiJ78E34UP2hhUUvKxnLdWrV/fkAXuI=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=dNOefcd6juI+hFvcmSzari5LxYlnOPFzMQdp+t/ASy/1841IOrqjj9+fe7eJzOXMpmhWQVjwYoAJ93CTw18jhs5S5eNZljk4EkTXCsjHewS8ncyaOIU3nq5RErlPVR+ep8h0VMaw/YIa3jHS5DpLBbpuGoGh4v5QT2vKK8VQh58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Rw0C5J72; arc=none smtp.client-ip=209.85.161.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F0F717C60
+	for <brcm80211@lists.linux.dev>; Sun, 26 May 2024 15:53:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.92.74.29
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1716738836; cv=fail; b=Y26VxEUfDgfo1fAZC6b7lAzKazXmfzotWhbPK0h0eE1jmdTC2Qc/gu2uZMxQ6z24P6x/bgnb4e318wIHAhPDNeb0pERUyBKzEr526CCh6grX1oRioFUVecyouGD4n+2ydIQA6VL0L664nFUTxpM87NkoCbNDprfy0HURy8d/XTo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1716738836; c=relaxed/simple;
+	bh=bGl+cZdEw7TEOUlR95vUSFWfEFJ/b8QEHSRdZ++DZ/c=;
+	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=ZuNpYWVaWyt9OdkI7cM0pIxx78xe3UgPt6uBSj4E/JFzOy0yAJO1zFuX5wbAUA8uMFdRd9VBoaCYvLMMe6AVfoENYYP/Q7JNTD+PhmEhPP69wfzJwtYO9KbwskhSHfzTegHJgy9SgyDACtq3h3Hzd3tOToNgWmjiHeK7x1RlQbY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=fJ1wL3pX; arc=fail smtp.client-ip=40.92.74.29
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Rw0C5J72"
-Received: by mail-oo1-f45.google.com with SMTP id 006d021491bc7-5b279e04391so488602eaf.3;
-        Fri, 17 May 2024 18:25:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715995511; x=1716600311; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :references:cc:to:from:subject:user-agent:mime-version:date
-         :message-id:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=cJqjedwoYcqSzJKmZSEwT+6hVhtxWLfg/8QtauvSdx4=;
-        b=Rw0C5J726+Lqvp8SxRcfLwFwto03B1DuM/YzljzpliiMtlGXJVzeJQN3EItAeM4TpE
-         vJUKIzpvXD/0tnUDAp6koyOzFi8/vVpq9mz/Z8t7tMoF0sQp/NGK/3ktiVURa4Uy2RZq
-         wOe+loKHitRd5yy0J/RPL5CAqcPVyC20bDf/niDsmQag+WKbvAPinPMMtqYJuPZcvL6s
-         yBIDnJhDf8edi61Sg+Qm5sYZ2m7zcaIoBPh9VL57V76+Er5uYRECWWezkglbbDlNmlUu
-         nYUfiWc/vnKMF1NWBIW7X027x6Fy6vtxd2mYEru3VnOGO9R5udQFC5b9lBs8aliGRtvx
-         HD8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715995511; x=1716600311;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :references:cc:to:from:subject:user-agent:mime-version:date
-         :message-id:sender:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cJqjedwoYcqSzJKmZSEwT+6hVhtxWLfg/8QtauvSdx4=;
-        b=g5PPd0S0FJsx6H1yefMyzaKhORjQc/2aHEUD1Gy0WHHGcRejC4EPFQe1KSejK7wUuN
-         SvBUMQX58qydBrL94loxq3o/N4e20d69SJEU5LUZfVAgps2s3QU3DsiPL0hc14zTeD7o
-         ldYd49+BZWvKXG9ewn+luNFZHNhvwWuwOZxNUAUiOmVcVVxEA58Zwx/aBiXKVFtSiG7n
-         1I0KG2lVKDDeOCdHL/yykTQ4n0s7RLnbaUHtK3/zMyJgSX38L/ZThaAgmDswBpIg8AxK
-         GyolrjC05AmEg8fAhwO35DUpMUCqxeW9UV3WZJ/cZNEmJmqOsh44Iftt4Tk1SC9s4fVK
-         uwtg==
-X-Forwarded-Encrypted: i=1; AJvYcCUgk881BZ6wZ0YYOWATRvFaXZ0+KBdxujRBYyVNO9Lg36PE+azD4VZd9qZK7tZ1O+cxueUJsMMud+xJ0tJ66CHAba49LggM2+zWsbVdZ8NbuA9kr5W4NfTuS8z8Mfqoox1qzQqmcpASKcAjwszPkEMTzDMfIDL50xool7qcECjV02itXesX9wKH/V2oMUgB4B0U7mt+zfpcSbdEcUmM
-X-Gm-Message-State: AOJu0Ywogc45qUUAV28y03+ev/C8iEYHFdNkF6O8LIthibAl1N1cqfJf
-	um1VUazvORJiW0sCablI3X1KG7UwIBKyCg4WWHf9U2/UQuzN5wDm
-X-Google-Smtp-Source: AGHT+IFRaG5+veBhAS+2oO1Mq9a7mnKgK9vX9unu3cCbE/KbyDzrBjSt084GN8tso2cWg108BqN4VA==
-X-Received: by 2002:a05:6870:a3d2:b0:240:c8ff:c96a with SMTP id 586e51a60fabf-241728fc1damr27553351fac.27.1715995510785;
-        Fri, 17 May 2024 18:25:10 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-6f4d2a66316sm15339938b3a.35.2024.05.17.18.25.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 May 2024 18:25:09 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <64db2b94-edb3-4ea3-87cf-bb91746869e6@roeck-us.net>
-Date: Fri, 17 May 2024 18:25:06 -0700
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="fJ1wL3pX"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=jnQ6/pqT4botwRxp8U00U0m2pdlox+GZZ5mbiKbs+5HUOOrruNtEs7r5YRQRGUKoSC7Z+rWfHM0ZUABY+W48bRPj7eI8XPqGkJ/jfxDiqFCT9j5o8/mYlrvc7p6q7ETUz5Wbjpy+OF0v6xeKjvzym1gTfJveNrL941Z5ae6qHlDsO/f36KtF7wnv6Y7JC8EnBuC5ODLjPZoiKxBmHoGFFVrQeowIOTc7SOiUBXLO6SrOTPpRKsFHC9BDR/UPAXuS7BBgZMKc8k2B8dJ3XwERp8kml7oVrvjqtnIsE46fQZlrN/6seaCK73BGU8D3yhWTgCXCD25UYCgYUM7+ce68zA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=1UjF533ne+R29oKLdkWmIC0TlClWGbaMuVjAVoDlBjQ=;
+ b=KZ424co83lfv2Xn7nvjscBglFsKepcKDQtO21lREoIHLJhZkJbeP9hIDFqzG6lSgK5sIv6Jaj2xf/sxdHemz5uB9MZm+Zmz3/MrC8uXO8blgZlHCIYRol3sU79y0sImVW4CKw4QCf6zyxppN8/npKK+6zxr150DSTkAU/9pWinEwuSnZWred1mYhBM7jTHf+MqIZfXP/Hvj643gPbw3TMaSHIu4pMR6PfAmVx7FmT8Pssbkf+XGZf2VuXELSAA75aQ39MQMWscP+mdOK6iz5sW/oQFJFkK9L8FJz0aNslIsdRhg3tFZxikapU6FKdr/LRKkvTKfTjwx35KRH05URQw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=1UjF533ne+R29oKLdkWmIC0TlClWGbaMuVjAVoDlBjQ=;
+ b=fJ1wL3pXwm6SQ8Ket/CT4hkMEXxezXOsRw6zgIrVaqri2lemDfHWXYESSZRfQ4ZL5KgAQ3gYbPatA4V6Nel6xUT/IP9PB9SLnbyXbyNNtTKAck9bev2eVpkU/q5YdA+ps7Il0fkTf33EbOmakWOBQvXuwubRGnpwCWN8L6LAWDEqlNqcKl/QpUU0Dr9B9MY7Z8dy2oYsYr0aaJC47T+3VnMon6pjcwQw4FUDnr/Ssd33WAbVlk99x+xAFiW0EoUjAsWmDFehymgwXDphJn0+Tixt84pmCiM2uk1NGs3lJ4Ipj9ToEQl0hpVkheawHe6FLoqVTiDV8/YI1kSOz5YHtQ==
+Received: from AS8PR02MB7237.eurprd02.prod.outlook.com (2603:10a6:20b:3f1::10)
+ by GV1PR02MB8260.eurprd02.prod.outlook.com (2603:10a6:150:63::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7611.29; Sun, 26 May
+ 2024 15:53:49 +0000
+Received: from AS8PR02MB7237.eurprd02.prod.outlook.com
+ ([fe80::409b:1407:979b:f658]) by AS8PR02MB7237.eurprd02.prod.outlook.com
+ ([fe80::409b:1407:979b:f658%5]) with mapi id 15.20.7611.025; Sun, 26 May 2024
+ 15:53:49 +0000
+From: Erick Archer <erick.archer@outlook.com>
+To: Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Kalle Valo <kvalo@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Yajun Deng <yajun.deng@linux.dev>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	Artem Chernyshev <artem.chernyshev@red-soft.ru>,
+	Kees Cook <keescook@chromium.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Justin Stitt <justinstitt@google.com>
+Cc: Erick Archer <erick.archer@outlook.com>,
+	linux-wireless@vger.kernel.org,
+	brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com,
+	linux-kernel@vger.kernel.org,
+	linux-hardening@vger.kernel.org
+Subject: [PATCH] wifi: brcm80211: use sizeof(*pointer) instead of sizeof(type)
+Date: Sun, 26 May 2024 17:53:30 +0200
+Message-ID:
+ <AS8PR02MB7237C3696881F79EAEE8D02E8BF72@AS8PR02MB7237.eurprd02.prod.outlook.com>
+X-Mailer: git-send-email 2.25.1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-TMN: [La+141XPgp9H8RHDMk4rtECEn+K2ONDI]
+X-ClientProxiedBy: MA2P292CA0025.ESPP292.PROD.OUTLOOK.COM (2603:10a6:250::9)
+ To AS8PR02MB7237.eurprd02.prod.outlook.com (2603:10a6:20b:3f1::10)
+X-Microsoft-Original-Message-ID:
+ <20240526155330.5208-1-erick.archer@outlook.com>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tracing/treewide: Remove second parameter of
- __assign_str()
-From: Guenter Roeck <linux@roeck-us.net>
-To: Steven Rostedt <rostedt@goodmis.org>
-Cc: LKML <linux-kernel@vger.kernel.org>,
- Linux trace kernel <linux-trace-kernel@vger.kernel.org>,
- Masami Hiramatsu <mhiramat@kernel.org>,
- Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
- Linus Torvalds <torvalds@linux-foundation.org>,
- linuxppc-dev@lists.ozlabs.org, kvm@vger.kernel.org,
- linux-block@vger.kernel.org, linux-cxl@vger.kernel.org,
- linux-media@vger.kernel.org, dri-devel@lists.freedesktop.org,
- amd-gfx@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
- intel-xe@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
- freedreno@lists.freedesktop.org, virtualization@lists.linux.dev,
- linux-rdma@vger.kernel.org, linux-pm@vger.kernel.org, iommu@lists.linux.dev,
- linux-tegra@vger.kernel.org, netdev@vger.kernel.org,
- linux-hyperv@vger.kernel.org, ath10k@lists.infradead.org,
- linux-wireless@vger.kernel.org, ath11k@lists.infradead.org,
- ath12k@lists.infradead.org, brcm80211@lists.linux.dev,
- brcm80211-dev-list.pdl@broadcom.com, linux-usb@vger.kernel.org,
- linux-bcachefs@vger.kernel.org, linux-nfs@vger.kernel.org,
- ocfs2-devel@lists.linux.dev, linux-cifs@vger.kernel.org,
- linux-xfs@vger.kernel.org, linux-edac@vger.kernel.org,
- selinux@vger.kernel.org, linux-btrfs@vger.kernel.org,
- linux-erofs@lists.ozlabs.org, linux-f2fs-devel@lists.sourceforge.net,
- linux-hwmon@vger.kernel.org, io-uring@vger.kernel.org,
- linux-sound@vger.kernel.org, bpf@vger.kernel.org,
- linux-wpan@vger.kernel.org, dev@openvswitch.org, linux-s390@vger.kernel.org,
- tipc-discussion@lists.sourceforge.net, Julia Lawall <Julia.Lawall@inria.fr>
-References: <20240516133454.681ba6a0@rorschach.local.home>
- <5080f4c5-e0b3-4c2e-9732-f673d7e6ca66@roeck-us.net>
- <20240517134834.43e726dd@gandalf.local.home>
- <5cff0ff0-48d1-49f8-84f4-bb33571fdf16@roeck-us.net>
-Content-Language: en-US
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-In-Reply-To: <5cff0ff0-48d1-49f8-84f4-bb33571fdf16@roeck-us.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AS8PR02MB7237:EE_|GV1PR02MB8260:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8525f391-5da3-4a5b-3b32-08dc7d9c0795
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|461199019|440099019|3412199016|1710799017;
+X-Microsoft-Antispam-Message-Info:
+	v53IPLgrmLhFz2NiwdWkx+iwWswlFJnpAo1gd7BjsdZXfm1RzJe9Gh7rAiLsYTHqDjqLXUM9grZ4G1AifRafFRyq6EWUrQmUQH0Wm33KChU9drbllj/lYjzJNN3q0Rluy/aKM+IqnU8vszk0EqyzDFV92Xzj98OzMUB1VJxCD93MFvvHvI9b/KwxCGIwuAZHpw69EV6f0D2XruAV/Cup4XPdXywE8tSD7k+Wy72bsqznUm/ofT9/NI7STYVFqCBx+9SErNUHtideT6+TKkypSaAvjF6Paw0EQ3SEByFB+d7d6/UqoOXzV9QNUuWWs8x6oPwgsQB/O9cOepdnjc8F0zfe+dTbIQleaTjgHDmG8n88x7spW4HjyyOoHF7lQNP9cBXvO4ZYts/McF3X/19Tmrsru9NjIUHevstM27pyaYJNV4D79NPBclSvecyJP6Wy5J52wUTpr5cBkWuhwyxHD7h9Qsxr9jbmGvQcIwHLy7uOlL/CIt9MBmLbRpTr3pVqsD067xzbA5ZH4mCk8j0QOH3B0libsWXRadzDPQJT+erwApUnkOIrHYm1tTWSW1Kg9T65jTTxl9tA0vqLslRVQ8K1kNmFcLS10YrBO67nVwseQ5ETDe8ckBNKDcHJSdO1
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?RV4YWAh5QG2uJKacTHnxIu4x8cGM3teuKzRQpyVuyVTfSh7Unm8jI0nCOmT2?=
+ =?us-ascii?Q?4pTEWxY3cADs2zKr3dGvJq+JpCDDiecdUPdzOKAO+MNnwzYgvIy/SSXgW9nr?=
+ =?us-ascii?Q?JjRVTG1sYMZo3Z01J9EQpqFTGf7o3Tmv+Bgdxlh9eZhDp+wg7oX+8827J/NH?=
+ =?us-ascii?Q?TS3gFlHJ76b0BllqnIrx/XJnsrucd/H9VRV02rQHVBI/ozxj87Y6XXqCnssC?=
+ =?us-ascii?Q?fqCZZRHo813liZtYmP7pf1Pm9SVSQqbZDbxIYRBdSAWCMEvMVBfsEM7DZYmO?=
+ =?us-ascii?Q?otbgzgnfdj5etKyqc6VY0KR3x2UeiF6ReN8OGd7IZLuYwRFWRw7zLfYNwVLT?=
+ =?us-ascii?Q?xUHipqTaAA4o7xh7A8tCpnoG25v5nXe/kInqi3d+JN7L6J/HMn65YmxgXiXq?=
+ =?us-ascii?Q?IwwQIxdkmVOWOq+Pyap6n7PGLiOCRUyFp377toFIwYo+4CmJT/urrxzixpk3?=
+ =?us-ascii?Q?8TVCPFyRPq6ONyahQBSq7qC8+bAhmkKKEjYDyOFSGfimvGomwpTzq866UMnt?=
+ =?us-ascii?Q?TjH7ykhLP84PmrR2b96vUWDpaLKmAEtHeRDr3f3bD0tsSMs2Kd0+o269B+fn?=
+ =?us-ascii?Q?RSmEmhBYL8+1KsN2ICwdgf1g9PgMvX1CKSts5ZHVneF310s0S7yI7M/M4Ywg?=
+ =?us-ascii?Q?F6ypYItLYShqaOSmyhx3+K0G+kgCYWogSwx0DV4D0xwb3rWziHqXT4nT/5UC?=
+ =?us-ascii?Q?rmGh5UagAFHnY/tAp0VmfR/XJoQ6ZgFQv1qymtuskEOQmbEmCdzUgt06zuGT?=
+ =?us-ascii?Q?NlvAVCx7qN1y2F9vTPHUsBO+7xCKcyuhlp4ScG3a+Ox6lMkBbtUfKx7/fDei?=
+ =?us-ascii?Q?Bf4mSXc3RwDct5npw3WaurMAkqYyFCPW+a2wmazaZaFrdw3neM3gx/cQ4h6S?=
+ =?us-ascii?Q?r27g+TtcmKawkesqnLZAPcE/6+ZiTkYE+d342uvpdJ0xHaNN3wx3VMbcI5Z+?=
+ =?us-ascii?Q?KBEIXpPRbJ4rbl86cwd+HWcIgR/w35//f1WmX2fnXzm4qMdlYbMlUSZ1KNjX?=
+ =?us-ascii?Q?G7+bB2MbEDnU5fASfSSqzmOD++WMV5ku1e8Lz29+uz5m3uJPeYGRVw6CStWa?=
+ =?us-ascii?Q?g/rD+730JqS1kEJFYdhb2dcerxsmqLBclx0TlukR/aHELmIXVekTr0iB+ccU?=
+ =?us-ascii?Q?ZtbO+d6YyoAEq0lksp3N/k+lR3//WdOl2g9ZnzJte9X3wBnE+eLe56FBvoey?=
+ =?us-ascii?Q?nHAui9fl2qBSi415QvJw7VgCs1WaMYQSEB9CCw1GhuI2rfF7L3Fq8/a7mkIM?=
+ =?us-ascii?Q?Azg8nrX4FTb0oAbhLt0a?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8525f391-5da3-4a5b-3b32-08dc7d9c0795
+X-MS-Exchange-CrossTenant-AuthSource: AS8PR02MB7237.eurprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 May 2024 15:53:48.2869
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV1PR02MB8260
 
-On 5/17/24 11:00, Guenter Roeck wrote:
-> On 5/17/24 10:48, Steven Rostedt wrote:
->> On Fri, 17 May 2024 10:36:37 -0700
->> Guenter Roeck <linux@roeck-us.net> wrote:
->>
->>> Building csky:allmodconfig (and others) ... failed
->>> --------------
->>> Error log:
->>> In file included from include/trace/trace_events.h:419,
->>>                   from include/trace/define_trace.h:102,
->>>                   from drivers/cxl/core/trace.h:737,
->>>                   from drivers/cxl/core/trace.c:8:
->>> drivers/cxl/core/./trace.h:383:1: error: macro "__assign_str" passed 2 arguments, but takes just 1
->>>
->>> This is with the patch applied on top of v6.9-8410-gff2632d7d08e.
->>> So far that seems to be the only build failure.
->>> Introduced with commit 6aec00139d3a8 ("cxl/core: Add region info to
->>> cxl_general_media and cxl_dram events"). Guess we'll see more of those
->>> towards the end of the commit window.
->>
->> Looks like I made this patch just before this commit was pulled into
->> Linus's tree.
->>
->> Which is why I'll apply and rerun the above again probably on Tuesday of
->> next week against Linus's latest.
->>
->> This patch made it through both an allyesconfig and an allmodconfig, but on
->> the commit I had applied it to, which was:
->>
->>    1b294a1f3561 ("Merge tag 'net-next-6.10' of git://git.kernel.org/pub/scm/linux/kernel/git/netdev/net-next")
->>
->> I'll be compiling those two builds after I update it then.
->>
-> 
-> I am currently repeating my test builds with the above errors fixed.
-> That should take a couple of hours. I'll let you know how it goes.
-> 
+It is preferred to use sizeof(*pointer) instead of sizeof(type)
+due to the type of the variable can change and one needs not
+change the former (unlike the latter). This patch has no effect
+on runtime behavior.
 
-There are no more build failures caused by this patch after fixing the above
-errors.
+Signed-off-by: Erick Archer <erick.archer@outlook.com>
+---
+ .../broadcom/brcm80211/brcmfmac/bcmsdh.c      |  4 ++--
+ .../broadcom/brcm80211/brcmfmac/btcoex.c      |  2 +-
+ .../broadcom/brcm80211/brcmfmac/sdio.c        |  2 +-
+ .../broadcom/brcm80211/brcmfmac/usb.c         |  2 +-
+ .../broadcom/brcm80211/brcmsmac/aiutils.c     |  2 +-
+ .../broadcom/brcm80211/brcmsmac/ampdu.c       |  2 +-
+ .../broadcom/brcm80211/brcmsmac/antsel.c      |  2 +-
+ .../broadcom/brcm80211/brcmsmac/channel.c     |  2 +-
+ .../broadcom/brcm80211/brcmsmac/dma.c         |  2 +-
+ .../broadcom/brcm80211/brcmsmac/mac80211_if.c |  2 +-
+ .../broadcom/brcm80211/brcmsmac/main.c        | 23 +++++++++----------
+ .../broadcom/brcm80211/brcmsmac/phy/phy_cmn.c |  4 ++--
+ .../broadcom/brcm80211/brcmsmac/phy/phy_lcn.c |  2 +-
+ .../broadcom/brcm80211/brcmsmac/phy_shim.c    |  2 +-
+ 14 files changed, 26 insertions(+), 27 deletions(-)
 
-Tested-by: Guenter Roeck <linux@roeck-us.net>
-
-Guenter
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
+index 13391c2d82aa..d35262335eaf 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
+@@ -1061,10 +1061,10 @@ static int brcmf_ops_sdio_probe(struct sdio_func *func,
+ 	if (func->num != 2)
+ 		return -ENODEV;
+ 
+-	bus_if = kzalloc(sizeof(struct brcmf_bus), GFP_KERNEL);
++	bus_if = kzalloc(sizeof(*bus_if), GFP_KERNEL);
+ 	if (!bus_if)
+ 		return -ENOMEM;
+-	sdiodev = kzalloc(sizeof(struct brcmf_sdio_dev), GFP_KERNEL);
++	sdiodev = kzalloc(sizeof(*sdiodev), GFP_KERNEL);
+ 	if (!sdiodev) {
+ 		kfree(bus_if);
+ 		return -ENOMEM;
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/btcoex.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/btcoex.c
+index 7ea2631b8069..c199595a6a01 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/btcoex.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/btcoex.c
+@@ -361,7 +361,7 @@ int brcmf_btcoex_attach(struct brcmf_cfg80211_info *cfg)
+ 	struct brcmf_btcoex_info *btci = NULL;
+ 	brcmf_dbg(TRACE, "enter\n");
+ 
+-	btci = kmalloc(sizeof(struct brcmf_btcoex_info), GFP_KERNEL);
++	btci = kmalloc(sizeof(*btci), GFP_KERNEL);
+ 	if (!btci)
+ 		return -ENOMEM;
+ 
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
+index 6b38d9de71af..1461dc453ac2 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
+@@ -4450,7 +4450,7 @@ struct brcmf_sdio *brcmf_sdio_probe(struct brcmf_sdio_dev *sdiodev)
+ 	brcmf_dbg(TRACE, "Enter\n");
+ 
+ 	/* Allocate private bus interface state */
+-	bus = kzalloc(sizeof(struct brcmf_sdio), GFP_ATOMIC);
++	bus = kzalloc(sizeof(*bus), GFP_ATOMIC);
+ 	if (!bus)
+ 		goto fail;
+ 
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
+index 9a105e6debe1..40b818e63ce4 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
+@@ -1247,7 +1247,7 @@ static int brcmf_usb_probe_cb(struct brcmf_usbdev_info *devinfo,
+ 	if (!bus_pub)
+ 		return -ENODEV;
+ 
+-	bus = kzalloc(sizeof(struct brcmf_bus), GFP_ATOMIC);
++	bus = kzalloc(sizeof(*bus), GFP_ATOMIC);
+ 	if (!bus) {
+ 		ret = -ENOMEM;
+ 		goto fail;
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/aiutils.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/aiutils.c
+index 2084b506a450..50d817485cf9 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/aiutils.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/aiutils.c
+@@ -512,7 +512,7 @@ ai_attach(struct bcma_bus *pbus)
+ 	struct si_info *sii;
+ 
+ 	/* alloc struct si_info */
+-	sii = kzalloc(sizeof(struct si_info), GFP_ATOMIC);
++	sii = kzalloc(sizeof(*sii), GFP_ATOMIC);
+ 	if (sii == NULL)
+ 		return NULL;
+ 
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/ampdu.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/ampdu.c
+index c3376f887114..33d17b779201 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/ampdu.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/ampdu.c
+@@ -219,7 +219,7 @@ struct ampdu_info *brcms_c_ampdu_attach(struct brcms_c_info *wlc)
+ 	struct ampdu_info *ampdu;
+ 	int i;
+ 
+-	ampdu = kzalloc(sizeof(struct ampdu_info), GFP_ATOMIC);
++	ampdu = kzalloc(sizeof(*ampdu), GFP_ATOMIC);
+ 	if (!ampdu)
+ 		return NULL;
+ 
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/antsel.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/antsel.c
+index 54c616919590..f411bc6d795d 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/antsel.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/antsel.c
+@@ -111,7 +111,7 @@ struct antsel_info *brcms_c_antsel_attach(struct brcms_c_info *wlc)
+ 	struct antsel_info *asi;
+ 	struct ssb_sprom *sprom = &wlc->hw->d11core->bus->sprom;
+ 
+-	asi = kzalloc(sizeof(struct antsel_info), GFP_ATOMIC);
++	asi = kzalloc(sizeof(*asi), GFP_ATOMIC);
+ 	if (!asi)
+ 		return NULL;
+ 
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/channel.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/channel.c
+index f6962e558d7c..d1b9a18d0374 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/channel.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/channel.c
+@@ -331,7 +331,7 @@ struct brcms_cm_info *brcms_c_channel_mgr_attach(struct brcms_c_info *wlc)
+ 	const char *ccode = sprom->alpha2;
+ 	int ccode_len = sizeof(sprom->alpha2);
+ 
+-	wlc_cm = kzalloc(sizeof(struct brcms_cm_info), GFP_ATOMIC);
++	wlc_cm = kzalloc(sizeof(*wlc_cm), GFP_ATOMIC);
+ 	if (wlc_cm == NULL)
+ 		return NULL;
+ 	wlc_cm->pub = pub;
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.c
+index 3d5c1ef8f7f2..bd480239368a 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.c
+@@ -558,7 +558,7 @@ struct dma_pub *dma_attach(char *name, struct brcms_c_info *wlc,
+ 	struct si_info *sii = container_of(sih, struct si_info, pub);
+ 
+ 	/* allocate private info structure */
+-	di = kzalloc(sizeof(struct dma_info), GFP_ATOMIC);
++	di = kzalloc(sizeof(*di), GFP_ATOMIC);
+ 	if (di == NULL)
+ 		return NULL;
+ 
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
+index 92860dc0a92e..860ef9c11c46 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
+@@ -1496,7 +1496,7 @@ struct brcms_timer *brcms_init_timer(struct brcms_info *wl,
+ {
+ 	struct brcms_timer *t;
+ 
+-	t = kzalloc(sizeof(struct brcms_timer), GFP_ATOMIC);
++	t = kzalloc(sizeof(*t), GFP_ATOMIC);
+ 	if (!t)
+ 		return NULL;
+ 
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.c
+index 34460b5815d0..d3c74440381f 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.c
+@@ -463,11 +463,11 @@ static struct brcms_bss_cfg *brcms_c_bsscfg_malloc(uint unit)
+ {
+ 	struct brcms_bss_cfg *cfg;
+ 
+-	cfg = kzalloc(sizeof(struct brcms_bss_cfg), GFP_ATOMIC);
++	cfg = kzalloc(sizeof(*cfg), GFP_ATOMIC);
+ 	if (cfg == NULL)
+ 		goto fail;
+ 
+-	cfg->current_bss = kzalloc(sizeof(struct brcms_bss_info), GFP_ATOMIC);
++	cfg->current_bss = kzalloc(sizeof(*cfg->current_bss), GFP_ATOMIC);
+ 	if (cfg->current_bss == NULL)
+ 		goto fail;
+ 
+@@ -483,14 +483,14 @@ brcms_c_attach_malloc(uint unit, uint *err, uint devid)
+ {
+ 	struct brcms_c_info *wlc;
+ 
+-	wlc = kzalloc(sizeof(struct brcms_c_info), GFP_ATOMIC);
++	wlc = kzalloc(sizeof(*wlc), GFP_ATOMIC);
+ 	if (wlc == NULL) {
+ 		*err = 1002;
+ 		goto fail;
+ 	}
+ 
+ 	/* allocate struct brcms_c_pub state structure */
+-	wlc->pub = kzalloc(sizeof(struct brcms_pub), GFP_ATOMIC);
++	wlc->pub = kzalloc(sizeof(*wlc->pub), GFP_ATOMIC);
+ 	if (wlc->pub == NULL) {
+ 		*err = 1003;
+ 		goto fail;
+@@ -499,7 +499,7 @@ brcms_c_attach_malloc(uint unit, uint *err, uint devid)
+ 
+ 	/* allocate struct brcms_hardware state structure */
+ 
+-	wlc->hw = kzalloc(sizeof(struct brcms_hardware), GFP_ATOMIC);
++	wlc->hw = kzalloc(sizeof(*wlc->hw), GFP_ATOMIC);
+ 	if (wlc->hw == NULL) {
+ 		*err = 1005;
+ 		goto fail;
+@@ -528,7 +528,7 @@ brcms_c_attach_malloc(uint unit, uint *err, uint devid)
+ 		goto fail;
+ 	}
+ 
+-	wlc->default_bss = kzalloc(sizeof(struct brcms_bss_info), GFP_ATOMIC);
++	wlc->default_bss = kzalloc(sizeof(*wlc->default_bss), GFP_ATOMIC);
+ 	if (wlc->default_bss == NULL) {
+ 		*err = 1010;
+ 		goto fail;
+@@ -540,21 +540,20 @@ brcms_c_attach_malloc(uint unit, uint *err, uint devid)
+ 		goto fail;
+ 	}
+ 
+-	wlc->protection = kzalloc(sizeof(struct brcms_protection),
+-				  GFP_ATOMIC);
++	wlc->protection = kzalloc(sizeof(*wlc->protection), GFP_ATOMIC);
+ 	if (wlc->protection == NULL) {
+ 		*err = 1016;
+ 		goto fail;
+ 	}
+ 
+-	wlc->stf = kzalloc(sizeof(struct brcms_stf), GFP_ATOMIC);
++	wlc->stf = kzalloc(sizeof(*wlc->stf), GFP_ATOMIC);
+ 	if (wlc->stf == NULL) {
+ 		*err = 1017;
+ 		goto fail;
+ 	}
+ 
+ 	wlc->bandstate[0] =
+-		kcalloc(MAXBANDS, sizeof(struct brcms_band), GFP_ATOMIC);
++		kcalloc(MAXBANDS, sizeof(*wlc->bandstate[0]), GFP_ATOMIC);
+ 	if (wlc->bandstate[0] == NULL) {
+ 		*err = 1025;
+ 		goto fail;
+@@ -567,14 +566,14 @@ brcms_c_attach_malloc(uint unit, uint *err, uint devid)
+ 				+ (sizeof(struct brcms_band)*i));
+ 	}
+ 
+-	wlc->corestate = kzalloc(sizeof(struct brcms_core), GFP_ATOMIC);
++	wlc->corestate = kzalloc(sizeof(*wlc->corestate), GFP_ATOMIC);
+ 	if (wlc->corestate == NULL) {
+ 		*err = 1026;
+ 		goto fail;
+ 	}
+ 
+ 	wlc->corestate->macstat_snapshot =
+-		kzalloc(sizeof(struct macstat), GFP_ATOMIC);
++		kzalloc(sizeof(*wlc->corestate->macstat_snapshot), GFP_ATOMIC);
+ 	if (wlc->corestate->macstat_snapshot == NULL) {
+ 		*err = 1027;
+ 		goto fail;
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_cmn.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_cmn.c
+index a27d6f0b8819..c3d7aa570b4e 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_cmn.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_cmn.c
+@@ -355,7 +355,7 @@ struct shared_phy *wlc_phy_shared_attach(struct shared_phy_params *shp)
+ {
+ 	struct shared_phy *sh;
+ 
+-	sh = kzalloc(sizeof(struct shared_phy), GFP_ATOMIC);
++	sh = kzalloc(sizeof(*sh), GFP_ATOMIC);
+ 	if (sh == NULL)
+ 		return NULL;
+ 
+@@ -442,7 +442,7 @@ wlc_phy_attach(struct shared_phy *sh, struct bcma_device *d11core,
+ 		return &pi->pubpi_ro;
+ 	}
+ 
+-	pi = kzalloc(sizeof(struct brcms_phy), GFP_ATOMIC);
++	pi = kzalloc(sizeof(*pi), GFP_ATOMIC);
+ 	if (pi == NULL)
+ 		return NULL;
+ 	pi->wiphy = wiphy;
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c
+index aae2cf95fe95..8696061bf2dd 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c
+@@ -4968,7 +4968,7 @@ bool wlc_phy_attach_lcnphy(struct brcms_phy *pi)
+ {
+ 	struct brcms_phy_lcnphy *pi_lcn;
+ 
+-	pi->u.pi_lcnphy = kzalloc(sizeof(struct brcms_phy_lcnphy), GFP_ATOMIC);
++	pi->u.pi_lcnphy = kzalloc(sizeof(*pi->u.pi_lcnphy), GFP_ATOMIC);
+ 	if (pi->u.pi_lcnphy == NULL)
+ 		return false;
+ 
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy_shim.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy_shim.c
+index b72381791536..4b916f3a087b 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy_shim.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy_shim.c
+@@ -40,7 +40,7 @@ struct phy_shim_info *wlc_phy_shim_attach(struct brcms_hardware *wlc_hw,
+ 					  struct brcms_c_info *wlc) {
+ 	struct phy_shim_info *physhim = NULL;
+ 
+-	physhim = kzalloc(sizeof(struct phy_shim_info), GFP_ATOMIC);
++	physhim = kzalloc(sizeof(*physhim), GFP_ATOMIC);
+ 	if (!physhim)
+ 		return NULL;
+ 
+-- 
+2.25.1
 
