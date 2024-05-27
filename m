@@ -1,56 +1,56 @@
-Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+Received: from mail-oo1-f49.google.com (mail-oo1-f49.google.com [209.85.161.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B97C13AA2A
-	for <brcm80211@lists.linux.dev>; Mon, 27 May 2024 12:49:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA30A15E5BE
+	for <brcm80211@lists.linux.dev>; Mon, 27 May 2024 12:55:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716814150; cv=none; b=ueVFY7c4Iv9kk5d1ynSIagIRksoGDpJh97yc1OP39I4m2IYOi1yRep/d//FclxxoZ4FNWS8rEn8/JKutzqCNtFTKQsZIQSEoU5Ay5/QWGBXXUp8zR//pJevOYUTzr411Kx4TT6SPoTp/xHelbgruT131OnRmfoU1PQnXZs7InnM=
+	t=1716814524; cv=none; b=XZEuNItihYNQj8/YsxuN6oNpj5BjIHFXKCnPOFn2Yd6p+ngC+ay1FFee+8ns8QveJ+X3VfxXva6/c+LnXd5dcideICb1l8tu5fzEbrfWAbkYiaJ9rMELbbqRUoV19Fbs4B2vmIhmc+pOpdtqtCe9hWcataFYq9AsYXb8JFgVMBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716814150; c=relaxed/simple;
-	bh=L3NObQjqXiTmiXHkjIP4vTHH65/S+cBfDmfiA0A5I2s=;
+	s=arc-20240116; t=1716814524; c=relaxed/simple;
+	bh=2wO2Ap7r2MLzYpjVthKpzBhOZHcntrBe4LRjwOjGCJY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=m1efge1fVFugAX7llF21WMRJSdmAIDsOc5FlkLe0Dnw8/M1oPZ1uR18hj/rUZAjc1g0wM28XHULylyyDkwZg5Jxpy1BUhet1dx1eZGDTc053HcLzcam2Z6HKrfYhGX50D8QIXD3d6B22tk6xCtDoEkOcP+ndNhXVdV62MdG/6eA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=XnNLqUq3; arc=none smtp.client-ip=209.85.128.171
+	 In-Reply-To:Content-Type; b=Qb6JKbJzMn0fkYwwC23NFj1rnvEyjDUjqiO4gYGfMR2sHnuVhZVlvQiSWZQ+f2nObiyt0WOEHaEFht6tN0+wpX8FJeuLtUWO0ab9JGN3a6OwpQQCALZ9h7FBkmk6VknrV7k6DXfZSlwTEgHiDHzwsR8tXsFbic+GN6I5MQdove4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=Ry7KusoO; arc=none smtp.client-ip=209.85.161.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="XnNLqUq3"
-Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-62a0849f5a8so32147837b3.2
-        for <brcm80211@lists.linux.dev>; Mon, 27 May 2024 05:49:07 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="Ry7KusoO"
+Received: by mail-oo1-f49.google.com with SMTP id 006d021491bc7-5b3241373adso6183509eaf.2
+        for <brcm80211@lists.linux.dev>; Mon, 27 May 2024 05:55:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1716814146; x=1717418946; darn=lists.linux.dev;
+        d=broadcom.com; s=google; t=1716814522; x=1717419322; darn=lists.linux.dev;
         h=in-reply-to:autocrypt:from:references:cc:to:subject:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=FkTQ5ArwiQKqkgB933We4anVSaGOsB/y/asIJE/znsg=;
-        b=XnNLqUq3Fuc4IXS8ZS+ZmM/lYltDZ8bgyFFGtAh+OSVd2LnkOC/zCMKrBJIHqMCwqF
-         JW7OFRzeNzY8YqVhOYLMv2IJ4dZTrcVMgVbAAAjbaZHJQX3xDXd/uOR/IC+bHBTpJqCl
-         Pr+LhCiEYbXLcaZthHaC5ugTtmYdX3v0qbKfE=
+        bh=TnOLuT8w9bd1LiqufAIexK8/3oR3CNe1B4zIFQRVbAw=;
+        b=Ry7KusoO8kqCjWqf/ZfKvR9/NaPdteGUKb0fBudn3QsV5m/2rVi4QYdzDXxvQ2hQRy
+         CKKS8QGctXad2OJLfzJJdnnXMau5oa+//fV+8Xt7QDm/8MlnXK0RuxlytHpdyfMkvF6C
+         eT0VQOjba3o1pBGQdQ1PhZ66BlJshqFBfa9WY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1716814146; x=1717418946;
+        d=1e100.net; s=20230601; t=1716814522; x=1717419322;
         h=in-reply-to:autocrypt:from:references:cc:to:subject:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=FkTQ5ArwiQKqkgB933We4anVSaGOsB/y/asIJE/znsg=;
-        b=iV/SFpJ0eqR7conV81zoZh+LskrZjBU4VSKldLnaGGk/wscR8ucAbAzFi6jAhvbuvS
-         r7GkHXrvFNLAcgV4BDofRiFwQ0XHb8Nj3rNC56DfYZXfCEGgtj4xaQrZkeY4p15Ffbhq
-         LxusUIkafATHHlzG56Ai9VQExpLJbhhxN/aUhZRm8n27QMP+A7wd9tekef4W6k0XSZPg
-         sJ40W+Iv0EMMi7uKcju0EW4mWz4ub95kg/Uw2OJx1SrP5AuIphyX+y8Jksn34OgrIs4x
-         W4kBeu4QlY0yycPqC2OW514OzFQXrqhOFy5NnqgtZSzD0npMZ33evvfYh+h8OBlHYr1p
-         KY9w==
-X-Forwarded-Encrypted: i=1; AJvYcCWrWQJaDg6q6yNjC6x5wYExzev4yfuqPhMUhlWMQ6JHjgM3b9YjfiLqoiWYfea2HaeIzmv57gaSFzhT8SxzLS3WkY+e2VKQZe6B
-X-Gm-Message-State: AOJu0Yw61RfZInTbo44lGZyRFm4RscVNDroiUq2KariFzci2rgWqgS2k
-	x4E2c0voAxruWdDYDU0o6OdQAkIYF5+FhjUPHzWM/xIFg3lxaYhPOo9lg5jrTA==
-X-Google-Smtp-Source: AGHT+IEg63ANJ11NVriCi2gU5nNWQocZyjfXn+V2JFxN3NsmCZXUlQE7jxRGT+A6G9CuxtaTPuOr/Q==
-X-Received: by 2002:a81:ad5f:0:b0:62a:259f:74d1 with SMTP id 00721157ae682-62a259f82e3mr45286707b3.5.1716814146194;
-        Mon, 27 May 2024 05:49:06 -0700 (PDT)
+        bh=TnOLuT8w9bd1LiqufAIexK8/3oR3CNe1B4zIFQRVbAw=;
+        b=LxM3/Q0pGYD8h9hOJpQabZeDkqeKTSv4+zmTavmOPyZoWoyDIYI7RFYnO+WTCdKp2g
+         YJxKLIT+9rUhyAh9FaGgVyPkrIzBu+3QTL8TRmTAo/uMNoCS7U4OetPeD68nwpqmo3wk
+         G4e6Z5L1ZjeyohrE2tnIGfQbIVCevvcjdx/FMvCnAJF1C3GMBmYomKRoj4PZpYUHUex+
+         i5R6Rkj/hPRMSkhdE5EGM7uNHlk3Plq/bF2zJvfQEP5bOIosQaXW4RkGUqR1MXqzALlF
+         V3XynbEjq13R6L0oEsqg0PYmAIKa9W788HxQos3gT0MWaa+z03dr1Jy8w23PtJ1tiFev
+         TU+A==
+X-Forwarded-Encrypted: i=1; AJvYcCWwLPyJB6sACvD/DZyvAZXB5LzAyArZjYCRmxVkGgSYNlnTfd4gnS51r7STjuDka/dm6QTn8VEo9DcNITvGQ9/0KNhH3Qkb20qS
+X-Gm-Message-State: AOJu0YxD9gI98mHgswn/7rwqHfAlZ9iq67aDmeC3Ay6OuRolXPNyjOnI
+	/OcrVpoqwTO8lQKFlDE6G9lhuA1qe0w+TwOi8TjoEw/5wL6/WIHMCTJbp/SLLg==
+X-Google-Smtp-Source: AGHT+IF0psy86taXvDv3AAdH2PVjna2w47dAysGhCoK/bZvU5REBiydm/2uxaA5GzU9w8MnSx3vk9g==
+X-Received: by 2002:a05:6358:5f1d:b0:18a:6074:90d1 with SMTP id e5c5f4694b2df-197e531a51bmr1184837755d.19.1716814521855;
+        Mon, 27 May 2024 05:55:21 -0700 (PDT)
 Received: from [10.176.68.61] ([192.19.176.250])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6ad7865f386sm15591816d6.133.2024.05.27.05.49.04
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-682275b02ffsm5072259a12.86.2024.05.27.05.55.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 May 2024 05:49:05 -0700 (PDT)
-Message-ID: <68efa99b-a40e-41ea-80f3-0a7467147edb@broadcom.com>
-Date: Mon, 27 May 2024 14:49:03 +0200
+        Mon, 27 May 2024 05:55:21 -0700 (PDT)
+Message-ID: <088d5c85-01dc-4c29-9a3c-cd7e2c6b0224@broadcom.com>
+Date: Mon, 27 May 2024 14:55:14 +0200
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -58,11 +58,25 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] wifi: brcm80211: remove unused structs
-To: linux@treblig.org, kvalo@kernel.org
+Subject: Re: [PATCH] wifi: brcm80211: use sizeof(*pointer) instead of
+ sizeof(type)
+To: Erick Archer <erick.archer@outlook.com>, Kalle Valo <kvalo@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Ulf Hansson <ulf.hansson@linaro.org>,
+ Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+ Yajun Deng <yajun.deng@linux.dev>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Alan Stern <stern@rowland.harvard.edu>, Dmitry Antipov
+ <dmantipov@yandex.ru>, Johannes Berg <johannes.berg@intel.com>,
+ Arnd Bergmann <arnd@arndb.de>, Jonas Gorski <jonas.gorski@gmail.com>,
+ Artem Chernyshev <artem.chernyshev@red-soft.ru>,
+ Kees Cook <keescook@chromium.org>,
+ "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+ Justin Stitt <justinstitt@google.com>
 Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
- brcm80211-dev-list.pdl@broadcom.com, linux-kernel@vger.kernel.org
-References: <20240526234553.286773-1-linux@treblig.org>
+ brcm80211-dev-list.pdl@broadcom.com, linux-kernel@vger.kernel.org,
+ linux-hardening@vger.kernel.org
+References: <AS8PR02MB7237C3696881F79EAEE8D02E8BF72@AS8PR02MB7237.eurprd02.prod.outlook.com>
 From: Arend van Spriel <arend.vanspriel@broadcom.com>
 Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
  xsFNBGP96SABEACfErEjSRi7TA1ttHYaUM3GuirbgqrNvQ41UJs1ag1T0TeyINqG+s6aFuO8
@@ -107,37 +121,77 @@ Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
  NKowQLrlMBGXT4NnRNV0+yHmusXPOPIqQCKEtbWSx9s2slQxmXukPYvLnuRJqkPkvrTgjn5d
  eSE0Dkhni4292/Nn/TnZf5mxCNWH1p3dz/vrT6EIYk2GSJgCLoTkCcqaM6+5E4IwgYOq3UYu
  AAgeEbPV1QeTVAPrntrLb0t0U5vdwG7Xl40baV9OydTv7ghjYZU349w1d5mdxg==
-In-Reply-To: <20240526234553.286773-1-linux@treblig.org>
+In-Reply-To: <AS8PR02MB7237C3696881F79EAEE8D02E8BF72@AS8PR02MB7237.eurprd02.prod.outlook.com>
 Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-	boundary="0000000000005a139c06196ef199"
+	boundary="000000000000bf867b06196f076c"
 
---0000000000005a139c06196ef199
+--000000000000bf867b06196f076c
 Content-Language: en-US
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 5/27/2024 1:45 AM, linux@treblig.org wrote:
-> From: "Dr. David Alan Gilbert" <linux@treblig.org>
-> 
-> 'brcmf_pcie_core_info' was added in
-> commit 9e37f045d5e7 ("brcmfmac: Adding PCIe bus layer support.")
-> but never used.
-> 
-> 'brcms_c_bit_desc' last use was removed in
-> commit cdf4352f5c59 ("brcmsmac: Improve tx trace and debug support").
-> 
-> Remove them.
+On 5/26/2024 5:53 PM, Erick Archer wrote:
+> It is preferred to use sizeof(*pointer) instead of sizeof(type)
+> due to the type of the variable can change and one needs not
+> change the former (unlike the latter). This patch has no effect
+> on runtime behavior.
 
-Thanks for cleaning this up.
+Thanks. A bit long list, but mostly trivial. Just a few remarks...
 
 Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-> Signed-off-by: Dr. David Alan Gilbert <linux@treblig.org>
+> Signed-off-by: Erick Archer <erick.archer@outlook.com>
 > ---
->   drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c | 5 -----
->   drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.c | 6 ------
->   2 files changed, 11 deletions(-)
+>   .../broadcom/brcm80211/brcmfmac/bcmsdh.c      |  4 ++--
+>   .../broadcom/brcm80211/brcmfmac/btcoex.c      |  2 +-
+>   .../broadcom/brcm80211/brcmfmac/sdio.c        |  2 +-
+>   .../broadcom/brcm80211/brcmfmac/usb.c         |  2 +-
+>   .../broadcom/brcm80211/brcmsmac/aiutils.c     |  2 +-
+>   .../broadcom/brcm80211/brcmsmac/ampdu.c       |  2 +-
+>   .../broadcom/brcm80211/brcmsmac/antsel.c      |  2 +-
+>   .../broadcom/brcm80211/brcmsmac/channel.c     |  2 +-
+>   .../broadcom/brcm80211/brcmsmac/dma.c         |  2 +-
+>   .../broadcom/brcm80211/brcmsmac/mac80211_if.c |  2 +-
+>   .../broadcom/brcm80211/brcmsmac/main.c        | 23 +++++++++----------
+>   .../broadcom/brcm80211/brcmsmac/phy/phy_cmn.c |  4 ++--
+>   .../broadcom/brcm80211/brcmsmac/phy/phy_lcn.c |  2 +-
+>   .../broadcom/brcm80211/brcmsmac/phy_shim.c    |  2 +-
+>   14 files changed, 26 insertions(+), 27 deletions(-)
 
---0000000000005a139c06196ef199
+[...]
+
+> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c
+> index aae2cf95fe95..8696061bf2dd 100644
+> --- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c
+> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c
+> @@ -4968,7 +4968,7 @@ bool wlc_phy_attach_lcnphy(struct brcms_phy *pi)
+>   {
+>   	struct brcms_phy_lcnphy *pi_lcn;
+>   
+> -	pi->u.pi_lcnphy = kzalloc(sizeof(struct brcms_phy_lcnphy), GFP_ATOMIC);
+> +	pi->u.pi_lcnphy = kzalloc(sizeof(*pi->u.pi_lcnphy), GFP_ATOMIC);
+Better use pi_lcn here and assign it to pi->u.pi_lcnphy after the 
+if-statement.
+
+>   	if (pi->u.pi_lcnphy == NULL)
+>   		return false;
+>   
+> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy_shim.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy_shim.c
+> index b72381791536..4b916f3a087b 100644
+> --- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy_shim.c
+> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy_shim.c
+> @@ -40,7 +40,7 @@ struct phy_shim_info *wlc_phy_shim_attach(struct brcms_hardware *wlc_hw,
+>   					  struct brcms_c_info *wlc) {
+>   	struct phy_shim_info *physhim = NULL;
+
+While at it please remove the redundant NULL initialization.
+
+> -	physhim = kzalloc(sizeof(struct phy_shim_info), GFP_ATOMIC);
+> +	physhim = kzalloc(sizeof(*physhim), GFP_ATOMIC);
+>   	if (!physhim)
+>   		return NULL;
+>   
+
+--000000000000bf867b06196f076c
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -208,14 +262,14 @@ BtkeSGJx/8dy0h8YmRn+adOrxKXHxhSL8BNn8wsmIZyYWe6fRcBtO3Ks2DOLyHCdkoFlN8x9VUQF
 N2ulEgqCbRKkx+qNirW86eF138lr1gRxzclu/38ko//MmkAYR/+hP3WnBll7zbpIt0jc9wyFkSqH
 p8a1MYICbTCCAmkCAQEwazBbMQswCQYDVQQGEwJCRTEZMBcGA1UEChMQR2xvYmFsU2lnbiBudi1z
 YTExMC8GA1UEAxMoR2xvYmFsU2lnbiBHQ0MgUjMgUGVyc29uYWxTaWduIDIgQ0EgMjAyMAIMTv1t
-bpIzNUky46LXMA0GCWCGSAFlAwQCAQUAoIHUMC8GCSqGSIb3DQEJBDEiBCDKPzM6cT6BmKQ+VuyH
-R9Pa+9B2k0ffg7T5GHhWmSPztTAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJ
-BTEPFw0yNDA1MjcxMjQ5MDZaMGkGCSqGSIb3DQEJDzFcMFowCwYJYIZIAWUDBAEqMAsGCWCGSAFl
+bpIzNUky46LXMA0GCWCGSAFlAwQCAQUAoIHUMC8GCSqGSIb3DQEJBDEiBCBSR0n1cejsDtiTAM03
+26suRBIGH4cUKMHQOz+jcJzf+zAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJ
+BTEPFw0yNDA1MjcxMjU1MjJaMGkGCSqGSIb3DQEJDzFcMFowCwYJYIZIAWUDBAEqMAsGCWCGSAFl
 AwQBFjALBglghkgBZQMEAQIwCgYIKoZIhvcNAwcwCwYJKoZIhvcNAQEKMAsGCSqGSIb3DQEBBzAL
-BglghkgBZQMEAgEwDQYJKoZIhvcNAQEBBQAEggEAhCsF21V8CHNS1ai+BlPDblwofAsybekmpIL/
-JtSNSamoSplfX/G1IDHh8+IoZ8UqA6poZOjfJoOfhWLiMOeXtA2SjipT1f9hbBJSTQleNuVujam7
-iI8m7iMrW4BENlvagpZj9Wco1fLBpfUyduRbX5jzxXLYTj6qpQBSTP2aDlvafnNehvzCRz9Qdwkp
-zTRkDoHSuTXntfToKKudteU83ILW/M5NTnh9SKk9MhsBReqZCyl8NKgQiB0isxvTgWHTwRXo/Dkk
-xuMXyYg8X3PS/BTi8LSx3pge/VwXU4P7hc8rqzUpkNsSZlbrVuaWXiB/ElwDvrsVUhlZ6cp0sPcW
-+A==
---0000000000005a139c06196ef199--
+BglghkgBZQMEAgEwDQYJKoZIhvcNAQEBBQAEggEAzkFTc3AJAbp3L9Dh5LXjY2/pQfbSxnXzzBcV
+upLyEfcDAE8i58n0Hnxxjy1OB3i/Q18SXM0F21RMyj8BOHcokR7XrYZsanNqejlijLcFEI2SBshQ
+O3SxolBY6fvKg0OHSMT+lOUw0QSNX+Nc0JOds3RgCFDo+F+ZxAb11Un2xmPezYYLjsSUHh792TNs
+EWWL2MBhT1roz3xvaTera9vQ6Iu2TLpPRB7G/nHwxb9oAixcPdCaPCKVXFYLUEPuNLtMRZESi4lb
+8XZPxvM4v+URU0GB5ynw032GraejgaPCOXoCNtvpWMP9Gva097qgfwDHVWwNdm61PIsW5rmCXjep
+Lw==
+--000000000000bf867b06196f076c--
