@@ -1,82 +1,79 @@
-Received: from mail.zeus03.de (www.zeus03.de [194.117.254.33])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFF9512D759
-	for <brcm80211@lists.linux.dev>; Mon,  3 Jun 2024 13:15:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.117.254.33
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B57F45B5B6;
+	Wed, 12 Jun 2024 12:01:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717420522; cv=none; b=MrzCpv7Rmjfut3psWPihx8U4e5rgeUA5d/ChK5hNwN294iMfcH+AXZVsxGMDl4yo6xsaCOOFtfXSf6y/gPP9qKqD8PShoQ8gAJX3OEMkWPDXBOHc5RJavme3End+vT3QKs9KUU/LZideTF7PN2fEumtc3XR+tbRK08ds03sOCz4=
+	t=1718193688; cv=none; b=MrqV8WSy8dn2GVz/jdJ04TCrkj8y54Tk0OmTQuQ9qJxEcEYvBIOeIIiJyTR3E8kR5/+INRPWHgQXetA1T8GZ+d0DIv/+gXKCqdbi4yX/fAjcrSsF9UgoD3ngYHFb8Xt7/NkX8yoG0OKqHiFdPWqDy3T9raayoZZBiEaKC1WhzPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717420522; c=relaxed/simple;
-	bh=Hfw/OFJv5jPhE+pjptCCl5HrbbJfqf+E2qR+4z6HYKM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XaOX30QTZT2BmOKsSvSJr/RZFqOOAFimfJCIhV7o2SDnBQvjQgW9RSnKs8AlwEPUb5GZLlM7YJD5MVaDTlLqfWpQBYT4F1Dyosvls2iaEtAlsGZ50M/gEUZ2B+moZFFjhr9RDCbC1DzudFonTLQY6+ky+/4wLitZ8cewXl7Qobg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=XVzNI7fx; arc=none smtp.client-ip=194.117.254.33
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sang-engineering.com
+	s=arc-20240116; t=1718193688; c=relaxed/simple;
+	bh=Tsv48oPtlgTHvx9V3xuPXgrjcGCvx5oPY+03wCrBLEY=;
+	h=Content-Type:MIME-Version:Subject:From:In-Reply-To:References:To:
+	 Cc:Message-ID:Date; b=aSt6Kaw4l/FBz5qLk7xXAF+2Fb3iWdiGgqpAsREHA52K8WspNkBF+Nbt6iYFqiNgMFZ0SsxaxNXDaH+RoAymEwBge0RIumyRQy2EHfAmxQisL7yoCpXBwJyk3K+RUbF7YJDZvwyXSo1jFSj1E0A6NN0Ydir/aODsKfQcG/gABAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=plBA+azh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="XVzNI7fx"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	sang-engineering.com; h=date:from:to:cc:subject:message-id
-	:references:mime-version:content-type:content-transfer-encoding
-	:in-reply-to; s=k1; bh=Hfw/OFJv5jPhE+pjptCCl5HrbbJfqf+E2qR+4z6HY
-	KM=; b=XVzNI7fxvwbsxg1kfm9oK51zLHah6fxb9GKGCsd+gWMxCwfncSwygzddT
-	SnDpFV0CarWdYmgnGCtWMM6bVVwBDXQS7y/FPns8/QNPG6hi6tuFfb1Lvjb58wZW
-	mLmmq/UW3l0qYdFQkyP9gDyAjG2HenLtKPnP3UM+TgCXp05kDTchQ4Ed0igJk/o4
-	aHBMNF/D7a0vLVDVUvj4oFaw66UOh0gTHxQUGICQ7ywo0EmR4OqanfTN5KI0TxYU
-	//lEJYFjo3T7xnV5KKCAqXYPNjpxVwTURoI98dW3gPPLEPVbsP9P3BPkg8E4cW8o
-	uiDHINxkpTEcxMFQe9X+KkVwahSnQ==
-Received: (qmail 1964875 invoked from network); 3 Jun 2024 15:15:15 +0200
-Received: by mail.zeus03.de with ESMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 3 Jun 2024 15:15:15 +0200
-X-UD-Smtp-Session: l3s3148p1@bVS3H/wZ5NNehhtB
-Date: Mon, 3 Jun 2024 15:15:14 +0200
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
-To: Arend van Spriel <arend.vanspriel@broadcom.com>
-Cc: linux-kernel@vger.kernel.org, Kalle Valo <kvalo@kernel.org>, 
-	linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com
-Subject: Re: [PATCH 2/6] wifi: brcmfmac: use 'time_left' variable with
- wait_event_timeout()
-Message-ID: <zelrtyr4kv75cfrt2ije3ifjdmaqy25zm4sa774w7v5sa5soy2@qvufjqml47m3>
-Mail-Followup-To: Wolfram Sang <wsa+renesas@sang-engineering.com>, 
-	Arend van Spriel <arend.vanspriel@broadcom.com>, linux-kernel@vger.kernel.org, Kalle Valo <kvalo@kernel.org>, 
-	linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com
-References: <20240603091541.8367-1-wsa+renesas@sang-engineering.com>
- <20240603091541.8367-3-wsa+renesas@sang-engineering.com>
- <08985c11-3652-4699-81d9-8a6769b061da@broadcom.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="plBA+azh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1C11C3277B;
+	Wed, 12 Jun 2024 12:01:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1718193688;
+	bh=Tsv48oPtlgTHvx9V3xuPXgrjcGCvx5oPY+03wCrBLEY=;
+	h=Subject:From:In-Reply-To:References:To:Cc:Date:From;
+	b=plBA+azhUxAd+ard8rlBITJU9CNxUf3NphVbg3hPOtXGvTdlhRXdinrNQEpQJJ5yk
+	 ICHrhCEz1pyGznF2m2oeCkiGMVBHVaB4aiufbin9W55/7TsZxl0nK9NUKAUrtZuxhU
+	 KTug8AMd7s8cmYAmyBe2E0Hlu9Mng2il8mj67zmFHrG5Axx527Fa8revTlGPeK7zSW
+	 HU2iBuWUtVt2Sa2Jl7R/Bzvmhw7b71rXASKG8fQR6PfRSYmzo8snAb1RYFjNhZeM0v
+	 qcb7gS6d/CEplW0Zn8Bd52ZaPci/c7o1uB9tT6s5XD4nvZ8KAOQMzOSzJpC6C135/y
+	 y0Um1IfNWo18g==
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <08985c11-3652-4699-81d9-8a6769b061da@broadcom.com>
+Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH 2/6] wifi: brcmfmac: use 'time_left' variable with
+ wait_event_timeout()
+From: Kalle Valo <kvalo@kernel.org>
+In-Reply-To: <20240603091541.8367-3-wsa+renesas@sang-engineering.com>
+References: <20240603091541.8367-3-wsa+renesas@sang-engineering.com>
+To: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Cc: linux-kernel@vger.kernel.org,
+ Wolfram Sang <wsa+renesas@sang-engineering.com>,
+ Arend van Spriel <arend.vanspriel@broadcom.com>,
+ linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
+ brcm80211-dev-list.pdl@broadcom.com
+User-Agent: pwcli/0.1.1-git (https://github.com/kvalo/pwcli/) Python/3.11.2
+Message-ID: <171819368496.3856519.10394049739413295100.kvalo@kernel.org>
+Date: Wed, 12 Jun 2024 12:01:26 +0000 (UTC)
 
+Wolfram Sang <wsa+renesas@sang-engineering.com> wrote:
 
-> I feel this type of changes fall into the category of bike-shedding. Peop=
-le
-
-I have two motivations for this change: One may be bike-shedding, yet
-"if (!timeout) return -ETIMEDOUT" looks stupid to me.
-
-> should know how wait_event_timeout() works and then a variable name does =
-not
-> really matter.
-
-And for a new developer, I am quite sure the change will help to
-understand how wait_event-family() works. Especially given that
-wait_event_interruptible() returns 0 if condition is true and
-wait_event_interruptible_timeout() returns 0 if condition is false.
-
-> > Fix to the proper variable type 'long' while here.
->=20
-> But it may have useful side-effects to go over the code with fresh look.
-
-:)
-
+> There is a confusing pattern in the kernel to use a variable named 'timeout' to
+> store the result of wait_event_timeout() causing patterns like:
+> 
+> 	timeout = wait_event_timeout(...)
+> 	if (!timeout) return -ETIMEDOUT;
+> 
+> with all kinds of permutations. Use 'time_left' as a variable to make the code
+> self explaining.
+> 
+> Fix to the proper variable type 'long' while here.
+> 
+> Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 > Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
 
-Thank you!
+4 patches applied to wireless-next.git, thanks.
+
+158d5a1b3caa wifi: brcmfmac: use 'time_left' variable with wait_event_timeout()
+0c0668813cc0 wifi: mwl8k: use 'time_left' variable with wait_for_completion_timeout()
+a37f6947ff07 wifi: p54: use 'time_left' variable with wait_for_completion_interruptible_timeout()
+a2ead3445a63 wifi: zd1211rw: use 'time_left' variable with wait_for_completion_timeout()
+
+-- 
+https://patchwork.kernel.org/project/linux-wireless/patch/20240603091541.8367-3-wsa+renesas@sang-engineering.com/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
