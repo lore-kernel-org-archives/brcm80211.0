@@ -1,218 +1,85 @@
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from relay-b01.edpnet.be (relay-b01.edpnet.be [212.71.1.221])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAD091C290
-	for <brcm80211@lists.linux.dev>; Mon, 17 Jun 2024 14:57:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6947718A93A
+	for <brcm80211@lists.linux.dev>; Mon, 17 Jun 2024 17:44:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.71.1.221
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718636277; cv=none; b=Gh4NkO1X3WE0HHjlO8c7w6E3nkOCFuWd+/IEOqfu8aKdqiewomuXpc/ufyfxEoiZgX2WQeVcrt/UX81nVyBqXxy0uGaEVRjECnG9X8Y6KdJOipUWqhYwrseGN4G87/jQcvxbk8nXwpRttU3WF/g6tbrmw+XWMQFlaArx5x5pZrg=
+	t=1718646280; cv=none; b=hmG4SrhpMrAzcpQw3bDHQrUBeNnfL0yIXWkBuWLUCKEsgo13pITva5sfhXOg2Tjbem5yfU8sntqVXayOFrXznZDIs4zTKbDeH+W0e2KSMYvqmqsBuACVEppaJdiFScT+drDA6ttxc3/e/j456QKbQW2eG9BuEphF8qX+C5FxaQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718636277; c=relaxed/simple;
-	bh=/WOEA/4p6Dj8tnUSyzLvWMsjjOpysV902JAVsIpYzYM=;
-	h=From:To:CC:Date:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type; b=o3N8g8Q42pMBLMafpZNjh8MqPoZpPHZXZYqGRD01jqqL4ES5CNAWSiaW9oXFDqpv2wOFDYiutFU/y/ssu4V44JAFiMAX4AfIaW75GiDjsp+gzdcjnelp10Eh834A0O517DJGLAgwrXVgD0f5TO3kmA0WATd5LTTPrDY7YogZ8nQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=EtGyB6cw; arc=none smtp.client-ip=209.85.208.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+	s=arc-20240116; t=1718646280; c=relaxed/simple;
+	bh=fHI9suxn2yhoenFRb/GpaUBgD6FKtYobVow+7IALfwE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qlLKdGdsQx5p98BRcO/a7Fyd9Q+Wq1ClmbPCZIIqtmiYlCHn0k71TIZJgXP4pGnKUc0vEvsx2QHeF2UzoJt93Xx+dCz+rG1FBHMjNWFVGzkWytNH9YpSeLNPt7C8j8S1MNR1PLoXVDvlCOyO8bRKc/+WTO0KmH/7Nx/Cz5W9814=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=vandijck-laurijssen.be; spf=pass smtp.mailfrom=vandijck-laurijssen.be; dkim=pass (2048-bit key) header.d=vandijck-laurijssen.be header.i=@vandijck-laurijssen.be header.b=Pmv3ycVQ; arc=none smtp.client-ip=212.71.1.221
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=vandijck-laurijssen.be
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=vandijck-laurijssen.be
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="EtGyB6cw"
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-579fa270e53so6753822a12.3
-        for <brcm80211@lists.linux.dev>; Mon, 17 Jun 2024 07:57:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1718636274; x=1719241074; darn=lists.linux.dev;
-        h=mime-version:subject:user-agent:references:in-reply-to:message-id
-         :date:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=I96/xfjfpPp+gCRB7qylY1mpEs8tzvsW2zTm7Ar98Fg=;
-        b=EtGyB6cwv05vlAQLCKwKjRgku7R96Pot+6/c+Lauogb/AMBJjO0F32ksNaKBRmagu9
-         Cf7TZfyOLwZ5hYvk4dAo05ZfdicCTNKnISpGgGH8pSwolLSkZxWUuwQA4y6tX4uMVXtp
-         yLy850rHzhTRNjMiZxxr6RPg6hgWDnA1N5X9M=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718636274; x=1719241074;
-        h=mime-version:subject:user-agent:references:in-reply-to:message-id
-         :date:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=I96/xfjfpPp+gCRB7qylY1mpEs8tzvsW2zTm7Ar98Fg=;
-        b=BW1FfNjoZ0cEJ/Eb63YYRh+442XqJlv685fmj5aGeYPyJW/iZ6gwsxbBtkfkYjA217
-         C4c/vZ5s12p6aSDeWCY7EDLbXA2m1I0shUIGn3C5P4lFGiaQhyxVHshtn3Yja6eEoCb6
-         6+2Y6AMGaShCgUiukAExCsTQL/m3Ab93gQCC+0TL6vgbFx4hgNoWYEcU6SJPBN2LcAKI
-         fjJi69HN985QEzFNwWdj/W4XWux8eY+x3IFod67LLliwx/ak/7RRpG4gvXfCeD1ly4dt
-         S3+MZ02fJmcHiEWsA2rmepP85/Du66mx9+kR0M5kPwMPi0qwGD4A3xX+phC+7m2Vs9Es
-         hSmQ==
-X-Gm-Message-State: AOJu0YwMLsr5gP+bKQU93y3pNxCxbsKLF89nCJ7qCJGLGZx5JanQ6sDQ
-	MmyUxE3/6/IMLitAldlw+k03gFWaan8mU1ookq8bMccYGi9/Usx08DK+aQfNmg==
-X-Google-Smtp-Source: AGHT+IFH/O0BfeGWIV0gH4dawn5yv56Id5lK62bbsMWnqc346dkUMOm3PNnwGutCw35z5P2YFImEew==
-X-Received: by 2002:a17:906:2c16:b0:a6f:37b7:52e6 with SMTP id a640c23a62f3a-a6f60d13b6dmr858496966b.2.1718636274157;
-        Mon, 17 Jun 2024 07:57:54 -0700 (PDT)
-Received: from [192.168.178.38] (f215227.upc-f.chello.nl. [80.56.215.227])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6f63f7e9d8sm415130766b.182.2024.06.17.07.57.53
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 17 Jun 2024 07:57:53 -0700 (PDT)
-From: Arend Van Spriel <arend.vanspriel@broadcom.com>
+	dkim=pass (2048-bit key) header.d=vandijck-laurijssen.be header.i=@vandijck-laurijssen.be header.b="Pmv3ycVQ"
+X-ASG-Debug-ID: 1718645260-2392345cc4a74c10001-0m9BuY
+Received: from srv21.vandijck-laurijssen.be (77.109.96.193.adsl.dyn.edpnet.net [77.109.96.193]) by relay-b01.edpnet.be with ESMTP id YyM4m9klsVyZiJlo; Mon, 17 Jun 2024 19:27:40 +0200 (CEST)
+X-Barracuda-Envelope-From: dev.kurt@vandijck-laurijssen.be
+X-Barracuda-Effective-Source-IP: 77.109.96.193.adsl.dyn.edpnet.net[77.109.96.193]
+X-Barracuda-Apparent-Source-IP: 77.109.96.193
+Received: from x1.vandijck-laurijssen.be (x1.vandijck-laurijssen.be [IPv6:fd01::1a1d:eaff:fe02:d339])
+	by srv21.vandijck-laurijssen.be (Postfix) with ESMTPSA id AD97C5AA3F7;
+	Mon, 17 Jun 2024 19:27:39 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+	d=vandijck-laurijssen.be; s=default; t=1718645259;
+	bh=fHI9suxn2yhoenFRb/GpaUBgD6FKtYobVow+7IALfwE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Pmv3ycVQuKVUCtQlCVz6uu7UY2vfjz9nCzjNT7KMsuzGx4QQpDS1cFpOsJJvvxrmo
+	 i+GlyzWgEKX1NroByqzI9AtNOikWW9efFWD+8nEA+gtEn7aufXTQ+6/QmOJJDSYu8T
+	 6ttKSyYNr1Gpv/Hm/R+r//pzg8m1AmpuoK2DRMkuZU4QzIcMQV33xijKl4y175PXiv
+	 lRIyad7NRkj0nVsGZjXM8IniPouwiKg6DW6Oxz937TC62mSdF3+hxf3dxPLSdrPsJ1
+	 HyFz7ryJdnrabPxUsE1wI4sCIvrfVcu0TaJVRfPvZ31eouDhXjg7AdxDxQxrAAlUfA
+	 s25t4XLgFbF+g==
+Date: Mon, 17 Jun 2024 19:27:38 +0200
+From: Kurt Van Dijck <dev.kurt@vandijck-laurijssen.be>
 To: Kalle Valo <kvalo@kernel.org>
-CC: <brcm80211@lists.linux.dev>, <linux-wireless@vger.kernel.org>
-Date: Mon, 17 Jun 2024 16:57:52 +0200
-Message-ID: <19026b45980.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
-In-Reply-To: <87v827k8p2.fsf@kernel.org>
+Cc: Arend van Spriel <arend.vanspriel@broadcom.com>,
+	brcm80211@lists.linux.dev, linux-wireless@vger.kernel.org
+Subject: Re: brcmfmac: implement basic AP-follow-STA
+Message-ID: <ZnByCrJlNQPnLYHe@x1.vandijck-laurijssen.be>
+X-ASG-Orig-Subj: Re: brcmfmac: implement basic AP-follow-STA
+Mail-Followup-To: Kalle Valo <kvalo@kernel.org>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	brcm80211@lists.linux.dev, linux-wireless@vger.kernel.org
 References: <Zmqf7jCqwlQNGM_j@x1.vandijck-laurijssen.be>
  <87v827k8p2.fsf@kernel.org>
-User-Agent: AquaMail/1.51.3 (build: 105103473)
-Subject: Re: brcmfmac: implement basic AP-follow-STA
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-	boundary="000000000000a58e93061b17308d"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87v827k8p2.fsf@kernel.org>
+X-Barracuda-Connect: 77.109.96.193.adsl.dyn.edpnet.net[77.109.96.193]
+X-Barracuda-Start-Time: 1718645260
+X-Barracuda-URL: https://212.71.1.221:443/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at edpnet.be
+X-Barracuda-Scan-Msg-Size: 544
+X-Barracuda-BRTS-Status: 1
+X-Barracuda-Spam-Score: 0.00
+X-Barracuda-Spam-Status: No, SCORE=0.00 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=7.0 tests=
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.126378
+	Rule breakdown below
+	 pts rule name              description
+	---- ---------------------- --------------------------------------------------
 
---000000000000a58e93061b17308d
-Content-Type: text/plain; format=flowed; charset="us-ascii"
-Content-Transfer-Encoding: 8bit
-
-On June 17, 2024 3:19:56 PM Kalle Valo <kvalo@kernel.org> wrote:
-
+On ma, 17 jun 2024 16:19:53 +0300, Kalle Valo wrote:
 > Kurt Van Dijck <dev.kurt@vandijck-laurijssen.be> writes:
->
->> /* context */
->> We (Yamabiko) have an application where we migrated to a bcm4339 sdio wifi 
->> chip.
->> We use it in AP+STA mode: when the chip is detected (wlan+ add uevent),
->> we call 'run iw dev wlan0 interface add wap0 type __ap' and start
->> wpa_supplicant on wlan0 and hostapd on wap0.
->> The STA is more important than the AP.
->> We have 'roamoff' parameter set. We observed problems with the firmware roaming
->> before and switched to wpa_supplicant roaming.
->>
->> We run a linux v5.4.24 derivative.
->>
->> /* problem */
->> We observed that the chip is able to switch channel for wpa_supplicant to
->> connect to a different channel, but it soon looses connection because hostapd
->> does not change channel too.
->>
->> This did work with our previous wifi chip (realtek 88x2 something), which 
->> notifies
->> hostapd that it switched.
->>
->> /* patch description */
->> I went down and ended up modifying the brcmfmac driver, patch appended below.
->> For contributing on these mailing lists, I ported it to yesterday's master.
->> The idea is that whenever a STA issues a connect with channel info, the AP's
->> will switch to it too. This implies a small glitch in the AP radio, which 
->> already
->> occurred before my patch. it seems that the wifi chip cannot modify radio 
->> settings
->> per virtual interface, although the API to the wifi chip suggests it can 
->> (that is
->> most probable a more generic communication used for other chips that can do 
->> this).
->> The channel switch is also reported to userspace.
->>
->> To be less invasive, this new behaviour is put behind
->> a module parameter 'ap_follow_sta'.
->
+> 
+> > To be less invasive, this new behaviour is put behind
+> > a module parameter 'ap_follow_sta'.
+> 
 > FWIW module parameters should be avoided, especially for 802.11 protocol
 > level functionality.
 
-Right. Only had taken a quick glance and noticed this. The 802.11 spec does 
-not really cover the concept of virtual interfaces, but still having this 
-solved through a module parameter for a specific driver is definitely not a 
-first choice.
+The module parameter does not add functionality in this case either.
+If it's a problem for merging this patch, I'll be more than happy to send a v2
+without the parameter, with the functionality always active.
 
-Anyway, I do have some thoughts about this patch. Hopefully I can dive into 
-this in coming days.
-
-Regards,
-Arend
-
-> --
-> https://patchwork.kernel.org/project/linux-wireless/list/
->
-> https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
-
-
-
-
---000000000000a58e93061b17308d
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Description: S/MIME Cryptographic Signature
-
-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
-2Gzj3QNJRLsZu1TLyOyBBIr/BE7UiY3RabgRzknBGAPmzhS+fmyM8OtM5BYBsFBrSUFtZZO2p/tf
-Nbc24J2zf2peoZ8MK+7WQqummYlOnz+FyDkA9EybeNMcS5C+xi/PAgMBAAGjggHdMIIB2TAOBgNV
-HQ8BAf8EBAMCBaAwgaMGCCsGAQUFBwEBBIGWMIGTME4GCCsGAQUFBzAChkJodHRwOi8vc2VjdXJl
-Lmdsb2JhbHNpZ24uY29tL2NhY2VydC9nc2djY3IzcGVyc29uYWxzaWduMmNhMjAyMC5jcnQwQQYI
-KwYBBQUHMAGGNWh0dHA6Ly9vY3NwLmdsb2JhbHNpZ24uY29tL2dzZ2NjcjNwZXJzb25hbHNpZ24y
-Y2EyMDIwME0GA1UdIARGMEQwQgYKKwYBBAGgMgEoCjA0MDIGCCsGAQUFBwIBFiZodHRwczovL3d3
-dy5nbG9iYWxzaWduLmNvbS9yZXBvc2l0b3J5LzAJBgNVHRMEAjAAMEkGA1UdHwRCMEAwPqA8oDqG
-OGh0dHA6Ly9jcmwuZ2xvYmFsc2lnbi5jb20vZ3NnY2NyM3BlcnNvbmFsc2lnbjJjYTIwMjAuY3Js
-MCcGA1UdEQQgMB6BHGFyZW5kLnZhbnNwcmllbEBicm9hZGNvbS5jb20wEwYDVR0lBAwwCgYIKwYB
-BQUHAwQwHwYDVR0jBBgwFoAUljPR5lgXWzR1ioFWZNW+SN6hj88wHQYDVR0OBBYEFIikAXd8CEtv
-ZbDflDRnf3tuStPuMA0GCSqGSIb3DQEBCwUAA4IBAQCdS5XCYx6k2GGZui9DlFsFm75khkqAU7rT
-zBX04sJU1+B1wtgmWTVIzW7ugdtDZ4gzaV0S9xRhpDErjJaltxPbCylb1DEsLj+AIvBR34caW6ZG
-sQk444t0HPb29HnWYj+OllIGMbdJWr0/P95ZrKk2bP24ub3ZP/8SyzrohfIba9WZKMq6g2nTLZE3
-BtkeSGJx/8dy0h8YmRn+adOrxKXHxhSL8BNn8wsmIZyYWe6fRcBtO3Ks2DOLyHCdkoFlN8x9VUQF
-N2ulEgqCbRKkx+qNirW86eF138lr1gRxzclu/38ko//MmkAYR/+hP3WnBll7zbpIt0jc9wyFkSqH
-p8a1MYICbTCCAmkCAQEwazBbMQswCQYDVQQGEwJCRTEZMBcGA1UEChMQR2xvYmFsU2lnbiBudi1z
-YTExMC8GA1UEAxMoR2xvYmFsU2lnbiBHQ0MgUjMgUGVyc29uYWxTaWduIDIgQ0EgMjAyMAIMTv1t
-bpIzNUky46LXMA0GCWCGSAFlAwQCAQUAoIHUMC8GCSqGSIb3DQEJBDEiBCA9/COoi2VLlWyAEPjO
-nfN+LSJNis2pD5OqeHtNWOmi8TAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJ
-BTEPFw0yNDA2MTcxNDU3NTRaMGkGCSqGSIb3DQEJDzFcMFowCwYJYIZIAWUDBAEqMAsGCWCGSAFl
-AwQBFjALBglghkgBZQMEAQIwCgYIKoZIhvcNAwcwCwYJKoZIhvcNAQEKMAsGCSqGSIb3DQEBBzAL
-BglghkgBZQMEAgEwDQYJKoZIhvcNAQEBBQAEggEAFG797p9nJVafRIz+baGd5i4TKtqyopy6UcoD
-K36jGeisRk5sLN464pjNwb5BJCNENJ4FrmvmGtsXYSE7xxAQ7UyBco8IXwSJAxpGNyiHEgOl2a9O
-q1WGJYYhHIDAK5IExsl6Aqngn758Jm16vXGhFYj8lI98M0gRQEET15Rw7R7DLztQyTZCtjACsCay
-HTmPkEmm76dSa/WuJFZX5QAO7fvt02IZDDHHuweu3Ux57L5bfMNIDBzXq8DiZLJ+nTzE3O4wwOfn
-/Dlne+Ho0CODyRReoucAEKnmpmgyuBPdJ8rUOeVJmlUE5gsCsj0vS7WNGmU2QcGTfFyBseJ3YSn/
-6Q==
---000000000000a58e93061b17308d--
+Kurt
