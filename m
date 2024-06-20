@@ -1,114 +1,106 @@
-Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0AA02D05D
-	for <brcm80211@lists.linux.dev>; Thu, 20 Jun 2024 08:59:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A2751A8C09
+	for <brcm80211@lists.linux.dev>; Thu, 20 Jun 2024 09:46:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718873943; cv=none; b=MLLGdMDu2shUe32s0SL/MpIdvmbco148P10GtQwCnl5+e0HVUUC6X+JhDZf/eW+NMHUlaPc6y8KNtImW8kuWnuELVYd3ZAnulbT1grwCSs/ufJXE1V+K207EWWs6cD0vFiz1PW/Mvk3lHfdsKjcig5BTnhJYmZVw5jwk5X1YF6c=
+	t=1718876804; cv=none; b=iAjfxMZX7B2rMSKrMai78IoLaXugX17b7l2hNiZrR8UG/Z/Wsu06FP27820EGYA0bSNylL80fC2pDr+ooJ1Rb/q+Jmmu1O073mGHzp2JOuIyjBh7YrMCqiADWuaVJyHi0C3wyJQDBx3NUlEzmCBo7Q0C0z48lNloenInnbdYcoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718873943; c=relaxed/simple;
-	bh=IbUeNxa6Ztg9ggQC8IhtjLkEjkCroZ9PYPXXCxGKkUs=;
+	s=arc-20240116; t=1718876804; c=relaxed/simple;
+	bh=rNIOKzcwK3pdjqaqdsGkpgJmK9GSZc1BC+fo/O2YJXA=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=VIQ3kXs44krrxY7V13EpzfaNmg1L/EOxgREnlaO64mY8UQV/aGXWVWQwj2lWAuHyNWePNwptKNcvobLbVJTKc/nwl5f+g0s41uke6kkMnKT1DhsdnF5xMlCZm0SZDqd4myuYLY6N91sFXBTrKaXTA4WGGtZpz1FACurn8bRGUPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dMWbYQrx; arc=none smtp.client-ip=209.85.208.177
+	 To:Cc:Content-Type; b=GRxRczJnR1Tku31mIO79wQHDSn31UJyiHShWZcYbwMBtaxgnfkVkfkP/qiXNb/1cAYRnztsKpoGPal3D/Fj76au2zRgvgevFMxxEkKvVXghJ6yld1DY4bYWG6U3xB9Pdd1K+lFMV+Gp7LS3AvmhsRDeItgysVmInKMrKzYE8TyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eXfIgBEf; arc=none smtp.client-ip=209.85.128.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dMWbYQrx"
-Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2ebeefb9a6eso5743041fa.1
-        for <brcm80211@lists.linux.dev>; Thu, 20 Jun 2024 01:59:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eXfIgBEf"
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-63267c30eaaso6468317b3.1
+        for <brcm80211@lists.linux.dev>; Thu, 20 Jun 2024 02:46:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718873940; x=1719478740; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=A0c4GWBmK6OfKPLjq+HRXk5iadfQq+qlk0GGJwyE53g=;
-        b=dMWbYQrxFEVoYo5ffCXo/xClxki7OY37YCwmbkTXBMAH62PqKMDZRF+OFrT4nm3dXi
-         lCoYXx2jiM+XGNNOw6TBcwCjrRBOrEsjcOJDiWMnFacaZKObZaqIGSUnCyLvlOtgUhUz
-         jXUIqoXAIM3nwp4p0IGCKJn1urCzqigAeehGS6RYMqmqxTzN/bJA7pikCt7VVrTLZgsn
-         4XAb0TjeMMTThhhM8OMmK4V3v5+2qnT+rfnNXaWVpPW+rRvyel3u4VfS9e7YpKds6gRi
-         b2wpljQqf23FnyG5eZoONhQnXskKhg+JBlVmdEVBwpn8ij5jDOv5Sa6o79nlWNRXYHNY
-         DQ7A==
+        d=gmail.com; s=20230601; t=1718876802; x=1719481602; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=sgSLok9248zUH94CIqG1aU31X9pCD+9Gxn9TdonRlVc=;
+        b=eXfIgBEfFhutPNmQ2YYIGZrCQTIk/pcvJ5c0QhnpWd5x3D+b9F6TbSw0pMdgqugUnJ
+         E3BUuTswmeenCTxjciKt9OIw4hYSFkAkq0Myx/Il93iq5Mu4DgErBgDleYPEBn1Q2R1R
+         vbIKU9ZKWKnm3XTzaXal83XlGRcFSZi/8mT7VskF2MMZbD7Pgz3FxxiweHGGp1R3jIvl
+         oKlP2tFkNx8MeHJdj6QojPdYCcYrWU/NGjnC1ozUGaeGmQHE6nA48AtxPyIuEyniTtsN
+         gC4QNAzdvX8YkJOMPOgG5p0WCHPTMcaMQn5B/6eE1bhbOnErCYC7SKEz895qce2MzMc0
+         vr4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718873940; x=1719478740;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=A0c4GWBmK6OfKPLjq+HRXk5iadfQq+qlk0GGJwyE53g=;
-        b=ic4u4LGtPC/Lj88OT9SKOL2p9O1lWdeX5CIXsJTwtYfOakV+bW6ZInfUWdwQsjehIF
-         eoDUDteDyOyqZl/XKZkHAydCqrwWdSSVZG49R9MyAplNNl4ZVh6QJ2NgBVyjXrowfbT6
-         BY7aowTap0TYs4ebCWNPVtqJeS3Lt/JsXZhf2Qik0YGtNythqz5HY532Iydqzkdt0y/z
-         LOZdBqrAOH5Ha4NiYmwzCwjKujQOW5dNRy1TSBTq5CbZ1k6i8h+THITaQgOjJvK4hnvd
-         Ttb9PvSwds40TSJQAWoLvI2rPfdcBqiZzhqggISmsbE4lkC22vEb46vQNtUuRua+AJs8
-         6bFw==
-X-Forwarded-Encrypted: i=1; AJvYcCUK5I642/hMe4RqrlXqy2SkEU+I+DYzfMVPuRVof6Vf4+kyTMwnYBatyNdhZ/xXR1tXZciStn/VhQ5H8M0h1S75fphoN54DnGEA
-X-Gm-Message-State: AOJu0Ywp/x7Gm7UiRIO2snNP7DvmtQhI3EUMmKPFw9P9i0jiwsg9AEwq
-	q8KiyEA1ajQ32cls1Qd8bSgAlNXYNkzCnN8SqoAR1sADfPa4z6v2OP6rTE47xVfRiqKdA5Q4/mC
-	pZE2u9eP237XcpCg9b/L4MxF5CiA=
-X-Google-Smtp-Source: AGHT+IEMeEW1RufKZNUSAOVIeyM7M4gDXxUTXMXwz7ODyibLtgvSe4Vr204B98C7MQEgxk5UxQTUQeP54Re0d/0jTnY=
-X-Received: by 2002:a2e:9612:0:b0:2ec:2ccb:8efb with SMTP id
- 38308e7fff4ca-2ec3cfe8a75mr26594501fa.38.1718873939728; Thu, 20 Jun 2024
- 01:58:59 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1718876802; x=1719481602;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=sgSLok9248zUH94CIqG1aU31X9pCD+9Gxn9TdonRlVc=;
+        b=Cf532txiXJgHdacomsF6TI2EjycOvHpPVjnORkdZEypfUwxU9UQqlionIIe4ovUWae
+         HmlkDwPAqRXqNVme8zkUdf4rouBnSGkdD874MZXH4dnqxwoN6NjdDnOJci+K2jguahwc
+         Bb5pInluVuB4xLKjhR2HbfwsGg6EqXgfvvZcT80eYy8sVMgQT4DHmQD35m4r/ozaZc/W
+         Q/y3HBio7M73gDDQ4hk9MtpeDQvhn4OzjhrJtzVXkwWcc1+YoeTbhP89H50izxOoNuWL
+         vqmrttWNneq/Dqs6IzqPnyFmF0zhwe0IDDBxO7Gjt63YOCvZMqqsZXpx8fixQAfJz9dj
+         5kKg==
+X-Forwarded-Encrypted: i=1; AJvYcCXudvX42LSmpuB/ZnLoDhqBeuauFN+qBcNxQUfx5Lhv2Mcn18X0lP4lRxXQ2eP9mtfg6XRwva3uwZce8Yay8VY72U3nzK1nis1R
+X-Gm-Message-State: AOJu0Yx0c/d7dUfhe+of66dY7jiAbSy/cI6ZpM9Su3/FyZnNTdFi2FX5
+	5MvELiUMS7nmYY9haedJnHJVdRvTVuyky7TYaY9F2hL+kwLPUwX5QPrAeGmwkTTt/b/qRTCZb5Z
+	rQIJbfs6mqc9xbWEFcaI6qpYLfR4=
+X-Google-Smtp-Source: AGHT+IFqLSKS5K41fiVpUsu27BMJJni/5wt5ZZUTYsjR0JWKIVDOOYmzUA1liNLqeUTRNwAUzGgzfuvcIT0CMCcbPUc=
+X-Received: by 2002:a0d:eb41:0:b0:61a:cd65:3010 with SMTP id
+ 00721157ae682-63a8e1dcaedmr48296707b3.30.1718876802073; Thu, 20 Jun 2024
+ 02:46:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240617122609.349582-1-arend.vanspriel@broadcom.com>
-In-Reply-To: <20240617122609.349582-1-arend.vanspriel@broadcom.com>
-From: Peter Robinson <pbrobinson@gmail.com>
-Date: Thu, 20 Jun 2024 09:58:48 +0100
-Message-ID: <CALeDE9O7DCPhoxdMyHmYFOjwdkPRepiaaC92QorzSTXCduZ+xQ@mail.gmail.com>
+References: <20240617122609.349582-1-arend.vanspriel@broadcom.com> <CALeDE9O7DCPhoxdMyHmYFOjwdkPRepiaaC92QorzSTXCduZ+xQ@mail.gmail.com>
+In-Reply-To: <CALeDE9O7DCPhoxdMyHmYFOjwdkPRepiaaC92QorzSTXCduZ+xQ@mail.gmail.com>
+From: Julian Calaby <julian.calaby@gmail.com>
+Date: Thu, 20 Jun 2024 19:46:30 +1000
+Message-ID: <CAGRGNgWH9U3XeatXA9xpkLz76COuL1xjYcfXQYLTGKBxvy=M-A@mail.gmail.com>
 Subject: Re: [PATCH] wifi: brcmsmac: advertise MFP_CAPABLE to enable WPA3
-To: Arend van Spriel <arend.vanspriel@broadcom.com>
-Cc: Kalle Valo <kvalo@kernel.org>, linux-wireless@vger.kernel.org, 
-	brcm80211@lists.linux.dev
+To: Peter Robinson <pbrobinson@gmail.com>
+Cc: Arend van Spriel <arend.vanspriel@broadcom.com>, Kalle Valo <kvalo@kernel.org>, 
+	linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Arend,
+Hi Peter,
 
-> After being asked about support for WPA3 for BCM43224 chipset it
-> was found that all it takes is setting the MFP_CAPABLE flag and
-> mac80211 will take care of all that is needed [1].
-
-Testing this on a Raspberry Pi 4 [1] against a UniFi U6Pro AP I can't
-connect to my WPA3 only SSID, it works fine with the SSID that's
-WPA2/WPA3 on the same AP. It doesn't connect and I get a whole lot of
-the following errors while it tries:
-
-[  155.988865] brcmfmac: brcmf_set_channel: set chanspec 0xd02e fail, reason -52
-[  156.100906] brcmfmac: brcmf_set_channel: set chanspec 0xd034 fail, reason -52
-[  156.108597] brcmfmac: brcmf_set_channel: set chanspec 0xd038 fail, reason -52
-[  156.116317] brcmfmac: brcmf_set_channel: set chanspec 0xd03c fail, reason -52
-
-I also have a RPi3 (BCM43430/1) and a Rock960 (BCM4356/2) with working
-brcmfmac WiFi I can test if that's useful.
-
-[1] The upstream linux-firmware FW: BCM4345/6 wl0: Apr 15 2021
-03:03:20 version 7.45.234 (4ca95bb CY) FWID 01-996384e2
-
-> [1] https://lore.kernel.org/linux-wireless/20200526155909.5807-2-Larry.Finger@lwfinger.net/
+On Thu, Jun 20, 2024 at 7:19=E2=80=AFPM Peter Robinson <pbrobinson@gmail.co=
+m> wrote:
 >
-> Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-> ---
->  drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c | 1 +
->  1 file changed, 1 insertion(+)
+> Hi Arend,
 >
-> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
-> index 860ef9c11c46..a5aa58047d39 100644
-> --- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
-> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
-> @@ -1090,6 +1090,7 @@ static int ieee_hw_init(struct ieee80211_hw *hw)
->         ieee80211_hw_set(hw, AMPDU_AGGREGATION);
->         ieee80211_hw_set(hw, SIGNAL_DBM);
->         ieee80211_hw_set(hw, REPORTS_TX_ACK_STATUS);
-> +       ieee80211_hw_set(hw, MFP_CAPABLE);
+> > After being asked about support for WPA3 for BCM43224 chipset it
+> > was found that all it takes is setting the MFP_CAPABLE flag and
+> > mac80211 will take care of all that is needed [1].
 >
->         hw->extra_tx_headroom = brcms_c_get_header_len();
->         hw->queues = N_TX_QUEUES;
+> Testing this on a Raspberry Pi 4 [1] against a UniFi U6Pro AP I can't
+> connect to my WPA3 only SSID, it works fine with the SSID that's
+> WPA2/WPA3 on the same AP. It doesn't connect and I get a whole lot of
+> the following errors while it tries:
 >
-> base-commit: a2ead3445a6317c5d2b53711cf9a98e54c395223
-> --
-> 2.32.0
->
+> [  155.988865] brcmfmac: brcmf_set_channel: set chanspec 0xd02e fail, rea=
+son -52
+> [  156.100906] brcmfmac: brcmf_set_channel: set chanspec 0xd034 fail, rea=
+son -52
+> [  156.108597] brcmfmac: brcmf_set_channel: set chanspec 0xd038 fail, rea=
+son -52
+> [  156.116317] brcmfmac: brcmf_set_channel: set chanspec 0xd03c fail, rea=
+son -52
+
+The Raspberry Pis' WiFi chipsets use the brcmfmac driver and this is a
+patch to the brcmsmac driver. This driver is for older and simpler
+WiFi chipsets than the ones on the Raspberry Pis.
+
+Thanks,
+
+--=20
+Julian Calaby
+
+Email: julian.calaby@gmail.com
+Profile: http://www.google.com/profiles/julian.calaby/
