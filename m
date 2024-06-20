@@ -1,67 +1,62 @@
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC41C1ABCBB
-	for <brcm80211@lists.linux.dev>; Thu, 20 Jun 2024 17:04:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 618091C688B
+	for <brcm80211@lists.linux.dev>; Thu, 20 Jun 2024 17:33:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718903086; cv=none; b=YX2kkKmV7ZuWOzYLp/fsj3CiBsIJKWLyEcJIaTkBe5ke1sNQjQPvBRlOK1B0PPSDbA9XzeIKApBBRAc8EWZ5i/O+uLwgL+tzJhRd91g1gEZ2jW6/LSsM/6m2u5ONlMWYXxXkX0ToxMXAF0rwXKbKdlyd/S8J1y3FJbeIJKof1RE=
+	t=1718904804; cv=none; b=AhudbxG7EA0pH8iMoEi2Aq4MA/LSdl1ThpvQd/UrnTxGSOamONk+yHoZV7xymdBngFrabcOJ1Ix0PMiDif8IhSrZaokyE5VuyO3Ta9quftL2bdE9k1AlDWMZZAc+1oGo5NTRMyG7/Y2fItJiFeWnvlk1LF7ZS0BbrEl41UgqKeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718903086; c=relaxed/simple;
-	bh=r8IYeuxVvquTKE75kpp7R6a7O1hdG13Q763U9ZGxug4=;
+	s=arc-20240116; t=1718904804; c=relaxed/simple;
+	bh=9Fc//cSECUnP9/NbCret6GcPs/Cqi30ebupY1kv3Coo=;
 	h=From:To:CC:Date:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type; b=LvXXGMkScugNJbecgV81acVtG48h3ThHe7GVw2t9N0mc8EQKQ88SFdBt1iSV/rJEvQsaQAms1KDYK8g6adY10wJ74XMGBN0b0xH3zLpfFOYx4LFPRoBrd6Ggq2oJt3brKCwA70RL6gIromeCC1kAMlaurYe8qfXbsaBCqumh3i4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=FfEPg8i5; arc=none smtp.client-ip=209.85.218.48
+	 MIME-Version:Content-Type; b=SJy6IrvqQ/FsxXyyIrhok5/bahJvkG2WrnVduSuPTJJo75/Da3sCjOkqExdfetWSsNXbUA7BV3C9tD8CSPHfGNubLZPznr02f52J0x4jddlcBrVzEWfmk8lerHb5a5MCAMbDEQ4UYVeCQixaFg+i7/9osyX0wg+gDLzrbjCy1FE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=D+oGLAaE; arc=none smtp.client-ip=209.85.208.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="FfEPg8i5"
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a62ef52e837so129565266b.3
-        for <brcm80211@lists.linux.dev>; Thu, 20 Jun 2024 10:04:44 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="D+oGLAaE"
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-57d280e2d5dso538353a12.1
+        for <brcm80211@lists.linux.dev>; Thu, 20 Jun 2024 10:33:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1718903083; x=1719507883; darn=lists.linux.dev;
+        d=broadcom.com; s=google; t=1718904801; x=1719509601; darn=lists.linux.dev;
         h=mime-version:subject:user-agent:references:in-reply-to:message-id
          :date:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=sHfYEioNzF33Mit4fg7G+y4uBzeo5Emdaf5RMWkAz+Y=;
-        b=FfEPg8i50Vnf87y8Ixk7ZmYeoKeUMx7NjflSbFgghb3Q1Nl+WybBKx5ZWrlyQQd4nK
-         WE5V8juKlhG+VSK/d17yo9Jb7M4yNLjWPJPsZ2I13iiVMFbjdVrlGqmDywQOFYVtEGMt
-         RYqeZblPTw6CfCfRMUm7nup31HVQMKZSqyGD4=
+        bh=Fc4dm/DNLJvU7u1fW6nzts/6I6GJzFICA4OcvFELUjY=;
+        b=D+oGLAaEgQjzIXIPTOxR83r+F1gt+BvmQz3NlLyuF9t3VpVaKUylP9jthsFFCO42+a
+         8kuCE0AH1CW6nRBCR38SzINXBGXlmvIvVtY4QkT1ppXiWbgom3RQMBex4+wCkkDhxSOf
+         YFTErHtf7ARGNbW4WT+1kPiz+rL76ZqiUtRyQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718903083; x=1719507883;
+        d=1e100.net; s=20230601; t=1718904801; x=1719509601;
         h=mime-version:subject:user-agent:references:in-reply-to:message-id
          :date:cc:to:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=sHfYEioNzF33Mit4fg7G+y4uBzeo5Emdaf5RMWkAz+Y=;
-        b=hxgCLtTEeUWT87ShN7N/YdeoOmaiuD35zPjudpBD36p1Jt9ESbIuhWhGGPpRtzEukj
-         4q455JVhEKYsZr2ZA2OYiZWJK3OuGtMHwXwF6+25L4QkFbfOPgPptmsdpVXMFvaV7Et3
-         Kjm6CoezhIamXOl643VfciV626GjuZjI3GMGsQWJ8EGJzh1gvl0GI4yj2JWJuPyNHX2p
-         BzKi7+kvLWlbtO17dHqfGycwvhcd33zM5u5nuduPtCraj5B9ntV20YpdRuotPwu/ke/m
-         QxBYTtOXv8fn98IBOwImdzBJWB7OiF7wEBJ75uPAblobMxJF4wgdG0xQZsLiSdn9Y7ve
-         iBNg==
-X-Forwarded-Encrypted: i=1; AJvYcCUmDYT6koRp1RJayeVszqj8hOsG0xoIwmJpouYNAdtS87/daCg+5PjnB813Kt3HHllcuTYEE392AOV8P6gSEKlX8ik667Z4dNqW
-X-Gm-Message-State: AOJu0Yw8btudF72a1WN4RtwTlaT60YP74dimd4elyx7tWsYWtvvnzLGn
-	3IOh6OnKF0Xjh5doX2synoiPrz3M5AgPFIarJ53bjezICshgPCRmlhglwSS6Qw==
-X-Google-Smtp-Source: AGHT+IEl/1o2pt8N1B5OyLEYGoj5X0yy/yK3Tk64mObbSQoCLEbHn1J4DrtuK3+ovpyDQFaEqK5X0g==
-X-Received: by 2002:a17:907:a684:b0:a6f:6078:6e71 with SMTP id a640c23a62f3a-a6fab6072edmr532897066b.8.1718903083044;
-        Thu, 20 Jun 2024 10:04:43 -0700 (PDT)
+        bh=Fc4dm/DNLJvU7u1fW6nzts/6I6GJzFICA4OcvFELUjY=;
+        b=mSEEcVmcvcMMiDYzX3ez6e1p1v454Bgp0zt24Dki3oaHIHhEkls/c5tEjEQaSbKXqr
+         nz+XHgdVr8lp28uT7yL8EtKzhHMUdD/vG2hmgf8l9z1aQUHfnlVQdUVIpHWbbBlTlJvR
+         9Octy374ABT1cLEXXYnHd1qa09PF/V8jg4kpZ0Zk2d8YJ+mgqp/d8IdPjBFtDwnLuSe8
+         nuMr2aIqZMkwdetGcx30B73WWEfxlMm5O9gplMbqCk2gwpQoLpxVxYMzpgbHuyOFMLJc
+         ZWvEPD7Bm3zyJnjEHlhOUEl3SATFB8b20VlV1dwi7NEMZHp2b4USZkbqdjAPQVyKfDih
+         pxQA==
+X-Forwarded-Encrypted: i=1; AJvYcCWMEi8kQCfjx59C6ko9LdFRHRqyFW8jX70b99+ZiqOwbKBattYY6aACYBjPVjSLpYGvF0jPIbfI57wzQqZikR9Km89I3EnnBYxp
+X-Gm-Message-State: AOJu0Yybzg7LX2MUZRyf/zl5UBVpCRQOiLFAT7GaMODGw2CX6hYF8///
+	kgoTI1Te57ZNl84IRfXWCbTBPf948tl3owZC8bbH0x34YgBbs91obGt93s4+Vg==
+X-Google-Smtp-Source: AGHT+IETUAVlwwFkqDQ4w98uIqyon39aonVaXSncZlcpdsKtKdRss5bCY3FXbq7fQ34KTjOyYSsSvA==
+X-Received: by 2002:a50:9e67:0:b0:57d:57c:ce99 with SMTP id 4fb4d7f45d1cf-57d07e68e29mr3351251a12.2.1718904800448;
+        Thu, 20 Jun 2024 10:33:20 -0700 (PDT)
 Received: from [192.168.178.38] (f215227.upc-f.chello.nl. [80.56.215.227])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6f56db5bafsm787499966b.50.2024.06.20.10.04.42
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-57cb72da156sm9886234a12.22.2024.06.20.10.33.19
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 20 Jun 2024 10:04:42 -0700 (PDT)
+        Thu, 20 Jun 2024 10:33:20 -0700 (PDT)
 From: Arend Van Spriel <arend.vanspriel@broadcom.com>
-To: KeithG <ys3al35l@gmail.com>
-CC: Peter Robinson <pbrobinson@gmail.com>, Julian Calaby <julian.calaby@gmail.com>, Kalle Valo <kvalo@kernel.org>, <linux-wireless@vger.kernel.org>, <brcm80211@lists.linux.dev>
-Date: Thu, 20 Jun 2024 19:04:42 +0200
-Message-ID: <190369b8c10.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
-In-Reply-To: <CAG17S_NBO=tTBp9GX=S9C4REbT-Gx634n66+7JERcWbe-KXt-g@mail.gmail.com>
-References: <20240617122609.349582-1-arend.vanspriel@broadcom.com>
- <CALeDE9O7DCPhoxdMyHmYFOjwdkPRepiaaC92QorzSTXCduZ+xQ@mail.gmail.com>
- <CAGRGNgWH9U3XeatXA9xpkLz76COuL1xjYcfXQYLTGKBxvy=M-A@mail.gmail.com>
- <CALeDE9M78so=roEFion9GGo4tV7c+M885=ZNZgi9zKyBur+iMQ@mail.gmail.com>
- <190355aedf0.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
- <CAG17S_NBO=tTBp9GX=S9C4REbT-Gx634n66+7JERcWbe-KXt-g@mail.gmail.com>
+To: Jacobe Zang <jacobe.zang@wesion.com>
+CC: <kvalo@kernel.org>, <duoming@zju.edu.cn>, <bhelgaas@google.com>, <minipli@grsecurity.net>, <linux-wireless@vger.kernel.org>, <brcm80211@lists.linux.dev>, <brcm80211-dev-list.pdl@broadcom.com>, <megi@xff.cz>, <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <heiko@sntech.de>, <nick@khadas.com>, <efectn@protonmail.com>, <jagan@edgeble.ai>, <dsimic@manjaro.org>, <devicetree@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>, <linux-rockchip@lists.infradead.org>, <linux-kernel@vger.kernel.org>
+Date: Thu, 20 Jun 2024 19:33:18 +0200
+Message-ID: <19036b5bb30.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
+In-Reply-To: <20240620020015.4021696-1-jacobe.zang@wesion.com>
+References: <20240620020015.4021696-1-jacobe.zang@wesion.com>
 User-Agent: AquaMail/1.51.3 (build: 105103473)
-Subject: Re: [PATCH] wifi: brcmsmac: advertise MFP_CAPABLE to enable WPA3
+Subject: Re: [PATCH v1 0/3] Add AP6275P wireless support
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -69,175 +64,29 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-	boundary="000000000000b17ed5061b554f6a"
+	boundary="000000000000110885061b55b660"
 
---000000000000b17ed5061b554f6a
-Content-Type: text/plain; format=flowed; charset="UTF-8"
+--000000000000110885061b55b660
+Content-Type: text/plain; format=flowed; charset="us-ascii"
 Content-Transfer-Encoding: 8bit
 
-On June 20, 2024 5:44:30 PM KeithG <ys3al35l@gmail.com> wrote:
+On June 20, 2024 4:00:31 AM Jacobe Zang <jacobe.zang@wesion.com> wrote:
 
-> On Thu, Jun 20, 2024 at 6:14 AM Arend Van Spriel
-> <arend.vanspriel@broadcom.com> wrote:
->>
->> On June 20, 2024 11:53:12 AM Peter Robinson <pbrobinson@gmail.com> wrote:
->>
->>> On Thu, 20 Jun 2024 at 10:46, Julian Calaby <julian.calaby@gmail.com> wrote:
->>>>
->>>> Hi Peter,
->>>>
->>>> On Thu, Jun 20, 2024 at 7:19 PM Peter Robinson <pbrobinson@gmail.com> wrote:
->>>>>
->>>>> Hi Arend,
->>>>>
->>>>>> After being asked about support for WPA3 for BCM43224 chipset it
->>>>>> was found that all it takes is setting the MFP_CAPABLE flag and
->>>>>> mac80211 will take care of all that is needed [1].
->>>>>
->>>>> Testing this on a Raspberry Pi 4 [1] against a UniFi U6Pro AP I can't
->>>>> connect to my WPA3 only SSID, it works fine with the SSID that's
->>>>> WPA2/WPA3 on the same AP. It doesn't connect and I get a whole lot of
->>>>> the following errors while it tries:
->>>>>
->>>>> [  155.988865] brcmfmac: brcmf_set_channel: set chanspec 0xd02e fail,
->>>>> reason -52
->>>>> [  156.100906] brcmfmac: brcmf_set_channel: set chanspec 0xd034 fail,
->>>>> reason -52
->>>>> [  156.108597] brcmfmac: brcmf_set_channel: set chanspec 0xd038 fail,
->>>>> reason -52
->>>>> [  156.116317] brcmfmac: brcmf_set_channel: set chanspec 0xd03c fail,
->>>>> reason -52
->>>>
->>>> The Raspberry Pis' WiFi chipsets use the brcmfmac driver and this is a
->>>> patch to the brcmsmac driver. This driver is for older and simpler
->>>> WiFi chipsets than the ones on the Raspberry Pis.
->>>
->>> Right you are, completely missed that :)
->>
->> The devil is in the details ;-) Good that you tested. Maybe we can look
->> into the WPA3-only problem. Are you using wpa_supplicant? Can you share
->> supplicant log file and kernel log with brcmfmac debug modparam set to 0x1416.
->>
->> Regards,
->> Arend
->
-> The RPis and the brcmfmac cards.
-> The current RPiOS for 32 bit and 64 bit OS have firmware which loads
-> on the 5Ghz capable Pis (3b+, 4, 5, 02W) which advertise WPA3
-> capability (this is a Pi5, but others are similar) This firmware is
-> from 2021:
-> # dmesg | grep brcmfmac
-> [    2.112735] brcmfmac: F1 signature read @0x18000000=0x15264345
-> [    2.114202] brcmfmac: brcmf_fw_alloc_request: using
-> brcm/brcmfmac43455-sdio for chip BCM4345/6
-> [    2.117274] usbcore: registered new interface driver brcmfmac
-> [    2.335211] brcmfmac: brcmf_c_process_txcap_blob: no txcap_blob
-> available (err=-2)
-> [    2.335581] brcmfmac: brcmf_c_preinit_dcmds: Firmware: BCM4345/6
-> wl0: Apr 15 2021 03:03:20 version 7.45.234 (4ca95bb CY) FWID
-> 01-996384e2
->
-> # iw list
-> Wiphy phy0
-> ...
->    Supported extended features:
->        * [ CQM_RSSI_LIST ]: multiple CQM_RSSI_THOLD records
->        * [ 4WAY_HANDSHAKE_STA_PSK ]: 4-way handshake with PSK in station mode
->        * [ 4WAY_HANDSHAKE_STA_1X ]: 4-way handshake with 802.1X in station mode
->        * [ DFS_OFFLOAD ]: DFS offload
->        * [ SAE_OFFLOAD ]: SAE offload support
->        * [ 4WAY_HANDSHAKE_AP_PSK ]: AP mode PSK offload support
->        * [ SAE_OFFLOAD_AP ]: AP mode SAE authentication offload support
->
-> # uname -a
-> Linux pi5 6.6.31+rpt-rpi-2712 #1 SMP PREEMPT Debian 1:6.6.31-1+rpt1
-> (2024-05-29) aarch64 GNU/Linux
->
-> I am pretty sure I am fully up to date.
->
-> I set up hostapd running an WPA3 SAE config on my desktop with an
-> intel card and can connect to it from my phone.
-> I cannot connect to it from the Pi5:
+> These add AP6275P wireless support on Khadas Edge2. Enable 32k clock
+> for Wi-Fi module and extend the hardware IDs table in the brcmfmac
+> driver for it to attach.
 
-So let's dive in
-
-> I tried using a config file and connecting with wpa_supplicant and it did not:
-> # cat /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
-> ctrl_interface=DIR=/run/wpa_supplicant GROUP=netdev
-> update_config=1
-> network={
->  ssid="deskSAE"
->  sae_password="secret123"
->  proto=RSN
->  key_mgmt=SAE
->  pairwise=CCMP
->  ieee80211w=2
-> }
-
-That looks sane to me.
-
-> # ifconfig wlan0 up
-> root@pi5(rw):~# iwlist wlan0 scan | grep deskSAE
->                    ESSID:"deskSAE"
-> # wpa_supplicant -i wlan0 -c /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
-> Successfully initialized wpa_supplicant
-> wlan0: WPA: Failed to select authenticated key management type
-> wlan0: WPA: Failed to set WPA key management and encryption suites
-> (never returns command prompt)
-
-The supplicant remains running in the foreground so that is normal. Could 
-you retry with -ddt on the command line. Also having brcmfmac loaded with 
-debug=0x1416 while testing. Finally, can you share the hostapd.conf file?
+Please get the bindings properly defined. I assume the patch sent earlier 
+titled "[PATCH v1] dt-bindings: net: wireless: BCM4329 binding: add 
+pci14e4,449d" is related. Focus on getting agreement on that before 
+throwing in DTS and driver details.
 
 Regards,
 Arend
 
->
-> I tried using wpa_cli as well and it also fails:
-> <3>CTRL-EVENT-NETWORK-ADDED 1
-> <3>CTRL-EVENT-SCAN-STARTED
-> <3>CTRL-EVENT-SCAN-RESULTS
-> <3>WPS-AP-AVAILABLE  "deskS
-> <4>Failed to initiate sched scan
-> <3>CTRL-EVENT-NETWORK-NOT-FOUND
->> set_network 0 ssid "deskSAE"
-> OK
->> set_network - key_mgmt SAE
-> OK
->> set_network 0 ieee80211w 2
-> OK
->> set_network 0 sae_password "secret123"
-> OK
-> <3>CTRL-EVENT-SCAN-STARTED
-> <3>CTRL-EVENT-SCAN-RESULTS
-> <3>WPS-AP-AVAILABLE
-> <4>Failed to initiate sched scan
-> <3>CTRL-EVENT-NETWORK-NOT-FOUND
-> <3>CTRL-EVENT-SCAN-STARTED
->> enable 0
-> OK
-> <3>CTRL-EVENT-SCAN-RESULTS
-> <3>WPS-AP-AVAILABLE
-> <4>Failed to initiate sched scan
-> <3>CTRL-EVENT-NETWORK-NOT-FOUND
-> <4>WPA: Failed to select authenticated key management type
-> <4>WPA: Failed to set WPA key management and encryption suites
-> <3>CTRL-EVENT-SCAN-STARTED
-> <3>CTRL-EVENT-SCAN-RESULTS
-> <3>WPS-AP-AVAILABLE
-> <4>WPA: Failed to select authenticated key management type
-> <4>WPA: Failed to set WPA key management and encryption suites
-> <3>CTRL-EVENT-SCAN-STARTED
->
-> Would love it if there were a way to get wpa3 to work with the
-> brcmfmac cards on RPI.
->
-> Keith
 
 
-
-
---000000000000b17ed5061b554f6a
+--000000000000110885061b55b660
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -308,14 +157,14 @@ BtkeSGJx/8dy0h8YmRn+adOrxKXHxhSL8BNn8wsmIZyYWe6fRcBtO3Ks2DOLyHCdkoFlN8x9VUQF
 N2ulEgqCbRKkx+qNirW86eF138lr1gRxzclu/38ko//MmkAYR/+hP3WnBll7zbpIt0jc9wyFkSqH
 p8a1MYICbTCCAmkCAQEwazBbMQswCQYDVQQGEwJCRTEZMBcGA1UEChMQR2xvYmFsU2lnbiBudi1z
 YTExMC8GA1UEAxMoR2xvYmFsU2lnbiBHQ0MgUjMgUGVyc29uYWxTaWduIDIgQ0EgMjAyMAIMTv1t
-bpIzNUky46LXMA0GCWCGSAFlAwQCAQUAoIHUMC8GCSqGSIb3DQEJBDEiBCDIdLxTqy0OUIFD/HmY
-Vmchy4Ns3hJMiOjmLT0hDJ5J3DAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJ
-BTEPFw0yNDA2MjAxNzA0NDNaMGkGCSqGSIb3DQEJDzFcMFowCwYJYIZIAWUDBAEqMAsGCWCGSAFl
+bpIzNUky46LXMA0GCWCGSAFlAwQCAQUAoIHUMC8GCSqGSIb3DQEJBDEiBCBPebLIu9F2P1y30YQL
+jbYsU5v9bP7EgEDtpbFiVHGrMDAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJ
+BTEPFw0yNDA2MjAxNzMzMjFaMGkGCSqGSIb3DQEJDzFcMFowCwYJYIZIAWUDBAEqMAsGCWCGSAFl
 AwQBFjALBglghkgBZQMEAQIwCgYIKoZIhvcNAwcwCwYJKoZIhvcNAQEKMAsGCSqGSIb3DQEBBzAL
-BglghkgBZQMEAgEwDQYJKoZIhvcNAQEBBQAEggEAJVOabUmiK6I4I2F7bLY0QsYIbmOxrqJDb/pu
-SUE6tCgFDZ+lX/c2UBGubGiqHbuNUQIvN4ToMXwbhacXDchNwqDDaUgEscOe1vXrQfbE3gELwmSJ
-+PPD5EyDqDI09FIMxjDFii7p7uTQGwc7cnaeukWh0WhGmkbl7C7pdRrAJDExU7oejDYLP+UjzWv9
-rhjyrzdCfrl1VMXxLOxQIbYocf+Ox3ify4CgzkjdWfup0TthYjAMFe+VIXRxZ0qi/S4LzikngHGu
-Lm1tG9vy2ParsPBOahZIWl85RhI1JGtot7/rkMRLp4L64I6Y+Ti1dRNS72MdtY0yRr/0lo8z6j0i
-mQ==
---000000000000b17ed5061b554f6a--
+BglghkgBZQMEAgEwDQYJKoZIhvcNAQEBBQAEggEAFUacIdRVb6zyMWqRS4C7dma+hpUQFPR5x7It
+rDfvoZeyqV9dgn71AeciW4E+ySGN2Nw2iRo/KOte3hFL+BBF4HT2Jb8OHOBQ2/qR8NSHdLrVCxQS
+8CVAhXwriZG2nk4AmrCIp/bJQh+ktIQzs77xCcWXw+6Vr0vBvdp1bbYJ4Bx1GI/lm9OSwRRT3FDP
+Gw29GNRWS/ur33cZFZA/z1xB69ALZqXtW0+SWfR1I6NqjWu7iEnH1YB+FPfdI4dwjn/9ROgaQxBE
+3+bcsDKJoezoz8inDmiCz+XQaHl0XrrqN0GVs9xavUUCl9HePs3neKFNKwHVPoCvubyeVkx4xK9b
+zA==
+--000000000000110885061b55b660--
