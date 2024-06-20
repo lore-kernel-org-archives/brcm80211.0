@@ -1,104 +1,201 @@
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A991A4F0B
-	for <brcm80211@lists.linux.dev>; Thu, 20 Jun 2024 09:53:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C37DD1AB36E
+	for <brcm80211@lists.linux.dev>; Thu, 20 Jun 2024 11:14:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718877195; cv=none; b=tboCNLFAG4uAykKSLt1KSmBB+/36tQ6Ay/Pq2bXrWq9l8QG6Ym8kdMzs5o55sg9KTdHi2u0TwJ6usnNtzlQhkoFGDBAyO5h0k3zhfWiLKRR2nNUk942ZnwlCv5q0LnMGt4iOomwYpcf7Je7wblKzDaxsWMBs8NlB0dRiF55jUN0=
+	t=1718882074; cv=none; b=csf/ffkJljDLZSFi2raxmZ/CzuGqm3yD6M2KN1NgzLPr3o+IboijOI9G9VjOquJX3roBlBQfp0yqqQzTpj3YYDGsRbm1ygba89uAv1NwYB09hgh7HINgZ+twNMFNmfSI65sWO/gGSk6TplsuR+5/T+x9H0BYJKN017PIDv/fgRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718877195; c=relaxed/simple;
-	bh=gfLjd3QkChDuzoAzM3t3fnWy9YbR69Dq7dT/7ghf8cU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CieTa+ZqcXGvYxKhtq+o1F04mcrhjkdqlL9fJ91CVw5TyFqwyrHHx0IuTYMf1HcgtLIUPG48GNzMyb2SP4Rfv8RXwk573zrjRtyiG5TTtSoQEm2MpcutNd4HsKw4KNKP7S6/s8tL5mShut1a6c3cUfYZ7Ly0iDfd7qKAn2bkyRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J1u2zI/G; arc=none smtp.client-ip=209.85.208.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1718882074; c=relaxed/simple;
+	bh=+C+hByt2EXHaE+Z050+p1O5sQvXp7kZkrt9TrURi42E=;
+	h=From:To:CC:Date:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type; b=dMAt6lHjDzqgROAoqkT+1PutF78dMdQeWxhIk2ZfaOvxtDbwK790gMzxS4U+JgB0csmwGMQelaK0AhD1CG2hNQ+T61IHw9QpN74L0f6DjB1tU+CSXu370+02jVe7ch//jZs8z9bK3D7aSKGJiw/HC4U43ZR7TrQWm4ALPvSYQEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=O5I00wWw; arc=none smtp.client-ip=209.85.208.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J1u2zI/G"
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-57cbc66a0a6so1243155a12.1
-        for <brcm80211@lists.linux.dev>; Thu, 20 Jun 2024 02:53:13 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="O5I00wWw"
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2ec0f3b9bb8so7346531fa.1
+        for <brcm80211@lists.linux.dev>; Thu, 20 Jun 2024 04:14:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718877192; x=1719481992; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3VHc9yD6hEXLNpIxxUuTrYCo+DSeamUiVG3Znxi11gM=;
-        b=J1u2zI/GHV3Zmh9OvoyqvXPuLKQZu71I+O59pIMDtyg7CUiMf1LGon4ppV2oP4pyNg
-         AUSZzE7oDio8n8d1K3XeydUgbIw++74t7nJbD8Jz91J+8XkbTfMTMgY3nUZPxLk+ymsk
-         SlitFxY2bQOZK9zWohShcNaRG1FTTgw/VDnpUSD2YAD96UZpY8xWp92DsgFlYVFK1yVI
-         OK2EHL8rzvkoATye/kVQmCq64oADnDF3hUkQaAUEHwdh7qLayAuqkVVPpF628Ic5ZvIj
-         1VhkaCayjYkhkTTczxUdDSyysn0SSEM6AFqLSQiC3vh5/0T8eva/z6OL36KH/eHZw8Jp
-         CgmQ==
+        d=broadcom.com; s=google; t=1718882071; x=1719486871; darn=lists.linux.dev;
+        h=mime-version:subject:user-agent:references:in-reply-to:message-id
+         :date:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=1oAZ027LP3EIHUAPd9vSJLBiUaotSFFwTFVgF/vbAx8=;
+        b=O5I00wWw3plVTyZ//z8NaCYdLRrjPEVytv4uiehrZ7JH2C8GhgqKPDePoT5GTPqZ8K
+         MpF9Bm0OsWyd3kgbX92ezqEvhMhSlIG/6s67XvcFPEvCu+i9jowwaTViznEiQQ5J3+KS
+         FaBRtrdMTJB1ofA0v7Svopo4WN+/eVZMMSfCY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718877192; x=1719481992;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3VHc9yD6hEXLNpIxxUuTrYCo+DSeamUiVG3Znxi11gM=;
-        b=at1ATOIssFgIZjML4RqAtvdPsrCgvdf0S0SxJmgu5D5fu4gyyImpPtvgwQ9Doq6VGF
-         pSEYRp3fAAnnYvk7ff0FEsLhRlTnX9ZKLFXKaaasUnz1AtRmdMsdd/IC4+asHk+budxl
-         gh0nBs2Q6e9Xd/E4J4JnmfNKG9VafCsLATm0+ST0gXgpAfnQLP9n6Agzld1p2bcF/1AZ
-         kPKeYxRldfr7mReVn2CyeaF4fElh2Y+EgufBwcotx5b0nLCYeZStneYVrtIuh9+eCmL8
-         ctBYJm0By3nG19iJA53lXiLs3iYsQ3MverbXH8HmJFpiXDtSWxqVrgbfvOFkv9YO/ZTL
-         cMxw==
-X-Forwarded-Encrypted: i=1; AJvYcCVCMM+t9Ni9bTV7NFGZn4KShmshjkMkAGhMMJX2zMLm5sR38Cy51G+JL8WZ3QEFUpE4XLhVxRm87NxyYJECDfyc95KsFZ7zZrVW
-X-Gm-Message-State: AOJu0Ywr/t4mt9Tl3tqyL8pIX525Wxa1ulfaF0j2t2zVjtIuYkRLMLho
-	QMhDGU/662Hw0PVHmrO4RXyjlRODxkwRAtt9Y+rXy69S5gQ9YcZNuLbIdDQtm/1dREgUfy68WyJ
-	Mj662S0nmrYMZLQZy5yiWRRYgkjI=
-X-Google-Smtp-Source: AGHT+IEEIEgMc1waOkd5VEFVPrkMLjEldUsLx6nfx4aggbummrn4fNrTftq7sf0tT/32pehTAoV+7arADnVu6AcnOYk=
-X-Received: by 2002:a05:6402:1d31:b0:57c:f8d9:2f50 with SMTP id
- 4fb4d7f45d1cf-57cf8d93051mr4714990a12.12.1718877191920; Thu, 20 Jun 2024
- 02:53:11 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1718882071; x=1719486871;
+        h=mime-version:subject:user-agent:references:in-reply-to:message-id
+         :date:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1oAZ027LP3EIHUAPd9vSJLBiUaotSFFwTFVgF/vbAx8=;
+        b=vDGfnmpjEty+WkYGOcS2GBOVNQ7TcagNxE0JEXu3e6+VWkiMHQGJJ91dzwKG2t8OkE
+         ds1xABCr3pmYNxTve41YUHdFZ5ckCw8X3LvUGJ56S3huuJAISSSR0DHq6vMdpseMBf3J
+         nOrUBBm7nQH+XK3zrfNMXU6Gxuth0lTiLGQcnJ+jka8gpj3Yci7/QvKb9SkmYGGOIHNP
+         kNKd9Ru33sm7POcag0ZSgpkAbv7yAuJk6FAgs8E8niaA/e5ib1iFz2R/iKy8Y/hWDcd8
+         kn1+owU5hTEsWo6PIC5lxgQ0VRjlAIc+jVN2tPGhvUcAKTE0MVCzkNiRLJwQAoqFAEbb
+         cr8Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUX/ldQ9ONJJQenEXmGbf1EfQLTfOvBrqbhViQUSETllKAZiMAkd7PALQD+8js43cVaam4npuIPFMmBOuA7lJduw3xWDrLWBAto
+X-Gm-Message-State: AOJu0YwGFiEUlV0+JVdWL0Qv5NCzmbypzrMqi95+Y6WXMnEp7gkfxCs2
+	Q1w0399uZaPyILAaSj0gLYlIV/N2wKSDA9LBN7eQuLL2rMGcPMU0kPYKrNTyKg==
+X-Google-Smtp-Source: AGHT+IHvtUBXRcCX4PQ1xiorMqe9XQyPGYnlOu+wbXZ1SH8c9ZJy+M4H6v5QYDPfHZMdmYIaIcVkGw==
+X-Received: by 2002:a2e:9e94:0:b0:2ec:4064:18e4 with SMTP id 38308e7fff4ca-2ec40641ae0mr27120081fa.5.1718882070853;
+        Thu, 20 Jun 2024 04:14:30 -0700 (PDT)
+Received: from [192.168.178.38] (f215227.upc-f.chello.nl. [80.56.215.227])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-57d03f29c8csm2082529a12.40.2024.06.20.04.14.30
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 20 Jun 2024 04:14:30 -0700 (PDT)
+From: Arend Van Spriel <arend.vanspriel@broadcom.com>
+To: Peter Robinson <pbrobinson@gmail.com>, Julian Calaby <julian.calaby@gmail.com>
+CC: Kalle Valo <kvalo@kernel.org>, <linux-wireless@vger.kernel.org>, <brcm80211@lists.linux.dev>
+Date: Thu, 20 Jun 2024 13:14:30 +0200
+Message-ID: <190355aedf0.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
+In-Reply-To: <CALeDE9M78so=roEFion9GGo4tV7c+M885=ZNZgi9zKyBur+iMQ@mail.gmail.com>
+References: <20240617122609.349582-1-arend.vanspriel@broadcom.com>
+ <CALeDE9O7DCPhoxdMyHmYFOjwdkPRepiaaC92QorzSTXCduZ+xQ@mail.gmail.com>
+ <CAGRGNgWH9U3XeatXA9xpkLz76COuL1xjYcfXQYLTGKBxvy=M-A@mail.gmail.com>
+ <CALeDE9M78so=roEFion9GGo4tV7c+M885=ZNZgi9zKyBur+iMQ@mail.gmail.com>
+User-Agent: AquaMail/1.51.3 (build: 105103473)
+Subject: Re: [PATCH] wifi: brcmsmac: advertise MFP_CAPABLE to enable WPA3
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240617122609.349582-1-arend.vanspriel@broadcom.com>
- <CALeDE9O7DCPhoxdMyHmYFOjwdkPRepiaaC92QorzSTXCduZ+xQ@mail.gmail.com> <CAGRGNgWH9U3XeatXA9xpkLz76COuL1xjYcfXQYLTGKBxvy=M-A@mail.gmail.com>
-In-Reply-To: <CAGRGNgWH9U3XeatXA9xpkLz76COuL1xjYcfXQYLTGKBxvy=M-A@mail.gmail.com>
-From: Peter Robinson <pbrobinson@gmail.com>
-Date: Thu, 20 Jun 2024 10:53:00 +0100
-Message-ID: <CALeDE9M78so=roEFion9GGo4tV7c+M885=ZNZgi9zKyBur+iMQ@mail.gmail.com>
-Subject: Re: [PATCH] wifi: brcmsmac: advertise MFP_CAPABLE to enable WPA3
-To: Julian Calaby <julian.calaby@gmail.com>
-Cc: Arend van Spriel <arend.vanspriel@broadcom.com>, Kalle Valo <kvalo@kernel.org>, 
-	linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
+	boundary="00000000000044df09061b506bc6"
 
-On Thu, 20 Jun 2024 at 10:46, Julian Calaby <julian.calaby@gmail.com> wrote=
-:
->
-> Hi Peter,
->
-> On Thu, Jun 20, 2024 at 7:19=E2=80=AFPM Peter Robinson <pbrobinson@gmail.=
-com> wrote:
-> >
-> > Hi Arend,
-> >
-> > > After being asked about support for WPA3 for BCM43224 chipset it
-> > > was found that all it takes is setting the MFP_CAPABLE flag and
-> > > mac80211 will take care of all that is needed [1].
-> >
-> > Testing this on a Raspberry Pi 4 [1] against a UniFi U6Pro AP I can't
-> > connect to my WPA3 only SSID, it works fine with the SSID that's
-> > WPA2/WPA3 on the same AP. It doesn't connect and I get a whole lot of
-> > the following errors while it tries:
-> >
-> > [  155.988865] brcmfmac: brcmf_set_channel: set chanspec 0xd02e fail, r=
-eason -52
-> > [  156.100906] brcmfmac: brcmf_set_channel: set chanspec 0xd034 fail, r=
-eason -52
-> > [  156.108597] brcmfmac: brcmf_set_channel: set chanspec 0xd038 fail, r=
-eason -52
-> > [  156.116317] brcmfmac: brcmf_set_channel: set chanspec 0xd03c fail, r=
-eason -52
->
-> The Raspberry Pis' WiFi chipsets use the brcmfmac driver and this is a
-> patch to the brcmsmac driver. This driver is for older and simpler
-> WiFi chipsets than the ones on the Raspberry Pis.
+--00000000000044df09061b506bc6
+Content-Type: text/plain; format=flowed; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-Right you are, completely missed that :)
+On June 20, 2024 11:53:12 AM Peter Robinson <pbrobinson@gmail.com> wrote:
+
+> On Thu, 20 Jun 2024 at 10:46, Julian Calaby <julian.calaby@gmail.com> wrote:
+>>
+>> Hi Peter,
+>>
+>> On Thu, Jun 20, 2024 at 7:19 PM Peter Robinson <pbrobinson@gmail.com> wrote:
+>>>
+>>> Hi Arend,
+>>>
+>>>> After being asked about support for WPA3 for BCM43224 chipset it
+>>>> was found that all it takes is setting the MFP_CAPABLE flag and
+>>>> mac80211 will take care of all that is needed [1].
+>>>
+>>> Testing this on a Raspberry Pi 4 [1] against a UniFi U6Pro AP I can't
+>>> connect to my WPA3 only SSID, it works fine with the SSID that's
+>>> WPA2/WPA3 on the same AP. It doesn't connect and I get a whole lot of
+>>> the following errors while it tries:
+>>>
+>>> [  155.988865] brcmfmac: brcmf_set_channel: set chanspec 0xd02e fail, 
+>>> reason -52
+>>> [  156.100906] brcmfmac: brcmf_set_channel: set chanspec 0xd034 fail, 
+>>> reason -52
+>>> [  156.108597] brcmfmac: brcmf_set_channel: set chanspec 0xd038 fail, 
+>>> reason -52
+>>> [  156.116317] brcmfmac: brcmf_set_channel: set chanspec 0xd03c fail, 
+>>> reason -52
+>>
+>> The Raspberry Pis' WiFi chipsets use the brcmfmac driver and this is a
+>> patch to the brcmsmac driver. This driver is for older and simpler
+>> WiFi chipsets than the ones on the Raspberry Pis.
+>
+> Right you are, completely missed that :)
+
+The devil is in the details ;-) Good that you tested. Maybe we can look 
+into the WPA3-only problem. Are you using wpa_supplicant? Can you share 
+supplicant log file and kernel log with brcmfmac debug modparam set to 0x1416.
+
+Regards,
+Arend
+
+
+
+
+--00000000000044df09061b506bc6
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Description: S/MIME Cryptographic Signature
+
+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
+2Gzj3QNJRLsZu1TLyOyBBIr/BE7UiY3RabgRzknBGAPmzhS+fmyM8OtM5BYBsFBrSUFtZZO2p/tf
+Nbc24J2zf2peoZ8MK+7WQqummYlOnz+FyDkA9EybeNMcS5C+xi/PAgMBAAGjggHdMIIB2TAOBgNV
+HQ8BAf8EBAMCBaAwgaMGCCsGAQUFBwEBBIGWMIGTME4GCCsGAQUFBzAChkJodHRwOi8vc2VjdXJl
+Lmdsb2JhbHNpZ24uY29tL2NhY2VydC9nc2djY3IzcGVyc29uYWxzaWduMmNhMjAyMC5jcnQwQQYI
+KwYBBQUHMAGGNWh0dHA6Ly9vY3NwLmdsb2JhbHNpZ24uY29tL2dzZ2NjcjNwZXJzb25hbHNpZ24y
+Y2EyMDIwME0GA1UdIARGMEQwQgYKKwYBBAGgMgEoCjA0MDIGCCsGAQUFBwIBFiZodHRwczovL3d3
+dy5nbG9iYWxzaWduLmNvbS9yZXBvc2l0b3J5LzAJBgNVHRMEAjAAMEkGA1UdHwRCMEAwPqA8oDqG
+OGh0dHA6Ly9jcmwuZ2xvYmFsc2lnbi5jb20vZ3NnY2NyM3BlcnNvbmFsc2lnbjJjYTIwMjAuY3Js
+MCcGA1UdEQQgMB6BHGFyZW5kLnZhbnNwcmllbEBicm9hZGNvbS5jb20wEwYDVR0lBAwwCgYIKwYB
+BQUHAwQwHwYDVR0jBBgwFoAUljPR5lgXWzR1ioFWZNW+SN6hj88wHQYDVR0OBBYEFIikAXd8CEtv
+ZbDflDRnf3tuStPuMA0GCSqGSIb3DQEBCwUAA4IBAQCdS5XCYx6k2GGZui9DlFsFm75khkqAU7rT
+zBX04sJU1+B1wtgmWTVIzW7ugdtDZ4gzaV0S9xRhpDErjJaltxPbCylb1DEsLj+AIvBR34caW6ZG
+sQk444t0HPb29HnWYj+OllIGMbdJWr0/P95ZrKk2bP24ub3ZP/8SyzrohfIba9WZKMq6g2nTLZE3
+BtkeSGJx/8dy0h8YmRn+adOrxKXHxhSL8BNn8wsmIZyYWe6fRcBtO3Ks2DOLyHCdkoFlN8x9VUQF
+N2ulEgqCbRKkx+qNirW86eF138lr1gRxzclu/38ko//MmkAYR/+hP3WnBll7zbpIt0jc9wyFkSqH
+p8a1MYICbTCCAmkCAQEwazBbMQswCQYDVQQGEwJCRTEZMBcGA1UEChMQR2xvYmFsU2lnbiBudi1z
+YTExMC8GA1UEAxMoR2xvYmFsU2lnbiBHQ0MgUjMgUGVyc29uYWxTaWduIDIgQ0EgMjAyMAIMTv1t
+bpIzNUky46LXMA0GCWCGSAFlAwQCAQUAoIHUMC8GCSqGSIb3DQEJBDEiBCBQASszIE8E6NbffKqu
+edH7IPeTGkqMf7NMrzXC4YahtTAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJ
+BTEPFw0yNDA2MjAxMTE0MzFaMGkGCSqGSIb3DQEJDzFcMFowCwYJYIZIAWUDBAEqMAsGCWCGSAFl
+AwQBFjALBglghkgBZQMEAQIwCgYIKoZIhvcNAwcwCwYJKoZIhvcNAQEKMAsGCSqGSIb3DQEBBzAL
+BglghkgBZQMEAgEwDQYJKoZIhvcNAQEBBQAEggEADcOZYoelIObh4sAhhI0f65ONxPnyemDcNu0f
+l+yR/O0Gzb2TlCDb6TvpRKDKcD48ZJVZS45GuumnOzAsTm+tez5YcBcZZ3tZoW3VVwdjz6rJW2Tb
+tFb51TY1OYiz6l24/XxPhtyuIKegzDlLBQjGmDGGI3QqHzLiYXhp5EmDjIJCvC2mh+xGBRV6GQ8D
+nJ/eEpsqvr9cYfSsSb+xrsLnV1ikKPqqLlBZqhqOKsSeTUJpWfCJPl8Utt3ELFve0udsJgbF/wDw
+1iAkQeg8wUO0WfjFU0fCqnD5MTfL0dvC7K4kM5tHPu1p1PPQO6h9a0Q+ubKdlba5AQ8Q47qhj4Pz
+1w==
+--00000000000044df09061b506bc6--
