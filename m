@@ -1,148 +1,114 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C58E13FB2C;
-	Thu, 20 Jun 2024 06:54:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0AA02D05D
+	for <brcm80211@lists.linux.dev>; Thu, 20 Jun 2024 08:59:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718866461; cv=none; b=LLrJSN0Hb4d0RAy78DPbX9vwLEs8HIq6d/QP5AbpKuZBNpVAajfR96oJd947uInuA1Oo+8+P7JM2F3Oku7xAj4q73xdMn21HU5v1sHWvPYR7WfM/UDL45vSIknlRq+LeSlGM/eVYiq2MVzz3tIs4x/bGbSNoCpch3HEqH0Mz5xo=
+	t=1718873943; cv=none; b=MLLGdMDu2shUe32s0SL/MpIdvmbco148P10GtQwCnl5+e0HVUUC6X+JhDZf/eW+NMHUlaPc6y8KNtImW8kuWnuELVYd3ZAnulbT1grwCSs/ufJXE1V+K207EWWs6cD0vFiz1PW/Mvk3lHfdsKjcig5BTnhJYmZVw5jwk5X1YF6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718866461; c=relaxed/simple;
-	bh=b2G7dmQlry0grvELyUtudXqRY6yeQ761cKOld8xr0Zo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sCfSDjsnqmJdQwwTypDluWApUMQc6fT1NZL7qGAOib1Rtz8MEmkrV9B/BVBOiWlv18wN2JEjpz3jaZGvGaPT2uyQRitx80ATXThicMeyNdxETf9AP9dhQfU2QjQpB7sSaBpwxN5/Kpv31s1UJTJnZf+TGvArYpfCIXAD+bmgHM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UThE7hC3; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1718873943; c=relaxed/simple;
+	bh=IbUeNxa6Ztg9ggQC8IhtjLkEjkCroZ9PYPXXCxGKkUs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=VIQ3kXs44krrxY7V13EpzfaNmg1L/EOxgREnlaO64mY8UQV/aGXWVWQwj2lWAuHyNWePNwptKNcvobLbVJTKc/nwl5f+g0s41uke6kkMnKT1DhsdnF5xMlCZm0SZDqd4myuYLY6N91sFXBTrKaXTA4WGGtZpz1FACurn8bRGUPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dMWbYQrx; arc=none smtp.client-ip=209.85.208.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UThE7hC3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55A5CC2BD10;
-	Thu, 20 Jun 2024 06:54:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718866461;
-	bh=b2G7dmQlry0grvELyUtudXqRY6yeQ761cKOld8xr0Zo=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=UThE7hC31k6cj8kVv/CXcqrOUr6mFVSlqkb1Rml9iXtSN9At9zh+UD3k/1U9c1TJI
-	 M4fjzI3ZBW+aSnScpJJkUTK+ZjPROfR6oSHXsfPptDnHOTxBbotc1Hly+x/8eXF3Nm
-	 D7O2jLAcEr0q+z7dOcDSxNkDC4p98T/O7TmnF5DsnbXe0MVYzB2oGGtC9cBhoDRpD9
-	 qGgU4kmWYd7UtuErZtbCRqyHQVOHAOMXkM/aDoHiEFyGq6A/RujxjsGy2x91ceiFME
-	 9qBask59AMb7CcPGspVyFVtFnO7m1h6TTE5/sxB7jU0kNUxXDvqYJL5aE0UZPC4E96
-	 DSffSp/gbujsg==
-Message-ID: <b8b89ef7-2e92-4e1a-9609-6b0fd6d64d7e@kernel.org>
-Date: Thu, 20 Jun 2024 08:54:11 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dMWbYQrx"
+Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2ebeefb9a6eso5743041fa.1
+        for <brcm80211@lists.linux.dev>; Thu, 20 Jun 2024 01:59:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1718873940; x=1719478740; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=A0c4GWBmK6OfKPLjq+HRXk5iadfQq+qlk0GGJwyE53g=;
+        b=dMWbYQrxFEVoYo5ffCXo/xClxki7OY37YCwmbkTXBMAH62PqKMDZRF+OFrT4nm3dXi
+         lCoYXx2jiM+XGNNOw6TBcwCjrRBOrEsjcOJDiWMnFacaZKObZaqIGSUnCyLvlOtgUhUz
+         jXUIqoXAIM3nwp4p0IGCKJn1urCzqigAeehGS6RYMqmqxTzN/bJA7pikCt7VVrTLZgsn
+         4XAb0TjeMMTThhhM8OMmK4V3v5+2qnT+rfnNXaWVpPW+rRvyel3u4VfS9e7YpKds6gRi
+         b2wpljQqf23FnyG5eZoONhQnXskKhg+JBlVmdEVBwpn8ij5jDOv5Sa6o79nlWNRXYHNY
+         DQ7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718873940; x=1719478740;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=A0c4GWBmK6OfKPLjq+HRXk5iadfQq+qlk0GGJwyE53g=;
+        b=ic4u4LGtPC/Lj88OT9SKOL2p9O1lWdeX5CIXsJTwtYfOakV+bW6ZInfUWdwQsjehIF
+         eoDUDteDyOyqZl/XKZkHAydCqrwWdSSVZG49R9MyAplNNl4ZVh6QJ2NgBVyjXrowfbT6
+         BY7aowTap0TYs4ebCWNPVtqJeS3Lt/JsXZhf2Qik0YGtNythqz5HY532Iydqzkdt0y/z
+         LOZdBqrAOH5Ha4NiYmwzCwjKujQOW5dNRy1TSBTq5CbZ1k6i8h+THITaQgOjJvK4hnvd
+         Ttb9PvSwds40TSJQAWoLvI2rPfdcBqiZzhqggISmsbE4lkC22vEb46vQNtUuRua+AJs8
+         6bFw==
+X-Forwarded-Encrypted: i=1; AJvYcCUK5I642/hMe4RqrlXqy2SkEU+I+DYzfMVPuRVof6Vf4+kyTMwnYBatyNdhZ/xXR1tXZciStn/VhQ5H8M0h1S75fphoN54DnGEA
+X-Gm-Message-State: AOJu0Ywp/x7Gm7UiRIO2snNP7DvmtQhI3EUMmKPFw9P9i0jiwsg9AEwq
+	q8KiyEA1ajQ32cls1Qd8bSgAlNXYNkzCnN8SqoAR1sADfPa4z6v2OP6rTE47xVfRiqKdA5Q4/mC
+	pZE2u9eP237XcpCg9b/L4MxF5CiA=
+X-Google-Smtp-Source: AGHT+IEMeEW1RufKZNUSAOVIeyM7M4gDXxUTXMXwz7ODyibLtgvSe4Vr204B98C7MQEgxk5UxQTUQeP54Re0d/0jTnY=
+X-Received: by 2002:a2e:9612:0:b0:2ec:2ccb:8efb with SMTP id
+ 38308e7fff4ca-2ec3cfe8a75mr26594501fa.38.1718873939728; Thu, 20 Jun 2024
+ 01:58:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 2/3] net: wireless: brcmfmac: Add optional 32k clock
- enable support
-To: Jacobe Zang <jacobe.zang@wesion.com>, arend.vanspriel@broadcom.com
-Cc: kvalo@kernel.org, duoming@zju.edu.cn, bhelgaas@google.com,
- minipli@grsecurity.net, linux-wireless@vger.kernel.org,
- brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com, megi@xff.cz,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, heiko@sntech.de,
- nick@khadas.com, efectn@protonmail.com, jagan@edgeble.ai,
- dsimic@manjaro.org, devicetree@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-rockchip@lists.infradead.org,
- linux-kernel@vger.kernel.org
-References: <20240620020015.4021696-1-jacobe.zang@wesion.com>
- <20240620020015.4021696-3-jacobe.zang@wesion.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240620020015.4021696-3-jacobe.zang@wesion.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20240617122609.349582-1-arend.vanspriel@broadcom.com>
+In-Reply-To: <20240617122609.349582-1-arend.vanspriel@broadcom.com>
+From: Peter Robinson <pbrobinson@gmail.com>
+Date: Thu, 20 Jun 2024 09:58:48 +0100
+Message-ID: <CALeDE9O7DCPhoxdMyHmYFOjwdkPRepiaaC92QorzSTXCduZ+xQ@mail.gmail.com>
+Subject: Re: [PATCH] wifi: brcmsmac: advertise MFP_CAPABLE to enable WPA3
+To: Arend van Spriel <arend.vanspriel@broadcom.com>
+Cc: Kalle Valo <kvalo@kernel.org>, linux-wireless@vger.kernel.org, 
+	brcm80211@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 
-On 20/06/2024 04:00, Jacobe Zang wrote:
-> WiFi modules often require 32kHz clock to function. Add support to
-> enable the clock to PCIe driver.
-> 
-> Signed-off-by: Jacobe Zang <jacobe.zang@wesion.com>
+Hi Arend,
+
+> After being asked about support for WPA3 for BCM43224 chipset it
+> was found that all it takes is setting the MFP_CAPABLE flag and
+> mac80211 will take care of all that is needed [1].
+
+Testing this on a Raspberry Pi 4 [1] against a UniFi U6Pro AP I can't
+connect to my WPA3 only SSID, it works fine with the SSID that's
+WPA2/WPA3 on the same AP. It doesn't connect and I get a whole lot of
+the following errors while it tries:
+
+[  155.988865] brcmfmac: brcmf_set_channel: set chanspec 0xd02e fail, reason -52
+[  156.100906] brcmfmac: brcmf_set_channel: set chanspec 0xd034 fail, reason -52
+[  156.108597] brcmfmac: brcmf_set_channel: set chanspec 0xd038 fail, reason -52
+[  156.116317] brcmfmac: brcmf_set_channel: set chanspec 0xd03c fail, reason -52
+
+I also have a RPi3 (BCM43430/1) and a Rock960 (BCM4356/2) with working
+brcmfmac WiFi I can test if that's useful.
+
+[1] The upstream linux-firmware FW: BCM4345/6 wl0: Apr 15 2021
+03:03:20 version 7.45.234 (4ca95bb CY) FWID 01-996384e2
+
+> [1] https://lore.kernel.org/linux-wireless/20200526155909.5807-2-Larry.Finger@lwfinger.net/
+>
+> Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
 > ---
->  .../net/wireless/broadcom/brcm80211/brcmfmac/pcie.c    | 10 ++++++++++
->  1 file changed, 10 insertions(+)
-> 
-> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-> index 06698a714b523..f241e1757d7e3 100644
-> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-> @@ -3,6 +3,7 @@
->   * Copyright (c) 2014 Broadcom Corporation
->   */
->  
-> +#include <linux/clk.h>
->  #include <linux/kernel.h>
->  #include <linux/module.h>
->  #include <linux/firmware.h>
-> @@ -2411,6 +2412,7 @@ brcmf_pcie_probe(struct pci_dev *pdev, const struct pci_device_id *id)
->  	struct brcmf_pciedev *pcie_bus_dev;
->  	struct brcmf_core *core;
->  	struct brcmf_bus *bus;
-> +	struct clk *clk;
->  
->  	if (!id) {
->  		id = pci_match_id(brcmf_pcie_devid_table, pdev);
-> @@ -2422,6 +2424,14 @@ brcmf_pcie_probe(struct pci_dev *pdev, const struct pci_device_id *id)
->  
->  	brcmf_dbg(PCIE, "Enter %x:%x\n", pdev->vendor, pdev->device);
->  
-> +	clk = devm_clk_get_optional_enabled(&pdev->dev, "32k");
-
-Where is the binding for this?
-
-> +	if (IS_ERR(clk))
-> +		return PTR_ERR(clk);
-> +	if (clk) {
-> +		dev_info(&pdev->dev, "enabling 32kHz clock\n");
-
-Drop
-
-
-
-Best regards,
-Krzysztof
-
+>  drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
+> index 860ef9c11c46..a5aa58047d39 100644
+> --- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
+> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
+> @@ -1090,6 +1090,7 @@ static int ieee_hw_init(struct ieee80211_hw *hw)
+>         ieee80211_hw_set(hw, AMPDU_AGGREGATION);
+>         ieee80211_hw_set(hw, SIGNAL_DBM);
+>         ieee80211_hw_set(hw, REPORTS_TX_ACK_STATUS);
+> +       ieee80211_hw_set(hw, MFP_CAPABLE);
+>
+>         hw->extra_tx_headroom = brcms_c_get_header_len();
+>         hw->queues = N_TX_QUEUES;
+>
+> base-commit: a2ead3445a6317c5d2b53711cf9a98e54c395223
+> --
+> 2.32.0
+>
