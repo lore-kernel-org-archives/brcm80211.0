@@ -1,107 +1,102 @@
-Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA24217B4FA
-	for <brcm80211@lists.linux.dev>; Fri, 21 Jun 2024 19:43:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F2CB16F26B
+	for <brcm80211@lists.linux.dev>; Fri, 21 Jun 2024 22:56:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718999041; cv=none; b=Uvh4KopvJOFBrOEZyo6KoUFIRxta/2A5ATbsoqNagLDDSY9+q2GncTev+UanTQ3LgvGuE5mnAU+Gx9tz0z7hmVAju3Ry63RJVcmUBcsQ8G/gIRdUnpxIFpHdp+au6pY9CA+zO8a7UL5Hfp1oavEp6HorZ+yShRZGTL8tTv/hThU=
+	t=1719010564; cv=none; b=ZU89ZYv1GXpBIAXuWoMLkT+19TSzP+Eo5z6n0o0UM9iXjg4bIz8YFw1E6o9HSuntprh28oopnTUEDy35u+OFkxQDqe9MqA5Yeem0Ybg87GkDjrTw6Qevsk9TZ4XjDRGTLfHWxt0clpIeuHtT0cIbJbl/lOY1+SsaDKStQh5tkOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718999041; c=relaxed/simple;
-	bh=FckWlNcKkH86nEpWwvTUlItzowssczEyxh04y6cUrQk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ROpCRtYrPyhH5W9sVtGGMz2QWV98K2cyh6QY2jCdTuQe0wvq/pT+gAq0H2ND6DN2VdVZGUA+ksA9146BcSDhYWIH5aapE3nOYSpOgO8kpciUKi2fjoQu5NjyvvtHgk2464BywfIhYMLi0O+AO+K1/jg+V4IyXpu9UNjLvsiFr14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IZEOZFKQ; arc=none smtp.client-ip=209.85.215.173
+	s=arc-20240116; t=1719010564; c=relaxed/simple;
+	bh=4oUdsvqCDrLiUkMVo03wVv5uUKw1KazsqU/cnfG6uhs=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=pf2TtUfCbDLP7L9B/svA3sXjosW0iDV5DSND+omvP8D6ZP8g4W6XIUAebTxg9hsN7M5FOIh8ejlrU85IA35MTyAwJ6bpyPgEME3laWaZc+rJYGJVI7vDAICSgACmlLxVEPTGUpkEpe2N4Z2gVEOxWlYasXNpkUuUgYJ8tiiHduU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O1jD+Eb0; arc=none smtp.client-ip=209.85.208.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IZEOZFKQ"
-Received: by mail-pg1-f173.google.com with SMTP id 41be03b00d2f7-71871d5e087so305317a12.1
-        for <brcm80211@lists.linux.dev>; Fri, 21 Jun 2024 12:43:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O1jD+Eb0"
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-57d251b5fccso2033835a12.0
+        for <brcm80211@lists.linux.dev>; Fri, 21 Jun 2024 15:56:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718999039; x=1719603839; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QkIb7gf2bHPY6dWL00bChK5hdPR/pt0YWtKvdJeMO1w=;
-        b=IZEOZFKQF3Z9J2ke+MfoB+6Nw6fVwNaGUtvwB0CspqL+3kBMfpLDiBXOsngMyo9RUu
-         n+KSolsDFRO5ezEWI6eI2qSLQXM9BmH/fI4FtKOr5NTo+hgOdcl/9lvJJhH2UUxQrGCC
-         elpqxDNqo1JSmMFcsI4QHD/AWiLH9u3Rd2KZ2UpLDOZ133MWY8I3WKgKphkB4d+avaRa
-         +ih+aSk/W1fbdiaGWJSxBMWmQ11ctefCj4xonanu+W60dG3L7U9UzPWeXto7AmAgwsrM
-         +J8GxiPDnpmkvTdyqc3FSDM/dpNFL4RLilc6ZhRMsHey/as39pyqCx/slLVDTLaobhl2
-         MJ9Q==
+        d=gmail.com; s=20230601; t=1719010562; x=1719615362; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=o6JyC8iY2Muk9y3RK0oBca3B3yHY25hFFfJVNqJVifY=;
+        b=O1jD+Eb07QktcB+S8f/o77GeyQwD/r3QnWqaOcRtV+Pf3BFSnzkKeNyxGLmU4HytCh
+         H+bNHyLyYiJzBfmPV/gtT1i2zpfyAsBdztcQZmCZyM1qaLsivJ566Xl/cBa+ZrO+4z+y
+         wlevz0nOjMXNrmGBk2f2VM8j/RFGcs+PnsRyGP01SW8jkd2VkJg4c4b3fBnp5OdVcZKM
+         +8qFmjYDSAteMqz5JOuBYd9RqnCbAXXpvA8BMBO0sA/vt/gvsJa/qLLEaWOAY6PQSvkz
+         SZvAdg9jpWZ/fZL7L4e6FvWZdjfjTtG1YKBiliq9zOsD8v5Nc0uvo2mss1taxQXGpTHP
+         leKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718999039; x=1719603839;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QkIb7gf2bHPY6dWL00bChK5hdPR/pt0YWtKvdJeMO1w=;
-        b=v8gnfsYTtDbkIGRkafOUDxxOh0snIWpWuARwz2CtpErWWCqiMQOhL//zKsdj7vsbIW
-         OamssN754cO/eUvx7Z3jf5YcUQDRVAVJVd/NDcKFH9l5xXKPGFUA/yMwZSMxqCGgwru4
-         F87bdSXKTM5t+DS4ZEBMNpMDuNRdzy+9XuPJfi/xfudsBpklbG3y2M8qZ9dfH6b9d7Fd
-         SPQtSOPpuzpe/E5rJA3BpMwj9Zb7zxd4xdXpYCMoOfk4SB0gx3QMk2J9IOAZlVGZ887a
-         5pxieQ2GIrzTPJM13rDJ8Zagsf0FfyvNtZ8F3oxHz43kSJRhgAwlVKYIhrWQXHMtjHcq
-         D0Bg==
-X-Forwarded-Encrypted: i=1; AJvYcCUIpLXJU2Eth3k5IvLZL1oXooGH9OccTKn+SbyA59ztf+r0ISjG9yM7LjVB2mODoeuV6tdk9t+EAvtFuocOxQVNIsy801y8dELq
-X-Gm-Message-State: AOJu0YysCvfjm99qUUIsHVAACHZdtx4nhTYHjwVjstxPmwcQcOlNj6gv
-	SH0v9HGdgTneNkgUt4wUSAF5kg6cOMgHL1a3YQVVxrXFdgz/iiDVfMKSJAnBoa6ESxcGb2ywvVH
-	6JbXoZ51u4QwNg0QydNVd/IdZP+A=
-X-Google-Smtp-Source: AGHT+IG/VHNVGO8lR86yTQZFauMxfnJ6vv1yrqpGRdYmFybn/jp3wU2ZU3njC7MVpJ6AVq5rCdQRmUr7DWOzhI/1Isk=
-X-Received: by 2002:a17:90a:4a17:b0:2c8:893:2c1b with SMTP id
- 98e67ed59e1d1-2c808932c47mr4517482a91.21.1718999039034; Fri, 21 Jun 2024
- 12:43:59 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1719010562; x=1719615362;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=o6JyC8iY2Muk9y3RK0oBca3B3yHY25hFFfJVNqJVifY=;
+        b=sba/WlxhlTGk5Zh33QwntXv7qxd1beco91X1KtfRDbF1+CQygP9svUlzRP8EXeDv1K
+         X7ANSg367McJsKaBtJL01gt3RlpjgFmrfxtWt09+qLHxxLh4tj5TYE3ZyLZ/vtaXTaaa
+         dFKlZ3UPAQCfVi+xQ3dlhQeh6Wh3KEsOZ2JG9n5JxKNL/cDzESu9VyK88yOVucSixsmv
+         xE5C+EzPy1UW+8pNxL5ayXVkoFt8G/9qOKPBRc2NUIjFRcL66JrTJWmhlmEbI0+6FVLr
+         2g6z8snn7KDmKShl0kdueWbj11TLDoke6iJ+wNOseyM3i1mrwlDm9fVWtNVhIm9X8xem
+         jxAA==
+X-Forwarded-Encrypted: i=1; AJvYcCWV4yegjf3SR7RH5eMeWvPrUv+xzztMCdRa5e9FJLLnorQP17HvDtJY42yfAZLrhh77DIV9Zx6xKtoJSfePwxNCpggcXLe1i9Lh
+X-Gm-Message-State: AOJu0YxPayiXer/nH+5VbNqTRCuX2EDR9Yari5X1Vq4ryVClKeLzAyeo
+	22Baguh390V4Ntswwdkq9cMCRv0gUmYt91vMSsMJOHTCXgGEHX7ZnRGA
+X-Google-Smtp-Source: AGHT+IGMzl+xBQUL7dOvE+TEcJ/gGUJX9+zMX68SSdTV8Tvv2glRsSTXnvBMZenX9Rr13Y/oi/SAXA==
+X-Received: by 2002:a50:d6d7:0:b0:57c:5f74:d8ff with SMTP id 4fb4d7f45d1cf-57d07e750c8mr5784439a12.21.1719010561093;
+        Fri, 21 Jun 2024 15:56:01 -0700 (PDT)
+Received: from U4.lan ([2a02:810b:f40:4600:aed6:1d20:313e:7dc1])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-57d3042d421sm1537795a12.42.2024.06.21.15.56.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 Jun 2024 15:56:00 -0700 (PDT)
+From: Alex Bee <knaerzche@gmail.com>
+To: Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Kalle Valo <kvalo@kernel.org>,
+	linux-wireless@vger.kernel.org,
+	brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com,
+	linux-kernel@vger.kernel.org
+Cc: Alex Bee <knaerzche@gmail.com>
+Subject: [PATCH] wifi: brcmfmac: of: Support interrupts-extended
+Date: Sat, 22 Jun 2024 00:55:58 +0200
+Message-ID: <20240621225558.280462-1-knaerzche@gmail.com>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240617122609.349582-1-arend.vanspriel@broadcom.com> <1903bdacb28.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
-In-Reply-To: <1903bdacb28.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
-From: KeithG <ys3al35l@gmail.com>
-Date: Fri, 21 Jun 2024 14:43:47 -0500
-Message-ID: <CAG17S_MPxPms32e=s8szVOBHQk=tikN5sjO_pa8r1as0V2Q5ZA@mail.gmail.com>
-Subject: Re: [PATCH] wifi: brcmsmac: advertise MFP_CAPABLE to enable WPA3
-To: Arend Van Spriel <arend.vanspriel@broadcom.com>
-Cc: Kalle Valo <kvalo@kernel.org>, linux-wireless@vger.kernel.org, 
-	brcm80211@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Fri, Jun 21, 2024 at 12:32=E2=80=AFPM Arend Van Spriel
-<arend.vanspriel@broadcom.com> wrote:
->
-> On June 17, 2024 2:26:25 PM Arend van Spriel <arend.vanspriel@broadcom.co=
-m>
-> wrote:
->
-> > After being asked about support for WPA3 for BCM43224 chipset it
-> > was found that all it takes is setting the MFP_CAPABLE flag and
-> > mac80211 will take care of all that is needed [1].
-> >
-> > [1]
-> > https://lore.kernel.org/linux-wireless/20200526155909.5807-2-Larry.Fing=
-er@lwfinger.net/
->
-> Tested-by: Reijer Boekhoff <reijerboekhoff@protonmail.com>
-> > Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-> > ---
-> > drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c | 1 +
-> > 1 file changed, 1 insertion(+)
->
-I think I get what it is supposed to do, but am unsure of how to do it.
+This "new" version of defining external interrupts is around for a very
+long time now and supported and preferred by irq_of_parse_and_map
+respectively of_irq_parse_one.
 
-the modules referred to in that link (b43 or ieee80211) do not appear
-to be loaded:
-# lsmod | grep 802
-8021q                  49152  0
-garp                   49152  1 8021q
-nf_conntrack          180224  1 nf_nat
-cfg80211             1032192  1 brcmfmac
-rfkill                 49152  7 bluetooth,cfg80211
+Support it in brcmfmac as well by checking if either "interrupts" or
+"interrupts-extended" property exists as indication if irq_of_parse_and_map
+should be called.
 
-How do I set this up to work on RPiOS?
+Signed-off-by: Alex Bee <knaerzche@gmail.com>
+---
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Regards,
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
+index e406e11481a6..6cdc941552e3 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
+@@ -129,7 +129,8 @@ void brcmf_of_probe(struct device *dev, enum brcmf_bus_type bus_type,
+ 		sdio->drive_strength = val;
+ 
+ 	/* make sure there are interrupts defined in the node */
+-	if (!of_property_present(np, "interrupts"))
++	if (!of_property_present(np, "interrupts") &&
++	    !of_property_present(np, "interrupts-extended"))
+ 		return;
+ 
+ 	irq = irq_of_parse_and_map(np, 0);
+-- 
+2.45.2
 
-Keith
