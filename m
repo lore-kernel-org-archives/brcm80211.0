@@ -1,127 +1,210 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C09084D04;
-	Fri, 21 Jun 2024 10:06:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 547CA14F9F0
+	for <brcm80211@lists.linux.dev>; Fri, 21 Jun 2024 12:24:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718964370; cv=none; b=hwIaVJyL1YK0q+yllkwOiL6fcO8CGZf60QnYrvLuJLRbxmk8dAMK3DBE2XPLXnrdWVYEsgJ5X8o+npmU6QzBGEHOmAIBujsWVbxYnjbyjXVx71EgsiW8MZy+DzgQYK01VIgupNFrstzIE+d+BBXyL0wUZrcWab2nins+f5pcguI=
+	t=1718972660; cv=none; b=ctqYSLsPWbllULs7Gch6Dih76YZZYk00pDzdbOHH6LyLBdyxzb595MY4zDzgooxnShw+ZWePkSCcLo+KRL3YBmniE72DywU+I0OJk5VDwvOW/HO2zVrqMu4ryy2YjL61HNvvqsAkcF9Na92+jiro3rOL7ACWRyfkk5G5ol/CPsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718964370; c=relaxed/simple;
-	bh=eIrkj/gF11mCVv5C/FFPHFinu8rryuV0kc+GwM2eeE4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ELoW7r4jBpyoAXgPPd/Bi4JPnrhYfAOXf+fdy+jVR6xY1cw91tjPuGQijLytM8M6gtLxW6tqWc7//sKQnJZy1zMeJFJj4zVYrmCrIEJnGkeh0hEs1uUmYIiMppMP0S4a3M+x35qQdJqXb3epC80jmP7scg9+t7KS8Bcx7/vBpM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kAdMqyV+; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1718972660; c=relaxed/simple;
+	bh=5csl0XyUsUFBmGcXYKqBD7NYTRwWEbtOFTnmkgrY90k=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=a+QD8j7LAqUuIDHdTbABcac4GO8jmqRGXiUEJLG+NRS6hMLJe+AMrtCHYfVpDGbIHGRDqHGf2gXfAlgT2yuTYTkDQRDtD+ZNJ6iw/OdIEcdmwbjxgcbaGKc6MNp42J1LAzZfI5g8jXITG5b88p20Vh00N7JwONxeAekjKs76F5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iIlquHPq; arc=none smtp.client-ip=209.85.215.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kAdMqyV+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C756BC2BBFC;
-	Fri, 21 Jun 2024 10:06:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718964370;
-	bh=eIrkj/gF11mCVv5C/FFPHFinu8rryuV0kc+GwM2eeE4=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=kAdMqyV+Bm54/U80yaJFieUDXUu5iENt7Oga/D+z04++JZfqq56C6/Am28wY+na8f
-	 twWx/luB6gR/FNCn0Bi5gVHXrrZRXKKvqppeYoLhjyZXM1vIhXLzVMx3MDlUb6Idwt
-	 6J8mCn5JkYxKCQe7kZ6+iLe3E08N8Io2eYhnpbrknIxwoFtEfqKIzH78cD8Yrj2Nl1
-	 Xausbquup+SUfGZ4cTOfmkuKwr7zTWGswAkycDD5H5U3jPBZp/5yWnjJyPtyfhHgaS
-	 PI4AqFZ3f0uT6ssMzfjZJzwBbFkXuDOHrYnpoMzSj5XDiz3cjEsAAA96sP/mwW+W8t
-	 6rYRsZfO7FCGg==
-Message-ID: <6ad2a9ab-41a7-4560-8031-d5fa9f2cd558@kernel.org>
-Date: Fri, 21 Jun 2024 12:06:01 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iIlquHPq"
+Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-6c5bcb8e8edso1505702a12.2
+        for <brcm80211@lists.linux.dev>; Fri, 21 Jun 2024 05:24:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1718972658; x=1719577458; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8BYumKzEPIJ2+taQ2EhhDzMepCVQ30/T2f5DONRpdSs=;
+        b=iIlquHPqwXVWmmEpWITayAq4K4a6sGmAdHulZ7TjnU8TGYLyUXW1vkbxfWbLD6NtUd
+         yULRWm/dpprss+p1n9EEfGEWmlUoRoJmaWMwDSHDxwAZdsyl6kkqNrAuF2ZQ+7/jJgIm
+         pSmh7WlZXVxyM3ev5k3XT6/RTRobSEtf+6xoQkGLcoJNQKLpMLlzXmhj8ygeDzb/ob9M
+         YQXwR/PEN/AUVuc2YJU96gcvoeYbueBhW+BjctrqGVLamcb/5yJH4xL+lFJAT/ZXOjw5
+         Lu4WO13UeXZMswDQ9XwGgUEa0vxdKaDRDlIoFqHkWEuK51IyH7kjUTzvglaYl1DIF4rn
+         B35w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718972658; x=1719577458;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=8BYumKzEPIJ2+taQ2EhhDzMepCVQ30/T2f5DONRpdSs=;
+        b=YEwiHR7uoyjxlsQW16RX8wE+M0VG3vItDO8hjX5IGotIMl09jYE2uj9vXdbxfcf64h
+         qpbj0MTMX6d/XaSHtdkVrSqloxFV/xcaKMu/iGsHEUX4Pl8JF9+CHv8PxzDZDvRziYq5
+         auCD4+Pdg7I2SC1reurer4L+9QKA7F/NpLcC1iB7QVEI4FEANcvZEhk8+lkHiUv++yJ5
+         3xq3GxFwuGcGcix6pOorjcCQYqr9WNHT4RhzhNgZbVV/IwtjyIKn53sf+oN/AZPYHNp2
+         g0Ncj31NRRy+LYXBH4VonXhy5FNjrf94kwVwH4Yv/Z/D6q244/b5N6NlH7jFhYkWUVw6
+         Rz8A==
+X-Forwarded-Encrypted: i=1; AJvYcCUMtb68gcf7/s3MxIW/zQQrE67ZtcpGzpSC+7FPJaUZMndkLfSKUPzu9IkjEz+c5ApANlIsRgy0z5BAHYiZcXT4wwC7Pp/MSjyc
+X-Gm-Message-State: AOJu0YxA0cLPmscro7iiOLADQOdJH99ai3ErZym9iCUQ78M1cwMJh7Uy
+	kFlYTR65VrM+1fMLJEIZuO78vvWQTuVzoOaytrHnxcCFE7w2VRvxncMQyPCim0eGqW2I4zYc4Qi
+	xV6bOX3TUL891nKOXmOn3IVUnguY=
+X-Google-Smtp-Source: AGHT+IEWBsNVTlvhs50CF8JnWTKI2VGnKt2kIVugsk6+ZnQUzHoHmHezWliJZkRGinJTPi8O02jupyNweYr7XXtBLpk=
+X-Received: by 2002:a17:90a:c287:b0:2c7:8fac:48bf with SMTP id
+ 98e67ed59e1d1-2c7b57f3c03mr8267831a91.2.1718972658513; Fri, 21 Jun 2024
+ 05:24:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 2/3] net: wireless: brcmfmac: Add optional 32k clock
- enable support
-To: Jacobe Zang <jacobe.zang@wesion.com>,
- "arend.vanspriel@broadcom.com" <arend.vanspriel@broadcom.com>
-Cc: "kvalo@kernel.org" <kvalo@kernel.org>,
- "duoming@zju.edu.cn" <duoming@zju.edu.cn>,
- "bhelgaas@google.com" <bhelgaas@google.com>,
- "minipli@grsecurity.net" <minipli@grsecurity.net>,
- "linux-wireless@vger.kernel.org" <linux-wireless@vger.kernel.org>,
- "brcm80211@lists.linux.dev" <brcm80211@lists.linux.dev>,
- "brcm80211-dev-list.pdl@broadcom.com" <brcm80211-dev-list.pdl@broadcom.com>,
- "megi@xff.cz" <megi@xff.cz>, "robh@kernel.org" <robh@kernel.org>,
- "krzk+dt@kernel.org" <krzk+dt@kernel.org>,
- "conor+dt@kernel.org" <conor+dt@kernel.org>,
- "heiko@sntech.de" <heiko@sntech.de>, Nick Xie <nick@khadas.com>,
- "efectn@protonmail.com" <efectn@protonmail.com>,
- "jagan@edgeble.ai" <jagan@edgeble.ai>,
- "dsimic@manjaro.org" <dsimic@manjaro.org>,
- "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
- "linux-arm-kernel@lists.infradead.org"
- <linux-arm-kernel@lists.infradead.org>,
- "linux-rockchip@lists.infradead.org" <linux-rockchip@lists.infradead.org>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-References: <20240620020015.4021696-1-jacobe.zang@wesion.com>
- <20240620020015.4021696-3-jacobe.zang@wesion.com>
- <b8b89ef7-2e92-4e1a-9609-6b0fd6d64d7e@kernel.org>
- <TYZPR03MB700143E13635364FF5A316D080C92@TYZPR03MB7001.apcprd03.prod.outlook.com>
- <4533403d-11b1-4f73-b57d-3079be1e300f@kernel.org>
- <TYZPR03MB7001C517C5BDC8967DECECD880C92@TYZPR03MB7001.apcprd03.prod.outlook.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <TYZPR03MB7001C517C5BDC8967DECECD880C92@TYZPR03MB7001.apcprd03.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20240617122609.349582-1-arend.vanspriel@broadcom.com>
+ <CALeDE9O7DCPhoxdMyHmYFOjwdkPRepiaaC92QorzSTXCduZ+xQ@mail.gmail.com>
+ <CAGRGNgWH9U3XeatXA9xpkLz76COuL1xjYcfXQYLTGKBxvy=M-A@mail.gmail.com>
+ <CALeDE9M78so=roEFion9GGo4tV7c+M885=ZNZgi9zKyBur+iMQ@mail.gmail.com>
+ <190355aedf0.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
+ <CAG17S_NBO=tTBp9GX=S9C4REbT-Gx634n66+7JERcWbe-KXt-g@mail.gmail.com>
+ <190369b8c10.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
+ <CAG17S_NHC7EqUMtc58eSY9Yoq4K0mvp=C1rcP8PTRzajXW3Csg@mail.gmail.com> <c065ae75-f89e-4b14-9fc3-6ef19e6d144b@broadcom.com>
+In-Reply-To: <c065ae75-f89e-4b14-9fc3-6ef19e6d144b@broadcom.com>
+From: KeithG <ys3al35l@gmail.com>
+Date: Fri, 21 Jun 2024 07:24:06 -0500
+Message-ID: <CAG17S_OMV5TpCO+XwP-6dQNB_zVs+OCoawpngZUshuDOgFOF0w@mail.gmail.com>
+Subject: Re: [PATCH] wifi: brcmsmac: advertise MFP_CAPABLE to enable WPA3
+To: Arend van Spriel <arend.vanspriel@broadcom.com>
+Cc: Peter Robinson <pbrobinson@gmail.com>, Julian Calaby <julian.calaby@gmail.com>, 
+	Kalle Valo <kvalo@kernel.org>, linux-wireless@vger.kernel.org, 
+	brcm80211@lists.linux.dev, Jouni Malinen <j@w1.fi>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 21/06/2024 09:45, Jacobe Zang wrote:
->> That's DTS, not binding. I ask about Devicetree binding.
-> 
-> Ok... I have grep in all dts files and can't find wifi node which is under pcie node has clock. So should I add an example in the yaml file? 
+On Fri, Jun 21, 2024 at 4:09=E2=80=AFAM Arend van Spriel
+<arend.vanspriel@broadcom.com> wrote:
+>
+> + Jouni
+>
+> On 6/20/2024 8:25 PM, KeithG wrote:
+> > 1718907734.308740: wlan0: WPA: AP group 0x10 network profile group
+> > 0x18; available group 0x10
+> > 1718907734.308748: wlan0: WPA: using GTK CCMP
+> > 1718907734.308758: wlan0: WPA: AP pairwise 0x10 network profile
+> > pairwise 0x10; available pairwise 0x10
+> > 1718907734.308767: wlan0: WPA: using PTK CCMP
+> > 1718907734.308772: wlan0: WPA: AP key_mgmt 0x400 network profile
+> > key_mgmt 0x400; available key_mgmt 0x0
+>
+>
+> I suspect the message above indicates the problem as there is no
+> available key_mgmt to select so looked it up in the code and here it is:
+>
+>          sel =3D ie.key_mgmt & ssid->key_mgmt;
+> #ifdef CONFIG_SAE
+>          if ((!(wpa_s->drv_flags & WPA_DRIVER_FLAGS_SAE) &&
+>               !(wpa_s->drv_flags2 & WPA_DRIVER_FLAGS2_SAE_OFFLOAD_STA)) |=
+|
+>              wpas_is_sae_avoided(wpa_s, ssid, &ie))
+>                  sel &=3D ~(WPA_KEY_MGMT_SAE | WPA_KEY_MGMT_SAE_EXT_KEY |
+>                           WPA_KEY_MGMT_FT_SAE |
+> WPA_KEY_MGMT_FT_SAE_EXT_KEY);
+> #endif /* CONFIG_SAE */
+> #ifdef CONFIG_IEEE80211R
+>          if (!(wpa_s->drv_flags & (WPA_DRIVER_FLAGS_SME |
+>                                    WPA_DRIVER_FLAGS_UPDATE_FT_IES)))
+>                  sel &=3D ~WPA_KEY_MGMT_FT;
+> #endif /* CONFIG_IEEE80211R */
+>          wpa_dbg(wpa_s, MSG_DEBUG,
+>                  "WPA: AP key_mgmt 0x%x network profile key_mgmt 0x%x;
+> available key_mgmt 0x%x",
+>                  ie.key_mgmt, ssid->key_mgmt, sel);
+>
+> So 0x400 matches the expectation:
+>
+> #define WPA_KEY_MGMT_SAE BIT(10)
+>
+> You already confirmed that the driver reports SAE and SAE offload
+> support. So it seems wpas_is_sae_avoided() must return true. That will
+> check whether the AP and network profile are setup to MFP. This seems to
+> be the fact as your hostapd.conf and wpa_supplicant.conf both have
+> ieee80211w=3D2 defined. This function can only return true when
+> sae_check_mfp is enabled in configuration file:
+>
+> # sae_check_mfp: Require PMF support to select SAE key_mgmt
+> # 0 =3D Do not check PMF for SAE (default)
+> # 1 =3D Limit SAE when PMF is not enabled
+> #
+> # When enabled SAE will not be selected if PMF will not be used
+> # for the connection.
+> # Scenarios where this check will limit SAE:
+> #  1) ieee80211w=3D0 is set for the network
+> #  2) The AP does not have PMF enabled.
+> #  3) ieee80211w is unset, pmf=3D1 is enabled globally, and
+> #     the device does not support the BIP cipher.
+> # Consider the configuration of global parameterss sae_check_mfp=3D1,
+> pmf=3D1 and a
+> # network configured with ieee80211w unset and key_mgmt=3DSAE WPA-PSK.
+> # In the example WPA-PSK will be used if the device does not support
+> # the BIP cipher or the AP has PMF disabled.
+> # Limiting SAE with this check can avoid failing to associate to an AP
+> # that is configured with sae_requires_mfp=3D1 if the device does
+> # not support PMF due to lack of the BIP cipher.
+>
+> The default is not to check it and you wpa_supplicant.conf does not
+> specify it.
+>
+> # cat /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
+> ctrl_interface=3DDIR=3D/run/wpa_supplicant GROUP=3Dnetdev
+> update_config=3D1
+> network=3D{
+>   ssid=3D"deskSAE"
+>   sae_password=3D"secret123"
+>   proto=3DRSN
+>   key_mgmt=3DSAE
+>   pairwise=3DCCMP
+>   ieee80211w=3D2
+> }
+>
+> $ cat /etc/hostapd/hostapd.conf
+> # interface and driver
+> interface=3Dap0
+> driver=3Dnl80211
+>
+> # WIFI-Config
+> ssid=3DdeskSAE
+> channel=3D1
+> hw_mode=3Dg
+>
+> wpa=3D2
+> wpa_key_mgmt=3DSAE
+> wpa_pairwise=3DCCMP
+> sae_password=3Dsecret123
+> sae_groups=3D19
+> ieee80211w=3D2
+> sae_pwe=3D0
+>
+> Regards,
+> Arend
+>
+>
+> > 1718907734.308779: wlan0: WPA: Failed to select authenticated key
+> > management type
+> > 1718907734.308787: wlan0: WPA: Failed to set WPA key management and
+> > encryption suites
 
-No, that's example, not binding.
+Arend,
 
-Validate your DTS with dtbs_check.
+I find the wpa_supplicant docs really hard to understand. I have read
+through your response a few times and am still a bit confused. Does
+this have to do with a pure wpa3 versus a wpa2/3 AP?
 
-Best regards,
-Krzysztof
+I have tried editing my hostapd.conf and my wpa_supplicant.conf and
+still cannot get a connection, so I must be doing something wrong.
+I commented the ieee80211w line on both and it would not connect.
+I tried changing the wpa_key_mgmt on both ends to be 'SAE WPA_PSK' and
+it still would not connect.
 
+What *should* the configurations be in the hostapd.conf and
+wpa_supplicant.conf to negotiate this as a pure wpa3 setup? What
+should it be to be a wpa2/3 setup? My phone worked fine to connect
+with the original hostapd setup, but I have no idea what it is doing.
+
+Regards,
+
+Keith
