@@ -1,59 +1,60 @@
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9C1516E88B
-	for <brcm80211@lists.linux.dev>; Sat, 22 Jun 2024 13:38:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9027816A953
+	for <brcm80211@lists.linux.dev>; Sat, 22 Jun 2024 13:49:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719063519; cv=none; b=KChoSlrLc3YIrg+qGSYjOxJQFtMnPWW+xG6i1KUKAKLyraVf5zBJgQB+tsYYd1pEC3L5wSR0Srr2aPbDrwa/NBUasn+BJyYKltQy/QCMcBDD2OqpBSMsD7F1J5Sz7IMUuFi+JJ5f8Xe0oD5xmdIFCDviikCyOS+K4ovlv9oFYoQ=
+	t=1719064158; cv=none; b=AKNWgT5s/r1LyMB8nmUNpatkylwRFGbzJYgryj7upsd3A3bElLnRGu5J5t1cZcDlN1/wlM0Old0ky4fuCozGF+XOdeB5wFHD4Z9cdwn7YexIA8h/Aqmy7hfHmVUGBB8Sp99CJ/Wyyt9KEmZOZ5cPe0DnWL392lPc5E611qxt08k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719063519; c=relaxed/simple;
-	bh=0oJiotJgtm00s8jwToKcEonHw2cVaoGVZJo9kA4u2KE=;
+	s=arc-20240116; t=1719064158; c=relaxed/simple;
+	bh=wXGXPDoATetFmUCYfnOb5cvf2z54iOuxWefKkIkvAzQ=;
 	h=From:To:Date:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type; b=CLkW0h7ciQSkp7ZDC8op+kUjjWzGHn1rZMBmrmcZwIHdxEEQaHIY8tPaO0R7N5t9L5OBE5/EoCZngx6Wc6XgXeFsVvdN2pZajzSHyLjqDvgDfU2RRNItgP4G69s/VymqYXbabGCOuFzdrlO33ZCFwK13uVXOQTzhoJHMOP1rujM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=c/1JnMqB; arc=none smtp.client-ip=209.85.218.46
+	 MIME-Version:Content-Type; b=eSS71C5NamQ1lVWe8WODJ+jgjHbH1NsZOHn+vykCwm3xWGQJK7m7+5YV5hoQMALmO/79guVr14uoR44OwAn4oSM+oZp3eQ9//Y/bX2cm6O066w1G7ty9P/Lpxob/PCAZ16j18QfIg1CBXyMEXHnWXN683EIakrHW3UoY/0n0rz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=HoGjwcpG; arc=none smtp.client-ip=209.85.208.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="c/1JnMqB"
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a7241b2fe79so22590666b.1
-        for <brcm80211@lists.linux.dev>; Sat, 22 Jun 2024 06:38:37 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="HoGjwcpG"
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-57d457357easo329762a12.3
+        for <brcm80211@lists.linux.dev>; Sat, 22 Jun 2024 06:49:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1719063516; x=1719668316; darn=lists.linux.dev;
+        d=broadcom.com; s=google; t=1719064155; x=1719668955; darn=lists.linux.dev;
         h=mime-version:subject:user-agent:references:in-reply-to:message-id
          :date:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=us8QxT4M2Jn8/b45q1fUxqWeJbVmujyarH6EvCCIxqQ=;
-        b=c/1JnMqBaaHtcsbQQIGrk5a5M0IXqqbxjF0szWGdM2ATD3/OiGtGrAQ4MKRnImrT2e
-         WuVps7MefjxSsU599oLuerXsM7kTtgVQf8bjTVRGVXl2pxMm0sr56pwrUGDDUeEWz7Sb
-         fmV9hnVVNdQ3+l90OMTXIyaJs/Co+DxAwneJY=
+        bh=WehtHVSa5cP+C0eu7O6hZJ/NZHgjiDoQpoZTezP7AGM=;
+        b=HoGjwcpGkWiquwD5DLUGQpHDztZ6fxWC1sGMkUEV0+9pjvC5cbzGtfgulgANn1hxF9
+         xp+KJQLblRTk3+KmRvi1qIEd56l/suoVHyYmfH9avnjGcHFlBzSb19HOywK0fYzqTfRF
+         CDo4ec8r4lSNAvwZ6MLV3wJZ7/Xu49OUlqB4k=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719063516; x=1719668316;
+        d=1e100.net; s=20230601; t=1719064155; x=1719668955;
         h=mime-version:subject:user-agent:references:in-reply-to:message-id
          :date:to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=us8QxT4M2Jn8/b45q1fUxqWeJbVmujyarH6EvCCIxqQ=;
-        b=DlKi+DWUaeMB1hYxSH9uazTqBFL34ZYpCwK7zKnm84x/0OWjKlALCQAsJyKzUJ7AIB
-         4ktSLMF8yRmuVCjBUVB8XUO4WX8jT/iOrkC5lNlnuJfqZYC7asf/2gLAf60r3M35N3AQ
-         5jgk3BbLc3Jw7W6soCAYgJT2y+IerhGvnPmizjG1dVhU4BjpUqIb6qwUDwI/bNkTJ9o9
-         3ZUoPAGp6MERX6YLdDemq5L90rLZm2IZXkJ3IF0W7TfYf6tJY2COm4ttqBAKQx2KD86s
-         aDzRKf2rTN6rMtrSdiwTeq1+uj5uBFBjbfpB56AFej/Esv2hYPLBtFszWDhE308i8bSm
-         DG5Q==
-X-Forwarded-Encrypted: i=1; AJvYcCVnJ9QZ1HVICEhaF85t54TouPv6hLL1VtVdwjnqo1Ucs9VoYvPyDJbpwpYouNwX7HO6UZi+bfCU05dJcME2EeiR5HIWxqqyj2aM
-X-Gm-Message-State: AOJu0YzBB8ozYW4FpXvBnpTTV7ROqFSRvDLiYGw7lZ4Gwf6/r3WYb/PB
-	LLVXBlFDSYRw61auSyx0Zon0YUQfXKaPXJmap4VihFcHRCDj7vyfSGPf6WE9Yw==
-X-Google-Smtp-Source: AGHT+IFkEDbNq7rb5j1cQBep5Fj57wNYjX+ARW4d3/fNOuXUI3ulnpOYiMcLmefjigRbTlKNmBvWTg==
-X-Received: by 2002:a17:907:b19:b0:a6f:4b5b:4ba7 with SMTP id a640c23a62f3a-a7242d2a239mr27628166b.67.1719063515848;
-        Sat, 22 Jun 2024 06:38:35 -0700 (PDT)
+        bh=WehtHVSa5cP+C0eu7O6hZJ/NZHgjiDoQpoZTezP7AGM=;
+        b=Q4jJqsav7hMyIys8YL/mVh7QRlRUNvPOOYUKS3Y3Xpef7Mce0BH5+Gi0w8uONccP1V
+         FRcmf/bKj/1OdWzJAMkEiB9EAsFlEc8q2PoHfpBHy8Pd6vBB+xbY+EnHIidq7EQXhG5T
+         kMaz8mfVBiDqrZYQldb99iNQq9F0KWeDYgfDr+vBYQmgegbnT3H+bqyu6XIhkJLY5oZi
+         rH4qAw7CUf+v943nIllqQDPrAgqu8vRTwh9dBpg4hvbvwUrAdfhmUbJqFGsFIbmtovz6
+         Bg1CpddHdz0ut8s3Zxt/OCWNksRiDwzG9Qs+5/8UdM1y6UyEmRE4xZUVoMSHwTTb6OhL
+         56JQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXSLWYy5coGSj11Wh77cVdu6bIjoT4db9q5bNA62qPTFkmLbMEoHuS/7X1XuFSYM7zqPHmsLaDlLH7pm4OJlJKPHnnpro/Qoq5B
+X-Gm-Message-State: AOJu0YwdHo9hvsSm9Qa7dwbff5wr6L0FHJ0x+GCFSAmVweDE3CDYuDfG
+	B7DL27Zfsr6TPlB3NtI35MJmwr+5hSrPNMxVpK6NQ97RXp76QkmqZj/bDUYuLQ==
+X-Google-Smtp-Source: AGHT+IGPCqk+WzkG0ojgGfSFW7HVqKNO3doKNlzqIBIpYOUMZqnBPia1VgzFi0LJe0NCVfVaDek6DQ==
+X-Received: by 2002:a50:d79b:0:b0:57c:dbf6:931f with SMTP id 4fb4d7f45d1cf-57d4bd56bc0mr86578a12.5.1719064154826;
+        Sat, 22 Jun 2024 06:49:14 -0700 (PDT)
 Received: from [192.168.178.38] (f215227.upc-f.chello.nl. [80.56.215.227])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6fdb669e1csm106852066b.211.2024.06.22.06.38.32
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-57d303d7cdesm2370630a12.7.2024.06.22.06.49.12
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 22 Jun 2024 06:38:32 -0700 (PDT)
+        Sat, 22 Jun 2024 06:49:12 -0700 (PDT)
 From: Arend Van Spriel <arend.vanspriel@broadcom.com>
 To: Alex Bee <knaerzche@gmail.com>, Kalle Valo <kvalo@kernel.org>, <linux-wireless@vger.kernel.org>, <brcm80211@lists.linux.dev>, <brcm80211-dev-list.pdl@broadcom.com>, <linux-kernel@vger.kernel.org>
-Date: Sat, 22 Jun 2024 15:38:33 +0200
-Message-ID: <190402b87a8.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
-In-Reply-To: <20240621225558.280462-1-knaerzche@gmail.com>
+Date: Sat, 22 Jun 2024 15:49:13 +0200
+Message-ID: <19040354ba8.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
+In-Reply-To: <190402b87a8.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
 References: <20240621225558.280462-1-knaerzche@gmail.com>
+ <190402b87a8.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
 User-Agent: AquaMail/1.51.3 (build: 105103473)
 Subject: Re: [PATCH] wifi: brcmfmac: of: Support interrupts-extended
 Precedence: bulk
@@ -63,33 +64,48 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-	boundary="0000000000003caa90061b7aaab9"
+	boundary="000000000000528264061b7ad0c2"
 
---0000000000003caa90061b7aaab9
+--000000000000528264061b7ad0c2
 Content-Type: text/plain; format=flowed; charset="us-ascii"
 Content-Transfer-Encoding: 8bit
 
-On June 22, 2024 12:56:02 AM Alex Bee <knaerzche@gmail.com> wrote:
+On June 22, 2024 3:38:32 PM Arend Van Spriel <arend.vanspriel@broadcom.com> 
+wrote:
 
-> This "new" version of defining external interrupts is around for a very
-> long time now and supported and preferred by irq_of_parse_and_map
-> respectively of_irq_parse_one.
+> On June 22, 2024 12:56:02 AM Alex Bee <knaerzche@gmail.com> wrote:
 >
-> Support it in brcmfmac as well by checking if either "interrupts" or
-> "interrupts-extended" property exists as indication if irq_of_parse_and_map
-> should be called.
+>> This "new" version of defining external interrupts is around for a very
+>> long time now and supported and preferred by irq_of_parse_and_map
+>> respectively of_irq_parse_one.
+>>
+>> Support it in brcmfmac as well by checking if either "interrupts" or
+>> "interrupts-extended" property exists as indication if irq_of_parse_and_map
+>> should be called.
+>
+> All very interesting, but why should we add code for something that is not
+> specified in the bindings documentation?
+>
+> NAK (for now). Feel free to update the bindings document.
 
-All very interesting, but why should we add code for something that is not 
-specified in the bindings documentation?
+So looked up the interrupts-extended definition:
 
-NAK (for now). Feel free to update the bindings document.
+The "interrupts-extended" property is a special form; useful when a node needs
+to reference multiple interrupt parents or a different interrupt parent than
+the inherited one. Each entry in this property contains both the parent phandle
+and the interrupt specifier.
+
+Given that brcmfmac device will only have one interrupt item defined there 
+is no need to use it. If someone can give a good argument to support it 
+please chime in.
 
 Regards,
 Arend
 
 
 
---0000000000003caa90061b7aaab9
+
+--000000000000528264061b7ad0c2
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -160,14 +176,14 @@ BtkeSGJx/8dy0h8YmRn+adOrxKXHxhSL8BNn8wsmIZyYWe6fRcBtO3Ks2DOLyHCdkoFlN8x9VUQF
 N2ulEgqCbRKkx+qNirW86eF138lr1gRxzclu/38ko//MmkAYR/+hP3WnBll7zbpIt0jc9wyFkSqH
 p8a1MYICbTCCAmkCAQEwazBbMQswCQYDVQQGEwJCRTEZMBcGA1UEChMQR2xvYmFsU2lnbiBudi1z
 YTExMC8GA1UEAxMoR2xvYmFsU2lnbiBHQ0MgUjMgUGVyc29uYWxTaWduIDIgQ0EgMjAyMAIMTv1t
-bpIzNUky46LXMA0GCWCGSAFlAwQCAQUAoIHUMC8GCSqGSIb3DQEJBDEiBCB61uv3nd/WdKvGrMdM
-Jb37lrb2HbdpuXKUFaD2MqKMkDAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJ
-BTEPFw0yNDA2MjIxMzM4MzZaMGkGCSqGSIb3DQEJDzFcMFowCwYJYIZIAWUDBAEqMAsGCWCGSAFl
+bpIzNUky46LXMA0GCWCGSAFlAwQCAQUAoIHUMC8GCSqGSIb3DQEJBDEiBCBBq3OCm5fdgDacEIPU
+vVemTSrOwrT9vm+LYXLbIZawDTAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJ
+BTEPFw0yNDA2MjIxMzQ5MTVaMGkGCSqGSIb3DQEJDzFcMFowCwYJYIZIAWUDBAEqMAsGCWCGSAFl
 AwQBFjALBglghkgBZQMEAQIwCgYIKoZIhvcNAwcwCwYJKoZIhvcNAQEKMAsGCSqGSIb3DQEBBzAL
-BglghkgBZQMEAgEwDQYJKoZIhvcNAQEBBQAEggEA5Nz7qqOOVRLIFerf0gCgpUrgw+uqTGJx19El
-5iipfyQHjHTvAsKOlR3Z7kUwcAfSXHw01vqge77CP141NwX7cvMKK92TXSid9tNq5C+X9kil4445
-QmO5q4SHqAqRNDUNaE43wlW+H8RDm843ATDMWK5ujunDfhRA+NU8i5aZy4UY1gusIio9eyihyKpl
-XvFyXkRPcPrID04hV+a9oIIccr0yoiBTqhDkiZwAPnxOlO7osHJ4UC0uVs56ZbD7PnRQx/iqdQRj
-+/LeiLQa1l9n76Orci8MS+xyfMx+eHCFPg+zuhU1BwO/+OZ3QM+RFKRjMnT/1acU0q+BSpsMJRwc
-CA==
---0000000000003caa90061b7aaab9--
+BglghkgBZQMEAgEwDQYJKoZIhvcNAQEBBQAEggEAgbhfA4VDpfvD0V0a6SyDj1ZXcmDaWVGV+Q1p
+jRO9ukQHOrCSQ4+WvbZU7/22Jb6cOgu4Z+a6PGaZniSPr+2QbsaGdo6L12tKuvcRdS3/QiyYbQHD
+SdyZcJgLBR4VmppP4d8FnlQv3uB5dpzKcLHxO+VzpSR7R3r/dUJooUxnMktbZB+6M8Yz6od/GCwr
+QD3ezEA3jaru/SyhwtkQBMLzsZwmrtKslL6xEXrgNW/CzpjNbc28fVZ9n17qCJoZ5bwdoV5Et3x5
+R/i2kkANrcz56oY0SwWrGLvXHT21i8Dsspf5ysSCpnrICk2u4qCYRzyrRDEsauIojlhYf8tGMFX0
+Pw==
+--000000000000528264061b7ad0c2--
