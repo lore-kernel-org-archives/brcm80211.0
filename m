@@ -1,117 +1,179 @@
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from APC01-TYZ-obe.outbound.protection.outlook.com (mail-tyzapc01on2092.outbound.protection.outlook.com [40.107.117.92])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55723629E4
-	for <brcm80211@lists.linux.dev>; Sat, 22 Jun 2024 21:54:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719093262; cv=none; b=NHnxIlDwC4KxWwSKYYPQAmsMwgMZQa0GEWVGMzUn7stYuN/AWfYjhlVkpjMIXbVpl8Qa6gx0M45CXoHB8+U4ZF32zK780z/7ZhlQsDh8ed+GP4ZblZ9EU6VP4Wdtdj21AH+TsMx0eCQDVFaTgm3knn/+8NV47BD+DVq6xzmipgM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719093262; c=relaxed/simple;
-	bh=XdLgw78vP983A+TrIdqPxl7VoHeX0riB0ZOsS3TwwGs=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=GeKl5ey2w3ORsO0YiurXuCNQPRmsA97G168aQZMXHOLe0zQtlkKxVZNuBLbvN972XDmM6cn9IZ4JITamYgdtO0kLGkASME+E0TzkEykA0nppVNNoBOYzwkP9IOy3RiZXuW+ktUYdirpbQejl1jhfLU3+hQFjdKivv0wiWEhm4XU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JwMoyImK; arc=none smtp.client-ip=209.85.208.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JwMoyImK"
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2ec3f875e68so35087871fa.0
-        for <brcm80211@lists.linux.dev>; Sat, 22 Jun 2024 14:54:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719093259; x=1719698059; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=psmXmpnFkPmw8m7RnDe0q4FMekfuWqvHUm1UB3CLbCg=;
-        b=JwMoyImKLJhsxW67ajarQsLJjIFNjoT/fE/tchFXUw140L3CXFmHckVWGHviRaggF2
-         w9DWbi4aXgjQxzTSoCYyxwJmUDqm3+w/Xo2GRRlUAYOFasAyqH6T3Epo+3NYSALzyqm8
-         grNg9/bQWcbOdSp/0ZQTJIoTxlrLz9ZL/Cgknv9r+KbOlWHLsyiNbWXe17daQiXjPbKq
-         tbehl7xGgfgEqEKc8TymthHRXSDYyaTHFs6eZHkZ8mLnmWOFxDNh0jR/P2cfzPbTZERC
-         cFRtKdBebQ7AVKxBVjsJ3ZUy4xPwuuxdzY8AcBpb1Mfu45Rol5vAx5ViIiEEn/trCZgh
-         u6qg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719093259; x=1719698059;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=psmXmpnFkPmw8m7RnDe0q4FMekfuWqvHUm1UB3CLbCg=;
-        b=qmalgxpTcXynTU7BnVtRnw7zcz1E3oFqA4/jxFj9NOoVhVcpktnrXgE1Z+MwwuVH9s
-         Pq+7t7v8nfQwRv38cg5Hsde6OCCDZT/nBcUkut2zsmLJPcwUmHRBhJfPgr+wnreFJTBr
-         ZeXl9ydZVkUskN8wvLOoRHwu8rqdqARLI0P0+ZRoj+cc4TrU8JbOnTCYZDPxDuxtN4Io
-         xez5vzz1zC73cmmuTrG20c+urvy091E1ipKAltYNl0PwXLd2AYZP6fl4MRIqLYYC9dV8
-         fBgWJWkisYA8XyeB1S+SI6LjRVg+f8VO9jv0uiLe9mDZvaiuy5zTUtptnL4RWt+Ew5O+
-         lX5w==
-X-Forwarded-Encrypted: i=1; AJvYcCUr2v+Ox0SN5vGA7nFueI4iTmvZihMY2cW2vPQiQFExiyN409NOYCQDgq8+rKqz0SJ3dIFg17yVFsIMtEHxBa+VHKYYExObHizV
-X-Gm-Message-State: AOJu0Ywck2S0FMLrEjY3+w+sSLhZxQcoa22HqOvfRPVFotov2SnU12t/
-	k55Y+16bCKweUt01fQPi11y8IRnhsCdZVeS0jOw60fktxNTXU/s=
-X-Google-Smtp-Source: AGHT+IEkOv7yLf6PDm6Vje2xrzSTTbJGzsmhV1y3d5JhLXiHTmWHaXhFLL6OuSN92I/QDJCY3Gz80g==
-X-Received: by 2002:a2e:8191:0:b0:2ec:557b:f8a0 with SMTP id 38308e7fff4ca-2ec5b3d4abfmr3710991fa.38.1719093258554;
-        Sat, 22 Jun 2024 14:54:18 -0700 (PDT)
-Received: from U4.lan ([2a02:810b:f40:4600:108d:ce41:c0b8:26cd])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-57d3056301bsm2796288a12.89.2024.06.22.14.54.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 22 Jun 2024 14:54:18 -0700 (PDT)
-From: Alex Bee <knaerzche@gmail.com>
-To: Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Kalle Valo <kvalo@kernel.org>,
-	linux-wireless@vger.kernel.org,
-	brcm80211@lists.linux.dev,
-	brcm80211-dev-list.pdl@broadcom.com,
-	linux-kernel@vger.kernel.org
-Cc: Alex Bee <knaerzche@gmail.com>
-Subject: [PATCH v2] wifi: brcmfmac: of: Support interrupts-extended
-Date: Sat, 22 Jun 2024 23:54:16 +0200
-Message-ID: <20240622215416.659208-1-knaerzche@gmail.com>
-X-Mailer: git-send-email 2.45.2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58D0D321D
+	for <brcm80211@lists.linux.dev>; Sun, 23 Jun 2024 02:21:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.117.92
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1719109308; cv=fail; b=VvL+/OblHpb3JCSeUTqne3vtbQj//2J61oEO39nkbGL7fCKykLkVVHnywFvCvw7Tf1QB/PfLNGBuT/7wvURMrJKJpyGW3opUloyguvcJ6kcACqkFoyw702++b6NJmghkRYtMviEwmjPZHqbFNV0Z4JYh4Dh67vYrf1DKF37Jb1w=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1719109308; c=relaxed/simple;
+	bh=a5CXsmIt6J/B60XAPDbiGAWk+Sz4cw/QF4BaSm+sNaw=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=fKaJMTfHlGIpPS+4fDxEBAYmkaHjkUu2/LkP/zOevKYbqj20ymUzD1+fEeOdYJLGli5yOvuSJhT70NmH/gi5K9KjGotw/NNEXMC8mc99MxZ6KH0IHHwSklkXF+J2gs0sYwoqSVFj8dWzthK8v3sOT+qZXJBR9YXbFbWgggS2Pjc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wesion.com; spf=pass smtp.mailfrom=wesion.com; arc=fail smtp.client-ip=40.107.117.92
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wesion.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wesion.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=lUFzaB5/d2EmrMgXJOxwPVakQ7Xyzcy3oeFHQWpUmQTOgi++WYKZCuX/x+sV7bjOTwuBVfC4DM7aDk31C5SMCo+82xoq6uYbQJjMmPllz9zR9f4cQVhKh1uV2+Gs802sVdw6VbsGk5QmGCrhEb7ptLqVu5ZmtHdbtNvNfiVeju7+2S8+J+pUj7g7zjFYBlaybyJmDjLcxpPVgwisvSQBRde5e3TDhbQ2KkfJT3zdi9WkQg3UZ546Ub17lUHuzWGUNeqNKHny2V/S2rvXYlj39NHc1eWLNjhsHHJrnFnNmPRi66cNEzMrZlFuh1peedsjzaAvQK4kARtCNvM3kghBow==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=a5CXsmIt6J/B60XAPDbiGAWk+Sz4cw/QF4BaSm+sNaw=;
+ b=edFQDRVjmo/Lj4c6JtWb8UOblFyLvqYXSQv5Ynn7jz630e34OLfB/98egafl4I7vubHrk3TCy1nYDyxVP/w0wVn9ed9p/OTduPn1DlUDjpDBK+1cL+z//L9bM1oA0aInkxQ+uEjC3Cwz8cr8eti2YXPkos1LGjrBnoauHSC4zAhpV/jpJMoVOhrj83fPjJBlUZyVGqebbWAQoMprbtS9QjAWo0mztZHnzKFX5StIGhWfBPXhlEKRZIE42t54qLmc4x/9uKgLiVFzkdvwPuKd/z1KzgIGKMnQbhYGFoSxowG6H7uWz0kplMLIAR7NleOCA5I+7XMVhQNJ8k9RlMOVvw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=wesion.com; dmarc=pass action=none header.from=wesion.com;
+ dkim=pass header.d=wesion.com; arc=none
+Received: from TYZPR03MB7001.apcprd03.prod.outlook.com (2603:1096:400:26a::14)
+ by SEZPR03MB6959.apcprd03.prod.outlook.com (2603:1096:101:9e::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7677.38; Sun, 23 Jun
+ 2024 02:21:39 +0000
+Received: from TYZPR03MB7001.apcprd03.prod.outlook.com
+ ([fe80::78dd:5e68:1a9c:36c0]) by TYZPR03MB7001.apcprd03.prod.outlook.com
+ ([fe80::78dd:5e68:1a9c:36c0%6]) with mapi id 15.20.7698.024; Sun, 23 Jun 2024
+ 02:21:39 +0000
+From: Jacobe Zang <jacobe.zang@wesion.com>
+To: =?iso-8859-2?Q?Ond=F8ej_Jirman?= <megi@xff.cz>
+CC: "arend.vanspriel@broadcom.com" <arend.vanspriel@broadcom.com>,
+	"kvalo@kernel.org" <kvalo@kernel.org>, "duoming@zju.edu.cn"
+	<duoming@zju.edu.cn>, "bhelgaas@google.com" <bhelgaas@google.com>,
+	"minipli@grsecurity.net" <minipli@grsecurity.net>,
+	"linux-wireless@vger.kernel.org" <linux-wireless@vger.kernel.org>,
+	"brcm80211@lists.linux.dev" <brcm80211@lists.linux.dev>,
+	"brcm80211-dev-list.pdl@broadcom.com" <brcm80211-dev-list.pdl@broadcom.com>,
+	"robh@kernel.org" <robh@kernel.org>, "krzk+dt@kernel.org"
+	<krzk+dt@kernel.org>, "conor+dt@kernel.org" <conor+dt@kernel.org>,
+	"heiko@sntech.de" <heiko@sntech.de>, Nick Xie <nick@khadas.com>,
+	"efectn@protonmail.com" <efectn@protonmail.com>, "jagan@edgeble.ai"
+	<jagan@edgeble.ai>, "dsimic@manjaro.org" <dsimic@manjaro.org>,
+	"devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+	"linux-arm-kernel@lists.infradead.org"
+	<linux-arm-kernel@lists.infradead.org>, "linux-rockchip@lists.infradead.org"
+	<linux-rockchip@lists.infradead.org>, "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v1 3/3] net: wireless: brcmfmac: Add support for AP6275P
+Thread-Topic: [PATCH v1 3/3] net: wireless: brcmfmac: Add support for AP6275P
+Thread-Index: AQHawrWkSZjILdfElUC6XOD5DUOw1rHS7xyAgAGnXp8=
+Date: Sun, 23 Jun 2024 02:21:39 +0000
+Message-ID:
+ <TYZPR03MB700154AE39D44B8D166344BF80CB2@TYZPR03MB7001.apcprd03.prod.outlook.com>
+References: <20240620020015.4021696-1-jacobe.zang@wesion.com>
+ <20240620020015.4021696-4-jacobe.zang@wesion.com>
+ <fro2xcwsnvbxmpszny6g2p36z4zwoq4kegmpvww4twxir5piez@a3c2nbwitmab>
+In-Reply-To: <fro2xcwsnvbxmpszny6g2p36z4zwoq4kegmpvww4twxir5piez@a3c2nbwitmab>
+Accept-Language: en-US, zh-CN
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=wesion.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TYZPR03MB7001:EE_|SEZPR03MB6959:EE_
+x-ms-office365-filtering-correlation-id: 65198ea4-1916-4e53-b573-08dc932b3713
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230037|366013|376011|7416011|1800799021|38070700015;
+x-microsoft-antispam-message-info:
+ =?iso-8859-2?Q?+P9aQxqiB8YckZNSbz7yk9eq6BZVbzGA/9m16anB9DH8nWWo5fj9zMWuGQ?=
+ =?iso-8859-2?Q?Cnkz2/OkiGMXq2MKagNm7+F+Dwkq0uLKLnI/lTn2Sck+8MU8RZQTNN9EWn?=
+ =?iso-8859-2?Q?4AeWh2LfnBbFJ6NEMn2HW5T17jsakpTtvYh6mDWnK+X8/NW15X2Et0Jcs7?=
+ =?iso-8859-2?Q?FCHMDsSk4UynIUPzzjagQu60BmKdsr4uSJINuK9zHxr9SUQ+JQz7BxfXDp?=
+ =?iso-8859-2?Q?/WGY4kIPsYrZNKK0Xa3/WzQq9Lb1Or5C0GjIHONP29RsmBWL/QlDuiWhom?=
+ =?iso-8859-2?Q?2RBlhfVU0Hvw/6VeARQZ8XPqjaS93HU0A1FL+bxJukE0tDsuhEno6u6Sw9?=
+ =?iso-8859-2?Q?GXe06iSBIKlnTFFjos6+bZyVR96BJqFoxAD4qrd+EPoL6PmJmhYXHE/pQ+?=
+ =?iso-8859-2?Q?ZMVY+9bQnImBuFtQpb+CQ+R3hoPs6GR238V7xZhnpm35ZvHSFhmC/E8IZd?=
+ =?iso-8859-2?Q?Q4NJwvlmfTXcFpGgZV/mRbcvSZcD9oPhcfyx210DI4rFjWy/Yudr/b3aIN?=
+ =?iso-8859-2?Q?rD2PNdodMM7A3gv0IEjFKW7nLHYPROXkXY/SROEg2XDgOT7Lu5WP8Iv2lv?=
+ =?iso-8859-2?Q?ZF00Eqnf6H9kJle6fknICv7Z3oVkHFHcFBAgg4blrjlPXMXtW1zoX5s/IY?=
+ =?iso-8859-2?Q?ReGVM84VDM7FlXZzgocjtycQTdlxNYyuzSIyINcV2OCaodW76SlkPMXVky?=
+ =?iso-8859-2?Q?tcIVmUo3RS5bi7nMDHpZ4l7Dhy4+B31h55JpKJJvMjCYgGQCix/HPgxAsy?=
+ =?iso-8859-2?Q?E6Ul7iAjzrjxBNwp7gMqVYGMirwOB5m5FRpPs/upK2PSCqndgLM5zgkFAy?=
+ =?iso-8859-2?Q?YEpms98nPQP3ZNRW7GYw/N8W3/e7oKXmKY0IUugk4wTl52t2WXL832f6G1?=
+ =?iso-8859-2?Q?1iEqyhpjIaby0CLx729ZhS9AcCxf0rEeQxnO4zcmHejoVVKP9xxsMR4XbW?=
+ =?iso-8859-2?Q?foUw9iPrwO9BFJsKdMRAMwkkzY/kLEuyfFkZVTUVsiSq3yCmYcga08kRI8?=
+ =?iso-8859-2?Q?rwe9ip7FxFOOrLoBqQZbryVl9vpOA+/ChNKiya1u9mRXcA0u6FZQ2+prDk?=
+ =?iso-8859-2?Q?gq+jG6Xfm2zCWv1lVD5dh5uQeZ7YbxPRK8GxHKjfZd25R7mnzsUZLLXMbt?=
+ =?iso-8859-2?Q?Dpr76QQvDT14u9ICC5K8O22N6CEzrm/Nhyt40bIIf2GIJCzv8Z19jo+qMq?=
+ =?iso-8859-2?Q?oQxRX+JRKUv4ItDteMnspVgDApc4dwnnmSlzoA1girtwz5PlgpwZnD64ob?=
+ =?iso-8859-2?Q?yIUTKiKwWSWOb+vGM+RzPu/buO4pklZgO2gIi+89VammtYlWSgqpkUtyU4?=
+ =?iso-8859-2?Q?NcGCGiPIhSRBUlLpVxm9uLJJ/m8i2OqDGrul18+83g7mE36SGS99fcZ3W1?=
+ =?iso-8859-2?Q?XIGwdDdl4t?=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TYZPR03MB7001.apcprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230037)(366013)(376011)(7416011)(1800799021)(38070700015);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?iso-8859-2?Q?2T0GhOv8LpeAV1n0UJzP71hgaIM0WGN7qnP0MJcaqKPcbAP44FOarCGgyi?=
+ =?iso-8859-2?Q?clHK1OHmNfQMFbs4UVv/+k05/1qcghDpOl6qNTgYdlxAkPGD4zQfuyeiTr?=
+ =?iso-8859-2?Q?GnrUq4lyAjwngC8IJAmcYcRKN3Dto/zT2eCX1kMBTtJH6kf5SIXDEZQ/kC?=
+ =?iso-8859-2?Q?wQdSL+j8a5MLvd+QvYPu/O1NRkdF2sZTHjuXtSc2lpxDLsHM1pWO61/E4w?=
+ =?iso-8859-2?Q?Gs/f0YsKmT0yfOc8RZkU5C+bs3Gm8u7k9pdGs5DUoXjzfsc8qqumTtKBlw?=
+ =?iso-8859-2?Q?nJKuFA58qSTws/jWMo2gi1Eb+0OKXfx0YIOgS9LIGMoG5chzgCjZHBkgt0?=
+ =?iso-8859-2?Q?kyrCNMtM5niTIQnQCdTqKRZ+1fSyFYt/trmbtsDXHQXQjN+BR61w/Ek2ep?=
+ =?iso-8859-2?Q?SV1ECEu5v66dzeolb34yq2xaqb/rjiF24Ny3INSH9UiAUlv4X2REHOeTEO?=
+ =?iso-8859-2?Q?wbWjH4qvJfAEtbX+cGBdOAoQoCdqRs6qA03xv5XdWpzW4sSUoFBOMTGlJw?=
+ =?iso-8859-2?Q?7MX40n7bD/1m6PabVmO50DkDHfkG+95/WQvdzp0lPg0Kk8DmIhQ9EcWNL/?=
+ =?iso-8859-2?Q?KF7/74rsdrHIJLoq1Z3CO3pkxWiLvSHbj6KYrZSshJkCBOXtk28qcB9R5t?=
+ =?iso-8859-2?Q?/p46BesAHUIPmecKXmREMKA+MhhPuqKpurKwH0Lr6KgLPhaB0ad0FuV0UE?=
+ =?iso-8859-2?Q?5XONoBqIthyckTPLCJToocvg3WbrSbsoUzRebne/WmsQA30h/sJQF4V0Xe?=
+ =?iso-8859-2?Q?Ig/ceIMCusq2fJueqXjLou0VDYqUAPO6qFyin8sACPdFZWnPi0kvR0fgZA?=
+ =?iso-8859-2?Q?+ORkIfCCQIbpx8m33o+3KZQ0cuQ4+if4M8ienuSWpPF39rPKkXqx1Ol2HA?=
+ =?iso-8859-2?Q?/LtN7OSNjds1fWFYUDvT8xYQUge+cSRU+7juxkuGj0tJmj6NIpurl29wkA?=
+ =?iso-8859-2?Q?PQsl6lajuadQyJE0fhmC0onLtCx+8Utb/pUvXfhEnhcGgN8vMTPec3otCc?=
+ =?iso-8859-2?Q?/ZIFY22EgPa07SP80EdBDWf0apbcE6ZElZ4pyZxtZ7uXB//YVDjmSIo32D?=
+ =?iso-8859-2?Q?59fiTNR3xB8Ay0jmkR8iZquv5lC1tikeQKpiqKZ8mfV7lp8u1GTEcrQfWY?=
+ =?iso-8859-2?Q?qk32pAG3rYFwJig7C9ynfBLGxtubVk/TM8qYvsiAJQCTFSJ0ryzoWHDRct?=
+ =?iso-8859-2?Q?fkFQZoKhWUsrlRD6XlNTiRBNE21RPPLNNUmiQIgoGXF8Yp1Y3vGNc01tPu?=
+ =?iso-8859-2?Q?lruo0JjRsKq7T5h3zjLh71zxwFoXJEQCdcULCk9/d023B8GkwgLzhnX3Ef?=
+ =?iso-8859-2?Q?vFcysyYm/m38ZTWjxsnT4N74EU5Th3AmiyqCBvNo9xDblZeDUmlmAuNu+a?=
+ =?iso-8859-2?Q?OyQ1IUzUnz+t+75De/RsjHruvdAecJNZ3pT4yPBI0yRioXpx4vyLattl/0?=
+ =?iso-8859-2?Q?lLE1VvHc1EPgzSo2D63SShct/acijgs+riVud6KRzPWbiiNkD8qjEwtGtL?=
+ =?iso-8859-2?Q?4LVzaCOi8M0bjlEwAjcW7hhziUveiR0zZXQPdEh1VjTg6qmoTM9gBzl6rV?=
+ =?iso-8859-2?Q?Z0CE47gzT3c5lAomEsIywPGy8S6kt4/ifLlKYibdml8Q+7JwLg7zjntVyl?=
+ =?iso-8859-2?Q?9GDcYjBsVFmHiK5gAVVDNUhWbQsZgFmH85?=
+Content-Type: text/plain; charset="iso-8859-2"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-OriginatorOrg: wesion.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TYZPR03MB7001.apcprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 65198ea4-1916-4e53-b573-08dc932b3713
+X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Jun 2024 02:21:39.6253
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 2dc3bd76-7ac2-4780-a5b7-6c6cc6b5af9b
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 6dtdgPWT4WDK7WKKX/zEaRa+tAtZflqoHSM2RqoTxbjwXs7pVfVctWmtOkxXM88zaPxFMI23oJS1yMbZzAzBUg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR03MB6959
 
-The currently existing of_property_present check for interrupts does not
-cover all ways interrupts can be defined in a device tree, e.g.
-"interrupts-extended".
-
-In order to support all current and future ways that can be done, drop that
-check and call of_irq_parse_one to figure out if an interrupt is defined
-and irq_create_of_mapping for the actual mapping and let it be handled by
-the interrupt subsystem.
-
-Signed-off-by: Alex Bee <knaerzche@gmail.com>
----
-Link to v1:
-https://lore.kernel.org/all/20240621225558.280462-1-knaerzche@gmail.com/
-
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
-index e406e11481a6..fe4f65756105 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
-@@ -70,6 +70,7 @@ void brcmf_of_probe(struct device *dev, enum brcmf_bus_type bus_type,
- {
- 	struct brcmfmac_sdio_pd *sdio = &settings->bus.sdio;
- 	struct device_node *root, *np = dev->of_node;
-+	struct of_phandle_args oirq;
- 	const char *prop;
- 	int irq;
- 	int err;
-@@ -129,10 +130,10 @@ void brcmf_of_probe(struct device *dev, enum brcmf_bus_type bus_type,
- 		sdio->drive_strength = val;
- 
- 	/* make sure there are interrupts defined in the node */
--	if (!of_property_present(np, "interrupts"))
-+	if (of_irq_parse_one(np, 0, &oirq))
- 		return;
- 
--	irq = irq_of_parse_and_map(np, 0);
-+	irq = irq_create_of_mapping(&oirq);
- 	if (!irq) {
- 		brcmf_err("interrupt could not be mapped\n");
- 		return;
--- 
-2.45.2
-
+> Any reason to strip info about origin of the patch, my SoB and=0A=
+> present this work as your own?=0A=
+=0A=
+Sincerely express my apology to Ondrej. It's really my mistake. After getti=
+ng your permission if I could submit the patches. I jsut think if the autho=
+r and submitter is not the same person is strange so I changed it. Next tie=
+m I will avoid this mistake. Apologize again.=0A=
+=0A=
+=0A=
+> I sincerely hope this is just a rookie mistake so please carefully read=
+=0A=
+the URL below:=0A=
+=0A=
+> https://www.kernel.org/doc/html/latest/process/submitting-patches.html=0A=
+=0A=
+Thanks for the guidance Arend. After reading the document I realized what a=
+ stupid mistake I made.=0A=
+=0A=
+BTW I have another question, except the SoB of the real author, should I al=
+so post the original link in commit message?=0A=
+=0A=
+---=0A=
+Best Regards=0A=
+Jacobe=
