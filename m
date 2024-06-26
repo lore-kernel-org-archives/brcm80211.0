@@ -1,59 +1,61 @@
-Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
+Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0991B219FC
-	for <brcm80211@lists.linux.dev>; Wed, 26 Jun 2024 07:48:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6C9B180A93
+	for <brcm80211@lists.linux.dev>; Wed, 26 Jun 2024 12:05:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719388084; cv=none; b=m12Aak0n/C1QaENEugNlx1t/BOCqtg9wnjOJKy5HiqPZq/alufVJZA31z+B4bxrPXCoSsOsBa+4MSxwllgOESgPVaKITkDw/A2H8LG6AgFPNjZuj30oi7ExIVAypWopGxV/JptRjUcu3wx4/SeaBnOnFIUJ6wO06TCSyCfBUDVA=
+	t=1719403509; cv=none; b=sLqtofzMBx9MJuMy7RGhoDbnbrwU9TFrdqVhLfqu8rMaa2DHSFuS/b38lER790gOd1u2Vr2a2MKsdD2yK8bpvvs1/3VDSTAjILM23hOicmEoaSCdDMo2xIS4WCwJvk5mjOR1p4jFGJGIJKcHtJvb32ysWtCh8kdujnzYrTPallw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719388084; c=relaxed/simple;
-	bh=DPHDg2FTaHvqy1oXFYZ6JYW4VWj4Aft/E2wizY2yMJ0=;
-	h=From:To:CC:Date:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type; b=FT3zeZb4c6tQvGHgk/gPLdO+R1y+STbyMLLNiwEKg/pfN6GLZUJD+LTPB5oKmo4Fhbl7geyDJmpKhqluSKh+L47hDgHLB0MBSFHFXOpgRxJaMrE3YZEHUrLklcGJUEyvYL4CtOoYalZfrj2XCZdppnCyWQlQRQ9QCvVaQW+7pEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=KUFA0vIe; arc=none smtp.client-ip=209.85.160.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+	s=arc-20240116; t=1719403509; c=relaxed/simple;
+	bh=NBEFTzkklGFGDVG2/xtdV1orAF8Jslvtw0j0Fq+A/u8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=h69+oTx9XVKzYrYRVjchrqGOity9zIOJdSp07XQE+IDDpWVU5POxLgPWNzsbiE451f1nqjdcBMdc/t+o0Z7w5gbsJoPvPj37et9NcGc2XOjVgPbuI39cs0R3h+l6ElII95cc/wqeBp4JcsGJnSo1SbxviTjxoHssjq2LQIrYOTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NaQcpKKg; arc=none smtp.client-ip=209.85.215.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="KUFA0vIe"
-Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-445033fbc24so4806041cf.3
-        for <brcm80211@lists.linux.dev>; Wed, 26 Jun 2024 00:48:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NaQcpKKg"
+Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-710437d0affso4956199a12.3
+        for <brcm80211@lists.linux.dev>; Wed, 26 Jun 2024 05:05:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1719388082; x=1719992882; darn=lists.linux.dev;
-        h=mime-version:subject:user-agent:references:in-reply-to:message-id
-         :date:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=bbpTekQOQYWD9q5cRkBKp9LGQoSjGYwej/7opQKMWMQ=;
-        b=KUFA0vIewMChg4/ryoRFy2Z6XkSrMrmbuu208Xjkxw84SQiFIAClwatInIJbCqjzEM
-         5mDIuB2zAE49YxWS/ReH0NZ2E4z/EQ4t/Bv1yMud9t+OAAdwO43XvCmecHGCFacpZiu8
-         K+30MS7UsrDH6T4sEk/Y7U4uNEr0MVHssNJQ4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719388082; x=1719992882;
-        h=mime-version:subject:user-agent:references:in-reply-to:message-id
-         :date:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1719403507; x=1720008307; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=bbpTekQOQYWD9q5cRkBKp9LGQoSjGYwej/7opQKMWMQ=;
-        b=GqKXl5ZKxwU+qLt6QVUDijbuv5ERIUy4ytxO9/Y8jgCaUAUE60w6l9l6uy9uMhkw0P
-         HWS0J2ywepkTro7+yyqNSeA9wCdVpdHgUCtQ3DbpVoUrTfssXIKrSzEBXSGGMUQt7hua
-         PwBvGCBxmVoSWqz+e1kFY3cKsfvtFW9q3BA6++PZ4FRr6QgX4rVDxjPSSK1Uc8PxIC6e
-         chdU4hbhONv2042p7ymB0a1LGWKrGWidkhN30l7yTIKfotIGunxeJanPEUWU/+6OUz1X
-         sMAOGqag0wsN8UbQqAKN0bT/utzAG3x6zoeTeWwY08hRIUwmmaqM89gVqBhB9ezZHxaD
-         ATOg==
-X-Forwarded-Encrypted: i=1; AJvYcCXDLx0HQCYwhuht9QI13LsP50+klsb8AisMa8Phk6+CwU2sLykqTvnLdD0HzZ4K09boFIKfTMPcqZUY0lAPkV6OBa2mP3atXRxf
-X-Gm-Message-State: AOJu0YzrXrd9jfnq7Ay74Pz2VeJFPm3UE7zuGkF0WByhYmfw+N5shBpJ
-	u0mga2uUXEiKkNcPEXnZQEeCZG0ofPI/JOvp4DKYySaThvZHOojXkIGQrL5GVw==
-X-Google-Smtp-Source: AGHT+IF6bITAHbnd9J/HjEyIOMs5v9PA2QyyLs7DpHT/lDuZQmqBxYL2hwHkblfbTz2ZBLG49cq0WA==
-X-Received: by 2002:a05:622a:507:b0:43f:9ff5:1d6d with SMTP id d75a77b69052e-444d936c590mr108590121cf.46.1719388081874;
-        Wed, 26 Jun 2024 00:48:01 -0700 (PDT)
-Received: from [192.168.178.38] (f215227.upc-f.chello.nl. [80.56.215.227])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-444fe365315sm13255251cf.28.2024.06.26.00.47.58
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 26 Jun 2024 00:48:01 -0700 (PDT)
-From: Arend Van Spriel <arend.vanspriel@broadcom.com>
-To: KeithG <ys3al35l@gmail.com>
-CC: Peter Robinson <pbrobinson@gmail.com>, Julian Calaby <julian.calaby@gmail.com>, Kalle Valo <kvalo@kernel.org>, <linux-wireless@vger.kernel.org>, <brcm80211@lists.linux.dev>, Jouni Malinen <j@w1.fi>, <hostap@lists.infradead.org>
-Date: Wed, 26 Jun 2024 09:47:56 +0200
-Message-ID: <1905383f7e0.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
-In-Reply-To: <CAG17S_OMV5TpCO+XwP-6dQNB_zVs+OCoawpngZUshuDOgFOF0w@mail.gmail.com>
+        bh=1UCfu79HmhWSdtl/1wXnfzkyBlaEjaZcIKqYIxg5bUw=;
+        b=NaQcpKKgfbdPO8IXEgDfwdLjVeJu9jZIaGyjTNxmRVzmW923yzlgs2ciEY62YoVVNL
+         Yj+0+sR66mcQKWaeDOWDvaBSIvfXa0YLg32TQ3++QJUZQpvHEJZSWt5IVd4soUcY5qvc
+         V2b1nybFLio8qHLSuvPouIGDix+gMKzvuzSYQ81pVONGA0+YbSC7Y6IXKeUsFkDgi6Wd
+         DHKo4OQoNvUd8l3u3qR1LUa6ZnFCTl4XTPwsFlK6yYzF5mdbkfqRFqvNrkTZi8Y8nbtm
+         EYKgMAmc11DUuGBC+eG/OoH15pn9zVYmYwJv5oBliHsepEcUxH2AExUlZi3FSr1Hl+Tr
+         HOZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719403507; x=1720008307;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=1UCfu79HmhWSdtl/1wXnfzkyBlaEjaZcIKqYIxg5bUw=;
+        b=c1yvQ+hg1Zt1cBZCWWLVV9RliSFE7WP5QcBfBc6QJYBP1JnZzo0cUK1zAX7yy4AFRv
+         hGxiLQIbcSp9Mh7GpHiwuHE8uWMJeO4bvmUh1ePo63xUkuEjG3yFIB51FASfHnnfN2Vh
+         nA+eHDRsdOqnVVzDXJsbJIoqhdCLUC5KlwQiBY2wzZU7fHhdGBmBFH3cp05djmCkOpAo
+         /0EYHL5sjCECvwng04X84cPOIek/p7mexFcsx58I9jJtv1IkI5x8hhRgM1ELhSHmvtO0
+         qPu1WQrnFxWdgwBrsu3iFpSGitYwlgnRbFV582kC4NFxiuOR9A/4tDYMRgLAeZDOX7Qz
+         N2nA==
+X-Forwarded-Encrypted: i=1; AJvYcCUtv7Hph5fYLJ3CrR4FEaVZEjuneUG1cDVK+5PB7gxxoiMGJRBORUMjOuFWtSTk5zspGNsY0YcceAkI/Y1jKkBuyo1KIog8iXmy
+X-Gm-Message-State: AOJu0Yyd18+O7lnnv8xWvh72cDwMgi0qPRO+1Dtztbtg7Npqx+nkCP6z
+	JKU066/nxy6B4GlmdlM738y58mGUwWePRejK2kk8mftGLpNw5vluWLGKGYvWALv9wJNqlERyvP/
+	GcH4bGNFH2tK5EttChQKkirzyDiroxl6N
+X-Google-Smtp-Source: AGHT+IGd0NoEbFjS7olP1xxMX4lVfuZPb+3O2FokBowu6HNfyG/mz6ggTlIDanwox5pVv8HyeXp4S1l/zy7bVXc90iI=
+X-Received: by 2002:a17:90a:f3d5:b0:2c2:d250:2813 with SMTP id
+ 98e67ed59e1d1-2c86127e27fmr8372737a91.1.1719403506903; Wed, 26 Jun 2024
+ 05:05:06 -0700 (PDT)
+Precedence: bulk
+X-Mailing-List: brcm80211@lists.linux.dev
+List-Id: <brcm80211.lists.linux.dev>
+List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
+List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
 References: <20240617122609.349582-1-arend.vanspriel@broadcom.com>
  <CALeDE9O7DCPhoxdMyHmYFOjwdkPRepiaaC92QorzSTXCduZ+xQ@mail.gmail.com>
  <CAGRGNgWH9U3XeatXA9xpkLz76COuL1xjYcfXQYLTGKBxvy=M-A@mail.gmail.com>
@@ -62,249 +64,187 @@ References: <20240617122609.349582-1-arend.vanspriel@broadcom.com>
  <CAG17S_NBO=tTBp9GX=S9C4REbT-Gx634n66+7JERcWbe-KXt-g@mail.gmail.com>
  <190369b8c10.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
  <CAG17S_NHC7EqUMtc58eSY9Yoq4K0mvp=C1rcP8PTRzajXW3Csg@mail.gmail.com>
- <c065ae75-f89e-4b14-9fc3-6ef19e6d144b@broadcom.com>
- <CAG17S_OMV5TpCO+XwP-6dQNB_zVs+OCoawpngZUshuDOgFOF0w@mail.gmail.com>
-User-Agent: AquaMail/1.51.3 (build: 105103473)
-Subject: Re: brcmfmac: how to setup SAE on RPi // Re: [PATCH] wifi: brcmsmac: advertise MFP_CAPABLE to enable WPA3
-Precedence: bulk
-X-Mailing-List: brcm80211@lists.linux.dev
-List-Id: <brcm80211.lists.linux.dev>
-List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
-List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-	boundary="000000000000df9a8d061bc63baf"
+ <c065ae75-f89e-4b14-9fc3-6ef19e6d144b@broadcom.com> <CAG17S_OMV5TpCO+XwP-6dQNB_zVs+OCoawpngZUshuDOgFOF0w@mail.gmail.com>
+ <1905383f7e0.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
+In-Reply-To: <1905383f7e0.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
+From: KeithG <ys3al35l@gmail.com>
+Date: Wed, 26 Jun 2024 07:04:56 -0500
+Message-ID: <CAG17S_MPwwgzup17zwHmNH87RS9mrwn7A8v0FkntQx2du6fLig@mail.gmail.com>
+Subject: Re: brcmfmac: how to setup SAE on RPi // Re: [PATCH] wifi: brcmsmac:
+ advertise MFP_CAPABLE to enable WPA3
+To: Arend Van Spriel <arend.vanspriel@broadcom.com>
+Cc: Peter Robinson <pbrobinson@gmail.com>, Julian Calaby <julian.calaby@gmail.com>, 
+	Kalle Valo <kvalo@kernel.org>, linux-wireless@vger.kernel.org, 
+	brcm80211@lists.linux.dev, Jouni Malinen <j@w1.fi>, hostap@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
---000000000000df9a8d061bc63baf
-Content-Type: text/plain; format=flowed; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-
-On June 21, 2024 2:24:19 PM KeithG <ys3al35l@gmail.com> wrote:
-
-> On Fri, Jun 21, 2024 at 4:09 AM Arend van Spriel
-> <arend.vanspriel@broadcom.com> wrote:
->>
->> + Jouni
->>
->> On 6/20/2024 8:25 PM, KeithG wrote:
->>> 1718907734.308740: wlan0: WPA: AP group 0x10 network profile group
->>> 0x18; available group 0x10
->>> 1718907734.308748: wlan0: WPA: using GTK CCMP
->>> 1718907734.308758: wlan0: WPA: AP pairwise 0x10 network profile
->>> pairwise 0x10; available pairwise 0x10
->>> 1718907734.308767: wlan0: WPA: using PTK CCMP
->>> 1718907734.308772: wlan0: WPA: AP key_mgmt 0x400 network profile
->>> key_mgmt 0x400; available key_mgmt 0x0
->>
->>
->> I suspect the message above indicates the problem as there is no
->> available key_mgmt to select so looked it up in the code and here it is:
->>
->> sel = ie.key_mgmt & ssid->key_mgmt;
->> #ifdef CONFIG_SAE
->> if ((!(wpa_s->drv_flags & WPA_DRIVER_FLAGS_SAE) &&
->> !(wpa_s->drv_flags2 & WPA_DRIVER_FLAGS2_SAE_OFFLOAD_STA)) ||
->> wpas_is_sae_avoided(wpa_s, ssid, &ie))
->> sel &= ~(WPA_KEY_MGMT_SAE | WPA_KEY_MGMT_SAE_EXT_KEY |
->>          WPA_KEY_MGMT_FT_SAE |
->> WPA_KEY_MGMT_FT_SAE_EXT_KEY);
->> #endif /* CONFIG_SAE */
->> #ifdef CONFIG_IEEE80211R
->> if (!(wpa_s->drv_flags & (WPA_DRIVER_FLAGS_SME |
->>                   WPA_DRIVER_FLAGS_UPDATE_FT_IES)))
->> sel &= ~WPA_KEY_MGMT_FT;
->> #endif /* CONFIG_IEEE80211R */
->> wpa_dbg(wpa_s, MSG_DEBUG,
->> "WPA: AP key_mgmt 0x%x network profile key_mgmt 0x%x;
->> available key_mgmt 0x%x",
->> ie.key_mgmt, ssid->key_mgmt, sel);
->>
->> So 0x400 matches the expectation:
->>
->> #define WPA_KEY_MGMT_SAE BIT(10)
->>
->> You already confirmed that the driver reports SAE and SAE offload
->> support. So it seems wpas_is_sae_avoided() must return true. That will
->> check whether the AP and network profile are setup to MFP. This seems to
->> be the fact as your hostapd.conf and wpa_supplicant.conf both have
->> ieee80211w=2 defined. This function can only return true when
->> is enabled in configuration file:
->>
->> # sae_check_mfp: Require PMF support to select SAE key_mgmt
->> # 0 = Do not check PMF for SAE (default)
->> # 1 = Limit SAE when PMF is not enabled
->> #
->> # When enabled SAE will not be selected if PMF will not be used
->> # for the connection.
->> # Scenarios where this check will limit SAE:
->> #  1) ieee80211w=0 is set for the network
->> #  2) The AP does not have PMF enabled.
->> #  3) ieee80211w is unset, pmf=1 is enabled globally, and
->> #     the device does not support the BIP cipher.
->> # Consider the configuration of global parameterss sae_check_mfp=1,
->> pmf=1 and a
->> # network configured with ieee80211w unset and key_mgmt=SAE WPA-PSK.
->> # In the example WPA-PSK will be used if the device does not support
->> # the BIP cipher or the AP has PMF disabled.
->> # Limiting SAE with this check can avoid failing to associate to an AP
->> # that is configured with sae_requires_mfp=1 if the device does
->> # not support PMF due to lack of the BIP cipher.
->>
->> The default is not to check it and you wpa_supplicant.conf does not
->> specify it.
->>
->> # cat /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
->> ctrl_interface=DIR=/run/wpa_supplicant GROUP=netdev
->> update_config=1
->> network={
->> ssid="deskSAE"
->> sae_password="secret123"
->> proto=RSN
->> key_mgmt=SAE
->> pairwise=CCMP
->> ieee80211w=2
->> }
->>
->> $ cat /etc/hostapd/hostapd.conf
->> # interface and driver
->> interface=ap0
->> driver=nl80211
->>
->> # WIFI-Config
->> ssid=deskSAE
->> channel=1
->> hw_mode=g
->>
->> wpa=2
->> wpa_key_mgmt=SAE
->> wpa_pairwise=CCMP
->> sae_password=secret123
->> sae_groups=19
->> ieee80211w=2
->> sae_pwe=0
->>
->> Regards,
->> Arend
->>
->>
->>> 1718907734.308779: wlan0: WPA: Failed to select authenticated key
->>> management type
->>> 1718907734.308787: wlan0: WPA: Failed to set WPA key management and
->>> encryption suites
+On Wed, Jun 26, 2024 at 2:48=E2=80=AFAM Arend Van Spriel
+<arend.vanspriel@broadcom.com> wrote:
 >
-> Arend,
+> On June 21, 2024 2:24:19 PM KeithG <ys3al35l@gmail.com> wrote:
 >
-> I find the wpa_supplicant docs really hard to understand. I have read
-> through your response a few times and am still a bit confused. Does
-> this have to do with a pure wpa3 versus a wpa2/3 AP?
-
-Correct. If I am not mistaken MFP aka PMF aka 802.11w is mandatory for WPA3.
-
-> I have tried editing my hostapd.conf and my wpa_supplicant.conf and
-> still cannot get a connection, so I must be doing something wrong.
-> I commented the ieee80211w line on both and it would not connect.
-> I tried changing the wpa_key_mgmt on both ends to be 'SAE WPA_PSK' and
-> it still would not connect.
+> > On Fri, Jun 21, 2024 at 4:09=E2=80=AFAM Arend van Spriel
+> > <arend.vanspriel@broadcom.com> wrote:
+> >>
+> >> + Jouni
+> >>
+> >> On 6/20/2024 8:25 PM, KeithG wrote:
+> >>> 1718907734.308740: wlan0: WPA: AP group 0x10 network profile group
+> >>> 0x18; available group 0x10
+> >>> 1718907734.308748: wlan0: WPA: using GTK CCMP
+> >>> 1718907734.308758: wlan0: WPA: AP pairwise 0x10 network profile
+> >>> pairwise 0x10; available pairwise 0x10
+> >>> 1718907734.308767: wlan0: WPA: using PTK CCMP
+> >>> 1718907734.308772: wlan0: WPA: AP key_mgmt 0x400 network profile
+> >>> key_mgmt 0x400; available key_mgmt 0x0
+> >>
+> >>
+> >> I suspect the message above indicates the problem as there is no
+> >> available key_mgmt to select so looked it up in the code and here it i=
+s:
+> >>
+> >> sel =3D ie.key_mgmt & ssid->key_mgmt;
+> >> #ifdef CONFIG_SAE
+> >> if ((!(wpa_s->drv_flags & WPA_DRIVER_FLAGS_SAE) &&
+> >> !(wpa_s->drv_flags2 & WPA_DRIVER_FLAGS2_SAE_OFFLOAD_STA)) ||
+> >> wpas_is_sae_avoided(wpa_s, ssid, &ie))
+> >> sel &=3D ~(WPA_KEY_MGMT_SAE | WPA_KEY_MGMT_SAE_EXT_KEY |
+> >>          WPA_KEY_MGMT_FT_SAE |
+> >> WPA_KEY_MGMT_FT_SAE_EXT_KEY);
+> >> #endif /* CONFIG_SAE */
+> >> #ifdef CONFIG_IEEE80211R
+> >> if (!(wpa_s->drv_flags & (WPA_DRIVER_FLAGS_SME |
+> >>                   WPA_DRIVER_FLAGS_UPDATE_FT_IES)))
+> >> sel &=3D ~WPA_KEY_MGMT_FT;
+> >> #endif /* CONFIG_IEEE80211R */
+> >> wpa_dbg(wpa_s, MSG_DEBUG,
+> >> "WPA: AP key_mgmt 0x%x network profile key_mgmt 0x%x;
+> >> available key_mgmt 0x%x",
+> >> ie.key_mgmt, ssid->key_mgmt, sel);
+> >>
+> >> So 0x400 matches the expectation:
+> >>
+> >> #define WPA_KEY_MGMT_SAE BIT(10)
+> >>
+> >> You already confirmed that the driver reports SAE and SAE offload
+> >> support. So it seems wpas_is_sae_avoided() must return true. That will
+> >> check whether the AP and network profile are setup to MFP. This seems =
+to
+> >> be the fact as your hostapd.conf and wpa_supplicant.conf both have
+> >> ieee80211w=3D2 defined. This function can only return true when
+> >> is enabled in configuration file:
+> >>
+> >> # sae_check_mfp: Require PMF support to select SAE key_mgmt
+> >> # 0 =3D Do not check PMF for SAE (default)
+> >> # 1 =3D Limit SAE when PMF is not enabled
+> >> #
+> >> # When enabled SAE will not be selected if PMF will not be used
+> >> # for the connection.
+> >> # Scenarios where this check will limit SAE:
+> >> #  1) ieee80211w=3D0 is set for the network
+> >> #  2) The AP does not have PMF enabled.
+> >> #  3) ieee80211w is unset, pmf=3D1 is enabled globally, and
+> >> #     the device does not support the BIP cipher.
+> >> # Consider the configuration of global parameterss sae_check_mfp=3D1,
+> >> pmf=3D1 and a
+> >> # network configured with ieee80211w unset and key_mgmt=3DSAE WPA-PSK.
+> >> # In the example WPA-PSK will be used if the device does not support
+> >> # the BIP cipher or the AP has PMF disabled.
+> >> # Limiting SAE with this check can avoid failing to associate to an AP
+> >> # that is configured with sae_requires_mfp=3D1 if the device does
+> >> # not support PMF due to lack of the BIP cipher.
+> >>
+> >> The default is not to check it and you wpa_supplicant.conf does not
+> >> specify it.
+> >>
+> >> # cat /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
+> >> ctrl_interface=3DDIR=3D/run/wpa_supplicant GROUP=3Dnetdev
+> >> update_config=3D1
+> >> network=3D{
+> >> ssid=3D"deskSAE"
+> >> sae_password=3D"secret123"
+> >> proto=3DRSN
+> >> key_mgmt=3DSAE
+> >> pairwise=3DCCMP
+> >> ieee80211w=3D2
+> >> }
+> >>
+> >> $ cat /etc/hostapd/hostapd.conf
+> >> # interface and driver
+> >> interface=3Dap0
+> >> driver=3Dnl80211
+> >>
+> >> # WIFI-Config
+> >> ssid=3DdeskSAE
+> >> channel=3D1
+> >> hw_mode=3Dg
+> >>
+> >> wpa=3D2
+> >> wpa_key_mgmt=3DSAE
+> >> wpa_pairwise=3DCCMP
+> >> sae_password=3Dsecret123
+> >> sae_groups=3D19
+> >> ieee80211w=3D2
+> >> sae_pwe=3D0
+> >>
+> >> Regards,
+> >> Arend
+> >>
+> >>
+> >>> 1718907734.308779: wlan0: WPA: Failed to select authenticated key
+> >>> management type
+> >>> 1718907734.308787: wlan0: WPA: Failed to set WPA key management and
+> >>> encryption suites
+> >
+> > Arend,
+> >
+> > I find the wpa_supplicant docs really hard to understand. I have read
+> > through your response a few times and am still a bit confused. Does
+> > this have to do with a pure wpa3 versus a wpa2/3 AP?
 >
-> What *should* the configurations be in the hostapd.conf and
-> wpa_supplicant.conf to negotiate this as a pure wpa3 setup? What
-> should it be to be a wpa2/3 setup? My phone worked fine to connect
-> with the original hostapd setup, but I have no idea what it is doing
+> Correct. If I am not mistaken MFP aka PMF aka 802.11w is mandatory for WP=
+A3.
+>
+> > I have tried editing my hostapd.conf and my wpa_supplicant.conf and
+> > still cannot get a connection, so I must be doing something wrong.
+> > I commented the ieee80211w line on both and it would not connect.
+> > I tried changing the wpa_key_mgmt on both ends to be 'SAE WPA_PSK' and
+> > it still would not connect.
+> >
+> > What *should* the configurations be in the hostapd.conf and
+> > wpa_supplicant.conf to negotiate this as a pure wpa3 setup? What
+> > should it be to be a wpa2/3 setup? My phone worked fine to connect
+> > with the original hostapd setup, but I have no idea what it is doing
+>
+> As I mentioned in my previous email both config files listed above look
+> okay to me (might be wrong though). The problem seems to be with
+> wpas_is_sae_avoided(). For it to return true the config should have:
+>
+> sae_check_mfp=3D1
+>
+> But you don't have that and default is 0 so it should check for MFP. This
+> is where my trail ends. To learn more I would add additional debug prints=
+.
+> Are you comfortable rebuilding wpa_supplicant from source?
+>
+> Regards,
+> Arend
+>
+>
 
-As I mentioned in my previous email both config files listed above look 
-okay to me (might be wrong though). The problem seems to be with 
-wpas_is_sae_avoided(). For it to return true the config should have:
+Arend,
 
-sae_check_mfp=1
+Thanks for the reply. I could try to rebuild wpa_supplicant from
+source. This is on RPi, so debian *.debs which are a pain, but I think
+I can do it.
 
-But you don't have that and default is 0 so it should check for MFP. This 
-is where my trail ends. To learn more I would add additional debug prints. 
-Are you comfortable rebuilding wpa_supplicant from source?
+Do I understand correctly that 'sae_check_mfp=3D1' is supposed to be in
+the hostapd.conf and wpa_supplicant.conf? I can try that and see if
+anything changes.
 
-Regards,
-Arend
+Why would I have to re-build wpa_supplicant?
 
+Keith
 
-
---000000000000df9a8d061bc63baf
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Description: S/MIME Cryptographic Signature
-
-MIIQdwYJKoZIhvcNAQcCoIIQaDCCEGQCAQExDzANBglghkgBZQMEAgEFADALBgkqhkiG9w0BBwGg
-gg3OMIIFDTCCA/WgAwIBAgIQeEqpED+lv77edQixNJMdADANBgkqhkiG9w0BAQsFADBMMSAwHgYD
-VQQLExdHbG9iYWxTaWduIFJvb3QgQ0EgLSBSMzETMBEGA1UEChMKR2xvYmFsU2lnbjETMBEGA1UE
-AxMKR2xvYmFsU2lnbjAeFw0yMDA5MTYwMDAwMDBaFw0yODA5MTYwMDAwMDBaMFsxCzAJBgNVBAYT
-AkJFMRkwFwYDVQQKExBHbG9iYWxTaWduIG52LXNhMTEwLwYDVQQDEyhHbG9iYWxTaWduIEdDQyBS
-MyBQZXJzb25hbFNpZ24gMiBDQSAyMDIwMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA
-vbCmXCcsbZ/a0fRIQMBxp4gJnnyeneFYpEtNydrZZ+GeKSMdHiDgXD1UnRSIudKo+moQ6YlCOu4t
-rVWO/EiXfYnK7zeop26ry1RpKtogB7/O115zultAz64ydQYLe+a1e/czkALg3sgTcOOcFZTXk38e
-aqsXsipoX1vsNurqPtnC27TWsA7pk4uKXscFjkeUE8JZu9BDKaswZygxBOPBQBwrA5+20Wxlk6k1
-e6EKaaNaNZUy30q3ArEf30ZDpXyfCtiXnupjSK8WU2cK4qsEtj09JS4+mhi0CTCrCnXAzum3tgcH
-cHRg0prcSzzEUDQWoFxyuqwiwhHu3sPQNmFOMwIDAQABo4IB2jCCAdYwDgYDVR0PAQH/BAQDAgGG
-MGAGA1UdJQRZMFcGCCsGAQUFBwMCBggrBgEFBQcDBAYKKwYBBAGCNxQCAgYKKwYBBAGCNwoDBAYJ
-KwYBBAGCNxUGBgorBgEEAYI3CgMMBggrBgEFBQcDBwYIKwYBBQUHAxEwEgYDVR0TAQH/BAgwBgEB
-/wIBADAdBgNVHQ4EFgQUljPR5lgXWzR1ioFWZNW+SN6hj88wHwYDVR0jBBgwFoAUj/BLf6guRSSu
-TVD6Y5qL3uLdG7wwegYIKwYBBQUHAQEEbjBsMC0GCCsGAQUFBzABhiFodHRwOi8vb2NzcC5nbG9i
-YWxzaWduLmNvbS9yb290cjMwOwYIKwYBBQUHMAKGL2h0dHA6Ly9zZWN1cmUuZ2xvYmFsc2lnbi5j
-b20vY2FjZXJ0L3Jvb3QtcjMuY3J0MDYGA1UdHwQvMC0wK6ApoCeGJWh0dHA6Ly9jcmwuZ2xvYmFs
-c2lnbi5jb20vcm9vdC1yMy5jcmwwWgYDVR0gBFMwUTALBgkrBgEEAaAyASgwQgYKKwYBBAGgMgEo
-CjA0MDIGCCsGAQUFBwIBFiZodHRwczovL3d3dy5nbG9iYWxzaWduLmNvbS9yZXBvc2l0b3J5LzAN
-BgkqhkiG9w0BAQsFAAOCAQEAdAXk/XCnDeAOd9nNEUvWPxblOQ/5o/q6OIeTYvoEvUUi2qHUOtbf
-jBGdTptFsXXe4RgjVF9b6DuizgYfy+cILmvi5hfk3Iq8MAZsgtW+A/otQsJvK2wRatLE61RbzkX8
-9/OXEZ1zT7t/q2RiJqzpvV8NChxIj+P7WTtepPm9AIj0Keue+gS2qvzAZAY34ZZeRHgA7g5O4TPJ
-/oTd+4rgiU++wLDlcZYd/slFkaT3xg4qWDepEMjT4T1qFOQIL+ijUArYS4owpPg9NISTKa1qqKWJ
-jFoyms0d0GwOniIIbBvhI2MJ7BSY9MYtWVT5jJO3tsVHwj4cp92CSFuGwunFMzCCA18wggJHoAMC
-AQICCwQAAAAAASFYUwiiMA0GCSqGSIb3DQEBCwUAMEwxIDAeBgNVBAsTF0dsb2JhbFNpZ24gUm9v
-dCBDQSAtIFIzMRMwEQYDVQQKEwpHbG9iYWxTaWduMRMwEQYDVQQDEwpHbG9iYWxTaWduMB4XDTA5
-MDMxODEwMDAwMFoXDTI5MDMxODEwMDAwMFowTDEgMB4GA1UECxMXR2xvYmFsU2lnbiBSb290IENB
-IC0gUjMxEzARBgNVBAoTCkdsb2JhbFNpZ24xEzARBgNVBAMTCkdsb2JhbFNpZ24wggEiMA0GCSqG
-SIb3DQEBAQUAA4IBDwAwggEKAoIBAQDMJXaQeQZ4Ihb1wIO2hMoonv0FdhHFrYhy/EYCQ8eyip0E
-XyTLLkvhYIJG4VKrDIFHcGzdZNHr9SyjD4I9DCuul9e2FIYQebs7E4B3jAjhSdJqYi8fXvqWaN+J
-J5U4nwbXPsnLJlkNc96wyOkmDoMVxu9bi9IEYMpJpij2aTv2y8gokeWdimFXN6x0FNx04Druci8u
-nPvQu7/1PQDhBjPogiuuU6Y6FnOM3UEOIDrAtKeh6bJPkC4yYOlXy7kEkmho5TgmYHWyn3f/kRTv
-riBJ/K1AFUjRAjFhGV64l++td7dkmnq/X8ET75ti+w1s4FRpFqkD2m7pg5NxdsZphYIXAgMBAAGj
-QjBAMA4GA1UdDwEB/wQEAwIBBjAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBSP8Et/qC5FJK5N
-UPpjmove4t0bvDANBgkqhkiG9w0BAQsFAAOCAQEAS0DbwFCq/sgM7/eWVEVJu5YACUGssxOGhigH
-M8pr5nS5ugAtrqQK0/Xx8Q+Kv3NnSoPHRHt44K9ubG8DKY4zOUXDjuS5V2yq/BKW7FPGLeQkbLmU
-Y/vcU2hnVj6DuM81IcPJaP7O2sJTqsyQiunwXUaMld16WCgaLx3ezQA3QY/tRG3XUyiXfvNnBB4V
-14qWtNPeTCekTBtzc3b0F5nCH3oO4y0IrQocLP88q1UOD5F+NuvDV0m+4S4tfGCLw0FREyOdzvcy
-a5QBqJnnLDMfOjsl0oZAzjsshnjJYS8Uuu7bVW/fhO4FCU29KNhyztNiUGUe65KXgzHZs7XKR1g/
-XzCCBVYwggQ+oAMCAQICDE79bW6SMzVJMuOi1zANBgkqhkiG9w0BAQsFADBbMQswCQYDVQQGEwJC
-RTEZMBcGA1UEChMQR2xvYmFsU2lnbiBudi1zYTExMC8GA1UEAxMoR2xvYmFsU2lnbiBHQ0MgUjMg
-UGVyc29uYWxTaWduIDIgQ0EgMjAyMDAeFw0yMjA5MTAxMTQzMjNaFw0yNTA5MTAxMTQzMjNaMIGV
-MQswCQYDVQQGEwJJTjESMBAGA1UECBMJS2FybmF0YWthMRIwEAYDVQQHEwlCYW5nYWxvcmUxFjAU
-BgNVBAoTDUJyb2FkY29tIEluYy4xGTAXBgNVBAMTEEFyZW5kIFZhbiBTcHJpZWwxKzApBgkqhkiG
-9w0BCQEWHGFyZW5kLnZhbnNwcmllbEBicm9hZGNvbS5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IB
-DwAwggEKAoIBAQDxOB8Yu89pZLsG9Ic8ZY3uGibuv+NRsij+E70OMJQIwugrByyNq5xgH0BI22vJ
-LT7VKCB6YJC88ewEFfYi3EKW/sn6RL16ImUM40beDmQ12WBquJRoxVNyoByNalmTOBNYR95ZQZJw
-1nrzaoJtK0XIsv0dNCUcLlAc+jHkngD+I0ptVuWoMO1BcJexqJf5iX2M1CdC8PXTh9g4FIQnG2mc
-2Gzj3QNJRLsZu1TLyOyBBIr/BE7UiY3RabgRzknBGAPmzhS+fmyM8OtM5BYBsFBrSUFtZZO2p/tf
-Nbc24J2zf2peoZ8MK+7WQqummYlOnz+FyDkA9EybeNMcS5C+xi/PAgMBAAGjggHdMIIB2TAOBgNV
-HQ8BAf8EBAMCBaAwgaMGCCsGAQUFBwEBBIGWMIGTME4GCCsGAQUFBzAChkJodHRwOi8vc2VjdXJl
-Lmdsb2JhbHNpZ24uY29tL2NhY2VydC9nc2djY3IzcGVyc29uYWxzaWduMmNhMjAyMC5jcnQwQQYI
-KwYBBQUHMAGGNWh0dHA6Ly9vY3NwLmdsb2JhbHNpZ24uY29tL2dzZ2NjcjNwZXJzb25hbHNpZ24y
-Y2EyMDIwME0GA1UdIARGMEQwQgYKKwYBBAGgMgEoCjA0MDIGCCsGAQUFBwIBFiZodHRwczovL3d3
-dy5nbG9iYWxzaWduLmNvbS9yZXBvc2l0b3J5LzAJBgNVHRMEAjAAMEkGA1UdHwRCMEAwPqA8oDqG
-OGh0dHA6Ly9jcmwuZ2xvYmFsc2lnbi5jb20vZ3NnY2NyM3BlcnNvbmFsc2lnbjJjYTIwMjAuY3Js
-MCcGA1UdEQQgMB6BHGFyZW5kLnZhbnNwcmllbEBicm9hZGNvbS5jb20wEwYDVR0lBAwwCgYIKwYB
-BQUHAwQwHwYDVR0jBBgwFoAUljPR5lgXWzR1ioFWZNW+SN6hj88wHQYDVR0OBBYEFIikAXd8CEtv
-ZbDflDRnf3tuStPuMA0GCSqGSIb3DQEBCwUAA4IBAQCdS5XCYx6k2GGZui9DlFsFm75khkqAU7rT
-zBX04sJU1+B1wtgmWTVIzW7ugdtDZ4gzaV0S9xRhpDErjJaltxPbCylb1DEsLj+AIvBR34caW6ZG
-sQk444t0HPb29HnWYj+OllIGMbdJWr0/P95ZrKk2bP24ub3ZP/8SyzrohfIba9WZKMq6g2nTLZE3
-BtkeSGJx/8dy0h8YmRn+adOrxKXHxhSL8BNn8wsmIZyYWe6fRcBtO3Ks2DOLyHCdkoFlN8x9VUQF
-N2ulEgqCbRKkx+qNirW86eF138lr1gRxzclu/38ko//MmkAYR/+hP3WnBll7zbpIt0jc9wyFkSqH
-p8a1MYICbTCCAmkCAQEwazBbMQswCQYDVQQGEwJCRTEZMBcGA1UEChMQR2xvYmFsU2lnbiBudi1z
-YTExMC8GA1UEAxMoR2xvYmFsU2lnbiBHQ0MgUjMgUGVyc29uYWxTaWduIDIgQ0EgMjAyMAIMTv1t
-bpIzNUky46LXMA0GCWCGSAFlAwQCAQUAoIHUMC8GCSqGSIb3DQEJBDEiBCCorXVtCv8mZACOPmfG
-D40IA7jUWJ3nR3jeMYQC3PK2cDAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJ
-BTEPFw0yNDA2MjYwNzQ4MDJaMGkGCSqGSIb3DQEJDzFcMFowCwYJYIZIAWUDBAEqMAsGCWCGSAFl
-AwQBFjALBglghkgBZQMEAQIwCgYIKoZIhvcNAwcwCwYJKoZIhvcNAQEKMAsGCSqGSIb3DQEBBzAL
-BglghkgBZQMEAgEwDQYJKoZIhvcNAQEBBQAEggEAKQOaDDb4uqoru/Jgh6AKbsecOCrdezYZ7zFp
-NKu5xQ0U5hdK+pCICYQAgQLnpkEDzgJpDy6JfgF1ZPT+QnmvPhY9ItMNCUbu75+MoPuPlDqbY2AT
-dei5acfiZ4wwJ1Ipi9pi0wH6WC5LTYBW5LEP/cf3iCRoXAStCN54D5vddQR9RG/NhuzgaA9lMhds
-it9f5dNDoYGGICYN6ksbDBLR4HnktlUpICWh19Nb3LyKyqqGXe9by8XaZ7/fnvRUFUiloxT5uOqD
-hYkbKdxQpFGT7B5NyzdeaC/fqIevg8wHezhvTugCnocg3eyew5sp4tuMO1oPqu8xoL0x6kDh0JiF
-3A==
---000000000000df9a8d061bc63baf--
+Keith
