@@ -1,64 +1,65 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 497651BB69C
-	for <brcm80211@lists.linux.dev>; Tue,  2 Jul 2024 15:39:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6139BBA3F
+	for <brcm80211@lists.linux.dev>; Tue,  2 Jul 2024 16:26:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719934768; cv=none; b=PvldYGvS3X1smxlCIgzK59GPMoKKY6pHC3Y4iMGWyWY0X06RBvb5AjJSq95MOOmoBS3NUAlAXbNw+2T6evtIfShfbrn5GqFAb+1wxObitrv9se5yL6x7cgW4QBKkJ8z3wOqe4zt6XaMTrh2TUtEYvKvDxF0AocFDmUZNi71Isbs=
+	t=1719937619; cv=none; b=C5RCm5Y6zaQbyVU96588lKUM7pmBSh6xicDV+mMCjYZPKrvwWZdxPTZwj998CldUBu6C9+l4IE6lq9YrIanq3Qxw0hqc6G86fw1ON34K7GxEpTR4fODF9XYeBG8nIwZ745dxtPFyTlF2o9+uBWeoYMgBU0PEffyv9/BJaoWuDC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719934768; c=relaxed/simple;
-	bh=mP51ghhYFzENOw32hALf07AuOogpcz5Nm2YKHW9UP0k=;
+	s=arc-20240116; t=1719937619; c=relaxed/simple;
+	bh=RoWF5OyoJygNRz5Dt5L7Mt0f0+zQegf2evuVBYGzLSw=;
 	h=From:To:CC:Date:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type; b=mxSzQkchizC1A8UWbZTwGcE+XOk9wuJ5uroDyoJGhcxi49A6CMn+qhVrH3/wzeAcYkfAyOrF5GDA6COQdiCUXYabzrMGZzcYC+Eci8LSRDjRyVX7nnk2j1xeNeaAjgC1ZFQeb9OS/wnK7BsHDf3HxrxyHCJDmyM2WsoNFXe38/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=YCgYH5iv; arc=none smtp.client-ip=209.85.214.169
+	 MIME-Version:Content-Type; b=MCv5mcohfe88c+UdBLYf6yYsEtLHlceHvwK1E52slauTIGneLq4Q3tNz2+4tgJMxMWlq5Z7srAQrGqv7CUKg+XJqfc4CfjM64cL/96ttGgCHol+p9Jd6xoJFPlthO6iy7Jp1NfAmdpmiJGiJoNPmU7Y2RczO0wJ1rmZf32ozRIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=bBGy8C9G; arc=none smtp.client-ip=209.85.215.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="YCgYH5iv"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-1f480624d0dso33015535ad.1
-        for <brcm80211@lists.linux.dev>; Tue, 02 Jul 2024 08:39:27 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="bBGy8C9G"
+Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-725a7b0fc55so2664418a12.3
+        for <brcm80211@lists.linux.dev>; Tue, 02 Jul 2024 09:26:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1719934767; x=1720539567; darn=lists.linux.dev;
+        d=broadcom.com; s=google; t=1719937618; x=1720542418; darn=lists.linux.dev;
         h=mime-version:subject:user-agent:references:in-reply-to:message-id
          :date:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Npvm4PwYy1lvWH+gJwOSWkjvte1XFqbOc9OgSR9SJeM=;
-        b=YCgYH5ivNm+vSIfU9ecOEZaUX/io+7dawcvcjbqCKxGXt+A/dGcdk9nVa4GlTKWKWb
-         01dkKZubZSlGTdTqEBdZymH/nGWUTbbSLQR1xvDfKmvcZREu75X6SS2gZTsmF6AVoFJS
-         o96R6PerMMEStkay6QuE/+t5OZ7W6XIhTAsnw=
+        bh=4Jam3CdGBVx9Dp6J9tSXFYDJr/T51pV/esTUXw8MI68=;
+        b=bBGy8C9GBCZjhjFc0Y84VniWA7cGKCJE1QlHQ35Fr7pikjXXDe+KqpUEm+LVeqARJ3
+         SswVCYC2CuHJu3oEFm7qGuxW7lmu6PfsNXZQiKhZKwtgDMQ2RgpkbRu772+YqRYiEDBN
+         MkdKK2+EBMdW0SFMTfcinEA8fKa8w3deRgw1w=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719934767; x=1720539567;
+        d=1e100.net; s=20230601; t=1719937618; x=1720542418;
         h=mime-version:subject:user-agent:references:in-reply-to:message-id
          :date:cc:to:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Npvm4PwYy1lvWH+gJwOSWkjvte1XFqbOc9OgSR9SJeM=;
-        b=fzr3ATw4u/ku72hVsh0XaXplnuzSpA8wnW/Un6Yq/+odq4PMYya76Bf9aP8KtfQRIP
-         EkSiNbw9EbRMIxz732tIsOVvF+PzMwagKsTQ+0KrE5MvpUlwERDMSQTdvGfQgacNpEk3
-         hRdq47VpfdALoXlBjqUYhNgO1HMvDdw8a1iTb3+Q+MFmXNSZSsueHoaQ/zYrMvswyXLT
-         B3O+6koKv1nO6JnfQY3YVgMwgX2OE8HfofBYI1014L45ilPsYPfmSfeIgaot2kQLGGFZ
-         sdd7k8uZtWZapHKpFlZNW+CVdUGwe5JRKE6VdkwM7/r+oBScIXSYyIxGOJtlzNlAYipt
-         IaQg==
-X-Forwarded-Encrypted: i=1; AJvYcCWr2BWu3gUFydA8mLS/YG88hDVgacGbluizM7+mCKygyfn5Jw3CZy8l0Ti/W7dgEmZsLbRC10A+SlQ6fj6td66hFawbBND9dq6i
-X-Gm-Message-State: AOJu0YxGo5h19zXD+WAOmoVfFluRekLaGCGulH/j5ZZ1LNStm/AcuVjG
-	RK8AIJHfMPwep9x9QVzfJB8HUaHxgfEixPkjCBYEvo4DIFSs62wjeCCJR3wAyw==
-X-Google-Smtp-Source: AGHT+IHGNe88xaz9V3wl7Y0BZz+8Vp1YXhbqAgPA/0D0pXcdR5pI17FqahEDKlWelRJEO2oTR4B6Gg==
-X-Received: by 2002:a17:902:bb09:b0:1f7:174d:3309 with SMTP id d9443c01a7336-1fadbc8eabbmr64859875ad.30.1719934766597;
-        Tue, 02 Jul 2024 08:39:26 -0700 (PDT)
+        bh=4Jam3CdGBVx9Dp6J9tSXFYDJr/T51pV/esTUXw8MI68=;
+        b=r9jpwhoa9NvBzrqBfLGfvs8yfE5rcfbLcD/osyxt6Y6qEsplKSYBvhf4rzy8RFw60N
+         zRwPAaPJv6hZPcBYlJV7dx5j2qv6Q8boJ9VIOFwq3Fj5NfYgPEsZdj7AZAAyuyea7c4A
+         zJ15D+NpD7psMDNhYPxwl34Ojq8lnPWP0f/OqFB67EDWb6waj31x/UO0P2ul1XXrnKFX
+         XsCyA2ccQNeTa5uzTm7l75mhfss4+rb9t5NcvsgWrHkJ57vzyqk81sSVVCGGREevKpsL
+         DheQ3RwZ+x8pyDRnLJFwc06vKySQslTZP7vwQ0T2JTfPIor93OrmX2ZJXOybmkQinwXF
+         VLUA==
+X-Forwarded-Encrypted: i=1; AJvYcCUwk5HuWuUqiUNOZZfcvUEpOLIrUBNn2Iu4cjG4oAbMEe4UHkMba+fiiBx1o9NW50V8Xhab8JpkxDbF3AK6+ZeFI6oZdijpclR5
+X-Gm-Message-State: AOJu0YyeKh5GtIYXUoQxDn2e2T/tYRbZeYgQk7bBwu3EVXp1BQWlyaLN
+	d4UkQqUsFN+slEUSDy8Kv80oBYtdRyigTIjhDkxPQq9Zv/dZggyvGQyTa+sRfA==
+X-Google-Smtp-Source: AGHT+IHaKEzsVjhtAgyonPaS4x7MGwSeBIOGNBpe/ox6nPbhDA4jnqihFInNrZdsokg0QOjhvTL1mQ==
+X-Received: by 2002:a17:90a:9ee:b0:2c9:63a4:a138 with SMTP id 98e67ed59e1d1-2c963a4a232mr1209263a91.11.1719937617616;
+        Tue, 02 Jul 2024 09:26:57 -0700 (PDT)
 Received: from [192.168.178.38] (f215227.upc-f.chello.nl. [80.56.215.227])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fac1539160sm85687665ad.180.2024.07.02.08.39.21
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2c91d3be561sm9035933a91.43.2024.07.02.09.26.51
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 02 Jul 2024 08:39:26 -0700 (PDT)
+        Tue, 02 Jul 2024 09:26:57 -0700 (PDT)
 From: Arend Van Spriel <arend.vanspriel@broadcom.com>
-To: Kalle Valo <kvalo@kernel.org>
-CC: Dan Carpenter <dan.carpenter@linaro.org>, Su Hui <suhui@nfschina.com>, <johannes.berg@intel.com>, <kees@kernel.org>, <a@bayrepo.ru>, <marcan@marcan.st>, <quic_alokad@quicinc.com>, <zyytlz.wz@163.com>, <petr.tesarik.ext@huawei.com>, <duoming@zju.edu.cn>, <colin.i.king@gmail.com>, <frankyl@broadcom.com>, <meuleman@broadcom.com>, <phaber@broadcom.com>, <linville@tuxdriver.com>, <linux-wireless@vger.kernel.org>, <brcm80211@lists.linux.dev>, <brcm80211-dev-list.pdl@broadcom.com>, <linux-kernel@vger.kernel.org>, <kernel-janitors@vger.kernel.org>
-Date: Tue, 02 Jul 2024 17:39:17 +0200
-Message-ID: <1907419a888.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
-In-Reply-To: <878qyjg6cv.fsf@kernel.org>
+To: Dan Carpenter <dan.carpenter@linaro.org>, Kalle Valo <kvalo@kernel.org>
+CC: Su Hui <suhui@nfschina.com>, <johannes.berg@intel.com>, <kees@kernel.org>, <a@bayrepo.ru>, <marcan@marcan.st>, <quic_alokad@quicinc.com>, <zyytlz.wz@163.com>, <petr.tesarik.ext@huawei.com>, <duoming@zju.edu.cn>, <colin.i.king@gmail.com>, <frankyl@broadcom.com>, <meuleman@broadcom.com>, <phaber@broadcom.com>, <linville@tuxdriver.com>, <linux-wireless@vger.kernel.org>, <brcm80211@lists.linux.dev>, <brcm80211-dev-list.pdl@broadcom.com>, <linux-kernel@vger.kernel.org>, <kernel-janitors@vger.kernel.org>
+Date: Tue, 02 Jul 2024 18:26:49 +0200
+Message-ID: <19074452940.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
+In-Reply-To: <3071fd19-5cc7-440a-8184-3aeeb81c96e0@suswa.mountain>
 References: <20240702122450.2213833-1-suhui@nfschina.com>
  <20240702122450.2213833-2-suhui@nfschina.com>
  <ba67020a-04bb-46b8-bc05-751684f71e8a@suswa.mountain>
  <19073fcc9e8.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
  <878qyjg6cv.fsf@kernel.org>
+ <3071fd19-5cc7-440a-8184-3aeeb81c96e0@suswa.mountain>
 User-Agent: AquaMail/1.51.5 (build: 105105504)
 Subject: Re: [PATCH wireless 1/9]  wifi: cfg80211: avoid garbage value of 'io_type' in  brcmf_cfg80211_attach()
 Precedence: bulk
@@ -68,50 +69,48 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-	boundary="000000000000d35a49061c4584e9"
+	boundary="000000000000c3093f061c462e58"
 
---000000000000d35a49061c4584e9
+--000000000000c3093f061c462e58
 Content-Type: text/plain; format=flowed; charset="us-ascii"
 Content-Transfer-Encoding: 8bit
 
-On July 2, 2024 5:29:27 PM Kalle Valo <kvalo@kernel.org> wrote:
+On July 2, 2024 5:37:10 PM Dan Carpenter <dan.carpenter@linaro.org> wrote:
 
-> Arend Van Spriel <arend.vanspriel@broadcom.com> writes:
->
->> On July 2, 2024 3:57:27 PM Dan Carpenter <dan.carpenter@linaro.org> wrote:
+> On Tue, Jul 02, 2024 at 06:29:20PM +0300, Kalle Valo wrote:
+>> Arend Van Spriel <arend.vanspriel@broadcom.com> writes:
 >>
->>> On Tue, Jul 02, 2024 at 08:24:44PM +0800, Su Hui wrote:
->>>> brcmf_fil_cmd_int_get() reads the value of 'io_type' and passes it to
->>>> brcmf_fil_cmd_data_get(). Initialize 'io_type' to avoid garbage value.
+>>> On July 2, 2024 3:57:27 PM Dan Carpenter <dan.carpenter@linaro.org> wrote:
 >>>
->>> Since you're going to be resending anyway, please delete the space char
->>> from the start of the line.
+>>>> On Tue, Jul 02, 2024 at 08:24:44PM +0800, Su Hui wrote:
+>>>>> brcmf_fil_cmd_int_get() reads the value of 'io_type' and passes it to
+>>>>> brcmf_fil_cmd_data_get(). Initialize 'io_type' to avoid garbage value.
+>>>>
+>>>> Since you're going to be resending anyway, please delete the space char
+>>>> from the start of the line.
+>>>>
+>>>> It's weird that brcmf_fil_cmd_data_get() uses the uninitialized data.
+>>>> It looks like it just goes to great lengths to preserve the original
+>>>> data in io_type...  So it likely is harmless enough but still a strange
+>>>> and complicated way write a no-op.
 >>>
->>> It's weird that brcmf_fil_cmd_data_get() uses the uninitialized data.
->>> It looks like it just goes to great lengths to preserve the original
->>> data in io_type...  So it likely is harmless enough but still a strange
->>> and complicated way write a no-op.
+>>> Not sure if it helps, but I tried to explain the reason in response to
+>>> patch 0 (cover letter).
 >>
->> Not sure if it helps, but I tried to explain the reason in response to
->> patch 0 (cover letter).
+>> Would it make more sense to have just one patch? It's the same issue
+>> anyway.
 >
-> Would it make more sense to have just one patch? It's the same issue
-> anyway.
+> The Fixes tags are different though.  I'd probably leave them as
+> separate patches just because of that.
 
-Yes, but I would solve it in brcmf_fil_* functions (fwil.[ch]).
+Depending how you look at the problem those tags are wrong.
 
 Regards,
 Arend
 
-> --
-> https://patchwork.kernel.org/project/linux-wireless/list/
->
-> https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
 
-
-
---000000000000d35a49061c4584e9
+--000000000000c3093f061c462e58
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -182,14 +181,14 @@ BtkeSGJx/8dy0h8YmRn+adOrxKXHxhSL8BNn8wsmIZyYWe6fRcBtO3Ks2DOLyHCdkoFlN8x9VUQF
 N2ulEgqCbRKkx+qNirW86eF138lr1gRxzclu/38ko//MmkAYR/+hP3WnBll7zbpIt0jc9wyFkSqH
 p8a1MYICbTCCAmkCAQEwazBbMQswCQYDVQQGEwJCRTEZMBcGA1UEChMQR2xvYmFsU2lnbiBudi1z
 YTExMC8GA1UEAxMoR2xvYmFsU2lnbiBHQ0MgUjMgUGVyc29uYWxTaWduIDIgQ0EgMjAyMAIMTv1t
-bpIzNUky46LXMA0GCWCGSAFlAwQCAQUAoIHUMC8GCSqGSIb3DQEJBDEiBCCeOi8qC29vhaKHam6V
-P4dzvmzOFshznc/u5y1ytFdEeTAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJ
-BTEPFw0yNDA3MDIxNTM5MjdaMGkGCSqGSIb3DQEJDzFcMFowCwYJYIZIAWUDBAEqMAsGCWCGSAFl
+bpIzNUky46LXMA0GCWCGSAFlAwQCAQUAoIHUMC8GCSqGSIb3DQEJBDEiBCANkW8i6xNH461hlU4N
+tir5y4Q+4435V9AqoArP0RVMlTAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJ
+BTEPFw0yNDA3MDIxNjI2NThaMGkGCSqGSIb3DQEJDzFcMFowCwYJYIZIAWUDBAEqMAsGCWCGSAFl
 AwQBFjALBglghkgBZQMEAQIwCgYIKoZIhvcNAwcwCwYJKoZIhvcNAQEKMAsGCSqGSIb3DQEBBzAL
-BglghkgBZQMEAgEwDQYJKoZIhvcNAQEBBQAEggEAfrgN78bbaCqlzFzw2xUlkvSTnlOWT3C2LQ/O
-molPJwy5vF9mW6ppJA6CwV0DPCTJ8EpKISOfS5Ey/V23Zzi2mujPqWlG5U9LxVPn4rrXdtrbAL0E
-CX79W95tP+7+7CSHZEz3OI60sn8ZpNvEKn7IK1s7wMpK1kvrmaofHDDbAFzXWh5DJqiadUDuW4WC
-hsJaef7UCeGhDCcf8k8b+UnOmq+DHioQ0ekwMcYAs8JPFASowb847C/JtqC/P3cfN8sjuMfvs0Sw
-/d2DxUa7MdZyuBmm12HVGnI4qBXp2QE3u9yglDYGlCcAz9DXHPuVkRYOYAUJCzUm4Cw3Z+Zi+0rl
-Bg==
---000000000000d35a49061c4584e9--
+BglghkgBZQMEAgEwDQYJKoZIhvcNAQEBBQAEggEAUhwgqzRKh4tj3CM5qfY7ImL+adYce23127oE
+EV1xi42PY8yJUyFQ9BhzWLNbUFCznXK2Bjc0lbIQz6CuVGdpSDRifrWdp10nZeHFofva6973ABBO
+3KiVAGUSjsNy0rgDhhQabqTc8FXqDsMmN+570X9LHh9S33fku7IfnvwOrt4cSH0s9D2PEPEUNTB4
+S+s9JlTMocH9BAr9jS8hheOnRaxIGyMcadGt1bOXLw5KXPcvRcgiyZWLFo24zDvOd/dl9VzKpDpD
+AocArzaWW/SzjygUUSxiP6rHwHVa38zwIxAaD2dEh6+bk1ps3qOcXVYj5A2+APGDdalCIR4C5zb3
+gA==
+--000000000000c3093f061c462e58--
