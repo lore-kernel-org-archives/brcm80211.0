@@ -1,56 +1,56 @@
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+Received: from mail-ua1-f46.google.com (mail-ua1-f46.google.com [209.85.222.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B009613C810
-	for <brcm80211@lists.linux.dev>; Sun, 14 Jul 2024 18:54:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B4A318309D
+	for <brcm80211@lists.linux.dev>; Mon, 15 Jul 2024 07:43:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720983250; cv=none; b=lgjx7/+CzwHenj5Yl83ac99cP0kAR+pCzwZ1eyjgHp191o6m+KXg5eE+6miyTi/KMh4kMIDbIWIsFWoNfGvHXJiMGQqGeCpyqUr3B+foGmthc4hES6p23GEcbRNOaZai5OFdGMAwBE9K8eP4usPtvtm1RmyrEyfJS8WICnEAgs4=
+	t=1721029390; cv=none; b=YwzbGuD5CtUYsQ5M7hcJJVnUxOVG0KutjhB6c5qOmhs1t8x+KDTgAx/vH2MyTw5mmFobwsP7e/ib7EgsaN0mwKD2dLQr617XNHRNclsUwaP6thWIvwMdrPP0BBAaFsPkhl1vzPSFscTMXOyyigGe+vBvq63ZmAsHA9GIxfFTE64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720983250; c=relaxed/simple;
-	bh=WoGGAnObkM00eUBYnhYNpTVKgLw3zDLyxqTPqMhiO5U=;
+	s=arc-20240116; t=1721029390; c=relaxed/simple;
+	bh=GRgMcdgv9HTSspJ84DfbB3drOgC0p2ExuV+7TuoyZlI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=g1dbwe4grmxhZOk+ERefidoyBZkGj5fnCFMXmWyZVxeh/wOy5PrslZ0nhUy2fqxFhgQX0FArsLLN5BqazVQ8CvNKWBhUONrFzsa0O88vpN2Qa8PLrznhi+FHgWY5avHMoM/nx3lsCZO+CeSbSOq8R22e4Ahwqar+rEpgKk6ETYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=FXjiAvfJ; arc=none smtp.client-ip=209.85.208.50
+	 In-Reply-To:Content-Type; b=uZtdqFz3rix8XF1hdq0q3qpkt3GVmvY4nLl3MLYoQ6sj9YV9KQVxX+VM8fmwKpMYqbHHOpFfAuEQCVmXFtPFduBZd+lwwGNllrFfV6+XWhwCh9E3J0huLx0sZJW3or3fRUqG6Fe9P6GderOXnY0yuPuBPGpOqLNcxvUPzQL6GV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=Uj5fLlv6; arc=none smtp.client-ip=209.85.222.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="FXjiAvfJ"
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-5957040e32aso2315713a12.2
-        for <brcm80211@lists.linux.dev>; Sun, 14 Jul 2024 11:54:08 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="Uj5fLlv6"
+Received: by mail-ua1-f46.google.com with SMTP id a1e0cc1a2514c-819525d5402so236442241.2
+        for <brcm80211@lists.linux.dev>; Mon, 15 Jul 2024 00:43:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1720983247; x=1721588047; darn=lists.linux.dev;
+        d=broadcom.com; s=google; t=1721029387; x=1721634187; darn=lists.linux.dev;
         h=in-reply-to:autocrypt:from:references:cc:to:subject:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ZhiLSJ6vaTpZtzpqTVMdNXTY8Z7+5HNDzb4xq/bfa0I=;
-        b=FXjiAvfJDiUGPk/cEMGDxl0UDFfu6mE/Rl4BGm9Q8iBsO6MMICJrnuVzP97Affkoax
-         OOTgiRV8PlMfcJKRrBCSZeTSRHeJBSdm268cU5DcVPoXa5/h08hUjvRE3D4jYPGZUCnk
-         JjCqgNIDz61v4TYaeQzSmwa3wRcL5FwIFXu8Y=
+        bh=rnqfT4NDTAnsYOPU1Ioy/JPYaCFPIirCsg51uBNq/vI=;
+        b=Uj5fLlv6TBGVoy5QNn9vJfD+Fpx9pX1UApmYTAoF9rNSJYP9irY9lm0M2w2j3NdhCl
+         qFrkgUIeZ9mUB+berctRoMtFNmCrkPRDOUlUhC9Ac/ID7tL8QaqfI4IjTbUwfsT4+6oZ
+         ykzWuBLl0g7gKSJRKMijZYj15cs+Oy8k/QW9k=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720983247; x=1721588047;
+        d=1e100.net; s=20230601; t=1721029387; x=1721634187;
         h=in-reply-to:autocrypt:from:references:cc:to:subject:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=ZhiLSJ6vaTpZtzpqTVMdNXTY8Z7+5HNDzb4xq/bfa0I=;
-        b=kvSJ/m+SNLbGwTVyEKfy/KcJ3k3prWiYiW2Oq/uRILUgcowD6+a5dRs/d3elw4ZruY
-         Jpa2VzEEhTcTkuI9EJ9BjZbfvekaBSD+v0SBfWgZ//U1p1GPqlyyhXwHzH1AuYwOnCpp
-         t2b1ssU30s/7siMXjsWH/xNlomOyjcX8WVqNTAMi4r81LjgEoNRffIF+k9r5DcjLGsbF
-         FTEjg4BZNFw6+1mHiSzDzuMFdNCMlaVsFf2p1ouAiehmQvZt4TEe0MMD9kw+khudmL0H
-         FETj/79kx3YvcYxoV5pqeqfFum8lDE+C4T5MUHCPLoLY02q79nFsTYpFC1+Bcpsih6wO
-         uIyQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW5n5hXluxFWJQc351i3xsJlvhhprlDFF/GB/UGShK3vCEJftNb5UuJHXR6e82uG+9hZSLuzU/+aT1MXnQ4XXQVJ0ZI8o/+O8Nw
-X-Gm-Message-State: AOJu0YyQfvIjzdTKVpl95p9UJF/eCKglF8vRdhmc3t3v4vWggvtBgWON
-	OQTSfIlpuwEooxcL+rdM1XWs/0S6B2f7Nxx/V020etiu+BnLoEyh8GGE/mqwXQ==
-X-Google-Smtp-Source: AGHT+IH6ZI29AB/hw3QhOp2qi8uVKNiVRTzzF8a/pk7PQT4/kziZSgBsZ6pdB3R73wYT2k85i2pypg==
-X-Received: by 2002:a50:ef0b:0:b0:58b:e192:3635 with SMTP id 4fb4d7f45d1cf-594bb180442mr13499857a12.11.1720983246963;
-        Sun, 14 Jul 2024 11:54:06 -0700 (PDT)
-Received: from [192.168.178.137] (f215227.upc-f.chello.nl. [80.56.215.227])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-59b268a291asm2415615a12.76.2024.07.14.11.54.06
+        bh=rnqfT4NDTAnsYOPU1Ioy/JPYaCFPIirCsg51uBNq/vI=;
+        b=v9ixzCre2GF/sUKexJ0vnoosgz884mAnKoCh+qqO1Au6gMX762dhWtT3xHL3KTiFi5
+         axV+9vV5Gft2DQd4XteYVUDfG5qdLsxlug6kYEbrfbR1PllDE5/Jw5D49jGRhBTSn+HO
+         oTFOPK4YWAZboRBjM5BhuYexC4NHIa4n3nKK0mXPElOuPeMLhYakZumaVi3KmIolaYGy
+         iRRMtB8EnyZKN195iwXodDk+X41J1h1FbkV/ysdnVk2G2pxs/HXO35Y3AJbWZoGPu3vQ
+         aiQt00lrffSKIT1v0qEeeYwmIlZhrRk+9OFWxedTJ7EBGL7pOZRgYmTi9a8Be+x6bDQd
+         6E6g==
+X-Forwarded-Encrypted: i=1; AJvYcCXGrHrebfbSLzPj+3iBOdW6j5nFMgBWroOslUURE5TDwVm7J8S+UjBZgwKkRJRti0ikkpT+0ZhL7p5Y5M9fH1LeZAvp7edbQgg8
+X-Gm-Message-State: AOJu0YzRDyGUxOjCQNaQnpnNOBDWb6bAY2b5X3pdWkT68fPVT/1IukMM
+	sXHfBY+kJuB0cLElWqTGLrJ9LdaGKbyY9WasKj6TBGs5h2k9IW8AceugGlI9wg==
+X-Google-Smtp-Source: AGHT+IFyZDf+S5ViYKyE6C2mNs3Y+NBMCC23/3jJ3b/HWGCElW6E3N5LZlCFgXPcktjIfTDTLKECJA==
+X-Received: by 2002:a05:6102:419e:b0:48f:df86:da4 with SMTP id ada2fe7eead31-4903213d8d1mr21579353137.20.1721029387020;
+        Mon, 15 Jul 2024 00:43:07 -0700 (PDT)
+Received: from [100.92.8.215] ([217.166.247.56])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7a160c855dfsm175879985a.132.2024.07.15.00.43.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 14 Jul 2024 11:54:06 -0700 (PDT)
-Message-ID: <0360afd2-8749-4be6-a451-78345dc44b12@broadcom.com>
-Date: Sun, 14 Jul 2024 20:54:05 +0200
+        Mon, 15 Jul 2024 00:43:06 -0700 (PDT)
+Message-ID: <1f111630-a3f8-4678-a637-1650344e2bd5@broadcom.com>
+Date: Mon, 15 Jul 2024 09:43:03 +0200
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -58,14 +58,28 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] brcmfmac: fwsignal: Use struct_size() to simplify
- brcmf_fws_rxreorder()
-To: Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
- Kalle Valo <kvalo@kernel.org>
-Cc: linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org,
+Subject: Re: brcmfmac: how to setup SAE on RPi // Re: [PATCH] wifi: brcmsmac:
+ advertise MFP_CAPABLE to enable WPA3
+To: KeithG <ys3al35l@gmail.com>
+Cc: Peter Robinson <pbrobinson@gmail.com>,
+ Julian Calaby <julian.calaby@gmail.com>, Kalle Valo <kvalo@kernel.org>,
  linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
- brcm80211-dev-list.pdl@broadcom.com
-References: <bd3ad239c4d1c49b94c1ba93e48c09df98ef86cb.1720951805.git.christophe.jaillet@wanadoo.fr>
+ Jouni Malinen <j@w1.fi>, hostap@lists.infradead.org
+References: <20240617122609.349582-1-arend.vanspriel@broadcom.com>
+ <190369b8c10.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
+ <CAG17S_NHC7EqUMtc58eSY9Yoq4K0mvp=C1rcP8PTRzajXW3Csg@mail.gmail.com>
+ <c065ae75-f89e-4b14-9fc3-6ef19e6d144b@broadcom.com>
+ <CAG17S_OMV5TpCO+XwP-6dQNB_zVs+OCoawpngZUshuDOgFOF0w@mail.gmail.com>
+ <1905383f7e0.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
+ <CAG17S_MPwwgzup17zwHmNH87RS9mrwn7A8v0FkntQx2du6fLig@mail.gmail.com>
+ <19054769d10.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
+ <CAG17S_NojmnuQqLyOAT6+Tq4OLaBVc1FY6J8cqwWvo_VxcNLiA@mail.gmail.com>
+ <19058122ea8.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
+ <CAG17S_Paw=634Q5zNm8jM2c_66OMscN1ngxR53kF=DJHKU2N1A@mail.gmail.com>
+ <CAG17S_OMU2QbeMnue+RWqFErhbPKVCmFR90VMOYkVy+aMcdoBQ@mail.gmail.com>
+ <1905a29df60.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
+ <CAG17S_OL+zskWOQty2rzZG8+Ddb+qeR4bQYCZ53qJ00-9QVeiQ@mail.gmail.com>
+ <CAG17S_Ngcgvg9i5S-DixKDXn0-nZuS=0_=gT0bL2HxyYS_zK3Q@mail.gmail.com>
 From: Arend van Spriel <arend.vanspriel@broadcom.com>
 Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
  xsFNBGP96SABEACfErEjSRi7TA1ttHYaUM3GuirbgqrNvQ41UJs1ag1T0TeyINqG+s6aFuO8
@@ -110,73 +124,36 @@ Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
  NKowQLrlMBGXT4NnRNV0+yHmusXPOPIqQCKEtbWSx9s2slQxmXukPYvLnuRJqkPkvrTgjn5d
  eSE0Dkhni4292/Nn/TnZf5mxCNWH1p3dz/vrT6EIYk2GSJgCLoTkCcqaM6+5E4IwgYOq3UYu
  AAgeEbPV1QeTVAPrntrLb0t0U5vdwG7Xl40baV9OydTv7ghjYZU349w1d5mdxg==
-In-Reply-To: <bd3ad239c4d1c49b94c1ba93e48c09df98ef86cb.1720951805.git.christophe.jaillet@wanadoo.fr>
+In-Reply-To: <CAG17S_Ngcgvg9i5S-DixKDXn0-nZuS=0_=gT0bL2HxyYS_zK3Q@mail.gmail.com>
 Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-	boundary="000000000000203d99061d39a306"
+	boundary="0000000000004bc235061d4461fd"
 
---000000000000203d99061d39a306
+--0000000000004bc235061d4461fd
 Content-Language: en-US
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 7/14/2024 12:10 PM, Christophe JAILLET wrote:
-> In the "struct brcmf_ampdu_rx_reorder", change the 'pktslots' field into
-> flexible array.
-> 
-> It saves the size of a pointer when the memory is allocated and avoids
-> an indirection when the array is used.
-> It also removes the usage of a pointer arithmetic and saves a few lines of
-> code.
-> 
-> Finally, struct_size() can be used. It is not a must have here, because
-> it is easy to see that buf_size can not overflow, but still, it is a good
-> practice.
+On 7/1/2024 10:54 PM, KeithG wrote:
+> I do get a ton of this in the log, though:
+> [  113.543122] brcmfmac: brcmf_set_channel: set chanspec 0xd022 fail, reason -52
+> ...
 
-Looks good to me with a minor nit (see below)...
+I suspect this is the same issue that Stefan Wahren reported a while 
+ago. That thread dried up which is probably my bad. That chanspec 0xd022 
+is encoded channel info translating to "band=5G bw=20MHz channel=34". As 
+far as I know channel 34 is an old Japan channel. Not sure if it is 
+valid today. So we can remove them probably. However, these messages are 
+also reported on some channels that are valid in certain regions. Need 
+to discuss with Johannes what the best option is. Will revive the 
+original email thread [1].
 
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-> Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-> ---
-> Compile tested only
-> ---
->   drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.h   | 4 ++--
->   .../net/wireless/broadcom/brcm80211/brcmfmac/fwsignal.c   | 8 ++------
->   2 files changed, 4 insertions(+), 8 deletions(-)
-> 
-> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.h
-> index ea76b8d33401..6ea2b677f047 100644
-> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.h
-> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.h
-> @@ -48,20 +48,20 @@
->   /**
->    * struct brcmf_ampdu_rx_reorder - AMPDU receive reorder info
->    *
-> - * @pktslots: dynamic allocated array for ordering AMPDU packets.
->    * @flow_id: AMPDU flow identifier.
->    * @cur_idx: last AMPDU index from firmware.
->    * @exp_idx: expected next AMPDU index.
->    * @max_idx: maximum amount of packets per AMPDU.
->    * @pend_pkts: number of packets currently in @pktslots.
-> + * @pktslots: dynamic allocated array for ordering AMPDU packets.
+Regards,
+Arend
 
-pktslots is not dynamic allocated, but just part of the structure. That 
-was already so before this patch through. Just drop the "dynamic 
-allocated" part.
+[1] 
+https://lore.kernel.org/all/d9c9336a-6314-4de9-aead-8b865bb30f05@gmx.net/
 
->    */
->   struct brcmf_ampdu_rx_reorder {
-> -	struct sk_buff **pktslots;
->   	u8 flow_id;
->   	u8 cur_idx;
->   	u8 exp_idx;
->   	u8 max_idx;
->   	u8 pend_pkts;
-> +	struct sk_buff *pktslots[];
->   };
->   
->   /* Forward decls for struct brcmf_pub (see below) */
-
---000000000000203d99061d39a306
+--0000000000004bc235061d4461fd
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -247,14 +224,14 @@ BtkeSGJx/8dy0h8YmRn+adOrxKXHxhSL8BNn8wsmIZyYWe6fRcBtO3Ks2DOLyHCdkoFlN8x9VUQF
 N2ulEgqCbRKkx+qNirW86eF138lr1gRxzclu/38ko//MmkAYR/+hP3WnBll7zbpIt0jc9wyFkSqH
 p8a1MYICbTCCAmkCAQEwazBbMQswCQYDVQQGEwJCRTEZMBcGA1UEChMQR2xvYmFsU2lnbiBudi1z
 YTExMC8GA1UEAxMoR2xvYmFsU2lnbiBHQ0MgUjMgUGVyc29uYWxTaWduIDIgQ0EgMjAyMAIMTv1t
-bpIzNUky46LXMA0GCWCGSAFlAwQCAQUAoIHUMC8GCSqGSIb3DQEJBDEiBCBvrxaXsjxvx/sf9S2k
-afsUgKOXOV69O7Ks4MrYjatN+zAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJ
-BTEPFw0yNDA3MTQxODU0MDdaMGkGCSqGSIb3DQEJDzFcMFowCwYJYIZIAWUDBAEqMAsGCWCGSAFl
+bpIzNUky46LXMA0GCWCGSAFlAwQCAQUAoIHUMC8GCSqGSIb3DQEJBDEiBCCbOXv/ET1AAJz8HNXU
+rNrS6ryRr04ruxyXfXQ/HEDN1TAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJ
+BTEPFw0yNDA3MTUwNzQzMDdaMGkGCSqGSIb3DQEJDzFcMFowCwYJYIZIAWUDBAEqMAsGCWCGSAFl
 AwQBFjALBglghkgBZQMEAQIwCgYIKoZIhvcNAwcwCwYJKoZIhvcNAQEKMAsGCSqGSIb3DQEBBzAL
-BglghkgBZQMEAgEwDQYJKoZIhvcNAQEBBQAEggEABP/QmIsz5/ZY5YvM5/MrifPIuzMZacHoaeWz
-L9xtKQ6xkQxv9fNH9U6r418umfVaqOVikD+JRdSfccLBs9os0XCai6J1eUUObS9fcgdRcTTSVaT2
-md6GpKafXA4EE/Jkc0I35J8K8yZLLDTZ2k4tayrCAwq4hwUw0US6BifVvR+aMtDI7M8Vl0RlBsRh
-y/IhgPkjVlg7V1YE4fPdvCIM0wV1Yagw/nwOSzZRt0xiwFuyM+UR9/p/g9mzz4GoVecpxLok16Ry
-yrk6nHLEjnDA3iVaO/5hPG46gSEOrSNlxt5qQ/JJmbHi5LYVNMBUhJedgapgR9fTaGOG7IwPx9ge
-Eg==
---000000000000203d99061d39a306--
+BglghkgBZQMEAgEwDQYJKoZIhvcNAQEBBQAEggEAsBwHSctmU0bEfo/duq8vhfjdqMHrb1ciOrSG
+O527HikEyair1gNsVfN7i59OLoaOqC4EI2Lyt7R16HwlzoMH5rsOp2VRLTsdosaV3p03Iw+0N4I9
+Bncq62zX0oVjpwT508srmeSps+0XNu2w43gNGdmAbCc+g3WJi3p/JQX1gFMbr4KomUmcU0k3n4U7
+x21maEiYA9A3jvKZdtwlRKBYQsEk3qpX7wF2VexUeuh0t2MFX0nzrlI+1j6PiT8LMbGZDEeTHYVd
+x6W7slfIrBHoooH/9RnfRp35OWuN88KuIfEOhWOceAYdzN/eytDS7fTohGuDPosA3yyI11w8rOyS
+MA==
+--0000000000004bc235061d4461fd--
