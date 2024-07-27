@@ -1,50 +1,62 @@
-Received: from smtp.smtpout.orange.fr (smtp-23.smtpout.orange.fr [80.12.242.23])
+Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C280B1B86E6
-	for <brcm80211@lists.linux.dev>; Sun, 21 Jul 2024 07:41:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.12.242.23
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A080A12EBCA
+	for <brcm80211@lists.linux.dev>; Sat, 27 Jul 2024 18:56:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721547668; cv=none; b=STXvQYsx7B10pP7Fxy54OIsKGKsnAQBAgMiFwlBUpR2WpjSFDl72kfhm7pNuoUDF0Svw99I3ZkYb7hKm7Y4MbK0LYcEPr2zJtYA99/BK5E6305USUlojTMNSFR3xQaFgmbnx8TGE+g39nCUeIRBxe0xp0XfcAWkBPqKi9+O0Nr8=
+	t=1722106587; cv=none; b=TlCdCt0zV10vNNvbJV6agjQH7wH0aXMKJtf2j4Sqf/WM7W/HC3D0hIBP9lHGxgPZYqrUsoUT2nLXGWYdbsokkqlm/6io3GrMs/UeDAq2wcRmz0cT/au2xLeRu8y/24KOQfisPpjglJwrPQh5NppSVoOOUGwfjSFMK9V4fQQhikw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721547668; c=relaxed/simple;
-	bh=myooTmdDYWi3w4/BwipOyDPWqNI6T+1/xT+G+yICZtA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=OrTFAjGqunVxBuDNfq+Hc8RuuADYUXItMIhKD3IMqXDnvQIaIYlXmah6nSoWeibRKuIIdb2LneZxl2oPPTHALP1y/dU3pg+4snXvlXEzI+jFx9bwBdtkLoKbu0qinH1HUEUcDUbZ4UkEptIZP+ia740lo245MKvdN6Q+s9vfgkw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr; spf=pass smtp.mailfrom=wanadoo.fr; dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b=UEpSI4Sk; arc=none smtp.client-ip=80.12.242.23
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wanadoo.fr
+	s=arc-20240116; t=1722106587; c=relaxed/simple;
+	bh=8p1rNmz4tmeWBJJwzhliteifGEOd1BXjvVO8MLUJcms=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=BXsx7hZktWX+CSP3ZITHVbqYoeIl3qgi608kbU1QpD/aA13c5TMYGXEiVXBWHMRfQrq3mRag+vK+cdW4qlglCyUjegnT0SGUPtUAWmYHs715pjBoCx4q4tcw2MIlT2uZX0MWs415EQyR5PY9HBCx41gP+I1BKDMQRfMUAgYdUbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=bYJRi5z7; arc=none smtp.client-ip=209.85.160.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b="UEpSI4Sk"
-Received: from fedora.home ([90.11.132.44])
-	by smtp.orange.fr with ESMTPA
-	id VRBmsszGLnYGvVRBms5oUi; Sun, 21 Jul 2024 09:41:02 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
-	s=t20230301; t=1721547662;
-	bh=0P+L+Gugv+wzdGvctc9kSUn+nQDPgO6wIWj+dXDwk3M=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version;
-	b=UEpSI4SkWxFHkRylyVr6QtXi3vte6IoJivFq98RMQvM8JZwomp6PtWnn/Bb2ad/Cb
-	 aU9RPvVRMpAN0yY91hhL3H+DmcHhw+pm/s0D7gEs9tKc5LCZ3sfvTe2PTfgNDe0SZ6
-	 RkymXfA3zeoqpbolNNxytKP9KaUZzRSr5+NME56azOgS2VOT92Hto8Hcta8TSQVZXj
-	 8nmIdcH+6/VBBLW8sHFkKjJYPo9KFaN53q8i/rC1OFSaSjzUaxPfI4cQAkMdxIRsas
-	 NHGCVnblCOiC+wbJhV/F92ywA/edxhfW+xSWPdvexiSPyXPHTJ/JB9QW+755GJt/FJ
-	 4hCfIC9prkVQQ==
-X-ME-Helo: fedora.home
-X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
-X-ME-Date: Sun, 21 Jul 2024 09:41:02 +0200
-X-ME-IP: 90.11.132.44
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-To: Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Kalle Valo <kvalo@kernel.org>
-Cc: linux-kernel@vger.kernel.org,
-	kernel-janitors@vger.kernel.org,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	linux-wireless@vger.kernel.org,
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="bYJRi5z7"
+Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-44feaa08040so10424721cf.2
+        for <brcm80211@lists.linux.dev>; Sat, 27 Jul 2024 11:56:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google; t=1722106584; x=1722711384; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=MUOOESKI/ksW3lXihkzO7z85Zi5xiBexY1ha/4ln73U=;
+        b=bYJRi5z7PsCkMG8i9VncHKqafmcU5wcr27Ysx6S3XX3dqCVRoU1JlCW5xu2bBntc4o
+         ZwLKsb6iiB2z0x4sg85OtQN/batyPju0l71968TGTt4oveKpVfB5E0lb6rl36JEfUwY9
+         oLsYvmqeGWBaVd72FqhupnML940vlzSvA0pCw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722106584; x=1722711384;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=MUOOESKI/ksW3lXihkzO7z85Zi5xiBexY1ha/4ln73U=;
+        b=IS762bzs3LzwQK8bIw4wGujTfo0ALWP+zVXAtYL+fBYfXiLh/wmmTLa8YcKFwdrVj5
+         bjULmbw4ZQn3ytbYulfouPFxaAPDLPJmWh16NCWMhDY/++itRAGhn9IzIUi9MHq92IsK
+         nIOOojsc3CGpLkabkXQOZXfhTCPH4MlSZ9HXNYxcAxQGuWw5JQKMjUYVVN4hhblnFgk5
+         L73iEfbNccf33WTOrhkdOIdAtRQDedjtddFeXXb/eX7mA5vGedQZc6KLKc8stMcq4E4Y
+         p4HJHlHxcXR5zdVbM25voo9VXtZ6x9CN1bAZk57SvcAYlNglr3RuA127JByp5JH0KJJn
+         /iQg==
+X-Forwarded-Encrypted: i=1; AJvYcCXZIVOf8wbYGOC2qAipnUdEOjuWs60y+BNX4h2FJqOqFaqBWoV8W6kicmhJG31kLpA6P8JbeULEjL+xARsYMiyFdYysqqsmRyjq
+X-Gm-Message-State: AOJu0Yw4EdLz1a9kE3Y3kb+CxV9NS1tCshvpe+eGewJ0JNWYTiVTSzSN
+	EdkNILkky9nxdVPHNrDCbIPOhSKVoLjLK7N+foqB+EBEFlYw7zqTYsfU/q9uMQ==
+X-Google-Smtp-Source: AGHT+IE/TgnuMb5X5BJF190OfHUANB8z7/1Kk+p9GZtvjLf05X2fLDRyPvqsSYwaE1+E53UXWV0zQQ==
+X-Received: by 2002:a05:622a:13d1:b0:446:5d60:5cf3 with SMTP id d75a77b69052e-45004d79febmr43944361cf.6.1722106584428;
+        Sat, 27 Jul 2024 11:56:24 -0700 (PDT)
+Received: from bld-bun-02.bun.broadcom.net ([192.19.176.227])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-44fe81689a5sm26382331cf.39.2024.07.27.11.56.22
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 27 Jul 2024 11:56:23 -0700 (PDT)
+From: Arend van Spriel <arend.vanspriel@broadcom.com>
+To: Kalle Valo <kvalo@kernel.org>
+Cc: linux-wireless@vger.kernel.org,
 	brcm80211@lists.linux.dev,
-	brcm80211-dev-list.pdl@broadcom.com
-Subject: [PATCH v2] brcmfmac: fwsignal: Use struct_size() to simplify brcmf_fws_rxreorder()
-Date: Sun, 21 Jul 2024 09:40:19 +0200
-Message-ID: <f4ca6b887ca1290c71e76247218adea4d1c42442.1721547559.git.christophe.jaillet@wanadoo.fr>
-X-Mailer: git-send-email 2.45.2
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Su Hui <suhui@nfschina.com>
+Subject: [PATCH] wifi: brcmfmac: introducing fwil query functions
+Date: Sat, 27 Jul 2024 20:56:17 +0200
+Message-Id: <20240727185617.253210-1-arend.vanspriel@broadcom.com>
+X-Mailer: git-send-email 2.32.0
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -53,98 +65,272 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In the "struct brcmf_ampdu_rx_reorder", change the 'pktslots' field into
-flexible array.
+When the firmware interface layer was refactored it provided various
+"get" and "set" functions. For the "get" in some cases a parameter
+needed to be passed down to firmware as a key indicating what to
+"get" turning the output parameter of the "get" function into an
+input parameter as well. To accommodate this the "get" function blindly
+copies the parameter which in some places resulted in an uninitialized
+warnings from the compiler. These have been fixed by initializing the
+input parameter in the past. Recently another batch of similar fixes
+were submitted to address clang static checker warnings [1].
 
-It saves the size of a pointer when the memory is allocated and avoids
-an indirection when the array is used.
-It also removes the usage of a pointer arithmetic and saves a few lines of
-code.
+Proposing another solution by introducing a "query" variant which is used
+when the (input) parameter is needed by firmware. The "get" variant will
+only fill the (output) parameter with the result received from firmware
+taking care of proper endianess conversion.
 
-Finally, struct_size() can be used. It is not a must have here, because
-it is easy to see that buf_size can not overflow, but still, it is a good
-practice.
+[1] https://lore.kernel.org/all/20240702122450.2213833-1-suhui@nfschina.com/
 
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Fixes: 81f5dcb80830 ("brcmfmac: refactor firmware interface layer.")
+Reported-by: Su Hui <suhui@nfschina.com>
+Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
 ---
-Compile tested only
+The change has been compiled with C=2 (sparse) to assure endianess
+conversions are correct. The change has been verified on 43664 PCIe
+device and 4330 SDIO device.
 
-Changes in v2:
-  - fix description of the 'pktslots' field   [Arend van Spriel]
-  - add A-b tag
+It applies to the main branch of the wireless-next repository.
 
-v1: https://lore.kernel.org/all/bd3ad239c4d1c49b94c1ba93e48c09df98ef86cb.1720951805.git.christophe.jaillet@wanadoo.fr/
+Regards,
+Arend
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.h   | 4 ++--
- .../net/wireless/broadcom/brcm80211/brcmfmac/fwsignal.c   | 8 ++------
- 2 files changed, 4 insertions(+), 8 deletions(-)
+ .../broadcom/brcm80211/brcmfmac/btcoex.c      |  2 +-
+ .../broadcom/brcm80211/brcmfmac/cfg80211.c    | 30 +++++++-------
+ .../broadcom/brcm80211/brcmfmac/core.c        |  2 +-
+ .../broadcom/brcm80211/brcmfmac/feature.c     |  2 +-
+ .../broadcom/brcm80211/brcmfmac/fwil.h        | 40 ++++++++++++++-----
+ 5 files changed, 48 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.h
-index ea76b8d33401..39226b9c0fa8 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.h
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.h
-@@ -48,20 +48,20 @@
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/btcoex.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/btcoex.c
+index 0c3d119d1219..1e8495f50c16 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/btcoex.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/btcoex.c
+@@ -123,7 +123,7 @@ static s32 brcmf_btcoex_params_read(struct brcmf_if *ifp, u32 addr, u32 *data)
+ {
+ 	*data = addr;
+ 
+-	return brcmf_fil_iovar_int_get(ifp, "btc_params", data);
++	return brcmf_fil_iovar_int_query(ifp, "btc_params", data);
+ }
+ 
  /**
-  * struct brcmf_ampdu_rx_reorder - AMPDU receive reorder info
-  *
-- * @pktslots: dynamic allocated array for ordering AMPDU packets.
-  * @flow_id: AMPDU flow identifier.
-  * @cur_idx: last AMPDU index from firmware.
-  * @exp_idx: expected next AMPDU index.
-  * @max_idx: maximum amount of packets per AMPDU.
-  * @pend_pkts: number of packets currently in @pktslots.
-+ * @pktslots: array for ordering AMPDU packets.
-  */
- struct brcmf_ampdu_rx_reorder {
--	struct sk_buff **pktslots;
- 	u8 flow_id;
- 	u8 cur_idx;
- 	u8 exp_idx;
- 	u8 max_idx;
- 	u8 pend_pkts;
-+	struct sk_buff *pktslots[];
- };
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+index 1585a5653ee4..2379f46e2326 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -663,8 +663,8 @@ static int brcmf_cfg80211_request_sta_if(struct brcmf_if *ifp, u8 *macaddr)
+ 	/* interface_create version 3+ */
+ 	/* get supported version from firmware side */
+ 	iface_create_ver = 0;
+-	err = brcmf_fil_bsscfg_int_get(ifp, "interface_create",
+-				       &iface_create_ver);
++	err = brcmf_fil_bsscfg_int_query(ifp, "interface_create",
++					 &iface_create_ver);
+ 	if (err) {
+ 		brcmf_err("fail to get supported version, err=%d\n", err);
+ 		return -EOPNOTSUPP;
+@@ -756,8 +756,8 @@ static int brcmf_cfg80211_request_ap_if(struct brcmf_if *ifp)
+ 	/* interface_create version 3+ */
+ 	/* get supported version from firmware side */
+ 	iface_create_ver = 0;
+-	err = brcmf_fil_bsscfg_int_get(ifp, "interface_create",
+-				       &iface_create_ver);
++	err = brcmf_fil_bsscfg_int_query(ifp, "interface_create",
++					 &iface_create_ver);
+ 	if (err) {
+ 		brcmf_err("fail to get supported version, err=%d\n", err);
+ 		return -EOPNOTSUPP;
+@@ -2101,7 +2101,8 @@ brcmf_set_key_mgmt(struct net_device *ndev, struct cfg80211_connect_params *sme)
+ 	if (!sme->crypto.n_akm_suites)
+ 		return 0;
  
- /* Forward decls for struct brcmf_pub (see below) */
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwsignal.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwsignal.c
-index 36af81975855..0949e7975ff1 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwsignal.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwsignal.c
-@@ -1673,7 +1673,6 @@ void brcmf_fws_rxreorder(struct brcmf_if *ifp, struct sk_buff *pkt)
- 	struct sk_buff_head reorder_list;
- 	struct sk_buff *pnext;
- 	u8 flags;
--	u32 buf_size;
+-	err = brcmf_fil_bsscfg_int_get(netdev_priv(ndev), "wpa_auth", &val);
++	err = brcmf_fil_bsscfg_int_get(netdev_priv(ndev),
++				       "wpa_auth", &val);
+ 	if (err) {
+ 		bphy_err(drvr, "could not get wpa_auth (%d)\n", err);
+ 		return err;
+@@ -2680,7 +2681,7 @@ brcmf_cfg80211_get_tx_power(struct wiphy *wiphy, struct wireless_dev *wdev,
+ 	struct brcmf_cfg80211_info *cfg = wiphy_to_cfg(wiphy);
+ 	struct brcmf_cfg80211_vif *vif = wdev_to_vif(wdev);
+ 	struct brcmf_pub *drvr = cfg->pub;
+-	s32 qdbm = 0;
++	s32 qdbm;
+ 	s32 err;
  
- 	reorder_data = ((struct brcmf_skb_reorder_data *)pkt->cb)->reorder;
- 	flow_id = reorder_data[BRCMF_RXREORDER_FLOWID_OFFSET];
-@@ -1708,15 +1707,13 @@ void brcmf_fws_rxreorder(struct brcmf_if *ifp, struct sk_buff *pkt)
+ 	brcmf_dbg(TRACE, "Enter\n");
+@@ -3067,7 +3068,7 @@ brcmf_cfg80211_get_station_ibss(struct brcmf_if *ifp,
+ 	struct brcmf_scb_val_le scbval;
+ 	struct brcmf_pktcnt_le pktcnt;
+ 	s32 err;
+-	u32 rate = 0;
++	u32 rate;
+ 	u32 rssi;
+ 
+ 	/* Get the current tx rate */
+@@ -7039,8 +7040,8 @@ static int brcmf_construct_chaninfo(struct brcmf_cfg80211_info *cfg,
+ 			ch.bw = BRCMU_CHAN_BW_20;
+ 			cfg->d11inf.encchspec(&ch);
+ 			chaninfo = ch.chspec;
+-			err = brcmf_fil_bsscfg_int_get(ifp, "per_chan_info",
+-						       &chaninfo);
++			err = brcmf_fil_bsscfg_int_query(ifp, "per_chan_info",
++							 &chaninfo);
+ 			if (!err) {
+ 				if (chaninfo & WL_CHAN_RADAR)
+ 					channel->flags |=
+@@ -7074,7 +7075,7 @@ static int brcmf_enable_bw40_2g(struct brcmf_cfg80211_info *cfg)
+ 
+ 	/* verify support for bw_cap command */
+ 	val = WLC_BAND_5G;
+-	err = brcmf_fil_iovar_int_get(ifp, "bw_cap", &val);
++	err = brcmf_fil_iovar_int_query(ifp, "bw_cap", &val);
+ 
+ 	if (!err) {
+ 		/* only set 2G bandwidth using bw_cap command */
+@@ -7150,11 +7151,11 @@ static void brcmf_get_bwcap(struct brcmf_if *ifp, u32 bw_cap[])
+ 	int err;
+ 
+ 	band = WLC_BAND_2G;
+-	err = brcmf_fil_iovar_int_get(ifp, "bw_cap", &band);
++	err = brcmf_fil_iovar_int_query(ifp, "bw_cap", &band);
+ 	if (!err) {
+ 		bw_cap[NL80211_BAND_2GHZ] = band;
+ 		band = WLC_BAND_5G;
+-		err = brcmf_fil_iovar_int_get(ifp, "bw_cap", &band);
++		err = brcmf_fil_iovar_int_query(ifp, "bw_cap", &band);
+ 		if (!err) {
+ 			bw_cap[NL80211_BAND_5GHZ] = band;
+ 			return;
+@@ -7163,7 +7164,6 @@ static void brcmf_get_bwcap(struct brcmf_if *ifp, u32 bw_cap[])
+ 		return;
  	}
- 	/* from here on we need a flow reorder instance */
- 	if (rfi == NULL) {
--		buf_size = sizeof(*rfi);
- 		max_idx = reorder_data[BRCMF_RXREORDER_MAXIDX_OFFSET];
+ 	brcmf_dbg(INFO, "fallback to mimo_bw_cap info\n");
+-	mimo_bwcap = 0;
+ 	err = brcmf_fil_iovar_int_get(ifp, "mimo_bw_cap", &mimo_bwcap);
+ 	if (err)
+ 		/* assume 20MHz if firmware does not give a clue */
+@@ -7259,10 +7259,10 @@ static int brcmf_setup_wiphybands(struct brcmf_cfg80211_info *cfg)
+ 	struct brcmf_pub *drvr = cfg->pub;
+ 	struct brcmf_if *ifp = brcmf_get_ifp(drvr, 0);
+ 	struct wiphy *wiphy = cfg_to_wiphy(cfg);
+-	u32 nmode = 0;
++	u32 nmode;
+ 	u32 vhtmode = 0;
+ 	u32 bw_cap[2] = { WLC_BW_20MHZ_BIT, WLC_BW_20MHZ_BIT };
+-	u32 rxchain = 0;
++	u32 rxchain;
+ 	u32 nchain;
+ 	int err;
+ 	s32 i;
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
+index bf91b1e1368f..df53dd1d7e74 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
+@@ -691,7 +691,7 @@ static int brcmf_net_mon_open(struct net_device *ndev)
+ {
+ 	struct brcmf_if *ifp = netdev_priv(ndev);
+ 	struct brcmf_pub *drvr = ifp->drvr;
+-	u32 monitor = 0;
++	u32 monitor;
+ 	int err;
  
--		buf_size += (max_idx + 1) * sizeof(pkt);
--
- 		/* allocate space for flow reorder info */
- 		brcmf_dbg(INFO, "flow-%d: start, maxidx %d\n",
- 			  flow_id, max_idx);
--		rfi = kzalloc(buf_size, GFP_ATOMIC);
-+		rfi = kzalloc(struct_size(rfi, pktslots, max_idx + 1),
-+			      GFP_ATOMIC);
- 		if (rfi == NULL) {
- 			bphy_err(drvr, "failed to alloc buffer\n");
- 			brcmf_netif_rx(ifp, pkt);
-@@ -1724,7 +1721,6 @@ void brcmf_fws_rxreorder(struct brcmf_if *ifp, struct sk_buff *pkt)
- 		}
+ 	brcmf_dbg(TRACE, "Enter\n");
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/feature.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/feature.c
+index f23310a77a5d..0d9ae197fa1e 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/feature.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/feature.c
+@@ -184,7 +184,7 @@ static void brcmf_feat_wlc_version_overrides(struct brcmf_pub *drv)
+ static void brcmf_feat_iovar_int_get(struct brcmf_if *ifp,
+ 				     enum brcmf_feat_id id, char *name)
+ {
+-	u32 data = 0;
++	u32 data;
+ 	int err;
  
- 		ifp->drvr->reorder_flows[flow_id] = rfi;
--		rfi->pktslots = (struct sk_buff **)(rfi + 1);
- 		rfi->max_idx = max_idx;
- 	}
- 	if (flags & BRCMF_RXREORDER_NEW_HOLE)  {
+ 	/* we need to know firmware error */
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwil.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwil.h
+index a315a7fac6a0..31e080e4da66 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwil.h
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwil.h
+@@ -96,15 +96,22 @@ static inline
+ s32 brcmf_fil_cmd_int_get(struct brcmf_if *ifp, u32 cmd, u32 *data)
+ {
+ 	s32 err;
+-	__le32 data_le = cpu_to_le32(*data);
+ 
+-	err = brcmf_fil_cmd_data_get(ifp, cmd, &data_le, sizeof(data_le));
++	err = brcmf_fil_cmd_data_get(ifp, cmd, data, sizeof(*data));
+ 	if (err == 0)
+-		*data = le32_to_cpu(data_le);
++		*data = le32_to_cpu(*(__le32 *)data);
+ 	brcmf_dbg(FIL, "ifidx=%d, cmd=%d, value=%d\n", ifp->ifidx, cmd, *data);
+ 
+ 	return err;
+ }
++static inline
++s32 brcmf_fil_cmd_int_query(struct brcmf_if *ifp, u32 cmd, u32 *data)
++{
++	__le32 *data_le = (__le32 *)data;
++
++	*data_le = cpu_to_le32(*data);
++	return brcmf_fil_cmd_int_get(ifp, cmd, data);
++}
+ 
+ s32 brcmf_fil_iovar_data_set(struct brcmf_if *ifp, const char *name,
+ 			     const void *data, u32 len);
+@@ -120,14 +127,21 @@ s32 brcmf_fil_iovar_int_set(struct brcmf_if *ifp, const char *name, u32 data)
+ static inline
+ s32 brcmf_fil_iovar_int_get(struct brcmf_if *ifp, const char *name, u32 *data)
+ {
+-	__le32 data_le = cpu_to_le32(*data);
+ 	s32 err;
+ 
+-	err = brcmf_fil_iovar_data_get(ifp, name, &data_le, sizeof(data_le));
++	err = brcmf_fil_iovar_data_get(ifp, name, data, sizeof(*data));
+ 	if (err == 0)
+-		*data = le32_to_cpu(data_le);
++		*data = le32_to_cpu(*(__le32 *)data);
+ 	return err;
+ }
++static inline
++s32 brcmf_fil_iovar_int_query(struct brcmf_if *ifp, const char *name, u32 *data)
++{
++	__le32 *data_le = (__le32 *)data;
++
++	*data_le = cpu_to_le32(*data);
++	return brcmf_fil_iovar_int_get(ifp, name, data);
++}
+ 
+ 
+ s32 brcmf_fil_bsscfg_data_set(struct brcmf_if *ifp, const char *name,
+@@ -145,15 +159,21 @@ s32 brcmf_fil_bsscfg_int_set(struct brcmf_if *ifp, const char *name, u32 data)
+ static inline
+ s32 brcmf_fil_bsscfg_int_get(struct brcmf_if *ifp, const char *name, u32 *data)
+ {
+-	__le32 data_le = cpu_to_le32(*data);
+ 	s32 err;
+ 
+-	err = brcmf_fil_bsscfg_data_get(ifp, name, &data_le,
+-					sizeof(data_le));
++	err = brcmf_fil_bsscfg_data_get(ifp, name, data, sizeof(*data));
+ 	if (err == 0)
+-		*data = le32_to_cpu(data_le);
++		*data = le32_to_cpu(*(__le32 *)data);
+ 	return err;
+ }
++static inline
++s32 brcmf_fil_bsscfg_int_query(struct brcmf_if *ifp, const char *name, u32 *data)
++{
++	__le32 *data_le = (__le32 *)data;
++
++	*data_le = cpu_to_le32(*data);
++	return brcmf_fil_bsscfg_int_get(ifp, name, data);
++}
+ 
+ s32 brcmf_fil_xtlv_data_set(struct brcmf_if *ifp, const char *name, u16 id,
+ 			    void *data, u32 len);
 -- 
-2.45.2
+2.34.1
 
