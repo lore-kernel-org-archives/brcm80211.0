@@ -1,58 +1,57 @@
-Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 207CF1304AB
-	for <brcm80211@lists.linux.dev>; Mon, 29 Jul 2024 08:05:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A626A137775
+	for <brcm80211@lists.linux.dev>; Mon, 29 Jul 2024 08:11:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722240361; cv=none; b=qBfiUiXUjzNbacJ9n+pKOaZJa11qOe19PeSSXJk6r5i6Nr4LWZ57uezBi1RDAehUamUQySvW+GzsQ0xc76/s2m17EhZ80LwHwn4nrJ+LByD8R56RkKUfampfR+vgQ7f3bHYuPy3sNwVfBCd9j8Dn3ybYC2ysCbGmzt0wy9PetPc=
+	t=1722240716; cv=none; b=JP0QaZxBGxpyDTvaKlR8MRR+lSu52RRwz9zcC87EBVM3PZPnde6w9srySVRazHUSX7l87gKebkRgV4xj9Aa+eyldwht1pmZlCmhR3E8fonZhSgsTf1hmJxqpQA0PBVlxDzs6XBiUglBqOQS3XXD2qMEQV2CNJGq8Gkc0xN1MVtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722240361; c=relaxed/simple;
-	bh=n8Rx/zdmS57QY4dB3glmMrAOg1vw7OYCpVhNhDCu8BE=;
+	s=arc-20240116; t=1722240716; c=relaxed/simple;
+	bh=csmoB5idqcCPefW1AXeDNFDunmmcF2B6jgzWGOvHV1I=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=a/kkLYG9pH+7Eg65AWywSfNQVnwFPUoRsL8F49JJ/y7RxeWIb4N7aWT7uWhNbTjKo+rpjh0+J/3Vfp2Yoyh6qg1HI6LmrepPmYV64aTY0rC38dvrll8TYywRgbdYLHk6snoOXstntbZ9XfRaRn2ysChJaMDL6Q88QaGsldbXfug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=K1NkJI6p; arc=none smtp.client-ip=209.85.219.49
+	 In-Reply-To:Content-Type; b=rQPVSKOjk9vdagyvTI6/XGtbq5NbaVqnfdskQxoWqxhpr0/R/AJZ9mDUrtT12CgSxjdrgst9UqN03ET50pR7EZ1u814BcnJJLq1dWEow3UpBJyN3mCTIsS6E0fJH89IedN9bcY1AU++S4Hq7l4I7jGGvPjdIvVLWg6Krb+LWbVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=Np04d693; arc=none smtp.client-ip=209.85.221.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="K1NkJI6p"
-Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-6ad86f3cc34so16832656d6.1
-        for <brcm80211@lists.linux.dev>; Mon, 29 Jul 2024 01:05:59 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="Np04d693"
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-36887ca3da2so1136379f8f.2
+        for <brcm80211@lists.linux.dev>; Mon, 29 Jul 2024 01:11:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1722240359; x=1722845159; darn=lists.linux.dev;
+        d=broadcom.com; s=google; t=1722240713; x=1722845513; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=OLxQ+oltHXvWTm73jCnAzYaGS2Qwqp5wgJznleOQdko=;
-        b=K1NkJI6p4wHMPTmT87eBLtYRPCRY/BAekVXqMhbbenqSltvdssBtE+EMrjjAfCSFOF
-         5E+GWxNytd9UH3RB4RytgCC9ER2WOMF3xXpfYrbSQe8328LVYoOUN0QA8umEW9LfGJpy
-         Epi+2QrLMT8h5+fNrybpJd39l3YVlgKChfGms=
+        bh=PtxIoI01sIjPH0N/O0yucMttPw3HqhezE6RqcXzaLWA=;
+        b=Np04d693dksFKPUbkHfCiTBHWXkkpSWvgpsDA//UBsk6R5WJ5uDVkDmXUlr5BLBNrw
+         Fj85VqfGro+l6MMgSRAgKklvzrX5zQWx7OverMYx1SxpnCCEAZFjZniXPGHTuokdJ/eG
+         eRnOK3HVn2ghgM4Mk4OfkfZSG8u9OfBOJjcUI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722240359; x=1722845159;
+        d=1e100.net; s=20230601; t=1722240713; x=1722845513;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=OLxQ+oltHXvWTm73jCnAzYaGS2Qwqp5wgJznleOQdko=;
-        b=I5FG8Y6tQX7Oe6OUGmoxWAYARSRmxKJBYBHb86G+PtasAtGm0EkxaPZucwan171n4T
-         S1mIk2D5hKbDf1en6aWfk9w1iYvXYfDQ6CmA8d8sq09iJWYGwngdPx8+5npV6BulLlhz
-         KxT/k5Z4pwQ9O2L9KGXlomWl6vqCeOAajM7ejtsxSUL6ZZYNWRcihrnVBV+bDvjSwput
-         uQS2Alof4szH53RO14oaQpf3DRXKHZtZ1H1lIlWx6Vl7eWLZNPMJFbHQ34ss0S2HAxAY
-         YeCq2ETexc3at84mqvYH56CZrTBaQhuk6UcquAhLHIKDn1nml3GSHAa/jzKnYbtWnOpo
-         QuVg==
-X-Forwarded-Encrypted: i=1; AJvYcCVfw5i/vefZIGQMppfRpZVmEUMTe9QYIlwER1hRFW1suFyLDrpEeoWIUe6GUQTXsutXrKHLY+PcSHLezUFp53kKd4fuE7lsAWnM
-X-Gm-Message-State: AOJu0YxJorqFJh5Ddf4RzPNoy9I8YwTSTT1D4toHVnpuLkVMDWG6uOef
-	cdJfPRjSr+mZnullqbwzGjmW1Df0zQD3Y5EQYrGUKht4FTzFbYcOfaFxyZfH80NGWk1VEch9zlO
-	H1Y9D
-X-Google-Smtp-Source: AGHT+IHDxRS/Qj/GgqaFGs7FuOIX0yBdKNkaZhJs4PVEqzZvCi316pZ+Yn2S8PHH0tjxLiWg/3zRpw==
-X-Received: by 2002:ad4:5ae1:0:b0:6b5:23eb:3a4d with SMTP id 6a1803df08f44-6bb55a0cd98mr109431496d6.27.1722240359085;
-        Mon, 29 Jul 2024 01:05:59 -0700 (PDT)
+        bh=PtxIoI01sIjPH0N/O0yucMttPw3HqhezE6RqcXzaLWA=;
+        b=K+z8kZmQcRdz6itvmvLRh8Dh63gvqMQfB3jmPFh00kM7yLkbjvtSdluukB3BxQqZyM
+         RN8ZF0qt4a6lIwDzlbbdgyoT+kuH7QMu1tcDR8IHh22Wv5A+496vjtANo8TUH8c8+2MC
+         tqSCCREx9ZzkBjICpeT3pTTc5aOoLa5BXr8V9xO58ESlq18bSfkZgPa5Ci+5ePDdXhql
+         IImmjDNe3bO76wwNf4kLsEeOepBH2PPpmlwvZsXSBjPzBI+yo4MzuyRyuYWJcM/DMHlr
+         rpKDvo6cMPbjWSJ2kdy/db2yT+PmKx11LOHZSCH7W801pspn/U8PRpmB4wD8MQCBiXeo
+         NWTg==
+X-Forwarded-Encrypted: i=1; AJvYcCWIlS0y5tNh5QSFEE7DKATxrtja7vjFiza6Ukhy7CSDQVbSuuQoKFmGqNe4CB2pbkjEi9BBl9K7T42FZvq+njAUopAxJS3Am7/h
+X-Gm-Message-State: AOJu0Yz4x3cEtYKlHgnk1EdjJhZzB0+gddd1nAXLlP/yGtccZMt/jaoL
+	jTxPRi5cHA2BJVCMvEHkusyGA7G+9GQlYwSXggmkUkG/NOOwgzo4nd+uhFpt4Q==
+X-Google-Smtp-Source: AGHT+IEkPnyGxlNxPr8rOm1//BHb13++chZqYWICdkIAEUcyxWMPSDKu9ODbOje5jSTEy0OxHq6Lww==
+X-Received: by 2002:a5d:4604:0:b0:368:7422:d966 with SMTP id ffacd0b85a97d-36b5cf11550mr4475214f8f.33.1722240712854;
+        Mon, 29 Jul 2024 01:11:52 -0700 (PDT)
 Received: from [10.176.68.61] ([192.19.176.250])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6bb3f922b63sm48741156d6.67.2024.07.29.01.05.58
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4280f8da2f7sm101566355e9.10.2024.07.29.01.11.51
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Jul 2024 01:05:58 -0700 (PDT)
-Message-ID: <d14bcb85-2b43-4961-863f-42eb14227051@broadcom.com>
-Date: Mon, 29 Jul 2024 10:05:56 +0200
+        Mon, 29 Jul 2024 01:11:52 -0700 (PDT)
+Message-ID: <1c1fe7ec-1d6b-46ce-a90d-29ca6be01109@broadcom.com>
+Date: Mon, 29 Jul 2024 10:11:50 +0200
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -60,14 +59,20 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFT v2] wifi: brcmfmac: add flag for random seed during firmware
- download
-To: Jacobe Zang <jacobe.zang@wesion.com>
-Cc: "linux-wireless@vger.kernel.org" <linux-wireless@vger.kernel.org>,
- "brcm80211@lists.linux.dev" <brcm80211@lists.linux.dev>
-References: <20240728193904.35820-1-arend.vanspriel@broadcom.com>
- <TYZPR03MB700147CA6C80F34B8E3D5CC280B72@TYZPR03MB7001.apcprd03.prod.outlook.com>
- <TYZPR03MB70019A591F0717F365A3392280B72@TYZPR03MB7001.apcprd03.prod.outlook.com>
+Subject: Re: [PATCH v4 5/5] wifi: brcmfmac: add flag for random seed during
+ firmware download
+To: Jacobe Zang <jacobe.zang@wesion.com>, robh@kernel.org,
+ krzk+dt@kernel.org, heiko@sntech.de, kvalo@kernel.org, davem@davemloft.net,
+ edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, conor+dt@kernel.org
+Cc: efectn@protonmail.com, dsimic@manjaro.org, jagan@edgeble.ai,
+ devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-rockchip@lists.infradead.org, linux-kernel@vger.kernel.org,
+ arend@broadcom.com, linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
+ megi@xff.cz, duoming@zju.edu.cn, bhelgaas@google.com,
+ minipli@grsecurity.net, brcm80211@lists.linux.dev,
+ brcm80211-dev-list.pdl@broadcom.com, nick@khadas.com
+References: <20240729070102.3770318-1-jacobe.zang@wesion.com>
+ <20240729070102.3770318-6-jacobe.zang@wesion.com>
 Content-Language: en-US
 From: Arend van Spriel <arend.vanspriel@broadcom.com>
 Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
@@ -113,22 +118,30 @@ Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
  NKowQLrlMBGXT4NnRNV0+yHmusXPOPIqQCKEtbWSx9s2slQxmXukPYvLnuRJqkPkvrTgjn5d
  eSE0Dkhni4292/Nn/TnZf5mxCNWH1p3dz/vrT6EIYk2GSJgCLoTkCcqaM6+5E4IwgYOq3UYu
  AAgeEbPV1QeTVAPrntrLb0t0U5vdwG7Xl40baV9OydTv7ghjYZU349w1d5mdxg==
-In-Reply-To: <TYZPR03MB70019A591F0717F365A3392280B72@TYZPR03MB7001.apcprd03.prod.outlook.com>
+In-Reply-To: <20240729070102.3770318-6-jacobe.zang@wesion.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 7/29/2024 8:25 AM, Jacobe Zang wrote:
->> I found that in drivers/net/wirless/broadcom/brcm80211/brcmfmac/bus.h has already prepared an > enumeration like these.
->> enum brcmf_fwvendor {
->>          BRCMF_FWVENDOR_WCC,
->>          BRCMF_FWVENDOR_CYW,
->>          BRCMF_FWVENDOR_BCA,
->>          /* keep last */
->>          BRCMF_FWVENDOR_NUM,
->>          BRCMF_FWVENDOR_INVALID
->> };
->> So should we delete them? Because you also changed BRCMF_FWVENDOR_ to BRCMF_DRVDATA_
-> 
-> Sorry, please ignore this comment, I didn't notice these were two enums with different purposes
+On 7/29/2024 9:01 AM, Jacobe Zang wrote:
+> Providing the random seed to firmware was tied to the fact that the
+> device has a valid OTP, which worked for some Apple chips. However,
+> it turns out the BCM43752 device also needs the random seed in order
+> to get firmware running. Suspect it is simply tied to the firmware
+> branch used for the device. Introducing a mechanism to allow setting
+> it for a device through the device table.
 
-Ignored ;-)
+Not exactly what I meant by using my patch "as is". I would have kept 
+the two patches separate, but it is not a deal breaker for me.
+
+Regards,
+Arend
+
+> Co-developed-by: Ondrej Jirman <megi@xff.cz>
+> Signed-off-by: Ondrej Jirman <megi@xff.cz>
+> Co-developed-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+> Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+> Signed-off-by: Jacobe Zang <jacobe.zang@wesion.com>
+> ---
+>   .../broadcom/brcm80211/brcmfmac/pcie.c        | 52 ++++++++++++++++---
+>   .../broadcom/brcm80211/include/brcm_hw_ids.h  |  2 +
+>   2 files changed, 46 insertions(+), 8 deletions(-)
