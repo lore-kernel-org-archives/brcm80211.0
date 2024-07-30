@@ -1,204 +1,175 @@
-Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09517154C18
-	for <brcm80211@lists.linux.dev>; Tue, 30 Jul 2024 17:38:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CF5C1AA3DD
+	for <brcm80211@lists.linux.dev>; Tue, 30 Jul 2024 18:46:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722361100; cv=none; b=gNZbbI90QNJUIOKwmRPRdxf1st9I4EV1ey98HegzBxL9xVYdeOnlfa0eTr25sAccWE6ZMwy5pvh+knSiV4cbB77KLLQTjZjklX27gcAAVdxUBh2E1zTTWu6IvPBn481ymXyHaF+Hv7oeAhJ6vZwlw0yg9tonoUPQHWIxtvXj/08=
+	t=1722365198; cv=none; b=XnbGpuu6ecmxmBr1NpzHWUBGhi6wAN1UcsFkxUPPqkTBGXLTFspmOWM19fdHU0d48cM7xLWmymowuZrMuRwD/7zwRxQyciLR+BuOv0ilTAMuPvdh5Gyo4C0xx/MRk4FAYgXrg7AovbzhFc+EEVv8rpxVDz1+WOATt1a8u9kdyuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722361100; c=relaxed/simple;
-	bh=9IUleP8OzhpQtp7S1NkmiFennhuOo0B3m/rmGIOk5+M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fu8QHHZRAvb4T9vVmSMKP5zDZmNMK0aJ2OohYkNegAX4I+RJq56iDFujjGhx4rrcU9vWbfFZuE6IO0DnyyMf5mP//OROSIoHOlP4/0VBCEP1Uw5ipaSrWfDC7sV28jwh048+2VPc3VBWW4EQSwfX6J7PVBGSfqm9E/X6DIHbV/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=LRGoCPiZ; arc=none smtp.client-ip=46.235.227.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	s=arc-20240116; t=1722365198; c=relaxed/simple;
+	bh=7I91QI7WaQibOia9pMj6b8m5xOPg4oEy2GvIUlEu4A0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=msxR1nhmL0Zptnfe0yaYeHg6cCtr3PWCpfKPi+jZ8Z8tsKPCrQkx8FMfk//cBKJMv6ZbpMZccAAu0TGUil9uNQxvSKEjqxH7bUTq2/w4R6P8AkgV9cnfLqiyXNCww8RWR8ZfpwTdr9OETPMls2rzjE/yUczE4J9tuRCE9OMKlwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=Lt7Vt6ds; arc=none smtp.client-ip=209.85.218.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="LRGoCPiZ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1722361096;
-	bh=9IUleP8OzhpQtp7S1NkmiFennhuOo0B3m/rmGIOk5+M=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=LRGoCPiZ0JAyuj7ggrTjMFyQRrwTvDzXOiWdMhoyjs55Te5FcWuCA9a2yMO90y6B+
-	 pm7uqlKSKJrS5muy4DTbqQ6E+8r9o8x9wEsFFqKeGj3mDABsPgU6mzkqbTz8UuWop3
-	 sCZcybBDE31UicBaqMaCTGoKoqMiJ1C4q9LMvnjLdRVHs6q8WLCqZzN8ibQGKy/FZb
-	 KvYHjpHqbX6y7gROPQ/4oZSkWsa4lwQevOiozL9vzus5VKGUzoUxzzbP9BD2HNtns7
-	 o6laaQKI8jsgDLBP5MqYg6P1eV5x9fMMEL0KQveiRtfMJl9/DRYlUpGkHrJohdWGu1
-	 EU+ryKM3Pt85w==
-Received: from mercury (cola.collaboradmins.com [195.201.22.229])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: sre)
-	by madrid.collaboradmins.com (Postfix) with ESMTPSA id CC1AA3781139;
-	Tue, 30 Jul 2024 17:38:16 +0000 (UTC)
-Received: by mercury (Postfix, from userid 1000)
-	id 70AD510609BB; Tue, 30 Jul 2024 19:38:16 +0200 (CEST)
-Date: Tue, 30 Jul 2024 19:38:16 +0200
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
-To: Arend Van Spriel <arend.vanspriel@broadcom.com>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>, 
-	Jacobe Zang <jacobe.zang@wesion.com>, robh@kernel.org, krzk+dt@kernel.org, heiko@sntech.de, 
-	kvalo@kernel.org, davem@davemloft.net, edumazet@google.com, kuba@kernel.org, 
-	pabeni@redhat.com, conor+dt@kernel.org, Linus Walleij <linus.walleij@linaro.org>, 
-	efectn@protonmail.com, dsimic@manjaro.org, jagan@edgeble.ai, devicetree@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-rockchip@lists.infradead.org, linux-kernel@vger.kernel.org, 
-	arend@broadcom.com, linux-wireless@vger.kernel.org, netdev@vger.kernel.org, 
-	megi@xff.cz, duoming@zju.edu.cn, bhelgaas@google.com, minipli@grsecurity.net, 
-	brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com, nick@khadas.com
-Subject: Re: [PATCH v5 2/5] dt-bindings: net: wireless: brcm4329-fmac: add
- clock description for AP6275P
-Message-ID: <k3dhdsa5bjzad2ha5e2uurg2azzs773ier5thkot4w2qcvnv54@yuf52eluqsae>
-References: <20240730033053.4092132-1-jacobe.zang@wesion.com>
- <20240730033053.4092132-3-jacobe.zang@wesion.com>
- <191025b5268.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
- <f45c1fa7-f321-4a1f-b65c-6ed326a18268@kernel.org>
- <191030eac78.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
- <3d3b8e0a-7492-4db1-bd73-c30a488edaa7@kernel.org>
- <191035b8c28.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="Lt7Vt6ds"
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a6265d3ba8fso459303966b.0
+        for <brcm80211@lists.linux.dev>; Tue, 30 Jul 2024 11:46:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google; t=1722365195; x=1722969995; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=ewzcNpdrX/YDyXLlaNSEGqi6c+PmGRbMmQlZH3a66BY=;
+        b=Lt7Vt6dsNKUIFzNCpR4wY7njCsS4RlUPZG7FV1GJ/tUcew491QuCVXjsUrMEOuWxgl
+         Z1kcATJoUYuQO+xxZRlfwsJP/wkZeUYGuGCdWYen+v/mKTly73p567i+T/HWrvvKPC4o
+         ionffqZEbV4t3eRwrh2WzEDeqEGWhE7Kzv9aI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722365195; x=1722969995;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ewzcNpdrX/YDyXLlaNSEGqi6c+PmGRbMmQlZH3a66BY=;
+        b=Ok/xKr/vhyk2aGomPLXVd31MkuRUbxM4QC2NlJLg/3l+fCalCz0XPpvZZMllJbQEXn
+         vA2nF/yDUKpR58490Pqe3cN3K8ssp/mZS8TkVMertGjczh4tBe6gZhdBlBolYNmWE9KD
+         ceHjRNjpQVONdsXUU60c2JtCOC3772B0bsaKAWNOtIFUfBgLd5kMwt72tC0DIJ1dPChK
+         jV5/oeR39pGJVHVF1EHT6tzcGpQchUUrlPlnuFtRmorJN1UZGx3KXXOPay98yucOoyd4
+         0G+0OhFdWBvKN0jOZ/nRoIGDFo0s7pZvn+kXfQ5luo62muYaG+C9YpqdHy+05AdtuoNa
+         PONw==
+X-Forwarded-Encrypted: i=1; AJvYcCWpheEY7wUkD2XMwaGzaHO5jL5IGP7+kUBwWN56r590VgTyxxfvvIDyOU95/d4r7r8jXlZPXyd2Nudils4OwV05sUhI1H40gOev
+X-Gm-Message-State: AOJu0Yw/bFqJGl7A7kpjcql2g9QiBMZZkE/sV3lBoejAA1l1Led+2AD7
+	yEb67fN2Kkbaq19cO41Ooraw1sNJn570FbayWSLP0JeACawDY2h4z6zytI3bXg==
+X-Google-Smtp-Source: AGHT+IFpWHmaQN85R+Wta1GB7iids5DyYMnk0X4+ZOhcSYxAG6UsJ8zaLoWK3Gch55aQ8SBn5NA5KA==
+X-Received: by 2002:a17:907:728e:b0:a77:bfca:da57 with SMTP id a640c23a62f3a-a7d401769bfmr900653666b.44.1722365194902;
+        Tue, 30 Jul 2024 11:46:34 -0700 (PDT)
+Received: from [192.168.178.137] (f215227.upc-f.chello.nl. [80.56.215.227])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a7acab235fesm680407666b.36.2024.07.30.11.46.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 30 Jul 2024 11:46:34 -0700 (PDT)
+Message-ID: <35321e96-2cbf-47fa-bf0a-fe658f3751bb@broadcom.com>
+Date: Tue, 30 Jul 2024 20:46:32 +0200
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="jf2alk6nvvmfsvtq"
-Content-Disposition: inline
-In-Reply-To: <191035b8c28.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 4/5] wifi: brcmfmac: Add optional lpo clock enable
+ support
+To: Jacobe Zang <jacobe.zang@wesion.com>, robh@kernel.org,
+ krzk+dt@kernel.org, heiko@sntech.de, kvalo@kernel.org, davem@davemloft.net,
+ edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, conor+dt@kernel.org
+Cc: efectn@protonmail.com, dsimic@manjaro.org, jagan@edgeble.ai,
+ devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-rockchip@lists.infradead.org, linux-kernel@vger.kernel.org,
+ arend@broadcom.com, linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
+ megi@xff.cz, duoming@zju.edu.cn, bhelgaas@google.com,
+ minipli@grsecurity.net, brcm80211@lists.linux.dev,
+ brcm80211-dev-list.pdl@broadcom.com, nick@khadas.com
+References: <20240730033053.4092132-1-jacobe.zang@wesion.com>
+ <20240730033053.4092132-5-jacobe.zang@wesion.com>
+Content-Language: en-US
+From: Arend van Spriel <arend.vanspriel@broadcom.com>
+Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
+ 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
+In-Reply-To: <20240730033053.4092132-5-jacobe.zang@wesion.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
 
---jf2alk6nvvmfsvtq
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-Hi,
+On 7/30/2024 5:30 AM, Jacobe Zang wrote:
+> WiFi modules often require 32kHz clock to function. Add support to
+> enable the clock to PCIe driver.
+> 
+> Co-developed-by: Ondrej Jirman <megi@xff.cz>
+> Signed-off-by: Ondrej Jirman <megi@xff.cz>
+> Signed-off-by: Jacobe Zang <jacobe.zang@wesion.com>
+> ---
+>   drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c | 8 ++++++++
+>   1 file changed, 8 insertions(+)
+> 
+> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
+> index e406e11481a62..6246e3fd7399f 100644
+> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
+> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
+> @@ -6,6 +6,7 @@
+>   #include <linux/of.h>
+>   #include <linux/of_irq.h>
+>   #include <linux/of_net.h>
+> +#include <linux/clk.h>
+>   
+>   #include <defs.h>
+>   #include "debug.h"
+> @@ -70,6 +71,7 @@ void brcmf_of_probe(struct device *dev, enum brcmf_bus_type bus_type,
+>   {
+>   	struct brcmfmac_sdio_pd *sdio = &settings->bus.sdio;
+>   	struct device_node *root, *np = dev->of_node;
+> +	struct clk *clk;
+>   	const char *prop;
+>   	int irq;
+>   	int err;
+> @@ -113,6 +115,12 @@ void brcmf_of_probe(struct device *dev, enum brcmf_bus_type bus_type,
+>   		of_node_put(root);
+>   	}
+>   
+> +	clk = devm_clk_get_optional_enabled(dev, "lpo");
+> +	if (!IS_ERR_OR_NULL(clk)) {
+> +		brcmf_dbg(INFO, "enabling 32kHz clock\n");
+> +		clk_set_rate(clk, 32768);
+> +	}
+> +
+>   	if (!np || !of_device_is_compatible(np, "brcm,bcm4329-fmac"))
+>   		return;
 
-On Tue, Jul 30, 2024 at 01:16:57PM GMT, Arend Van Spriel wrote:
-> On July 30, 2024 12:18:20 PM Krzysztof Kozlowski <krzk@kernel.org> wrote:
->=20
-> > On 30/07/2024 11:52, Arend Van Spriel wrote:
-> > > On July 30, 2024 11:01:43 AM Krzysztof Kozlowski <krzk@kernel.org> wr=
-ote:
-> > >=20
-> > > > On 30/07/2024 08:37, Arend Van Spriel wrote:
-> > > > > + Linus W
-> > > > >=20
-> > > > > On July 30, 2024 5:31:15 AM Jacobe Zang <jacobe.zang@wesion.com> =
-wrote:
-> > > > >=20
-> > > > > > Not only AP6275P Wi-Fi device but also all Broadcom wireless de=
-vices allow
-> > > > > > external low power clock input. In DTS the clock as an optional=
- choice in
-> > > > > > the absence of an internal clock.
-> > > > > >=20
-> > > > > > Reviewed-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-> > > > > > Signed-off-by: Jacobe Zang <jacobe.zang@wesion.com>
-> > > > > > ---
-> > > > > > .../bindings/net/wireless/brcm,bcm4329-fmac.yaml          | 8 +=
-+++++++
-> > > > > > 1 file changed, 8 insertions(+)
-> > > > > >=20
-> > > > > > diff --git
-> > > > > > a/Documentation/devicetree/bindings/net/wireless/brcm,bcm4329-f=
-mac.yaml
-> > > > > > b/Documentation/devicetree/bindings/net/wireless/brcm,bcm4329-f=
-mac.yaml
-> > > > > > index 2c2093c77ec9a..a3607d55ef367 100644
-> > > > > > --- a/Documentation/devicetree/bindings/net/wireless/brcm,bcm43=
-29-fmac.yaml
-> > > > > > +++ b/Documentation/devicetree/bindings/net/wireless/brcm,bcm43=
-29-fmac.yaml
-> > > > > > @@ -122,6 +122,14 @@ properties:
-> > > > > > NVRAM. This would normally be filled in by the bootloader from =
-platform
-> > > > > > configuration data.
-> > > > > >=20
-> > > > > > +  clocks:
-> > > > > > +    items:
-> > > > > > +      - description: External Low Power Clock input (32.768KHz)
-> > > > > > +
-> > > > > > +  clock-names:
-> > > > > > +    items:
-> > > > > > +      - const: lpo
-> > > > > > +
-> > > > >=20
-> > > > > We still have an issue that this clock input is also present in t=
-he
-> > > > > bindings specification broadcom-bluetooth.yaml (not in bluetooth
-> > > > > subfolder). This clock is actually a chip resource. What happens =
-if both
-> > > > > are defined and both wifi and bt drivers try to enable this clock=
-? Can this
-> > > > > be expressed in yaml or can we only put a textual warning in the =
-property
-> > > > > descriptions?
-> > > >=20
-> > > > Just like all clocks, what would happen? It will be enabled.
-> > >=20
-> > > Oh, wow! Cool stuff. But seriously is it not a problem to have two en=
-tities
-> > > controlling one and the same clock? Is this use-case taken into accou=
-nt by
-> > > the clock framework?
-> >=20
-> > Yes, it is handled correctly. That's a basic use-case, handled by CCF
-> > since some years (~12?). Anyway, whatever OS is doing (or not doing)
-> > with the clocks is independent of the bindings here. The question is
->=20
-> Agree. Probably the bindings would not be the place to document this if it
-> would be an issue.
->=20
-> > about hardware - does this node, which represents PCI interface of the
-> > chip, has/uses the clocks.
->=20
-> The schematics I found for the wifi module and the khadas edge platform s=
-how
-> these are indeed wired to the chip.
+This if-statement should be the first check in brcmf_of_probe(). Can you 
+include that change in your patch.
 
-I have a Rockchip RK3588 Evaluation Board on my desk, which uses the
-same WLAN AP6275P module. I think I already commented on a prior
-version of this series: The LPO clock is needed to make the PCIe
-device visible on the bus. That means this series only works if the
-clock has already been running. Otherwise the PCIe driver will never
-be probed. To become visible the devices requires:
-
-1. The LPO clock to be enabled
-2. Power to be applied
-3. The WL_EN gpio to be configured correctly
-
-If one of the above is not met, the device will not even appear in
-'lspci'. I believe the binding needs to take into consideration, that
-pwrseq is needed for the PCIe side. Fortuantely the heavy lifting of
-creating the proper infrastructure for this has already been done by
-Bartosz Golaszewski for Qualcomm WLAN chips. What is missing is a
-pwrseq driver for the Broadcom chip (or this specific module?).
-
-Greetings,
-
--- Sebastian
-
---jf2alk6nvvmfsvtq
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmapJP4ACgkQ2O7X88g7
-+ppEtw//U1k4jbWPNYlqHLMqe+zCNqwKR5lm/UcmOBN5NZbS+CUQkPZxNBGlVGmV
-GN7dnCABPzlKtbi+IybAV9D3zuZ9pjWqoUmqXDENHluMxyevsPqeIqUdg+QWQbgr
-5XbEXHYbGSl2Ous+jbo3pUBC+riwepUOqO9lMVS/AjpeOgX1JyOIpYEOT9IAqrRn
-ZMHASWZ8jZZCgXZcivEAkpVXhz9TrxDjGZzUKe8zXu4JawYlZt7z1bD3pwoxyQ7J
-KRZpVm3a5RWSJzWcPefJwJ2mhk+/TmDJHMhn+bGtg5j/IoNiBAqFn+hiNRcn1S9E
-Bprr5IAJEs/jYjyytrCAm013AXPpI29pd9k5zBTbj8OeS0DKZA1dOi8gDhB89jVo
-wC/+s6YU2RYC4DwY5FXBjvoZGb2jCALl9vWb2Hhrk9OLtjtphUEz3aPkZYnARWpo
-ElAVz0x76stHIfe4DOIautJHlH9zf4TaBEiqv8M4Sx2fM10Kq5sps6gbSESNLyru
-rswZR4SJwBnJfcAarov9LcWiESEztmGm5HRVGehHqw2470kyUprdElP2h3YLudfx
-frNemcdHN9IByCVz70O6m9sHl9wTaIDCRaFul8DlNalIRbcHNE4Gw1Pr7P8t7rRZ
-pe2MsIYPSY9JzvYlRcuztpgaGHmChUSdhTMhQdbu6x416/EFaOY=
-=lH9x
------END PGP SIGNATURE-----
-
---jf2alk6nvvmfsvtq--
+Regards,
+Arend
