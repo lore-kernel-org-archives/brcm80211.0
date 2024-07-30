@@ -1,41 +1,33 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFB8B79B8E;
-	Tue, 30 Jul 2024 05:11:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7215624;
+	Tue, 30 Jul 2024 06:03:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722316279; cv=none; b=jC7QSwqzyKb89U30soja6HgripiXna//x2uWXYGz6jrHpjqNJUGWRx6podiFopJ7dxk1a8dZSlt9G6ZYiA8/bz9oPjosTVnMH8VJ0p+r9DS0zdVKh8sjVxsnp3vCwiy1yo/4iNotbR811GN0xM8y8FZewSUrBwA1HPYuAajT+I0=
+	t=1722319414; cv=none; b=kBv//lnK2eLrw94WmlTruRVKZD/E60fiDJ8OhiN0hpysJ0OpT62INlf9ddv0CwRIXn+DegN1+ehDSitYaVun+h97mJJ9+gJRQNdqjTNjPyT80VPxIxgX7rlzvrzfwtwbvYBt9pDZ29N9L+N6acxMo+gm9CFH6LqaytPJnTt4Vg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722316279; c=relaxed/simple;
-	bh=y+xJg/pVcJ1y/GxBn6qUhLzXw2h4YczuJeQD8VE2xG4=;
+	s=arc-20240116; t=1722319414; c=relaxed/simple;
+	bh=oL8vRiWidptUNxRTdT1hQz8E7qWGGM60Lp/Ehe5Ovtc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KiGKsBPqC8OiW/M2w3nbc/ajZDlKdE0vqZWtTF7d+snQXLGkLcRKiJPl4HHTQwEUaaIP2XWRBcitBCTDIwylvBtMjwMmcc9YkBtyNStc6lqPVeXwXCeUI9Ck0rQIzlqlG1N2uxOQn9rxgBX0kfVgp003j/eeCotDMunnlj+CSzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.net; spf=pass smtp.mailfrom=gmx.net; dkim=pass (2048-bit key) header.d=gmx.net header.i=wahrenst@gmx.net header.b=GtUlpQMk; arc=none smtp.client-ip=212.227.15.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.net
+	 In-Reply-To:Content-Type; b=cS2PXXRsTXlUdZ5jIcNMUUiJlBE9/hETDLoL2zEY0hDLkSS7vRu/1WB3eG/qqt/ZCNaS22lAvCUBvlAzzICcN+9LkcC/V9GFdzp2skgzwYg+22Q1ibFQVBy6IKxhyFqPvIuDLyX7HD5HjccBpYjVWzgnk8kG2ldQ7olSNDNzqhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EB5YXv7l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.net header.i=wahrenst@gmx.net header.b="GtUlpQMk"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.net;
-	s=s31663417; t=1722316220; x=1722921020; i=wahrenst@gmx.net;
-	bh=g2qT0PqPzss90wszs6Vw/sUubex/AK94mW4YSO8z+6g=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=GtUlpQMkqXYlCdfWx8/dX0Wq2i6sof9gWcfWs64aI6BJI3qKXo5+AodwEWK9DWlA
-	 qdbZJl00uu9DO9wgVIbwnYx8jfGZ0s5QYVYeOwxNJA+3dXSLSlFhuhDug0PkV83LI
-	 HJciUHdFGIpJrkMfT/yjUkyP2mR+cXomXFm8XaIxS0emkgkyso5T4BJaNqAGSLz59
-	 nOlEZfPY3HD72EzVhl0enqT6jUq16emh66uYAHxezsQUB4wiCFoo0pOsoa+Rf/bCu
-	 kBQoB3127MY4K+K1SOFniXT7bztwsts/ohM52GHds0Ccj8kU6eJts9Agn1FN2l546
-	 ZO3uZL9hAi5j4qWOdg==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.1.127] ([37.4.248.43]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mqs0R-1rvQLd2h8b-00m67u; Tue, 30
- Jul 2024 07:10:20 +0200
-Message-ID: <0b2cb5ca-f134-4733-a931-9e192e47c65d@gmx.net>
-Date: Tue, 30 Jul 2024 07:10:16 +0200
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EB5YXv7l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1214C32782;
+	Tue, 30 Jul 2024 06:03:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1722319413;
+	bh=oL8vRiWidptUNxRTdT1hQz8E7qWGGM60Lp/Ehe5Ovtc=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=EB5YXv7l9n3q695IC0pKlQVMp4pqApvOVDQteLhLc69Tvd35UcnGZZjZ8T0t3Bg6z
+	 YG0aNWW1kPKSkeyXObYIlgXo81ZW530aZApkmSmxg/yAnXBLS8xMKHH7izqUZzx0bx
+	 3DYQAIAEDU+eJonvn8CAYg7vY3DkABYZaujRPIErZUMYaUmAKChYwkYkEJHN1VCE2y
+	 5DXWoCMFg+9C6cGsDnc7Kos5dsfM/zcqEygjYTdmlgxcoNPzKWMQsLFJtruU6d6QUc
+	 6hEnCboEnRU9NWBQtA8qbbjrIyr2oS1I5Kj5xwbgR4Dg3YTm/3yKbRjRqaRhmzcVN3
+	 76ja7zN6Tk7vA==
+Message-ID: <841572d7-ecb6-4c11-a890-aa29fd58adf4@kernel.org>
+Date: Tue, 30 Jul 2024 08:03:21 +0200
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -43,8 +35,8 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 4/5] wifi: brcmfmac: Add optional lpo clock enable
- support
+Subject: Re: [PATCH v5 1/5] dt-bindings: net: wireless: brcm4329-fmac: add
+ pci14e4,449d
 To: Jacobe Zang <jacobe.zang@wesion.com>, robh@kernel.org,
  krzk+dt@kernel.org, heiko@sntech.de, kvalo@kernel.org, davem@davemloft.net,
  edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, conor+dt@kernel.org
@@ -54,84 +46,69 @@ Cc: efectn@protonmail.com, dsimic@manjaro.org, jagan@edgeble.ai,
  arend@broadcom.com, linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
  megi@xff.cz, duoming@zju.edu.cn, bhelgaas@google.com,
  minipli@grsecurity.net, brcm80211@lists.linux.dev,
- brcm80211-dev-list.pdl@broadcom.com, nick@khadas.com
+ brcm80211-dev-list.pdl@broadcom.com, nick@khadas.com,
+ Arend van Spriel <arend.vanspriel@broadcom.com>
 References: <20240730033053.4092132-1-jacobe.zang@wesion.com>
- <20240730033053.4092132-5-jacobe.zang@wesion.com>
+ <20240730033053.4092132-2-jacobe.zang@wesion.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Stefan Wahren <wahrenst@gmx.net>
-In-Reply-To: <20240730033053.4092132-5-jacobe.zang@wesion.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:8WNkQqDKD6KnO7CaHnNyvZKHD2ZLfpHZ1KvW+8D6yIJ+YdzOq/6
- CLWdUvzbu9l6YctXbf1haRex8PX2JKcQU7WhDqvAMzzMsm0/6HAKqHK0DRnctKDabAs5BFZ
- vthC6Ht7+pR02+u8OGMUjdtgk+oE3lYNkxhNpFYnAVOFycdKUFvB88ZkSJ5bFY724iQYRV+
- Tuwsjq0ksT2Qcf7t1diEg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:nd+W6xGWmI4=;A2cfTUJ99aOtAX+YCl0i1dYvdGn
- gY8LRgEJiagSJAvzjLo+cxqcN9VESNtTRJi9hoM9ziTMuej/tBgQQsP7MgG43c40YNV2JIIUP
- zJQFD680l97chT4EvmvCycxhn5qU8JNSfYHBmonmQbC+Q+T+WAW9pfNm6U1KDt0E/AwS3jhrc
- r718kLHUxjeK6MA3cvv4UC9gUMdLBhC7wST4tXu4K4L5qK1z60i6ln4DDJgBJNrlj56OMv8ld
- qijT74jCjIf8yOKIhlve+/bOCvFONfBKh/JuVlefEOABQ5PRQmOLya0XNtfq8Q0Jixif/gCxd
- TWUKlZfKnL2AuXXzl8Yu5KViNX+fbBCnCGf4CzPSXT0jiOcOfPYTHdwDjWilOFt3we5aik5Oe
- uxoPvt6CpHUkI7VwX2vqi2zcR8EkoPH5FnzzdDfF+VwO1U6LOEPpmhIL3QGfiiFNvkfCQKXaO
- FcEG7Fn8ScOcG+THZNobY1VgeafUJ1OhS69VcarqU4FbT8BRZPx24o7KZE9Z462ljJl5GX6UH
- Uu+0n+E/BZkcjksmo3oQcJB+eXADkhWdTJ1u0xWIThc5Nh3OOS2RPam8/a/dbsb/G8/zsAWlV
- vhzkPh/Q9RK8j2MYXuKWi+nFZenzFU9KZG+XjmdjhhwaWVNqsAtwLW/DnEJTjDhLctPatGuTS
- GEtSWP5tZtmgB6E3SKFlOghoSCAj3xz8VXIZpJilYua+EbRkvmuwmUMb+trLyL6DU/sLz19QK
- 42yut5KRB/w5+tWdzdB4rt20sjl8bNwO10reoIKWt31a1oYp96fRXkeoKb/dWStZ1yI7rk+2S
- k0ufOL0hbl5TsgctUT3VJ2Sg==
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20240730033053.4092132-2-jacobe.zang@wesion.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Jacobe,
-
-Am 30.07.24 um 05:30 schrieb Jacobe Zang:
-> WiFi modules often require 32kHz clock to function. Add support to
-> enable the clock to PCIe driver.
->
-> Co-developed-by: Ondrej Jirman <megi@xff.cz>
-> Signed-off-by: Ondrej Jirman <megi@xff.cz>
+On 30/07/2024 05:30, Jacobe Zang wrote:
+> It's the device id used by AP6275P which is the Wi-Fi module
+> used by Rockchip's RK3588 evaluation board and also used in
+> some other RK3588 boards.
+> 
+> Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
 > Signed-off-by: Jacobe Zang <jacobe.zang@wesion.com>
-> ---
->   drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c | 8 ++++++++
->   1 file changed, 8 insertions(+)
->
-> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c b/dri=
-vers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
-> index e406e11481a62..6246e3fd7399f 100644
-> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
-> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
-> @@ -6,6 +6,7 @@
->   #include <linux/of.h>
->   #include <linux/of_irq.h>
->   #include <linux/of_net.h>
-> +#include <linux/clk.h>
->
->   #include <defs.h>
->   #include "debug.h"
-> @@ -70,6 +71,7 @@ void brcmf_of_probe(struct device *dev, enum brcmf_bus=
-_type bus_type,
->   {
->   	struct brcmfmac_sdio_pd *sdio =3D &settings->bus.sdio;
->   	struct device_node *root, *np =3D dev->of_node;
-> +	struct clk *clk;
->   	const char *prop;
->   	int irq;
->   	int err;
-> @@ -113,6 +115,12 @@ void brcmf_of_probe(struct device *dev, enum brcmf_=
-bus_type bus_type,
->   		of_node_put(root);
->   	}
->
-> +	clk =3D devm_clk_get_optional_enabled(dev, "lpo");
-> +	if (!IS_ERR_OR_NULL(clk)) {
-> +		brcmf_dbg(INFO, "enabling 32kHz clock\n");
-> +		clk_set_rate(clk, 32768);
-> +	}
-even if the clock is optional, there should be a proper error handling
-(e.g. the -EPROBE_DEFER case).
 
-Best regards
-> +
->   	if (!np || !of_device_is_compatible(np, "brcm,bcm4329-fmac"))
->   		return;
->
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Best regards,
+Krzysztof
 
