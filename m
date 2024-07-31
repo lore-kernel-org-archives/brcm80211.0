@@ -1,252 +1,242 @@
-Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
+Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD23A1AD9C9
-	for <brcm80211@lists.linux.dev>; Wed, 31 Jul 2024 12:32:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 112471B0139
+	for <brcm80211@lists.linux.dev>; Wed, 31 Jul 2024 12:56:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722429154; cv=none; b=LwUg6Zu2FRhb2n9esQ7tuktnlcm7tlE7vTHYELl9MZzeTVJVI5rNhqgbkkZa57AWJQJaxhiUA8RtbilYizhU1wEoV/3cI4EcK42m9kWAmSg09rR2KoS0iwE2CkGXuWxmcYBiWwiguq562/EPaf8FqnGFpuyiN/dIODPqwg7R4C4=
+	t=1722430592; cv=none; b=eTS2/xSCWu69N2hAjMR1rpK0PwLvdcV/2sH7Rc84GUtbb1O4/0ivjQ6tgMZ3srrj+sPhVD6Ukdga1X9wLaQ7/WeSX5ysn4a52z/uMutygM01Lyz+/7UNt1i55lteGL+x0fNdfv7PHkR7PiRpZbYNcyxLhX6ykE1t/EI0gcva75w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722429154; c=relaxed/simple;
-	bh=nIaMDXTEvvVu5TaAZ+M1p28NLK3Hau+a0RwSgozPyD4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cSeonDSrJ9GaTwbl/fqcVZmjD5Cy8hIbMRA68TUAj20XUSGWrlCxoO6r9zilQfD7Hz+rK05IlSmeJATAkVgbd1gI0pggw4IfkUxQvb2TzUyR9RtGq/5crfUf/os/x/hrdMVaN+9ZI5y8uNyAlIC+0ScithRaAaSldfzpzEGG8zI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=dGAPLIr0; arc=none smtp.client-ip=209.85.167.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+	s=arc-20240116; t=1722430592; c=relaxed/simple;
+	bh=ReKHMmunPvE+vcGTa+O4hLPOMROj0UD+UoMrTRavCqU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=NqHOpBTp/84E/qYkP+d+FKbTZv3Z+p6iVKSbl5BjusM0L3LnF2fFI6sS1GshlxpYPHdVPBDYYTSfyAF0VSAmPmtzifnpsMkb/F2M6MjKSDsuIEzY31VBjo0l2VWKrAFPRXPFUha9Ry+7e9fDDMCC/GWgUKEEZrfAnYla58OckpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QfvXWQCe; arc=none smtp.client-ip=209.85.160.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="dGAPLIr0"
-Received: by mail-oi1-f170.google.com with SMTP id 5614622812f47-3db12a2f530so3534243b6e.1
-        for <brcm80211@lists.linux.dev>; Wed, 31 Jul 2024 05:32:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QfvXWQCe"
+Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-44fedc06c03so29078101cf.3
+        for <brcm80211@lists.linux.dev>; Wed, 31 Jul 2024 05:56:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1722429152; x=1723033952; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=IBnztp7MHGTNI2WLXQ1z2xFUTFJyK2sGTn7NhQG6Jn0=;
-        b=dGAPLIr0Gz8l4Veik6TqUoXTRZOxngTElsZMwTxr0TNsFCJ5nuEBK+z7r6USL0eJfm
-         XGDGmEEmAAlJ2ViCURg0wjOgzgPG4g3zWXbY/ST6PlLmOgwCm2o2/AFzZcPBOoan5rtJ
-         /evb7DdBEK6iib0JW/HCfySdCihxb+EDPaxyE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722429152; x=1723033952;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1722430590; x=1723035390; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=IBnztp7MHGTNI2WLXQ1z2xFUTFJyK2sGTn7NhQG6Jn0=;
-        b=Up6yxl84P7PzoMGWhLLtrABESQVEzoYDEqeK6skbvblsnYQMNY9LeeOznvSqAsXWn6
-         i5gibX8o93ygacznlfpFM7MsGLezIVprpi3sicTAe3Nd4p88HNWy6gUcaR/wJ6G9Zz6a
-         4isumQewrdqZh/fdBg9zllgDrTtXjM6NkCV6p5NprAByTuQCUtGQDp+MPhfkB4+bcnsC
-         n7r8IiQVDri9urE52RgTi884KpEp93jZymre9JpyWNsJ6SAVTuiq6Y1V/14bLso1I0sy
-         6BY9IDFLkEAZp9fL6bqYPmcTtgF3Y0qg1ot7P8eZa7ZERS3AEf51oocAckHQZu4FGqqu
-         FqOw==
-X-Forwarded-Encrypted: i=1; AJvYcCVqGL/P6sP9Xf39M2fQSKECMSt+aCi69xmug2P/5VMrro8zdnzcUhT06fkL2hlYZ7VGU+tlV/dzy0WgXIl7DxvYu2HFuZ2Q5d/j
-X-Gm-Message-State: AOJu0Yzc/cnOP/eOaF1NFbm1ZEp8ZE/aF0rALh0o38bjjue8tDoQOSSr
-	WgEpcc6tDBIVskMu94QWKh3+/v986z8ptt4+P4uOPj5fVtC2qq76DxX3/L/Mrg==
-X-Google-Smtp-Source: AGHT+IGub2mfcUjNyEK7FnlmoAJsUg+UOYRuhDDZrKgslzcgZXVtSEKgXAyfNVfLpTCXJ5MAH3GXUw==
-X-Received: by 2002:a05:6808:201c:b0:3da:e219:bf with SMTP id 5614622812f47-3db23d37550mr17331120b6e.43.1722429151648;
-        Wed, 31 Jul 2024 05:32:31 -0700 (PDT)
-Received: from [192.168.178.137] (f215227.upc-f.chello.nl. [80.56.215.227])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-44fe8206b5bsm57935951cf.65.2024.07.31.05.32.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 31 Jul 2024 05:32:31 -0700 (PDT)
-Message-ID: <6e34c814-a6dc-4a96-9e46-ca25af67f4f6@broadcom.com>
-Date: Wed, 31 Jul 2024 14:32:25 +0200
+        bh=1seQq6pVWKt421meYywLs/KfxY3tgGQZFmNZ1IQhRhU=;
+        b=QfvXWQCe8TDqyS4n1Nnx0DhclbdaYgqbKYs2f4B9PHLbbLyrpAbcfBws4TZjp1MO7A
+         HXp1XD88oONs0QSRnqzh4WCpngHdk7qDDy7axwWYS0MlAJIkbNUS7Pg7p3Di92OCf90Q
+         D/UZ5jNVx7PZxISmZaSbtg2jfmvscASkcrNae+XGe3aqj6QypibaIMfvOAPuQHYb1khm
+         QPjq5jZqqCCrRSL88ugB5mTOaIoccJY8ZpfGwxwVY6cF65KNsKmJJPMOjaeK5M6E3DNO
+         ngc6wUKtZ9v1MFlfuvEwqR/SE/jtKci1odjtC4e+vTsksuwDYemxD/fF/QDRQMSZP5ge
+         cxmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722430590; x=1723035390;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=1seQq6pVWKt421meYywLs/KfxY3tgGQZFmNZ1IQhRhU=;
+        b=AkVgfuUUyBfmX9U5Z/IHLDxzT2N9ObSrsHC7glGC+ufzOJdYxtQ75qAz3IhapCvPLr
+         mVrYW+obSRQm1PzR9+nHkqqlcA+FDNW62+Se6Eu8/i5/ChaVxzcmPdG5EVexdH4Fppgi
+         0xPZ+/6HxF2h3h6RpNcpnqfagf0a5yyhBpahySMn36yqMVneGxTrfdZ8Bw80ymIduJot
+         f18mKKBTqg23MMiOxZrFqu2uKmwBc+8mYFF2OJRWrEoJpWG0byxThNLUnYel5Xm+JekB
+         1bDTn/pXHEfsIqiwydDfodNjUW+a4olbvv5I+R4jmt3nNjJsDlr0fyANYU7HC/tgp5dE
+         G4Lw==
+X-Forwarded-Encrypted: i=1; AJvYcCWFhFsJYCH6jyqiigkQDF4lK+iW9fMajAFC//d/em8kx6kgi6+atPMmbpcle92EZpwzrPgQ2d3e9r25f9S452dwYO6kuZAna7Sp
+X-Gm-Message-State: AOJu0YyeILWEHMbbZ+biZoGaYK4s0N/no4avV2XmQgOVxydRv+jMXFB+
+	OCrKXvIzy4pltQsH0uskAQrR3ajEz4hT2maNJAx5+nGXUM8o0xAViQM2+F5An3gh2NZ/ShrNv7a
+	n6v4MWGcP0/tac0Xc4Scmwiv7DMM=
+X-Google-Smtp-Source: AGHT+IHjDtpIf0QCPWYz+XhMAa8yvBe/ManCTONa09BmUisSVpzkusuCKuxED1ndPBdlxCf66ZyqBkZoqGckyZQwO10=
+X-Received: by 2002:ac8:7d10:0:b0:447:f469:b58d with SMTP id
+ d75a77b69052e-45004f4e214mr187667771cf.42.1722430589901; Wed, 31 Jul 2024
+ 05:56:29 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 4/5] wifi: brcmfmac: Add optional lpo clock enable
- support
-To: Alexey Charkov <alchark@gmail.com>
-Cc: Jacobe Zang <jacobe.zang@wesion.com>, robh@kernel.org,
- krzk+dt@kernel.org, heiko@sntech.de, kvalo@kernel.org, davem@davemloft.net,
- edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
- conor+dt@kernel.org, efectn@protonmail.com, dsimic@manjaro.org,
- jagan@edgeble.ai, devicetree@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-rockchip@lists.infradead.org,
- linux-kernel@vger.kernel.org, arend@broadcom.com,
- linux-wireless@vger.kernel.org, netdev@vger.kernel.org, megi@xff.cz,
- duoming@zju.edu.cn, bhelgaas@google.com, minipli@grsecurity.net,
- brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com,
- nick@khadas.com
 References: <20240731061132.703368-1-jacobe.zang@wesion.com>
- <20240731061132.703368-5-jacobe.zang@wesion.com>
- <0a78a0fb-0a5e-424f-a801-4a63b9ee1a49@gmail.com>
- <3ded8aea-ee11-43da-9dd7-1259cf931747@broadcom.com>
- <CABjd4YxiSY0A0iVHGHw9RDey+avxmzUapoLLLyf=80MzVX0yWA@mail.gmail.com>
-Content-Language: en-US
-From: Arend van Spriel <arend.vanspriel@broadcom.com>
-Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
- 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
-In-Reply-To: <CABjd4YxiSY0A0iVHGHw9RDey+avxmzUapoLLLyf=80MzVX0yWA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+ <20240731061132.703368-5-jacobe.zang@wesion.com> <0a78a0fb-0a5e-424f-a801-4a63b9ee1a49@gmail.com>
+ <3ded8aea-ee11-43da-9dd7-1259cf931747@broadcom.com> <CABjd4YxiSY0A0iVHGHw9RDey+avxmzUapoLLLyf=80MzVX0yWA@mail.gmail.com>
+ <6e34c814-a6dc-4a96-9e46-ca25af67f4f6@broadcom.com>
+In-Reply-To: <6e34c814-a6dc-4a96-9e46-ca25af67f4f6@broadcom.com>
+From: Alexey Charkov <alchark@gmail.com>
+Date: Wed, 31 Jul 2024 15:56:18 +0300
+Message-ID: <CABjd4YxdCh7EceYOfcFxKtV0H7Von0oZAMWD=69sM6y4-CoAQw@mail.gmail.com>
+Subject: Re: [PATCH v6 4/5] wifi: brcmfmac: Add optional lpo clock enable support
+To: Arend van Spriel <arend.vanspriel@broadcom.com>
+Cc: Jacobe Zang <jacobe.zang@wesion.com>, robh@kernel.org, krzk+dt@kernel.org, 
+	heiko@sntech.de, kvalo@kernel.org, davem@davemloft.net, edumazet@google.com, 
+	kuba@kernel.org, pabeni@redhat.com, conor+dt@kernel.org, 
+	efectn@protonmail.com, dsimic@manjaro.org, jagan@edgeble.ai, 
+	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-rockchip@lists.infradead.org, linux-kernel@vger.kernel.org, 
+	arend@broadcom.com, linux-wireless@vger.kernel.org, netdev@vger.kernel.org, 
+	megi@xff.cz, duoming@zju.edu.cn, bhelgaas@google.com, minipli@grsecurity.net, 
+	brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com, 
+	nick@khadas.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 7/31/2024 2:01 PM, Alexey Charkov wrote:
-> On Wed, Jul 31, 2024 at 2:15 PM Arend van Spriel
-> <arend.vanspriel@broadcom.com> wrote:
->>
->> On 7/31/2024 12:16 PM, Alexey Charkov wrote:
->>> Hi Jacobe,
->>>
->>>
->>> On 31/07/2024 9:11 am, Jacobe Zang wrote:
->>>   > WiFi modules often require 32kHz clock to function. Add support to
->>>   > enable the clock to PCIe driver and move "brcm,bcm4329-fmac" check
->>>   > to the top of brcmf_of_probe
->>>   >
->>>   > Co-developed-by: Ondrej Jirman <megi@xff.cz>
->>>   > Signed-off-by: Ondrej Jirman <megi@xff.cz>
->>>   > Signed-off-by: Jacobe Zang <jacobe.zang@wesion.com>
->>>   > ---
->>>   >  .../net/wireless/broadcom/brcm80211/brcmfmac/of.c    | 12 +++++++++++-
->>>   >  1 file changed, 11 insertions(+), 1 deletion(-)
->>>   >
->>>   > diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
->>> b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
->>>   > index e406e11481a62..7e0a2ad5c7c8a 100644
->>>   > --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
->>>   > +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
->>>   > @@ -6,6 +6,7 @@
->>>   >  #include <linux/of.h>
->>>   >  #include <linux/of_irq.h>
->>>   >  #include <linux/of_net.h>
->>>   > +#include <linux/clk.h>
->>>   >
->>>   >  #include <defs.h>
->>>   >  #include "debug.h"
->>>   > @@ -70,12 +71,16 @@ void brcmf_of_probe(struct device *dev, enum
->>> brcmf_bus_type bus_type,
->>>   >  {
->>>   >      struct brcmfmac_sdio_pd *sdio = &settings->bus.sdio;
->>>   >      struct device_node *root, *np = dev->of_node;
->>>   > +    struct clk *clk;
->>>   >      const char *prop;
->>>   >      int irq;
->>>   >      int err;
->>>   >      u32 irqf;
->>>   >      u32 val;
->>>   >
->>>   > +    if (!np || !of_device_is_compatible(np, "brcm,bcm4329-fmac"))
->>>   > +        return;
->>>
->>> Did you test this? The DTS patch you sent as part of this series doesn't
->>> list "brcm,bcm4329-fmac" in the compatible, so this will probably return
->>> right here, skipping over the rest of your patch.
->>>
->>> Please test before resending, both with and without the driver for the
->>> Bluetooth part of the chip (since it also touches clocks).
->>>
->>> You are also changing the behavior for other systems by putting this
->>> check further up the probe path, which might break things for no reason.
->>> Better put your clk-related addition below where this check was
->>> originally, rather than reorder stuff you don't have to reorder.
->>
->> That was upon my suggestion. That check was originally at the top of the
->> function, but people added stuff before that. I agree that makes the
->> compatible "brcm,brcm4329-fmac" required which is what the textual
->> binding stated before the switch to YAML was made:
->>
->> """
->> Broadcom BCM43xx Fullmac wireless SDIO devices
->>
->> This node provides properties for controlling the Broadcom wireless
->> device. The
->> node is expected to be specified as a child node to the SDIO controller that
->> connects the device to the system.
->>
->> Required properties:
->>
->>    - compatible : Should be "brcm,bcm4329-fmac".
->> """
->>
->> Not sure whether this is still true for YAML version (poor YAML reading
->> skills ;-) ), but it should as the switch from textual to YAML should
->> not have changed the bindings specification.
->>
->>>   > +
->>>   >      /* Apple ARM64 platforms have their own idea of board type,
->>> passed in
->>>   >       * via the device tree. They also have an antenna SKU parameter
->>>   >       */
->>>   > @@ -113,8 +118,13 @@ void brcmf_of_probe(struct device *dev, enum
->>> brcmf_bus_type bus_type,
->>>   >          of_node_put(root);
->>>   >      }
->>>   >
->>>   > -    if (!np || !of_device_is_compatible(np, "brcm,bcm4329-fmac"))
->>>   > +    clk = devm_clk_get_optional_enabled(dev, "lpo");
->>>   > +    if (!IS_ERR_OR_NULL(clk)) {
->>>   > +        brcmf_dbg(INFO, "enabling 32kHz clock\n");
->>>   > +        clk_set_rate(clk, 32768);
->>>   > +    } else {
->>>   >          return;
->>>
->>> Why return here? If the clock is optional, a lot of systems will not
->>> have it - that shouldn't prevent the driver from probing. And you are
->>> still not handling the -EPROBE_DEFER case which was mentioned on your
->>> previous submission.
->>
->> Right. The else statement above could/should be:
->>
->> } else if (clk && PTR_ERR(clk) == -EPROBE_DEFER) {
->>           return PTR_ERR(clk);
->> }
-> 
-> ... plus change the function prototype to return int and propagate
-> that error code through brcmf_get_module_param to brcmf_pcie_probe's
-> return value. I guess checking clk for NULL is also redundant in this
-> case?
+On Wed, Jul 31, 2024 at 3:32=E2=80=AFPM Arend van Spriel
+<arend.vanspriel@broadcom.com> wrote:
+>
+> On 7/31/2024 2:01 PM, Alexey Charkov wrote:
+> > On Wed, Jul 31, 2024 at 2:15=E2=80=AFPM Arend van Spriel
+> > <arend.vanspriel@broadcom.com> wrote:
+> >>
+> >> On 7/31/2024 12:16 PM, Alexey Charkov wrote:
+> >>> Hi Jacobe,
+> >>>
+> >>>
+> >>> On 31/07/2024 9:11 am, Jacobe Zang wrote:
+> >>>   > WiFi modules often require 32kHz clock to function. Add support t=
+o
+> >>>   > enable the clock to PCIe driver and move "brcm,bcm4329-fmac" chec=
+k
+> >>>   > to the top of brcmf_of_probe
+> >>>   >
+> >>>   > Co-developed-by: Ondrej Jirman <megi@xff.cz>
+> >>>   > Signed-off-by: Ondrej Jirman <megi@xff.cz>
+> >>>   > Signed-off-by: Jacobe Zang <jacobe.zang@wesion.com>
+> >>>   > ---
+> >>>   >  .../net/wireless/broadcom/brcm80211/brcmfmac/of.c    | 12 ++++++=
++++++-
+> >>>   >  1 file changed, 11 insertions(+), 1 deletion(-)
+> >>>   >
+> >>>   > diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.=
+c
+> >>> b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
+> >>>   > index e406e11481a62..7e0a2ad5c7c8a 100644
+> >>>   > --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
+> >>>   > +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
+> >>>   > @@ -6,6 +6,7 @@
+> >>>   >  #include <linux/of.h>
+> >>>   >  #include <linux/of_irq.h>
+> >>>   >  #include <linux/of_net.h>
+> >>>   > +#include <linux/clk.h>
+> >>>   >
+> >>>   >  #include <defs.h>
+> >>>   >  #include "debug.h"
+> >>>   > @@ -70,12 +71,16 @@ void brcmf_of_probe(struct device *dev, enum
+> >>> brcmf_bus_type bus_type,
+> >>>   >  {
+> >>>   >      struct brcmfmac_sdio_pd *sdio =3D &settings->bus.sdio;
+> >>>   >      struct device_node *root, *np =3D dev->of_node;
+> >>>   > +    struct clk *clk;
+> >>>   >      const char *prop;
+> >>>   >      int irq;
+> >>>   >      int err;
+> >>>   >      u32 irqf;
+> >>>   >      u32 val;
+> >>>   >
+> >>>   > +    if (!np || !of_device_is_compatible(np, "brcm,bcm4329-fmac")=
+)
+> >>>   > +        return;
+> >>>
+> >>> Did you test this? The DTS patch you sent as part of this series does=
+n't
+> >>> list "brcm,bcm4329-fmac" in the compatible, so this will probably ret=
+urn
+> >>> right here, skipping over the rest of your patch.
+> >>>
+> >>> Please test before resending, both with and without the driver for th=
+e
+> >>> Bluetooth part of the chip (since it also touches clocks).
+> >>>
+> >>> You are also changing the behavior for other systems by putting this
+> >>> check further up the probe path, which might break things for no reas=
+on.
+> >>> Better put your clk-related addition below where this check was
+> >>> originally, rather than reorder stuff you don't have to reorder.
+> >>
+> >> That was upon my suggestion. That check was originally at the top of t=
+he
+> >> function, but people added stuff before that. I agree that makes the
+> >> compatible "brcm,brcm4329-fmac" required which is what the textual
+> >> binding stated before the switch to YAML was made:
+> >>
+> >> """
+> >> Broadcom BCM43xx Fullmac wireless SDIO devices
+> >>
+> >> This node provides properties for controlling the Broadcom wireless
+> >> device. The
+> >> node is expected to be specified as a child node to the SDIO controlle=
+r that
+> >> connects the device to the system.
+> >>
+> >> Required properties:
+> >>
+> >>    - compatible : Should be "brcm,bcm4329-fmac".
+> >> """
+> >>
+> >> Not sure whether this is still true for YAML version (poor YAML readin=
+g
+> >> skills ;-) ), but it should as the switch from textual to YAML should
+> >> not have changed the bindings specification.
+> >>
+> >>>   > +
+> >>>   >      /* Apple ARM64 platforms have their own idea of board type,
+> >>> passed in
+> >>>   >       * via the device tree. They also have an antenna SKU parame=
+ter
+> >>>   >       */
+> >>>   > @@ -113,8 +118,13 @@ void brcmf_of_probe(struct device *dev, enum
+> >>> brcmf_bus_type bus_type,
+> >>>   >          of_node_put(root);
+> >>>   >      }
+> >>>   >
+> >>>   > -    if (!np || !of_device_is_compatible(np, "brcm,bcm4329-fmac")=
+)
+> >>>   > +    clk =3D devm_clk_get_optional_enabled(dev, "lpo");
+> >>>   > +    if (!IS_ERR_OR_NULL(clk)) {
+> >>>   > +        brcmf_dbg(INFO, "enabling 32kHz clock\n");
+> >>>   > +        clk_set_rate(clk, 32768);
+> >>>   > +    } else {
+> >>>   >          return;
+> >>>
+> >>> Why return here? If the clock is optional, a lot of systems will not
+> >>> have it - that shouldn't prevent the driver from probing. And you are
+> >>> still not handling the -EPROBE_DEFER case which was mentioned on your
+> >>> previous submission.
+> >>
+> >> Right. The else statement above could/should be:
+> >>
+> >> } else if (clk && PTR_ERR(clk) =3D=3D -EPROBE_DEFER) {
+> >>           return PTR_ERR(clk);
+> >> }
+> >
+> > ... plus change the function prototype to return int and propagate
+> > that error code through brcmf_get_module_param to brcmf_pcie_probe's
+> > return value. I guess checking clk for NULL is also redundant in this
+> > case?
+>
+> Only wanted to give the suggestion to get started. Propagating the
+> return value seemed obvious to me, but you are absolutely right.
+> PTR_ERR(NULL) will probably be something else than -EPROBE_DEFER but it
+> seems odd to me. Maybe PTR_ERR_OR_ZERO(clk) is a better option here.
 
-Only wanted to give the suggestion to get started. Propagating the 
-return value seemed obvious to me, but you are absolutely right. 
-PTR_ERR(NULL) will probably be something else than -EPROBE_DEFER but it 
-seems odd to me. Maybe PTR_ERR_OR_ZERO(clk) is a better option here.
+Indeed. Perhaps something along the lines of:
 
-Regards,
-Arend
+       clk =3D devm_clk_get_optional_enabled(dev, "lpo");
+       if (!IS_ERR_OR_NULL(clk)) {
+               brcmf_dbg(INFO, "enabling 32kHz clock\n");
+               return clk_set_rate(clk, 32768);
+       } else {
+               return PTR_ERR_OR_ZERO(clk);
+       }
+
+... which should then go at the very end of brcmf_of_probe. And all of
+the existing void returns should get appropriate errno's. And the
+functions prototypes should be updated along the call chain. And then
+it would still only work after pwrseq is added to ensure that power
+and wake signals are applied correctly along with this clock, as
+Sebastian pointed out in the other thread :)
+
+Which really prompts a question: should this clock be added to the
+PCIe driver and the respective DT binding in the first place, or
+should it instead be claimed by pwrseq, leaving brcmfmac alone?
+
+Best regards,
+Alexey
