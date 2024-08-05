@@ -1,134 +1,228 @@
-Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
+Received: from APC01-PSA-obe.outbound.protection.outlook.com (mail-psaapc01on2096.outbound.protection.outlook.com [40.107.255.96])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8752AD38;
-	Mon,  5 Aug 2024 06:25:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722839155; cv=none; b=VXG6kkGtWjfufM9vhOEguhCtlIcl7hsEfmGdSEfCTII6h4zWEAY2MMwYVUtgHc6MwDvxOZWrjiREN+BAdT6GQ/wx8MzlCOgz709UHYVMpsC2QIUAu607v+FgPH3CgqkeZCY9qH9CCCDT3ImJg7hjLJ1rOwNd94KHnJRP1oAiyYc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722839155; c=relaxed/simple;
-	bh=NFKvwhMYxv6H12ucH+V7Tz+LDXlTONBEHssLV55FCFw=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=MWUrAC5ecueuQNGLpvZ3n0Ubtz0pMZ8FGHmpFEO1aTbxrnwqG/O+Lgo/uZFedtYuya5jOXgbiGPY8vI92EwSckQ1pY1gGO+dytwenazeBF9bCR0LTbwr/vYRudOIlftClEVW3KWrwD32ZsIN5uCTNuL8Wa8uvnO70H0RVm0PtEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jannau.net; spf=pass smtp.mailfrom=jannau.net; dkim=pass (2048-bit key) header.d=jannau.net header.i=@jannau.net header.b=WNr3s5s2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=m1l8IFN2; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jannau.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jannau.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jannau.net header.i=@jannau.net header.b="WNr3s5s2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="m1l8IFN2"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 87F711151E4E;
-	Mon,  5 Aug 2024 02:25:52 -0400 (EDT)
-Received: from wimap26 ([10.202.2.86])
-  by compute6.internal (MEProxy); Mon, 05 Aug 2024 02:25:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jannau.net; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1722839152;
-	 x=1722925552; bh=NFKvwhMYxv6H12ucH+V7Tz+LDXlTONBEHssLV55FCFw=; b=
-	WNr3s5s2DNlO/DPFFhXdkIG/dxcIAVuFMJM2l+SFj35fqOei+irmzgAaaT8PwI/H
-	QU89IPh/mdURGwcdrlR7ptwFmnfci0wnMpLLJL4uPkS1+rtkoaqFgWqTrdktb7X+
-	K7zYdGFb1/KAzvuPexDtbaxKNYFPYryV78Jy4yO/dQOlA+OCb3O+7JLWipETbihg
-	bWPjYkva17cWZvsQrOaMKvv06jYPRsocM8rm1exz6xQYyiosHD1reYMUSldm1gp6
-	fcg11Ss6Ahzn4gmxosxGVnIq/qFYuO06xuh9VDTWgN65FpZKlzqxQETqx10cmFYJ
-	V6qYFYCifMQGPZST1UTXWA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1722839152; x=
-	1722925552; bh=NFKvwhMYxv6H12ucH+V7Tz+LDXlTONBEHssLV55FCFw=; b=m
-	1l8IFN2VirG95gejjfEhwu3WzNrPE/oHDFzcl5YwkBEZJwM6oH9kAe2XNTV6/Cp2
-	bfj6RRZHv+20UyW+pR9Vw2vWDnaMF5z1FbfqlfuhPmYFVX6i3A2H2yri4LWMHaFi
-	vbhUnwV+tJ2B2mEaFcigv00ACnBmbqjLu0JMKh6391DYb+EvDTrxG7/aSDCn4Ynl
-	IulAwdekeyVeKR0i8zhzTjMEp+dX6IjxmY2nT8vZT4uHRGmNR99xvK9F6aI+ZGSw
-	36uLZ6AmoYBdSWkTKws97d0j53DBk1HbolD4pH4pAQUS1jPhxn9Z9UD2zO/KrTgc
-	GnnRVjgE5X8+tsO6iQJ/g==
-X-ME-Sender: <xms:b3CwZqKf3CXFc9I-9TyQ-S9ZsJiNVEvRDOdu2mT9PQBTPV3WA62fbA>
-    <xme:b3CwZiKgqUPz6Ef9zdUsMIrpAZkA4ScCAD3byTolg7k1edVnERPq0oAVy6mB6Rvey
-    IhiUx_preVx-jONlvA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrkeehgdduuddtucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedflfgr
-    nhhnvgcuifhruhhnrghufdcuoehjsehjrghnnhgruhdrnhgvtheqnecuggftrfgrthhtvg
-    hrnhephfeguddvheevvedtueelkefgfeeijeetgffffedtleetgfeuueetudelleffgeel
-    necuffhomhgrihhnpehprghsthgvsghinhdrtghomhdpfidurdhfihdpihhnfhhrrgguvg
-    grugdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhr
-    ohhmpehjsehjrghnnhgruhdrnhgvthdpnhgspghrtghpthhtoheptd
-X-ME-Proxy: <xmx:cHCwZqsS0EfwtTYHvBVuM8mf2Z1QLY7HB-cKdpjyAmv3olJMW8ECIw>
-    <xmx:cHCwZvYA5UjO9dbEP04yPZBETxI17CV11Y2OD5zTnjyR1vVymocnKw>
-    <xmx:cHCwZhYxajsE4Ut6xBLI1jh7axP13Hl3keLKyASnlCTPj57U8EKHnA>
-    <xmx:cHCwZrBGf4mYCwfqAu1YUvvf-ipNZNJMwJwxyJn3vaZfXNLwOsCU4Q>
-    <xmx:cHCwZnBlNC4tjCll2sg_DyeRp_MY81asWItW3wqX1F70uRLfZg-mxL6R>
-Feedback-ID: i47b949f6:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id E06E219C0069; Mon,  5 Aug 2024 02:25:51 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 313672AD04
+	for <brcm80211@lists.linux.dev>; Mon,  5 Aug 2024 07:34:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.255.96
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1722843286; cv=fail; b=CUADcwSnzlnT7n9YoWSgi6o3i0BiO79rF26/sp+pjSjwEGB1Zezb3H9cFTAA3TUo1gF0Svx3Dd+CNlLFAx9uxOSBtPG90StbsRiaPM32A6ALd7M2JKVhYBaV90f9c5Q4a/tFBjrIddo9S756t5xBi/ByqyOBfuIKing348hmTbI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1722843286; c=relaxed/simple;
+	bh=C30uLWdglNxBzumGBgsA0GivE4Gw1GpMMTWIu+/Yw5U=;
+	h=From:To:Cc:Subject:Date:Message-Id:Content-Type:MIME-Version; b=CPWbZmxKa9FhoHMrxAIp89ezzghngaYtKqiyf4Pb5KbEx5/X+9Utwb/m6QQxxR1zcXj51YLAbi0QO9JIO+tIABNE2JvB8AQuOL46V5ymLPYrmGfVnn5Eh9u1XJhLj2wjAUNwBXEiRHkPZ9rFli0PqLwKC/UmKSjVRu3WQaWPudw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wesion.com; spf=pass smtp.mailfrom=wesion.com; arc=fail smtp.client-ip=40.107.255.96
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wesion.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wesion.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=nIWmO8g1b7oOWMafEzCDYPtA2shOK0n6xJJ9d+wQwHZiVWwGyfGv8yUa2QbobKQgWEXljC2+ygUmuf9FVTDYp3WGZ+2W2CTI6P8coJGvKNTf7iU/PE3DV1sdXErBFn18vtUdJ51Z7Vr3XtdwH7VWaJOc8xMxVyt2v4U2H1ZQ1RCM5ns86/5PM4CfDy3SXjg+PEphhWAT02AlN7672lHc2EWbhjgKS5sshyzIM/G4qXbH/DBwOBXjOxELxGz/ggIjK06/aJK4NlLIc6WEp5sONkzufYoGfS5xxQF3WCqnU+tdKANHurYtfcsY7J5iaCHwIAzYt4lkrWY8VG5pjZv9tw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=pbmv7CYQnne+n5iC/mAJMihfRBti3RW0UrXg360vIHg=;
+ b=CW/iSUBjAqOyt8aXsJvlBY2A6EiqhB7GU+lDu72U/0ZOPXcu47KJpFu+iOFgIDNUIzm9GxQDkw0sYq18he5MUfGXrdaiI0lchQYtimhWCSu0jHFq0LB7B5AG9g7QwpBcgWR9BqPrsGqPsKGE297j60d2CKpuMBh91RVPfq+o6OV9+ElR/1FtrbODd3pR2bwKmMrSuz7LUueNw7TTTc8bxOtEN+To4f6rutuAY8sdxX/yGj62Km24O54ezMO7Yct6wMqTI8B07J1yH1mM26pOZYHz3Wh9my8RDlWOtHxhhUr/Sxlu8DrDF1lejwRojjdX7sv2jN+Wt6vKPn3V9CI9DA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=wesion.com; dmarc=pass action=none header.from=wesion.com;
+ dkim=pass header.d=wesion.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=wesion.com;
+Received: from TYZPR03MB7001.apcprd03.prod.outlook.com (2603:1096:400:26a::14)
+ by JH0PR03MB8052.apcprd03.prod.outlook.com (2603:1096:990:37::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7828.25; Mon, 5 Aug
+ 2024 07:34:37 +0000
+Received: from TYZPR03MB7001.apcprd03.prod.outlook.com
+ ([fe80::78dd:5e68:1a9c:36c0]) by TYZPR03MB7001.apcprd03.prod.outlook.com
+ ([fe80::78dd:5e68:1a9c:36c0%6]) with mapi id 15.20.7828.024; Mon, 5 Aug 2024
+ 07:34:37 +0000
+From: Jacobe Zang <jacobe.zang@wesion.com>
+To: robh@kernel.org,
+	krzk+dt@kernel.org,
+	heiko@sntech.de,
+	kvalo@kernel.org,
+	davem@davemloft.net,
+	edumazet@google.com,
+	kuba@kernel.org,
+	pabeni@redhat.com,
+	conor+dt@kernel.org,
+	arend.vanspriel@broadcom.com
+Cc: efectn@protonmail.com,
+	dsimic@manjaro.org,
+	jagan@edgeble.ai,
+	devicetree@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-rockchip@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	arend@broadcom.com,
+	linux-wireless@vger.kernel.org,
+	netdev@vger.kernel.org,
+	megi@xff.cz,
+	duoming@zju.edu.cn,
+	bhelgaas@google.com,
+	minipli@grsecurity.net,
+	brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com,
+	nick@khadas.com,
+	Jacobe Zang <jacobe.zang@wesion.com>
+Subject: [PATCH v8 0/5] Add AP6275P wireless support
+Date: Mon,  5 Aug 2024 15:34:20 +0800
+Message-Id: <20240805073425.3492078-1-jacobe.zang@wesion.com>
+X-Mailer: git-send-email 2.34.1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: SGXP274CA0010.SGPP274.PROD.OUTLOOK.COM (2603:1096:4:b8::22)
+ To TYZPR03MB7001.apcprd03.prod.outlook.com (2603:1096:400:26a::14)
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Date: Mon, 05 Aug 2024 08:25:31 +0200
-From: "Janne Grunau" <j@jannau.net>
-To: "arend.vanspriel@broadcom.com" <arend.vanspriel@broadcom.com>,
- "Aditya Garg" <gargaditya08@live.com>,
- "devnull+j.jannau.net@kernel.org" <devnull+j.jannau.net@kernel.org>
-Cc: asahi@lists.linux.dev,
- "brcm80211-dev-list.pdl@broadcom.com" <brcm80211-dev-list.pdl@broadcom.com>,
- "brcm80211@lists.linux.dev" <brcm80211@lists.linux.dev>,
- "kvalo@kernel.org" <kvalo@kernel.org>,
- "linus.walleij@linaro.org" <linus.walleij@linaro.org>,
- LKML <linux-kernel@vger.kernel.org>,
- "linux-wireless@vger.kernel.org" <linux-wireless@vger.kernel.org>,
- "Hector Martin" <marcan@marcan.st>,
- "stable@vger.kernel.org" <stable@vger.kernel.org>
-Message-Id: <9ed78539-35ca-4643-9a38-ac2c0379f395@app.fastmail.com>
-In-Reply-To: <ac9f0cb4-ba12-44f1-b32f-d17e24fe426a@app.fastmail.com>
-References: 
- <MA0P287MB021718EE92FC809CB2BB0F82B8BD2@MA0P287MB0217.INDP287.PROD.OUTLOOK.COM>
- <306c3010-a6ac-4f8a-a986-88c1a137ed84@app.fastmail.com>
- <MA0P287MB021725DE596EF4E5294FA5DDB8BD2@MA0P287MB0217.INDP287.PROD.OUTLOOK.COM>
- <1911d0fdea8.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
- <ac9f0cb4-ba12-44f1-b32f-d17e24fe426a@app.fastmail.com>
-Subject: Re: [PATCH] wifi: brcmfmac: cfg80211: Handle SSID based pmksa deletion
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TYZPR03MB7001:EE_|JH0PR03MB8052:EE_
+X-MS-Office365-Filtering-Correlation-Id: 24e3839e-0996-413b-e7d5-08dcb5210f4e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|52116014|366016|7416014|376014|1800799024|38350700014|921020;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?k3fZRlU8YtGxBk+MCikHPDAIgflyM6x8O0JojDGcOi7H7GVpkOqvmcjyNDJy?=
+ =?us-ascii?Q?uXK5d200z2jKPX9bqlNXSjmO2AkCsSDlXYa2RmNVru//+o5PgYhFKCjKZEud?=
+ =?us-ascii?Q?3CDebajWQRNzEP+vxwn51Icj0JoEFTjni587Pjt0sk5F9ka7To7JDK7JOsFC?=
+ =?us-ascii?Q?qRtLkSZ1/ZO22lOK3kn05q3EDY+s6pdpeoUnO6LnMBYrryw3xCr6oP6M4LTI?=
+ =?us-ascii?Q?hJC1Ec+p6BO/f7ryOz359NRnwLvwA0+Pwe6jJu3G45nHHDRH20zX9Pel0u5i?=
+ =?us-ascii?Q?Xe01KaX60uwfffSKqjpwIzigPlXD29BNPh8cYET2uWNLf+OtZxb6hGUyI0ag?=
+ =?us-ascii?Q?G7LjuW93AYrZM4xMTOytppAQiXoyp7aJo+wZrIeAWcxVCWhCH7U1xmROO2u/?=
+ =?us-ascii?Q?uV+/pzptyDkMzX4Dy8YdUzIjWxwmCD06wo4tBDRMirSYUd+HszDNVzSX5V4E?=
+ =?us-ascii?Q?5jvEHB4/g5XogvcOTRTqyyvu0hing0kb7bpHGssGvXjzYzJ7RfWdEB12FdiW?=
+ =?us-ascii?Q?ierU4UIa51IAAzce0MkJJEi5FIxVXtqGJuVPu2AT9y9vgxQdv0AcJ2Ho4+RP?=
+ =?us-ascii?Q?FCffCk7MIkUMXzL88XvEWFsDryprm0wsPC3pqI5jPoX7VnUT4SLfClsS6rdp?=
+ =?us-ascii?Q?DbQ4qwBVpaPoCN3acG5f8yu0Xqn3mhsrPHDC58h+HG1ccnn50humlStQTicN?=
+ =?us-ascii?Q?/td0Eyx6iq1VEK5p/f0Y5xheWnoEispVO58Rsm9/RoGCeNViCP2SclMOaG7x?=
+ =?us-ascii?Q?NHvJUZkgkpHuHdwAYn5iKQ26g774UmfpmWeQe3gj7/JXCgAhV/Zyd9wNkAhe?=
+ =?us-ascii?Q?fBy3DkZRO9+JRgyzru3+KiXmkyEJI4PYnyxhttRrIr6NTk5b9hw67G7JDbFC?=
+ =?us-ascii?Q?9YRo8Bfq+olIB6VW5gASbgVAdzJzUO6mM5vOOEVUluywPJu8Ynm7PT3scVe6?=
+ =?us-ascii?Q?MG+GHi5JbjI+otRlS3Un995R8NsXV1mfKos3J+gcMbjEEerotAnapmYZigqI?=
+ =?us-ascii?Q?d/beBsSG2ktq4LJaxclzXI9L3bWAinDB3/oJ9JMIvUeezQtXiV4sWTYJowW7?=
+ =?us-ascii?Q?T9v8MYExlW0npfczx/X3S0ZS7hjaw5YrEh9nfDMzhSQ3vbx39Y8GWXYNFKes?=
+ =?us-ascii?Q?OVM67a2cbPf1Pewv+UsW1pj/nczdBznmFw94kRj0uLIsVttNZ96txDxr1e3J?=
+ =?us-ascii?Q?Zrj3wL/O1qSsFBwqNqy2uVxJfuYQr458mDXjJoG5+jgh1UmjpRaikvHmdtaG?=
+ =?us-ascii?Q?CLdURlfF9s0CGanKSnh4YVCDXdqyLeWL4NJW8RlChwm1/EsRvPk20fwhlA/8?=
+ =?us-ascii?Q?Jq2XGLLICzaff/1bj3BqlgmGXarPymiLZH1qDWkdto9ZuUI7MURpN6bj7+aN?=
+ =?us-ascii?Q?IUWx85E=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TYZPR03MB7001.apcprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(52116014)(366016)(7416014)(376014)(1800799024)(38350700014)(921020);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?kp6C3vyh0PQPWPkVW/NHK6Stj7SSjL538GOrDVs0FjhdpgOuV3aIyGFucBJE?=
+ =?us-ascii?Q?oTqBnlHKtwMquv9AJlVtkhQivFEwtq3cbnpHdo5yhJdJ1bHaZVvOaso9DuML?=
+ =?us-ascii?Q?gzjYe2pAco0Xb+bIQDBCe4u3Kqrl4gJDGRWrBW41wHG/JiRzlVMux0GO4/py?=
+ =?us-ascii?Q?eKchYvCvMqWN2PwN9U75+EnL4PYfgJhQSaW2oEB2evvKohZP1wHNZeoFqWeE?=
+ =?us-ascii?Q?edLSi3aWSxSWlaJK5cipZDdVvkFC+aIu/TlYZCI4H2jDK8OEJhNziHdhy6Tv?=
+ =?us-ascii?Q?NAigofpn9+Bz93TQbVrfm7OrbMaC1b2rKfYVOS17iDTYLfAKMP3kHbBmHryd?=
+ =?us-ascii?Q?7i1zggsfk+JnISCKb7R+TI12OnKvjDGzXiXQ64eQuJjlzfCtOpEpqrjXYsZD?=
+ =?us-ascii?Q?yMyIYVedxPTs0EMhUy5dZxey7t+f/HZAdkt6Qxp7eRqzMTc3q4taCBH+5KT3?=
+ =?us-ascii?Q?ajsovxQen2MQQhvqD3oCLwLDH8Iol5Z12b2D497N4NOpQj5e5uP1OPDZWH4w?=
+ =?us-ascii?Q?TfLITmkYNfdFuLl1RBuNC3o+1vLzd/V1fqRwzM0f1LSZ16L+Jije39xNy8GB?=
+ =?us-ascii?Q?WpiyoDnTyOzla0FZNbbxlRkhVlWwl7rCCsnPZ1yafTfS8bp5yAwuYXT6yRxT?=
+ =?us-ascii?Q?XkkUNwt7ZSpPlELDj9feTOLRbqGwkF49lIj2JFMidTCToPRQBFufk23za/Sn?=
+ =?us-ascii?Q?fsrQ6cNsygfpFRRAP9sKU/Qj95KWUqw/KVkXHWno2lviSSNNozEfpQFFf/Ix?=
+ =?us-ascii?Q?BVdoLBNve/kRKNl11LfAzS8pXUuD3myQMVIVbc31NZZKgBbQ7oRq/acCiznz?=
+ =?us-ascii?Q?flCJ4D2NxxxMiu10fJfcWup03YSvq3drU7/2r+XIQa0N4e7VAkSttdwtJTdh?=
+ =?us-ascii?Q?EYpCx2Dvgd1L9+6Px8ZceTS6Psb7cZ1KLevBgHqfhCBhtwYiDr6g8GuzzeJW?=
+ =?us-ascii?Q?L6NVhUmHdKEAJihgHHzzInutAPJFkX0GQC05hU4uIvZIc8nQwmrKcXBkJzNc?=
+ =?us-ascii?Q?aYVtg9drhODXQb/etg7Hk7xhVFby0gQ1U+4hFmQC2jOiYWR+AxNZkXlyf29o?=
+ =?us-ascii?Q?4N9lzVut3U1y7J923M2X8bfGZ6t9O241BSZVPaGTA/U31YpIfdHjmM90/Qyx?=
+ =?us-ascii?Q?xAUQfZOoE5j0Z8PIrjy93TYXlUK8GwdscBcSDfk0x4JOyUZmon+Rr8xdehHq?=
+ =?us-ascii?Q?h1h0OFsxgCedh1dt/yS65fwTj8FcFi1ZHVyQgeZ9Jn81vt1NGoVr/+haII//?=
+ =?us-ascii?Q?RtKIc1G27PseRpasL4CpL8G9ZOOdWqCn71b5w+quX4Lwnu+eXN+u+fMn9CxZ?=
+ =?us-ascii?Q?NEpWBZiro3LBZTtCSuDHw0E74YQUimnq2sUc4SaqYPYyGhjo4kX5v2kbSZdc?=
+ =?us-ascii?Q?1GgnDbTOF8ni+F8KwCmRr1WffoSGFPky6Oy6D9N/j3hlYVr5dSvyaK3NVDXW?=
+ =?us-ascii?Q?JV+R0rudbBGjeqFGE4K54PEIBNmkFFZr6FUYqti/sdSPCbxqtDpH0WbvEcd3?=
+ =?us-ascii?Q?AdYuvmWXk/iVLtoHmhxGzuUTjqMVxFwxKGxv/TEGJ2Fv9fMQjqra/eQPw5Sa?=
+ =?us-ascii?Q?2Haipjw55xVEg/TqE7HB/B7ybNBVLkPfKIwMFqZI?=
+X-OriginatorOrg: wesion.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 24e3839e-0996-413b-e7d5-08dcb5210f4e
+X-MS-Exchange-CrossTenant-AuthSource: TYZPR03MB7001.apcprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Aug 2024 07:34:37.7321
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 2dc3bd76-7ac2-4780-a5b7-6c6cc6b5af9b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: wh+jFt4eRm0rRGEViBU4bG48bQpPx+/hZ6aEgKKlSOZUwpq6G2WpVPvSPKhndOIXYrNSOqPHOZVHVwd4S3l2kw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: JH0PR03MB8052
 
-Hej,
+These add AP6275P wireless support on Khadas Edge2. Enable 32k clock
+for Wi-Fi module and extend the hardware IDs table in the brcmfmac
+driver for it to attach.
 
-On Sun, Aug 4, 2024, at 13:37, Janne Grunau wrote:
-> On Sun, Aug 4, 2024, at 13:04, Arend Van Spriel wrote:
->> On August 4, 2024 8:27:04 AM Aditya Garg <gargaditya08@live.com> wrote:
->>>
->>> WPA3 is broken on T2 Macs (atleast on 4364) for a long time. I was
->>> under the impression brcmfmac doesn't support it.
->>>
->>> Anyways, I've asked a fedora user to compile a kernel with
->>> CONFIG_BRCMDBG.
->>>
->>> If you want logs without it, look over here:
->>> https://pastebin.com/fnhH30JA
->>
->> Not sure what to make of this. The interface comes up without any
->> obvious error and then another interface is created by another
->> driver:
->
-> I've bisected the authentication timeouts for WPA2-PSK and WPA3-SAE
-> (and probably every other authentication method) down to
->
-> https://w1.fi/cgit/hostap/commit/?id=41638606054a09867fe3f9a2b5523aa4678cbfa5
+Changes in v8:
+ - Add appropriate errno's for return values that will be
+    send to bus when error occurred.
+ 
+ - Link to v7: https://lore.kernel.org/all/20240802025715.2360456-1-jacobe.zang@wesion.com/
 
-this is reported upstream in
-http://lists.infradead.org/pipermail/hostap/2024-August/042893.html
+Changes in v7:
+ - Change brcmf_of_probe prototypes from void to int, add appropriate errno's for return
+    value, move clock check to the end of brcmf_of_probe
+ - Add "brcm,bcm4329-fmac" compatible for wifi node
 
-Disabling offloading in brcmfmac with "brcmfmac.feature_disable=0x82000"
-on the kernel command line works around both the kernel and
-wpa_supplicant issue.
+ - Link to v6: https://lore.kernel.org/all/20240731061132.703368-1-jacobe.zang@wesion.com/
 
-HTH,
-Janne
+Changes in v6:
+ - Move "brcm,bcm4329-fmac" check to the top of brcmf_of_probe in of.c
+ - Add return if clk didn't set in DTS
+
+ -Link to v5: https://lore.kernel.org/all/20240730033053.4092132-1-jacobe.zang@wesion.com/
+
+Changes in v5:
+ - Add more commit message to the clock in bindings
+ - Use IS_ERR_OR_NULL as a judgment condition of clk
+
+ - Link to v4: https://lore.kernel.org/all/20240729070102.3770318-1-jacobe.zang@wesion.com/
+
+Changes in v4:
+ - Change clock description in dt-bindings
+ - Move enable clk from pcie.c to of.c
+ - Add compatible for wifi node in DTS
+ - Add random seed flag for firmware download
+
+ - Link to v3: https://lore.kernel.org/all/20240630073605.2164346-1-jacobe.zang@wesion.com/
+
+Changes in v3:
+ - Dropped redundant parts in dt-bindings.
+ - Change driver patch title prefix as 'wifi: brcmfmac:'.
+ - Change DTS Wi-Fi node clock-name as 'lpo'.
+ 
+ - Link to v2: https://lore.kernel.org/all/20240624081906.1399447-1-jacobe.zang@wesion.com/
+
+Changes in v2:
+ - Add SoB tags for original developer.
+ - Add dt-bindings for pci14e4,449d and clocks.
+ - Replace dev_info to brcmf_dbg in pcie.c
+
+ - Link to v1: https://lore.kernel.org/all/20240620020015.4021696-1-jacobe.zang@wesion.com/
+
+Jacobe Zang (5):
+  dt-bindings: net: wireless: brcm4329-fmac: add pci14e4,449d
+  dt-bindings: net: wireless: brcm4329-fmac: add clock description for
+    AP6275P
+  arm64: dts: rockchip: Add AP6275P wireless support to Khadas Edge 2
+  wifi: brcmfmac: Add optional lpo clock enable support
+  wifi: brcmfmac: add flag for random seed during firmware download
+
+ .../net/wireless/brcm,bcm4329-fmac.yaml       |  9 +++
+ .../dts/rockchip/rk3588s-khadas-edge2.dts     | 16 ++++++
+ .../broadcom/brcm80211/brcmfmac/bcmsdh.c      |  4 ++
+ .../broadcom/brcm80211/brcmfmac/common.c      |  6 +-
+ .../wireless/broadcom/brcm80211/brcmfmac/of.c | 28 +++++++---
+ .../wireless/broadcom/brcm80211/brcmfmac/of.h |  9 +--
+ .../broadcom/brcm80211/brcmfmac/pcie.c        | 55 ++++++++++++++++---
+ .../broadcom/brcm80211/brcmfmac/sdio.c        | 18 ++++--
+ .../broadcom/brcm80211/brcmfmac/usb.c         |  3 +
+ .../broadcom/brcm80211/include/brcm_hw_ids.h  |  2 +
+ 10 files changed, 123 insertions(+), 27 deletions(-)
+
+-- 
+2.34.1
+
