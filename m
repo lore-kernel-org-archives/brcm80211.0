@@ -1,324 +1,136 @@
-Received: from APC01-PSA-obe.outbound.protection.outlook.com (mail-psaapc01on2135.outbound.protection.outlook.com [40.107.255.135])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05A97153820
-	for <brcm80211@lists.linux.dev>; Mon,  5 Aug 2024 07:35:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.255.135
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722843303; cv=fail; b=uYO9bOezVC/vonTV/R3nbvYNW3+TK1o1wdnzeldtAhdfDlgpln1ee41WSEC5f584tHhRslCUhjjOJxhS0QelGe3ravv0bEUj8eSzlXAElELwyN8T0Q5Z8ikkvBOhlP812MEnqZY81PoMMosWIwJQHXeMy976OCJ7Fr90ZQbMxRY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722843303; c=relaxed/simple;
-	bh=z/JMI1ioorJsC5rpgzgpHUYttwWsJh+gThzg/mM6S6Y=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=tZkyL7/WCYmLRiJLGFiZ3pnFmh6qelfjx1TdlLHfBRtiqMK7Fyrqh7BtRst5bHWlPSGi/QZlYYUS4NyuwNqIRJ8iB6CprfZoXqufl8FmoUSCVptWwPQ0oxfK5uCwFRKmWAwRO+ix/SeFb2kT1Ek2ZBq43DcPuuLo/VmPopehBN0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wesion.com; spf=pass smtp.mailfrom=wesion.com; arc=fail smtp.client-ip=40.107.255.135
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wesion.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wesion.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=EsOi/Dd7SUc4tCyf+0rRJhpuvr+i6WWoLa4lF9XD8/EWLJsvJndbVHpJJM9UhTL/HxFDHJdkZS4JCAmEyqEHsc3/w06jh2M85ci6U8ii7JTAQsJ8qm37u2sLiEu+CA8LxKliH8FQ9xzORThaz5enR8/zkYOqDPArsLxHj2drbBvHD6PPIak4M8g+lJbWkf4lQZKYWqCqF1+lAjQdRNI4dS15ul6mDENo4r85jLDcdXqOjC7hO7hU0RJD5UtpeekZMlbPIAUxE9EqoHp5+nchA9COegilqNzcoiyw8GCIeUXOilnNIs087kKBcq6dAVYbO8cWJtgV4jnZkHoRN7f4dw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ZWqN2d2WV5H3rjNNY/SuBA/Is/G4XlfllfCP+MEOJRA=;
- b=XFzC0gNcMCnjGypfjcecaBtnTLldAKrBEdVYSeUNB0bPOdGZuc2NUu8rP81JelDyiWH+FZhBvROY+9PtVpUeTYFEWTU4skL4vzFrxDtQ+B9vw4GbAbcDZWh9hKrZ7Bj3v+F29CsC6+l8QY0l+Uq/62hAEAcblMbVUCsUZwba33Tj97dqISdBtc+YVGtv2ruOGrgRcNTWdwSNVJ1Rcgvavv6fLZD81mf8U1mNUinjM6K+Ekcl8TRSbZup0SaHIA/Js3Gzglrkul2smZA+hIBIRdYuj8+Wf7yags9ZPByXWOLlPVhSl9t7rzkDox1mAMr0iZw3oOanxMmgDoImTemnsA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=wesion.com; dmarc=pass action=none header.from=wesion.com;
- dkim=pass header.d=wesion.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=wesion.com;
-Received: from TYZPR03MB7001.apcprd03.prod.outlook.com (2603:1096:400:26a::14)
- by JH0PR03MB8052.apcprd03.prod.outlook.com (2603:1096:990:37::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7828.25; Mon, 5 Aug
- 2024 07:34:59 +0000
-Received: from TYZPR03MB7001.apcprd03.prod.outlook.com
- ([fe80::78dd:5e68:1a9c:36c0]) by TYZPR03MB7001.apcprd03.prod.outlook.com
- ([fe80::78dd:5e68:1a9c:36c0%6]) with mapi id 15.20.7828.024; Mon, 5 Aug 2024
- 07:34:59 +0000
-From: Jacobe Zang <jacobe.zang@wesion.com>
-To: robh@kernel.org,
-	krzk+dt@kernel.org,
-	heiko@sntech.de,
-	kvalo@kernel.org,
-	davem@davemloft.net,
-	edumazet@google.com,
-	kuba@kernel.org,
-	pabeni@redhat.com,
-	conor+dt@kernel.org,
-	arend.vanspriel@broadcom.com
-Cc: efectn@protonmail.com,
-	dsimic@manjaro.org,
-	jagan@edgeble.ai,
-	devicetree@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-rockchip@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	arend@broadcom.com,
-	linux-wireless@vger.kernel.org,
-	netdev@vger.kernel.org,
-	megi@xff.cz,
-	duoming@zju.edu.cn,
-	bhelgaas@google.com,
-	minipli@grsecurity.net,
-	brcm80211@lists.linux.dev,
-	brcm80211-dev-list.pdl@broadcom.com,
-	nick@khadas.com,
-	Jacobe Zang <jacobe.zang@wesion.com>
-Subject: [PATCH v8 5/5] wifi: brcmfmac: add flag for random seed during firmware download
-Date: Mon,  5 Aug 2024 15:34:25 +0800
-Message-Id: <20240805073425.3492078-6-jacobe.zang@wesion.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240805073425.3492078-1-jacobe.zang@wesion.com>
-References: <20240805073425.3492078-1-jacobe.zang@wesion.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: SGXP274CA0010.SGPP274.PROD.OUTLOOK.COM (2603:1096:4:b8::22)
- To TYZPR03MB7001.apcprd03.prod.outlook.com (2603:1096:400:26a::14)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBEA514B09C
+	for <brcm80211@lists.linux.dev>; Mon,  5 Aug 2024 08:38:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1722847083; cv=none; b=UVUsZlM++5GMLVE7RnwOPYt2u2EYTgwgIajbeBPk+WwV7ii3GCQB+wuKBjP0RqlAaIoGu1+nWsz2IhsX8u/vfN0yLtE6uyZQN6uWdpHnLGfzsDI8PkBLICy79ZfoNlQZL5tgZ6Cs47wIGH5Uwvv0nHWZzSNA9hy6ncajCCVvOoo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1722847083; c=relaxed/simple;
+	bh=X6jcxMd+FRPQlkV1oJKr2Tp9S0aJ1mG8uhJOvWbeKWU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VinkijyAjsXjoEOxiSFBCLWNy6S1AyCbPzNdmbCbEYmkzvg0tTPKGFnE4ugDDkFc+4J3ry26sfoupn9bCu0FyVKO4BKZhwOjrtNb6QBX7SsX3nA0AF2kGTeN7t5/pwAziTc1C6eAYi2jEdTGcd7YdB4dLHjmU5D7FSDQln3sGaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=QCTjzpqq; arc=none smtp.client-ip=209.85.215.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="QCTjzpqq"
+Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-7b396521ff6so4707591a12.1
+        for <brcm80211@lists.linux.dev>; Mon, 05 Aug 2024 01:38:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google; t=1722847081; x=1723451881; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=lwKaJV11ZNo64nhEmzjMhGqxhmedgN2za3+jM9f935A=;
+        b=QCTjzpqqHU/Qri6IXHaLOwGAIMWZpI4hC7gN9n2w8pQys055g7vtwHrUMcsJKU2Si0
+         ozFeOoKLeAf+UwanjpeGfAGLzfNyqvcivs2mu74IJNww9hX6/ZH4GX2IdNnk4arRbU+t
+         hcy82lonlBsP84OiVCWTUNdTav9luG7wXeeAw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722847081; x=1723451881;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lwKaJV11ZNo64nhEmzjMhGqxhmedgN2za3+jM9f935A=;
+        b=Gz4yzbOw1nIzhOLoCogRWdllbtZxejRt9UpZ0sOTIAxuN41aX2ZUmoQWO7QOb1E2DR
+         84Sboq9xBx6wbiCAW/+LpfVOH7IY3C8awVrcDgfn7R+FWjYa+XMcosMBae9xGeSoPxqT
+         9l3ve+JMngPDYTnsVaEpJSDTD+B3dgnwgm1MlzCcLSqD10p1NhEe0q/FEFDLykZ3cDts
+         YTTl64+YmUF2sLJi6LdR3x4KYnA1RGwToEJg8clziE9umXUtWsRiEvYEZvRYUYJb4qzq
+         P5wO33X92zgBf8q4sPqIxzBMO/3wZXRwgBQjFTe2MbgjpxjK9KcVEF2yESY1xXcdcIrc
+         5DzA==
+X-Forwarded-Encrypted: i=1; AJvYcCUI6Kd/Yxmj9AGtMNn9cT/sx7ubC1s5DwPb7/gHq4oSQPZMlQrwxfut00fNnyaHqtmCaWiWMzDpAcecyTGxoY4o3eTVM20VDVww
+X-Gm-Message-State: AOJu0YzykW+c7nI1czHGVFAw1RrA9N6dlvJzh/V8vEZlADjTTabmbnuX
+	wNJ6xhTdZEDI0DK5466tWQ4/ds/c4tm7h0lUx92SEWGSutE1kdQx0qPvDPuhGg==
+X-Google-Smtp-Source: AGHT+IGkudqNL0fTBNkSAE89yZQ5MD4zd9FpMTyItlaPtVglqeJXDe8fDvsl1Fh4ANkwyM3hm/+jBQ==
+X-Received: by 2002:a05:6a20:9193:b0:1c2:8d91:634 with SMTP id adf61e73a8af0-1c6996b9324mr16846423637.45.1722847080953;
+        Mon, 05 Aug 2024 01:38:00 -0700 (PDT)
+Received: from [10.176.68.61] ([192.19.176.250])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1ff58f53c4csm62072535ad.72.2024.08.05.01.37.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 05 Aug 2024 01:38:00 -0700 (PDT)
+Message-ID: <32ddf003-0547-4905-9c87-899b9074ede3@broadcom.com>
+Date: Mon, 5 Aug 2024 10:37:52 +0200
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYZPR03MB7001:EE_|JH0PR03MB8052:EE_
-X-MS-Office365-Filtering-Correlation-Id: d3a8ced0-665e-415f-a0fb-08dcb5211c39
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|52116014|366016|7416014|376014|1800799024|38350700014|921020;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?EXdolgxyHNPHKSU2Cy7zag3D3+4AVKB2GDJx7UUHW6noZ5EjUSnfMIkSHsWP?=
- =?us-ascii?Q?+9cfEUc9HlLmPMLXRrC48zwZ0spt/j1zZ3ZYBpFyY0uJOHJA0HfO/+aQfwnG?=
- =?us-ascii?Q?xWasPeBF0HXjp5WEKqLowOZgjAV4lZDqjacddEMkHmJDssLZyNDxkZSH5gl2?=
- =?us-ascii?Q?7BQxvcm2lCiL5BGa5AVmGVUclN34c0AlHkSzTxZUw67yQwa5lUWZmMjUPIXq?=
- =?us-ascii?Q?kh1n7v6VjkWwwrJNHt7JmYR3ke84RhhjAGQwe+uYcK3qMn3v/JUwuOd3eioq?=
- =?us-ascii?Q?UYN4XoHxPgoTwKPiHuYKbLHK3/SA0caeRLiHI9t9K1H+nT55mozNQckjbi83?=
- =?us-ascii?Q?M07Yt3qvDykDMxOG5kWr9TMfIi1Wl8hDKGDWo2ph168G5J9a5IgNBvuDTghR?=
- =?us-ascii?Q?mn25vyymfp38BeRuDop+6n9f4BaCyoqIBCrPcm5w2JL5Hy1bTR086VsDTztQ?=
- =?us-ascii?Q?1DK+CpqmQQiSEJj8+zRK+tRawTqcXpjZA237clPuKmr4V+ZhJRAxSNYmtQVK?=
- =?us-ascii?Q?5V4MAQdlkPSsOe32E+E1HVFW6mygKlXN3mDRYmUrAgy3TgqJcRi244ca/Tzo?=
- =?us-ascii?Q?8kjThWz3DiqSqjRWD+AMsULUxqK1UbzOJihHtpqzQSQbkVpDu/ua/VUun13z?=
- =?us-ascii?Q?qnSiLwwMdKwn3dLtprmkJxXIW1n3p9M3sG9v86wh3LsHcesbR9fQNpHEt7tV?=
- =?us-ascii?Q?GDyDUAfDGDQMz120pQ1XSpTSeEU+PJnPZPfnf2ZFivH+qh2HjgZTa0SumTBl?=
- =?us-ascii?Q?E6ULMglpxJXTV/2neDbLKxeZpWCjS4sEAkiKWF/l7E5O5rdzvjgvOJgrXSOx?=
- =?us-ascii?Q?JNf9HosvHmGzc/ahNA9vm0LLRP4ydWMX9YD0Nu+BegMbjjaU3nrSEZavvMrt?=
- =?us-ascii?Q?u++TeCYywqik9CF+cR2Bh+NlDhCxq2IU/k7gwBLOksClZZ4N5ZARybtCStML?=
- =?us-ascii?Q?TYZF+vIqn6ZV7Gpvq2liUlkoCfFNuL76z1bVrsnfIYGjFDw6Aaw+X0HmZeEW?=
- =?us-ascii?Q?QlLQqh6kgp1HK2q4tq57DkKoBE4Hi2sFdIwW7UFHIMrRnmFDxztPNk0lke0W?=
- =?us-ascii?Q?4a/ABgD8EyWvtqIUvZQYaiZb6LF5OPJEZPOATqkfsFSRyOcCubdJ5XgaF6cu?=
- =?us-ascii?Q?9n0Oto5qziA4TYhhIaIIoLdxBhrqx69aWbpny97hEGNnKCQp6G5qDxD59PAs?=
- =?us-ascii?Q?UN/pxx5Ur+1+oYvat3Nw0WgFYIs9FieXtCxGgEIOlXO6km9+xEjBBY24U9BF?=
- =?us-ascii?Q?iXvW3dJDv9sqiTKCdG0VAhY65y6FK2NyNNoZSd9LQzrVveshYg6Go1WDc3Zo?=
- =?us-ascii?Q?d+wfB6VoPMYoNNo9nDK/Kko9aRHWXoS3cOwj7sFGE6tnqVqZnW1I6uNg4tVH?=
- =?us-ascii?Q?pvxn0NQARM0HAXM5n80D8Xt+JvLpSLWtCIzqlHi8MqbJ7kgIZb0/L73cCiRT?=
- =?us-ascii?Q?AbfQHHVBReI=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TYZPR03MB7001.apcprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(52116014)(366016)(7416014)(376014)(1800799024)(38350700014)(921020);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?Eb7JHmxOY1/Zho0yKofC4KoNfiTrSgvItQnCEPxCWl+maoDC+CJJBbiOPi2k?=
- =?us-ascii?Q?M+IoT0wCj5UK3UnMYfX4+vHrWEMPDjZW7dPuJSHtXVBuRWkthW2sVQQ2a4/I?=
- =?us-ascii?Q?+ZMgeA5cPDfdP3+3q3gxQFUjLoqDgLHcPWYpr18HYaNBK3DSuRoiLzGL3cGw?=
- =?us-ascii?Q?n/yLO79pggH4eplG+mMqhXrAOs16xIVL/nuzwPTALI8DgDRsAGGaUPkrjHbv?=
- =?us-ascii?Q?xbC0MB+lbsHMcG/07hReUpT2MPkVD9oRzEB+5hd41bGxfCPwYdA9TaTT0MQ2?=
- =?us-ascii?Q?aO/nD5kgWVS0MMTYqbD06Sv9nDjIgFH2f47Fk1xvQ6WB1NyDwVF9WICQxhOZ?=
- =?us-ascii?Q?576eI4EgHEJ2d1FI5GNmgpzc6HKonaZ6KSplcYnq2MyVZNu6tKvJeI0s9F9w?=
- =?us-ascii?Q?hubkN0kU+6nDZiqCmV8AFV5nUHtlcrHYsTMPRjP6Pg8PA+RydvBrEItjDeKc?=
- =?us-ascii?Q?JRypnHWKbtPlveL41aGDF+a3AZ4b7L99DfvcICJcHIs59uMPdndC+96ewp5m?=
- =?us-ascii?Q?vQzniNn0Dl7+8vao/8QuPQ/3FN3fOANXx98Ajts5ByQkzVxBsTlGpiTpVfz3?=
- =?us-ascii?Q?C4pnECebLuY8cgad8yem4CyTuvBLH3RkdvqK4fscUtjsllQb1WJb5ofHDau7?=
- =?us-ascii?Q?tHnN5bZTLQM4c+mFaguA3JP2/obFBxF9zfUXk07p0LH2TIXPJwe/aC9V/lYF?=
- =?us-ascii?Q?KvJh9AehdulLZQbxVxfKkqUrD18DLn/0NkByZs0Eej8d+0somSjs8cacDcMf?=
- =?us-ascii?Q?7bQBwswkOY7nG92lAWKuM0Xzunrx6iyysmpTYV+aKKeRtWSESpAm4LzOBc0a?=
- =?us-ascii?Q?Wokb4iMkKm9RYdKnEDPM7GnBEEbYnIwXc3DYW9LSqajWHCKhEAUPaMS2Brhx?=
- =?us-ascii?Q?XRwkasZoWpEK1PLWxBFXVFSmtgRAKvVXi263/NefCayWX5fSFJGHIBFY5Xm0?=
- =?us-ascii?Q?vxuaP86mn7BxlROtWJgkMB4gMiXrffirvFT/lVnEryqRySmS6ohnSiSBKGUs?=
- =?us-ascii?Q?p8JMysl3+uB/m+mHlTSbLMgeQBPhMjt0PGUa4uYxIKUcL1afRHRYMxiku5yW?=
- =?us-ascii?Q?9WgmfGrtSime4Xm9w65ageYKnyRWAtmYCyYYHto5xNg6BOFyL2RhFXs5jXe0?=
- =?us-ascii?Q?X94yXax1bTInegv4btfs1P+V82sL4o1KtmDl67lRvZfxA62yIAPBUpo++pJO?=
- =?us-ascii?Q?cOt2EmZ9SXBREVO+ajKXJTFlQA9IChse8/mz5OUU9YZbs0dF6g+jq69leYe1?=
- =?us-ascii?Q?trBPlV3ZHxtN9sj7/W2uhLiNag9k7Ri+nwLGGzODaH3JSVsD2tG00jaBeJay?=
- =?us-ascii?Q?3tWjuUrQUHc2OY5+Q+bDmfZ2mHXv+g9ZtwA85br541Bm0nF1DS2fRxdPMSgF?=
- =?us-ascii?Q?9/EMOCFtV0qb63xAbKUgi2Xk73ffLwYJnziZJg0ZbxnVRsmv26uqGdq8kMGB?=
- =?us-ascii?Q?6B0U9csEr6iiRtdEVsyCBlLLeY9paSFHnzqG8Sn5TGB0V75s8q4/31BPTa3K?=
- =?us-ascii?Q?pSIF+ZBUiPblLSFjBPq2SyC2vy2FCf3QNfASSI83M5EObQJZi56/12Iq3AeR?=
- =?us-ascii?Q?3HlJWQNZH3Ow8dKz2KXKhSNHB2pMmwRwDLy2WdLw?=
-X-OriginatorOrg: wesion.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d3a8ced0-665e-415f-a0fb-08dcb5211c39
-X-MS-Exchange-CrossTenant-AuthSource: TYZPR03MB7001.apcprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Aug 2024 07:34:59.3135
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 2dc3bd76-7ac2-4780-a5b7-6c6cc6b5af9b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: +Rm1Wj/piI2O+G59wwlpRSaZi36kImTbscFsG72Fpz9Y5PXfF99sB37jiLnWVpsrK9tlS7qzPVubEMeWZ87L0w==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: JH0PR03MB8052
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 3/5] arm64: dts: rockchip: Add AP6275P wireless support
+ to Khadas Edge 2
+To: Jacobe Zang <jacobe.zang@wesion.com>, robh@kernel.org,
+ krzk+dt@kernel.org, heiko@sntech.de, kvalo@kernel.org, davem@davemloft.net,
+ edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, conor+dt@kernel.org
+Cc: efectn@protonmail.com, dsimic@manjaro.org, jagan@edgeble.ai,
+ devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-rockchip@lists.infradead.org, linux-kernel@vger.kernel.org,
+ arend@broadcom.com, linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
+ megi@xff.cz, duoming@zju.edu.cn, bhelgaas@google.com,
+ minipli@grsecurity.net, brcm80211@lists.linux.dev,
+ brcm80211-dev-list.pdl@broadcom.com, nick@khadas.com
+References: <20240805073425.3492078-1-jacobe.zang@wesion.com>
+ <20240805073425.3492078-4-jacobe.zang@wesion.com>
+Content-Language: en-US
+From: Arend van Spriel <arend.vanspriel@broadcom.com>
+Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
+ 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
+In-Reply-To: <20240805073425.3492078-4-jacobe.zang@wesion.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Providing the random seed to firmware was tied to the fact that the
-device has a valid OTP, which worked for some Apple chips. However,
-it turns out the BCM43752 device also needs the random seed in order
-to get firmware running. Suspect it is simply tied to the firmware
-branch used for the device. Introducing a mechanism to allow setting
-it for a device through the device table.
+On 8/5/2024 9:34 AM, Jacobe Zang wrote:
+> Khadas Edge2 uses the PCI-e Ampak AP6275P 2T2R Wi-Fi 6 module. The
+> pcie@0 node can be used as Bridge1, so the wifi@0 node is used as a
+> device under the Bridge1.
 
-Co-developed-by: Ondrej Jirman <megi@xff.cz>
-Signed-off-by: Ondrej Jirman <megi@xff.cz>
-Co-developed-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Signed-off-by: Jacobe Zang <jacobe.zang@wesion.com>
----
- .../broadcom/brcm80211/brcmfmac/pcie.c        | 52 ++++++++++++++++---
- .../broadcom/brcm80211/include/brcm_hw_ids.h  |  2 +
- 2 files changed, 46 insertions(+), 8 deletions(-)
-
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-index c34405a6d38b8..e88fa4cd62a1d 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-@@ -66,6 +66,7 @@ BRCMF_FW_DEF(4365C, "brcmfmac4365c-pcie");
- BRCMF_FW_DEF(4366B, "brcmfmac4366b-pcie");
- BRCMF_FW_DEF(4366C, "brcmfmac4366c-pcie");
- BRCMF_FW_DEF(4371, "brcmfmac4371-pcie");
-+BRCMF_FW_CLM_DEF(43752, "brcmfmac43752-pcie");
- BRCMF_FW_CLM_DEF(4377B3, "brcmfmac4377b3-pcie");
- BRCMF_FW_CLM_DEF(4378B1, "brcmfmac4378b1-pcie");
- BRCMF_FW_CLM_DEF(4378B3, "brcmfmac4378b3-pcie");
-@@ -104,6 +105,7 @@ static const struct brcmf_firmware_mapping brcmf_pcie_fwnames[] = {
- 	BRCMF_FW_ENTRY(BRCM_CC_43664_CHIP_ID, 0xFFFFFFF0, 4366C),
- 	BRCMF_FW_ENTRY(BRCM_CC_43666_CHIP_ID, 0xFFFFFFF0, 4366C),
- 	BRCMF_FW_ENTRY(BRCM_CC_4371_CHIP_ID, 0xFFFFFFFF, 4371),
-+	BRCMF_FW_ENTRY(BRCM_CC_43752_CHIP_ID, 0xFFFFFFFF, 43752),
- 	BRCMF_FW_ENTRY(BRCM_CC_4377_CHIP_ID, 0xFFFFFFFF, 4377B3), /* revision ID 4 */
- 	BRCMF_FW_ENTRY(BRCM_CC_4378_CHIP_ID, 0x0000000F, 4378B1), /* revision ID 3 */
- 	BRCMF_FW_ENTRY(BRCM_CC_4378_CHIP_ID, 0xFFFFFFE0, 4378B3), /* revision ID 5 */
-@@ -358,6 +360,7 @@ struct brcmf_pciedev_info {
- 			  u16 value);
- 	struct brcmf_mp_device *settings;
- 	struct brcmf_otp_params otp;
-+	bool fwseed;
- #ifdef DEBUG
- 	u32 console_interval;
- 	bool console_active;
-@@ -1720,14 +1723,14 @@ static int brcmf_pcie_download_fw_nvram(struct brcmf_pciedev_info *devinfo,
- 		memcpy_toio(devinfo->tcm + address, nvram, nvram_len);
- 		brcmf_fw_nvram_free(nvram);
- 
--		if (devinfo->otp.valid) {
-+		if (devinfo->fwseed) {
- 			size_t rand_len = BRCMF_RANDOM_SEED_LENGTH;
- 			struct brcmf_random_seed_footer footer = {
- 				.length = cpu_to_le32(rand_len),
- 				.magic = cpu_to_le32(BRCMF_RANDOM_SEED_MAGIC),
- 			};
- 
--			/* Some Apple chips/firmwares expect a buffer of random
-+			/* Some chips/firmwares expect a buffer of random
- 			 * data to be present before NVRAM
- 			 */
- 			brcmf_dbg(PCIE, "Download random seed\n");
-@@ -2399,6 +2402,37 @@ static void brcmf_pcie_debugfs_create(struct device *dev)
- }
- #endif
- 
-+struct brcmf_pcie_drvdata {
-+	enum brcmf_fwvendor vendor;
-+	bool fw_seed;
-+};
-+
-+enum {
-+	BRCMF_DRVDATA_CYW,
-+	BRCMF_DRVDATA_BCA,
-+	BRCMF_DRVDATA_WCC,
-+	BRCMF_DRVDATA_WCC_SEED,
-+};
-+
-+static const struct brcmf_pcie_drvdata drvdata[] = {
-+	[BRCMF_DRVDATA_CYW] = {
-+		.vendor = BRCMF_FWVENDOR_CYW,
-+		.fw_seed = false,
-+	},
-+	[BRCMF_DRVDATA_BCA] = {
-+		.vendor = BRCMF_FWVENDOR_BCA,
-+		.fw_seed = false,
-+	},
-+	[BRCMF_DRVDATA_WCC] = {
-+		.vendor = BRCMF_FWVENDOR_WCC,
-+		.fw_seed = false,
-+	},
-+	[BRCMF_DRVDATA_WCC_SEED] = {
-+		.vendor = BRCMF_FWVENDOR_WCC,
-+		.fw_seed = true,
-+	},
-+};
-+
- /* Forward declaration for pci_match_id() call */
- static const struct pci_device_id brcmf_pcie_devid_table[];
- 
-@@ -2480,9 +2514,10 @@ brcmf_pcie_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	bus->bus_priv.pcie = pcie_bus_dev;
- 	bus->ops = &brcmf_pcie_bus_ops;
- 	bus->proto_type = BRCMF_PROTO_MSGBUF;
--	bus->fwvid = id->driver_data;
- 	bus->chip = devinfo->coreid;
- 	bus->wowl_supported = pci_pme_capable(pdev, PCI_D3hot);
-+	bus->fwvid = drvdata[id->driver_data].vendor;
-+	devinfo->fwseed = drvdata[id->driver_data].fw_seed;
- 	dev_set_drvdata(&pdev->dev, bus);
- 
- 	ret = brcmf_alloc(&devinfo->pdev->dev, devinfo->settings);
-@@ -2668,14 +2703,14 @@ static const struct dev_pm_ops brcmf_pciedrvr_pm = {
- 		BRCM_PCIE_VENDOR_ID_BROADCOM, (dev_id), \
- 		PCI_ANY_ID, PCI_ANY_ID, \
- 		PCI_CLASS_NETWORK_OTHER << 8, 0xffff00, \
--		BRCMF_FWVENDOR_ ## fw_vend \
-+		BRCMF_DRVDATA_ ## fw_vend \
- 	}
- #define BRCMF_PCIE_DEVICE_SUB(dev_id, subvend, subdev, fw_vend) \
- 	{ \
- 		BRCM_PCIE_VENDOR_ID_BROADCOM, (dev_id), \
- 		(subvend), (subdev), \
- 		PCI_CLASS_NETWORK_OTHER << 8, 0xffff00, \
--		BRCMF_FWVENDOR_ ## fw_vend \
-+		BRCMF_DRVDATA_ ## fw_vend \
- 	}
- 
- static const struct pci_device_id brcmf_pcie_devid_table[] = {
-@@ -2703,9 +2738,10 @@ static const struct pci_device_id brcmf_pcie_devid_table[] = {
- 	BRCMF_PCIE_DEVICE(BRCM_PCIE_4366_5G_DEVICE_ID, BCA),
- 	BRCMF_PCIE_DEVICE(BRCM_PCIE_4371_DEVICE_ID, WCC),
- 	BRCMF_PCIE_DEVICE(BRCM_PCIE_43596_DEVICE_ID, CYW),
--	BRCMF_PCIE_DEVICE(BRCM_PCIE_4377_DEVICE_ID, WCC),
--	BRCMF_PCIE_DEVICE(BRCM_PCIE_4378_DEVICE_ID, WCC),
--	BRCMF_PCIE_DEVICE(BRCM_PCIE_4387_DEVICE_ID, WCC),
-+	BRCMF_PCIE_DEVICE(BRCM_PCIE_4377_DEVICE_ID, WCC_SEED),
-+	BRCMF_PCIE_DEVICE(BRCM_PCIE_4378_DEVICE_ID, WCC_SEED),
-+	BRCMF_PCIE_DEVICE(BRCM_PCIE_4387_DEVICE_ID, WCC_SEED),
-+	BRCMF_PCIE_DEVICE(BRCM_PCIE_43752_DEVICE_ID, WCC_SEED),
- 
- 	{ /* end: all zeroes */ }
- };
-diff --git a/drivers/net/wireless/broadcom/brcm80211/include/brcm_hw_ids.h b/drivers/net/wireless/broadcom/brcm80211/include/brcm_hw_ids.h
-index 44684bf1b9acc..c1e22c589d85e 100644
---- a/drivers/net/wireless/broadcom/brcm80211/include/brcm_hw_ids.h
-+++ b/drivers/net/wireless/broadcom/brcm80211/include/brcm_hw_ids.h
-@@ -52,6 +52,7 @@
- #define BRCM_CC_43664_CHIP_ID		43664
- #define BRCM_CC_43666_CHIP_ID		43666
- #define BRCM_CC_4371_CHIP_ID		0x4371
-+#define BRCM_CC_43752_CHIP_ID		43752
- #define BRCM_CC_4377_CHIP_ID		0x4377
- #define BRCM_CC_4378_CHIP_ID		0x4378
- #define BRCM_CC_4387_CHIP_ID		0x4387
-@@ -94,6 +95,7 @@
- #define BRCM_PCIE_4366_5G_DEVICE_ID	0x43c5
- #define BRCM_PCIE_4371_DEVICE_ID	0x440d
- #define BRCM_PCIE_43596_DEVICE_ID	0x4415
-+#define BRCM_PCIE_43752_DEVICE_ID	0x449d
- #define BRCM_PCIE_4377_DEVICE_ID	0x4488
- #define BRCM_PCIE_4378_DEVICE_ID	0x4425
- #define BRCM_PCIE_4387_DEVICE_ID	0x4433
--- 
-2.34.1
-
+Reviewed-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+> Co-developed-by: Muhammed Efe Cetin <efectn@protonmail.com>
+> Signed-off-by: Muhammed Efe Cetin <efectn@protonmail.com>
+> Signed-off-by: Jacobe Zang <jacobe.zang@wesion.com>
+> ---
+>   .../boot/dts/rockchip/rk3588s-khadas-edge2.dts   | 16 ++++++++++++++++
+>   1 file changed, 16 insertions(+)
