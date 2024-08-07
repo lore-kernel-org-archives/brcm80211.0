@@ -1,376 +1,236 @@
-Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
+Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E30A1B9B20
-	for <brcm80211@lists.linux.dev>; Wed,  7 Aug 2024 11:17:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2CD982C8E
+	for <brcm80211@lists.linux.dev>; Wed,  7 Aug 2024 16:48:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723029472; cv=none; b=T5htGakHzFt4R+UzbMsXQUOfbtJAa8oUc3nfGUECItXRzYrhfwvckS/yDunAMXuoFLIxVmB0MVSzguwKxlVCCMc96C4jaYV7AQdsD4iKG3y6F7AOklsJuz/b9Ptx0ocel4kW1xA4jy8NlGGSZJx9uUvLht8ebW21kPQa8hzTolQ=
+	t=1723049311; cv=none; b=nGdSOgtIHFEWlKj9Yd8a9WvnEPEXXe1WOBTepoTafqg+nYimBNzmGDyO5uuNxY1zqBz8E0dyzEoOFWdV8GBn5P8mfh4aMSmfsBJRhmLhsTwtBICj94AE9L+VrXgFm0MauQa9MsPQbEBd9TT3P75AIiqQur8fxifAgX4kHBroMBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723029472; c=relaxed/simple;
-	bh=8iU/+U9M+gWXkRXjeKe+OIgB/LU4uPnMtIt0B8v/VXo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DCRfYYsFCFgToq6ejhpeOX7NTwc2c8ZCWG8b9KHHHcK/UHdpsqqnA0wCEYjomPZQjFNmqP1RV2Tm343AT51u/Pq8m1vHYaX5gmGk2DDPpuugB5sqWJmYSoQ9VrW6T/NReX05KYH76SCZzttaf3dbZFOAGA4GnUKgPeF+9f0L2XQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=YrBGQgik; arc=none smtp.client-ip=209.85.210.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+	s=arc-20240116; t=1723049311; c=relaxed/simple;
+	bh=MyGpS8A8yCOgOMFPJGm3nQghuITkLQxuSG1wKxyoEAY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=JHynt1jI4wJTtDUMslmeCfm4rdsfxurvrjPyppnXWU7ucMrO4r7qUr4TTS8+EIgPY20/kLVvwG4IgEmXsyLZs06r78ajHwC+UYDT1A9bHLWi9Rwmwti6ZWsmwIW2uthuKRSvDuZaLtMAy+qmly/YTznOcVrp360P/KV9H0du1ok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e3w1COrm; arc=none smtp.client-ip=209.85.222.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="YrBGQgik"
-Received: by mail-ot1-f47.google.com with SMTP id 46e09a7af769-70930f8eabbso610531a34.1
-        for <brcm80211@lists.linux.dev>; Wed, 07 Aug 2024 04:17:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e3w1COrm"
+Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-7a1d3959ad5so6241485a.0
+        for <brcm80211@lists.linux.dev>; Wed, 07 Aug 2024 09:48:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1723029469; x=1723634269; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=g8T58TMUroLjjn23XCwrJps87DMjljqz/cFcV/xQzLE=;
-        b=YrBGQgik09vJVr5hqeZnkGaOBum0ro8C85gFZSvpcHe7DqfTnvp38J+zRchh2qGzG3
-         EEG9wCloux5doT74q82DkVIWTLi1TXphF5cz+/Fn3r9SFEfQkdlnOZrKkKb6QJYqd06s
-         yzXyL613BE0xPVzafgtBr5ymqL0KsNov8cpxg=
+        d=gmail.com; s=20230601; t=1723049309; x=1723654109; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ppEzbuljpxEqS9CSU1lR4GhsTWn9NP9h9n5p+ezkHKg=;
+        b=e3w1COrmlHbWXm/S5rZIs1bxLfdxvYyy9NQmpfP2Y9ikSz40iTVN0A96Z6VGevFptY
+         pJ6gUBV3SAktdssB7nbjcWFJ5DMs78as0evVGJcbam/U+Z11+st87bu7dMWhfGtvLtrT
+         J6jYoySE3/yvIGHevsHumSJ/cwQMr2BDVGAF+QyAW3OsRBPbHniDQ/PvLL+1G94cYzGj
+         7Q2Zv7iwgXB0YxmCjsdtKvvmPb+4EaUmLtxEM890fvwEjAUpLipWPDbW4fnV8WdQLh4v
+         7Y3kCR5ZqBpw1qg3C+5wMQ71PDmvzBFqLuA8XFC8yL0XK3R3AOJnjSno81LP4GLsWYYl
+         gztA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723029469; x=1723634269;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=g8T58TMUroLjjn23XCwrJps87DMjljqz/cFcV/xQzLE=;
-        b=gmPLIpSXPljnAcyRx3VfbmB9klR6UHbx04eODn/RVL0BwH8FfDqfahrDiIiK3qwhBQ
-         ErU+wbRnmoKSB/kobJUeEDY7NxxcLkQmNPesmlqCjXX1llKV8hd6RPiq3GDKtNN7YyIU
-         YkVyFr1Fyr2sm/zuls+H/sdHBf1E+e6qRQ7JqUKwKH15zuHpHmqdO0OS9MVsmTrK7MHa
-         PyrAAXcQVod8phfqhfJ/8JbGNcNbVNXY+IOZWkQsHHU1l/Bmgs70DarUReT6PlfaWW60
-         1GngzePsTP/k4UAgR1tfLVfIHZpVV1NLPJaKMySYsRP6X5zGOvMWRsE10Q/1tcbqByD4
-         08Zw==
-X-Forwarded-Encrypted: i=1; AJvYcCWrc9ciAkC27NL5TiZvLuMV0AmBogQSeA/QzmhGY0xPZffBQ/IpiGh6c4vrjh+kLiecmIXXvRnlpiDGx0apoxkGqQ7NjZsloLIu
-X-Gm-Message-State: AOJu0YyukugvHkuDO3VkYaC6MiiKByi6+tiLiNgdPpy9GbvYBoqncRtF
-	2kKiGF7jFz2Z5F2JXePyPF9642WRsPbwxxvjeslugBPP3CoX1i4RcHwhsx+AQQ==
-X-Google-Smtp-Source: AGHT+IF57MpjgiXGHcNN6VTpzeW23YTSDW+7bPvQ8c8TcM/qbxMruA/tL2if1MrdIwPIvEwz72O7hA==
-X-Received: by 2002:a05:6830:2654:b0:704:2dd4:362a with SMTP id 46e09a7af769-7099ea40342mr26878825a34.0.1723029469333;
-        Wed, 07 Aug 2024 04:17:49 -0700 (PDT)
-Received: from [10.176.68.61] ([192.19.176.250])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6bb9c7a7a53sm55589406d6.58.2024.08.07.04.17.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 07 Aug 2024 04:17:48 -0700 (PDT)
-Message-ID: <b6551bf0-2ee9-4b79-af68-0677e3f0f915@broadcom.com>
-Date: Wed, 7 Aug 2024 13:17:44 +0200
+        d=1e100.net; s=20230601; t=1723049309; x=1723654109;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ppEzbuljpxEqS9CSU1lR4GhsTWn9NP9h9n5p+ezkHKg=;
+        b=VmMj2i/qQQWFqzeozRULUnAtLEf63SYajeT3RCblxePd47qaAd/eap8zNeDCcZmahH
+         RRehjytnNOGas0ubOH5dM3yXEq7KX0av9mvONEb7mBU7sNxOCU0rQrDAsp6mwr+BHSlr
+         U8nXl0+mqhXMPBKPY5mjH2rgmGuSSbqeiAr6nQZevZ4a5bSmb6XqPSSphzikYezjth3k
+         NadMeJY4AYBB6iZs1PAHTL16q0WMnM/TsGb131JZDrmUXHKh7oPmcva0mjd5byjjjZtV
+         zMomxh5o3paisc3DdSMg7d187mHYp8kqNlN1TkrjllxfJMC4FpmVQLVf9TnHgHUXeZjl
+         zNxA==
+X-Forwarded-Encrypted: i=1; AJvYcCUdoomAd6Uy4/WQy3sgSkzIDnpg2GaCMLqmHXXSXPMlZDtl+D6JgLDRtl/DFIOMOSKf0qSAwFPXjgGiIcGjbr4uyDAtNhkOVzrv
+X-Gm-Message-State: AOJu0Yx33WxgNv0R7WO9SlrhO6Z1BRUcJZXp8cs5UGMYnKmVtlbXwULC
+	yam1+CAJcbOAutx8h+ClhvaFVLHYnF3/K3Id3AwMA297mqIMkNMcYTwwNIufAukz2Mhh5YnxUxi
+	/kKLVfVJSnOzvJivBqdOx/1P89mQ=
+X-Google-Smtp-Source: AGHT+IGrz1woRCdFcf3AU1cz6WnokARNZ8npr64xqniUVjK159lEQjZ0EsGdSQw2I8QF6WpZIMde7xJ4DnI207ISe+Y=
+X-Received: by 2002:a05:620a:2484:b0:7a1:dc64:59db with SMTP id
+ af79cd13be357-7a377ba35c1mr531954785a.8.1723049308726; Wed, 07 Aug 2024
+ 09:48:28 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 4/5] wifi: brcmfmac: Add optional lpo clock enable
- support
-To: Alexey Charkov <alchark@gmail.com>, Jacobe Zang <jacobe.zang@wesion.com>,
- robh@kernel.org, krzk+dt@kernel.org, heiko@sntech.de, kvalo@kernel.org,
- davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
- pabeni@redhat.com, conor+dt@kernel.org
-Cc: efectn@protonmail.com, dsimic@manjaro.org, jagan@edgeble.ai,
- devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-rockchip@lists.infradead.org, linux-kernel@vger.kernel.org,
- arend@broadcom.com, linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
- megi@xff.cz, duoming@zju.edu.cn, bhelgaas@google.com,
- minipli@grsecurity.net, brcm80211@lists.linux.dev,
- brcm80211-dev-list.pdl@broadcom.com, nick@khadas.com
 References: <20240805073425.3492078-1-jacobe.zang@wesion.com>
- <20240805073425.3492078-5-jacobe.zang@wesion.com>
- <2e38c2bd-2cb2-4104-97ad-0355069606c0@gmail.com>
-Content-Language: en-US
-From: Arend van Spriel <arend.vanspriel@broadcom.com>
-Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
- 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
-In-Reply-To: <2e38c2bd-2cb2-4104-97ad-0355069606c0@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+ <20240805073425.3492078-5-jacobe.zang@wesion.com> <2e38c2bd-2cb2-4104-97ad-0355069606c0@gmail.com>
+ <b6551bf0-2ee9-4b79-af68-0677e3f0f915@broadcom.com>
+In-Reply-To: <b6551bf0-2ee9-4b79-af68-0677e3f0f915@broadcom.com>
+From: Alexey Charkov <alchark@gmail.com>
+Date: Wed, 7 Aug 2024 19:48:17 +0300
+Message-ID: <CABjd4YzEzDW6KhTJ1ZBU1PptHotgDqg8i03Z7VAfdzAgQo8BDw@mail.gmail.com>
+Subject: Re: [PATCH v8 4/5] wifi: brcmfmac: Add optional lpo clock enable support
+To: Arend van Spriel <arend.vanspriel@broadcom.com>, Jacobe Zang <jacobe.zang@wesion.com>, 
+	robh@kernel.org, krzk+dt@kernel.org, heiko@sntech.de, kvalo@kernel.org, 
+	davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, 
+	conor+dt@kernel.org
+Cc: efectn@protonmail.com, dsimic@manjaro.org, jagan@edgeble.ai, 
+	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-rockchip@lists.infradead.org, linux-kernel@vger.kernel.org, 
+	arend@broadcom.com, linux-wireless@vger.kernel.org, netdev@vger.kernel.org, 
+	megi@xff.cz, duoming@zju.edu.cn, bhelgaas@google.com, minipli@grsecurity.net, 
+	brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com, 
+	nick@khadas.com
+Content-Type: text/plain; charset="UTF-8"
 
-On 8/7/2024 1:10 AM, Alexey Charkov wrote:
-> Hi Jacobe,
-> 
-> On 05/08/2024 10:34 am, Jacobe Zang wrote:
->> WiFi modules often require 32kHz clock to function. Add support to
->> enable the clock to PCIe driver and move "brcm,bcm4329-fmac" check
->> to the top of brcmf_of_probe. Change function prototypes from void
->> to int and add appropriate errno's for return values that will be
->> send to bus when error occurred.
+On 07/08/2024 2:17 pm, Arend van Spriel wrote:
+> On 8/7/2024 1:10 AM, Alexey Charkov wrote:
+>> Hi Jacobe,
 >>
->> Co-developed-by: Ondrej Jirman <megi@xff.cz>
->> Signed-off-by: Ondrej Jirman <megi@xff.cz>
->> Co-developed-by: Arend van Spriel <arend.vanspriel@broadcom.com>
->> Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
->> Signed-off-by: Jacobe Zang <jacobe.zang@wesion.com>
->> ---
->>   .../broadcom/brcm80211/brcmfmac/bcmsdh.c      |  4 +++
->>   .../broadcom/brcm80211/brcmfmac/common.c      |  6 +++-
->>   .../wireless/broadcom/brcm80211/brcmfmac/of.c | 28 +++++++++++++------
->>   .../wireless/broadcom/brcm80211/brcmfmac/of.h |  9 +++---
->>   .../broadcom/brcm80211/brcmfmac/pcie.c        |  3 ++
->>   .../broadcom/brcm80211/brcmfmac/sdio.c        | 18 ++++++++----
->>   .../broadcom/brcm80211/brcmfmac/usb.c         |  3 ++
->>   7 files changed, 52 insertions(+), 19 deletions(-)
+>> On 05/08/2024 10:34 am, Jacobe Zang wrote:
+>>> WiFi modules often require 32kHz clock to function. Add support to
+>>> enable the clock to PCIe driver and move "brcm,bcm4329-fmac" check
+>>> to the top of brcmf_of_probe. Change function prototypes from void
+>>> to int and add appropriate errno's for return values that will be
+>>> send to bus when error occurred.
+>>>
+>>> Co-developed-by: Ondrej Jirman <megi@xff.cz>
+>>> Signed-off-by: Ondrej Jirman <megi@xff.cz>
+>>> Co-developed-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+>>> Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+>>> Signed-off-by: Jacobe Zang <jacobe.zang@wesion.com>
+>>> ---
+>>>   .../broadcom/brcm80211/brcmfmac/bcmsdh.c      |  4 +++
+>>>   .../broadcom/brcm80211/brcmfmac/common.c      |  6 +++-
+>>>   .../wireless/broadcom/brcm80211/brcmfmac/of.c | 28 +++++++++++++------
+>>>   .../wireless/broadcom/brcm80211/brcmfmac/of.h |  9 +++---
+>>>   .../broadcom/brcm80211/brcmfmac/pcie.c        |  3 ++
+>>>   .../broadcom/brcm80211/brcmfmac/sdio.c        | 18 ++++++++----
+>>>   .../broadcom/brcm80211/brcmfmac/usb.c         |  3 ++
+>>>   7 files changed, 52 insertions(+), 19 deletions(-)
+>>>
+>>> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/
+>>> bcmsdh.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
+>>> index 13391c2d82aae..ee3ca85c4a47b 100644
+>>> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
+>>> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
+>>> @@ -951,6 +951,10 @@ int brcmf_sdiod_probe(struct brcmf_sdio_dev
+>>> *sdiodev)
+>>>           ret = -ENODEV;
+>>>           goto out;
+>>>       }
+>>> +    if (IS_ERR(sdiodev->bus)) {
+>>> +        ret = PTR_ERR(sdiodev->bus);
+>>> +        goto out;
+>>> +    }
 >>
->> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c 
->> b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
->> index 13391c2d82aae..ee3ca85c4a47b 100644
->> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
->> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
->> @@ -951,6 +951,10 @@ int brcmf_sdiod_probe(struct brcmf_sdio_dev 
->> *sdiodev)
->>           ret = -ENODEV;
->>           goto out;
->>       }
->> +    if (IS_ERR(sdiodev->bus)) {
->> +        ret = PTR_ERR(sdiodev->bus);
->> +        goto out;
->> +    }
-> 
-> Maybe return -ENODEV error pointer instead of NULL from brcmf_sdio_probe 
-> as the default for the fail path? Then you can condense these two checks 
-> into one
+>> Maybe return -ENODEV error pointer instead of NULL from
+>> brcmf_sdio_probe as the default for the fail path? Then you can
+>> condense these two checks into one
+>
+> Sound reasonable.
+>
+>>>       brcmf_sdiod_host_fixup(sdiodev->func2->card->host);
+>>>   out:
+>>>       if (ret)
+>>> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/
+>>> common.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
+>>> index b24faae35873d..6c5d26f9b7661 100644
+>>> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
+>>> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
+>>> @@ -561,8 +561,12 @@ struct brcmf_mp_device
+>>> *brcmf_get_module_param(struct device *dev,
+>>>       if (!found) {
+>>>           /* No platform data for this device, try OF and DMI data */
+>>>           brcmf_dmi_probe(settings, chip, chiprev);
+>>> -        brcmf_of_probe(dev, bus_type, settings);
+>>>           brcmf_acpi_probe(dev, bus_type, settings);
+>>> +        i = brcmf_of_probe(dev, bus_type, settings);
+>>> +        if (i < 0) {
+>>> +            kfree(settings);
+>>> +            settings = ERR_PTR(i);
+>>> +        }
+>>
+>> This looks wrong. First, you're calling brcmf_of_probe twice. Second,
+>> if either DMI or ACPI probe successfully but OF doesn't, then you
+>> return an error code instead of success, and also overwrite settings
+>> with an error pointer thus rendering both brcmf_dmi_probe and
+>> brcmf_acpi_probe useless
+>
+> Twice? it is removed and added few lines below.
 
-Sound reasonable.
+Indeed, time to change glasses :) Didn't see the minus sign
 
->>       brcmf_sdiod_host_fixup(sdiodev->func2->card->host);
->>   out:
->>       if (ret)
->> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c 
->> b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
->> index b24faae35873d..6c5d26f9b7661 100644
->> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
->> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
->> @@ -561,8 +561,12 @@ struct brcmf_mp_device 
->> *brcmf_get_module_param(struct device *dev,
->>       if (!found) {
->>           /* No platform data for this device, try OF and DMI data */
->>           brcmf_dmi_probe(settings, chip, chiprev);
->> -        brcmf_of_probe(dev, bus_type, settings);
->>           brcmf_acpi_probe(dev, bus_type, settings);
->> +        i = brcmf_of_probe(dev, bus_type, settings);
->> +        if (i < 0) {
->> +            kfree(settings);
->> +            settings = ERR_PTR(i);
->> +        }
-> 
-> This looks wrong. First, you're calling brcmf_of_probe twice. Second, if 
-> either DMI or ACPI probe successfully but OF doesn't, then you return an 
-> error code instead of success, and also overwrite settings with an error 
-> pointer thus rendering both brcmf_dmi_probe and brcmf_acpi_probe useless
+> It does change the order
+> so that may not be best thing to do here. We actually only want to
+> handle the scenario where the clock resources are not yet available, ie.
+> when -EPROBE_DEFER is returned because that error value is taken into
+> account by the bus driver and tries to bind the driver again later.
 
-Twice? it is removed and added few lines below. It does change the order 
-so that may not be best thing to do here. We actually only want to 
-handle the scenario where the clock resources are not yet available, ie. 
-when -EPROBE_DEFER is returned because that error value is taken into 
-account by the bus driver and tries to bind the driver again later.
+Maybe we then do something like the following, which would retain the
+old behavior but pass -EPROBE_DEFER on to the bus:
 
->>       }
->>       return settings;
->>   }
->> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c 
->> b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
->> index e406e11481a62..5f61363fb5d0e 100644
->> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
->> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
->> @@ -6,6 +6,7 @@
->>   #include <linux/of.h>
->>   #include <linux/of_irq.h>
->>   #include <linux/of_net.h>
->> +#include <linux/clk.h>
->>   #include <defs.h>
->>   #include "debug.h"
->> @@ -65,17 +66,21 @@ static int brcmf_of_get_country_codes(struct 
->> device *dev,
->>       return 0;
->>   }
->> -void brcmf_of_probe(struct device *dev, enum brcmf_bus_type bus_type,
->> -            struct brcmf_mp_device *settings)
->> +int brcmf_of_probe(struct device *dev, enum brcmf_bus_type bus_type,
->> +           struct brcmf_mp_device *settings)
->>   {
->>       struct brcmfmac_sdio_pd *sdio = &settings->bus.sdio;
->>       struct device_node *root, *np = dev->of_node;
->> +    struct clk *clk;
->>       const char *prop;
->>       int irq;
->>       int err;
->>       u32 irqf;
->>       u32 val;
->> +    if (!np || !of_device_is_compatible(np, "brcm,bcm4329-fmac"))
->> +        return 0;
->> +
-> 
-> return 0 implies this function has completed successfully, while in this 
-> case it's obviously returned early due to not finding the correct device 
-> in DT. -ENODEV perhaps?
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
+b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
+index b24faae35873d..6c5d26f9b7661 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
+@@ -561,8 +561,12 @@ struct brcmf_mp_device
+*brcmf_get_module_param(struct device *dev,
+        if (!found) {
+                /* No platform data for this device, try OF and DMI data */
+                brcmf_dmi_probe(settings, chip, chiprev);
+-               brcmf_of_probe(dev, bus_type, settings);
++               if (brcmf_of_probe(dev, bus_type, settings) == -EPROBE_DEFER)
++                       return ERR_PTR(-EPROBE_DEFER);
+                brcmf_acpi_probe(dev, bus_type, settings);
+        }
+        return settings;
+ }
 
-This was a void function so returning 0 retains the behavior as before, 
-which is important to keep in mind here.
+>>>       }
+>>>       return settings;
+>>>   }
+>>> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c b/
+>>> drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
+>>> index e406e11481a62..5f61363fb5d0e 100644
+>>> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
+>>> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
+>>> @@ -6,6 +6,7 @@
+>>>   #include <linux/of.h>
+>>>   #include <linux/of_irq.h>
+>>>   #include <linux/of_net.h>
+>>> +#include <linux/clk.h>
+>>>   #include <defs.h>
+>>>   #include "debug.h"
+>>> @@ -65,17 +66,21 @@ static int brcmf_of_get_country_codes(struct
+>>> device *dev,
+>>>       return 0;
+>>>   }
+>>> -void brcmf_of_probe(struct device *dev, enum brcmf_bus_type bus_type,
+>>> -            struct brcmf_mp_device *settings)
+>>> +int brcmf_of_probe(struct device *dev, enum brcmf_bus_type bus_type,
+>>> +           struct brcmf_mp_device *settings)
+>>>   {
+>>>       struct brcmfmac_sdio_pd *sdio = &settings->bus.sdio;
+>>>       struct device_node *root, *np = dev->of_node;
+>>> +    struct clk *clk;
+>>>       const char *prop;
+>>>       int irq;
+>>>       int err;
+>>>       u32 irqf;
+>>>       u32 val;
+>>> +    if (!np || !of_device_is_compatible(np, "brcm,bcm4329-fmac"))
+>>> +        return 0;
+>>> +
+>>
+>> return 0 implies this function has completed successfully, while in
+>> this case it's obviously returned early due to not finding the correct
+>> device in DT. -ENODEV perhaps?
+>
+> This was a void function so returning 0 retains the behavior as before,
+> which is important to keep in mind here.
+>
+> This function will be called if the platform has CONFIG_OF enabled.
+> However, that does not mean that on every platform there is a node
+> defined for the struct device being probed. That is fine if it does not
+> require any DT properties to be functional. Hence we bail out here
+> without an error.
 
-This function will be called if the platform has CONFIG_OF enabled. 
-However, that does not mean that on every platform there is a node 
-defined for the struct device being probed. That is fine if it does not 
-require any DT properties to be functional. Hence we bail out here 
-without an error.
+Fair enough, thanks for the explanation!
 
->>       /* Apple ARM64 platforms have their own idea of board type, 
->> passed in
->>        * via the device tree. They also have an antenna SKU parameter
->>        */
->> @@ -105,7 +110,7 @@ void brcmf_of_probe(struct device *dev, enum 
->> brcmf_bus_type bus_type,
->>           board_type = devm_kstrdup(dev, tmp, GFP_KERNEL);
->>           if (!board_type) {
->>               of_node_put(root);
->> -            return;
->> +            return 0;
-> 
-> -ENOMEM?
-
-Retain behavior.
-
->>           }
->>           strreplace(board_type, '/', '-');
->>           settings->board_type = board_type;
->> @@ -113,8 +118,13 @@ void brcmf_of_probe(struct device *dev, enum 
->> brcmf_bus_type bus_type,
->>           of_node_put(root);
->>       }
->> -    if (!np || !of_device_is_compatible(np, "brcm,bcm4329-fmac"))
->> -        return;
->> +    clk = devm_clk_get_optional_enabled(dev, "lpo");
->> +    if (!IS_ERR_OR_NULL(clk)) {
->> +        brcmf_dbg(INFO, "enabling 32kHz clock\n");
->> +        clk_set_rate(clk, 32768);
->> +    } else if (PTR_ERR_OR_ZERO(clk) == -EPROBE_DEFER) {
-> 
-> PTR_ERR should be enough, no? Or better yet move this to the bottom of 
-> the function as was discussed on your previous submission, then you can 
-> return PTR_ERR_OR_ZERO(clk) right away, which would be a bit neater.
-> 
->> +        return -EPROBE_DEFER;
->> +    }
->>       err = brcmf_of_get_country_codes(dev, settings);
->>       if (err)
->> @@ -123,23 +133,25 @@ void brcmf_of_probe(struct device *dev, enum 
->> brcmf_bus_type bus_type,
->>       of_get_mac_address(np, settings->mac);
->>       if (bus_type != BRCMF_BUSTYPE_SDIO)
->> -        return;
->> +        return 0;
->>       if (of_property_read_u32(np, "brcm,drive-strength", &val) == 0)
->>           sdio->drive_strength = val;
->>       /* make sure there are interrupts defined in the node */
->>       if (!of_property_present(np, "interrupts"))
->> -        return;
->> +        return 0;
-> 
-> -ENOENT?
-
-That property is option in the binding so we return silently here as well.
-
->>       irq = irq_of_parse_and_map(np, 0);
->>       if (!irq) {
->>           brcmf_err("interrupt could not be mapped\n");
->> -        return;
->> +        return 0;
-> 
-> -ENXIO?
-
-This is a bit more gray area. The interrupt is optional, but if it is in 
-the device tree this is clearly intended to succeed. When it does the 
-question is whether the error print is sufficient or should we use 
-WARN() instead or fail the probe entirely. This interrupt is optional 
-because it is only needed in some sleep scenarios where it can wake the 
-host.
-
->>       }
->>       irqf = irqd_get_trigger_type(irq_get_irq_data(irq));
->>       sdio->oob_irq_supported = true;
->>       sdio->oob_irq_nr = irq;
->>       sdio->oob_irq_flags = irqf;
->> +
->> +    return 0;
->>   }
-
-[...]
-
->> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c 
->> b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
->> index 6b38d9de71af6..7d79e2db201b5 100644
->> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
->> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-
-[...]
-
->> @@ -4446,6 +4448,7 @@ struct brcmf_sdio *brcmf_sdio_probe(struct 
->> brcmf_sdio_dev *sdiodev)
->>       struct brcmf_sdio *bus;
->>       struct workqueue_struct *wq;
->>       struct brcmf_fw_request *fwreq;
->> +    int probe_attach_result;
->>       brcmf_dbg(TRACE, "Enter\n");
->> @@ -4474,7 +4477,8 @@ struct brcmf_sdio *brcmf_sdio_probe(struct 
->> brcmf_sdio_dev *sdiodev)
->>       bus->brcmf_wq = wq;
->>       /* attempt to attach to the dongle */
->> -    if (!(brcmf_sdio_probe_attach(bus))) {
->> +    probe_attach_result = brcmf_sdio_probe_attach(bus);
->> +    if (probe_attach_result < 0) {
->>           brcmf_err("brcmf_sdio_probe_attach failed\n");
->>           goto fail;
->>       }
->> @@ -4546,6 +4550,8 @@ struct brcmf_sdio *brcmf_sdio_probe(struct 
->> brcmf_sdio_dev *sdiodev)
->>   fail:
->>       brcmf_sdio_remove(bus);
->> +    if (probe_attach_result < 0)
->> +        return ERR_PTR(probe_attach_result);
->>       return NULL;
-> 
-> See my comment on the bcmsdh.c part above - perhaps initialize 
-> probe_attach_result to -ENODEV by default and just return 
-> ERR_PTR(probe_attach_result) here instead
-
-Yup. Let's do that.
-
-Thanks,
-Arend
+Best regards,
+Alexey
