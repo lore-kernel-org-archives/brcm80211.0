@@ -1,57 +1,57 @@
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E29D1B5AA
-	for <brcm80211@lists.linux.dev>; Sat, 10 Aug 2024 18:32:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FAAF13958F
+	for <brcm80211@lists.linux.dev>; Sat, 10 Aug 2024 18:32:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723314769; cv=none; b=lpd3M79N3WbeuhUPWNg+mNwkcAjG37wL0NlER6OdSk2VGLgZGKPrn7iGq+465nrLgFDe4l9f41E2LARmdIPkEn6rZCUR3vcvuj6JGDcdyevQ28nvOPe0YWcRmzhTPLsZqIAujBa78FFYQvbkGmyS9AMPgxswvQel1ZzeOQhm2eQ=
+	t=1723314776; cv=none; b=UMMcQhjOqAJ1M3J7XrWeVWn3z5EXL+zQMsBI06viucUlGt2InDhm7nb9h4xraRWWFc/by/zgb+bCIBbVGb1J8FTWmpJThqUNgwLxSBpJfOW0qiCZj00tHm1LibVTHhBnska/eUNDseV60LG+/Oheu1LN/uHnz18XDsDnu7rxvT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723314769; c=relaxed/simple;
+	s=arc-20240116; t=1723314776; c=relaxed/simple;
 	bh=VacrKqjT12DQWFLHJLsfIBg5hsy8fLzWFq+alMsvooM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=qPS9CeJWEdf+DXWhg8iIO3Vsps7MlUyn+32szp1UtTwd2wcdjM5y85uu/cD0Ce/Qkz1zQIzRbeKMgqs3J9trM7WCREahkNAMW6OyxV43krBc/4k3N5AaV/NODnDs+2TQjPCU1cIh5fIeYrTDOaqQOTBWzw6IxqMP+/dWFsulz7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=bB4z+JDV; arc=none smtp.client-ip=209.85.208.51
+	 In-Reply-To:Content-Type; b=RigMPGs5oHU/S6yZFrJMnwfVGIUrOugp7+//ZXu8xU1VKlAozthAKrMS2OV0e0PleokHkE0CnhoAe84u7HvPoXYy0PcoOlZnt+7jkc2QBw02q4e9oXbSmN/Z4s7rpkEWvORFEC/A+pNyMZLsOQjPAvRvVIn5tNYtDjMm6sZse14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=bOKWCABz; arc=none smtp.client-ip=209.85.218.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="bB4z+JDV"
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5a10835487fso4246152a12.1
-        for <brcm80211@lists.linux.dev>; Sat, 10 Aug 2024 11:32:47 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="bOKWCABz"
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a728f74c23dso344806466b.1
+        for <brcm80211@lists.linux.dev>; Sat, 10 Aug 2024 11:32:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1723314766; x=1723919566; darn=lists.linux.dev;
+        d=broadcom.com; s=google; t=1723314771; x=1723919571; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:to:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
         bh=u8muDajrGX3FO5dD48egl2aXV9/qSThjd9VJkKWphN4=;
-        b=bB4z+JDVLRt712Fa7J6Eppf78eOycTacanXCI8Ix4Dhif2Ft9uNhOI1nRgySeDb66+
-         o1eN4zadhE1h4r5xxploiQysdukpuihEdLur49BWR9FUjbG3q0a/SH8ltrqn5sEh8UeK
-         UNA7NZba4cw2mPQ7hsFWeZFksgaS11GRpC+Sg=
+        b=bOKWCABzsr53AHmYKdCnWNxieZ2QVY5QfAbvg7W+Bx/B8okHRcXrrX/sqHYl6JT4dY
+         2BZkL7CV46p5ks+7bhjgCtNet53s7nzNaA2+qz2uSlY3tkpW/znvGL8jO+QEPqrdvo2k
+         T5eAhzDHFMKKFd8xP0iu8XZjCa0juQ7WfLRV0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723314766; x=1723919566;
+        d=1e100.net; s=20230601; t=1723314771; x=1723919571;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:to:subject:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
         bh=u8muDajrGX3FO5dD48egl2aXV9/qSThjd9VJkKWphN4=;
-        b=fgmNXU0RY3vBTTKll5xpaMHrXgcNfct0StLcyXSRK9SYi07BWE7G+GQGTPJ0aYDrr3
-         Nc2LzbcaaJBmjsPVu+OoN/T5Cvq5UUcpmcBw3XA7wRh4hMSRg0QsGjlMdQgIZ1GO3Vr9
-         mdGhbV+9OMkaoZ/JPvMt0y1rJwKSA95Nw/dNZMP1hy52hy+KhWOzfZ8pO0PO5uNNMxZW
-         gCpXYaqKw5VJvMANkl1D/qfkMLOgcwZejfS6NOf9/ZKURSvl8IdYa9jD/7OqJBDDwL3s
-         H3qDnpumOeCnz+lKMhRo9xZALWfUQDmzT3e4/EMRJk1FWbJoC8w+G9xR86O+n7fNjcU6
-         4SaA==
-X-Forwarded-Encrypted: i=1; AJvYcCXNqMN+uUdY6TYmDlNMtgQdDvJoSYN5PAjEiP+6GjmNeJr51TBklMqbFVFunTgeP0ET/eOMrgFKR5F9AMiPqliKXP8trgQWy1c5
-X-Gm-Message-State: AOJu0YxwxBhcXByS9k3LUxpFczMKh21Q0gn7VVUmTtb+nHrDL5oeAT5M
-	hcEye92wrua+d27PKprFptgG+xdDh6sOrjtX9sEVDld4wRE/3MhQKpjoUk/X3A==
-X-Google-Smtp-Source: AGHT+IGop/ZoDA+Oc8+5qDzv25GL3CgFjr289f/SrTe7d5Ea2cqgNbnjGz8/e5qHIsy+G1LA+Xr+wA==
-X-Received: by 2002:a05:6402:90e:b0:59e:65d1:a56b with SMTP id 4fb4d7f45d1cf-5bd0a6668camr4516382a12.34.1723314765837;
-        Sat, 10 Aug 2024 11:32:45 -0700 (PDT)
+        b=tluKZFWDmQDBU6J638LAuu5uXauxJLVj+1qdHtCsPyu3LdVQ6oVoprvz6/LObkkveD
+         X0su9cU/x2Dr3T/8TgqWdqCMoISlrk6vfAmQJUMlCNiKOhAVyjcwBjcVrmQGYcOYT/N0
+         DKXUo0YwG4PjgFYVyG8Er0sr1lPrnmznvj1oZHoP9HRZc2gG8qLoRiBAE03G7tM3dCZO
+         pAo1l39kDvDIzW8TYUro+DI5rP8SRr6/gWM+WUpUFXIyIotP+SGFzP3mZkXSo7idwV7a
+         UpeLdY7eCyZs+NQpewfKg1nAo0Wx8cisqyWsDh/0vsifql+8GN/iKIgH5D93nd5Sa3W8
+         ucjA==
+X-Forwarded-Encrypted: i=1; AJvYcCV3NKu38NWqEPb/kU028x6jBfQn4ydPP2dmFgCrAMQtk313FQYAz6nBINJnGca8QhSLtrbaex4UJBS1yDKixnA5pe3lQuJxcMta
+X-Gm-Message-State: AOJu0YzA690CHjptZbenrGIcMFlifhCUCVDCrCgoJKZdfZ47QFnt1Stb
+	rECDi1PqDtXfSMDrLno3Gbo79/BepcJX7xXL4c/IESuU2NngfwnA2lDaSP83aw==
+X-Google-Smtp-Source: AGHT+IFXh7cTxFRswFB21Qe1oiRIGT9vU7kgXTaII9dWIL3bZbqeNjqAb2dSA1bo5MXu4eCB4cG/2Q==
+X-Received: by 2002:a17:907:e69e:b0:a6f:4a42:1976 with SMTP id a640c23a62f3a-a80aa5dff21mr428744866b.37.1723314771330;
+        Sat, 10 Aug 2024 11:32:51 -0700 (PDT)
 Received: from [192.168.178.137] (f215227.upc-f.chello.nl. [80.56.215.227])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5bd187f2abasm768760a12.8.2024.08.10.11.32.44
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a80bb08ffa0sm88575466b.9.2024.08.10.11.32.50
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 10 Aug 2024 11:32:45 -0700 (PDT)
-Message-ID: <fb9947fa-bca8-4c51-9feb-bf7ac6c6cc22@broadcom.com>
-Date: Sat, 10 Aug 2024 20:32:42 +0200
+        Sat, 10 Aug 2024 11:32:50 -0700 (PDT)
+Message-ID: <ff518c21-fcbb-4cfc-b5e3-40c0d4d18f0c@broadcom.com>
+Date: Sat, 10 Aug 2024 20:32:47 +0200
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
