@@ -1,276 +1,235 @@
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FAAF13958F
-	for <brcm80211@lists.linux.dev>; Sat, 10 Aug 2024 18:32:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C95BB200A3;
+	Sun, 11 Aug 2024 08:10:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723314776; cv=none; b=UMMcQhjOqAJ1M3J7XrWeVWn3z5EXL+zQMsBI06viucUlGt2InDhm7nb9h4xraRWWFc/by/zgb+bCIBbVGb1J8FTWmpJThqUNgwLxSBpJfOW0qiCZj00tHm1LibVTHhBnska/eUNDseV60LG+/Oheu1LN/uHnz18XDsDnu7rxvT0=
+	t=1723363847; cv=none; b=XeClIvAgoZaGJtxn6VFdTDQVF+VmDsjysx0Qll107LmlzmbxCtXyORzwQNA1UqOLkDTvMGom9cLPt4kYHnd/aFTF0dxxaA1YSs9IYp9aKyOr2LAoxkUBsTgMjUeX35e4LGW8oIRfiAScqm5ScOm1mepfsviAnbsFgVu704+P/Vc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723314776; c=relaxed/simple;
-	bh=VacrKqjT12DQWFLHJLsfIBg5hsy8fLzWFq+alMsvooM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=RigMPGs5oHU/S6yZFrJMnwfVGIUrOugp7+//ZXu8xU1VKlAozthAKrMS2OV0e0PleokHkE0CnhoAe84u7HvPoXYy0PcoOlZnt+7jkc2QBw02q4e9oXbSmN/Z4s7rpkEWvORFEC/A+pNyMZLsOQjPAvRvVIn5tNYtDjMm6sZse14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=bOKWCABz; arc=none smtp.client-ip=209.85.218.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+	s=arc-20240116; t=1723363847; c=relaxed/simple;
+	bh=nZFC08tDh3nttnNBJVhskJcR0F7oLOKEuY05u6lL1vI=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=CxuA3ZVID5pTIIFclHEdIT1knXHjNHJI/d3WPmySbEVwAU+HT++rYazskaqCw5hawz5sjmZsNoxVhv+mfLITfJqWpOtnnfjqKdpV9EEAcyq26hFfk/tmvWUVns2t7ieZH+FGFqrjc6BzdI0p1S65tJkLuoB0OYwVSR9SCqHynDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IayuqrgV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="bOKWCABz"
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a728f74c23dso344806466b.1
-        for <brcm80211@lists.linux.dev>; Sat, 10 Aug 2024 11:32:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1723314771; x=1723919571; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=u8muDajrGX3FO5dD48egl2aXV9/qSThjd9VJkKWphN4=;
-        b=bOKWCABzsr53AHmYKdCnWNxieZ2QVY5QfAbvg7W+Bx/B8okHRcXrrX/sqHYl6JT4dY
-         2BZkL7CV46p5ks+7bhjgCtNet53s7nzNaA2+qz2uSlY3tkpW/znvGL8jO+QEPqrdvo2k
-         T5eAhzDHFMKKFd8xP0iu8XZjCa0juQ7WfLRV0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723314771; x=1723919571;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=u8muDajrGX3FO5dD48egl2aXV9/qSThjd9VJkKWphN4=;
-        b=tluKZFWDmQDBU6J638LAuu5uXauxJLVj+1qdHtCsPyu3LdVQ6oVoprvz6/LObkkveD
-         X0su9cU/x2Dr3T/8TgqWdqCMoISlrk6vfAmQJUMlCNiKOhAVyjcwBjcVrmQGYcOYT/N0
-         DKXUo0YwG4PjgFYVyG8Er0sr1lPrnmznvj1oZHoP9HRZc2gG8qLoRiBAE03G7tM3dCZO
-         pAo1l39kDvDIzW8TYUro+DI5rP8SRr6/gWM+WUpUFXIyIotP+SGFzP3mZkXSo7idwV7a
-         UpeLdY7eCyZs+NQpewfKg1nAo0Wx8cisqyWsDh/0vsifql+8GN/iKIgH5D93nd5Sa3W8
-         ucjA==
-X-Forwarded-Encrypted: i=1; AJvYcCV3NKu38NWqEPb/kU028x6jBfQn4ydPP2dmFgCrAMQtk313FQYAz6nBINJnGca8QhSLtrbaex4UJBS1yDKixnA5pe3lQuJxcMta
-X-Gm-Message-State: AOJu0YzA690CHjptZbenrGIcMFlifhCUCVDCrCgoJKZdfZ47QFnt1Stb
-	rECDi1PqDtXfSMDrLno3Gbo79/BepcJX7xXL4c/IESuU2NngfwnA2lDaSP83aw==
-X-Google-Smtp-Source: AGHT+IFXh7cTxFRswFB21Qe1oiRIGT9vU7kgXTaII9dWIL3bZbqeNjqAb2dSA1bo5MXu4eCB4cG/2Q==
-X-Received: by 2002:a17:907:e69e:b0:a6f:4a42:1976 with SMTP id a640c23a62f3a-a80aa5dff21mr428744866b.37.1723314771330;
-        Sat, 10 Aug 2024 11:32:51 -0700 (PDT)
-Received: from [192.168.178.137] (f215227.upc-f.chello.nl. [80.56.215.227])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a80bb08ffa0sm88575466b.9.2024.08.10.11.32.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 10 Aug 2024 11:32:50 -0700 (PDT)
-Message-ID: <ff518c21-fcbb-4cfc-b5e3-40c0d4d18f0c@broadcom.com>
-Date: Sat, 10 Aug 2024 20:32:47 +0200
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IayuqrgV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F856C4AF0C;
+	Sun, 11 Aug 2024 08:10:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1723363847;
+	bh=nZFC08tDh3nttnNBJVhskJcR0F7oLOKEuY05u6lL1vI=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+	b=IayuqrgVtF03hxP3tVa0X2jMdwJIQiZvedasEzt4EiDzetg/YWqw+N3rHwOUgj1O7
+	 glWVz2/gjDD8FiVKSJCHkDIkCJXTMZ6qDM/YbL/NWJ8z7JGsUd5OYXqHyPNNZFkGJj
+	 gYB4t2FWWnQdSTtDD9lgpCezPjYX4TRLQ7x0dT96pPH22G2GD4nakyMQxWA98Imdey
+	 IdUYWoNzWedlDi8tZWfK8QwP+Owg9tnWU9v3y3AoknpKEJ7h8fTipsA8OwSpEhCYlD
+	 198BwYKta2npoYls9aUNOuSxuf5kzTa4BkaVBAOaASOOL9jTicowjyAceLcKdzcinD
+	 Tj0bIFimIcfUg==
+From: Kalle Valo <kvalo@kernel.org>
+To: Arend van Spriel <arend.vanspriel@broadcom.com>
+Cc: jacobe.zang@wesion.com,  Sai Krishna Gajula <saikrishnag@marvell.com>,
+  "robh@kernel.org" <robh@kernel.org>,  "krzk+dt@kernel.org"
+ <krzk+dt@kernel.org>,  "heiko@sntech.de" <heiko@sntech.de>,
+  "davem@davemloft.net" <davem@davemloft.net>,  "edumazet@google.com"
+ <edumazet@google.com>,  "kuba@kernel.org" <kuba@kernel.org>,
+  "pabeni@redhat.com" <pabeni@redhat.com>,  "conor+dt@kernel.org"
+ <conor+dt@kernel.org>,  "efectn@protonmail.com" <efectn@protonmail.com>,
+  "dsimic@manjaro.org" <dsimic@manjaro.org>,  "jagan@edgeble.ai"
+ <jagan@edgeble.ai>,  "devicetree@vger.kernel.org"
+ <devicetree@vger.kernel.org>,  "linux-arm-kernel@lists.infradead.org"
+ <linux-arm-kernel@lists.infradead.org>,
+  "linux-rockchip@lists.infradead.org"
+ <linux-rockchip@lists.infradead.org>,  "linux-kernel@vger.kernel.org"
+ <linux-kernel@vger.kernel.org>,  "arend@broadcom.com"
+ <arend@broadcom.com>,  "linux-wireless@vger.kernel.org"
+ <linux-wireless@vger.kernel.org>,  "netdev@vger.kernel.org"
+ <netdev@vger.kernel.org>,  "megi@xff.cz" <megi@xff.cz>,
+  "duoming@zju.edu.cn" <duoming@zju.edu.cn>,  "bhelgaas@google.com"
+ <bhelgaas@google.com>,  "minipli@grsecurity.net" <minipli@grsecurity.net>,
+  "brcm80211@lists.linux.dev" <brcm80211@lists.linux.dev>,
+  "brcm80211-dev-list.pdl@broadcom.com"
+ <brcm80211-dev-list.pdl@broadcom.com>,  "nick@khadas.com"
+ <nick@khadas.com>
+Subject: Re: [PATCH v9 4/5] wifi: brcmfmac: Add optional lpo clock enable
+ support
+References: <20240810035141.439024-1-jacobe.zang@wesion.com>
+	<20240810035141.439024-5-jacobe.zang@wesion.com>
+	<BY3PR18MB47072A9CC7E1EEB4BD1FC063A0BB2@BY3PR18MB4707.namprd18.prod.outlook.com>
+	<d9a182e4-c620-476d-8eb2-752dfd1ba4f8@wesion.com>
+	<fb9947fa-bca8-4c51-9feb-bf7ac6c6cc22@broadcom.com>
+Date: Sun, 11 Aug 2024 11:10:39 +0300
+In-Reply-To: <fb9947fa-bca8-4c51-9feb-bf7ac6c6cc22@broadcom.com> (Arend van
+	Spriel's message of "Sat, 10 Aug 2024 20:32:42 +0200")
+Message-ID: <8734nb32f4.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 4/5] wifi: brcmfmac: Add optional lpo clock enable
- support
-To: jacobe.zang@wesion.com, Sai Krishna Gajula <saikrishnag@marvell.com>,
- "robh@kernel.org" <robh@kernel.org>, "krzk+dt@kernel.org"
- <krzk+dt@kernel.org>, "heiko@sntech.de" <heiko@sntech.de>,
- "kvalo@kernel.org" <kvalo@kernel.org>,
- "davem@davemloft.net" <davem@davemloft.net>,
- "edumazet@google.com" <edumazet@google.com>,
- "kuba@kernel.org" <kuba@kernel.org>, "pabeni@redhat.com"
- <pabeni@redhat.com>, "conor+dt@kernel.org" <conor+dt@kernel.org>,
- "efectn@protonmail.com" <efectn@protonmail.com>,
- "dsimic@manjaro.org" <dsimic@manjaro.org>,
- "jagan@edgeble.ai" <jagan@edgeble.ai>,
- "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
- "linux-arm-kernel@lists.infradead.org"
- <linux-arm-kernel@lists.infradead.org>,
- "linux-rockchip@lists.infradead.org" <linux-rockchip@lists.infradead.org>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- "arend@broadcom.com" <arend@broadcom.com>,
- "linux-wireless@vger.kernel.org" <linux-wireless@vger.kernel.org>,
- "netdev@vger.kernel.org" <netdev@vger.kernel.org>, "megi@xff.cz"
- <megi@xff.cz>, "duoming@zju.edu.cn" <duoming@zju.edu.cn>,
- "bhelgaas@google.com" <bhelgaas@google.com>,
- "minipli@grsecurity.net" <minipli@grsecurity.net>,
- "brcm80211@lists.linux.dev" <brcm80211@lists.linux.dev>,
- "brcm80211-dev-list.pdl@broadcom.com" <brcm80211-dev-list.pdl@broadcom.com>,
- "nick@khadas.com" <nick@khadas.com>
-References: <20240810035141.439024-1-jacobe.zang@wesion.com>
- <20240810035141.439024-5-jacobe.zang@wesion.com>
- <BY3PR18MB47072A9CC7E1EEB4BD1FC063A0BB2@BY3PR18MB4707.namprd18.prod.outlook.com>
- <d9a182e4-c620-476d-8eb2-752dfd1ba4f8@wesion.com>
-Content-Language: en-US
-From: Arend van Spriel <arend.vanspriel@broadcom.com>
-Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
- 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
-In-Reply-To: <d9a182e4-c620-476d-8eb2-752dfd1ba4f8@wesion.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 8/10/2024 12:08 PM, jacobe.zang@wesion.com wrote:
-> 
-> 
-> On 2024/8/10 17:44, Sai Krishna Gajula <saikrishnag@marvell.com> wrote:
->>
->> > -----Original Message-----
->> > From: Jacobe Zang <jacobe.zang@wesion.com>
->> > Sent: Saturday, August 10, 2024 9:22 AM
->> > To: robh@kernel.org; krzk+dt@kernel.org; heiko@sntech.de;
->> > kvalo@kernel.org; davem@davemloft.net; edumazet@google.com;
->> > kuba@kernel.org; pabeni@redhat.com; conor+dt@kernel.org;
->> > arend.vanspriel@broadcom.com
->> > Cc: efectn@protonmail.com; dsimic@manjaro.org; jagan@edgeble.ai;
->> > devicetree@vger.kernel.org; linux-arm-kernel@lists.infradead.org; 
->> linux-
->> > rockchip@lists.infradead.org; linux-kernel@vger.kernel.org;
->> > arend@broadcom.com; linux-wireless@vger.kernel.org;
->> > netdev@vger.kernel.org; megi@xff.cz; duoming@zju.edu.cn;
->> > bhelgaas@google.com; minipli@grsecurity.net; brcm80211@lists.linux.dev;
->> > brcm80211-dev-list.pdl@broadcom.com; nick@khadas.com; Jacobe Zang
->> > <jacobe.zang@wesion.com>
->> > Subject:  [PATCH v9 4/5] wifi: brcmfmac: Add optional lpo clock
->> > enable support
->> >
->> > WiFi modules often require 32kHz clock to function. Add support to 
->> enable
->> > the clock to PCIe driver and move "brcm,bcm4329-fmac" check to the 
->> top of
->> > brcmf_of_probe. Change function prototypes from void to int and add
->> > appropriate errno's for return
->> > WiFi modules often require 32kHz clock to function. Add support to 
->> enable
->> > the clock to PCIe driver and move "brcm,bcm4329-fmac" check to the 
->> top of
->> > brcmf_of_probe. Change function prototypes from void to int and add
->> > appropriate errno's for return values that will be send to bus when 
->> error
->> > occurred.
->> >
->> > Co-developed-by: Ondrej Jirman <megi@xff.cz>
->> > Signed-off-by: Ondrej Jirman <megi@xff.cz>
->> > Co-developed-by: Arend van Spriel <arend.vanspriel@broadcom.com>
->> > Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
->> > Signed-off-by: Jacobe Zang <jacobe.zang@wesion.com>
->> > ---
->> >   .../broadcom/brcm80211/brcmfmac/bcmsdh.c      |  4 +-
->> >   .../broadcom/brcm80211/brcmfmac/common.c      |  3 +-
->> >   .../wireless/broadcom/brcm80211/brcmfmac/of.c | 53 
->> +++++++++++--------
->> > .../wireless/broadcom/brcm80211/brcmfmac/of.h |  9 ++--
->> >   .../broadcom/brcm80211/brcmfmac/pcie.c        |  3 ++
->> >   .../broadcom/brcm80211/brcmfmac/sdio.c        | 24 ++++++---
->> >   .../broadcom/brcm80211/brcmfmac/usb.c         |  3 ++
->> >   7 files changed, 63 insertions(+), 36 deletions(-)
->> >
->> > diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
->> > b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
->> > index 13391c2d82aae..b2ede4e579c5c 100644
->> > --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
->> > +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
->> > @@ -947,8 +947,8 @@ int brcmf_sdiod_probe(struct brcmf_sdio_dev
->> > *sdiodev)
->> >
->> >       /* try to attach to the target device */
->> >       sdiodev->bus = brcmf_sdio_probe(sdiodev);
->> > -    if (!sdiodev->bus) {
->> > -        ret = -ENODEV;
->> > +    if (IS_ERR(sdiodev->bus)) {
->> > +        ret = PTR_ERR(sdiodev->bus);
->> >           goto out;
->> >       }
->> >       brcmf_sdiod_host_fixup(sdiodev->func2->card->host);
->> > diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
->> > b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
->> > index b24faae35873d..58d50918dd177 100644
->> > --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
->> > +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
->> > @@ -561,7 +561,8 @@ struct brcmf_mp_device
->> > *brcmf_get_module_param(struct device *dev,
->> >       if (!found) {
->> >           /* No platform data for this device, try OF and DMI data */
->> >           brcmf_dmi_probe(settings, chip, chiprev);
->> > -        brcmf_of_probe(dev, bus_type, settings);
->> > +        if (brcmf_of_probe(dev, bus_type, settings) == -
->> > EPROBE_DEFER)
->> > +            return ERR_PTR(-EPROBE_DEFER);
->> >           brcmf_acpi_probe(dev, bus_type, settings);
->> >       }
->> >       return settings;
->> > diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
->> > b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
->> > index e406e11481a62..f19dc7355e0e8 100644
->> > --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
->> > +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
->> > @@ -6,6 +6,7 @@
->> >   #include <linux/of.h>
->> >   #include <linux/of_irq.h>
->> >   #include <linux/of_net.h>
->> > +#include <linux/clk.h>
->> >
->> >   #include <defs.h>
->> >   #include "debug.h"
->> > @@ -65,17 +66,21 @@ static int brcmf_of_get_country_codes(struct device
->> > *dev,
->> >       return 0;
->> >   }
->> >
->> > -void brcmf_of_probe(struct device *dev, enum brcmf_bus_type bus_type,
->> > -            struct brcmf_mp_device *settings)
->> > +int brcmf_of_probe(struct device *dev, enum brcmf_bus_type bus_type,
->> > +           struct brcmf_mp_device *settings)
->> >   {
->> >       struct brcmfmac_sdio_pd *sdio = &settings->bus.sdio;
->> >       struct device_node *root, *np = dev->of_node;
->> > +    struct clk *clk;
->> >       const char *prop;
->>
->> Small nit, please check if reverse x-mas tree order need to be follow 
->> here.
->>
->> >       int irq;
->> >       int err;
->> >       u32 irqf;
-> 
-> It can be seen from this line that there should be no need to follow the 
-> reverse x-mas tree order. Because it is a struct variable, so place with 
-> other struct ones.
+Arend van Spriel <arend.vanspriel@broadcom.com> writes:
 
-As driver maintainer I do not care about such neatness, but maybe Kalle 
-has another preference. The code above looks fine to me.
+> On 8/10/2024 12:08 PM, jacobe.zang@wesion.com wrote:
+>
+>> On 2024/8/10 17:44, Sai Krishna Gajula <saikrishnag@marvell.com>
+>> wrote:
+>>>
+>>> > -----Original Message-----
+>>> > From: Jacobe Zang <jacobe.zang@wesion.com>
+>>> > Sent: Saturday, August 10, 2024 9:22 AM
+>>> > To: robh@kernel.org; krzk+dt@kernel.org; heiko@sntech.de;
+>>> > kvalo@kernel.org; davem@davemloft.net; edumazet@google.com;
+>>> > kuba@kernel.org; pabeni@redhat.com; conor+dt@kernel.org;
+>>> > arend.vanspriel@broadcom.com
+>>> > Cc: efectn@protonmail.com; dsimic@manjaro.org; jagan@edgeble.ai;
+>>> > devicetree@vger.kernel.org; linux-arm-kernel@lists.infradead.org;
+>>> linux-
+>>> > rockchip@lists.infradead.org; linux-kernel@vger.kernel.org;
+>>> > arend@broadcom.com; linux-wireless@vger.kernel.org;
+>>> > netdev@vger.kernel.org; megi@xff.cz; duoming@zju.edu.cn;
+>>> > bhelgaas@google.com; minipli@grsecurity.net; brcm80211@lists.linux.de=
+v;
+>>> > brcm80211-dev-list.pdl@broadcom.com; nick@khadas.com; Jacobe Zang
+>>> > <jacobe.zang@wesion.com>
+>>> > Subject:=C2=A0 [PATCH v9 4/5] wifi: brcmfmac: Add optional lpo clock
+>>> > enable support
+>>> >
+>>> > WiFi modules often require 32kHz clock to function. Add support
+>>> to enable
+>>> > the clock to PCIe driver and move "brcm,bcm4329-fmac" check to
+>>> the top of
+>>> > brcmf_of_probe. Change function prototypes from void to int and add
+>>> > appropriate errno's for return
+>>> > WiFi modules often require 32kHz clock to function. Add support
+>>> to enable
+>>> > the clock to PCIe driver and move "brcm,bcm4329-fmac" check to
+>>> the top of
+>>> > brcmf_of_probe. Change function prototypes from void to int and add
+>>> > appropriate errno's for return values that will be send to bus
+>>> when error
+>>> > occurred.
+>>> >
+>>> > Co-developed-by: Ondrej Jirman <megi@xff.cz>
+>>> > Signed-off-by: Ondrej Jirman <megi@xff.cz>
+>>> > Co-developed-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+>>> > Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+>>> > Signed-off-by: Jacobe Zang <jacobe.zang@wesion.com>
+>>> > ---
+>>> >=C2=A0=C2=A0 .../broadcom/brcm80211/brcmfmac/bcmsdh.c=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0 |=C2=A0 4 +-
+>>> >=C2=A0=C2=A0 .../broadcom/brcm80211/brcmfmac/common.c=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0 |=C2=A0 3 +-
+>>> >=C2=A0=C2=A0 .../wireless/broadcom/brcm80211/brcmfmac/of.c | 53
+>>> +++++++++++--------
+>>> > .../wireless/broadcom/brcm80211/brcmfmac/of.h |=C2=A0 9 ++--
+>>> >=C2=A0=C2=A0 .../broadcom/brcm80211/brcmfmac/pcie.c=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 3 ++
+>>> >=C2=A0=C2=A0 .../broadcom/brcm80211/brcmfmac/sdio.c=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 | 24 ++++++---
+>>> >=C2=A0=C2=A0 .../broadcom/brcm80211/brcmfmac/usb.c=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 3 ++
+>>> >=C2=A0=C2=A0 7 files changed, 63 insertions(+), 36 deletions(-)
+>>> >
+>>> > diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
+>>> > b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
+>>> > index 13391c2d82aae..b2ede4e579c5c 100644
+>>> > --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
+>>> > +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
+>>> > @@ -947,8 +947,8 @@ int brcmf_sdiod_probe(struct brcmf_sdio_dev
+>>> > *sdiodev)
+>>> >
+>>> >=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* try to attach to the target de=
+vice */
+>>> >=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 sdiodev->bus =3D brcmf_sdio_probe=
+(sdiodev);
+>>> > -=C2=A0=C2=A0=C2=A0 if (!sdiodev->bus) {
+>>> > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ret =3D -ENODEV;
+>>> > +=C2=A0=C2=A0=C2=A0 if (IS_ERR(sdiodev->bus)) {
+>>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ret =3D PTR_ERR(sdiodev->=
+bus);
+>>> >=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 goto out;
+>>> >=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+>>> >=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 brcmf_sdiod_host_fixup(sdiodev->f=
+unc2->card->host);
+>>> > diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
+>>> > b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
+>>> > index b24faae35873d..58d50918dd177 100644
+>>> > --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
+>>> > +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
+>>> > @@ -561,7 +561,8 @@ struct brcmf_mp_device
+>>> > *brcmf_get_module_param(struct device *dev,
+>>> >=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (!found) {
+>>> >=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* No pla=
+tform data for this device, try OF and DMI data */
+>>> >=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 brcmf_dmi=
+_probe(settings, chip, chiprev);
+>>> > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 brcmf_of_probe(dev, bus_t=
+ype, settings);
+>>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (brcmf_of_probe(dev, b=
+us_type, settings) =3D=3D -
+>>> > EPROBE_DEFER)
+>>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 r=
+eturn ERR_PTR(-EPROBE_DEFER);
+>>> >=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 brcmf_acp=
+i_probe(dev, bus_type, settings);
+>>> >=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+>>> >=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return settings;
+>>> > diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
+>>> > b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
+>>> > index e406e11481a62..f19dc7355e0e8 100644
+>>> > --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
+>>> > +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
+>>> > @@ -6,6 +6,7 @@
+>>> >=C2=A0=C2=A0 #include <linux/of.h>
+>>> >=C2=A0=C2=A0 #include <linux/of_irq.h>
+>>> >=C2=A0=C2=A0 #include <linux/of_net.h>
+>>> > +#include <linux/clk.h>
+>>> >
+>>> >=C2=A0=C2=A0 #include <defs.h>
+>>> >=C2=A0=C2=A0 #include "debug.h"
+>>> > @@ -65,17 +66,21 @@ static int brcmf_of_get_country_codes(struct devi=
+ce
+>>> > *dev,
+>>> >=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return 0;
+>>> >=C2=A0=C2=A0 }
+>>> >
+>>> > -void brcmf_of_probe(struct device *dev, enum brcmf_bus_type bus_type,
+>>> > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 s=
+truct brcmf_mp_device *settings)
+>>> > +int brcmf_of_probe(struct device *dev, enum brcmf_bus_type bus_type,
+>>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 struct =
+brcmf_mp_device *settings)
+>>> >=C2=A0=C2=A0 {
+>>> >=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 struct brcmfmac_sdio_pd *sdio =3D=
+ &settings->bus.sdio;
+>>> >=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 struct device_node *root, *np =3D=
+ dev->of_node;
+>>> > +=C2=A0=C2=A0=C2=A0 struct clk *clk;
+>>> >=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 const char *prop;
+>>>
+>>> Small nit, please check if reverse x-mas tree order need to be
+>>> follow here.
+>>>
+>>> >=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 int irq;
+>>> >=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 int err;
+>>> >=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 u32 irqf;
+>> It can be seen from this line that there should be no need to follow
+>> the reverse x-mas tree order. Because it is a struct variable, so
+>> place with other struct ones.
+>
+> As driver maintainer I do not care about such neatness, but maybe
+> Kalle has another preference. The code above looks fine to me.
 
-Regards,
-Arend
+We haven't been strongly requiring reverse x-mas tree in wireless code,
+it has been just a preference. Also for me the code above looks fine.
 
+--=20
+https://patchwork.kernel.org/project/linux-wireless/list/
 
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatc=
+hes
