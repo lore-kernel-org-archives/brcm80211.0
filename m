@@ -1,235 +1,239 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from APC01-SG2-obe.outbound.protection.outlook.com (mail-sgaapc01on2113.outbound.protection.outlook.com [40.107.215.113])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C95BB200A3;
-	Sun, 11 Aug 2024 08:10:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723363847; cv=none; b=XeClIvAgoZaGJtxn6VFdTDQVF+VmDsjysx0Qll107LmlzmbxCtXyORzwQNA1UqOLkDTvMGom9cLPt4kYHnd/aFTF0dxxaA1YSs9IYp9aKyOr2LAoxkUBsTgMjUeX35e4LGW8oIRfiAScqm5ScOm1mepfsviAnbsFgVu704+P/Vc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723363847; c=relaxed/simple;
-	bh=nZFC08tDh3nttnNBJVhskJcR0F7oLOKEuY05u6lL1vI=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
-	 MIME-Version:Content-Type; b=CxuA3ZVID5pTIIFclHEdIT1knXHjNHJI/d3WPmySbEVwAU+HT++rYazskaqCw5hawz5sjmZsNoxVhv+mfLITfJqWpOtnnfjqKdpV9EEAcyq26hFfk/tmvWUVns2t7ieZH+FGFqrjc6BzdI0p1S65tJkLuoB0OYwVSR9SCqHynDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IayuqrgV; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IayuqrgV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F856C4AF0C;
-	Sun, 11 Aug 2024 08:10:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723363847;
-	bh=nZFC08tDh3nttnNBJVhskJcR0F7oLOKEuY05u6lL1vI=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
-	b=IayuqrgVtF03hxP3tVa0X2jMdwJIQiZvedasEzt4EiDzetg/YWqw+N3rHwOUgj1O7
-	 glWVz2/gjDD8FiVKSJCHkDIkCJXTMZ6qDM/YbL/NWJ8z7JGsUd5OYXqHyPNNZFkGJj
-	 gYB4t2FWWnQdSTtDD9lgpCezPjYX4TRLQ7x0dT96pPH22G2GD4nakyMQxWA98Imdey
-	 IdUYWoNzWedlDi8tZWfK8QwP+Owg9tnWU9v3y3AoknpKEJ7h8fTipsA8OwSpEhCYlD
-	 198BwYKta2npoYls9aUNOuSxuf5kzTa4BkaVBAOaASOOL9jTicowjyAceLcKdzcinD
-	 Tj0bIFimIcfUg==
-From: Kalle Valo <kvalo@kernel.org>
-To: Arend van Spriel <arend.vanspriel@broadcom.com>
-Cc: jacobe.zang@wesion.com,  Sai Krishna Gajula <saikrishnag@marvell.com>,
-  "robh@kernel.org" <robh@kernel.org>,  "krzk+dt@kernel.org"
- <krzk+dt@kernel.org>,  "heiko@sntech.de" <heiko@sntech.de>,
-  "davem@davemloft.net" <davem@davemloft.net>,  "edumazet@google.com"
- <edumazet@google.com>,  "kuba@kernel.org" <kuba@kernel.org>,
-  "pabeni@redhat.com" <pabeni@redhat.com>,  "conor+dt@kernel.org"
- <conor+dt@kernel.org>,  "efectn@protonmail.com" <efectn@protonmail.com>,
-  "dsimic@manjaro.org" <dsimic@manjaro.org>,  "jagan@edgeble.ai"
- <jagan@edgeble.ai>,  "devicetree@vger.kernel.org"
- <devicetree@vger.kernel.org>,  "linux-arm-kernel@lists.infradead.org"
- <linux-arm-kernel@lists.infradead.org>,
-  "linux-rockchip@lists.infradead.org"
- <linux-rockchip@lists.infradead.org>,  "linux-kernel@vger.kernel.org"
- <linux-kernel@vger.kernel.org>,  "arend@broadcom.com"
- <arend@broadcom.com>,  "linux-wireless@vger.kernel.org"
- <linux-wireless@vger.kernel.org>,  "netdev@vger.kernel.org"
- <netdev@vger.kernel.org>,  "megi@xff.cz" <megi@xff.cz>,
-  "duoming@zju.edu.cn" <duoming@zju.edu.cn>,  "bhelgaas@google.com"
- <bhelgaas@google.com>,  "minipli@grsecurity.net" <minipli@grsecurity.net>,
-  "brcm80211@lists.linux.dev" <brcm80211@lists.linux.dev>,
-  "brcm80211-dev-list.pdl@broadcom.com"
- <brcm80211-dev-list.pdl@broadcom.com>,  "nick@khadas.com"
- <nick@khadas.com>
-Subject: Re: [PATCH v9 4/5] wifi: brcmfmac: Add optional lpo clock enable
- support
-References: <20240810035141.439024-1-jacobe.zang@wesion.com>
-	<20240810035141.439024-5-jacobe.zang@wesion.com>
-	<BY3PR18MB47072A9CC7E1EEB4BD1FC063A0BB2@BY3PR18MB4707.namprd18.prod.outlook.com>
-	<d9a182e4-c620-476d-8eb2-752dfd1ba4f8@wesion.com>
-	<fb9947fa-bca8-4c51-9feb-bf7ac6c6cc22@broadcom.com>
-Date: Sun, 11 Aug 2024 11:10:39 +0300
-In-Reply-To: <fb9947fa-bca8-4c51-9feb-bf7ac6c6cc22@broadcom.com> (Arend van
-	Spriel's message of "Sat, 10 Aug 2024 20:32:42 +0200")
-Message-ID: <8734nb32f4.fsf@kernel.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAE7513CAB0
+	for <brcm80211@lists.linux.dev>; Tue, 13 Aug 2024 08:20:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.215.113
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1723537229; cv=fail; b=tV4HSS2YWJJuVc3FHITTa+iwDqIT4M6wQKaqKBBb7HIybSKYZtcfuHPtPI6L29lLtZOmEeAiTPPpgh9BGaflOLhdLl3ms0yd+0G+GHRRyfO50T4ZEXngkqBMprkgHV8CADwqHSvDT1AwoBpe/4EHSFglwoSTNyblpTJ761KOyW4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1723537229; c=relaxed/simple;
+	bh=QLM+SwMkH/4ULPUg7heBOEurzKWzpwdqtLxyPir6eSk=;
+	h=From:To:Cc:Subject:Date:Message-Id:Content-Type:MIME-Version; b=ZTxylROXiTVg3ELpC47F1nEuXo16Gc0rhQ0CUUgobJLCgmwQGsLPxd0Hy37EGLDL2+G/CIK/Swe7Exlhk9npXEfAKfliLNVLDzjDRxfuqEjzwAEoiJrOBBiXlBNxTBYoOq5rCIFJipj4Cvpk0fQb2q1tvFjHjVTqZzA8GXygHZE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wesion.com; spf=pass smtp.mailfrom=wesion.com; arc=fail smtp.client-ip=40.107.215.113
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wesion.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wesion.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=KjvoEGx7JQrYWqHQ0gVjy0QY1LuLNZSLA/WbrQzva+gtvGB7zTVHvAcF+krT9bHurmNxm6AetsNzYE0BO0cp9YrkqlQlVcPPVUyr5+2o5nNWQ1b/kw3PBsWXbD15k/E1IX+23uGFLR5bCXBSq2b1CZxxYSDI2iyuPOl9PDqBixed7wIwDnFz2MvWusbp/TaD38E9BS0Aslam78yVcD+kdVL6cDg4Cftv/UMABQs3AOZ/ecz1EgJgHuEYzK4bWIhxn2W5x92pbU6UVcANvwNhTvqMQOaLxArbVY5CWYSz1SSY3fAzsa8smTdJHa1RpDflfS5uquWKp5j/i0YeJ8QPsg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Qngay0JW9A6HmYeVLCyYDAVp6HXyaqvXfsF8k3Qk2wA=;
+ b=HsuffRlcMo0HZNXg4OqzmyjRPd4u/9LqO/7Xpol/mqHFKzkA7EIXj+eo8k1v5fpCH48bAvj4h1wooFrlbYYCr0wt+8TpR4mX8Co0m4odx2827AZ9T7B71R3y5N+taxibfCnNvH/ssQPIk+h3J/YCA2oiMA0UUauSaWdYVC4at+cuu04/76WfxsbVf6WkrunzOkrcJY9jJVE8SJwxJZaXYiAB4vzh0x1UsvGtCyI2amm9dxXwXomIHlNKBtdJhrN/vKoA/4pdW85/f+wjUvtxgyaX9yXZKyTJB0DQs0vPWReqcIATtXbK/erNE6oVmjSDUQSmhfSq9N0e7yjauRcBaw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=wesion.com; dmarc=pass action=none header.from=wesion.com;
+ dkim=pass header.d=wesion.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=wesion.com;
+Received: from TYZPR03MB7001.apcprd03.prod.outlook.com (2603:1096:400:26a::14)
+ by OSQPR03MB8748.apcprd03.prod.outlook.com (2603:1096:604:275::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7849.20; Tue, 13 Aug
+ 2024 08:20:19 +0000
+Received: from TYZPR03MB7001.apcprd03.prod.outlook.com
+ ([fe80::78dd:5e68:1a9c:36c0]) by TYZPR03MB7001.apcprd03.prod.outlook.com
+ ([fe80::78dd:5e68:1a9c:36c0%6]) with mapi id 15.20.7849.019; Tue, 13 Aug 2024
+ 08:20:19 +0000
+From: Jacobe Zang <jacobe.zang@wesion.com>
+To: robh@kernel.org,
+	krzk+dt@kernel.org,
+	heiko@sntech.de,
+	kvalo@kernel.org,
+	davem@davemloft.net,
+	edumazet@google.com,
+	kuba@kernel.org,
+	pabeni@redhat.com,
+	conor+dt@kernel.org
+Cc: efectn@protonmail.com,
+	dsimic@manjaro.org,
+	jagan@edgeble.ai,
+	devicetree@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-rockchip@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	arend@broadcom.com,
+	linux-wireless@vger.kernel.org,
+	netdev@vger.kernel.org,
+	megi@xff.cz,
+	duoming@zju.edu.cn,
+	bhelgaas@google.com,
+	minipli@grsecurity.net,
+	brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com,
+	nick@khadas.com,
+	Jacobe Zang <jacobe.zang@wesion.com>
+Subject: [PATCH v10 0/5] Add AP6275P wireless support
+Date: Tue, 13 Aug 2024 16:20:02 +0800
+Message-Id: <20240813082007.2625841-1-jacobe.zang@wesion.com>
+X-Mailer: git-send-email 2.34.1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: TYCP286CA0309.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:400:38b::10) To TYZPR03MB7001.apcprd03.prod.outlook.com
+ (2603:1096:400:26a::14)
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TYZPR03MB7001:EE_|OSQPR03MB8748:EE_
+X-MS-Office365-Filtering-Correlation-Id: 22a53096-89d4-400e-a5ea-08dcbb70c485
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|7416014|376014|52116014|1800799024|38350700014;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?6L4ht0Xm1gTUe3immVspvgXWB3QlBHF2xTsbKmbSAk94sf9GwFrIiJJ1+EvC?=
+ =?us-ascii?Q?ysoHuHwL2R8HwoayhS+fqub9IZ+N0KTZXeeIWfzc35h57VIwWVhl0S0kk9Fh?=
+ =?us-ascii?Q?IDxkErGwg/OrnqtjVL6GSDVjgHy7tE6F56rrisXG7MEtDTgIEnjoxIvg566f?=
+ =?us-ascii?Q?YuwSHVdwLGo58BVhm1UUboOBp4mxB6NDmqROASm461z/arGjw7FU1Akgxvyq?=
+ =?us-ascii?Q?9Tli8D/AzCRmKKwDW5DHdh7bvpgRGVB4RdlnKNEUN3QTY8yUN9lUCm8zlPnX?=
+ =?us-ascii?Q?2Nkvx7FXeJSQ1AWVWOahsWoAyF7KvKXCFD81jXjlcCN9IBDFPkA9oLf4RBlN?=
+ =?us-ascii?Q?A/7BVCPmTW6r/314idbxF/3+UZhH20sqvddnSh8u6+/VND4Zsr7hxRwSLsMt?=
+ =?us-ascii?Q?ettq2TT7bmFwbfMabSlfNfansf189kfDLR/btXaTZBp0FGZYIOu6B4L7No0W?=
+ =?us-ascii?Q?CfDDERjEpys0BJ4ASVVhNsHLDEeakmVip3cTV/2Ivj7Jp6hCIjCAcNSgEwN3?=
+ =?us-ascii?Q?01CpZMST7gaUR+R28djgepZ2exBaBKWfHlaqsXMbI3VFRQspf2mct5iALXhY?=
+ =?us-ascii?Q?1Fa3aQUjFUWftSd5R2j51liD4rsp3Ib+QNVeQv7Ly0bhRCX/ZI1/DMNdxER0?=
+ =?us-ascii?Q?sFAJoEr6Zo3XBLDu/f/q22wZEVoQNXgqZ7RbB+r+/gKv5u8ycA2PCsaO7gp1?=
+ =?us-ascii?Q?/yz3ZaklM9i5adbQwba9CLKNalm5XgAWNyRmtqQlnU9RieA6GBrYScG1MkPG?=
+ =?us-ascii?Q?4neELEnopoIKXk9MTFOuhr/DHo1TyfRk/0uaCscIYV0A7QheNSWlsweNhsLP?=
+ =?us-ascii?Q?xL2gWhxpEPUJ2CPUiUWnXf7Nyd2eQExlqy7oV2KxSslFghuVzTHgRx/swvrb?=
+ =?us-ascii?Q?ssdwP1Q0tt5OKmQr+aBjrZS73wcwVm5PznHis1gQKM4syMGbTlDe6ET1Urpg?=
+ =?us-ascii?Q?3M88W2upO3epVFRbfuaUS6wkStqWplKHJf1epEze/P4dFZYOjUu1ke6BOaK7?=
+ =?us-ascii?Q?Yln5GF2ETJQEfycYcbeKyVpuD1EZKZXegSEXU3GdjUSG68FIHgWd0TZ+AUkr?=
+ =?us-ascii?Q?cgU+bGWdkZpjwbuq8a33+0MxpX6QZQ+IPZqo/JPat6yk+32QZ3OEVZ38+NXA?=
+ =?us-ascii?Q?Jsd9bx2grNEnAfV1RO/hZ3utj44XQIkpc6KcaOqhE2xflaCnxHsnlcNERhkh?=
+ =?us-ascii?Q?Ew5kqXdDOV27Ap76+0c8UwBsoLZU4V6oZvuSveCg8aOB6GfSfpdhAkng2tMQ?=
+ =?us-ascii?Q?+JhFbkKnCyWHAt1OWcTTi4lpoZ8oGhT+AgXDe2Gj3YHbGNheDjDENJgKv9hC?=
+ =?us-ascii?Q?jsfvzwMn87DEALw17Oo9bKUd?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TYZPR03MB7001.apcprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(7416014)(376014)(52116014)(1800799024)(38350700014);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?6piLFKMwjeVMviX3D2JRw4gxsdPhforeNncbm0ZVmrScVAhcxDsAg7Ujo5Dc?=
+ =?us-ascii?Q?kvtk7RthnYYm0fURkicXfu67HE2cJS4vYyhw1o4AWfAJDGmAq//0tdCQSl3V?=
+ =?us-ascii?Q?xV+ikeoPI+7f4ulLgSaBfoH1yIbo7gBnD4BExrS0P/D6i9ifIDQSzh7kTBoQ?=
+ =?us-ascii?Q?yEyxTnWeBo707i5Mq9xcAQJGGV/B6VHc6QkHIoCZJN6Q7mapD3QEzmSLCWo+?=
+ =?us-ascii?Q?qQyQ8Q1Tn364YH2qHWukv65pJSIcfFOoRLjjUsjcWM9v18W5AcPX3oXlITVa?=
+ =?us-ascii?Q?VXSpBkgVksslEN5oGfpXZaVKK/BzieERrmM4hUUP1p1GPbR3nLjbbijN/K3+?=
+ =?us-ascii?Q?DBp2/wtxUq4WvC7lcflmPjk3EwB92gYkFNCkoxdkCjzj8l4nwsE2GJ+imUiI?=
+ =?us-ascii?Q?BMPo88/8amw+S4dY4xq2fuYCPlDOanLcPNvraTcGzJBUZnTtzqJrpyKi84hv?=
+ =?us-ascii?Q?natBb5l+0+/44wkq5AGMfcf13bWiyFnLKUiBmCm6ga6k0CkUw77Lzsgw6StV?=
+ =?us-ascii?Q?+Hsw/7QrzEuzacEdniupixmN39iriv8rfvUV1j2gMbxM+r/BkJ5fZZkKrrtY?=
+ =?us-ascii?Q?dDBSAgf9kOnEbKBCKB5PAjciFp1SPiyDgK+IQDx8dFmrrEc36uhHjnJZcx4+?=
+ =?us-ascii?Q?Jv6VCKAR1ILQp3lIGy9LpRrcw4j3sT6pWEAKxAJtsmQIjR+beQao3wPUZ0Xp?=
+ =?us-ascii?Q?RlDyrFiGE13MAUfvVO32BnZn0ERD/lCcFCLaXQx+A0FVVMZ2Ed1q62G+G0KF?=
+ =?us-ascii?Q?usGAOJUmbXcoSfZi5+0i4LWAjZ6UKSuhN2zUuQjg5oxfVvRwUcYUVu1lZ6kZ?=
+ =?us-ascii?Q?e/EPObbbZ/spDEKpWD49+uNq0zk70fgPWDL/IVp/K59ZGC+uy/byS37XiFlm?=
+ =?us-ascii?Q?Bk0BEwWJEBH3/ZGYv5Xtg7JBxNlK+Moga4Dr5ovnp80hu/aaYjF4/WF7AxsZ?=
+ =?us-ascii?Q?VfTSdKQdq+2TT4eCptYNlUtbcg+9kGwzO/Yr8KLsKAQgtTsIxXEu+JPTp80d?=
+ =?us-ascii?Q?HpQZpVJMUM+bRoAlxYJEn5mGtyuRqHA3L2AgWc07UzgAwtbPT3RKiWNUMiJE?=
+ =?us-ascii?Q?iTpgGN8/39zBtBme5IGLW3xut/tpNTPYJdxxIMzHlMPRkFmtYy8W3DiwTokF?=
+ =?us-ascii?Q?NWA+WgkmPb1SKCPMW1Lm+ChcFSA4jhm0haq0ohuaxmtoQVxKgiWhWD9g4QrW?=
+ =?us-ascii?Q?+jiiutcU/L/rbYWP42Sw//uFyRdhh47I9M1LRkJK86fs7eYHfjEL3s6rIquh?=
+ =?us-ascii?Q?lWZVULSyzqs12GNg9s2jRfEqEyBVzCm3nAvV6C3VFp4t4P4vR4RS+weujJgz?=
+ =?us-ascii?Q?qi356qKSVmHvOlsU1anfLTht/ZLqrEMjC89SKGsEB+u7cT8d8hZyqpXUF7/W?=
+ =?us-ascii?Q?hz9M1qaIQHKgD3/mVP8qm2qg+SfFRksbwgc4f/5tgOiu379HCOETjCCJcoSV?=
+ =?us-ascii?Q?5zdt82jLhu0esYjS8bFEwRm8j8ieB6HMV4W1TganWZAu1fefUHnnvIHKk+Zk?=
+ =?us-ascii?Q?CFj8xMZqnQFyjHRGM2gvhtDW/sLf6D9hQz9nc4FDtoWduy4mEgRCYq/4pF/n?=
+ =?us-ascii?Q?ymfZMdwbRFvHHnPDVlWRsFF3tvXb2VxV+ts4Fx67?=
+X-OriginatorOrg: wesion.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 22a53096-89d4-400e-a5ea-08dcbb70c485
+X-MS-Exchange-CrossTenant-AuthSource: TYZPR03MB7001.apcprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Aug 2024 08:20:18.9881
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 2dc3bd76-7ac2-4780-a5b7-6c6cc6b5af9b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: tT87yCNAtAJ4VAQP2NCYKdCna8Vqe79fxErPbih4lkuM4yuHy9snUK6Gd3xm/gcKZSzP9AUmiaYIWJWvZN8ulw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: OSQPR03MB8748
 
-Arend van Spriel <arend.vanspriel@broadcom.com> writes:
+These add AP6275P wireless support on Khadas Edge2. Enable 32k clock
+for Wi-Fi module and extend the hardware IDs table in the brcmfmac
+driver for it to attach.
 
-> On 8/10/2024 12:08 PM, jacobe.zang@wesion.com wrote:
->
->> On 2024/8/10 17:44, Sai Krishna Gajula <saikrishnag@marvell.com>
->> wrote:
->>>
->>> > -----Original Message-----
->>> > From: Jacobe Zang <jacobe.zang@wesion.com>
->>> > Sent: Saturday, August 10, 2024 9:22 AM
->>> > To: robh@kernel.org; krzk+dt@kernel.org; heiko@sntech.de;
->>> > kvalo@kernel.org; davem@davemloft.net; edumazet@google.com;
->>> > kuba@kernel.org; pabeni@redhat.com; conor+dt@kernel.org;
->>> > arend.vanspriel@broadcom.com
->>> > Cc: efectn@protonmail.com; dsimic@manjaro.org; jagan@edgeble.ai;
->>> > devicetree@vger.kernel.org; linux-arm-kernel@lists.infradead.org;
->>> linux-
->>> > rockchip@lists.infradead.org; linux-kernel@vger.kernel.org;
->>> > arend@broadcom.com; linux-wireless@vger.kernel.org;
->>> > netdev@vger.kernel.org; megi@xff.cz; duoming@zju.edu.cn;
->>> > bhelgaas@google.com; minipli@grsecurity.net; brcm80211@lists.linux.de=
-v;
->>> > brcm80211-dev-list.pdl@broadcom.com; nick@khadas.com; Jacobe Zang
->>> > <jacobe.zang@wesion.com>
->>> > Subject:=C2=A0 [PATCH v9 4/5] wifi: brcmfmac: Add optional lpo clock
->>> > enable support
->>> >
->>> > WiFi modules often require 32kHz clock to function. Add support
->>> to enable
->>> > the clock to PCIe driver and move "brcm,bcm4329-fmac" check to
->>> the top of
->>> > brcmf_of_probe. Change function prototypes from void to int and add
->>> > appropriate errno's for return
->>> > WiFi modules often require 32kHz clock to function. Add support
->>> to enable
->>> > the clock to PCIe driver and move "brcm,bcm4329-fmac" check to
->>> the top of
->>> > brcmf_of_probe. Change function prototypes from void to int and add
->>> > appropriate errno's for return values that will be send to bus
->>> when error
->>> > occurred.
->>> >
->>> > Co-developed-by: Ondrej Jirman <megi@xff.cz>
->>> > Signed-off-by: Ondrej Jirman <megi@xff.cz>
->>> > Co-developed-by: Arend van Spriel <arend.vanspriel@broadcom.com>
->>> > Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
->>> > Signed-off-by: Jacobe Zang <jacobe.zang@wesion.com>
->>> > ---
->>> >=C2=A0=C2=A0 .../broadcom/brcm80211/brcmfmac/bcmsdh.c=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0 |=C2=A0 4 +-
->>> >=C2=A0=C2=A0 .../broadcom/brcm80211/brcmfmac/common.c=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0 |=C2=A0 3 +-
->>> >=C2=A0=C2=A0 .../wireless/broadcom/brcm80211/brcmfmac/of.c | 53
->>> +++++++++++--------
->>> > .../wireless/broadcom/brcm80211/brcmfmac/of.h |=C2=A0 9 ++--
->>> >=C2=A0=C2=A0 .../broadcom/brcm80211/brcmfmac/pcie.c=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 3 ++
->>> >=C2=A0=C2=A0 .../broadcom/brcm80211/brcmfmac/sdio.c=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0 | 24 ++++++---
->>> >=C2=A0=C2=A0 .../broadcom/brcm80211/brcmfmac/usb.c=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 3 ++
->>> >=C2=A0=C2=A0 7 files changed, 63 insertions(+), 36 deletions(-)
->>> >
->>> > diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
->>> > b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
->>> > index 13391c2d82aae..b2ede4e579c5c 100644
->>> > --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
->>> > +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
->>> > @@ -947,8 +947,8 @@ int brcmf_sdiod_probe(struct brcmf_sdio_dev
->>> > *sdiodev)
->>> >
->>> >=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* try to attach to the target de=
-vice */
->>> >=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 sdiodev->bus =3D brcmf_sdio_probe=
-(sdiodev);
->>> > -=C2=A0=C2=A0=C2=A0 if (!sdiodev->bus) {
->>> > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ret =3D -ENODEV;
->>> > +=C2=A0=C2=A0=C2=A0 if (IS_ERR(sdiodev->bus)) {
->>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ret =3D PTR_ERR(sdiodev->=
-bus);
->>> >=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 goto out;
->>> >=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
->>> >=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 brcmf_sdiod_host_fixup(sdiodev->f=
-unc2->card->host);
->>> > diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
->>> > b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
->>> > index b24faae35873d..58d50918dd177 100644
->>> > --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
->>> > +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
->>> > @@ -561,7 +561,8 @@ struct brcmf_mp_device
->>> > *brcmf_get_module_param(struct device *dev,
->>> >=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (!found) {
->>> >=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* No pla=
-tform data for this device, try OF and DMI data */
->>> >=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 brcmf_dmi=
-_probe(settings, chip, chiprev);
->>> > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 brcmf_of_probe(dev, bus_t=
-ype, settings);
->>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (brcmf_of_probe(dev, b=
-us_type, settings) =3D=3D -
->>> > EPROBE_DEFER)
->>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 r=
-eturn ERR_PTR(-EPROBE_DEFER);
->>> >=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 brcmf_acp=
-i_probe(dev, bus_type, settings);
->>> >=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
->>> >=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return settings;
->>> > diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
->>> > b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
->>> > index e406e11481a62..f19dc7355e0e8 100644
->>> > --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
->>> > +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
->>> > @@ -6,6 +6,7 @@
->>> >=C2=A0=C2=A0 #include <linux/of.h>
->>> >=C2=A0=C2=A0 #include <linux/of_irq.h>
->>> >=C2=A0=C2=A0 #include <linux/of_net.h>
->>> > +#include <linux/clk.h>
->>> >
->>> >=C2=A0=C2=A0 #include <defs.h>
->>> >=C2=A0=C2=A0 #include "debug.h"
->>> > @@ -65,17 +66,21 @@ static int brcmf_of_get_country_codes(struct devi=
-ce
->>> > *dev,
->>> >=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return 0;
->>> >=C2=A0=C2=A0 }
->>> >
->>> > -void brcmf_of_probe(struct device *dev, enum brcmf_bus_type bus_type,
->>> > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 s=
-truct brcmf_mp_device *settings)
->>> > +int brcmf_of_probe(struct device *dev, enum brcmf_bus_type bus_type,
->>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 struct =
-brcmf_mp_device *settings)
->>> >=C2=A0=C2=A0 {
->>> >=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 struct brcmfmac_sdio_pd *sdio =3D=
- &settings->bus.sdio;
->>> >=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 struct device_node *root, *np =3D=
- dev->of_node;
->>> > +=C2=A0=C2=A0=C2=A0 struct clk *clk;
->>> >=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 const char *prop;
->>>
->>> Small nit, please check if reverse x-mas tree order need to be
->>> follow here.
->>>
->>> >=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 int irq;
->>> >=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 int err;
->>> >=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 u32 irqf;
->> It can be seen from this line that there should be no need to follow
->> the reverse x-mas tree order. Because it is a struct variable, so
->> place with other struct ones.
->
-> As driver maintainer I do not care about such neatness, but maybe
-> Kalle has another preference. The code above looks fine to me.
+Changes in v10:
+ - Use ret instead unused probe_attach_result in sdio.c 
 
-We haven't been strongly requiring reverse x-mas tree in wireless code,
-it has been just a preference. Also for me the code above looks fine.
+ - Link to v9: https://lore.kernel.org/all/20240810035141.439024-1-jacobe.zang@wesion.com/
 
---=20
-https://patchwork.kernel.org/project/linux-wireless/list/
+Changes in v9:
+ - Add return -ENODEV error pointer from brcmf_sdio_probe as the default for the fail path
+ - Add if statement for brcmf_of_probe in common.c
+ - Retain modifications to of.c other than the return values
 
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatc=
-hes
+ - Link to v8: https://lore.kernel.org/all/20240805073425.3492078-1-jacobe.zang@wesion.com/
+
+Changes in v8:
+ - Add appropriate errno's for return values that will be
+    send to bus when error occurred.
+ 
+ - Link to v7: https://lore.kernel.org/all/20240802025715.2360456-1-jacobe.zang@wesion.com/
+
+Changes in v7:
+ - Change brcmf_of_probe prototypes from void to int, add appropriate errno's for return
+    value, move clock check to the end of brcmf_of_probe
+ - Add "brcm,bcm4329-fmac" compatible for wifi node
+
+ - Link to v6: https://lore.kernel.org/all/20240731061132.703368-1-jacobe.zang@wesion.com/
+
+Changes in v6:
+ - Move "brcm,bcm4329-fmac" check to the top of brcmf_of_probe in of.c
+ - Add return if clk didn't set in DTS
+
+ -Link to v5: https://lore.kernel.org/all/20240730033053.4092132-1-jacobe.zang@wesion.com/
+
+Changes in v5:
+ - Add more commit message to the clock in bindings
+ - Use IS_ERR_OR_NULL as a judgment condition of clk
+
+ - Link to v4: https://lore.kernel.org/all/20240729070102.3770318-1-jacobe.zang@wesion.com/
+
+Changes in v4:
+ - Change clock description in dt-bindings
+ - Move enable clk from pcie.c to of.c
+ - Add compatible for wifi node in DTS
+ - Add random seed flag for firmware download
+
+ - Link to v3: https://lore.kernel.org/all/20240630073605.2164346-1-jacobe.zang@wesion.com/
+
+Changes in v3:
+ - Dropped redundant parts in dt-bindings.
+ - Change driver patch title prefix as 'wifi: brcmfmac:'.
+ - Change DTS Wi-Fi node clock-name as 'lpo'.
+ 
+ - Link to v2: https://lore.kernel.org/all/20240624081906.1399447-1-jacobe.zang@wesion.com/
+
+Changes in v2:
+ - Add SoB tags for original developer.
+ - Add dt-bindings for pci14e4,449d and clocks.
+ - Replace dev_info to brcmf_dbg in pcie.c
+
+ - Link to v1: https://lore.kernel.org/all/20240620020015.4021696-1-jacobe.zang@wesion.com/
+
+Jacobe Zang (5):
+  dt-bindings: net: wireless: brcm4329-fmac: add pci14e4,449d
+  dt-bindings: net: wireless: brcm4329-fmac: add clock description for
+    AP6275P
+  arm64: dts: rockchip: Add AP6275P wireless support to Khadas Edge 2
+  wifi: brcmfmac: Add optional lpo clock enable support
+  wifi: brcmfmac: add flag for random seed during firmware download
+
+ .../net/wireless/brcm,bcm4329-fmac.yaml       |  9 +++
+ .../dts/rockchip/rk3588s-khadas-edge2.dts     | 16 ++++++
+ .../broadcom/brcm80211/brcmfmac/bcmsdh.c      |  4 +-
+ .../broadcom/brcm80211/brcmfmac/common.c      |  3 +-
+ .../wireless/broadcom/brcm80211/brcmfmac/of.c | 53 +++++++++++-------
+ .../wireless/broadcom/brcm80211/brcmfmac/of.h |  9 +--
+ .../broadcom/brcm80211/brcmfmac/pcie.c        | 55 ++++++++++++++++---
+ .../broadcom/brcm80211/brcmfmac/sdio.c        | 22 +++++---
+ .../broadcom/brcm80211/brcmfmac/usb.c         |  3 +
+ .../broadcom/brcm80211/include/brcm_hw_ids.h  |  2 +
+ 10 files changed, 132 insertions(+), 44 deletions(-)
+
+-- 
+2.34.1
+
