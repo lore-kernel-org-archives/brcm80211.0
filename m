@@ -1,60 +1,57 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 478201AE846
-	for <brcm80211@lists.linux.dev>; Wed, 14 Aug 2024 10:39:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36BAF1AE02E
+	for <brcm80211@lists.linux.dev>; Wed, 14 Aug 2024 10:45:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723631977; cv=none; b=CD8zr1B/gIUxgoSKydE4P7v/reIkdebniVP/VudIQNdhNWW7ftRdnykdd8g5hPBLF1fLA0uSuIoTQQxrS1KoqcFrtfkiEMtyAsHVPrcHT66a8hizwbKXXAt8cztlMn2OnY65WuyoTy9tLQlopKChfssHAtDpnI40zlAg3bGG7GY=
+	t=1723632308; cv=none; b=CjqjHHGOS9dDcvZ8n0/1LRJet1w7tVESBhAmI2aHFJLkf0Je+qyUC6n64GtYHvQ9SCK00nBuQ5/YruBvQUSTWdKkR+5TbHJcpD30FDYUPBkXzicPiiCMpPN4crFjVdxDqvXW51Xl3jBvVv9jIygD0yZcExHXyzumI3vju6lTxq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723631977; c=relaxed/simple;
-	bh=++bW5wMefnS7yJM5ubwMFA3JD9os0eJ2KTHGaw/AzjQ=;
+	s=arc-20240116; t=1723632308; c=relaxed/simple;
+	bh=cZ9BkgG63rEN8kNe9FhooxE8MhReOnBZMnAbDlarQAQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HhuLD+7UFXg/7JY5Wv7JoRTssuaoyU3XfZeJdIPicoOliQ2FNQyxPtyjBPpf0NB7HF32q1wjYELPNW36Iiv9UeW3VNaDmdZVkpSdFPc4kAgb8sK+VNecUTiCdwR6JNSLu/ixsxwxm7N0Z/S8ol/REJjCf6zl+NYGdgpu0QYwQyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dVcxTT68; arc=none smtp.client-ip=209.85.221.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	 In-Reply-To:Content-Type; b=pqa65jt7T1lb+R+RyNBfxM6sq2rET1P/xyxvNpCsMRijcBCfCs84pJ6GCc6LWxfb4af0QiXrxukTRGiJYS0lGy12pk4lNqDLNwJn5GL6u3cyG5A9Eyi/+O0vKYW5HSslKMndNmBt+S3ZJJYuB264zmz5sjiTcW5lai//+DlxpjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=h3O3vW4g; arc=none smtp.client-ip=209.85.222.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dVcxTT68"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-36887ca3da2so3167222f8f.2
-        for <brcm80211@lists.linux.dev>; Wed, 14 Aug 2024 03:39:35 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="h3O3vW4g"
+Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-7a35eff1d06so396109585a.0
+        for <brcm80211@lists.linux.dev>; Wed, 14 Aug 2024 03:45:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1723631974; x=1724236774; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=6WRMEt7FBWJjYyyscCC3U3OCHTs2LMcI2PM9S0kbD08=;
-        b=dVcxTT68oj6+6Z3ElWt+xFPsIreP+Q2y5letn0kUKMQPmG1jE1BnAujp8jRnjpjyjE
-         40Hi8HmlmbS9OgVKSXI88OJ4IrmcLmFBy437x6HfANs5dP78tD69Lxnszl5RY9JF+2g+
-         4nRj+u8rlaTvBM8AbuLcrNNFBYRpaOWMnNE3yHFMN2mcmMGzv41KQ5PRIe3lQaUSb1Rk
-         aBsrzZMutAJ8eiAGDMnft6mIq2nq4cK9C+CpqK0i19rZm4wi6udeshk5syM7CgP2N8hS
-         pB0WQ1Ags0JCtvmHH0eTT8s93aI3RnIEQlRbcV2vesXaZjs8S8k5APQuKdtIp0dUyABg
-         0z8g==
+        d=broadcom.com; s=google; t=1723632305; x=1724237105; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=LFk4lh3cCjG0SR06SvOvwiuhTMezfgXvWpzfkPomYos=;
+        b=h3O3vW4g2byc+e3To/3KULWR+PTIPd/oXeW+3Y6AvHYoHxpdSUKeoNueR00gJ7eK/t
+         YbDmGV0jgiWswzqssfQ2MAHzAzKbpV+pj7LmtoVogYlOzs2Ve6lItaMcIf7JUBFNz3R4
+         Izvu//e8UlyM3C85QhME8g70LybpBpH3FB0j8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723631974; x=1724236774;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=6WRMEt7FBWJjYyyscCC3U3OCHTs2LMcI2PM9S0kbD08=;
-        b=u5euje7df42M/6tIpQrCWVCofEHAN0UcxjP75LSxRMJzY6N5wyJxLpIJy+m8A2QMSM
-         hAL3iMdNdKMFsyLl+6bEbzacjhqDrRl4mo5zNC9H5BpIoq01nBQ19BMRGDU/IirYrtEJ
-         l4AxLrV0ZNB14wE6hzs+tSMZ7qwyv9B40iRvGxzBouyCNkuDHkPoXHCzNhx/VYxaDEFG
-         zJfn71ha1Mw2xG29ZbwqLB3AybIjCPIhiQj28jMZlGtefA9UVq7CSKbIFVgQUkfoEkf3
-         dTXn4meY9+/igUbAd5qea97EKkRFohEm/5/xdz/FdWus4BPZ0F462JAmWrtaj/oLpzw9
-         5gdQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUv0qbKYhJzLhcJgi//KOmbMr/Be2RVlXPFk2YxQrnBcrXcn6XHcmSoZmyJlPf8hypp7nCEGqyWzvvQMmWtgSX+xvBpEX0o9stw
-X-Gm-Message-State: AOJu0YxI7Oo96FBz+PAkf4Vx4GkUGJcbyfOPle1RJI4eNbGCXQpJrGgk
-	hnCZri8ZTD82kJHoQayen3SxaeLUL6D/WvYXh+/H6cYBbNJgh6hZAyEa/epEKAc=
-X-Google-Smtp-Source: AGHT+IEsFnMkEPMABflOWSpHSTdZcGDUv5V3RMUWkg8aYLGAOnolNRBF80iFXPk0KvmcXBKPYRU9EA==
-X-Received: by 2002:a5d:5012:0:b0:36b:3384:40e5 with SMTP id ffacd0b85a97d-37177786e4dmr1476575f8f.24.1723631973511;
-        Wed, 14 Aug 2024 03:39:33 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.215.209])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36e4c36bcf6sm12456115f8f.17.2024.08.14.03.39.31
+        d=1e100.net; s=20230601; t=1723632305; x=1724237105;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LFk4lh3cCjG0SR06SvOvwiuhTMezfgXvWpzfkPomYos=;
+        b=YEkvyQ5nPm1OV1R4IxoYPqpTHwH4Ma4xzm7sGCAU7H99P7hL8MVDuIRmVVeY0/D/JL
+         Mb35W9485Fe6Jy6O3mXfKptrhYoSqb4siEOJjdG+9yqq6RXfw2xQJaUo/tDLkiszU3Gu
+         Y36FkH9T8UDCySWFViQ59hFz7hBBo7UoL1/aGp3968q3g+BTxQx1T/+TKjLi+4Ho9HZd
+         QZIW5yCSXa7XjuKHIFCa6JTLWokkgN+DC6CnuXBWjJAugz6KXLLNQbOaYK6WxoE7I0aR
+         rzGsF+S+HJcwVukbjWZ4NvKaxDJsn3NvJvFhhbSl0xY5IBouIokD+WB9sKl4Lr/SMmbZ
+         Vczg==
+X-Forwarded-Encrypted: i=1; AJvYcCWUfPB29m5oeihJjyHW/j+0vcxYfjNOejZsyEzGS6Dw3IVKT9f/Cq9ObR25i9o+5eAe1hV1fGbUg4NBqqeL1hzl3oIy2yrW2RUf
+X-Gm-Message-State: AOJu0YxXDeNj1bzKARjJFKgwRRggtB7j8rLnXnaSlUDBWRwR8HLNtQus
+	aQIYWbUOpIP5QsaAmHaLoBqxA+TgAVH0qvGOCVCLUpWETKeirBjELUfwhipLiQ==
+X-Google-Smtp-Source: AGHT+IGINV7Cr6/yUzciRzHq2zhc1Ek5UNVW7N0rj9HFgKO7ExivX+a6umTbzKbdjzFu5OuVUGXsyg==
+X-Received: by 2002:a0c:f7ce:0:b0:6bf:6714:43b3 with SMTP id 6a1803df08f44-6bf6714448emr2393696d6.21.1723632304908;
+        Wed, 14 Aug 2024 03:45:04 -0700 (PDT)
+Received: from [10.176.68.61] ([192.19.176.250])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6bd82c87843sm42263316d6.31.2024.08.14.03.45.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Aug 2024 03:39:32 -0700 (PDT)
-Message-ID: <1e442710-a233-4ab2-a551-f28ba6394b5b@linaro.org>
-Date: Wed, 14 Aug 2024 12:39:30 +0200
+        Wed, 14 Aug 2024 03:45:04 -0700 (PDT)
+Message-ID: <8de856d4-8526-4662-bb29-898b80476df9@broadcom.com>
+Date: Wed, 14 Aug 2024 12:44:58 +0200
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -62,110 +59,219 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 1/5] dt-bindings: net: wireless: brcm4329-fmac: add
- pci14e4,449d
-To: Arend van Spriel <arend.vanspriel@broadcom.com>,
- Krzysztof Kozlowski <krzk@kernel.org>, Jacobe Zang <jacobe.zang@wesion.com>,
- robh@kernel.org, krzk+dt@kernel.org, heiko@sntech.de, kvalo@kernel.org,
+Subject: Re: [PATCH v10 4/5] wifi: brcmfmac: Add optional lpo clock enable
+ support
+To: Alexey Charkov <alchark@gmail.com>, Jacobe Zang <jacobe.zang@wesion.com>
+Cc: robh@kernel.org, krzk+dt@kernel.org, heiko@sntech.de, kvalo@kernel.org,
  davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
- pabeni@redhat.com, conor+dt@kernel.org
-Cc: efectn@protonmail.com, dsimic@manjaro.org, jagan@edgeble.ai,
+ pabeni@redhat.com, conor+dt@kernel.org, linux-rockchip@lists.infradead.org,
+ efectn@protonmail.com, dsimic@manjaro.org, jagan@edgeble.ai,
  devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-rockchip@lists.infradead.org, linux-kernel@vger.kernel.org,
- arend@broadcom.com, linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
- megi@xff.cz, duoming@zju.edu.cn, bhelgaas@google.com,
- minipli@grsecurity.net, brcm80211@lists.linux.dev,
- brcm80211-dev-list.pdl@broadcom.com, nick@khadas.com
+ linux-kernel@vger.kernel.org, arend@broadcom.com,
+ linux-wireless@vger.kernel.org, netdev@vger.kernel.org, megi@xff.cz,
+ duoming@zju.edu.cn, bhelgaas@google.com, minipli@grsecurity.net,
+ brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com,
+ nick@khadas.com, Sai Krishna <saikrishnag@marvell.com>
 References: <20240813082007.2625841-1-jacobe.zang@wesion.com>
- <20240813082007.2625841-2-jacobe.zang@wesion.com>
- <1914cb2b1a8.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
- <e7401e25-7802-4dc3-9535-226f32b52be1@kernel.org>
- <062d8d4e-6d61-4f11-a9c0-1bbe1bfe0542@broadcom.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+ <20240813082007.2625841-5-jacobe.zang@wesion.com>
+ <721da64c-42ec-4be6-8ad3-e2685a84823a@broadcom.com>
+ <2269063.vFx2qVVIhK@latitude-fedora>
+ <fa019ee9-3f4d-4bea-92a7-929713518dc9@wesion.com>
+ <CABjd4YwTbG8pm_xwrOVtVwMwvarvz2SB9bapH3LDMqPn6pH9Ew@mail.gmail.com>
 Content-Language: en-US
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <062d8d4e-6d61-4f11-a9c0-1bbe1bfe0542@broadcom.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From: Arend van Spriel <arend.vanspriel@broadcom.com>
+Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
+ xsFNBGP96SABEACfErEjSRi7TA1ttHYaUM3GuirbgqrNvQ41UJs1ag1T0TeyINqG+s6aFuO8
+ evRHRnyAqTjMQoo4tkfy21XQX/OsBlgvMeNzfs6jnVwlCVrhqPkX5g5GaXJnO3c4AvXHyWik
+ SOd8nOIwt9MNfGn99tkRAmmsLaMiVLzYfg+n3kNDsqgylcSahbd+gVMq+32q8QA+L1B9tAkM
+ UccmSXuhilER70gFMJeM9ZQwD/WPOQ2jHpd0hDVoQsTbBxZZnr2GSjSNr7r5ilGV7a3uaRUU
+ HLWPOuGUngSktUTpjwgGYZ87Edp+BpxO62h0aKMyjzWNTkt6UVnMPOwvb70hNA2v58Pt4kHh
+ 8ApHky6IepI6SOCcMpUEHQuoKxTMw/pzmlb4A8PY//Xu/SJF8xpkpWPVcQxNTqkjbpazOUw3
+ 12u4EK1lzwH7wjnhM3Fs5aNBgyg+STS1VWIwoXJ7Q2Z51odh0XecsjL8EkHbp9qHdRvZQmMu
+ Ns8lBPBkzpS7y2Q6Sp7DcRvDfQQxPrE2sKxKLZVGcRYAD90r7NANryRA/i+785MSPUNSTWK3
+ MGZ3Xv3fY7phISvYAklVn/tYRh88Zthf6iDuq86m5mr+qOO8s1JnCz6uxd/SSWLVOWov9Gx3
+ uClOYpVsUSu3utTta3XVcKVMWG/M+dWkbdt2KES2cv4P5twxyQARAQABzS9BcmVuZCB2YW4g
+ U3ByaWVsIDxhcmVuZC52YW5zcHJpZWxAYnJvYWRjb20uY29tPsLBhwQTAQgAMRYhBLX1Z69w
+ T4l/vfdb0pZ6NOIYA/1RBQJj/ek9AhsDBAsJCAcFFQgJCgsFFgIDAQAACgkQlno04hgD/VGw
+ 8A//VEoGTamfCks+a12yFtT1d/GjDdf3i9agKMk3esn08JwjJ96x9OFFl2vFaQCSiefeXITR
+ K4T/yT+n/IXntVWT3pOBfb343cAPjpaZvBMh8p32z3CuV1H0Y+753HX7gdWTEojGWaWmKkZh
+ w3nGoRZQEeAcwcF3gMNwsM5Gemj7aInIhRLUeoKh/0yV85lNE1D7JkyNheQ+v91DWVj5/a9X
+ 7kiL18fH1iC9kvP3lq5VE54okpGqUj5KE5pmHNFBp7HZO3EXFAd3Zxm9ol5ic9tggY0oET28
+ ucARi1wXLD/oCf1R9sAoWfSTnvOcJjG+kUwK7T+ZHTF8YZ4GAT3k5EwZ2Mk3+Rt62R81gzRF
+ A6+zsewqdymbpwgyPDKcJ8YUHbqvspMQnPTmXNk+7p7fXReVPOYFtzzfBGSCByIkh1bB45jO
+ +TM5ZbMmhsUbqA0dFT5JMHjJIaGmcw21ocgBcLsJ730fbLP/L08udgWHywPoq7Ja7lj5W0io
+ ZDLz5uQ6CEER6wzD07vZwSl/NokljVexnOrwbR3wIhdr6B0Hc/0Bh7T8gpeM+QcK6EwJBG7A
+ xCHLEacOuKo4jinf94YQrOEMnOmvucuQRm9CIwZrQ69Mg6rLn32pA4cK4XWQN1N3wQXnRUnb
+ MTymLAoxE4MInhDVsZCtIDFxMVvBUgZiZZszN33OwU0EY/3pIgEQAN35Ii1Hn90ghm/qlvz/
+ L+wFi3PTQ90V6UKPv5Q5hq+1BtLA6aj2qmdFBO9lgO9AbzHo8Eizrgtxp41GkKTgHuYChijI
+ kdhTVPm+Pv44N/3uHUeFhN3wQ3sTs1ZT/0HhwXt8JvjqbhvtNmoGosZvpUCTwiyM1VBF/ICT
+ ltzFmXd5z7sEuDyZcz9Q1t1Bb2cmbhp3eIgLmVA4Lc9ZS3sK1UMgSDwaR4KYBhF0OKMC1OH8
+ M5jfcPHR8OLTLIM/Thw0YIUiYfj6lWwWkb82qa4IQvIEmz0LwvHkaLU1TCXbehO0pLWB9HnK
+ r3nofx5oMfhu+cMa5C6g3fBB8Z43mDi2m/xM6p5c3q/EybOxBzhujeKN7smBTlkvAdwQfvuD
+ jKr9lvrC2oKIjcsO+MxSGY4zRU0WKr4KD720PV2DCn54ZcOxOkOGR624d5bhDbjw1l2r+89V
+ WLRLirBZn7VmWHSdfq5Xl9CyHT1uY6X9FRr3sWde9kA/C7Z2tqy0MevXAz+MtavOJb9XDUlI
+ 7Bm0OPe5BTIuhtLvVZiW4ivT2LJOpkokLy2K852u32Z1QlOYjsbimf77avcrLBplvms0D7j6
+ OaKOq503UKfcSZo3lF70J5UtJfXy64noI4oyVNl1b+egkV2iSXifTGGzOjt50/efgm1bKNkX
+ iCVOYt9sGTrVhiX1ABEBAAHCwXYEGAEIACAWIQS19WevcE+Jf733W9KWejTiGAP9UQUCY/3p
+ PgIbDAAKCRCWejTiGAP9UaC/EACZvViKrMkFooyACGaukqIo/s94sGuqxj308NbZ4g5jgy/T
+ +lYBzlurnFmIbJESFOEq0MBZorozDGk+/p8pfAh4S868i1HFeLivVIujkcL6unG1UYEnnJI9
+ uSwUbEqgA8vwdUPEGewYkPH6AaQoh1DdYGOleQqDq1Mo62xu+bKstYHpArzT2islvLdrBtjD
+ MEzYThskDgDUk/aGPgtPlU9mB7IiBnQcqbS/V5f01ZicI1esy9ywnlWdZCHy36uTUfacshpz
+ LsTCSKICXRotA0p6ZiCQloW7uRH28JFDBEbIOgAcuXGojqYx5vSM6o+03W9UjKkBGYFCqjIy
+ Ku843p86Ky4JBs5dAXN7msLGLhAhtiVx8ymeoLGMoYoxqIoqVNaovvH9y1ZHGqS/IYXWf+jE
+ H4MX7ucv4N8RcsoMGzXyi4UbBjxgljAhTYs+c5YOkbXfkRqXQeECOuQ4prsc6/zxGJf7MlPy
+ NKowQLrlMBGXT4NnRNV0+yHmusXPOPIqQCKEtbWSx9s2slQxmXukPYvLnuRJqkPkvrTgjn5d
+ eSE0Dkhni4292/Nn/TnZf5mxCNWH1p3dz/vrT6EIYk2GSJgCLoTkCcqaM6+5E4IwgYOq3UYu
+ AAgeEbPV1QeTVAPrntrLb0t0U5vdwG7Xl40baV9OydTv7ghjYZU349w1d5mdxg==
+In-Reply-To: <CABjd4YwTbG8pm_xwrOVtVwMwvarvz2SB9bapH3LDMqPn6pH9Ew@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 14/08/2024 12:08, Arend van Spriel wrote:
-> On 8/14/2024 10:53 AM, Krzysztof Kozlowski wrote:
->> On 13/08/2024 19:04, Arend Van Spriel wrote:
->>> On August 13, 2024 10:20:24 AM Jacobe Zang <jacobe.zang@wesion.com> wrote:
->>>
->>>> It's the device id used by AP6275P which is the Wi-Fi module
->>>> used by Rockchip's RK3588 evaluation board and also used in
->>>> some other RK3588 boards.
->>>
->>> Hi Kalle,
->>>
->>> There probably will be a v11, but wanted to know how this series will be
->>> handled as it involves device tree bindings, arm arch device tree spec, and
->>> brcmfmac driver code. Can it all go through wireless-next?
+On 8/14/2024 11:48 AM, Alexey Charkov wrote:
+> On Wed, Aug 14, 2024 at 12:27 PM Jacobe Zang <jacobe.zang@wesion.com> wrote:
 >>
->> No, DTS must not go via wireless-next. Please split it from the series
->> and provide lore link in changelog for bindings.
+>>
+>>
+>> On 2024/8/14 16:47, Alexey Charkov wrote:
+>>> Hi Arend, Jacobe,
+>>>
+>>> On Tuesday, August 13, 2024 2:57:28 PM GMT+3 Arend van Spriel wrote:
+>>>> On 8/13/2024 10:20 AM, Jacobe Zang wrote:
+>>>>> WiFi modules often require 32kHz clock to function. Add support to
+>>>>> enable the clock to PCIe driver and move "brcm,bcm4329-fmac" check
+>>>>> to the top of brcmf_of_probe. Change function prototypes from void
+>>>>> to int and add appropriate errno's for return values that will be
+>>>>> send to bus when error occurred.
+>>>>
+>>>> I was going to say it looks good to me, but....
+>>>>
+>>>>> Co-developed-by: Ondrej Jirman <megi@xff.cz>
+>>>>> Signed-off-by: Ondrej Jirman <megi@xff.cz>
+>>>>> Co-developed-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+>>>>> Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+>>>>> Reviewed-by: Sai Krishna <saikrishnag@marvell.com>
+>>>>> Signed-off-by: Jacobe Zang <jacobe.zang@wesion.com>
+>>>>> ---
+>>>>>
+>>>>>     .../broadcom/brcm80211/brcmfmac/bcmsdh.c      |  4 +-
+>>>>>     .../broadcom/brcm80211/brcmfmac/common.c      |  3 +-
+>>>>>     .../wireless/broadcom/brcm80211/brcmfmac/of.c | 53 +++++++++++--------
+>>>>>     .../wireless/broadcom/brcm80211/brcmfmac/of.h |  9 ++--
+>>>>>     .../broadcom/brcm80211/brcmfmac/pcie.c        |  3 ++
+>>>>>     .../broadcom/brcm80211/brcmfmac/sdio.c        | 22 +++++---
+>>>>>     .../broadcom/brcm80211/brcmfmac/usb.c         |  3 ++
+>>>>>     7 files changed, 61 insertions(+), 36 deletions(-)
+>>>>
+>>>> [...]
+>>>>
+>>>>> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
+>>>>> b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c index
+>>>>> e406e11481a62..f19dc7355e0e8 100644
+>>>>> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
+>>>>> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
+>>>>
+>>>> [...]
+>>>>
+>>>>> @@ -113,33 +118,39 @@ void brcmf_of_probe(struct device *dev, enum
+>>>>> brcmf_bus_type bus_type,>
+>>>>>              of_node_put(root);
+>>>>>
+>>>>>      }
+>>>>>
+>>>>> -   if (!np || !of_device_is_compatible(np, "brcm,bcm4329-fmac"))
+>>>>> -           return;
+>>>>> -
+>>>>>
+>>>>>      err = brcmf_of_get_country_codes(dev, settings);
+>>>>>      if (err)
+>>>>>
+>>>>>              brcmf_err("failed to get OF country code map (err=%d)
+>>> \n", err);
+>>>>>
+>>>>>      of_get_mac_address(np, settings->mac);
+>>>>>
+>>>>> -   if (bus_type != BRCMF_BUSTYPE_SDIO)
+>>>>> -           return;
+>>>>> +   if (bus_type == BRCMF_BUSTYPE_SDIO) {
+>>>>
+>>>> Don't like the fact that this now has an extra indentation level and it
+>>>> offers no extra benefit. Just keep the original if-statement and return
+>>>> 0. Consequently the LPO clock code should move just before the if-statement.
+>>>>> +           if (of_property_read_u32(np, "brcm,drive-strength",
+>>> &val) == 0)
+>>>>> +                   sdio->drive_strength = val;
+>>>>>
+>>>>> -   if (of_property_read_u32(np, "brcm,drive-strength", &val) == 0)
+>>>>> -           sdio->drive_strength = val;
+>>>>> +           /* make sure there are interrupts defined in the node */
+>>>>> +           if (!of_property_present(np, "interrupts"))
+>>>>> +                   return 0;
+>>>>>
+>>>>> -   /* make sure there are interrupts defined in the node */
+>>>>> -   if (!of_property_present(np, "interrupts"))
+>>>>> -           return;
+>>>>> +           irq = irq_of_parse_and_map(np, 0);
+>>>>> +           if (!irq) {
+>>>>> +                   brcmf_err("interrupt could not be
+>>> mapped\n");
+>>>>> +                   return 0;
+>>>>> +           }
+>>>>> +           irqf = irqd_get_trigger_type(irq_get_irq_data(irq));
+>>>>> +
+>>>>> +           sdio->oob_irq_supported = true;
+>>>>> +           sdio->oob_irq_nr = irq;
+>>>>> +           sdio->oob_irq_flags = irqf;
+>>>>> +   }
+>>>>>
+>>>>> -   irq = irq_of_parse_and_map(np, 0);
+>>>>> -   if (!irq) {
+>>>>> -           brcmf_err("interrupt could not be mapped\n");
+>>>>> -           return;
+>>>>> +   clk = devm_clk_get_optional_enabled(dev, "lpo");
+>>>>> +   if (!IS_ERR_OR_NULL(clk)) {
+>>>>> +           brcmf_dbg(INFO, "enabling 32kHz clock\n");
+>>>>> +           return clk_set_rate(clk, 32768);
+>>>>> +   } else {
+>>>>> +           return PTR_ERR_OR_ZERO(clk);
+>>>>>
+>>>>>      }
+>>>>
+>>>> Change this to:
+>>>>    > +        clk = devm_clk_get_optional_enabled(dev, "lpo");
+>>>>    > +        if (IS_ERR_OR_NULL(clk)) {
+>>>>    > +                return PTR_ERR_OR_ZERO(clk);
+>>>
+>>> Perhaps in this case we should go for IS_ERR and PTR_ERR respectively.
+>>> devm_clk_get_optional_enabled would return NULL when the optional clock is not
+>>> found, so NULL is not an error state but serves as a dummy clock that can be> used with clk_set_rate.
+>>
+>> I think we don't need to set clock rate for clock is NULL. So it should
+>> be changed to:
+>>
+>> +       clk = devm_clk_get_optional_enabled(dev, "lpo");
+>> +       if (IS_ERR(clk)) {
+>> +               return PTR_ERR(clk);
+>> +       } else if (clk) {
+>> +               brcmf_dbg(INFO, "enabling 32kHz clock\n");
+>> +               clk_set_rate(clk, 32768);
+>> +       }
 > 
-> Hi Krzysztof,
-> 
-> Is it really important how the patches travel upstream to Linus. This 
-> binding is specific to Broadcom wifi devices so there are no 
-> dependencies(?). To clarify what you are asking I assume two separate 
-> series:
-> 
-> 1) DT binding + Khadas Edge2 DTS  -> devicetree@vger.kernel.org
-> 	reference to: 
-> https://patch.msgid.link/20240813082007.2625841-1-jacobe.zang@wesion.com
-> 
-> 2) brcmfmac driver changes	  -> linux-wireless@vger.kernel.org
+> If clk is NULL then clk_set_rate returns immediately with status zero,
+> so there is little difference from whether you wrap it into another if
+> (clk) or not. You can probably drop the debug statement altogether and
+> call clk_set_rate unconditionally - this will look neater.
 
-No. I said only DTS is separate. This was always the rule, since forever.
+The construct above is indeed only needed to get the debug statement 
+correct given the behavior of clk_set_rate(). However, for debugging it 
+is useful to know that the LPO clock is defined and used or not. Maybe 
+do this:
 
-Documentation/devicetree/bindings/submitting-patches.rst
+        clk = devm_clk_get_optional_enabled(dev, "lpo");
+        if (IS_ERR(clk))
+                return PTR_ERR(clk);
 
-Best regards,
-Krzysztof
+        brcmf_dbg(INFO, "%s LPO clock\n", clk ? "enable" : "no");
+        clk_set_rate(clk, 32768);
 
+Regards,
+Arend
