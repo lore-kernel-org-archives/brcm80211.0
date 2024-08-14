@@ -1,60 +1,60 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 682D31442F7
-	for <brcm80211@lists.linux.dev>; Wed, 14 Aug 2024 11:15:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F421E1B1421
+	for <brcm80211@lists.linux.dev>; Wed, 14 Aug 2024 14:08:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723634142; cv=none; b=l8zewP0AQ0D23Q42DQCw3aRJ414qFTwkegVal5hJbVJWPFP9KWsSpqRxP8Ef1UhMzO3wvtCjoK0CMpG+5zhs3HrPVuv4w0NAmanfEuzYxi1n4pToEK4fSxqul5E6NgdPg3WLIBsdBIi8c6e6FnE/tfsAmDmzIv8qED6pfvWzGM8=
+	t=1723644535; cv=none; b=YPq6zvrOBsSmjUkBk9Hxflu4e4wlyWC7llxfREfWlL32BJ3eyYhm3CDGFumyXebyI15FyN2nCZNft9CuzU9vQ6BC6MIswGbQftixbCGnKpZwSoCChR4T+xWWwd9+dYYxAnbGcVeTilJVyK3I8Td+CF6YhyGz5GocfsAhfNLhDpE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723634142; c=relaxed/simple;
-	bh=TSRANZP40Gb5UjsJrIapwEDdUuJg5uHFuOiocwJk6ng=;
+	s=arc-20240116; t=1723644535; c=relaxed/simple;
+	bh=gkysqq+eLkCi72KkUF3mmkTlr9D3RYFJHiqsDd5o8oo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EgbSulhjN3U5AU8qxjiLrynzt1uD187sbbkR8Y57dqzJZFrfjmRI2eAsgqo8XBc8o9rCS1owUPJF1T1PrERMXgczH5Mm0AX3G3/gzt8GGN8DYrMvmjfMmOWJAgoBWV48OJby3+cr01Ztap3JL6wN+UI4co+LVDPDjA0IlXrJaQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fHM1JGmk; arc=none smtp.client-ip=209.85.128.47
+	 In-Reply-To:Content-Type; b=RvTz4B4jb8ZzAj9nGWID3DnEsybjhMJhueEX1dtRy8JSohOkb5BhOB/8vYf9+ue8T3j62vtJCIfk9uvM1WN5AV5hrS1R+NtAyfpLMmQuxUuUDfglovbGXCqE34Yh80epRmCSIyxKnWR9cNx46IXFNzByLvjK1lX0fO+NKrTJxP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xe/yOFpk; arc=none smtp.client-ip=209.85.221.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fHM1JGmk"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-428178fc07eso44526775e9.3
-        for <brcm80211@lists.linux.dev>; Wed, 14 Aug 2024 04:15:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xe/yOFpk"
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-368526b1333so569609f8f.1
+        for <brcm80211@lists.linux.dev>; Wed, 14 Aug 2024 07:08:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1723634139; x=1724238939; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1723644532; x=1724249332; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=9/sTqG+/rfHmJHScki4Ugb8gxHrXjBax2B/xarMt7n4=;
-        b=fHM1JGmkeLm6fzjgcMDEjf8EkovWnU/MErq72Jlzm65dNB/trZypIa6Fzpc38YkFN3
-         N2QjxBfU9RHxkRE47AteEuVVBZ1+YfKPiSTLtDh/75cle+TeQPan+haHxso5w15QD2B1
-         tJibSyyvqoSI0gAzAzfnq3QLeWxnHbC2gFUkxAFS9pZdMYpZbyuEE27WhLGwesZKhkHD
-         HXtc9RS1lyXBG1jbHHlK/en1oVSxJsVXH4sm5OOqMKr57M1ANt0ykW3dym2NRz5WtgrF
-         HA8y3F1TEa2ECONddj7ArOuNvvvqhGMsMPNu/KSCkorJ16Jvqz5JqrnzkQcLSdY2l6AY
-         eVDA==
+        bh=N82Nc2+gY4/+lTNM9bo2pmanPWXfOJy6ZWbbOExaRpU=;
+        b=xe/yOFpkDnc77J+b6X+X0QJ6h8As4Igl+YiHUq2AJ+/v0K6A8FkGOXzobUpk071tJX
+         kRpLAccISGCr3LIUtYT+EngH1JCayLfG9OX4XE+1ucmbmF2T/ZPDdiXO3gfjZ1aByxJ6
+         o6dThxjerUWdapHQKr3v+vSu3zzsPgDUzGCKfjdG7aQmWQhlET731gTBXlLAYfXI6VrS
+         Kqa6bSZhGaZOpG9cmUi8RGiXNMiBfHAY/QdaE34Cynp8zsHK8BPcC4vc9Glq3C1kjbxp
+         P0lH6f8kR5TNXrdfwiMYO0aGGSWixVTrxiiLGkPWubwCxfocGTGLJd79tAY9bVfxLZSX
+         KajA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723634139; x=1724238939;
+        d=1e100.net; s=20230601; t=1723644532; x=1724249332;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=9/sTqG+/rfHmJHScki4Ugb8gxHrXjBax2B/xarMt7n4=;
-        b=Ua/pHBt/hCOh1VRdfw8xKwycGXz61V0TPrhm+HuYL2YYzREO7n5SmRofX6wRy0UoU5
-         AnKYsJbVx+8ziVLmEq/zPT5709O71hlFdmS1Vg5S7Eka61PovAilvx4SqtC6qc0mOhFY
-         H67G0GQsjvfAAs1H0Tkf7QnsJoUzuReGsnuCR+f1pIzgIYnyZn3cy+vLp5OIViojr0mS
-         cfvXzW88wAJFgrLMhUReUlbGWT8Y47OiwZcOUQ6ZEOk2sLEhsADkIt73m7cDS0Dj+b/b
-         BLg9/CWc0ivbfn8IPVXbPg4lpJpPxPjijQRBbMADvEfY3JLZY4dUi2Vw3mksyX+d2BQb
-         cgEQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVy7SA5U3TkgUlxiEHnw3bktanc1XF61HSdpA4OmusB0+rz5X9L410eiEkFm0VXLn/QMnhM2llTMxKvAQMneHCTXwhsAtw60F1z
-X-Gm-Message-State: AOJu0Yz73jrYUoaAtfvUZhUNVkRFRcj6aKYifdCYznLeKDqoDqCpS0eP
-	Rr55HuebJIRdt7bI94BRzDkc9/wWwb9aAkPOC6KSRrztBuWPS9H8C/Xuq/iSERw=
-X-Google-Smtp-Source: AGHT+IHPKTeh7IvvDNE3k5/yfiEeZhfikPr0CHce40sB1/ZhibesGiGUUJfU46YfXvEL9kv7YBJCbw==
-X-Received: by 2002:a5d:490f:0:b0:362:5816:f134 with SMTP id ffacd0b85a97d-371777696edmr1820585f8f.13.1723634138526;
-        Wed, 14 Aug 2024 04:15:38 -0700 (PDT)
+        bh=N82Nc2+gY4/+lTNM9bo2pmanPWXfOJy6ZWbbOExaRpU=;
+        b=jDTl97HsHVOGhBnk1IJaMfrSS7cJTGOLsqpOBUwLTBxDAogbVuLOGVUE80hIzgkyE8
+         ym/Cl5UNJpkvlZR29HctruJ4aMB/qoSt3E22YeQHcwuDcX0nf9+jRlt2cjeMuCBx18AK
+         EDbO8fYZ232UTTl8sSYokJoRrT2fOYibIHzPpr7P8wbxElctmbLLqKHvuv1tEV3mZa/t
+         J1HU85Xa5CeBYaaB2J5twekBdGwGsfwcAJjWqV6KpZUb68nnMdEGXri917f7s0tR+yV6
+         B7avNrF2vZsVCBp0tZNqjzGsfRXSXGtJKdVWDERnZOEWeE2yalX0LcwkUrR40Vq+CM+J
+         225A==
+X-Forwarded-Encrypted: i=1; AJvYcCVxkA4fezMWJYvT3meJ1zrvUpIzRxKx2OcVMdGWQXAwCSBjL6IQc/8yWQbk02ABgJ0wa6brRFrPmOs4ubvnKxbPObADX3goPHMR
+X-Gm-Message-State: AOJu0YwQEbfKkff0dt5yHXctKCVLIr/ve9305Io45SozaXl0ugg/QUeU
+	rtfbQiUrmLIkBlqWC+eudUslD1+dNKmfieVOXQrpNbEIlsf0A6jqbFuvN5mBasM=
+X-Google-Smtp-Source: AGHT+IGDqgiodX5asQzw8Eqc0zS1NjySybHtSTj+w8HqPC6KzCZ1oRb7Ab3PGuHo2p4wURp/PaZg9Q==
+X-Received: by 2002:a5d:4530:0:b0:360:8c88:ab82 with SMTP id ffacd0b85a97d-371796a10b9mr1591919f8f.30.1723644532127;
+        Wed, 14 Aug 2024 07:08:52 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.215.209])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36e4ecc7a52sm12521667f8f.103.2024.08.14.04.15.35
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36e4cfefa29sm12945847f8f.61.2024.08.14.07.08.50
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Aug 2024 04:15:37 -0700 (PDT)
-Message-ID: <df52a968-96be-4f05-8d6f-32a2abde1d91@linaro.org>
-Date: Wed, 14 Aug 2024 13:15:35 +0200
+        Wed, 14 Aug 2024 07:08:51 -0700 (PDT)
+Message-ID: <f504a3e7-cb18-41ce-a76d-267d464b6b05@linaro.org>
+Date: Wed, 14 Aug 2024 16:08:49 +0200
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -83,6 +83,7 @@ References: <20240813082007.2625841-1-jacobe.zang@wesion.com>
  <062d8d4e-6d61-4f11-a9c0-1bbe1bfe0542@broadcom.com>
  <1e442710-a233-4ab2-a551-f28ba6394b5b@linaro.org>
  <180f7459-39fa-4e96-83d6-504e7802dc94@broadcom.com>
+ <df52a968-96be-4f05-8d6f-32a2abde1d91@linaro.org>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Content-Language: en-US
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
@@ -129,80 +130,90 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <180f7459-39fa-4e96-83d6-504e7802dc94@broadcom.com>
+In-Reply-To: <df52a968-96be-4f05-8d6f-32a2abde1d91@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 14/08/2024 12:59, Arend van Spriel wrote:
-> On 8/14/2024 12:39 PM, Krzysztof Kozlowski wrote:
->> On 14/08/2024 12:08, Arend van Spriel wrote:
->>> On 8/14/2024 10:53 AM, Krzysztof Kozlowski wrote:
->>>> On 13/08/2024 19:04, Arend Van Spriel wrote:
->>>>> On August 13, 2024 10:20:24 AM Jacobe Zang <jacobe.zang@wesion.com> wrote:
+On 14/08/2024 13:15, Krzysztof Kozlowski wrote:
+> On 14/08/2024 12:59, Arend van Spriel wrote:
+>> On 8/14/2024 12:39 PM, Krzysztof Kozlowski wrote:
+>>> On 14/08/2024 12:08, Arend van Spriel wrote:
+>>>> On 8/14/2024 10:53 AM, Krzysztof Kozlowski wrote:
+>>>>> On 13/08/2024 19:04, Arend Van Spriel wrote:
+>>>>>> On August 13, 2024 10:20:24 AM Jacobe Zang <jacobe.zang@wesion.com> wrote:
+>>>>>>
+>>>>>>> It's the device id used by AP6275P which is the Wi-Fi module
+>>>>>>> used by Rockchip's RK3588 evaluation board and also used in
+>>>>>>> some other RK3588 boards.
+>>>>>>
+>>>>>> Hi Kalle,
+>>>>>>
+>>>>>> There probably will be a v11, but wanted to know how this series will be
+>>>>>> handled as it involves device tree bindings, arm arch device tree spec, and
+>>>>>> brcmfmac driver code. Can it all go through wireless-next?
 >>>>>
->>>>>> It's the device id used by AP6275P which is the Wi-Fi module
->>>>>> used by Rockchip's RK3588 evaluation board and also used in
->>>>>> some other RK3588 boards.
->>>>>
->>>>> Hi Kalle,
->>>>>
->>>>> There probably will be a v11, but wanted to know how this series will be
->>>>> handled as it involves device tree bindings, arm arch device tree spec, and
->>>>> brcmfmac driver code. Can it all go through wireless-next?
+>>>>> No, DTS must not go via wireless-next. Please split it from the series
+>>>>> and provide lore link in changelog for bindings.
 >>>>
->>>> No, DTS must not go via wireless-next. Please split it from the series
->>>> and provide lore link in changelog for bindings.
+>>>> Hi Krzysztof,
+>>>>
+>>>> Is it really important how the patches travel upstream to Linus. This
+>>>> binding is specific to Broadcom wifi devices so there are no
+>>>> dependencies(?). To clarify what you are asking I assume two separate
+>>>> series:
+>>>>
+>>>> 1) DT binding + Khadas Edge2 DTS  -> devicetree@vger.kernel.org
+>>>> 	reference to:
+>>>> https://patch.msgid.link/20240813082007.2625841-1-jacobe.zang@wesion.com
+>>>>
+>>>> 2) brcmfmac driver changes	  -> linux-wireless@vger.kernel.org
 >>>
->>> Hi Krzysztof,
+>>> No. I said only DTS is separate. This was always the rule, since forever.
 >>>
->>> Is it really important how the patches travel upstream to Linus. This
->>> binding is specific to Broadcom wifi devices so there are no
->>> dependencies(?). To clarify what you are asking I assume two separate
->>> series:
->>>
->>> 1) DT binding + Khadas Edge2 DTS  -> devicetree@vger.kernel.org
->>> 	reference to:
->>> https://patch.msgid.link/20240813082007.2625841-1-jacobe.zang@wesion.com
->>>
->>> 2) brcmfmac driver changes	  -> linux-wireless@vger.kernel.org
+>>> Documentation/devicetree/bindings/submitting-patches.rst
 >>
->> No. I said only DTS is separate. This was always the rule, since forever.
+>> I am going slightly mad (by Queen). That documents says:
 >>
->> Documentation/devicetree/bindings/submitting-patches.rst
+>>    1) The Documentation/ and include/dt-bindings/ portion of the patch 
+>> should
+>>       be a separate patch.
+>>
+>> and
+>>
+>>    4) Submit the entire series to the devicetree mailinglist at
+>>
+>>         devicetree@vger.kernel.org
+>>
+>> Above I mentioned "series", not "patch". So 1) is a series of 3 patches 
+>> (2 changes to the DT binding file and 1 patch for the Khadas Edge2 DTS. 
+>> Is that correct?
+>>
 > 
-> I am going slightly mad (by Queen). That documents says:
+> My bookmark to elixir.bootling does not work, so could not paste
+> specific line. Now it works, so:
 > 
->    1) The Documentation/ and include/dt-bindings/ portion of the patch 
-> should
->       be a separate patch.
+> https://elixir.bootlin.com/linux/v6.11-rc3/source/Documentation/devicetree/bindings/submitting-patches.rst#L79
 > 
-> and
+> The rule was/is:
+> 1. Binding for typical devices always go via subsystem tree, with the
+> driver changes.
+> There can be exceptions from above, e.g. some subsystems do not pick up
+> bindings, so Rob does. But how patches are organized is not an exception
+> - it is completely normal workflow.
 > 
->    4) Submit the entire series to the devicetree mailinglist at
-> 
->         devicetree@vger.kernel.org
-> 
-> Above I mentioned "series", not "patch". So 1) is a series of 3 patches 
-> (2 changes to the DT binding file and 1 patch for the Khadas Edge2 DTS. 
-> Is that correct?
-> 
+> 2. DTS *always* goes via SoC maintainer. DTS cannot go via any other
+> driver subsystem tree. There is no exception here. There cannot be an
+> exception, because it would mean the hardware depends on driver, which
+> is obviously false.
 
-My bookmark to elixir.bootling does not work, so could not paste
-specific line. Now it works, so:
+In case my message was not clear: we talk here about organizing
+patchsets, not individual patches. If you ask about patches, then DTS,
+bindings and driver are all separate patches. This set already is split
+like that, so this was fine and I did not comment on it. Only through
+whom the DTS patch goes - separate tree.
 
-https://elixir.bootlin.com/linux/v6.11-rc3/source/Documentation/devicetree/bindings/submitting-patches.rst#L79
-
-The rule was/is:
-1. Binding for typical devices always go via subsystem tree, with the
-driver changes.
-There can be exceptions from above, e.g. some subsystems do not pick up
-bindings, so Rob does. But how patches are organized is not an exception
-- it is completely normal workflow.
-
-2. DTS *always* goes via SoC maintainer. DTS cannot go via any other
-driver subsystem tree. There is no exception here. There cannot be an
-exception, because it would mean the hardware depends on driver, which
-is obviously false.
+And just in case: this is neither specific to wireless nor to Broadcom.
+This is for entire Linux kernel.
 
 Best regards,
 Krzysztof
