@@ -1,60 +1,60 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620F11AED57
-	for <brcm80211@lists.linux.dev>; Wed, 14 Aug 2024 10:38:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 478201AE846
+	for <brcm80211@lists.linux.dev>; Wed, 14 Aug 2024 10:39:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723631889; cv=none; b=Fg6OvF7w81//EpohEWqPANsr+IwgJnWzT6ekXWluG3jgVb2pQDeASuiwNuPZYb/Vr8BWytYghDNz68RprHc3ZNJSdIBD2t4JXd+nVfg5r4T5KwsWCcvM3gHeNhscdTDhFfHUhu8kMNJVje0t1mQbUgxJx2v3Bflxm2HmXQdt6V4=
+	t=1723631977; cv=none; b=CD8zr1B/gIUxgoSKydE4P7v/reIkdebniVP/VudIQNdhNWW7ftRdnykdd8g5hPBLF1fLA0uSuIoTQQxrS1KoqcFrtfkiEMtyAsHVPrcHT66a8hizwbKXXAt8cztlMn2OnY65WuyoTy9tLQlopKChfssHAtDpnI40zlAg3bGG7GY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723631889; c=relaxed/simple;
-	bh=BjLFDKJyMJol4iq7ns3l6PNcv2TAWojsCWm8EzURTP8=;
+	s=arc-20240116; t=1723631977; c=relaxed/simple;
+	bh=++bW5wMefnS7yJM5ubwMFA3JD9os0eJ2KTHGaw/AzjQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dBtZBhItQYdSdA8CJa7jhpp1VX5Sk2+Vb/F196Mx5d6WNUx01lq8zioNiXiiL7E8SrgO8q93tvZSDhDR94xgGgdcYGPDO9FXMKDegV/hEEosgEA4XvdNGYORmne/BSD0SgzCQtnNtEGjKGTIIwBJRv5QqhWQ30hpQxo3JAYAMI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OCzYLgFI; arc=none smtp.client-ip=209.85.221.48
+	 In-Reply-To:Content-Type; b=HhuLD+7UFXg/7JY5Wv7JoRTssuaoyU3XfZeJdIPicoOliQ2FNQyxPtyjBPpf0NB7HF32q1wjYELPNW36Iiv9UeW3VNaDmdZVkpSdFPc4kAgb8sK+VNecUTiCdwR6JNSLu/ixsxwxm7N0Z/S8ol/REJjCf6zl+NYGdgpu0QYwQyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dVcxTT68; arc=none smtp.client-ip=209.85.221.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OCzYLgFI"
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3684e8220f9so413373f8f.1
-        for <brcm80211@lists.linux.dev>; Wed, 14 Aug 2024 03:38:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dVcxTT68"
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-36887ca3da2so3167222f8f.2
+        for <brcm80211@lists.linux.dev>; Wed, 14 Aug 2024 03:39:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1723631886; x=1724236686; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1723631974; x=1724236774; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=fNKkWw51f5wypgz5w1sJpTMeYJTuNSrvezVgh7cX/iw=;
-        b=OCzYLgFIDuGDAAEPLgCmtOXLXJcBHQFFlDgsplvVoXZ5ucE0aDyRrbQl/1tH4vt9uB
-         DwnHvWSE+Ri932txSxkmeCqG12nX+ZA4yWtk/qFsqxiNxqS5F8B5IkriogsPAKLi5Yv8
-         c1pxAgMP3SfOoqErnKjRx0vA1b+PNZckh82zk9Z7LWZ88RuQu5+hzHG4w87GSfkXF5Ae
-         FPX9LMko0UvO8cG9PDDgNCwFjTGZmYSgsojje8OK//ZYD8BTZRIUxKlObKR1YPBjEub4
-         9K+Bdip1CxtFp4nyVs/sJ9qWM2zqXPoYdvuWLfyiOuGQPzdg8zwU34hCM5M1HPa4u9Ic
-         n0JA==
+        bh=6WRMEt7FBWJjYyyscCC3U3OCHTs2LMcI2PM9S0kbD08=;
+        b=dVcxTT68oj6+6Z3ElWt+xFPsIreP+Q2y5letn0kUKMQPmG1jE1BnAujp8jRnjpjyjE
+         40Hi8HmlmbS9OgVKSXI88OJ4IrmcLmFBy437x6HfANs5dP78tD69Lxnszl5RY9JF+2g+
+         4nRj+u8rlaTvBM8AbuLcrNNFBYRpaOWMnNE3yHFMN2mcmMGzv41KQ5PRIe3lQaUSb1Rk
+         aBsrzZMutAJ8eiAGDMnft6mIq2nq4cK9C+CpqK0i19rZm4wi6udeshk5syM7CgP2N8hS
+         pB0WQ1Ags0JCtvmHH0eTT8s93aI3RnIEQlRbcV2vesXaZjs8S8k5APQuKdtIp0dUyABg
+         0z8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723631886; x=1724236686;
+        d=1e100.net; s=20230601; t=1723631974; x=1724236774;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=fNKkWw51f5wypgz5w1sJpTMeYJTuNSrvezVgh7cX/iw=;
-        b=BVx3FeIhE5EsgSJ4OmL81PJlicYXFOcV7WTue/nk2zP5S75+N6R9hBcl72qnbYjdAO
-         YKwKpEMjfuXx7ZdAGNdEmdsIO7hJzySNvcvJO8RaEa6qJUbr+DNe5raze9pQhGQ2qDmt
-         bs23ddtymCKvwfsP+A6GSmtCv+k/X76wT7ArEHPMewnGK5eXdbeT7ewKAcO8k1N0Ttlc
-         KbjqSkmZlf7i0QnoSkXSEBNqN2CBlpLbAYAjBsVHL0wwqdnsHX5RjL4HIqrJwwIdUNCJ
-         wa5WPve0uOFPCncbYfgsgUpAI3k2ShDUH1c2k6fhwnDX1Edt5MImZKGEj+ylSzKHFOaw
-         hX5A==
-X-Forwarded-Encrypted: i=1; AJvYcCWCItsJPiUuyOSLWPUNTuGgIljP/D0WrTT3LQMWoz7CRqkPQoVDoa/C1o0TzUE47Xx0c90yYwOM0xLNzfm7gi8v2ibt+iL2h66X
-X-Gm-Message-State: AOJu0Yx6nBCRCI/smPLiINjQDGWwbip8H7Npr2o0QCDjRPVYkLMsIpnp
-	akSMJR/4aBi8snW8OVeA2G86BmrfK9KVf//te70YjXT/SSJtDmhJDbuPOqGvau8=
-X-Google-Smtp-Source: AGHT+IFAKzLv7ilDET28IMwrLig755ftX5WyeocJ71rGFpy8qsd2JDPFQqU5/gZhPVT74JHfONE3xg==
-X-Received: by 2002:adf:e549:0:b0:36b:a9e8:6b5 with SMTP id ffacd0b85a97d-37179620f6dmr1306544f8f.10.1723631885531;
-        Wed, 14 Aug 2024 03:38:05 -0700 (PDT)
+        bh=6WRMEt7FBWJjYyyscCC3U3OCHTs2LMcI2PM9S0kbD08=;
+        b=u5euje7df42M/6tIpQrCWVCofEHAN0UcxjP75LSxRMJzY6N5wyJxLpIJy+m8A2QMSM
+         hAL3iMdNdKMFsyLl+6bEbzacjhqDrRl4mo5zNC9H5BpIoq01nBQ19BMRGDU/IirYrtEJ
+         l4AxLrV0ZNB14wE6hzs+tSMZ7qwyv9B40iRvGxzBouyCNkuDHkPoXHCzNhx/VYxaDEFG
+         zJfn71ha1Mw2xG29ZbwqLB3AybIjCPIhiQj28jMZlGtefA9UVq7CSKbIFVgQUkfoEkf3
+         dTXn4meY9+/igUbAd5qea97EKkRFohEm/5/xdz/FdWus4BPZ0F462JAmWrtaj/oLpzw9
+         5gdQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUv0qbKYhJzLhcJgi//KOmbMr/Be2RVlXPFk2YxQrnBcrXcn6XHcmSoZmyJlPf8hypp7nCEGqyWzvvQMmWtgSX+xvBpEX0o9stw
+X-Gm-Message-State: AOJu0YxI7Oo96FBz+PAkf4Vx4GkUGJcbyfOPle1RJI4eNbGCXQpJrGgk
+	hnCZri8ZTD82kJHoQayen3SxaeLUL6D/WvYXh+/H6cYBbNJgh6hZAyEa/epEKAc=
+X-Google-Smtp-Source: AGHT+IEsFnMkEPMABflOWSpHSTdZcGDUv5V3RMUWkg8aYLGAOnolNRBF80iFXPk0KvmcXBKPYRU9EA==
+X-Received: by 2002:a5d:5012:0:b0:36b:3384:40e5 with SMTP id ffacd0b85a97d-37177786e4dmr1476575f8f.24.1723631973511;
+        Wed, 14 Aug 2024 03:39:33 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.215.209])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36e4e51eb10sm12424380f8f.84.2024.08.14.03.38.03
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36e4c36bcf6sm12456115f8f.17.2024.08.14.03.39.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Aug 2024 03:38:04 -0700 (PDT)
-Message-ID: <7bf93d78-ba51-45b9-85d7-2b7e4e0b2e56@linaro.org>
-Date: Wed, 14 Aug 2024 12:38:02 +0200
+        Wed, 14 Aug 2024 03:39:32 -0700 (PDT)
+Message-ID: <1e442710-a233-4ab2-a551-f28ba6394b5b@linaro.org>
+Date: Wed, 14 Aug 2024 12:39:30 +0200
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -64,11 +64,11 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v10 1/5] dt-bindings: net: wireless: brcm4329-fmac: add
  pci14e4,449d
-To: Jacobe Zang <jacobe.zang@wesion.com>,
- Krzysztof Kozlowski <krzk@kernel.org>,
- Arend Van Spriel <arend.vanspriel@broadcom.com>, robh@kernel.org,
- krzk+dt@kernel.org, heiko@sntech.de, kvalo@kernel.org, davem@davemloft.net,
- edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, conor+dt@kernel.org
+To: Arend van Spriel <arend.vanspriel@broadcom.com>,
+ Krzysztof Kozlowski <krzk@kernel.org>, Jacobe Zang <jacobe.zang@wesion.com>,
+ robh@kernel.org, krzk+dt@kernel.org, heiko@sntech.de, kvalo@kernel.org,
+ davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+ pabeni@redhat.com, conor+dt@kernel.org
 Cc: efectn@protonmail.com, dsimic@manjaro.org, jagan@edgeble.ai,
  devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
  linux-rockchip@lists.infradead.org, linux-kernel@vger.kernel.org,
@@ -80,7 +80,7 @@ References: <20240813082007.2625841-1-jacobe.zang@wesion.com>
  <20240813082007.2625841-2-jacobe.zang@wesion.com>
  <1914cb2b1a8.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
  <e7401e25-7802-4dc3-9535-226f32b52be1@kernel.org>
- <05785794-6eca-4ade-a990-2deac7156c48@wesion.com>
+ <062d8d4e-6d61-4f11-a9c0-1bbe1bfe0542@broadcom.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Content-Language: en-US
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
@@ -127,14 +127,12 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <05785794-6eca-4ade-a990-2deac7156c48@wesion.com>
+In-Reply-To: <062d8d4e-6d61-4f11-a9c0-1bbe1bfe0542@broadcom.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 14/08/2024 11:12, Jacobe Zang wrote:
-> 
-> 
-> On 2024/8/14 16:53, Krzysztof Kozlowski wrote:
+On 14/08/2024 12:08, Arend van Spriel wrote:
+> On 8/14/2024 10:53 AM, Krzysztof Kozlowski wrote:
 >> On 13/08/2024 19:04, Arend Van Spriel wrote:
 >>> On August 13, 2024 10:20:24 AM Jacobe Zang <jacobe.zang@wesion.com> wrote:
 >>>
@@ -150,13 +148,23 @@ On 14/08/2024 11:12, Jacobe Zang wrote:
 >>
 >> No, DTS must not go via wireless-next. Please split it from the series
 >> and provide lore link in changelog for bindings.
->>
 > 
-> I'm little confused that I should push bindings as a series, DTS as a 
-> series and driver as a series separately, so next time I should push 3 
-> series, right?
+> Hi Krzysztof,
+> 
+> Is it really important how the patches travel upstream to Linus. This 
+> binding is specific to Broadcom wifi devices so there are no 
+> dependencies(?). To clarify what you are asking I assume two separate 
+> series:
+> 
+> 1) DT binding + Khadas Edge2 DTS  -> devicetree@vger.kernel.org
+> 	reference to: 
+> https://patch.msgid.link/20240813082007.2625841-1-jacobe.zang@wesion.com
+> 
+> 2) brcmfmac driver changes	  -> linux-wireless@vger.kernel.org
 
-No. I said only DTS.
+No. I said only DTS is separate. This was always the rule, since forever.
+
+Documentation/devicetree/bindings/submitting-patches.rst
 
 Best regards,
 Krzysztof
