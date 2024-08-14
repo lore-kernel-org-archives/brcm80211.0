@@ -1,57 +1,57 @@
-Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36BAF1AE02E
-	for <brcm80211@lists.linux.dev>; Wed, 14 Aug 2024 10:45:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 098121AE84F
+	for <brcm80211@lists.linux.dev>; Wed, 14 Aug 2024 11:00:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723632308; cv=none; b=CjqjHHGOS9dDcvZ8n0/1LRJet1w7tVESBhAmI2aHFJLkf0Je+qyUC6n64GtYHvQ9SCK00nBuQ5/YruBvQUSTWdKkR+5TbHJcpD30FDYUPBkXzicPiiCMpPN4crFjVdxDqvXW51Xl3jBvVv9jIygD0yZcExHXyzumI3vju6lTxq4=
+	t=1723633202; cv=none; b=DaKDOWyQYR67wfx4xEHvexwqkNioI3moNKMiM3c+E4i3g0NenEbnmQrBTlSilrmQ2df9j0PcoGqONaTasCY0MlAzj5bo2rqIv66iBxK5uFB/MVc6twnr3kDOeTUWfWOaFFX0DCyyeN3jGXCNg/SR+t3X/tODYKwcFyzD6zKeIYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723632308; c=relaxed/simple;
-	bh=cZ9BkgG63rEN8kNe9FhooxE8MhReOnBZMnAbDlarQAQ=;
+	s=arc-20240116; t=1723633202; c=relaxed/simple;
+	bh=gkPgVpcGFwGoavkuUi2MpeQrl95zZ+AG1mO5RvrBy8E=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pqa65jt7T1lb+R+RyNBfxM6sq2rET1P/xyxvNpCsMRijcBCfCs84pJ6GCc6LWxfb4af0QiXrxukTRGiJYS0lGy12pk4lNqDLNwJn5GL6u3cyG5A9Eyi/+O0vKYW5HSslKMndNmBt+S3ZJJYuB264zmz5sjiTcW5lai//+DlxpjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=h3O3vW4g; arc=none smtp.client-ip=209.85.222.182
+	 In-Reply-To:Content-Type; b=GJ+zNF173lleWEPMvsZcrbGg3z+uQEfFHQnpxk0uzWj3DvLw031IL0xmUQb55RgVUtFRQ38qXmKqq1KrBjLRNSvzuZU0L7aNnmKQ069d7/c/3x44z7tLSp3CGYsj6MYUAe/QOD1thKJdEEj73dlA4dHEFWi3WfmS1ChN9Jg231o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=HQyDj1tw; arc=none smtp.client-ip=209.85.214.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="h3O3vW4g"
-Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-7a35eff1d06so396109585a.0
-        for <brcm80211@lists.linux.dev>; Wed, 14 Aug 2024 03:45:06 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="HQyDj1tw"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-1fd65aaac27so5137715ad.1
+        for <brcm80211@lists.linux.dev>; Wed, 14 Aug 2024 04:00:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1723632305; x=1724237105; darn=lists.linux.dev;
+        d=broadcom.com; s=google; t=1723633200; x=1724238000; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=LFk4lh3cCjG0SR06SvOvwiuhTMezfgXvWpzfkPomYos=;
-        b=h3O3vW4g2byc+e3To/3KULWR+PTIPd/oXeW+3Y6AvHYoHxpdSUKeoNueR00gJ7eK/t
-         YbDmGV0jgiWswzqssfQ2MAHzAzKbpV+pj7LmtoVogYlOzs2Ve6lItaMcIf7JUBFNz3R4
-         Izvu//e8UlyM3C85QhME8g70LybpBpH3FB0j8=
+        bh=3qUjSfJL0D2qc7SMFf2eMAHEIrrW3XFkl0wbXvVknJU=;
+        b=HQyDj1twlTDZmNRNObCobiLLhThHytXyVRUQlwSHwbjuvpcmkxccxfE/U/EdFjugPl
+         3pOVUY/cK68dLeUeFTLdpXOigYF8mPcUyybVFEa6RmmsUq1AE996TayGZ3qXTDl/eKaq
+         V5HwvEWwYu5wldkqf1wbl6iSHSx071YDXhh7o=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723632305; x=1724237105;
+        d=1e100.net; s=20230601; t=1723633200; x=1724238000;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=LFk4lh3cCjG0SR06SvOvwiuhTMezfgXvWpzfkPomYos=;
-        b=YEkvyQ5nPm1OV1R4IxoYPqpTHwH4Ma4xzm7sGCAU7H99P7hL8MVDuIRmVVeY0/D/JL
-         Mb35W9485Fe6Jy6O3mXfKptrhYoSqb4siEOJjdG+9yqq6RXfw2xQJaUo/tDLkiszU3Gu
-         Y36FkH9T8UDCySWFViQ59hFz7hBBo7UoL1/aGp3968q3g+BTxQx1T/+TKjLi+4Ho9HZd
-         QZIW5yCSXa7XjuKHIFCa6JTLWokkgN+DC6CnuXBWjJAugz6KXLLNQbOaYK6WxoE7I0aR
-         rzGsF+S+HJcwVukbjWZ4NvKaxDJsn3NvJvFhhbSl0xY5IBouIokD+WB9sKl4Lr/SMmbZ
-         Vczg==
-X-Forwarded-Encrypted: i=1; AJvYcCWUfPB29m5oeihJjyHW/j+0vcxYfjNOejZsyEzGS6Dw3IVKT9f/Cq9ObR25i9o+5eAe1hV1fGbUg4NBqqeL1hzl3oIy2yrW2RUf
-X-Gm-Message-State: AOJu0YxXDeNj1bzKARjJFKgwRRggtB7j8rLnXnaSlUDBWRwR8HLNtQus
-	aQIYWbUOpIP5QsaAmHaLoBqxA+TgAVH0qvGOCVCLUpWETKeirBjELUfwhipLiQ==
-X-Google-Smtp-Source: AGHT+IGINV7Cr6/yUzciRzHq2zhc1Ek5UNVW7N0rj9HFgKO7ExivX+a6umTbzKbdjzFu5OuVUGXsyg==
-X-Received: by 2002:a0c:f7ce:0:b0:6bf:6714:43b3 with SMTP id 6a1803df08f44-6bf6714448emr2393696d6.21.1723632304908;
-        Wed, 14 Aug 2024 03:45:04 -0700 (PDT)
+        bh=3qUjSfJL0D2qc7SMFf2eMAHEIrrW3XFkl0wbXvVknJU=;
+        b=vCQUJaOTfIhBHrTpLnREZuAX4IddtlMZdNC8FcUhcDSVIrO9VBvWvlj15Ak+9kC9pN
+         V2H+LBlaMzhx3aPwnUlbE8CT55dKlz8U7fDmr56L/IDlk2KoPhe846AoKWztE/RRnbJC
+         QgH6EKO+eAID8e0/BC//03ZCAfY1TcoWIBejmBdYQWEedxsTl4028zGbzOThkc85/DA2
+         UC00UIk4IPCa2SS3N8YT3kzAcW9OQTtpOREwYirR13olHq0PPo22qYKzXluGfpCArQcy
+         s5hNQ7I+jWyUhPyhkdHVdyjjRYOXpigmM6Kukfd1pVZQwMRaCiOTOFdqNAZbJKW0J55D
+         LgxA==
+X-Forwarded-Encrypted: i=1; AJvYcCXGUI27/ikKzr7c7UuPuWNxhsTiGirCVH1LxHB43EZXt2nDkLbOD4eJRrqcxvzWvPh8YcRcbhQ/OHB7j7Jp65ifFXqRvB/dEBbk
+X-Gm-Message-State: AOJu0Yxy6aQsVpP4naj+rop8lxtsPluWKCn5PQ9f4gE8GSiBoEF2pJMF
+	3sVxlRhOy34hm3wdWzL33um3ZjLPSU1a91NBfrNQBOHglk3ZL8MW7Z5RIL0oHQ==
+X-Google-Smtp-Source: AGHT+IFqOffgtQAjEk0phUboPbU/XKGUxX1A7ojT9F7/rLRq7j3XznoSX+PZCtEeLMgGbxudFio86w==
+X-Received: by 2002:a17:902:dac9:b0:1fb:2ebc:d16b with SMTP id d9443c01a7336-201cbba0316mr94862705ad.7.1723633200258;
+        Wed, 14 Aug 2024 04:00:00 -0700 (PDT)
 Received: from [10.176.68.61] ([192.19.176.250])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6bd82c87843sm42263316d6.31.2024.08.14.03.45.01
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-201cd14ac10sm27389575ad.102.2024.08.14.03.59.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Aug 2024 03:45:04 -0700 (PDT)
-Message-ID: <8de856d4-8526-4662-bb29-898b80476df9@broadcom.com>
-Date: Wed, 14 Aug 2024 12:44:58 +0200
+        Wed, 14 Aug 2024 03:59:59 -0700 (PDT)
+Message-ID: <180f7459-39fa-4e96-83d6-504e7802dc94@broadcom.com>
+Date: Wed, 14 Aug 2024 12:59:51 +0200
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -59,25 +59,26 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 4/5] wifi: brcmfmac: Add optional lpo clock enable
- support
-To: Alexey Charkov <alchark@gmail.com>, Jacobe Zang <jacobe.zang@wesion.com>
-Cc: robh@kernel.org, krzk+dt@kernel.org, heiko@sntech.de, kvalo@kernel.org,
+Subject: Re: [PATCH v10 1/5] dt-bindings: net: wireless: brcm4329-fmac: add
+ pci14e4,449d
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Krzysztof Kozlowski <krzk@kernel.org>, Jacobe Zang <jacobe.zang@wesion.com>,
+ robh@kernel.org, krzk+dt@kernel.org, heiko@sntech.de, kvalo@kernel.org,
  davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
- pabeni@redhat.com, conor+dt@kernel.org, linux-rockchip@lists.infradead.org,
- efectn@protonmail.com, dsimic@manjaro.org, jagan@edgeble.ai,
+ pabeni@redhat.com, conor+dt@kernel.org
+Cc: efectn@protonmail.com, dsimic@manjaro.org, jagan@edgeble.ai,
  devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-kernel@vger.kernel.org, arend@broadcom.com,
- linux-wireless@vger.kernel.org, netdev@vger.kernel.org, megi@xff.cz,
- duoming@zju.edu.cn, bhelgaas@google.com, minipli@grsecurity.net,
- brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com,
- nick@khadas.com, Sai Krishna <saikrishnag@marvell.com>
+ linux-rockchip@lists.infradead.org, linux-kernel@vger.kernel.org,
+ arend@broadcom.com, linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
+ megi@xff.cz, duoming@zju.edu.cn, bhelgaas@google.com,
+ minipli@grsecurity.net, brcm80211@lists.linux.dev,
+ brcm80211-dev-list.pdl@broadcom.com, nick@khadas.com
 References: <20240813082007.2625841-1-jacobe.zang@wesion.com>
- <20240813082007.2625841-5-jacobe.zang@wesion.com>
- <721da64c-42ec-4be6-8ad3-e2685a84823a@broadcom.com>
- <2269063.vFx2qVVIhK@latitude-fedora>
- <fa019ee9-3f4d-4bea-92a7-929713518dc9@wesion.com>
- <CABjd4YwTbG8pm_xwrOVtVwMwvarvz2SB9bapH3LDMqPn6pH9Ew@mail.gmail.com>
+ <20240813082007.2625841-2-jacobe.zang@wesion.com>
+ <1914cb2b1a8.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
+ <e7401e25-7802-4dc3-9535-226f32b52be1@kernel.org>
+ <062d8d4e-6d61-4f11-a9c0-1bbe1bfe0542@broadcom.com>
+ <1e442710-a233-4ab2-a551-f28ba6394b5b@linaro.org>
 Content-Language: en-US
 From: Arend van Spriel <arend.vanspriel@broadcom.com>
 Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
@@ -123,155 +124,61 @@ Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
  NKowQLrlMBGXT4NnRNV0+yHmusXPOPIqQCKEtbWSx9s2slQxmXukPYvLnuRJqkPkvrTgjn5d
  eSE0Dkhni4292/Nn/TnZf5mxCNWH1p3dz/vrT6EIYk2GSJgCLoTkCcqaM6+5E4IwgYOq3UYu
  AAgeEbPV1QeTVAPrntrLb0t0U5vdwG7Xl40baV9OydTv7ghjYZU349w1d5mdxg==
-In-Reply-To: <CABjd4YwTbG8pm_xwrOVtVwMwvarvz2SB9bapH3LDMqPn6pH9Ew@mail.gmail.com>
+In-Reply-To: <1e442710-a233-4ab2-a551-f28ba6394b5b@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 8/14/2024 11:48 AM, Alexey Charkov wrote:
-> On Wed, Aug 14, 2024 at 12:27 PM Jacobe Zang <jacobe.zang@wesion.com> wrote:
->>
->>
->>
->> On 2024/8/14 16:47, Alexey Charkov wrote:
->>> Hi Arend, Jacobe,
+On 8/14/2024 12:39 PM, Krzysztof Kozlowski wrote:
+> On 14/08/2024 12:08, Arend van Spriel wrote:
+>> On 8/14/2024 10:53 AM, Krzysztof Kozlowski wrote:
+>>> On 13/08/2024 19:04, Arend Van Spriel wrote:
+>>>> On August 13, 2024 10:20:24 AM Jacobe Zang <jacobe.zang@wesion.com> wrote:
+>>>>
+>>>>> It's the device id used by AP6275P which is the Wi-Fi module
+>>>>> used by Rockchip's RK3588 evaluation board and also used in
+>>>>> some other RK3588 boards.
+>>>>
+>>>> Hi Kalle,
+>>>>
+>>>> There probably will be a v11, but wanted to know how this series will be
+>>>> handled as it involves device tree bindings, arm arch device tree spec, and
+>>>> brcmfmac driver code. Can it all go through wireless-next?
 >>>
->>> On Tuesday, August 13, 2024 2:57:28 PM GMT+3 Arend van Spriel wrote:
->>>> On 8/13/2024 10:20 AM, Jacobe Zang wrote:
->>>>> WiFi modules often require 32kHz clock to function. Add support to
->>>>> enable the clock to PCIe driver and move "brcm,bcm4329-fmac" check
->>>>> to the top of brcmf_of_probe. Change function prototypes from void
->>>>> to int and add appropriate errno's for return values that will be
->>>>> send to bus when error occurred.
->>>>
->>>> I was going to say it looks good to me, but....
->>>>
->>>>> Co-developed-by: Ondrej Jirman <megi@xff.cz>
->>>>> Signed-off-by: Ondrej Jirman <megi@xff.cz>
->>>>> Co-developed-by: Arend van Spriel <arend.vanspriel@broadcom.com>
->>>>> Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
->>>>> Reviewed-by: Sai Krishna <saikrishnag@marvell.com>
->>>>> Signed-off-by: Jacobe Zang <jacobe.zang@wesion.com>
->>>>> ---
->>>>>
->>>>>     .../broadcom/brcm80211/brcmfmac/bcmsdh.c      |  4 +-
->>>>>     .../broadcom/brcm80211/brcmfmac/common.c      |  3 +-
->>>>>     .../wireless/broadcom/brcm80211/brcmfmac/of.c | 53 +++++++++++--------
->>>>>     .../wireless/broadcom/brcm80211/brcmfmac/of.h |  9 ++--
->>>>>     .../broadcom/brcm80211/brcmfmac/pcie.c        |  3 ++
->>>>>     .../broadcom/brcm80211/brcmfmac/sdio.c        | 22 +++++---
->>>>>     .../broadcom/brcm80211/brcmfmac/usb.c         |  3 ++
->>>>>     7 files changed, 61 insertions(+), 36 deletions(-)
->>>>
->>>> [...]
->>>>
->>>>> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
->>>>> b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c index
->>>>> e406e11481a62..f19dc7355e0e8 100644
->>>>> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
->>>>> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
->>>>
->>>> [...]
->>>>
->>>>> @@ -113,33 +118,39 @@ void brcmf_of_probe(struct device *dev, enum
->>>>> brcmf_bus_type bus_type,>
->>>>>              of_node_put(root);
->>>>>
->>>>>      }
->>>>>
->>>>> -   if (!np || !of_device_is_compatible(np, "brcm,bcm4329-fmac"))
->>>>> -           return;
->>>>> -
->>>>>
->>>>>      err = brcmf_of_get_country_codes(dev, settings);
->>>>>      if (err)
->>>>>
->>>>>              brcmf_err("failed to get OF country code map (err=%d)
->>> \n", err);
->>>>>
->>>>>      of_get_mac_address(np, settings->mac);
->>>>>
->>>>> -   if (bus_type != BRCMF_BUSTYPE_SDIO)
->>>>> -           return;
->>>>> +   if (bus_type == BRCMF_BUSTYPE_SDIO) {
->>>>
->>>> Don't like the fact that this now has an extra indentation level and it
->>>> offers no extra benefit. Just keep the original if-statement and return
->>>> 0. Consequently the LPO clock code should move just before the if-statement.
->>>>> +           if (of_property_read_u32(np, "brcm,drive-strength",
->>> &val) == 0)
->>>>> +                   sdio->drive_strength = val;
->>>>>
->>>>> -   if (of_property_read_u32(np, "brcm,drive-strength", &val) == 0)
->>>>> -           sdio->drive_strength = val;
->>>>> +           /* make sure there are interrupts defined in the node */
->>>>> +           if (!of_property_present(np, "interrupts"))
->>>>> +                   return 0;
->>>>>
->>>>> -   /* make sure there are interrupts defined in the node */
->>>>> -   if (!of_property_present(np, "interrupts"))
->>>>> -           return;
->>>>> +           irq = irq_of_parse_and_map(np, 0);
->>>>> +           if (!irq) {
->>>>> +                   brcmf_err("interrupt could not be
->>> mapped\n");
->>>>> +                   return 0;
->>>>> +           }
->>>>> +           irqf = irqd_get_trigger_type(irq_get_irq_data(irq));
->>>>> +
->>>>> +           sdio->oob_irq_supported = true;
->>>>> +           sdio->oob_irq_nr = irq;
->>>>> +           sdio->oob_irq_flags = irqf;
->>>>> +   }
->>>>>
->>>>> -   irq = irq_of_parse_and_map(np, 0);
->>>>> -   if (!irq) {
->>>>> -           brcmf_err("interrupt could not be mapped\n");
->>>>> -           return;
->>>>> +   clk = devm_clk_get_optional_enabled(dev, "lpo");
->>>>> +   if (!IS_ERR_OR_NULL(clk)) {
->>>>> +           brcmf_dbg(INFO, "enabling 32kHz clock\n");
->>>>> +           return clk_set_rate(clk, 32768);
->>>>> +   } else {
->>>>> +           return PTR_ERR_OR_ZERO(clk);
->>>>>
->>>>>      }
->>>>
->>>> Change this to:
->>>>    > +        clk = devm_clk_get_optional_enabled(dev, "lpo");
->>>>    > +        if (IS_ERR_OR_NULL(clk)) {
->>>>    > +                return PTR_ERR_OR_ZERO(clk);
->>>
->>> Perhaps in this case we should go for IS_ERR and PTR_ERR respectively.
->>> devm_clk_get_optional_enabled would return NULL when the optional clock is not
->>> found, so NULL is not an error state but serves as a dummy clock that can be> used with clk_set_rate.
+>>> No, DTS must not go via wireless-next. Please split it from the series
+>>> and provide lore link in changelog for bindings.
 >>
->> I think we don't need to set clock rate for clock is NULL. So it should
->> be changed to:
+>> Hi Krzysztof,
 >>
->> +       clk = devm_clk_get_optional_enabled(dev, "lpo");
->> +       if (IS_ERR(clk)) {
->> +               return PTR_ERR(clk);
->> +       } else if (clk) {
->> +               brcmf_dbg(INFO, "enabling 32kHz clock\n");
->> +               clk_set_rate(clk, 32768);
->> +       }
+>> Is it really important how the patches travel upstream to Linus. This
+>> binding is specific to Broadcom wifi devices so there are no
+>> dependencies(?). To clarify what you are asking I assume two separate
+>> series:
+>>
+>> 1) DT binding + Khadas Edge2 DTS  -> devicetree@vger.kernel.org
+>> 	reference to:
+>> https://patch.msgid.link/20240813082007.2625841-1-jacobe.zang@wesion.com
+>>
+>> 2) brcmfmac driver changes	  -> linux-wireless@vger.kernel.org
 > 
-> If clk is NULL then clk_set_rate returns immediately with status zero,
-> so there is little difference from whether you wrap it into another if
-> (clk) or not. You can probably drop the debug statement altogether and
-> call clk_set_rate unconditionally - this will look neater.
+> No. I said only DTS is separate. This was always the rule, since forever.
+> 
+> Documentation/devicetree/bindings/submitting-patches.rst
 
-The construct above is indeed only needed to get the debug statement 
-correct given the behavior of clk_set_rate(). However, for debugging it 
-is useful to know that the LPO clock is defined and used or not. Maybe 
-do this:
+I am going slightly mad (by Queen). That documents says:
 
-        clk = devm_clk_get_optional_enabled(dev, "lpo");
-        if (IS_ERR(clk))
-                return PTR_ERR(clk);
+   1) The Documentation/ and include/dt-bindings/ portion of the patch 
+should
+      be a separate patch.
 
-        brcmf_dbg(INFO, "%s LPO clock\n", clk ? "enable" : "no");
-        clk_set_rate(clk, 32768);
+and
+
+   4) Submit the entire series to the devicetree mailinglist at
+
+        devicetree@vger.kernel.org
+
+Above I mentioned "series", not "patch". So 1) is a series of 3 patches 
+(2 changes to the DT binding file and 1 patch for the Khadas Edge2 DTS. 
+Is that correct?
 
 Regards,
 Arend
