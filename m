@@ -1,106 +1,129 @@
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-op-o14.zoho.com (sender4-op-o14.zoho.com [136.143.188.14])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 395CB4964D
-	for <brcm80211@lists.linux.dev>; Mon, 19 Aug 2024 15:52:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724082765; cv=none; b=BLh1lHg1FNC/wh74RKT1TLm9lD4S5pKr7oi9p4/FkRSx+jRmK45mVniBB0wVCcm9heEcQIziyRpW8luEeuAjnInB7ehm7MhCHZBbPVAUoH2YDjYVogTz6De0dJaoVEJe+Bsz6Q3DSB5n3XHGfCYbDnRdC8lcypgv42jj2PwSQDk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724082765; c=relaxed/simple;
-	bh=Q7bJiVRG7liKTZBf0PjHSKqqS8kz/az3WbqO91obieY=;
-	h=From:To:CC:Date:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type; b=j/cWCR2/Dr86mvfrV/x0TjSNHh+AO8MIxVfWAn5W4UDUDeR+x4FOXvI1kEzkB+HIqN7Y7vZ0hX+bZKFf6HiJiorVRYXgNlHxEf1XNv2Zp8LEIdhErIUbV0b8B52CfShNw5olBwUCxFC1Ysc3yAmlDUrtFJk+rystQUb+8FOefcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=g+ZkGcjv; arc=none smtp.client-ip=209.85.221.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C73D518B48F
+	for <brcm80211@lists.linux.dev>; Mon, 19 Aug 2024 17:04:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.14
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1724087055; cv=pass; b=MMfQMd9zMDL99tlkz2yerjFaK4NE+iejhM2vhtVsWOkm409Q+7Dn/ri8qGCNtoAqZpebbNGXLdL45v5RnQ4J1mGP+crFNTqrlYNq9up/zQB+Wlzsjpx6BwEEBjL6DMjCiu0z9xm8XB05wDqcTEkptJl3AOctY3VKItC7OrMUfLo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1724087055; c=relaxed/simple;
+	bh=tvnBfqvPBRx+HDhCZhrrAy5UEzQvPjK5237fBaCqoVU=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=ogGPUs0jlVW4XAyEYdkpqAe1q/Y8STcLUHX5FzgYU0cRYD5a5fkILfSOLZsTAIYHBzjTsDJAJsjOJyLU/FVvcmaVHfbIv9ijxEATVkKRncdu1H8aHmO7+1QdaJ5eCJ2HyQBZnZdp8E0pLMeJtus4CkSMERrSBQy/5xlEch0+u7E=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=sebastian.reichel@collabora.com header.b=HjpYOp9z; arc=pass smtp.client-ip=136.143.188.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="g+ZkGcjv"
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3718706cf8aso2858992f8f.3
-        for <brcm80211@lists.linux.dev>; Mon, 19 Aug 2024 08:52:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1724082762; x=1724687562; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:subject:user-agent
-         :references:in-reply-to:message-id:date:cc:to:from:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=I4RzSWJA3xUP/23XsRcXEBJL0JfqNAW5dNBSPD0qir4=;
-        b=g+ZkGcjvhuj00vRjDC8Ez3a0fxs+uczkWAIISN81sHCmNM88fQV8BcsY2t5Q/2nPij
-         nQ8b7LJd/RrCuQRC2dIZUJD0yUGQtVwMo2MB7YuU1oE/RHsdc8AlGjP2rnW6b1U25W6t
-         VGAYT8ot7rbd/gKz+iNJuw6fxi1BnPn2pEoFA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724082762; x=1724687562;
-        h=content-transfer-encoding:mime-version:subject:user-agent
-         :references:in-reply-to:message-id:date:cc:to:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=I4RzSWJA3xUP/23XsRcXEBJL0JfqNAW5dNBSPD0qir4=;
-        b=TbmxreAWv+C0QpaTCLxHrUGBGaKoolNlznEuQ9Wab88huZIbH0treETui3rXcw2WO7
-         LBmpJYzM82b3bWIdWrsqQgwqRnQRur0L4R8Iv/NxNl49+Dfc+iesAzSL6DTmZ9F+zIXO
-         4asVYVPskjqnhrtpGm7k8EBFy5NvXFPq2Wz/D1D/kDlo9K5vCv1yiEInQwlUUk5df+yb
-         4evKB2S5PoCdTbrA1+ngcoJ7Opkx8NG2p6IbrJ0ESfKQs1yoE9MmcntCUVHA65blDFS9
-         LYc+zEsU5/nkHnHkFH8OS4jtO8AGrOQoceZFbKqbUhIPXLgr1kL/yk3Z2dVHFNFYpt9P
-         YVOQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUsqeV8dPnLeeu6gHJ7PGDO5n5i4v769uJZGcR4lKwvXhTsxl6CeWEumhJT8OeSrIwrmakGI1YTc7399MDOzOfuUEFpOakI37eO
-X-Gm-Message-State: AOJu0YyA79YiWS6JHQf62UDqfcov2PupnJuvIPA9+PqBVmF3OwbAXxmw
-	6LVz2SstVSGOUBYKWWv4inoLPPb7rA1UcH2ggQ91j2oZhgKwuinYiIT2LmMxlw==
-X-Google-Smtp-Source: AGHT+IGW8oAqkMSHkpuCNV4nfLQQ7vz+yfoDUOn5qpGNhEM3JUwcTDHEUZap/RaAsTKmplRWZ/snUw==
-X-Received: by 2002:a5d:6385:0:b0:368:36e6:b23a with SMTP id ffacd0b85a97d-371946c9ad0mr7268298f8f.55.1724082761901;
-        Mon, 19 Aug 2024 08:52:41 -0700 (PDT)
-Received: from [10.229.42.193] ([192.19.176.250])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-371898abf2csm10770266f8f.107.2024.08.19.08.52.40
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 19 Aug 2024 08:52:41 -0700 (PDT)
-From: Arend Van Spriel <arend.vanspriel@broadcom.com>
-To: Kalle Valo <kvalo@kernel.org>, Marek Vasut <marex@denx.de>
-CC: <linux-wireless@vger.kernel.org>, "Chung-Hsien Hsu" <stanley.hsu@cypress.com>, "Chung-Hsien Hsu" <chung-hsien.hsu@infineon.com>, "Dr. David Alan Gilbert" <linux@treblig.org>, "Gustavo A. R. Silva" <gustavoars@kernel.org>, =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>, Bjorn Helgaas <bhelgaas@google.com>, Carter Chen <carter.chen@infineon.com>, Duoming Zhou <duoming@zju.edu.cn>, Erick Archer <erick.archer@outlook.com>, Kees Cook <kees@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Mathias Krause <minipli@grsecurity.net>, Matthias Brugger <mbrugger@suse.com>, Owen Huang <Owen.Huang@infineon.com>, Ulf Hansson <ulf.hansson@linaro.org>, <brcm80211-dev-list.pdl@broadcom.com>, <brcm80211@lists.linux.dev>
-Date: Mon, 19 Aug 2024 17:52:40 +0200
-Message-ID: <1916b572558.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
-In-Reply-To: <871q2ky3zm.fsf@kernel.org>
-References: <20240818201533.89669-1-marex@denx.de>
- <871q2ky3zm.fsf@kernel.org>
-User-Agent: AquaMail/1.51.5 (build: 105105504)
-Subject: Re: [PATCH 1/2] wifi: brcmfmac: add support for TRX firmware download
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=sebastian.reichel@collabora.com header.b="HjpYOp9z"
+ARC-Seal: i=1; a=rsa-sha256; t=1724087022; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=n8uWCyB2elCluMJc278Nj13KMcZui0X3ZOO1H8htDvDly4zVwcZmPTja4DRogrv1m7coF5FuMzBPlaNGgdKXUaxNIyyzrgnoLZ/a9+SXkQaZKuCz8HC7se6peeXS8TAs/8rIa8IBDgNmCcoQy7jOgsg42fnD6n8zwkS8IytECDI=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1724087022; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=tvnBfqvPBRx+HDhCZhrrAy5UEzQvPjK5237fBaCqoVU=; 
+	b=Sb+Ut17tdpEUH5QwvchUTtzM3nGb3h0uJ+13RWci//0gsE/6tEWxcqiCLcmF+rH42Ha5afAe+eLs9OAh+67edlTfH5cAgnJifVAr2W9MIG9f/5rIMrrsUhjouV9qdweJLt+WQuFjeiOPbRvMwqeLPFz94COYVGCyyWX3V2PpzGU=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=sebastian.reichel@collabora.com;
+	dmarc=pass header.from=<sebastian.reichel@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1724087022;
+	s=zohomail; d=collabora.com; i=sebastian.reichel@collabora.com;
+	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
+	bh=tvnBfqvPBRx+HDhCZhrrAy5UEzQvPjK5237fBaCqoVU=;
+	b=HjpYOp9zsUV49NoOMAqnIKdMup1IV7jYjX9XXTerc7pA0z6dPminm2YS/59p2p89
+	Ok18E1GugjteLGxlUrNyIeNzOTpqve7f7AVNFc2m56ymMmOmgcIV3f/dGYcQu2k650J
+	+O/SfV72GdDQkC7XhnXZxMf0CU5OgKlfBkYTIsaA=
+Received: by mx.zohomail.com with SMTPS id 1724087019835273.7787678036623;
+	Mon, 19 Aug 2024 10:03:39 -0700 (PDT)
+Received: by jupiter.universe (Postfix, from userid 1000)
+	id 03A8B4800E2; Mon, 19 Aug 2024 18:42:43 +0200 (CEST)
+Date: Mon, 19 Aug 2024 18:42:43 +0200
+From: Sebastian Reichel <sebastian.reichel@collabora.com>
+To: jacobe.zang@wesion.com
+Cc: arend.vanspriel@broadcom.com, bhelgaas@google.com, 
+	brcm80211-dev-list.pdl@broadcom.com, brcm80211@lists.linux.dev, christophe.jaillet@wanadoo.fr, 
+	conor+dt@kernel.org, davem@davemloft.net, devicetree@vger.kernel.org, 
+	duoming@zju.edu.cn, edumazet@google.com, gregkh@linuxfoundation.org, 
+	krzk+dt@kernel.org, kuba@kernel.org, kvalo@kernel.org, linux-kernel@vger.kernel.org, 
+	linux-wireless@vger.kernel.org, megi@xff.cz, minipli@grsecurity.net, netdev@vger.kernel.org, 
+	pabeni@redhat.com, robh@kernel.org, saikrishnag@marvell.com, 
+	stern@rowland.harvard.edu, yajun.deng@linux.dev
+Subject: Re: [PATCH v11 0/4] Add AP6275P wireless support
+Message-ID: <uzmj5w6byisfguatjyy2ibo6zbn7w52bg2abgf7egych7usv6j@ec4xdmaofach>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-
-On August 19, 2024 4:36:05 PM Kalle Valo <kvalo@kernel.org> wrote:
-
-> Marek Vasut <marex@denx.de> writes:
->
->> From: Chung-Hsien Hsu <stanley.hsu@cypress.com>
->>
->> Add support to download TRX firmware for PCIe and SDIO.
->>
->> Signed-off-by: Chung-Hsien Hsu <chung-hsien.hsu@infineon.com>
->> Signed-off-by: Marek Vasut <marex@denx.de> # Upport to current linux-next
->
-> The commit message should answer to the question 'Why?'. What's TRX
-> firmware and why do we need it?
-
-I looked over the patches, but did not sit down to comment on this. The TRX 
-firmware format allows multiple images and possibly compression. Not sure 
-if Infineon is using all this functionality. This is probably needed for  
-55572 device support (patch 2/2). Turns out this device has a bootloader 
-that the driver has to talk with and that is probably where this TRX 
-support comes from. Not something I considered to happen for SDIO and PCIe 
-devices. There is always a puzzle to solve ;-)
-
-Also noticed a random seed is provided to firmware. This already there for 
-apple chips so it should be looked at whether that code can be shared. I 
-will follow up.
-
-Regards,
-Arend
-
-> --
-> https://patchwork.kernel.org/project/linux-wireless/list/
->
-> https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="of7hfoh4fqko6jig"
+Content-Disposition: inline
+In-Reply-To: <20240816020635.1273911-1-jacobe.zang@wesion.com>
+X-Zoho-Virus-Status: 1
+X-Zoho-AV-Stamp: zmail-av-1.3.1/224.30.53
+X-ZohoMailClient: External
 
 
+--of7hfoh4fqko6jig
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+Hi,
+
+I tested this on RK3588 EVB1 and the driver is working fine. The DT
+bindings are not correct, though:
+
+linux/arch/arm64/boot/dts/rockchip/rk3588-evb1-v10.dtb: wifi@0,0:
+compatible: 'oneOf' conditional failed, one must be fixed:
+
+['pci14e4,449d', 'brcm,bcm4329-fmac'] is too long
+'pci14e4,449d' is not one of ['brcm,bcm43143-fmac', 'brcm,bcm4341b0-fmac',
+'brcm,bcm4341b4-fmac', 'brcm,bcm4341b5-fmac', 'brcm,bcm4329-fmac',
+'brcm,bcm4330-fmac', 'brcm,bcm4334-fmac', 'brcm,bcm43340-fmac',
+'brcm,bcm4335-fmac', 'brcm,bcm43362-fmac', 'brcm,bcm4339-fmac',
+'brcm,bcm43430a0-fmac', 'brcm,bcm43430a1-fmac', 'brcm,bcm43455-fmac',
+'brcm,bcm43456-fmac', 'brcm,bcm4354-fmac', 'brcm,bcm4356-fmac',
+'brcm,bcm4359-fmac', 'brcm,bcm4366-fmac', 'cypress,cyw4373-fmac',
+'cypress,cyw43012-fmac', 'infineon,cyw43439-fmac']
+=66rom schema $id: http://devicetree.org/schemas/net/wireless/brcm,bcm4329-=
+fmac.yaml#
+
+It's easy to see the problem in the binding. It does not expect a
+fallback string after the PCI ID based compatible. Either the
+pci14e4,449d entry must be added to the first enum in the binding,
+which has the fallback compatible, or the fallback compatible
+should not be added to DTS.
+
+If the fallback compatible is missing in DTS, the compatible check in
+brcmf_of_probe() fails and the lpo clock is not requested resulting
+in the firmware startup failing. So that would require further
+driver changes.
+
+Greetings,
+
+-- Sebastian
+
+--of7hfoh4fqko6jig
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmbDdf4ACgkQ2O7X88g7
++pr5KRAAjDSIh+I777ZC2eOvfPG2PAsPfp+nGcsq2aP34vzqdrUy9Q7Rd9CDPPGX
+7J5O5w7rLfSEHMRr8E6YaRtnDprVP3eLOKBriQQpfjRhcK9jv5CDjAHk7xkD80ya
+k6B1k8pWaQ/OMJwCcFpZUyFs6WJZebEieOphbGXuPc81wLt7b8K19MFVXvd5CkuQ
+dLLtdwNv0fjEw5rmGbLostKvW2b5QohkqRQDIip3VbK1mg9yKV/oqyvZtS0/YNob
+gyqdI4GTzAwqayM+M28tQuaB/oAAqDNjTRHefPmNzGfbO2Ls8/nL1s3div+ckh0z
+YEb0wKj23EjR2CslSYJWmkpG71w+sMdQ+ViPaxDCiD2r4plk7GLEQG0tpHr/Amgf
+FnpJsNRtyaxdDdOsV2GCj9Y+n8k3M8S9z7FSszCqboDvIMvDx2kcnbKPqA3aPAiM
+c5rb6iIwggiTqCxF1qBZbg7LGMZK4V19/5+Ifjg2+nKtlfepyvky9Hmka5SHp0Ep
+dHJj1sZiW4qBy3mDfiqMyLaNR/NFq5z4XrwOBmT47ThjuV/SfUsGOeF1ZHapnDOi
+gQcnZjkxafVeMvWCVTiyZBg4V38Daxp4hQJx37WyPFgWQr/1GA8gyK9bOH4bjz8R
+9IpWzOlAhFgTRCGodl1GFD298gUSPv7CzGIpIIiURZpEHbdzFP8=
+=jdlM
+-----END PGP SIGNATURE-----
+
+--of7hfoh4fqko6jig--
