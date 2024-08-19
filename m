@@ -1,83 +1,74 @@
-Received: from phobos.denx.de (phobos.denx.de [85.214.62.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4EC2142900
-	for <brcm80211@lists.linux.dev>; Mon, 19 Aug 2024 11:24:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.214.62.61
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DC1E15F336;
+	Mon, 19 Aug 2024 14:36:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724066675; cv=none; b=al0jvYyxvdmiXzmd4ILj/4pyFaifFWjlVgSc1lBdgSePrOmXhGL5wHo0/Jtb3CT/xiHzXeEY1a4jBL+d6dWVyAQs18gtgkX9eBuofVCFvpiP/UuN3WXyPouthl/4ECT8I6DxpNTv3uMh8i3VitVj+u39zku5ZZLMpKcKtfxb9/k=
+	t=1724078164; cv=none; b=ts136+Y7qDNZfd1Woz2Ix/6/QXVgesYW1Xk5X3XBlryKXeP5i5o60CeVhLrua37NpyhHtly0A4pcwroE88H8yslYESAyc6GstQ7xkP8TiF71ysdaUxgLkuTkaiVrN5COIX7QHuSESuQvOpQls+QYF1f7dWxySamRW769Z0C6xCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724066675; c=relaxed/simple;
-	bh=07MBuIxs6/LBQhgoQiz21L1NSCc20DOXsCTb3zK8D98=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dzkY6VHXaBzjh5y4un/8/Kfc3Ai05tsbuexD4qLCThNAveP4oa99eQ7mvAp4Rb3TBv88SHx9jdQAxehwFuHoz5Saavg+gqpLJvAblQytdT7mge3K0O0tuCkVTIujh934zaTO6nB+PJB8ut5uGc7OyhqR9WQn9jvQQHBMCeMys7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de; spf=pass smtp.mailfrom=denx.de; dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b=rjoTLjh9; arc=none smtp.client-ip=85.214.62.61
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=denx.de
+	s=arc-20240116; t=1724078164; c=relaxed/simple;
+	bh=lOhVDAbDSbamnoXSZGytjq4rcSZI6pRdUdlaop0BxTk=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=bVj+a0Bmxo06xRUWcwdKjDKIDgs5JMJjR8rZa0gVQ+i1TN7sG8CU5/GDaUEM2iaQFXgtH+wC4mHDbdyinVYh/TxQwtNzH8uiu+KupqMZChUBcX6wKuvFhOArhUXcrTnx2RHQ5TNkoKWZzlijo0SuPFbiEPFDJNv1Nnjib6X38Q0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KhTYBgDz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b="rjoTLjh9"
-Received: from [127.0.0.1] (p578adb1c.dip0.t-ipconnect.de [87.138.219.28])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
-	(No client certificate requested)
-	(Authenticated sender: marex@denx.de)
-	by phobos.denx.de (Postfix) with ESMTPSA id 1E2C988744;
-	Mon, 19 Aug 2024 13:24:29 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de;
-	s=phobos-20191101; t=1724066671;
-	bh=AM2+cgjvNwBJieFm20b0iY2p/mYLOAeVO/RempMOqT8=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=rjoTLjh9Wx4UEWM1r+6qnw4p49PkTcXsH+Hgw2hdO8Z8EhfHCn7MPWHf71JXbm7ZU
-	 a/m25WUbT3g0aFrajjeCiXVmwiFuDqf1FQjkPmYcujsXHVNo++v4ivI9V+6rFUwgNG
-	 TMfQvtlaZ2JzWPEhH/s7Q7AWUnQ+Emmt5xiSyc2QlMk1IgGENswD3yjsYkJ6SwyQFd
-	 D7DWiNRoGaHWu0esmOXiAxJzTwD5Zq3PniF8pr3HJY4SProbsYJG/Jn3BfXsrO+w7D
-	 Au9b3hyBAbOPv7GloX7jaEl8GJcEFYoX3prdXYKhhRmsJtwtvMRcJqoiYKKEMxHFmK
-	 ywELl0Gy3/Tyg==
-Message-ID: <55eb179d-0b8e-45cc-9389-7776b3822855@denx.de>
-Date: Mon, 19 Aug 2024 13:15:29 +0200
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KhTYBgDz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A29CBC32782;
+	Mon, 19 Aug 2024 14:35:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1724078163;
+	bh=lOhVDAbDSbamnoXSZGytjq4rcSZI6pRdUdlaop0BxTk=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+	b=KhTYBgDzbrSs4l90WaKYic8RY5F/Sgy9acPi/QyNOGe2IQ3d9n8njIK3DyIcmba1M
+	 iqWIBUv/iX0fso0CTOCpCBaModyf7xgwX1/cNxRe4HGgjqhq81NErlcWK3iK9pU+m8
+	 rOZ0SlLCb0PVyngp5Evf/ec24bN4pAUSssXMci9OaYN5M5GrMQ/Yl3VrBIPq4107s6
+	 OB82u33Ww15nLnNPXfRpB6lnGtlqCPcILDgHBDCJh5i1GchXlJ5/o4om8sQ73Pn+4I
+	 neo5LeaH5QHjBWqQmHsxmK/9+41ZoCfYkXQ293uMYKWavdyjOD5K9F5elt4CteT88a
+	 cAQzMhz1Eub+w==
+From: Kalle Valo <kvalo@kernel.org>
+To: Marek Vasut <marex@denx.de>
+Cc: linux-wireless@vger.kernel.org,  Chung-Hsien Hsu
+ <stanley.hsu@cypress.com>,  Chung-Hsien Hsu
+ <chung-hsien.hsu@infineon.com>,  "Dr. David Alan Gilbert"
+ <linux@treblig.org>,  "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+  =?utf-8?Q?Rafa=C5=82_Mi=C5=82ecki?= <zajec5@gmail.com>,  Arend van Spriel
+ <arend.vanspriel@broadcom.com>,  Bjorn Helgaas <bhelgaas@google.com>,
+  Carter Chen <carter.chen@infineon.com>,  Duoming Zhou
+ <duoming@zju.edu.cn>,  Erick Archer <erick.archer@outlook.com>,  Kees Cook
+ <kees@kernel.org>,  Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+  Mathias Krause <minipli@grsecurity.net>,  Matthias Brugger
+ <mbrugger@suse.com>,  Owen Huang <Owen.Huang@infineon.com>,  Ulf Hansson
+ <ulf.hansson@linaro.org>,  brcm80211-dev-list.pdl@broadcom.com,
+  brcm80211@lists.linux.dev
+Subject: Re: [PATCH 1/2] wifi: brcmfmac: add support for TRX firmware download
+References: <20240818201533.89669-1-marex@denx.de>
+Date: Mon, 19 Aug 2024 17:35:57 +0300
+In-Reply-To: <20240818201533.89669-1-marex@denx.de> (Marek Vasut's message of
+	"Sun, 18 Aug 2024 22:12:25 +0200")
+Message-ID: <871q2ky3zm.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] wifi: brcmfmac: add support for TRX firmware download
-To: Ping-Ke Shih <pkshih@realtek.com>,
- "linux-wireless@vger.kernel.org" <linux-wireless@vger.kernel.org>
-Cc: Chung-Hsien Hsu <stanley.hsu@cypress.com>,
- Chung-Hsien Hsu <chung-hsien.hsu@infineon.com>,
- "Dr. David Alan Gilbert" <linux@treblig.org>,
- "Gustavo A. R. Silva" <gustavoars@kernel.org>,
- =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>,
- Arend van Spriel <arend.vanspriel@broadcom.com>,
- Bjorn Helgaas <bhelgaas@google.com>, Carter Chen <carter.chen@infineon.com>,
- Duoming Zhou <duoming@zju.edu.cn>, Erick Archer <erick.archer@outlook.com>,
- Kalle Valo <kvalo@kernel.org>, Kees Cook <kees@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Mathias Krause <minipli@grsecurity.net>, Matthias Brugger
- <mbrugger@suse.com>, Owen Huang <Owen.Huang@infineon.com>,
- Ulf Hansson <ulf.hansson@linaro.org>,
- "brcm80211-dev-list.pdl@broadcom.com" <brcm80211-dev-list.pdl@broadcom.com>,
- "brcm80211@lists.linux.dev" <brcm80211@lists.linux.dev>
-References: <20240818201533.89669-1-marex@denx.de>
- <582df73b7004435f8f0144cbfb1cd3f0@realtek.com>
-Content-Language: en-US
-From: Marek Vasut <marex@denx.de>
-In-Reply-To: <582df73b7004435f8f0144cbfb1cd3f0@realtek.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: clamav-milter 0.103.8 at phobos.denx.de
-X-Virus-Status: Clean
+Content-Type: text/plain
 
-On 8/19/24 5:08 AM, Ping-Ke Shih wrote:
-> Marek Vasut <marex@denx.de>
->> From: Chung-Hsien Hsu <stanley.hsu@cypress.com>
->>
->> Add support to download TRX firmware for PCIe and SDIO.
->>
->> Signed-off-by: Chung-Hsien Hsu <chung-hsien.hsu@infineon.com>
-> 
-> The email address of From field (author) is different from first s-o-b.
+Marek Vasut <marex@denx.de> writes:
 
-It seems this is a result of cypress being assimilated into infineon, it 
-seems like it is still the same person though.
+> From: Chung-Hsien Hsu <stanley.hsu@cypress.com>
+>
+> Add support to download TRX firmware for PCIe and SDIO.
+>
+> Signed-off-by: Chung-Hsien Hsu <chung-hsien.hsu@infineon.com>
+> Signed-off-by: Marek Vasut <marex@denx.de> # Upport to current linux-next
+
+The commit message should answer to the question 'Why?'. What's TRX
+firmware and why do we need it?
+
+-- 
+https://patchwork.kernel.org/project/linux-wireless/list/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
