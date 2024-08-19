@@ -1,59 +1,57 @@
-Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 275461CAAF
-	for <brcm80211@lists.linux.dev>; Mon, 19 Aug 2024 18:09:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A88B51D54CA
+	for <brcm80211@lists.linux.dev>; Mon, 19 Aug 2024 19:35:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724091000; cv=none; b=rtIsM3lXVM2AqMsVhQE55fOb63xcF+mgksa/2iVmY+QlUV1TcIYmc6r+6+mLT2JaV0vyXoS+fNlWP86tR1KfLyfCAy0atf0Ds4Jje5TJ439Et9bfXZvVEP1QwufGb7if54GEwi/w9ii+pURSbUDH4tiJtEIBYjdpyXiLEBKGY0o=
+	t=1724096118; cv=none; b=NV9/1tSKhz1SAu8XJRbGpuavT1FR6RFcOBZJ55nE6XbXvE5D4HYs2an4MM3PmXlqVp5bcqIy+f914ExrsEt4Jr1y2vcAqK9TUVDMZ3UKlLaF/vqkq0xK9o5+x/WqNQf8KdUOosgRZ1YTmOzA/R3JKgygilfTYdC+FdFGZKo+xlM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724091000; c=relaxed/simple;
-	bh=63+2QdlkyCN9L4q2CWGrCg16BE2JGVrtWcOW4JVfiag=;
+	s=arc-20240116; t=1724096118; c=relaxed/simple;
+	bh=QVO8dQKuFoGTBgkLNEPkI6tkWY3oyBUFbQkqyAFCosI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XiJUGb2+fn2r/hzCqWkdeKdFoK/6l7tYOoN+F1VhBNayDwyXrTV1fwol7GgoUItJrQjqYavgr7KYzBgef7um/55g2TOdm6FBy+WagbOEZzR7ClCtzIdDPhUbpbc1dZjnaEg4RL2NFn9pAdWuZ7B/hxm5ijEVrII7Ghoc5lyMD30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eWoo3kn2; arc=none smtp.client-ip=209.85.160.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 In-Reply-To:Content-Type; b=S8l7TWJy8Vix/fAQOh5VTkFaI7AQnJlPlY3RNkkv3t1QtOsggZQFoR796xlIhG99b51ZVBnKTG2dE5kwJ77LBQI6CtPMluDztyCqcsXgfGC/lq2Sb1aT9wAD2EeFsPmTIhzVL8l7UDtf63HZqU6/hOiHAPPVdI8Il2GYJJa5uLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=RojJX26D; arc=none smtp.client-ip=209.85.221.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eWoo3kn2"
-Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-44fdcd7a622so24961621cf.0
-        for <brcm80211@lists.linux.dev>; Mon, 19 Aug 2024 11:09:58 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="RojJX26D"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-3718ca50fd7so2839719f8f.1
+        for <brcm80211@lists.linux.dev>; Mon, 19 Aug 2024 12:35:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724090998; x=1724695798; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=J0LwJQr3msiysrr5pQWOHrBaffwI03B4P+ZJn5xGSP4=;
-        b=eWoo3kn2hMgIc1lLiDAntVfuJ9kteTIMokya+zREefX4WC/erGTQWGoVXbbV9UqcOU
-         +M9W9t2ndxdZdDkO2g4vwuybTK3WOe6tAqYtFiPGkmx4rUbjYAXZIrWlQSCnKv5QtPy6
-         /e07qWXOY0nHGa2J14CAbLDs/0kO7tWXjDBoa24WEwsuWYnfjgEAGZ6oGKXUa2s9hI4+
-         3hkMSOvwEJAhovWMCy+qskmBhUjTQMlq9QK6jdngtP7qcbq5eZFMZkVnj+D6ZxTDJe8y
-         7E/ap3A1CVw7tkr9ag6mi+eMP32VsL2luiRic6zQ3xx8uag0QOGtWMrXhCnVyE0SNGW9
-         YTOw==
+        d=broadcom.com; s=google; t=1724096115; x=1724700915; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=q/8oU2DQN2VtroQHSmbqD7g4h/fFT45vHUDpJEOX9KQ=;
+        b=RojJX26DnYy91Sp9/9nflpGGzrdlxzTTAzHdprsesl+KvteV2gH37I7iN4VLcvLwBA
+         XPLVGYV1dW09yRXrP8i5QwHPhyH92GEYkr8lUUA88/lMnEfP9no/1pcN93xzgJgfvkYg
+         OnsM5mMZOJpoCEWG9EvzAu7nCrbE0wO5rjUhE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724090998; x=1724695798;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=J0LwJQr3msiysrr5pQWOHrBaffwI03B4P+ZJn5xGSP4=;
-        b=nTeyHkyDS+l1QX3/HvnNfolctvnnHpcoqMH6cpKzAMlR1xLS0rSw+8tA0c9Wp0K0SM
-         voTrqiDcCmP2lB/0CdE7/VLMjKTg03ZEztG8s3GFgpU0jovYYFzxUZZdMcQ0gCfLJMP+
-         0f/Ux1+sKMqghsCc9sUKnkN9XT/7Ml5PbU3U1v+zr3Fv0nTeXIN+IDQcrVFYllvxivM9
-         eswo5/GXu0TO4TKrlEybdhAWd/3Lv+LkI2mJrqowQgfeEOetioKk2BJHVTSY2XaX6of/
-         emRivel00vdCSn+76+c2Z+uYClkdh5id1CtPYA5/kHk+qyzyk52AdTmrkYWg+2B4ZgtH
-         629A==
-X-Forwarded-Encrypted: i=1; AJvYcCUixLq5qA5vkGatRaef0tsH/fUFDcFqdRW+vltcJcTE29DqIpN/IBZA3+q8V1XuXgmw+lKpbLNHIV+k+M6uc6XI2kLLIh+13xCF
-X-Gm-Message-State: AOJu0Yx6cCY6tu8fqh67zADR3XWRU0hPnrFwnpoJwRP9lLkCNDy0umiR
-	5BaK9XprfBabH1ZNiIvJZ/1pNnfvwyrGIReQPZkRLL63xFR+a322
-X-Google-Smtp-Source: AGHT+IH3+QlTCvvPI2bIAaqp1+Yqeb33oJ1jrQ7ZGCg2XGiyOZJlCc77gjXxJdooZTP+muRDaCc+cA==
-X-Received: by 2002:a05:622a:5913:b0:453:17f1:eb8b with SMTP id d75a77b69052e-453743a96a9mr155808021cf.43.1724090997863;
-        Mon, 19 Aug 2024 11:09:57 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id d75a77b69052e-45369fd9e9bsm42344461cf.13.2024.08.19.11.09.54
+        d=1e100.net; s=20230601; t=1724096115; x=1724700915;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=q/8oU2DQN2VtroQHSmbqD7g4h/fFT45vHUDpJEOX9KQ=;
+        b=urag/JFKaX/V51jgpVmAuM1qs5tFQwPeH5AyHjgj4J3f/sG4KIkYoPMkhcdfzvX+Jk
+         SCvUXGv+9UkSGFQO1wmjZeeTB9QmCsq02pqpVxYI6uRYBdjdxoRCiPSCvNWuSE/MVHkE
+         rhxKbh4TgFv8f1/O9bG33pfRphSD5R7R+OiKao2W2qt5ZUDFRdI13C9n18vURIgILDqx
+         UUrgTQIEr/vlZD9eo1q6l0pRLecKHHdhKxhjrqcjtNV8L8jRgwY1xQL/MMKI4x1HjsfK
+         4MJEZajTRJq1p3sOfcGfjD6RGGRYACiD/oI3gcDocKfEex4ffPiML+owl+ou60UmmY9X
+         jB8Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVeZN2bOIhPT9sdRUO518H2DLQS5BcaJ2XeHnF6fnOkDyPDRRDWySueicyEDaJMj0iVVnIdOINpR4g=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzGc6vBu8b3bwxqhAWnWEgVZDnOFH1BuhDDIOC8DcKBJLhphG2U
+	WlkrzEY6tvBfx8UzR8ydShnoR4l1J8ntle6dkjRbTQKJc2Bi75/NHfn0/RDKZQ==
+X-Google-Smtp-Source: AGHT+IFxDHrCxmqP1sMvx6+E1BvkJ9ai7PXpym4xREMRt7wpAQAA5ZQvLnWAv6zgJIz2EMN/kCjUFQ==
+X-Received: by 2002:adf:e78b:0:b0:371:885f:73a with SMTP id ffacd0b85a97d-37194695bf8mr7231281f8f.58.1724096114326;
+        Mon, 19 Aug 2024 12:35:14 -0700 (PDT)
+Received: from [192.168.178.137] (f215227.upc-f.chello.nl. [80.56.215.227])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a83838c6af1sm668200566b.45.2024.08.19.12.35.13
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 19 Aug 2024 11:09:56 -0700 (PDT)
-Message-ID: <b04c01e5-3e60-4b0b-8984-9d6e0782f5af@gmail.com>
-Date: Mon, 19 Aug 2024 11:09:50 -0700
+        Mon, 19 Aug 2024 12:35:13 -0700 (PDT)
+Message-ID: <67d67f15-4631-44ba-bc05-c8da6a1af1bf@broadcom.com>
+Date: Mon, 19 Aug 2024 21:35:12 +0200
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -61,70 +59,167 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] wifi: brcmfmac: add support for TRX firmware download
-To: Marek Vasut <marex@denx.de>,
- Arend Van Spriel <arend.vanspriel@broadcom.com>,
- Kalle Valo <kvalo@kernel.org>
-Cc: linux-wireless@vger.kernel.org, Chung-Hsien Hsu
- <stanley.hsu@cypress.com>, Chung-Hsien Hsu <chung-hsien.hsu@infineon.com>,
- "Dr. David Alan Gilbert" <linux@treblig.org>,
- "Gustavo A. R. Silva" <gustavoars@kernel.org>,
- =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>,
- Bjorn Helgaas <bhelgaas@google.com>, Carter Chen <carter.chen@infineon.com>,
- Duoming Zhou <duoming@zju.edu.cn>, Erick Archer <erick.archer@outlook.com>,
- Kees Cook <kees@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Mathias Krause <minipli@grsecurity.net>, Matthias Brugger
- <mbrugger@suse.com>, Owen Huang <Owen.Huang@infineon.com>,
- Ulf Hansson <ulf.hansson@linaro.org>, brcm80211-dev-list.pdl@broadcom.com,
- brcm80211@lists.linux.dev
-References: <20240818201533.89669-1-marex@denx.de> <871q2ky3zm.fsf@kernel.org>
- <1916b572558.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
- <c95f64f1-3ebb-41ca-a935-51c1efa1256a@denx.de>
+Subject: Re: [PATCH v11 0/4] Add AP6275P wireless support
+To: Sebastian Reichel <sebastian.reichel@collabora.com>,
+ jacobe.zang@wesion.com
+Cc: bhelgaas@google.com, brcm80211-dev-list.pdl@broadcom.com,
+ brcm80211@lists.linux.dev, christophe.jaillet@wanadoo.fr,
+ conor+dt@kernel.org, davem@davemloft.net, devicetree@vger.kernel.org,
+ duoming@zju.edu.cn, edumazet@google.com, gregkh@linuxfoundation.org,
+ krzk+dt@kernel.org, kuba@kernel.org, kvalo@kernel.org,
+ linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org, megi@xff.cz,
+ minipli@grsecurity.net, netdev@vger.kernel.org, pabeni@redhat.com,
+ robh@kernel.org, saikrishnag@marvell.com, stern@rowland.harvard.edu,
+ yajun.deng@linux.dev
+References: <uzmj5w6byisfguatjyy2ibo6zbn7w52bg2abgf7egych7usv6j@ec4xdmaofach>
 Content-Language: en-US
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <c95f64f1-3ebb-41ca-a935-51c1efa1256a@denx.de>
+From: Arend van Spriel <arend.vanspriel@broadcom.com>
+Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
+ 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
+In-Reply-To: <uzmj5w6byisfguatjyy2ibo6zbn7w52bg2abgf7egych7usv6j@ec4xdmaofach>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 8/19/24 09:17, Marek Vasut wrote:
-> On 8/19/24 5:52 PM, Arend Van Spriel wrote:
-> 
+
+
+On 8/19/2024 6:42 PM, Sebastian Reichel wrote:
 > Hi,
 > 
->>>> Add support to download TRX firmware for PCIe and SDIO.
->>>>
->>>> Signed-off-by: Chung-Hsien Hsu <chung-hsien.hsu@infineon.com>
->>>> Signed-off-by: Marek Vasut <marex@denx.de> # Upport to current 
->>>> linux-next
->>>
->>> The commit message should answer to the question 'Why?'. What's TRX
->>> firmware and why do we need it?
->>
->> I looked over the patches, but did not sit down to comment on this.
+> I tested this on RK3588 EVB1 and the driver is working fine. The DT
+> bindings are not correct, though:
 > 
-> Thanks, it is real nice that someone who is actually familiar with the 
-> hardware jumped in. I only upported the patches from infineon downstream.
+> linux/arch/arm64/boot/dts/rockchip/rk3588-evb1-v10.dtb: wifi@0,0:
+> compatible: 'oneOf' conditional failed, one must be fixed:
 > 
->> The TRX firmware format allows multiple images and possibly 
->> compression. Not sure if Infineon is using all this functionality. 
->> This is probably needed for 55572 device support (patch 2/2). Turns 
->> out this device has a bootloader that the driver has to talk with and 
->> that is probably where this TRX support comes from. Not something I 
->> considered to happen for SDIO and PCIe devices. There is always a 
->> puzzle to solve ;-)
->>
->> Also noticed a random seed is provided to firmware. This already there 
->> for apple chips so it should be looked at whether that code can be 
->> shared. I will follow up.
+> ['pci14e4,449d', 'brcm,bcm4329-fmac'] is too long
+> 'pci14e4,449d' is not one of ['brcm,bcm43143-fmac', 'brcm,bcm4341b0-fmac',
+> 'brcm,bcm4341b4-fmac', 'brcm,bcm4341b5-fmac', 'brcm,bcm4329-fmac',
+> 'brcm,bcm4330-fmac', 'brcm,bcm4334-fmac', 'brcm,bcm43340-fmac',
+> 'brcm,bcm4335-fmac', 'brcm,bcm43362-fmac', 'brcm,bcm4339-fmac',
+> 'brcm,bcm43430a0-fmac', 'brcm,bcm43430a1-fmac', 'brcm,bcm43455-fmac',
+> 'brcm,bcm43456-fmac', 'brcm,bcm4354-fmac', 'brcm,bcm4356-fmac',
+> 'brcm,bcm4359-fmac', 'brcm,bcm4366-fmac', 'cypress,cyw4373-fmac',
+> 'cypress,cyw43012-fmac', 'infineon,cyw43439-fmac']
+> from schema $id: http://devicetree.org/schemas/net/wireless/brcm,bcm4329-fmac.yaml#
 > 
-> I did notice just now there is some TRX support for USB broadcom devices ?
-> 
+> It's easy to see the problem in the binding. It does not expect a
+> fallback string after the PCI ID based compatible. Either the
+> pci14e4,449d entry must be added to the first enum in the binding,
+> which has the fallback compatible, or the fallback compatible
+> should not be added to DTS.
 
-TRX is a format that is also used for partitioning flash devices, so 
-there is probably some room for making a common header:
+Never understood why we ended up with such a large list. When the 
+binding was introduced there was one compatible, ie. brcm,bcm4329-fmac. 
+People wanted all the other flavors because it described a specific wifi 
+chip and no other reason whatsoever. The PCI ID based compatible do 
+obfuscate that info so those are even less useful in my opinion.
 
-./Documentation/devicetree/bindings/mtd/partitions/brcm,trx.txt/drivers/mtd/parsers/parser_trx.c
--- 
-Florian
+> If the fallback compatible is missing in DTS, the compatible check in
+> brcmf_of_probe() fails and the lpo clock is not requested resulting
+> in the firmware startup failing. So that would require further
+> driver changes.
 
+Right. The text based bindings file in 5.12 kernel clearly says:
+
+Required properties:
+
+  - compatible : Should be "brcm,bcm4329-fmac".
+
+In 5.13 kernel this was replaced by the json-schema yaml file. The PCI 
+ID based enum which was added later does also list brcm,bcm4329-fmac so 
+why does that not work for the compatible list ['pci14e4,449d', 
+'brcm,bcm4329-fmac']? Looking at the compatible property in yaml which I 
+stripped a bit for brevity:
+
+properties:
+   compatible:
+     oneOf:
+       - items:
+           - enum:
+               - brcm,bcm43143-fmac
+               - brcm,bcm4329-fmac
+               - infineon,cyw43439-fmac
+           - const: brcm,bcm4329-fmac
+       - enum:
+           - brcm,bcm4329-fmac
+           - pci14e4,43dc  # BCM4355
+           - pci14e4,4464  # BCM4364
+           - pci14e4,4488  # BCM4377
+           - pci14e4,4425  # BCM4378
+           - pci14e4,4433  # BCM4387
+
+So how should I read this. Searching for some sort of syntax description 
+I found [1] which has an example schema with description that has a 
+similarly complicated compatible property. From that I think the above 
+should be changed to:
+
+  properties:
+    compatible:
+      oneOf:
+        - items:
+            - enum:
+                - brcm,bcm43143-fmac
+-              - brcm,bcm4329-fmac
+                - infineon,cyw43439-fmac
+            - const: brcm,bcm4329-fmac
++      - items:
+            - enum:
+-              - brcm,bcm4329-fmac
+                - pci14e4,43dc  # BCM4355
+                - pci14e4,4464  # BCM4364
+                - pci14e4,4488  # BCM4377
+                - pci14e4,4425  # BCM4378
+                - pci14e4,4433  # BCM4387
++          - const: brcm,bcm4329-fmac
++      - const: brcm,bcm4329-fmac
+
+This poses a constraint in which the last string in the compatible list 
+is always 'brcm,bcm4329-fmac' even if it is the only string. At least 
+that is my understanding so if my understanding is wrong feel free to 
+correct me on this.
+
+[1] https://docs.kernel.org/devicetree/bindings/writing-schema.html
+> Greetings,
+> 
+> -- Sebastian
