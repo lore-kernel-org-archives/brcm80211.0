@@ -1,101 +1,90 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from phobos.denx.de (phobos.denx.de [85.214.62.61])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C2AC16DEDF;
-	Thu, 22 Aug 2024 08:59:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 565B81CC89B
+	for <brcm80211@lists.linux.dev>; Thu, 22 Aug 2024 15:24:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.214.62.61
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724317190; cv=none; b=k9qvAHrr11U238p9CdBXg+TEc7Ad0Hi2ba4XA3vW4wBqBBFnp4Qph60/Uw2uwegyyzyIV3CUYHY15iHvzr2VIJAguxGT/TIPd60XfL0zrXe3/qr294yff0EX1fIw/DkZhR3KarruszcwBkGVUSgnLI+tWByTdvCsF3gh/8UoNxU=
+	t=1724340258; cv=none; b=fVqKsF1vE15kv/3bzfbu4iHcgLGUFvDzYwmoP9cWcW4htzgCN434gutKP3Wx+7hdZA2i+ybsWT8R9zccEh0eEhZdIIPVXBWQwULexiiF5V4YM6iGbE1g39fehqa4xF8e+k7LGZGDzDLIUn+c6yt5D4A2Q/H9ySpQMS4hK0AJ8O0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724317190; c=relaxed/simple;
-	bh=6fPHVZW9Wl5MBlZ31WLLPB+2/SdWlcpVd1n5Ao7R3D0=;
-	h=Content-Type:MIME-Version:Subject:From:In-Reply-To:References:To:
-	 Cc:Message-ID:Date; b=ShsQ2CP2/vfGVZFamh6mSq3EAZFghh9Vkze30c6R36cgemeTANZcOhQslVWS1uB2dhuwph2LKCjM3col4Rg3hNO52RjcXEY36C/OEssF2HSAVm9BMJwMzn11eCSuyQ/nmreFupKMnhZ8zHiV5//bTASmCQY6+d73YvmOnU89l0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mtGcUdh3; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1724340258; c=relaxed/simple;
+	bh=ifbdnDJW70+jw6bx/lsmpC2xoyRoOWyXmUWG0zvUBxg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ssLz2bmf+ujaoMuG60jZqxYLS8tLkg0ljIyhMZrs4bgMh937eeJ/ZxMJp1Kv4wEYjK9C0Q5Q2OSwnCQlQLsFQVEx16OW3kTjAVW+2FumcEMFCz3kQpRSDkp+2tiP4an/8i6VkZftuqCD8RdW0nglNBr/RJbrdxf1jdE8xAYD/+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de; spf=pass smtp.mailfrom=denx.de; dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b=BvI3y5kh; arc=none smtp.client-ip=85.214.62.61
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=denx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mtGcUdh3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F545C4AF09;
-	Thu, 22 Aug 2024 08:59:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724317189;
-	bh=6fPHVZW9Wl5MBlZ31WLLPB+2/SdWlcpVd1n5Ao7R3D0=;
-	h=Subject:From:In-Reply-To:References:To:Cc:Date:From;
-	b=mtGcUdh3FeNAFmY6+9OYrE0l+cei2CTF7LHHhtjK2eR6jjh7Vcdi8g8MlRpb41CN7
-	 cZrtrKMsces6P865auobuLLB3sKlPdnGtM7MOcRWOGVfLwJjN+utXCOyNTNfbzjDb5
-	 HWm2fSHa7xy8YTOzNp9gqJPYplbc1Qcv7lgbPTAIeH+lZVZZ9LcWspbpXFl0jocSM6
-	 XzGQzkhMEGUTaB69+6zKn8aqtNdqSy3vGgQrxSgymZtGRB+vBWynMxJ8JyF2rtIz9w
-	 OU7up2fvbfWC5aXFYoFdUaNEpTtsMZWmNK6SE0fE7jzdwoM1bduonK8/l7Xle/7/ka
-	 Rj13DObKI6uAQ==
-Content-Type: text/plain; charset="utf-8"
+	dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b="BvI3y5kh"
+Received: from [127.0.0.1] (p578adb1c.dip0.t-ipconnect.de [87.138.219.28])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+	(No client certificate requested)
+	(Authenticated sender: marex@denx.de)
+	by phobos.denx.de (Postfix) with ESMTPSA id 39D4A88B23;
+	Thu, 22 Aug 2024 17:24:07 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de;
+	s=phobos-20191101; t=1724340249;
+	bh=RACoWArEhJL9Q0Mv0jj8WLbXpHtBHRU+ZVaHNzkMKu8=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=BvI3y5khqEftd8/OwffBZxNrngIrxyTPwhEtkkoC8kn+RYjslzyftP+Mbzl+3RVaG
+	 mqnXNyR28Rvp3LyMYK4og3bRUvRL/+6Cn0kBpJTuKhaskKqvc/KrWpYK1AjHuVA9Ek
+	 q5lAzp6RNRRYOYdLoo12iDvCxm39IllNpMFZiTm0PJZEkHBOde84urAZ7ZbCsLJUhw
+	 5he1aY0u2dnu1ijN5XJg9PXW0bG6ZPiKIp7gq8o7j30HLK4Xii5fTeq05Egs+eiFpQ
+	 k37u1IedS/83mIpzSZhKVOCIpv4YMwS41U9nIFpvhqO6nNBwJo1cpndmZDxg0uHk/b
+	 U92FocWwiUW3g==
+Message-ID: <6129cf7b-59bb-440f-a277-69af63168e87@denx.de>
+Date: Thu, 22 Aug 2024 17:15:18 +0200
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] wifi: brcmfmac: add support for TRX firmware download
+To: Kalle Valo <kvalo@kernel.org>
+Cc: linux-wireless@vger.kernel.org, Chung-Hsien Hsu
+ <stanley.hsu@cypress.com>, Chung-Hsien Hsu <chung-hsien.hsu@infineon.com>,
+ "Dr. David Alan Gilbert" <linux@treblig.org>,
+ "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+ =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>,
+ Arend van Spriel <arend.vanspriel@broadcom.com>,
+ Bjorn Helgaas <bhelgaas@google.com>, Carter Chen <carter.chen@infineon.com>,
+ Duoming Zhou <duoming@zju.edu.cn>, Erick Archer <erick.archer@outlook.com>,
+ Kees Cook <kees@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Mathias Krause <minipli@grsecurity.net>, Matthias Brugger
+ <mbrugger@suse.com>, Owen Huang <Owen.Huang@infineon.com>,
+ Ulf Hansson <ulf.hansson@linaro.org>, brcm80211-dev-list.pdl@broadcom.com,
+ brcm80211@lists.linux.dev
+References: <20240818201533.89669-1-marex@denx.de>
+ <172431581868.2154344.15348672155352447310.kvalo@kernel.org>
+Content-Language: en-US
+From: Marek Vasut <marex@denx.de>
+In-Reply-To: <172431581868.2154344.15348672155352447310.kvalo@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH v11 1/4] dt-bindings: net: wireless: brcm4329-fmac: add
- pci14e4,449d
-From: Kalle Valo <kvalo@kernel.org>
-In-Reply-To: <20240816020635.1273911-2-jacobe.zang@wesion.com>
-References: <20240816020635.1273911-2-jacobe.zang@wesion.com>
-To: Jacobe Zang <jacobe.zang@wesion.com>
-Cc: arend.vanspriel@broadcom.com, davem@davemloft.net, edumazet@google.com,
- kuba@kernel.org, pabeni@redhat.com, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, saikrishnag@marvell.com, megi@xff.cz,
- bhelgaas@google.com, duoming@zju.edu.cn, minipli@grsecurity.net,
- yajun.deng@linux.dev, stern@rowland.harvard.edu, gregkh@linuxfoundation.org,
- christophe.jaillet@wanadoo.fr, linux-wireless@vger.kernel.org,
- netdev@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, brcm80211@lists.linux.dev,
- brcm80211-dev-list.pdl@broadcom.com, Jacobe Zang <jacobe.zang@wesion.com>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-User-Agent: pwcli/0.1.1-git (https://github.com/kvalo/pwcli/) Python/3.11.2
-Message-ID: <172431718274.2217900.9766315386587933045.kvalo@kernel.org>
-Date: Thu, 22 Aug 2024 08:59:44 +0000 (UTC)
+X-Virus-Scanned: clamav-milter 0.103.8 at phobos.denx.de
+X-Virus-Status: Clean
 
-Jacobe Zang <jacobe.zang@wesion.com> wrote:
-
-> It's the device id used by AP6275P which is the Wi-Fi module
-> used by Rockchip's RK3588 evaluation board and also used in
-> some other RK3588 boards.
+On 8/22/24 10:37 AM, Kalle Valo wrote:
+> Marek Vasut <marex@denx.de> wrote:
 > 
-> Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Jacobe Zang <jacobe.zang@wesion.com>
+>> From: Chung-Hsien Hsu <stanley.hsu@cypress.com>
+>>
+>> Add support to download TRX firmware for PCIe and SDIO.
+>>
+>> Signed-off-by: Chung-Hsien Hsu <chung-hsien.hsu@infineon.com>
+>> Signed-off-by: Marek Vasut <marex@denx.de> # Upport to current linux-next
+> 
+> Please fix the review comments, also Ping's comment that from and s-o-b
+> needs to match.
 
-Fails to apply, please rebase on top of wireless-next.
+I have most of the changes addressed locally already.
 
-Recorded preimage for 'drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c'
-Recorded preimage for 'drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c'
-error: Failed to merge in the changes.
-hint: Use 'git am --show-current-patch=diff' to see the failed patch
-Applying: wifi: brcmfmac: Add optional lpo clock enable support
-Using index info to reconstruct a base tree...
-M	drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
-M	drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
-M	drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-M	drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-M	drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
-Falling back to patching base and 3-way merge...
-Auto-merging drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
-Auto-merging drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-CONFLICT (content): Merge conflict in drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-Auto-merging drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-Auto-merging drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
-CONFLICT (content): Merge conflict in drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
-Auto-merging drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
-Patch failed at 0001 wifi: brcmfmac: Add optional lpo clock enable support
+Regarding the SoB line, do I update the commit Author email (because 
+that would make more sense, cypress got assimilated into infineon) or 
+the SoB line email to the "old" cypress email address ?
 
-4 patches set to Changes Requested.
-
-13765357 [v11,1/4] dt-bindings: net: wireless: brcm4329-fmac: add pci14e4,449d
-13765358 [v11,2/4] dt-bindings: net: wireless: brcm4329-fmac: add clock description for AP6275P
-13765359 [v11,3/4] wifi: brcmfmac: Add optional lpo clock enable support
-13765360 [v11,4/4] wifi: brcmfmac: add flag for random seed during firmware download
-
--- 
-https://patchwork.kernel.org/project/linux-wireless/patch/20240816020635.1273911-2-jacobe.zang@wesion.com/
-
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
-
+I am still hoping to get a bit more input on the TRX firmware handling 
+from Arend ... or maybe there is no further feedback ?
