@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2776E4CE05;
-	Thu, 22 Aug 2024 08:37:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C2AC16DEDF;
+	Thu, 22 Aug 2024 08:59:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724315825; cv=none; b=U9K69Ais+JONd385tvfXWWNHNju8Y0Ch8mP+Ph0KtgypbJb2wRYoRFBcguhL6s1UeTd4QdfPy2bQVkESMTN/WuCW1qUO6EtjIbe+Iop0uDBC8aPm40aS5V6Ac6Tn7zneeBtP9qvdStKyg95aZ9woU0vDVKfcjD3rsZzPodo5hbY=
+	t=1724317190; cv=none; b=k9qvAHrr11U238p9CdBXg+TEc7Ad0Hi2ba4XA3vW4wBqBBFnp4Qph60/Uw2uwegyyzyIV3CUYHY15iHvzr2VIJAguxGT/TIPd60XfL0zrXe3/qr294yff0EX1fIw/DkZhR3KarruszcwBkGVUSgnLI+tWByTdvCsF3gh/8UoNxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724315825; c=relaxed/simple;
-	bh=WFWK/7hBRq0sgq5LtF/lL7FET0lw7shy9bkyokw1jIE=;
+	s=arc-20240116; t=1724317190; c=relaxed/simple;
+	bh=6fPHVZW9Wl5MBlZ31WLLPB+2/SdWlcpVd1n5Ao7R3D0=;
 	h=Content-Type:MIME-Version:Subject:From:In-Reply-To:References:To:
-	 Cc:Message-ID:Date; b=uG2aT2Fp6QKRT+2OjYO/B39TYfc9r98TZ9/JUNRiSn9ZnheCr3t4pa0G2Td0NuaTrRkqzPXNPhQPBGcAJFz91aI6rKlffxDVd/+OGEmDb3nWeAylKfBxDN/7rDJI6arcUCsKP7O9FLC889prpFKgAHTm4HtOT6NuqHx6bWVzUpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c8seBVz9; arc=none smtp.client-ip=10.30.226.201
+	 Cc:Message-ID:Date; b=ShsQ2CP2/vfGVZFamh6mSq3EAZFghh9Vkze30c6R36cgemeTANZcOhQslVWS1uB2dhuwph2LKCjM3col4Rg3hNO52RjcXEY36C/OEssF2HSAVm9BMJwMzn11eCSuyQ/nmreFupKMnhZ8zHiV5//bTASmCQY6+d73YvmOnU89l0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mtGcUdh3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c8seBVz9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D7E3C4AF0B;
-	Thu, 22 Aug 2024 08:37:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mtGcUdh3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F545C4AF09;
+	Thu, 22 Aug 2024 08:59:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724315824;
-	bh=WFWK/7hBRq0sgq5LtF/lL7FET0lw7shy9bkyokw1jIE=;
+	s=k20201202; t=1724317189;
+	bh=6fPHVZW9Wl5MBlZ31WLLPB+2/SdWlcpVd1n5Ao7R3D0=;
 	h=Subject:From:In-Reply-To:References:To:Cc:Date:From;
-	b=c8seBVz9aP+jB/1G1+A6YAFhBRALZoNAXa/tKULq5dJh/yqodmB3CLCCohRKfN+1I
-	 LB66ZC00TmVH734Wwy54I4r0Hsklv8HGkLnFB04bXkNwEaWSrG/r7gV2vzgGT2qsUE
-	 HK6SGI7O7+9Bb8DYecsLJSPBFNCS3P0jXTGYf2SXvgOKetWjKPl/MPUEWP5ZvC67XY
-	 FRJ6N0JDp3S1sf9yl2w85RVlcY5ejvQcHJwCqe04SVWg4WgbK5Tf9EpKReA4Ecyhcj
-	 RI0cRaDD04XGc4pIv8dkruBcn1Z/5vSyr+TeaM4/G64u22DsQgPMOZRE50Y9kaYu/t
-	 mu8RHejQh+pXQ==
+	b=mtGcUdh3FeNAFmY6+9OYrE0l+cei2CTF7LHHhtjK2eR6jjh7Vcdi8g8MlRpb41CN7
+	 cZrtrKMsces6P865auobuLLB3sKlPdnGtM7MOcRWOGVfLwJjN+utXCOyNTNfbzjDb5
+	 HWm2fSHa7xy8YTOzNp9gqJPYplbc1Qcv7lgbPTAIeH+lZVZZ9LcWspbpXFl0jocSM6
+	 XzGQzkhMEGUTaB69+6zKn8aqtNdqSy3vGgQrxSgymZtGRB+vBWynMxJ8JyF2rtIz9w
+	 OU7up2fvbfWC5aXFYoFdUaNEpTtsMZWmNK6SE0fE7jzdwoM1bduonK8/l7Xle/7/ka
+	 Rj13DObKI6uAQ==
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
@@ -34,48 +34,68 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH 1/2] wifi: brcmfmac: add support for TRX firmware download
+Subject: Re: [PATCH v11 1/4] dt-bindings: net: wireless: brcm4329-fmac: add
+ pci14e4,449d
 From: Kalle Valo <kvalo@kernel.org>
-In-Reply-To: <20240818201533.89669-1-marex@denx.de>
-References: <20240818201533.89669-1-marex@denx.de>
-To: Marek Vasut <marex@denx.de>
-Cc: linux-wireless@vger.kernel.org, Chung-Hsien Hsu <stanley.hsu@cypress.com>,
- Chung-Hsien Hsu <chung-hsien.hsu@infineon.com>, Marek Vasut <marex@denx.de>,
- "Dr. David Alan Gilbert" <linux@treblig.org>,
- "Gustavo A. R. Silva" <gustavoars@kernel.org>, =?utf-8?b?UmFmYcWCIE1pxYJl?=
-	=?utf-8?b?Y2tp?= <zajec5@gmail.com>,
- Arend van Spriel <arend.vanspriel@broadcom.com>,
- Bjorn Helgaas <bhelgaas@google.com>, Carter Chen <carter.chen@infineon.com>,
- Duoming Zhou <duoming@zju.edu.cn>, Erick Archer <erick.archer@outlook.com>,
- Kees Cook <kees@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Mathias Krause <minipli@grsecurity.net>,
- Matthias Brugger <mbrugger@suse.com>, Owen Huang <Owen.Huang@infineon.com>,
- Ulf Hansson <ulf.hansson@linaro.org>, brcm80211-dev-list.pdl@broadcom.com,
- brcm80211@lists.linux.dev
+In-Reply-To: <20240816020635.1273911-2-jacobe.zang@wesion.com>
+References: <20240816020635.1273911-2-jacobe.zang@wesion.com>
+To: Jacobe Zang <jacobe.zang@wesion.com>
+Cc: arend.vanspriel@broadcom.com, davem@davemloft.net, edumazet@google.com,
+ kuba@kernel.org, pabeni@redhat.com, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, saikrishnag@marvell.com, megi@xff.cz,
+ bhelgaas@google.com, duoming@zju.edu.cn, minipli@grsecurity.net,
+ yajun.deng@linux.dev, stern@rowland.harvard.edu, gregkh@linuxfoundation.org,
+ christophe.jaillet@wanadoo.fr, linux-wireless@vger.kernel.org,
+ netdev@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, brcm80211@lists.linux.dev,
+ brcm80211-dev-list.pdl@broadcom.com, Jacobe Zang <jacobe.zang@wesion.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 User-Agent: pwcli/0.1.1-git (https://github.com/kvalo/pwcli/) Python/3.11.2
-Message-ID: <172431581868.2154344.15348672155352447310.kvalo@kernel.org>
-Date: Thu, 22 Aug 2024 08:37:00 +0000 (UTC)
+Message-ID: <172431718274.2217900.9766315386587933045.kvalo@kernel.org>
+Date: Thu, 22 Aug 2024 08:59:44 +0000 (UTC)
 
-Marek Vasut <marex@denx.de> wrote:
+Jacobe Zang <jacobe.zang@wesion.com> wrote:
 
-> From: Chung-Hsien Hsu <stanley.hsu@cypress.com>
+> It's the device id used by AP6275P which is the Wi-Fi module
+> used by Rockchip's RK3588 evaluation board and also used in
+> some other RK3588 boards.
 > 
-> Add support to download TRX firmware for PCIe and SDIO.
-> 
-> Signed-off-by: Chung-Hsien Hsu <chung-hsien.hsu@infineon.com>
-> Signed-off-by: Marek Vasut <marex@denx.de> # Upport to current linux-next
+> Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Jacobe Zang <jacobe.zang@wesion.com>
 
-Please fix the review comments, also Ping's comment that from and s-o-b
-needs to match.
+Fails to apply, please rebase on top of wireless-next.
 
-2 patches set to Changes Requested.
+Recorded preimage for 'drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c'
+Recorded preimage for 'drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c'
+error: Failed to merge in the changes.
+hint: Use 'git am --show-current-patch=diff' to see the failed patch
+Applying: wifi: brcmfmac: Add optional lpo clock enable support
+Using index info to reconstruct a base tree...
+M	drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
+M	drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
+M	drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+M	drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
+M	drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
+Falling back to patching base and 3-way merge...
+Auto-merging drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
+Auto-merging drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
+CONFLICT (content): Merge conflict in drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
+Auto-merging drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+Auto-merging drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
+CONFLICT (content): Merge conflict in drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
+Auto-merging drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
+Patch failed at 0001 wifi: brcmfmac: Add optional lpo clock enable support
 
-13767592 [1/2] wifi: brcmfmac: add support for TRX firmware download
-13767593 [2/2] wifi: brcmfmac: add support for CYW55572 PCIe chipset
+4 patches set to Changes Requested.
+
+13765357 [v11,1/4] dt-bindings: net: wireless: brcm4329-fmac: add pci14e4,449d
+13765358 [v11,2/4] dt-bindings: net: wireless: brcm4329-fmac: add clock description for AP6275P
+13765359 [v11,3/4] wifi: brcmfmac: Add optional lpo clock enable support
+13765360 [v11,4/4] wifi: brcmfmac: add flag for random seed during firmware download
 
 -- 
-https://patchwork.kernel.org/project/linux-wireless/patch/20240818201533.89669-1-marex@denx.de/
+https://patchwork.kernel.org/project/linux-wireless/patch/20240816020635.1273911-2-jacobe.zang@wesion.com/
 
 https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
