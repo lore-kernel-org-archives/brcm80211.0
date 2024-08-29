@@ -1,78 +1,191 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from APC01-TYZ-obe.outbound.protection.outlook.com (mail-tyzapc01on2047.outbound.protection.outlook.com [40.107.117.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30962191484;
-	Thu, 29 Aug 2024 12:23:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724934211; cv=none; b=V7XqgPgXGCIDDZpDC392KlcPOlUTwZkhHrhZF64XdnjwkrO6vI2jwKHpnm5Vto/2oMMNwheqxhPprBA+eKGUKPHmq0A2UVEm1vR2Xnsme6Y4DWdQyiti/A0bw37k5YGQNmo0R0mVWgIRZldXnEPhawLh++S69wKtqMGXlaK8+Go=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724934211; c=relaxed/simple;
-	bh=SaTxDfr+N8/M+HNWYckZpUPbBT0m10R2mHvbrVVu3T8=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
-	 MIME-Version:Content-Type; b=oA0S6nPgKUpuCQObYR0bB/I9hNq2nswMxmxJe5D1WA43l8LG7RYVqfAukrynp93FUP+tDLPYck+sguUnGaKqac+W4BkPweXu8LOnLdzbm5zWYPUN7LIiDqZwVdsgcmCHXOiDmn0P67K9xvvfTgT3sqVn7NkFUhqrilsBvvXyi90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OJMTgdGN; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E119D1AE85B
+	for <brcm80211@lists.linux.dev>; Thu, 29 Aug 2024 12:43:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.117.47
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1724935435; cv=fail; b=tkPSFYe0DtjlyFlOKpiNTlCuZt7YGWtL0DAZ1wN9na8WrKJiU0mPFw2mIw+V7YrRJXwfSM4CMZIKSkirWcySrJfEjOR4M+5bQ195nULrVjysVTmnNXtv2FvcGQ3TZNyVjv3gwj6P/u3AoMkPcCXGaFc/d+3mMbJ9B7UltX9LdeE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1724935435; c=relaxed/simple;
+	bh=YC03SQnYj/T+za/oSSRZR7+EhzzdjSI4JhNe5YrZstk=;
+	h=From:To:Cc:Subject:Date:Message-Id:Content-Type:MIME-Version; b=GX+LKmWd7Yv/rbci7NxceHtz4ojH10/ieI44vFbt1btbRVnsPjNdr+GQ0vFXB5auU6GIN0h/h15VNIojidDOwg5zT+qn7AV1AcvzlMrHrE8+ZlcC1Ok/Z0dO5LhF85+wBbEHXTlS/OnSzfunGvKBeJRO1gCDySCwGB61RSt96nc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vivo.com; spf=pass smtp.mailfrom=vivo.com; dkim=pass (2048-bit key) header.d=vivo.com header.i=@vivo.com header.b=jBHkU2FL; arc=fail smtp.client-ip=40.107.117.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vivo.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=vivo.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OJMTgdGN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 626C5C4CEC1;
-	Thu, 29 Aug 2024 12:23:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724934210;
-	bh=SaTxDfr+N8/M+HNWYckZpUPbBT0m10R2mHvbrVVu3T8=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
-	b=OJMTgdGNKTmuxDu+4lBJpiii00ILGvzgR+IPwcr3Umrb3dO7qGEiFi+4MGFkcYwD5
-	 YTbCBc4Cja0kSnN5VS0LfK5R1SwO6yt4KBWTOla8dA1I/o1GI7RaGgxP3yCRAiF6ZY
-	 14WrhkCR8HlE+sPD1rwzoR7oYe7dLJChlhfqEYKBXpG6qN82G8gy/YaBNjs+okIAbX
-	 sxWTrmGKhicz3Leuiupeok5alTJuOOvfV/NXah5dNUHchHLgn4TNtG4EhIOFx5ueKD
-	 bA6vMCQYxcJaPFrLECr6+f6+ZEmdWMPGoFedjeXP73omTN56CQv6gRPOVhYUOh90I9
-	 yUGM7VYHDnLSw==
-From: Kalle Valo <kvalo@kernel.org>
-To: Yuesong Li <liyuesong@vivo.com>
-Cc: kees@kernel.org,  johannes.berg@intel.com,  neal@gompa.dev,
-  a@bayrepo.ru,  justinstitt@google.com,  marcan@marcan.st,  j@jannau.net,
-  wsa+renesas@sang-engineering.com,  brcm80211@lists.linux.dev,
-  brcm80211-dev-list.pdl@broadcom.com,  linux-kernel@vger.kernel.org,
-  opensource.kernel@vivo.com
-Subject: Re: [PATCH net-next v1] brcmfmac: Convert to use ERR_CAST()
-References: <20240829112844.3193582-1-liyuesong@vivo.com>
-Date: Thu, 29 Aug 2024 15:23:25 +0300
-In-Reply-To: <20240829112844.3193582-1-liyuesong@vivo.com> (Yuesong Li's
-	message of "Thu, 29 Aug 2024 19:28:44 +0800")
-Message-ID: <87ed67ecw2.fsf@kernel.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+	dkim=pass (2048-bit key) header.d=vivo.com header.i=@vivo.com header.b="jBHkU2FL"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=hFmC1dw9HaSE3st8B7hz/Y8NnIPPfoVIEohqo8Zmnc/P9idU898xhMhou++Vh6EBP81x7Gm4cEbZXleBgf/5IA8mjb5Lik9vb++wJN7+E4ow7gdcP2rZ0HcaJBG1uPhXxelyooX0DodjAqHOhrtp9vrB2Kv6ClbSghgt+Va87DsM8jUMFvP/O5jlHf7XdxV/TYkIi3B1a2vxBCLzOIW4rQ0VAmiRggxBx2vDxDlxHveLgUJ6a9WkirZTHZhUuDNUpZG01TJhCu9ED5ou58McsjKbnJjnAqlr1McEnHJ18Y7raLChXSAjblItXtc/2p1OkXbEUFlgjzeJcFMhMRerWA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=yIvKF2fzg1uI2s0A3KofCkTNfX0t3SY53tI4ftOFVyY=;
+ b=w/yRMpZoDdJy0o/+nkp7TSEdPBxshpQpyfG/yy4/N/JibHR6F9O48Wk7mMmdLuKkc+D7EDsc6k30a/qrj9mmz4+GysoQz35+XI0SB7NqmdeF0bnx63jw1H24+kOQLY5aQXV7+W0W+UlapwKCFh0hMlnVM3Wyi8ub/nN0VT2JBIQQbIAs2U0sNGxRbnp9jYEmyEGLZZtghV+oPnt6vQ4Ls3iJDYM3xh64PxHyLvhBNhmDlbkO52OjI5kU3IQPpabEpRNxatlIw1/4TAvObjyXo36jLL/lzOIqdcy0p1qnoxMFqecEdOz7HVdymhM8cphLmTbRUefU80lnrJ5FbJHmeg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=vivo.com; dmarc=pass action=none header.from=vivo.com;
+ dkim=pass header.d=vivo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivo.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=yIvKF2fzg1uI2s0A3KofCkTNfX0t3SY53tI4ftOFVyY=;
+ b=jBHkU2FL9exO8pzHKpZICcJtGrddaCZ4PjTSIL6LUA+vunCF1S8gauSGOz8vUMK17zVqvk4y1Z4fmCEIBqx0H6xVAMIUFqRlGQUpWU9tvJz1Lra1Y6AW5bJbXano5MA9bTs0j0rPQVxi7ROsycyv9Hi45bMi5EYYjbzFX6LyAOC49iiDsKPhwL9cgUX2tQY2T03832Z6PwUs48YL3aLSC1AYGqrjwrde68f6vHCQDVrtvQmOBz0rIFbagwTlYVY7Md06GqsRp/asUhYbQsFkGqxEz78/QUYKaXZh2fLJKeE+ZpPN3Y0U94gwVpWwrKrp9R038k1HT24dIjAj/xHvPg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=vivo.com;
+Received: from TYZPR06MB5709.apcprd06.prod.outlook.com (2603:1096:400:283::14)
+ by TYSPR06MB6528.apcprd06.prod.outlook.com (2603:1096:400:47a::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7897.23; Thu, 29 Aug
+ 2024 12:43:51 +0000
+Received: from TYZPR06MB5709.apcprd06.prod.outlook.com
+ ([fe80::bc46:cc92:c2b6:cd1a]) by TYZPR06MB5709.apcprd06.prod.outlook.com
+ ([fe80::bc46:cc92:c2b6:cd1a%4]) with mapi id 15.20.7897.027; Thu, 29 Aug 2024
+ 12:43:51 +0000
+From: Yuesong Li <liyuesong@vivo.com>
+To: kvalo@kernel.org,
+	kees@kernel.org,
+	johannes.berg@intel.com,
+	neal@gompa.dev,
+	a@bayrepo.ru,
+	justinstitt@google.com,
+	marcan@marcan.st,
+	j@jannau.net,
+	wsa+renesas@sang-engineering.com
+Cc: brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com,
+	linux-kernel@vger.kernel.org,
+	opensource.kernel@vivo.com,
+	linux-wireless@vger.kernel.org,
+	Yuesong Li <liyuesong@vivo.com>
+Subject: [PATCH wireless-next v2] wifi: brcmfmac: Convert to use ERR_CAST()
+Date: Thu, 29 Aug 2024 20:43:26 +0800
+Message-Id: <20240829124326.3257874-1-liyuesong@vivo.com>
+X-Mailer: git-send-email 2.34.1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: TYBP286CA0005.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:404:ce::17) To TYZPR06MB5709.apcprd06.prod.outlook.com
+ (2603:1096:400:283::14)
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TYZPR06MB5709:EE_|TYSPR06MB6528:EE_
+X-MS-Office365-Filtering-Correlation-Id: 33e96aa1-9826-4462-80e0-08dcc8283bd3
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|7416014|1800799024|376014|52116014|366016|38350700014;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?agRE1Yy2ETho+J1I6tZwUX2HMt0V+T5XeIuRzyhwzJyud1h2uzIBOCrr7unu?=
+ =?us-ascii?Q?ppwa+OABgvyQmHJFboXsFJOKixk+aNV6kBIpXAg/yv0ed+QpRLhhfp/lh6cW?=
+ =?us-ascii?Q?GHXaUJ7QVDDwYkjH+VYNmISNho0jQh+xs+NMzp8qbHL59ZNdjBZYNXPo8zQV?=
+ =?us-ascii?Q?n4SMbHRQv3uCArKutJJMwCVtw5CFHPgPTqGZq1z237NpcbggIdsb17lfjC/D?=
+ =?us-ascii?Q?nL4ix2bfnG9Zxtlio93w9WmtLqW5vVs3q9WXYZd1kvi2GvO4mLNANnkOWPnq?=
+ =?us-ascii?Q?IVAGnyKcxQMPcE+BOiCKXoYPWAvkoioqsKVTb3MLjcO92UOp00T722tMddX5?=
+ =?us-ascii?Q?8UKEHaJgXwkOD72dHrjJlIAfYSsHOGXFpmVZcUtOolNqV8jOnrKPFOIiQmrA?=
+ =?us-ascii?Q?f8pH6kNFyjJ55PizJNooSkjozn0V/8Tc8D4QG88Vz/07u0UltTFstlCARsOt?=
+ =?us-ascii?Q?GVrys5+dgcjTX1nCjkYvBhtJ0stdEqtwKcoMga42IiAcgpI9DuJ07omYjpO2?=
+ =?us-ascii?Q?9DOr7e13tg7hO9S93NqtzS71yZCOl0KLIOMmMgXSaL94pJKF3Cwl0HsJqAGn?=
+ =?us-ascii?Q?uMYo9dKB1Sx2pyRxoCOMRWVJJOEsoTUIDLUwJ7F8Ekjs6ac/CwUiBg8gFE6V?=
+ =?us-ascii?Q?8zDN5oMYmUzQiYKeWbUk7QG6Usa2J8gMUl3FNOLsAE5grFnGVvA8132F9xYA?=
+ =?us-ascii?Q?r6w+XoAnh92u7ethdoYgQNcPR8tf18tnYzFpZMBx2+F/YdPjRbSv9PWgt3M1?=
+ =?us-ascii?Q?5EKLVam2e3B8mspeYE/rFbkcHYn3lrFph1aWndxqYlsAFCDpG7EyOLFd4ix5?=
+ =?us-ascii?Q?jxT2HGhuQpV8gBSuSTMFfwfv5i+UUPJqrZtPHaNJRv+dKlV7i7HGgYU4PHZ5?=
+ =?us-ascii?Q?7+nW3d7CPi2mRUZGAFvzzvP1HFcyI0N/TCbCalWIDs4iVCAbmadBCdUO/O1X?=
+ =?us-ascii?Q?TERi9v65R/v+QtWj34dStRHtkz94JDn0DEimgLZyDmSJNweTHBQSpGxDydK3?=
+ =?us-ascii?Q?xltG26i32W+J8yyUc4G8F+efWeqh8aRSog68V9ckpdSbl6XMo1p+d8ufE4Ng?=
+ =?us-ascii?Q?kJMLgqp8MX/eDeYmuzIr/G2PV7nw4TsJT8JqtL+MLL58QB+N9Nsea512bXAa?=
+ =?us-ascii?Q?/p1kvgAy3nAU8UBue1ISfUDdRK6eUReXVmDokVx6QwLZ52W2MGM5EwrUqWF5?=
+ =?us-ascii?Q?e8+7P9j1z2h4I07/1bwWDcmdGgpAvU147q+8GZzF8/l6wpRDS+pCO8YN0N/z?=
+ =?us-ascii?Q?v1sNVDc0SMjPZr2oXTWleAkHrUaWsm/6RFsJWmOZcIXbfQHduBgqRuwqvCjq?=
+ =?us-ascii?Q?JzRzKziCID/6HneZLAM59cJSXyUn1rhwoah0tCmSg8aBAjZnelcSctJLWf9W?=
+ =?us-ascii?Q?RUlWcmwpH00cZwTksFmrrGWQ14CaaiL94ccBjBpEkjMqR6AMOA=3D=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TYZPR06MB5709.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(1800799024)(376014)(52116014)(366016)(38350700014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?kn6f/pGr5gq9hujvCXrAndH4jryAuOj8ZxEUDJVuJLaCaHGmNl2vuz52P6py?=
+ =?us-ascii?Q?thZlgZE3mbfpQITmIDgzx2AUEdgW31o0Mxxh1wFRuVmwPAy0LBjbOu5ys9EF?=
+ =?us-ascii?Q?zl0dgEw9dJhw79nhwfD3AJanxrqcArlChc397C+zzIJshdiG0rkUbhMd8s2Y?=
+ =?us-ascii?Q?PGRZrhm6cgSfIna91wv24Jx/V1gSpKddPhAQTDyfURNcdHeUDyI2GhKGZq7d?=
+ =?us-ascii?Q?amfMpBX/vBOERpMR8WZmWqj/5t6s70SEfU82KN2LUFd3JnD6hQFG1neiPeEz?=
+ =?us-ascii?Q?NwVs93+z+yDrPaULI3CDIwg8tdFWkpRpXvBm0enSTiNb4m0xYlKRQBQX/yct?=
+ =?us-ascii?Q?n85AfIQHyE/55QxTNJMKyt/iFbL7BLKqRdyHcFuZSNYAmaoDIApHZDKMeWn/?=
+ =?us-ascii?Q?NBO4GDVyHpsp5D4PROU0Ik8POX/53PwCwg4i+5sx7NxeXbpXQwVKGCrNI4Dt?=
+ =?us-ascii?Q?4y66tI81zha0WwOSzCkgmBlnyp7s2LGTbReama85kwsXGyBx/EsaMfTb2dL7?=
+ =?us-ascii?Q?0FjCqMx13Cq6y+DG7fcl4auNdMvYb6WjDVH1xHf0ry3d1idSkC3PfiUwws/B?=
+ =?us-ascii?Q?zqWkdk2ztnHqewlqq8BQhwRZ49w8PEbVHuGkOy2apvaCIkyO2hhTf4cQEz8/?=
+ =?us-ascii?Q?KZWn89nbWKgl6JTxK7m6hTDwROqKSr3TvNY8K2TPYTVJgAIdFGZ3SbaA8RIM?=
+ =?us-ascii?Q?o3yGz/4ypm2EBOhNxqiQXxw991f6ZBT+ezv5uRN1pclkUNiN6Gu/90gJZNXj?=
+ =?us-ascii?Q?wIY7uGTARrSzhYwH/w/iq5AbAVLODBqWLGffHrDLf36EPOkWwDsIzf0JNxjF?=
+ =?us-ascii?Q?9EhJgHBpoSvMVqOZnasfx4nObC7xNMeSa4mbYK5r0ScoBLRqDhZtgfOHJD4A?=
+ =?us-ascii?Q?iYIw/ZIxdVFq82pII0i6w2nnJPBGLUtpGdwy6wJfIIIQ6Xc0diZnQNAJbRP7?=
+ =?us-ascii?Q?XBfyO7Bf0a2MC3OEqzq+gtAeYSo3/Opv7/9pW6cAeyksC3EaSAg77kfqw0eu?=
+ =?us-ascii?Q?aA7YXtk2XEmMrIgyMu5hkZwu5N8KBvj2RI1ijX1cumI60a0hhSinDaEtbAwW?=
+ =?us-ascii?Q?OtSW0ezLIpdhmTvrormFRt1GswUlnNwHKUXXEWYmkgMtlcRQq4JydedrNCih?=
+ =?us-ascii?Q?slH+gkDKIOSewXTkZsqshW5Oa+ImnZ9XpTOlHG13imAg4OU39IgB+MLZ2xZ7?=
+ =?us-ascii?Q?Md9pJZUmlbJAk/CDdV22Z9B3zNoBirZWkDs3hHjq9bw5tGd/D+mkrxquCUCo?=
+ =?us-ascii?Q?luWamNLyj9g+lCj35+grclZn4ULQ71MgD6yeCbQ4jVOjI97Fh7DpNi6nLVmW?=
+ =?us-ascii?Q?mp9jpAOFsFW6ZC91ZRiJkSVa4H0rSgMfjHTlLZOmIpxoy89kAv9K0Vm3jEeJ?=
+ =?us-ascii?Q?NluPXIt5yok8oFEmCXo/2lW8IxjcwoO/l4HnY8AjfJZgB4CHJ2sRctERpPyA?=
+ =?us-ascii?Q?WTPbn33GZDlMN1VNV6n+ghSkQq9TmpA+TmvM/hxLS18ZbVzNKBGZ+X0eGd61?=
+ =?us-ascii?Q?hOiSWZJlauohQnDARum+3u/okVJfP/JnTROm8c6XEG6OL/HwoYfEUnP7uKPu?=
+ =?us-ascii?Q?gcS65XGWOzZ4JP5LhO2/comeG8qfVCjHd6ZPV3GI?=
+X-OriginatorOrg: vivo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 33e96aa1-9826-4462-80e0-08dcc8283bd3
+X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB5709.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Aug 2024 12:43:50.9364
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 923e42dc-48d5-4cbe-b582-1a797a6412ed
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 8lpe0NsifCaTFAR2/3gAoLO59ETlwPAftGXEGnoNsYl0YSZ1sFQbUymGWY7bcVqJI4ZVZqcsRYmhNzK8AYvggQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYSPR06MB6528
 
-Yuesong Li <liyuesong@vivo.com> writes:
+Use ERR_CAST() as it is designed for casting an error pointer to
+another type.
 
-> Use ERR_CAST() as it is designed for casting an error pointer to
-> another type.
->
-> This macro utilizes the __force and __must_check modifiers, which instruct
-> the compiler to verify for errors at the locations where it is employed.
->
-> Signed-off-by: Yuesong Li <liyuesong@vivo.com>
-> ---
->  drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 2 +-
->  drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c      | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
+This macro utilizes the __force and __must_check modifiers, which instruct
+the compiler to verify for errors at the locations where it is employed.
 
-Several problems:
+Signed-off-by: Yuesong Li <liyuesong@vivo.com>
+---
+v2: - Fix the subject and the PATCH name
+---
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 2 +-
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c      | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-* wireless patches go to wireless-next, not net-next
-
-* "wifi:" missing from title
-
-* you forgot to cc linux-wireless
-
-Please fix these and submit v2. And please read the wiki link below.
-
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+index 815f6b3c79fc..3ea2824f8a68 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -836,7 +836,7 @@ struct wireless_dev *brcmf_apsta_add_vif(struct wiphy *wiphy, const char *name,
+ 
+ 	vif = brcmf_alloc_vif(cfg, type);
+ 	if (IS_ERR(vif))
+-		return (struct wireless_dev *)vif;
++		return ERR_CAST(vif);
+ 
+ 	brcmf_cfg80211_arm_vif_event(cfg, vif);
+ 
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
+index 6e0c90f4718b..2e627f428f5f 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
+@@ -2164,7 +2164,7 @@ static struct wireless_dev *brcmf_p2p_create_p2pdev(struct brcmf_p2p_info *p2p,
+ 	p2p_vif = brcmf_alloc_vif(p2p->cfg, NL80211_IFTYPE_P2P_DEVICE);
+ 	if (IS_ERR(p2p_vif)) {
+ 		bphy_err(drvr, "could not create discovery vif\n");
+-		return (struct wireless_dev *)p2p_vif;
++		return ERR_CAST(p2p_vif);
+ 	}
+ 
+ 	pri_ifp = p2p->bss_idx[P2PAPI_BSSCFG_PRIMARY].vif->ifp;
 -- 
-https://patchwork.kernel.org/project/linux-wireless/list/
+2.34.1
 
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
