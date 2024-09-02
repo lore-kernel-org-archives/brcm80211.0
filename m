@@ -1,57 +1,57 @@
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 606BA18BBA1
-	for <brcm80211@lists.linux.dev>; Mon,  2 Sep 2024 22:55:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C4B818DF9B
+	for <brcm80211@lists.linux.dev>; Mon,  2 Sep 2024 22:55:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725317752; cv=none; b=axsnJ8e6qe7i4GFaVfyDMRDJ6UiUP2A+nIkpx2YiiYYZRe5KP/cSOht3mhUHr4wIa3qlGm2Cq7RNf8qHKXwuuw1CFWR2Ek2ihFJrQDMYjPzMJF+/Jb5wj6jlvz5VfKLFTHPcfU3unqrjEkXYx4a+z1k2RuAf8Y6ERXVNfPenUKQ=
+	t=1725317755; cv=none; b=Y3UacznALbBkal7U9xtsKa4FbALlMH/3XK5dTk/MGlh2O5pc8Yx5Mih8t0VJT5Inr6iRSK/1EEffXuAeD7FyB/PyZeSB+Qna4JjBh/sybctZNnSAQyz014WMxU/dmAnt/1swBZDqleAkkVlasyU/zW/hg3PE8kXNHS4fmJoOsrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725317752; c=relaxed/simple;
-	bh=XPXzxmxPuh0oRaEz8t/+d+iASKVe9XfXqjCyTenSPXU=;
+	s=arc-20240116; t=1725317755; c=relaxed/simple;
+	bh=aG0ldiriHfw927e+9EU0XgBJ1LEe6dToHI6YishVZBI=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=OWTxhClp0bD6oo5/nK1SuPZ9ZALWlV0sPo1VL562eJOVNpZqmIrMAmER1kOAk+TTQ6WIVg7ZMX6zbNcuLEXgKghTHl8cvh1xv2NsW3qeI+chRQEqaA7SyNSmnRUIcURM4MBx7zuHUwyZbs9RW1TzTGIr/WKBxRUUcWKkWgc0xe8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RAA9fp/J; arc=none smtp.client-ip=209.85.208.54
+	 MIME-Version; b=sTgEmvxd7t7wQsQfAO189AwP/ItQDP1BAp3qIeBkuu8sDim/srnVJpT0FEdCez6YjNxiHttQ3hvw/89tHy2tc89kY5z3a6Gds3IoPGe3wBbLBB8tzEtfLzOPqR5FZc58ZgixtoxZ8C8Rq83Maxsww5M5TBMU0cKFJq308o4weC4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b9yrdHnY; arc=none smtp.client-ip=209.85.208.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RAA9fp/J"
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5c26852aff1so981002a12.3
-        for <brcm80211@lists.linux.dev>; Mon, 02 Sep 2024 15:55:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b9yrdHnY"
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-5bf01bdaff0so4327289a12.3
+        for <brcm80211@lists.linux.dev>; Mon, 02 Sep 2024 15:55:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725317749; x=1725922549; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1725317750; x=1725922550; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=kBEQBp9g3k9SiXOvyYlcXlhKd3Urb0xWdAtZQorxYxM=;
-        b=RAA9fp/JloVW9AsmY4Mgq0L8kSeGbEW2SQc7ya/EoX5Pc2c8CBHhX+xRIkp4VU0aNp
-         O0Z80xUSLt6hQTIVAqWAbh/fHWTDmjdJxJ0oORZb5SnD8JWgG73zTJB/1iM6JIM2J8lT
-         NUYLq1lwV8qd7VqMa+ySYY6CgQS7EAoRG6m4MQkGij+kYsLYa8nkA0qscFvSRxrrBB8/
-         tHnKaEmzTpBKL9AISTkhEuFwUHmIe85W//jIM2JK1mPEuQ2pfwXCdNdQABRak5winr3X
-         h4Op/RKgizbMNz4nSmvnrfgkGkFfKNVTwJaQiDPZinU3cLYBZ11Lh7+cXZgcN6aaptTC
-         SDUw==
+        bh=3M3zrQ4HRuBwzDNVnr3UQEv7suH9Jl1q9Q4EWJeNzEg=;
+        b=b9yrdHnYdcHJQSl6LWsTb1PcCw6EcY3aOlFWebGSZtkFmwF4q9isSntNNmYCjkFOIT
+         v0ELhrSveHl0yYpHxTaOly+Dg0mqC/LaqjXRnf6ltdDFZzlJxQenMo90Imao43tfivXY
+         fT6uWn08iduWkROn/7m7y3cspV+InILWi8VucpAcqrqqklVVle3ZeWc0Mw1wj+RIwKUG
+         rIoc7cU2rU/WRfBqNj0ki558JCXpRjXoPpZENITNc/5dpFFhnordF70fRSq3YGuoVQfD
+         fzzAK5oJlfSVVNcg7KtZ85WSwRbt7YQ9k+RkZyZkKegpqky/OOxyxvMvBzNIkXuWimMr
+         7TGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725317749; x=1725922549;
+        d=1e100.net; s=20230601; t=1725317750; x=1725922550;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=kBEQBp9g3k9SiXOvyYlcXlhKd3Urb0xWdAtZQorxYxM=;
-        b=Gv4LQH09ES5L2HpbOE92jwQK3bMgcKxZDLqjKPV5plGJaWHRCcblvOY9ZYsksHZKCL
-         VzgXmPC9qlxCKX7LeWbF9cWMaJrTuf9homYzXUIN4DV9UM9Jru/EQzTMKv1/RuBfeNi/
-         C7uehs4cn9X1lODdQJs8idT2ETx+riQzWYxVFINirnsOrIjUDbmwt/xeGrChx47pr7B7
-         mCjkQIdc2NE6KCvPS2cF27ZnhAPlgK7q5KeLOCfbRJuR3i9RLxlJQOCkJe4nSBDaLZUy
-         2qxDlyZdioCAlkl4dmqG+RahaBJGhPKmVV2vZsMxNCIytk6qp8SbfH5LtaoZ29A8xj4v
-         iypw==
-X-Forwarded-Encrypted: i=1; AJvYcCVQD2n+bW4X577c1s0qPwO42cgqkACs0h6jOxdydtFoMeZZqw6DgT9BUJ3swwJd1GpRHtNgJAFbiDE=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz6W6e+eF6Os2wbdx97Bsb/X/G/u2MWo7uKIl4DJSeB4zJPCpUQ
-	z9U6kOyvHVF9wjw3lIfi1K9252JimOPDPsN/J1ujJZR/Uok1oCI2
-X-Google-Smtp-Source: AGHT+IFGC5whsYTLJRRo+OjnE/CnzW9ioCA7rs9/xXHxQe/SonC3TILzstrZixS3NMZMqFGr2Uhr7Q==
-X-Received: by 2002:a05:6402:27d1:b0:5be:ea9c:5fe7 with SMTP id 4fb4d7f45d1cf-5c21ed40982mr11174299a12.16.1725317747871;
-        Mon, 02 Sep 2024 15:55:47 -0700 (PDT)
+        bh=3M3zrQ4HRuBwzDNVnr3UQEv7suH9Jl1q9Q4EWJeNzEg=;
+        b=fMAY08XWaghJ7Oh73p2jDfAfqgq5TR2IeISp44IFGGVEOf8A1au7RwqaIUAD6ovfNZ
+         qQhueekx97l7C2idlo67tq1YJMW9JN1qJ4NBXDgyUvSe7LXv5PmCufbyiisvaqBh2Oiz
+         0q+nr0U4cKv5V2Exqa6se+Zq6k74vkfDVnZyGPKrRFSHg3ZahkA9kMhRaBVci866zt0y
+         BDjtvLGXmgjN/MKrgKikbusl+Njamn1M/ETD6FMXl4q++vfinNf+NTWQMkUDpTvuwcJP
+         aR2VbDDNaEM+TVuNheLdwcrv5vCd2r3BDJ20AYbD96CR8r1pyAALc//lYKgO+qYu5qbc
+         DYTQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXxZH7oUeGrH1wZzznW/WiXk5Ize0V0dsjUg2T8yHeRQCqmgeYnuILl8Ky2G48t7unWw1oqy3jgqDw=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw1jrTQVxDcni46prHw0rYaUn34AFMhqbf8f0LuC4mUF/BzG73J
+	9pXGJ0jXbO/BP4icXd2PwVM3lOwJJMb6ENDd3PqNgG7FXl492Zbr
+X-Google-Smtp-Source: AGHT+IH90LXc7EwUasb8l0337BP8vUcyXOMkNHmERTlLixA2VuUgFhtFY6H5/0/XcuBxznM4NJTdXg==
+X-Received: by 2002:a05:6402:5107:b0:5c2:4740:93ec with SMTP id 4fb4d7f45d1cf-5c247409981mr4161897a12.9.1725317749721;
+        Mon, 02 Sep 2024 15:55:49 -0700 (PDT)
 Received: from localhost.localdomain ([2a04:ee41:82:7577:bc14:b544:1196:d1a])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c226c74184sm6040568a12.32.2024.09.02.15.55.46
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c226c74184sm6040568a12.32.2024.09.02.15.55.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Sep 2024 15:55:47 -0700 (PDT)
+        Mon, 02 Sep 2024 15:55:49 -0700 (PDT)
 From: Vasileios Amoiridis <vassilisamir@gmail.com>
 To: linux@armlinux.org.uk,
 	maarten.lankhorst@linux.intel.com,
@@ -81,9 +81,9 @@ Cc: linux-kernel@vger.kernel.org,
 	brcm80211-dev-list.pdl@broadcom.com,
 	devicetree@vger.kernel.org,
 	vassilisamir@gmail.com
-Subject: [PATCH v1 6/7] wifi: wlcore: sdio: Make use of irq_get_trigger_type()
-Date: Tue,  3 Sep 2024 00:55:33 +0200
-Message-Id: <20240902225534.130383-7-vassilisamir@gmail.com>
+Subject: [PATCH v1 7/7] of/irq: Make use of irq_get_trigger_type()
+Date: Tue,  3 Sep 2024 00:55:34 +0200
+Message-Id: <20240902225534.130383-8-vassilisamir@gmail.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20240902225534.130383-1-vassilisamir@gmail.com>
 References: <20240902225534.130383-1-vassilisamir@gmail.com>
@@ -100,31 +100,22 @@ simple irq_get_trigger_type(irq).
 
 Signed-off-by: Vasileios Amoiridis <vassilisamir@gmail.com>
 ---
- drivers/net/wireless/ti/wlcore/sdio.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/of/irq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ti/wlcore/sdio.c b/drivers/net/wireless/ti/wlcore/sdio.c
-index 92fb5b8dcdae..9e1b644beba9 100644
---- a/drivers/net/wireless/ti/wlcore/sdio.c
-+++ b/drivers/net/wireless/ti/wlcore/sdio.c
-@@ -324,15 +324,13 @@ static int wl1271_probe(struct sdio_func *func,
- 	memset(res, 0x00, sizeof(res));
+diff --git a/drivers/of/irq.c b/drivers/of/irq.c
+index 36351ad6115e..5d27b20634d3 100644
+--- a/drivers/of/irq.c
++++ b/drivers/of/irq.c
+@@ -430,7 +430,7 @@ int of_irq_to_resource(struct device_node *dev, int index, struct resource *r)
+ 					      &name);
  
- 	res[0].start = irq;
--	res[0].flags = IORESOURCE_IRQ |
--		       irqd_get_trigger_type(irq_get_irq_data(irq));
-+	res[0].flags = IORESOURCE_IRQ | irq_get_trigger_type(irq);
- 	res[0].name = "irq";
+ 		r->start = r->end = irq;
+-		r->flags = IORESOURCE_IRQ | irqd_get_trigger_type(irq_get_irq_data(irq));
++		r->flags = IORESOURCE_IRQ | irq_get_trigger_type(irq);
+ 		r->name = name ? name : of_node_full_name(dev);
+ 	}
  
- 
- 	if (wakeirq > 0) {
- 		res[1].start = wakeirq;
--		res[1].flags = IORESOURCE_IRQ |
--			       irqd_get_trigger_type(irq_get_irq_data(wakeirq));
-+		res[1].flags = IORESOURCE_IRQ | irq_get_trigger_type(wakeirq);
- 		res[1].name = "wakeirq";
- 		num_irqs = 2;
- 	} else {
 -- 
 2.25.1
 
