@@ -1,57 +1,57 @@
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEEB9188589
-	for <brcm80211@lists.linux.dev>; Mon,  2 Sep 2024 22:55:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51D0D188928
+	for <brcm80211@lists.linux.dev>; Mon,  2 Sep 2024 22:55:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725317745; cv=none; b=bgE8Zl5O4Q5qFQ8zLPXuP6MOvx78WSz5IzWvZxGWCxGCOYLWgl091bcB7vskF+3mPsCPL0mEKiPg/Ugmas3nvmEG3i4VNPJW4CrnUr0OmvqqzB2b1GKlAhNbu8R9Ztv10DbFR8qaP/lETqa9uLXGb7bPzO1kTe8GpZxaUfeohdw=
+	t=1725317746; cv=none; b=t4HhtnHjSn/kr3vHcooyqbvsZz+plRqWu70B3qsCQb/6VaTfTDR5COqVhyMhf1WyQ9C6+4m1xXWsfvFru9iQZIuPC5M3DVCUunhl2SAorlB7oBgihOI0vTnXFLvX3hk8DtalEo7T4TOotM0oWRUl42P3RJLOj7hJ7Fxz8EsEASo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725317745; c=relaxed/simple;
-	bh=QrUQcvnmZvtnPzZt8iGP4n9fjXwFPYGCz1cGar7E9G4=;
+	s=arc-20240116; t=1725317746; c=relaxed/simple;
+	bh=fSzJPU8bmjY5Ro+DB3zswx5GV+Kvbzad2TRXw4i/y84=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=K2Zk8WFYhEXWIq3hTthjF5+WaHf2d56Nk0XxrGoxHugLV+QvailVtvNz2GEtm5H/YPoST/yyoULDzo7pj49OIW8JrokZmwotgRJf1apOXH/rFPSnjowz3JsFnVR5v1z+PQky/5sLo726n2m48Ccu7z2ctBPkOouDt2ESfWaamGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=blJEf4NC; arc=none smtp.client-ip=209.85.208.41
+	 MIME-Version; b=N1Nqh49lXVlPEAln5owLeRecNJTc2fcEJEaEz57OAfVNMWm08D0r2MDym7pXOiv2LSZqoVJPPHlYne/EFgleGsGbuEmyevjs/66Nj5ciOd5V7I7MGbApEIVEtB28Z5AGqfNUgxVsEb5T8aVa3KY/zvob7jwj84JqEPTPFUi2j4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X4CZ2rT/; arc=none smtp.client-ip=209.85.208.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="blJEf4NC"
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-5c241feb80dso4735356a12.0
-        for <brcm80211@lists.linux.dev>; Mon, 02 Sep 2024 15:55:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X4CZ2rT/"
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-5c23f0a9699so2587718a12.1
+        for <brcm80211@lists.linux.dev>; Mon, 02 Sep 2024 15:55:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725317742; x=1725922542; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1725317743; x=1725922543; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=JVYXpp6XlxrexNwfXvthb0cGeIQ6ry7hBWcPM5Sw6j4=;
-        b=blJEf4NCpHCRXqI1Pgx1KjSpYsJpwOUn66fs2sEHTdY005MT+T41xzzF1j75mkm7lz
-         bGg48aHfj7WZSDFDe4TkciL/ERCjAHC8T54Ng6Ri2TLv5POcZIwOQpNeOJ/73bHjTR5P
-         8JW3YZBAc2xWHCbJ06Dtf49tw435rEXGIzwQpmuPO5Xakf3m2o99p9UHNxodKvCoJY7N
-         1hIB+ufWoqKZ6X3kFQcqTHbYZJslgWuQI/Pvk/qdt2tggp9EntllRcL/BlnDoqCuYkM9
-         TgHoCyYnWMZcvAoyVi2Vi1i1a0nV6dShfm+cZvAwNGKf6c0xU48lA9tmVP+2cZ7QoVhC
-         Bt5w==
+        bh=QMRQxsu6IuAS6frrvyS8c4hkmHHGDuOUXHIGD8sRn2E=;
+        b=X4CZ2rT/6EJqOTTDvfIOJvTNeeFO63pkLtcP4G8D9hnmvC5GJpNpTKmJ2TMaPtgeHi
+         e75N8L7iHI0E3pajblbi7k+A8EqDSjAwk3XRuyaRofCArLn6PeLWYN+v2wQr9zzWkgrq
+         6wDwtg20gPXcYwTEqcAaG0mziaaB1yJmWl91XRl1I+4yFMZRY03q0qOzIrNJT7W2mMeC
+         l01SvPVY8le5rAIeOUNnoP9QX7CSLktyiJJc6QAqnIRa/B0RlQmdQM5hH+a0kL0Kme6U
+         AqS5vDg6Cm+yOoxsy25Dvmq8cq9wcYcOiV6qv8JKOsFvTiSCV3TKKPCBmPsLIE7n+pIL
+         w6+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725317742; x=1725922542;
+        d=1e100.net; s=20230601; t=1725317743; x=1725922543;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=JVYXpp6XlxrexNwfXvthb0cGeIQ6ry7hBWcPM5Sw6j4=;
-        b=ggINQp49m1Vr2p5Geupx/CkqLKKfGaLrIwcAnoVKH0mGqnzCGjnVk8Z4qdNcSwi0pn
-         cVYFtlVJA58ulLf+4piG0J1ltTb1yeQDqppxhBsy3hk7lEGdi+V+eoVfs2gzorLS8EB6
-         IgyTnGvOKs5nKykxxNpDbRyd/t6/Nkm+5OrO6I2nYoYrjjmmmTCWwLS+PoqizO5b1e/U
-         0ZnnCvd9XUyVHf6uSnQIK+J2jorZPBDXXZuqgmRG4qkxjraDhxcom+CM6KFpPHIE4HoO
-         fdooiUSZuDQnJOZgTA5Ma6QvVrNTD+U4fS8s46mcHo92+S8wPHr0J5J0ubIUBiDPD1iy
-         pmNg==
-X-Forwarded-Encrypted: i=1; AJvYcCVzovHr23Hel97gf5doEWToLThkZz40vc+YEWRaPcK2E9Ud27TC6Us+VIG1/6rQ4UBjFOEcTEE6SnQ=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxvsNXTDxSX6H+KzGa3uib2xtpEw5qsBfD9D9w+ULBCD/JjlB9Q
-	969x8U14dd97sjm9ZpiD8zOJ+X1wm3/hTnY73KndRktZMgPq6hQI
-X-Google-Smtp-Source: AGHT+IHbdygsiHgue6jnl1jaLVDHduB6XMrVTsWjFGMYu9OGTpHCFsbA7oouOyBeUFys2QcOOAL9YA==
-X-Received: by 2002:a05:6402:2711:b0:5c2:6c75:4359 with SMTP id 4fb4d7f45d1cf-5c26c754480mr578287a12.9.1725317741625;
-        Mon, 02 Sep 2024 15:55:41 -0700 (PDT)
+        bh=QMRQxsu6IuAS6frrvyS8c4hkmHHGDuOUXHIGD8sRn2E=;
+        b=Kd6E7p7UkuUm41K5HA7lTaY3sDfe5OJSf/fuK01lPMEhiEUsUEtw7x2MyKaZZX7ZNB
+         +ZHYWC7kojlpCC59yY8hogmfUGlkPPT8kJKoEZHlj4EvJ6TheCMpGEWw4UYF35eJj+Up
+         9Q3quQ86DEC6H86BfX8Ielw81rZQr1rM7ULw+jkE6obvQjjvsMWiD5rmEZNYpA6oZBnc
+         8Nd78DjZIb+LO/0MAaSm7lh6iXFdaPZ1yJhmdQoiEKZkVY4bjHJiyrgE8GF/N6RCssLH
+         sL45YGeKsV+2ReMiLf5HTTrWJz3L9e2bIJKgicbfsWV6MHhplBpOw+RyMKobEa1CNLIT
+         sc7Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUQeUSj2/Lnixn/pgv5HzIuOG5ItAEaaBxrA+KT0zvm2/y9+7gRNo/o/Gmao0WXVYZZsnSTQCJJNUE=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyhbQpkR2jQNRRNBHsqsos85RP4JZMyghizt0T2iAvTYWijonQl
+	ZnRda0R9ogIWWSv79uhlZQrmr8KnBh4qdmbHivvZbVJy6tgp6aA5
+X-Google-Smtp-Source: AGHT+IGpOoiKZ1FObkw+EeG22X+GUgUsivRxsCpbNjjmSCMOZtMUSBCFQPPTD6c5DMOsUOlzrB7Ojw==
+X-Received: by 2002:a05:6402:40c5:b0:5c2:5cf7:a615 with SMTP id 4fb4d7f45d1cf-5c25cf7a653mr2982329a12.5.1725317742949;
+        Mon, 02 Sep 2024 15:55:42 -0700 (PDT)
 Received: from localhost.localdomain ([2a04:ee41:82:7577:bc14:b544:1196:d1a])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c226c74184sm6040568a12.32.2024.09.02.15.55.40
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c226c74184sm6040568a12.32.2024.09.02.15.55.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Sep 2024 15:55:41 -0700 (PDT)
+        Mon, 02 Sep 2024 15:55:42 -0700 (PDT)
 From: Vasileios Amoiridis <vassilisamir@gmail.com>
 To: linux@armlinux.org.uk,
 	maarten.lankhorst@linux.intel.com,
@@ -81,9 +81,9 @@ Cc: linux-kernel@vger.kernel.org,
 	brcm80211-dev-list.pdl@broadcom.com,
 	devicetree@vger.kernel.org,
 	vassilisamir@gmail.com
-Subject: [PATCH v1 2/7] net: dsa: realtek: rtl8365mb: Make use of irq_get_trigger_type()
-Date: Tue,  3 Sep 2024 00:55:29 +0200
-Message-Id: <20240902225534.130383-3-vassilisamir@gmail.com>
+Subject: [PATCH v1 3/7] net: dsa: realtek: rtl8366rb: Make use of irq_get_trigger_type()
+Date: Tue,  3 Sep 2024 00:55:30 +0200
+Message-Id: <20240902225534.130383-4-vassilisamir@gmail.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20240902225534.130383-1-vassilisamir@gmail.com>
 References: <20240902225534.130383-1-vassilisamir@gmail.com>
@@ -100,17 +100,17 @@ simple irq_get_trigger_type(irq).
 
 Signed-off-by: Vasileios Amoiridis <vassilisamir@gmail.com>
 ---
- drivers/net/dsa/realtek/rtl8365mb.c | 2 +-
+ drivers/net/dsa/realtek/rtl8366rb.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/dsa/realtek/rtl8365mb.c b/drivers/net/dsa/realtek/rtl8365mb.c
-index b9674f68b756..ad7044b295ec 100644
---- a/drivers/net/dsa/realtek/rtl8365mb.c
-+++ b/drivers/net/dsa/realtek/rtl8365mb.c
-@@ -1740,7 +1740,7 @@ static int rtl8365mb_irq_setup(struct realtek_priv *priv)
+diff --git a/drivers/net/dsa/realtek/rtl8366rb.c b/drivers/net/dsa/realtek/rtl8366rb.c
+index 9e821b42e5f3..e49cfdfb85cb 100644
+--- a/drivers/net/dsa/realtek/rtl8366rb.c
++++ b/drivers/net/dsa/realtek/rtl8366rb.c
+@@ -599,7 +599,7 @@ static int rtl8366rb_setup_cascaded_irq(struct realtek_priv *priv)
  	}
  
- 	/* Configure chip interrupt signal polarity */
+ 	/* Fetch IRQ edge information from the descriptor */
 -	irq_trig = irqd_get_trigger_type(irq_get_irq_data(irq));
 +	irq_trig = irq_get_trigger_type(irq);
  	switch (irq_trig) {
