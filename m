@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C0011C14;
-	Tue,  3 Sep 2024 17:13:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 625F618EFF0;
+	Tue,  3 Sep 2024 18:29:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725383586; cv=none; b=OrMuNDuba6cl1ZXWRwikXarf5HsXpMOlv0+imx/VyWm/d/Dfwhu6+Gtzfz+pkdGBwJCJ0loFqjpAhpUB0/CXmIe9dePg0DHU6WCgUjvueRb7j3gE+RtBDZf0HrfNEmzrnr1oZAFh72V7FiZSeUVBaegT+k1rRM+Feud+acVWIwI=
+	t=1725388199; cv=none; b=Er5N5u42j36QyUbHBAZ2VEQvDIv5UysbejU4/F+cefkkVvr8TuQcCIsflh3oR6C2rwmGjY/EzfNjZAhdtzN0ahWdSd4B0BX2pMCJjrGlcTjyaJ+ZPxAKgyytodfw/RuHaFY5fVu7PuivY3YD7CuI+OfQKivvf6DgzvgMGunlxEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725383586; c=relaxed/simple;
-	bh=Nj3zSSXVJY7aWly8kxr2GE48AQpf8nGuG7nIWcYODkA=;
+	s=arc-20240116; t=1725388199; c=relaxed/simple;
+	bh=uNXi3AVtFux7SXNuTj4/Mhy2r5c4MWPhDexce5mMEc4=;
 	h=Content-Type:MIME-Version:Subject:From:In-Reply-To:References:To:
-	 Cc:Message-ID:Date; b=kr8JsBscUOcJtjQrwuNRli4zP339TvNboa5RcHgLC0in4TmRCExEKwBm4mqcyr0ztmqX/9oa9bEcOBgv9ObZSeSFc4bB723lpnJwCUzplQZNeYUK+aeDkasplhjIWbiPilJO0jQumsYbOy1D4V/JCrpMAwWzdWxX+qzEerg+PSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K/tZpHKP; arc=none smtp.client-ip=10.30.226.201
+	 Cc:Message-ID:Date; b=f4vBaPSSfDaUxxghUSKmfKiX7JoNP+u4wWNvVddx2V7H2QiCCWPbL9goXsiyFhTGSiNvEXt6mSU3n+11nkwk1DuNzI9lybszltVvr7u3dlAAN5eUlijibx9j+mhXuaMF8aTRywZ3DJ3hACgkdQIOGU3byVenm8hyUXZoWXH08zc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bjnJYSol; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K/tZpHKP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F172C4CEC4;
-	Tue,  3 Sep 2024 17:13:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bjnJYSol"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E6A2C4CEC4;
+	Tue,  3 Sep 2024 18:29:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725383586;
-	bh=Nj3zSSXVJY7aWly8kxr2GE48AQpf8nGuG7nIWcYODkA=;
+	s=k20201202; t=1725388198;
+	bh=uNXi3AVtFux7SXNuTj4/Mhy2r5c4MWPhDexce5mMEc4=;
 	h=Subject:From:In-Reply-To:References:To:Cc:Date:From;
-	b=K/tZpHKPktx2CDrKKwILBE5Iz1Y8z79gvdsJWC9j309s+u/+NcGpStngyWIcEhx8b
-	 coRaxKR90TegAHXVr6mgSYoP2XIlGmrqNIHD6UGJdGrTTBqEptXRdnbJSwrNg98lnS
-	 g4HkuHG5M5aKP2Nmm9bYcRC+Sze6B6Ttv8Sch12sTtVBjioNTgnSNRq2v/jekc5aiL
-	 18v58Xu7kIhfVTao+/oWM3yWgj6flMIxKAQKRPKKZR0dK4FLA2zIaOV4D5Xd2TmM7m
-	 u/L2TuHPQYmR1+ya5K9+N5D7BkJbdYtjsWPvb7m9CYm5zDFcRw/Kf4QdAxtZxASOII
-	 4lt85LVd08KhQ==
+	b=bjnJYSolEvwyPx+KYfoWJCVZiuBPq/lX0WzwRq6AIKSnM35zzZsZflAVoqFd4rTLa
+	 etfsiXeeuSrzp085N7jUNb54r7j5vyfWofDTrZzdFIljHhZsS9Y3jZJ4/+VWZ1gJ0F
+	 jtfp+aqH+2aXwqQUIXEooZ0r6inu0oUE5A4b/0fkUCU02aUeiDP99RYjI6eH29oW1o
+	 QnOrp/KKsSbgOWsXxOHzlVz36N5SsmW8fJFLJFe2VnatR9OVHUXmAnE/BKKol7isKK
+	 mr91QmR9MOx/+5ddGA04iC0KvqUUrSgyzRVCpr6K1jmox5zErrM0GK1i4yiHMxPMnp
+	 xGznzDCJZRvDQ==
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
@@ -34,43 +34,36 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH v1 5/7] wifi: brcmfmac: of: Make use of
- irq_get_trigger_type()
+Subject: Re: [PATCH -next v2] wifi: brcmsmac: Use kvmemdup to simplify the
+ code
 From: Kalle Valo <kvalo@kernel.org>
-In-Reply-To: <20240902225534.130383-6-vassilisamir@gmail.com>
-References: <20240902225534.130383-6-vassilisamir@gmail.com>
-To: Vasileios Amoiridis <vassilisamir@gmail.com>
-Cc: linux@armlinux.org.uk, maarten.lankhorst@linux.intel.com,
- mripard@kernel.org, tzimmermann@suse.de, airlied@gmail.com, daniel@ffwll.ch,
- linus.walleij@linaro.org, alsi@bang-olufsen.dk, andrew@lunn.ch,
- f.fainelli@gmail.com, olteanv@gmail.com, davem@davemloft.net,
- edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, nico@fluxnic.net,
- arend.vanspriel@broadcom.com, robh@kernel.org, saravanak@google.com,
- andriy.shevchenko@linux.intel.com, linux-kernel@vger.kernel.org,
- netdev@vger.kernel.org, linux-wireless@vger.kernel.org,
- brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com,
- devicetree@vger.kernel.org, vassilisamir@gmail.com
+In-Reply-To: <20240821070257.2298559-1-ruanjinjie@huawei.com>
+References: <20240821070257.2298559-1-ruanjinjie@huawei.com>
+To: Jinjie Ruan <ruanjinjie@huawei.com>
+Cc: <arend.vanspriel@broadcom.com>, <johannes.berg@intel.com>,
+ <miriam.rachel.korenblit@intel.com>, <erick.archer@outlook.com>,
+ <ruanjinjie@huawei.com>, <emmanuel.grumbach@intel.com>,
+ <linux-wireless@vger.kernel.org>, <brcm80211@lists.linux.dev>,
+ <brcm80211-dev-list.pdl@broadcom.com>, <linux-kernel@vger.kernel.org>
 User-Agent: pwcli/0.1.1-git (https://github.com/kvalo/pwcli/) Python/3.11.2
-Message-ID: <172538357854.1029035.14523322695529094304.kvalo@kernel.org>
-Date: Tue,  3 Sep 2024 17:13:00 +0000 (UTC)
+Message-ID: <172538819507.1029035.1932092246762477157.kvalo@kernel.org>
+Date: Tue,  3 Sep 2024 18:29:56 +0000 (UTC)
 
-Vasileios Amoiridis <vassilisamir@gmail.com> wrote:
+Jinjie Ruan <ruanjinjie@huawei.com> wrote:
 
-> Convert irqd_get_trigger_type(irq_get_irq_data(irq)) cases to the more
-> simple irq_get_trigger_type().
+> Use kvmemdup instead of kvmalloc() + memcpy() to simplify the code.
 > 
-> Signed-off-by: Vasileios Amoiridis <vassilisamir@gmail.com>
+> No functional change.
+> 
+> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+> Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
 
-wireless patches go via wireless-next, please submit patches 5-6
-separately.
+Patch applied to wireless-next.git, thanks.
 
-2 patches set to Changes Requested.
-
-13787792 [v1,5/7] wifi: brcmfmac: of: Make use of irq_get_trigger_type()
-13787793 [v1,6/7] wifi: wlcore: sdio: Make use of irq_get_trigger_type()
+d38792292be7 wifi: brcmsmac: Use kvmemdup to simplify the code
 
 -- 
-https://patchwork.kernel.org/project/linux-wireless/patch/20240902225534.130383-6-vassilisamir@gmail.com/
+https://patchwork.kernel.org/project/linux-wireless/patch/20240821070257.2298559-1-ruanjinjie@huawei.com/
 
 https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 https://docs.kernel.org/process/submitting-patches.html
