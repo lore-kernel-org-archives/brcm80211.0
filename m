@@ -1,44 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E1011D6C68;
-	Tue,  3 Sep 2024 07:09:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F9F11CA69B;
+	Tue,  3 Sep 2024 14:39:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725347347; cv=none; b=oWS+8triqBoyZwt/YLmgp3p1gUhktNZcns2hrEfluhwzQZT4hBR6JkbQ7rQkkDdHczd8r3wpFOML//az9o8SrFHPbRfDxNha8uPGIBQ63NOceDsonwoFIDpPEkzx7zUTo3Kheo8wjpJ3B6D8w7czZT+VTHvw36Swf5dIgtbplEc=
+	t=1725374385; cv=none; b=d4LMLiJbTyjatOOEzg0uKnZAvzyD264JIid7HJxkb07eQwMrXIhz2jW1I8leZqEIH15jyg7qGl4kxVxa741tH8jimjUcw7Xq43qyxPv+d/vrHTugkbh20H2rTrOU9nyjqNTE2/qwcQXHNhi1y9oFVVoQYGlF58gVwxxac1O4T7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725347347; c=relaxed/simple;
-	bh=RV1DL4EWhw1Iqgi6fDlqAVV21a+LAaW/eDxabMVQgtU=;
+	s=arc-20240116; t=1725374385; c=relaxed/simple;
+	bh=D9Cdv5s5uqz98UZ38zDPKTwaHhmtDL/60jvVsg3/qPA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CodMz5S6svtT3a3EbcaBdUkv9DrKEMUSOtpxDAP7AUMCL0MMMxOmY2ivMAL2jOltPjEmrrDGbWJOoKdNpI2UnFUwtc16gK32mDNSQfJaRsXDYiMU8+ZYtdAOke7YtryOk/0vEaOFG0tMHe8Rnf7BcqznwKXNVaOwQKAv5bjgvdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kKtHUvx/; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=MbQfXU147fGB54f3JR6s7JifjHgSE5xf55lY6i/frqAFrNezlYbSWc6AXcP7DOxpQb8RH9kqnNknUmW0+fG6s3j9fGKWm7VfDUd2rYORdsuxX/1J55wklYAPaYcx6BuMuCAk8B4uXTBf41+MOc5FvbWdvflDkCiyRYPEKten4Lo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hyPBWZPD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kKtHUvx/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FFE7C4CEC6;
-	Tue,  3 Sep 2024 07:09:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hyPBWZPD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1F48C4CEC4;
+	Tue,  3 Sep 2024 14:39:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725347347;
-	bh=RV1DL4EWhw1Iqgi6fDlqAVV21a+LAaW/eDxabMVQgtU=;
+	s=k20201202; t=1725374385;
+	bh=D9Cdv5s5uqz98UZ38zDPKTwaHhmtDL/60jvVsg3/qPA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=kKtHUvx/hP/0KkhraxYmABpceQJQz/L6YAkP06Dt77kaWqGyMn8hkeWLtVSu5V9h/
-	 UXhudOUmMcdz1nwZciLUWZDBVPAFJRYdxtlWuKVK+yzX3j1A4+BDY4gIwoM62CyiLm
-	 kgQcHJlrqpRpU0L95EFH/HwyG0B4GFxIz7ZEU6V37oQQhpamLQrcuHATAipXpNDGb3
-	 hykxUP1b5B4bSVESTwMRypChDlabJFnnx/iR3msXhbnd7MnPXXcMe0aPXzrAXBpzke
-	 7Ww/9ikmb/3gkCcMLmcPK/dlLzxLgraODNmf9M1z46G0VQTcKsWkO3iAxEplMpzHg9
-	 3inKYa0e300Lg==
-Date: Tue, 3 Sep 2024 09:09:03 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
+	b=hyPBWZPDeICY9ZBtXSc7LSZtnnn18oNHYc3kNzVVj4ZF8b+0opmKhC80/kVyTTJox
+	 8soqTepKaf2TPia5hcdQit0VzzeRrtEP86sZO+qIQRRzdrVuur11qUNX2imBKT7hJQ
+	 xCS/ctKh/L01UWhhXNbPx7bMHOrxP5LLGapGGIJE1ShcSi9Hz54TTn7LdvTSWAKvsO
+	 QNArc8AfDXTS7/11r+m+RiFpvrl3ezBNZEaXpQdb5qr/0zYRCbCScmP6mh/7ymrJKc
+	 SFnnk2jRuCRHydK24y37jZhLxHATNhv6Jf7G86I8BcMpJEhTtoQvQ2A6C8r4KC0O6b
+	 Osp/1o0/B0mdQ==
+Date: Tue, 3 Sep 2024 09:39:43 -0500
+From: "Rob Herring (Arm)" <robh@kernel.org>
 To: Vasileios Amoiridis <vassilisamir@gmail.com>
-Cc: linux@armlinux.org.uk, maarten.lankhorst@linux.intel.com, 
-	mripard@kernel.org, tzimmermann@suse.de, airlied@gmail.com, daniel@ffwll.ch, 
-	linus.walleij@linaro.org, alsi@bang-olufsen.dk, andrew@lunn.ch, f.fainelli@gmail.com, 
-	olteanv@gmail.com, davem@davemloft.net, edumazet@google.com, kuba@kernel.org, 
-	pabeni@redhat.com, nico@fluxnic.net, arend.vanspriel@broadcom.com, kvalo@kernel.org, 
-	robh@kernel.org, saravanak@google.com, andriy.shevchenko@linux.intel.com, 
-	linux-kernel@vger.kernel.org, netdev@vger.kernel.org, linux-wireless@vger.kernel.org, 
-	brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com, devicetree@vger.kernel.org
+Cc: nico@fluxnic.net, pabeni@redhat.com, daniel@ffwll.ch,
+	davem@davemloft.net, kuba@kernel.org, olteanv@gmail.com,
+	saravanak@google.com, andriy.shevchenko@linux.intel.com,
+	linux-kernel@vger.kernel.org, mripard@kernel.org,
+	edumazet@google.com, netdev@vger.kernel.org,
+	brcm80211-dev-list.pdl@broadcom.com, f.fainelli@gmail.com,
+	linux-wireless@vger.kernel.org, airlied@gmail.com,
+	linus.walleij@linaro.org, brcm80211@lists.linux.dev, andrew@lunn.ch,
+	devicetree@vger.kernel.org, linux@armlinux.org.uk,
+	alsi@bang-olufsen.dk, tzimmermann@suse.de, kvalo@kernel.org,
+	arend.vanspriel@broadcom.com, maarten.lankhorst@linux.intel.com
 Subject: Re: [PATCH v1 7/7] of/irq: Make use of irq_get_trigger_type()
-Message-ID: <m3zzseb7rhc3l3ol5ecaikbvvp6nvu2oc56wr7bv7oxgmkchma@al6ywvqogvxc>
+Message-ID: <172537438003.978249.2559307502514402788.robh@kernel.org>
 References: <20240902225534.130383-1-vassilisamir@gmail.com>
  <20240902225534.130383-8-vassilisamir@gmail.com>
 Precedence: bulk
@@ -47,11 +50,12 @@ List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <20240902225534.130383-8-vassilisamir@gmail.com>
 
-On Tue, Sep 03, 2024 at 12:55:34AM +0200, Vasileios Amoiridis wrote:
+
+On Tue, 03 Sep 2024 00:55:34 +0200, Vasileios Amoiridis wrote:
 > Convert irqd_get_trigger_type(irq_get_irq_data(irq)) cases to the more
 > simple irq_get_trigger_type(irq).
 > 
@@ -59,9 +63,7 @@ On Tue, Sep 03, 2024 at 12:55:34AM +0200, Vasileios Amoiridis wrote:
 > ---
 >  drivers/of/irq.c | 2 +-
 >  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
+Applied, thanks!
 
