@@ -1,70 +1,88 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 625F618EFF0;
-	Tue,  3 Sep 2024 18:29:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC4B11C4ECE
+	for <brcm80211@lists.linux.dev>; Tue,  3 Sep 2024 18:59:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725388199; cv=none; b=Er5N5u42j36QyUbHBAZ2VEQvDIv5UysbejU4/F+cefkkVvr8TuQcCIsflh3oR6C2rwmGjY/EzfNjZAhdtzN0ahWdSd4B0BX2pMCJjrGlcTjyaJ+ZPxAKgyytodfw/RuHaFY5fVu7PuivY3YD7CuI+OfQKivvf6DgzvgMGunlxEQ=
+	t=1725389966; cv=none; b=a8vTxcTNbsX4g+0XTizP7P8Oa4eBcFD3CmG20lsjxHyJLg/i98s2k6I1He0TgQxjqCbDGazp3rCqH10scf/ebq1+wc7E/nzYTf6jlCOmj5oNqW4sdClLk2xmhqZh3YdAP3vQzjQblpN2yP4WwQ1dCPuySOoTAJ3vO682ZxsfHLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725388199; c=relaxed/simple;
-	bh=uNXi3AVtFux7SXNuTj4/Mhy2r5c4MWPhDexce5mMEc4=;
-	h=Content-Type:MIME-Version:Subject:From:In-Reply-To:References:To:
-	 Cc:Message-ID:Date; b=f4vBaPSSfDaUxxghUSKmfKiX7JoNP+u4wWNvVddx2V7H2QiCCWPbL9goXsiyFhTGSiNvEXt6mSU3n+11nkwk1DuNzI9lybszltVvr7u3dlAAN5eUlijibx9j+mhXuaMF8aTRywZ3DJ3hACgkdQIOGU3byVenm8hyUXZoWXH08zc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bjnJYSol; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1725389966; c=relaxed/simple;
+	bh=9TTFd2hhLualP7P0anivRWZJQY9eJQxI1ngy05lrXxo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=HpDmymoLsrdL7wdhCHTs44IoYUHYW01aY4hFI1moC98MLbAXV3p41w/K9e6Gqb/gBeLJNoQlL4e6HzpNyH+XrX8gx0CBGJOC97PjlBjepQAXLdQNVwFePOusKouBlUYWuC6F5An0XxczORXJ9PpACgMQSyUTNG9ak44AycGfimg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J1F7Uwdp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bjnJYSol"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E6A2C4CEC4;
-	Tue,  3 Sep 2024 18:29:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J1F7Uwdp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35F99C4CEC5
+	for <brcm80211@lists.linux.dev>; Tue,  3 Sep 2024 18:59:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725388198;
-	bh=uNXi3AVtFux7SXNuTj4/Mhy2r5c4MWPhDexce5mMEc4=;
-	h=Subject:From:In-Reply-To:References:To:Cc:Date:From;
-	b=bjnJYSolEvwyPx+KYfoWJCVZiuBPq/lX0WzwRq6AIKSnM35zzZsZflAVoqFd4rTLa
-	 etfsiXeeuSrzp085N7jUNb54r7j5vyfWofDTrZzdFIljHhZsS9Y3jZJ4/+VWZ1gJ0F
-	 jtfp+aqH+2aXwqQUIXEooZ0r6inu0oUE5A4b/0fkUCU02aUeiDP99RYjI6eH29oW1o
-	 QnOrp/KKsSbgOWsXxOHzlVz36N5SsmW8fJFLJFe2VnatR9OVHUXmAnE/BKKol7isKK
-	 mr91QmR9MOx/+5ddGA04iC0KvqUUrSgyzRVCpr6K1jmox5zErrM0GK1i4yiHMxPMnp
-	 xGznzDCJZRvDQ==
-Content-Type: text/plain; charset="utf-8"
+	s=k20201202; t=1725389966;
+	bh=9TTFd2hhLualP7P0anivRWZJQY9eJQxI1ngy05lrXxo=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=J1F7UwdpA/pPZEwuZ0/4B+dyQecUZs4ue4kj+s2CJEyPYfHPZ0IqIEJOgD3Ifhorx
+	 5qMQc8p2qsGAGR9PPwxY9F2GjEfx2J9/X8wMagcmlpMy0GAGaBedOOiO/PT/oyqrlB
+	 C8HqFblUQ905PsjMgdgNV5ftgrRJJRB8r4+njGopFECEoSKrtgJe7QtYL76ssT3E0G
+	 kW2RBzcGNjIUnx4QxV6/rgUR1A+sbfP67u4Hx3nU7DmTxE7ijdJOpaJLhzHiP9g3Yd
+	 gCT0r06mtKL3lS7yikFsz7UR2Wf12g+lGZcRwizQ2K/b56Oq4UdTYc1jUQIAfPzQc2
+	 KBcc6yWpODipw==
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-5334adf7249so7316513e87.3
+        for <brcm80211@lists.linux.dev>; Tue, 03 Sep 2024 11:59:26 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCXy3Ve59O+ST9SAbqFtHPXLGjMq665O6ouGLukS8Kunf+k6HbOpoO543kjiqJYsPTKueKe7IdQvmhk=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxVt668NfH1mTIW5GPkxbOB3+RRFQKuKJf6h9nbOW8moZG8ZgXT
+	gx3Z5XsWmGbKJ5YvuU4lDet4SvDVq/uVnWxa+ZhqCceBYibqie4IKq4PQfTnknftEAJCkyayxEY
+	pJYYxJJkeU6e81cQNsuWFqtR0Lg==
+X-Google-Smtp-Source: AGHT+IFpL/WAwaJEUddqnN23QW8H5LGR9Grih1m7MNNFfq750+qLMqm2X5GBNRTbFyO1BzABy+6jr6rWs+y4p6UfciU=
+X-Received: by 2002:a05:6512:3d8d:b0:52e:7f18:176b with SMTP id
+ 2adb3069b0e04-53546afd8famr11677026e87.11.1725389964567; Tue, 03 Sep 2024
+ 11:59:24 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH -next v2] wifi: brcmsmac: Use kvmemdup to simplify the
- code
-From: Kalle Valo <kvalo@kernel.org>
-In-Reply-To: <20240821070257.2298559-1-ruanjinjie@huawei.com>
-References: <20240821070257.2298559-1-ruanjinjie@huawei.com>
-To: Jinjie Ruan <ruanjinjie@huawei.com>
-Cc: <arend.vanspriel@broadcom.com>, <johannes.berg@intel.com>,
- <miriam.rachel.korenblit@intel.com>, <erick.archer@outlook.com>,
- <ruanjinjie@huawei.com>, <emmanuel.grumbach@intel.com>,
- <linux-wireless@vger.kernel.org>, <brcm80211@lists.linux.dev>,
- <brcm80211-dev-list.pdl@broadcom.com>, <linux-kernel@vger.kernel.org>
-User-Agent: pwcli/0.1.1-git (https://github.com/kvalo/pwcli/) Python/3.11.2
-Message-ID: <172538819507.1029035.1932092246762477157.kvalo@kernel.org>
-Date: Tue,  3 Sep 2024 18:29:56 +0000 (UTC)
+References: <20240902225534.130383-1-vassilisamir@gmail.com>
+ <20240902225534.130383-8-vassilisamir@gmail.com> <172537438003.978249.2559307502514402788.robh@kernel.org>
+ <ZtckM-uRzxAnS15o@smile.fi.intel.com>
+In-Reply-To: <ZtckM-uRzxAnS15o@smile.fi.intel.com>
+From: Rob Herring <robh@kernel.org>
+Date: Tue, 3 Sep 2024 13:59:09 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqJ+bQx-0KsN3ZWsZbQuAs0rV9DDTAjT_jJy2OBfH1WXeA@mail.gmail.com>
+Message-ID: <CAL_JsqJ+bQx-0KsN3ZWsZbQuAs0rV9DDTAjT_jJy2OBfH1WXeA@mail.gmail.com>
+Subject: Re: [PATCH v1 7/7] of/irq: Make use of irq_get_trigger_type()
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Vasileios Amoiridis <vassilisamir@gmail.com>, nico@fluxnic.net, pabeni@redhat.com, 
+	daniel@ffwll.ch, davem@davemloft.net, kuba@kernel.org, olteanv@gmail.com, 
+	saravanak@google.com, linux-kernel@vger.kernel.org, mripard@kernel.org, 
+	edumazet@google.com, netdev@vger.kernel.org, 
+	brcm80211-dev-list.pdl@broadcom.com, f.fainelli@gmail.com, 
+	linux-wireless@vger.kernel.org, airlied@gmail.com, linus.walleij@linaro.org, 
+	brcm80211@lists.linux.dev, andrew@lunn.ch, devicetree@vger.kernel.org, 
+	linux@armlinux.org.uk, alsi@bang-olufsen.dk, tzimmermann@suse.de, 
+	kvalo@kernel.org, arend.vanspriel@broadcom.com, 
+	maarten.lankhorst@linux.intel.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Jinjie Ruan <ruanjinjie@huawei.com> wrote:
+On Tue, Sep 3, 2024 at 9:59=E2=80=AFAM Andy Shevchenko
+<andriy.shevchenko@linux.intel.com> wrote:
+>
+> On Tue, Sep 03, 2024 at 09:39:43AM -0500, Rob Herring (Arm) wrote:
+> > On Tue, 03 Sep 2024 00:55:34 +0200, Vasileios Amoiridis wrote:
+>
+> ...
+>
+> > Applied, thanks!
+>
+> It was fast :-)
 
-> Use kvmemdup instead of kvmalloc() + memcpy() to simplify the code.
-> 
-> No functional change.
-> 
-> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-> Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+You're right. I didn't really look at that and was catching up from holiday=
+s.
 
-Patch applied to wireless-next.git, thanks.
+> Vasileios, consider my previous comment as a material for followup,
+> if Rob likes the idea.
 
-d38792292be7 wifi: brcmsmac: Use kvmemdup to simplify the code
+Yes. I've dropped the patch for now.
 
--- 
-https://patchwork.kernel.org/project/linux-wireless/patch/20240821070257.2298559-1-ruanjinjie@huawei.com/
-
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
-https://docs.kernel.org/process/submitting-patches.html
-
+Rob
