@@ -1,88 +1,94 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from cstnet.cn (smtp84.cstnet.cn [159.226.251.84])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC4B11C4ECE
-	for <brcm80211@lists.linux.dev>; Tue,  3 Sep 2024 18:59:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79C0E1482F6
+	for <brcm80211@lists.linux.dev>; Wed,  4 Sep 2024 07:47:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725389966; cv=none; b=a8vTxcTNbsX4g+0XTizP7P8Oa4eBcFD3CmG20lsjxHyJLg/i98s2k6I1He0TgQxjqCbDGazp3rCqH10scf/ebq1+wc7E/nzYTf6jlCOmj5oNqW4sdClLk2xmhqZh3YdAP3vQzjQblpN2yP4WwQ1dCPuySOoTAJ3vO682ZxsfHLk=
+	t=1725436080; cv=none; b=VZKcuC9+mkA/AoU7gRyEbas14CuxATvbJFw2esCoogDQfb6WJspEI5K8EI+lur3l9U8pqG/tL5ezQRgMqB/HY/A2h3QwExGmiYHIS8BE5YzohHcoK0MfSS17GsAP9Uop4V35kfnVJDe0+5nIV2O2neMX/TMuNdIx+2pydVZs9So=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725389966; c=relaxed/simple;
-	bh=9TTFd2hhLualP7P0anivRWZJQY9eJQxI1ngy05lrXxo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HpDmymoLsrdL7wdhCHTs44IoYUHYW01aY4hFI1moC98MLbAXV3p41w/K9e6Gqb/gBeLJNoQlL4e6HzpNyH+XrX8gx0CBGJOC97PjlBjepQAXLdQNVwFePOusKouBlUYWuC6F5An0XxczORXJ9PpACgMQSyUTNG9ak44AycGfimg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J1F7Uwdp; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J1F7Uwdp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35F99C4CEC5
-	for <brcm80211@lists.linux.dev>; Tue,  3 Sep 2024 18:59:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725389966;
-	bh=9TTFd2hhLualP7P0anivRWZJQY9eJQxI1ngy05lrXxo=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=J1F7UwdpA/pPZEwuZ0/4B+dyQecUZs4ue4kj+s2CJEyPYfHPZ0IqIEJOgD3Ifhorx
-	 5qMQc8p2qsGAGR9PPwxY9F2GjEfx2J9/X8wMagcmlpMy0GAGaBedOOiO/PT/oyqrlB
-	 C8HqFblUQ905PsjMgdgNV5ftgrRJJRB8r4+njGopFECEoSKrtgJe7QtYL76ssT3E0G
-	 kW2RBzcGNjIUnx4QxV6/rgUR1A+sbfP67u4Hx3nU7DmTxE7ijdJOpaJLhzHiP9g3Yd
-	 gCT0r06mtKL3lS7yikFsz7UR2Wf12g+lGZcRwizQ2K/b56Oq4UdTYc1jUQIAfPzQc2
-	 KBcc6yWpODipw==
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-5334adf7249so7316513e87.3
-        for <brcm80211@lists.linux.dev>; Tue, 03 Sep 2024 11:59:26 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCXy3Ve59O+ST9SAbqFtHPXLGjMq665O6ouGLukS8Kunf+k6HbOpoO543kjiqJYsPTKueKe7IdQvmhk=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxVt668NfH1mTIW5GPkxbOB3+RRFQKuKJf6h9nbOW8moZG8ZgXT
-	gx3Z5XsWmGbKJ5YvuU4lDet4SvDVq/uVnWxa+ZhqCceBYibqie4IKq4PQfTnknftEAJCkyayxEY
-	pJYYxJJkeU6e81cQNsuWFqtR0Lg==
-X-Google-Smtp-Source: AGHT+IFpL/WAwaJEUddqnN23QW8H5LGR9Grih1m7MNNFfq750+qLMqm2X5GBNRTbFyO1BzABy+6jr6rWs+y4p6UfciU=
-X-Received: by 2002:a05:6512:3d8d:b0:52e:7f18:176b with SMTP id
- 2adb3069b0e04-53546afd8famr11677026e87.11.1725389964567; Tue, 03 Sep 2024
- 11:59:24 -0700 (PDT)
+	s=arc-20240116; t=1725436080; c=relaxed/simple;
+	bh=jPUHbEFRlioacszj1Y1QLmf9zGOBWuwFLQ3AY59fBGE=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=l8IsV1efaj9SpnltZwJGWsMnxlrVl4G9dtiN9CUwSd2GNPKmQXzD0F9PEb4ioK9ghc2a+2HGG68uP6l26AS+3ZYnSVMxznPpe74gmsIcC9uEQ0PGQtVTnFgWSGA0cPHktp78+/NfC77JR+h9ixqwcICTcM4F+2Tr6X7AiFgEfIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from localhost (unknown [124.16.138.129])
+	by APP-05 (Coremail) with SMTP id zQCowABHLiGXENhmb0EmAQ--.3968S2;
+	Wed, 04 Sep 2024 15:47:35 +0800 (CST)
+From: Chen Ni <nichen@iscas.ac.cn>
+To: arend.vanspriel@broadcom.com,
+	kvalo@kernel.org,
+	johannes.berg@intel.com,
+	kees@kernel.org,
+	a@bayrepo.ru,
+	wsa+renesas@sang-engineering.com,
+	quic_alokad@quicinc.com,
+	marcan@marcan.st,
+	j@jannau.net
+Cc: linux-wireless@vger.kernel.org,
+	brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com,
+	linux-kernel@vger.kernel.org,
+	Chen Ni <nichen@iscas.ac.cn>
+Subject: [PATCH] wifi: brcmfmac: cfg80211: Convert comma to semicolon
+Date: Wed,  4 Sep 2024 15:46:37 +0800
+Message-Id: <20240904074637.1352864-1-nichen@iscas.ac.cn>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240902225534.130383-1-vassilisamir@gmail.com>
- <20240902225534.130383-8-vassilisamir@gmail.com> <172537438003.978249.2559307502514402788.robh@kernel.org>
- <ZtckM-uRzxAnS15o@smile.fi.intel.com>
-In-Reply-To: <ZtckM-uRzxAnS15o@smile.fi.intel.com>
-From: Rob Herring <robh@kernel.org>
-Date: Tue, 3 Sep 2024 13:59:09 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqJ+bQx-0KsN3ZWsZbQuAs0rV9DDTAjT_jJy2OBfH1WXeA@mail.gmail.com>
-Message-ID: <CAL_JsqJ+bQx-0KsN3ZWsZbQuAs0rV9DDTAjT_jJy2OBfH1WXeA@mail.gmail.com>
-Subject: Re: [PATCH v1 7/7] of/irq: Make use of irq_get_trigger_type()
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Vasileios Amoiridis <vassilisamir@gmail.com>, nico@fluxnic.net, pabeni@redhat.com, 
-	daniel@ffwll.ch, davem@davemloft.net, kuba@kernel.org, olteanv@gmail.com, 
-	saravanak@google.com, linux-kernel@vger.kernel.org, mripard@kernel.org, 
-	edumazet@google.com, netdev@vger.kernel.org, 
-	brcm80211-dev-list.pdl@broadcom.com, f.fainelli@gmail.com, 
-	linux-wireless@vger.kernel.org, airlied@gmail.com, linus.walleij@linaro.org, 
-	brcm80211@lists.linux.dev, andrew@lunn.ch, devicetree@vger.kernel.org, 
-	linux@armlinux.org.uk, alsi@bang-olufsen.dk, tzimmermann@suse.de, 
-	kvalo@kernel.org, arend.vanspriel@broadcom.com, 
-	maarten.lankhorst@linux.intel.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:zQCowABHLiGXENhmb0EmAQ--.3968S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7Gr4rCw4kuw4kuw1xGrW3ZFb_yoW8Jryrpr
+	W8Xa4qyF1UWws8Ka1fKFs7Aa4rtanxGas2k3yjyas3uFyDXr18Ja1v9Fy3Wr1kAr4Iyay2
+	9Fs0qFnrXrsxGrJanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUBY14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+	1l84ACjcxK6xIIjxv20xvE14v26ryj6F1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26F4j
+	6r4UJwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I8E87Iv6xkF7I0E14v26r
+	xl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj
+	6xIIjxv20xvE14v26r126r1DMcIj6I8E87Iv67AKxVW8Jr0_Cr1UMcvjeVCFs4IE7xkEbV
+	WUJVW8JwACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lFIxGxcIEc7Cj
+	xVA2Y2ka0xkIwI1lc7CjxVAaw2AFwI0_Jw0_GFylc2xSY4AK67AK6r4xMxAIw28IcxkI7V
+	AKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCj
+	r7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6x
+	IIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAI
+	w20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x
+	0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7VUbp6wtUUUUU==
+X-CM-SenderInfo: xqlfxv3q6l2u1dvotugofq/
 
-On Tue, Sep 3, 2024 at 9:59=E2=80=AFAM Andy Shevchenko
-<andriy.shevchenko@linux.intel.com> wrote:
->
-> On Tue, Sep 03, 2024 at 09:39:43AM -0500, Rob Herring (Arm) wrote:
-> > On Tue, 03 Sep 2024 00:55:34 +0200, Vasileios Amoiridis wrote:
->
-> ...
->
-> > Applied, thanks!
->
-> It was fast :-)
+Replace comma between expressions with semicolons.
 
-You're right. I didn't really look at that and was catching up from holiday=
-s.
+Using a ',' in place of a ';' can have unintended side effects.
+Although that is not the case here, it is seems best to use ';'
+unless ',' is intended.
 
-> Vasileios, consider my previous comment as a material for followup,
-> if Rob likes the idea.
+Found by inspection.
+No functional change intended.
+Compile tested only.
 
-Yes. I've dropped the patch for now.
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+---
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Rob
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+index 815f6b3c79fc..349aa3439502 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -1135,7 +1135,7 @@ static void brcmf_escan_prep(struct brcmf_cfg80211_info *cfg,
+ 		offset = offsetof(struct brcmf_scan_params_v2_le, channel_list) +
+ 				n_channels * sizeof(u16);
+ 		offset = roundup(offset, sizeof(u32));
+-		length += sizeof(ssid_le) * n_ssids,
++		length += sizeof(ssid_le) * n_ssids;
+ 		ptr = (char *)params_le + offset;
+ 		for (i = 0; i < n_ssids; i++) {
+ 			memset(&ssid_le, 0, sizeof(ssid_le));
+-- 
+2.25.1
+
