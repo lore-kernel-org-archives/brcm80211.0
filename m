@@ -1,133 +1,97 @@
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C0E31CCEFC
-	for <brcm80211@lists.linux.dev>; Wed,  4 Sep 2024 14:53:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 195B21DB537
+	for <brcm80211@lists.linux.dev>; Wed,  4 Sep 2024 15:49:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725461634; cv=none; b=WO6PD/3IMQfP6oHtLb4iF6kp2hLnA6EkywHJhYMv6Ym13IMPXAJ2Qw6Cfx/UlGNPV9Ig97E1vMWBjPRGRVeVCoTpv1UK6pr4DamMMZh++6RfMdGGXfCDQ1vtQXiRjavZacmnz/USHkOfGVSH0TDNeO/G7cL+fz8tVJ1dElJy3O8=
+	t=1725464968; cv=none; b=ruoEcmKRmwm12MQrWQOZgYHyOOkBDdKszacqCY06ZNTfXsi9mJn/yDg4B62dgovrsd5pFHcgK0jPHbxR2uaEOLeNtaacIIe6K0PtmWF6P1SASSAm5UzOQ8biUbK1VTL26Z8GFmIzqrLMRueD0h3Fit1ZIgsDKmIsksdIsktsiVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725461634; c=relaxed/simple;
-	bh=x949IdhBGiEjjv/A0ydxf0MZtvlczgR0jv1B5+4oj/I=;
-	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZrAUANg0u9qiAwnDQnfaNW/An1ocvtEzmS3dmkUDL3AED65RcUTCLrbK1h/3IkGccgMOyyUM9Get5xIKs5ZQC5LVvG+4mBvLYBjlbJXkZfFFMLyWyHPnqoIM3rxGEKhbzHpG1mxb8ySYNFYTW2kuv8LxltiqE2AxcZ+KAefgmUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IjlcN5Z+; arc=none smtp.client-ip=209.85.218.48
+	s=arc-20240116; t=1725464968; c=relaxed/simple;
+	bh=gTJrWsflJRH8i+wGV7R/FlxM/03HQmUVxlPhNaScABY=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=GMX4bFcuO7OUaUHmbBzS04m949B95iblZjJ6cUMZSIwn6lwA5WDeI2I9zyvh+vn/zY+8c8D2EpxschoIcB2kpMEkZDCoQi76cb/8vAcjHCnSBuOij1kFiWXicc2b7L/CVeBeA1Ru9l27yQ5HKPP7kIVmJR6hAfnczg7kSXvv/48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K0nTEoym; arc=none smtp.client-ip=209.85.218.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IjlcN5Z+"
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a83597ce5beso145215066b.1
-        for <brcm80211@lists.linux.dev>; Wed, 04 Sep 2024 07:53:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K0nTEoym"
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a868b8bb0feso813789066b.0
+        for <brcm80211@lists.linux.dev>; Wed, 04 Sep 2024 08:49:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725461631; x=1726066431; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=maoPS4oxSTuZ9S/xU0gayMwVs7HWVgQua2YIMDRQrMc=;
-        b=IjlcN5Z++dwPAvpsKX5slDEUU4EjUH4TVBKGircahOi1spfab14ffAhpwgNJmCDKGk
-         1PZKrEgWJAOxxdZ8/bDzUQLFkV44ehw2xF1kMI+/lY8ttVSuVjNJfaWBoCxq2xTrA6Tk
-         xHnGlsw5089qNYSVlVIXdL1hyLRI3X2WoJqQrqFp4nkBiz5400lBSDv6ISReEj1Pv4UX
-         OcdHWYhj9QL0zenSswzATIH3IkdxRHMaoIjGffhhWatZgooEIEMHKdt0O76jPjXA4VYJ
-         Nc5cG8Lu10+fPzm/Jr+Rv7tTFRo7o0uXhXlfuuXrBTo0h35Fx8fFRrOGUIEsuU4aA/Du
-         13Vg==
+        d=gmail.com; s=20230601; t=1725464965; x=1726069765; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ucfDxjSvRyxzVqonQmGsLlVw5jt/PwIM8Oy9nZdeRiA=;
+        b=K0nTEoymxP0hmL90Md726RaN1ET7OJGechIugsSeI0cqqLs6KbxI9dCPQ1XXZpIMtX
+         an6L9r1ke2KN4aRTrMo0OOI5/uIgiNpun5OSUpuMR1mvL2eBCyTvkWcen0JMpVDfpio9
+         zhXA3kaXFXz9op5bhY3QfJPYlhrVqx2WBIAut+erDt94bMMzdI206f9bhi306cuU/y7n
+         TT7bhUIe1b7WQbaY2udIcqqdTTkARvzGpNtFo7dVg1fJ2Sctn0YFVs87rXSUU8Tpouwb
+         m+p+vleJqhjZZNxk9H4Qw5rrR77h8btE3kjQYUDPdUkYgBr41f2LxavFK5c8TNR/kIUX
+         Rf9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725461631; x=1726066431;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=maoPS4oxSTuZ9S/xU0gayMwVs7HWVgQua2YIMDRQrMc=;
-        b=ew6mzfKqcoOfvFKtzmG94NJih+jfWUQ7CcWRRZT/fua/AcC8VGUYOJ6yINOQezJaWa
-         IRvp98W4grdj7NgQOeN5jsKnasXJieb3zajlXqgQ960Sjdw2DMRdUGjv4huXUgjYRdLb
-         01TGqPhTDKLRT2kQwHZIMiB6opG9rS/XJ2t93yySnEiKOaWQ5nfLcx0ZFjdNw/8DpA6z
-         KZmwbcE4fsKO5z6nYwKtPp6JJz9vXdg95GPsDU+Igczk/SoruJ7XSU5IP3OYoatAlSYv
-         jpmR84leSBTfNl6EU/YT1wgn/oetRXNWvLkIlrmu2OUTUeMnVJV8zJInaDg8cuX4lTnw
-         4HpA==
-X-Forwarded-Encrypted: i=1; AJvYcCVZ4ZJ95luCn94h0tPsrEBtnTYe+6KiNZAETrdKBGV3YhTP58Z49rgzbATIM3ZUlzZDZ9II0Ng8YZg=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzx9LtadI6UGgRSwJvgE+oYj60H3wSs5c3Fqn4/5ebRLAtBSlsJ
-	Ci44mxG++DZNh01Rq0MAJS6rj38WpZyNs58Xxrto45dnJAAVngl3
-X-Google-Smtp-Source: AGHT+IEFoTw35/FdxNCVm+/H9zZa+NzgrnOff+RYNxn8b2GRrl1sC4DkdjOCWReulr0J2guyrg1gNw==
-X-Received: by 2002:a17:907:3a95:b0:a7a:a4cf:4f93 with SMTP id a640c23a62f3a-a8a4319cf62mr156412066b.32.1725461629930;
-        Wed, 04 Sep 2024 07:53:49 -0700 (PDT)
-Received: from vamoiridPC ([2a04:ee41:82:7577:2f85:317:e13:c18])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a8a62037380sm2240566b.47.2024.09.04.07.53.48
+        d=1e100.net; s=20230601; t=1725464965; x=1726069765;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ucfDxjSvRyxzVqonQmGsLlVw5jt/PwIM8Oy9nZdeRiA=;
+        b=OhOtG6pvqFA/9MmmtyldvSlp5wzIwpRHlL9mSFKR/4x2aX2Ws7yn1/uRwbYTqyl3tU
+         Q8jgHMQ97vwium/7JOkan2MdAtPlyql8MdnmkKjgDz99zzNYTj5nL1fYjp0qPeVpj1uq
+         nvwkSdbV4PeFboC+cQ0gPSY0RhLwxXlwXrFV1hJcJ7YYFa0BFB3iNeoaBjZzLtNrrPku
+         TI8Uv96m6U6NoVq1C/UmjN+ksnRWMvl1sgyY2LHl8UKSj2SWeR55eyYUjE/Q7/OfkAR7
+         4Lw50JUqOvpoUZBX4eGFZtzGA120GPr3JD7CQ1qrj+JzDARnBjL4nZwqdjmWqmqGSPbo
+         DxNQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWRyC33JssPbx14BQI3va5lciUi2wyjdM4j2mzaaM636//ba7M2YTlSfLuyhRpDf22y9FLUaA0yBDU=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxRKphdXtp87NFlnr1WQPDjO7FKLbbdiSeyF9w/hQFmsmJYOfka
+	xJKsC6z5iLLMvqfrlnoQvXSYb0UZo2GQ3/fF5yIABw8xWxUWaWtR
+X-Google-Smtp-Source: AGHT+IFhXK5+Hg6Npk5cn92j6pprBkKVnnrHx6kaben4LyrmhWYlBqama/o1UbJSgEJT7tVkXG+Etg==
+X-Received: by 2002:a17:907:3e93:b0:a86:7a23:1284 with SMTP id a640c23a62f3a-a89a379cec4mr1300521966b.48.1725464965246;
+        Wed, 04 Sep 2024 08:49:25 -0700 (PDT)
+Received: from localhost.localdomain ([2a04:ee41:82:7577:2f85:317:e13:c18])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a8a62038c0asm7825566b.62.2024.09.04.08.49.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Sep 2024 07:53:49 -0700 (PDT)
+        Wed, 04 Sep 2024 08:49:24 -0700 (PDT)
 From: Vasileios Amoiridis <vassilisamir@gmail.com>
-X-Google-Original-From: Vasileios Amoiridis <vamoirid@vamoiridPC>
-Date: Wed, 4 Sep 2024 16:53:46 +0200
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Vasileios Amoiridis <vassilisamir@gmail.com>, linux@armlinux.org.uk,
-	maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-	tzimmermann@suse.de, airlied@gmail.com, daniel@ffwll.ch,
-	linus.walleij@linaro.org, alsi@bang-olufsen.dk, andrew@lunn.ch,
-	f.fainelli@gmail.com, olteanv@gmail.com, davem@davemloft.net,
-	edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
-	nico@fluxnic.net, arend.vanspriel@broadcom.com, kvalo@kernel.org,
-	robh@kernel.org, saravanak@google.com, linux-kernel@vger.kernel.org,
-	netdev@vger.kernel.org, linux-wireless@vger.kernel.org,
-	brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com,
-	devicetree@vger.kernel.org
-Subject: Re: [PATCH v1 6/7] wifi: wlcore: sdio: Make use of
- irq_get_trigger_type()
-Message-ID: <20240904145346.GA68482@vamoiridPC>
-References: <20240902225534.130383-1-vassilisamir@gmail.com>
- <20240902225534.130383-7-vassilisamir@gmail.com>
- <ZtchHGEBtn-BVB-l@smile.fi.intel.com>
+To: arend.vanspriel@broadcom.com,
+	kvalo@kernel.org
+Cc: knaerzche@gmail.com,
+	leitao@debian.org,
+	linus.walleij@linaro.org,
+	javierm@redhat.com,
+	linux-wireless@vger.kernel.org,
+	brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com,
+	linux-kernel@vger.kernel.org,
+	Vasileios Amoiridis <vassilisamir@gmail.com>
+Subject: [PATCH wireless-next v2 0/3] Use functionality of
+Date: Wed,  4 Sep 2024 17:49:16 +0200
+Message-Id: <20240904154919.118513-1-vassilisamir@gmail.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZtchHGEBtn-BVB-l@smile.fi.intel.com>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Sep 03, 2024 at 05:45:48PM +0300, Andy Shevchenko wrote:
-> On Tue, Sep 03, 2024 at 12:55:33AM +0200, Vasileios Amoiridis wrote:
-> > Convert irqd_get_trigger_type(irq_get_irq_data(irq)) cases to the more
-> > simple irq_get_trigger_type(irq).
-> 
-> ...
-> 
-> >  	memset(res, 0x00, sizeof(res));
-> >  
-> >  	res[0].start = irq;
-> > -	res[0].flags = IORESOURCE_IRQ |
-> > -		       irqd_get_trigger_type(irq_get_irq_data(irq));
-> > +	res[0].flags = IORESOURCE_IRQ | irq_get_trigger_type(irq);
-> >  	res[0].name = "irq";
-> 
-> 
-> >  	if (wakeirq > 0) {
-> >  		res[1].start = wakeirq;
-> > -		res[1].flags = IORESOURCE_IRQ |
-> > -			       irqd_get_trigger_type(irq_get_irq_data(wakeirq));
-> > +		res[1].flags = IORESOURCE_IRQ | irq_get_trigger_type(wakeirq);
-> >  		res[1].name = "wakeirq";
-> >  		num_irqs = 2;
-> 
-> Since you are touching a lot here, consider also using macros from ioport.h,
-> i.e. DEFINE_RES_IRQ_NAMED().
-> 
-> This will become something like
-> 
-> 	res[0] = DEFINE_RES_IRQ_NAMED(irq, "irq");
-> 	res[0].flags |= irq_get_trigger_type(irq);
-> 
-> 	if (wakeirq > 0) {
-> 		res[1] = DEFINE_RES_IRQ_NAMED(wakeirq, "wakeirq");
-> 		res[1].flags |= irq_get_trigger_type(wakeirq);
-> 
-> -- 
-> With Best Regards,
-> Andy Shevchenko
-> 
-> 
+Changes in v2:
+	- Split the patches into subsystems
+	- Use DEFINE_* helper to define the resource
 
-Hi Andy,
+---
+v1: https://lore.kernel.org/netdev/20240902225534.130383-1-vassilisamir@gmail.com/
 
-Thank you very much for reviewing this, I will check this out
-and apply the proposed changes to this and the next one.
+Vasileios Amoiridis (3):
+  wifi: brcmfmac: of: Make use of irq_get_trigger_type()
+  wifi: wlcore: sdio: Make use of irq_get_trigger_type()
+  wifi: wlcore: sdio: Use helper to define resources
 
-Cheers,
-Vasilis
+ .../net/wireless/broadcom/brcm80211/brcmfmac/of.c   |  2 +-
+ drivers/net/wireless/ti/wlcore/sdio.c               | 13 ++++---------
+ 2 files changed, 5 insertions(+), 10 deletions(-)
+
+
+base-commit: 97b766f989bcd06e5a7651b1080001d7327012f5
+-- 
+2.25.1
+
