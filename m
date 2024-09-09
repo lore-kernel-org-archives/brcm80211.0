@@ -1,89 +1,105 @@
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from lelv0143.ext.ti.com (lelv0143.ext.ti.com [198.47.23.248])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 614DD199E92
-	for <brcm80211@lists.linux.dev>; Thu,  5 Sep 2024 11:40:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2D581AD3FC
+	for <brcm80211@lists.linux.dev>; Mon,  9 Sep 2024 09:36:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.47.23.248
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725536406; cv=none; b=dIcBy8OhxidORe1SY5pp7r5s4Q8Wy26iIKSjkggtvumUMWBmgYN733KShEQORHdIwgA2M3XvuzA/vKTZfTioP+6gnmEGc8810ajDikWFndycKEtI0DZFIrF3zxQ5iwMloNYra+bGDfPcyTblvjPzSKZI6bNsPpHLSIauxaPApSA=
+	t=1725874616; cv=none; b=Ei8oZXitu7WGxCfof7Wi4f0mq9rs+GgbMcdDdH/jTYcZfUR2In4ygzCCBk0aKS5ruDrLoFnNebWbE/yj7wVHAo0ixomEt4FmxKSFnp/M2UyASyvNQJj96VTIH5cfaoNOcW94CQwh1moqO+t5X4Yv2W6qrRd52jOLsqqY0E0MqgI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725536406; c=relaxed/simple;
-	bh=zrVvUahKZA1Ly+gFFCpv1OrY4hxvtMfOO87dPXkzcrQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=n1lBbc9dyAnrikYMrYe8cNpA7z7ICEeeII6xrMZml1IwiMJZRQvvXK3CAW4Qreeq4Rs2gOz1gpjY3eYqq5ErOefP0uge5mdjn2jG8QnwR7WlA4PPt4w8VpJu7KKTvUVmmKVvm2gkcSrABujkgancmzl9hoaxDCa1fr9sbXrJsxo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Z0ZPwDzj; arc=none smtp.client-ip=209.85.167.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1725874616; c=relaxed/simple;
+	bh=GQEr/9zpRirO1wQsM0VqynSiZInCc24ILWtlBq5o0yQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Uy8qjEVmr1R55E0zy+CPIOsc8Sa4HQbI18ZPpI0lqVfYPKZ8V8MLNXXBs+1AjF2Wzu/QBRjtdxrXUmOVJnVsB9aa6voIsVhP36txBkmbVzC6wDu1CQWrwXkygxv73y7lOfuVvD2/syvCTLm+Fe8x/YPH/Y4p4dTOzXRrNSo4eCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b=kt4o5tHy; arc=none smtp.client-ip=198.47.23.248
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ti.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Z0ZPwDzj"
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-5353d0b7463so1000866e87.3
-        for <brcm80211@lists.linux.dev>; Thu, 05 Sep 2024 04:40:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1725536402; x=1726141202; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zrVvUahKZA1Ly+gFFCpv1OrY4hxvtMfOO87dPXkzcrQ=;
-        b=Z0ZPwDzjySiOTZX+DOVuC2Z+DQONehxvkDUtjUynC0iXHaD1cU14XqRMy9PpUBYm76
-         SfSV3pYQKUMmqR/QObK57QMdn5Oc/hRBRd3YIgrMP9WH8GocY45fjc0QgnYjH8xmyaK2
-         UadrqkQORfezuIKqwL+yUHCy+ulTknl3dy01o1G/jf9RjdQcsX6j0lTJlVnbQENL4CPk
-         i39HiduLDb3I+4l27abrCUI3FawKyx+GYBVUsxu9nMO+WgWIMJPZ1YvGFSCFD/efUTnS
-         hdhBiy8FP07rkzRpiAfs34MemY0UTdOMb5ZyT2AQ2A5NDo32+BP4EhQ8byN9YFrO+wzO
-         ws3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725536402; x=1726141202;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=zrVvUahKZA1Ly+gFFCpv1OrY4hxvtMfOO87dPXkzcrQ=;
-        b=HVPLRJ8cmdWLsJF8nHuRypPxRM283+dMwrhdO3D6eqDofnPM9SEUiXLGTgre+8OJcE
-         miD87aVCr/R6WRXjLiB0g+PumgO62oPTjUtwxoxKZEhlxqkOHtHBa3RLsff5DlO7G1FC
-         zno6oYwUKoDj0NBNCiSdf8JQcPXxfKgwJOvy2yUY5CZw3mPd/iRkByxgRHg/DTqNp9la
-         4/GSVlu4Ar+q9EDvg9Me1mS7R/alH1hTOmnRsFqHs7lTr8Jm64EO3UB4NQq/egtwPVdp
-         2XTlAerk6g/KQZLOAjtrxbcwBX07EezpL8xdZxgtDw7ams+YYA//96GXI/lCQYaXxGwY
-         LWlw==
-X-Forwarded-Encrypted: i=1; AJvYcCUpjwvy69KfSpWR9pQpVGYZXNat8HDRTrZEO0v8faEvM6ufr1hE4XdCf6y5PCPIK1zpEoKZlfjbYkA=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwGHNqdmkaNDdX5VqgChgiOXlkrMPNxNsKWb37UScz/cgmDkMlf
-	Po43Vyd03tLWuKlIQTLFgs6ysrVos62dbKKaWLf0WXsksHmvQSCglnJ/UeiUrr72YpCFbjQXw36
-	K/zloJ4grIz35BM6CLv5uhFx5zCKW+zUw0TnkCA==
-X-Google-Smtp-Source: AGHT+IEwZ/cUzkI93E/6LKm6cGyhHb8XA9AkNg8OpqoeSXVfyucD7/JsivArkGPITQJzkXL5zLtM+8AMY4ZU3v65zm0=
-X-Received: by 2002:a05:6512:108b:b0:52c:df83:a740 with SMTP id
- 2adb3069b0e04-53546b54df6mr16785064e87.30.1725536402123; Thu, 05 Sep 2024
- 04:40:02 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="kt4o5tHy"
+Received: from fllv0034.itg.ti.com ([10.64.40.246])
+	by lelv0143.ext.ti.com (8.15.2/8.15.2) with ESMTP id 4899aPEr114802;
+	Mon, 9 Sep 2024 04:36:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+	s=ti-com-17Q1; t=1725874585;
+	bh=9rFahbn1qIk8LJHzDYN4y2k/Snsiv71P703icd1KpGI=;
+	h=Date:Subject:To:CC:References:From:In-Reply-To;
+	b=kt4o5tHySTtI4MT0ZHZRH5WucoWLVokLdUlABPXgQVIm2Cd3JTDqPhSQvDi4GWvGR
+	 xfSssveZrHUXx8a9VcEoYnYStzA7aw+88XIKPWMPdDWApIYSaun/iKK/FSFQVTBw3v
+	 WPPGGrRsWhseNDS7kv808vtRuQ2mF9uPB47lW9QE=
+Received: from DFLE103.ent.ti.com (dfle103.ent.ti.com [10.64.6.24])
+	by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 4899aPTn104813
+	(version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+	Mon, 9 Sep 2024 04:36:25 -0500
+Received: from DFLE105.ent.ti.com (10.64.6.26) by DFLE103.ent.ti.com
+ (10.64.6.24) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23; Mon, 9
+ Sep 2024 04:36:24 -0500
+Received: from lelvsmtp6.itg.ti.com (10.180.75.249) by DFLE105.ent.ti.com
+ (10.64.6.26) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23 via
+ Frontend Transport; Mon, 9 Sep 2024 04:36:25 -0500
+Received: from [10.250.149.85] ([10.250.149.85])
+	by lelvsmtp6.itg.ti.com (8.15.2/8.15.2) with ESMTP id 4899aKaD032721;
+	Mon, 9 Sep 2024 04:36:21 -0500
+Message-ID: <7a7f5870-b74e-4c0e-8d76-b97b45bae963@ti.com>
+Date: Mon, 9 Sep 2024 13:36:19 +0400
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240902225534.130383-1-vassilisamir@gmail.com> <20240902225534.130383-4-vassilisamir@gmail.com>
-In-Reply-To: <20240902225534.130383-4-vassilisamir@gmail.com>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Thu, 5 Sep 2024 13:39:50 +0200
-Message-ID: <CACRpkdbjUe6aM0nHvEEEWaT1AG9kieiUuTx0M6G12Pnsvgcd6w@mail.gmail.com>
-Subject: Re: [PATCH v1 3/7] net: dsa: realtek: rtl8366rb: Make use of irq_get_trigger_type()
-To: Vasileios Amoiridis <vassilisamir@gmail.com>
-Cc: linux@armlinux.org.uk, maarten.lankhorst@linux.intel.com, 
-	mripard@kernel.org, tzimmermann@suse.de, airlied@gmail.com, daniel@ffwll.ch, 
-	alsi@bang-olufsen.dk, andrew@lunn.ch, f.fainelli@gmail.com, olteanv@gmail.com, 
-	davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, 
-	nico@fluxnic.net, arend.vanspriel@broadcom.com, kvalo@kernel.org, 
-	robh@kernel.org, saravanak@google.com, andriy.shevchenko@linux.intel.com, 
-	linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
-	linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev, 
-	brcm80211-dev-list.pdl@broadcom.com, devicetree@vger.kernel.org
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH wireless-next v2 2/3] wifi: wlcore: sdio: Make use of
+ irq_get_trigger_type()
+To: Vasileios Amoiridis <vassilisamir@gmail.com>,
+        <arend.vanspriel@broadcom.com>, <kvalo@kernel.org>
+CC: <knaerzche@gmail.com>, <leitao@debian.org>, <linus.walleij@linaro.org>,
+        <javierm@redhat.com>, <linux-wireless@vger.kernel.org>,
+        <brcm80211@lists.linux.dev>, <brcm80211-dev-list.pdl@broadcom.com>,
+        <linux-kernel@vger.kernel.org>
+References: <20240904154919.118513-1-vassilisamir@gmail.com>
+ <20240904154919.118513-3-vassilisamir@gmail.com>
+Content-Language: en-US
+From: "Khan, Sabeeh" <sabeeh-khan@ti.com>
+In-Reply-To: <20240904154919.118513-3-vassilisamir@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7bit
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 
-On Tue, Sep 3, 2024 at 12:55=E2=80=AFAM Vasileios Amoiridis
-<vassilisamir@gmail.com> wrote:
+Hi Vasileios,
 
+On 9/4/2024 7:49 PM, Vasileios Amoiridis wrote:
 > Convert irqd_get_trigger_type(irq_get_irq_data(irq)) cases to the more
 > simple irq_get_trigger_type(irq).
 >
 > Signed-off-by: Vasileios Amoiridis <vassilisamir@gmail.com>
+> ---
+>  drivers/net/wireless/ti/wlcore/sdio.c | 6 ++----
+>  1 file changed, 2 insertions(+), 4 deletions(-)
+>
+> diff --git a/drivers/net/wireless/ti/wlcore/sdio.c b/drivers/net/wireless/ti/wlcore/sdio.c
+> index 92fb5b8dcdae..9e1b644beba9 100644
+> --- a/drivers/net/wireless/ti/wlcore/sdio.c
+> +++ b/drivers/net/wireless/ti/wlcore/sdio.c
+> @@ -324,15 +324,13 @@ static int wl1271_probe(struct sdio_func *func,
+>  	memset(res, 0x00, sizeof(res));
+>  
+>  	res[0].start = irq;
+> -	res[0].flags = IORESOURCE_IRQ |
+> -		       irqd_get_trigger_type(irq_get_irq_data(irq));
+> +	res[0].flags = IORESOURCE_IRQ | irq_get_trigger_type(irq);
+>  	res[0].name = "irq";
+>  
+>  
+>  	if (wakeirq > 0) {
+>  		res[1].start = wakeirq;
+> -		res[1].flags = IORESOURCE_IRQ |
+> -			       irqd_get_trigger_type(irq_get_irq_data(wakeirq));
+> +		res[1].flags = IORESOURCE_IRQ | irq_get_trigger_type(wakeirq);
+>  		res[1].name = "wakeirq";
+>  		num_irqs = 2;
+>  	} else {
+Reviewed-by: Sabeeh Khan <sabeeh-khan@ti.com>
+Tested-by: Sabeeh Khan <sabeeh-khan@ti.com>
 
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-
-Yours,
-Linus Walleij
