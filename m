@@ -1,64 +1,64 @@
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5A8D18E1F
-	for <brcm80211@lists.linux.dev>; Sun, 15 Sep 2024 06:50:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4546EAE7
+	for <brcm80211@lists.linux.dev>; Sun, 15 Sep 2024 06:52:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726383053; cv=none; b=uJINB1eHjgpVEkTUEv/H6kJcUeeYJC/O61piScIEN0WIVTVhishdq+HN3XSxCoeHK3yl01VUuc1BgyilTv+HSlUvH2s9n0XhEhU9MwbTqiah1MM9n0G8kLCE+BqnLtTennzvhH0qDcGXoRhFHBDLtPEL3OLo0ozpdEh9vMCcwIs=
+	t=1726383166; cv=none; b=PTBJIfrunmcYFqqZY4CbmiPIe5zKrhovdNivKk6dOTmStB7oPuvPtIctwdAm7t6nsCs0z2keiLV8rjK492sXJTFdeSf63ubIyO6nNPmuALxgY5JfBJzvrGiH4zXFptMkKOz+tJdpToJOGvk+4vgchPVWBhsvaQbcxgKqcDolHw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726383053; c=relaxed/simple;
-	bh=rEmyIRyb8lQu1vOpOZTUou7zsVKMhNaTwYfuJI642tQ=;
+	s=arc-20240116; t=1726383166; c=relaxed/simple;
+	bh=Q5sEALuHPv1QRAJzo37KKiB5cC7Nv0mXzbDU/st89ls=;
 	h=From:To:CC:Date:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type; b=Nt6k5NcopC14TUCgvDSBDZ/AOTTKiliFoHbkI3ApgNJhXhbs/TE4LuSMiV2ZU5jSCSxvqTb7mAk/p3Pb3uBq6Es80sJDv/N1k3rcHDSf4/K8hLvDiDdIG45/XSxLwPL1OeJD3Nct4oWwMtlRRdP0eby9VxY1xhrvQThrTwjMlZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=aKU9hxdm; arc=none smtp.client-ip=209.85.221.51
+	 MIME-Version:Content-Type; b=hO3OeJYeZAk6iRg8/opXDMHPHPQqSwiE/Vyb50eCfh0iKprVK7fAWlV39U8hlm5fzD6dYw+p47+JFQVeafLPIJ7Iz64DGCNP/mWsWpiPHSiWjudnneDmOfMeVnVvoEPmYEZEAu5V0IyN28sBl5qv1DMAB2GJJe4saF21a0+UkpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=AmK1y4kj; arc=none smtp.client-ip=209.85.221.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="aKU9hxdm"
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-374d29ad870so1550091f8f.3
-        for <brcm80211@lists.linux.dev>; Sat, 14 Sep 2024 23:50:51 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="AmK1y4kj"
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-374bd0da617so2320993f8f.3
+        for <brcm80211@lists.linux.dev>; Sat, 14 Sep 2024 23:52:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1726383050; x=1726987850; darn=lists.linux.dev;
+        d=broadcom.com; s=google; t=1726383163; x=1726987963; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:subject:user-agent
          :references:in-reply-to:message-id:date:cc:to:from:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ejmnS563WYTKFurKv1lXQZcHBOVkT0E+DS3cmoKMb24=;
-        b=aKU9hxdmOYpc70CZ/VXYMFqzpezQWRQYidtrbVWoTbut6/IXN30DyOA+4RJFJhK/xC
-         N4qJ3RyO41bnhTMAKX5Rzrbf6vcpkAvLsgGbDZTGGIIAHK8eWnyJuTnDLRhd3EthxAlf
-         jBJ6w70WwXVDzWM04UfHjc53TBAWGTWMGsgKM=
+        bh=ISzocak7CfzsdizmFWg8QfL+4cD9AW1fcVI3tqhKr/E=;
+        b=AmK1y4kjZzoYuekhQzmT93pQeXiiBfh9L61qaj3bjaEbJYuGtug6UkBJ7A2TRH7uah
+         suSUn3y1au2dwI1607mzGfgw8Yt/tBD0++QMSQyxkg4cOk8uplR/9vK5ZalGu3RUa+An
+         vSi7mXvuQZ//kyFFyfJSP7zwwmJYlL/wraQWY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726383050; x=1726987850;
+        d=1e100.net; s=20230601; t=1726383163; x=1726987963;
         h=content-transfer-encoding:mime-version:subject:user-agent
          :references:in-reply-to:message-id:date:cc:to:from
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ejmnS563WYTKFurKv1lXQZcHBOVkT0E+DS3cmoKMb24=;
-        b=lksL+dw+SjdX7gZZi8q5jTSuMOTh/+3lwYKbPkHNO8XGdZDWYuiNyaOW7EVUqKG2qN
-         vOciaigDbNN8zk/C5K/AsJgzcqtumNl+6ogeRaxajWBP9dnKAhgpY4B/IN/O7dbAuEqd
-         e3NxPv6NZFid0JeyhxVQUSJXfYEvNSRoyQbSVY8VxuGe4bVvCx+IGJDH1M52uS71EmEE
-         idfmFGUuDV9AZsHuRRBmgNY2K1iq2EnYsjZAXAhdZCx1D9klUQZsTQJgeaHmKZzT16E7
-         yeuvrajuPiu+YHuNlXck4ouhUYiwlId16c5RatCdZxH9n8R06l/pcZgvG52I+OWDdOSS
-         CI2w==
-X-Forwarded-Encrypted: i=1; AJvYcCXDt1nvkDHZzxKHIRf9ptuz/WBIdL+1Omy8o2N3DQ66sLEBy0Yh2cJNPSSCaCyzFoI4kG1+bfp6pfM=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy/8R4vN09CYwZ10GUHo/o0xeVmVO6jw00QnSCyDlac0CTuKgU+
-	cH+a4OOp5hn0DfZdtdtDKLq21iqdjER1U6tFXIuJRTjFbp+ezWKrW6w9WQp58w==
-X-Google-Smtp-Source: AGHT+IG0aRsTm0roi1/IpFCkRxMfzU7+pRgSHSnqGW1mXMvrSh6pQZImosBl0LPIOM0o8vJEQPGvMg==
-X-Received: by 2002:adf:ae5a:0:b0:371:8dbf:8c1b with SMTP id ffacd0b85a97d-378d61f16f2mr4146486f8f.34.1726383049620;
-        Sat, 14 Sep 2024 23:50:49 -0700 (PDT)
+        bh=ISzocak7CfzsdizmFWg8QfL+4cD9AW1fcVI3tqhKr/E=;
+        b=GWPHoYoTzrgv8wiCTiHKADjh2aAJFiljl7RheEFkUh/nQ40oPjB6OI5v0IVRku2euU
+         PVQVQDU36H59nU+1QJWLgxcKO82E0bSECOT+9Pd16Y4eX9rpPJVLQ7yyAdgGxX/arcfG
+         ltPDOwBiYnf411IQxbK5lIp5ZIxFBV6XSgQQOerod3Mbz17X/irkZ/xo3gY80zc6Uk/c
+         hVjyqK2u+Y1i96HpnUb3dHcxGOecfYLdEM3/QKWh93e7QH5/Yqt/kawSrmvH1ug6m+BR
+         OW8dhlGeNhidTsofAXR2XXrs7OVF5TD6vf1EH+ekHS8Jp7wNBtTUiXUl/G2oracBpAib
+         llAw==
+X-Forwarded-Encrypted: i=1; AJvYcCUucYVpBWnQuMf86oVRuBj9s4FnNQr3TynTOm421gN67/6w4tik4DKYZY7vWlQyM9snGbSm+jSzsvY=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz2rf4iYw6jghbxWudilbOI+mbHnX6wzGOYUz6EC+9eKfXMTEVO
+	xHI9PamHKyxwd2OS61cY5N3Po8hjzzfyKKQpXaFC6NX0y22deMRRtFT1xNBTaw==
+X-Google-Smtp-Source: AGHT+IH88sEKQpcRpCxC3Pmitv3AYGQkPFoJMjKBtTDy2NU+mjIXebpVIEbFql2nmHL7yxkWVb65LA==
+X-Received: by 2002:a5d:6743:0:b0:371:6fba:d555 with SMTP id ffacd0b85a97d-378c2cf40bamr6205944f8f.18.1726383162728;
+        Sat, 14 Sep 2024 23:52:42 -0700 (PDT)
 Received: from [10.229.42.193] ([192.19.176.250])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-378e78044dfsm3887658f8f.94.2024.09.14.23.50.48
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-378e73e80eesm3920343f8f.30.2024.09.14.23.52.41
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 14 Sep 2024 23:50:49 -0700 (PDT)
+        Sat, 14 Sep 2024 23:52:42 -0700 (PDT)
 From: Arend Van Spriel <arend.vanspriel@broadcom.com>
 To: Jacobe Zang <jacobe.zang@wesion.com>, Kalle Valo <kvalo@kernel.org>, "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, van Spriel <arend@broadcom.com>
-CC: <linux-wireless@vger.kernel.org>, <netdev@vger.kernel.org>, <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>, <brcm80211@lists.linux.dev>, <brcm80211-dev-list.pdl@broadcom.com>, <nick@khadas.com>, Ondrej Jirman <megi@xff.cz>, Sai Krishna <saikrishnag@marvell.com>
-Date: Sun, 15 Sep 2024 08:50:47 +0200
-Message-ID: <191f472c158.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
-In-Reply-To: <20240910-wireless-mainline-v14-3-9d80fea5326d@wesion.com>
+CC: <linux-wireless@vger.kernel.org>, <netdev@vger.kernel.org>, <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>, <brcm80211@lists.linux.dev>, <brcm80211-dev-list.pdl@broadcom.com>, <nick@khadas.com>, Ondrej Jirman <megi@xff.cz>
+Date: Sun, 15 Sep 2024 08:52:40 +0200
+Message-ID: <191f47476d8.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
+In-Reply-To: <20240910-wireless-mainline-v14-4-9d80fea5326d@wesion.com>
 References: <20240910-wireless-mainline-v14-0-9d80fea5326d@wesion.com>
- <20240910-wireless-mainline-v14-3-9d80fea5326d@wesion.com>
+ <20240910-wireless-mainline-v14-4-9d80fea5326d@wesion.com>
 User-Agent: AquaMail/1.52.0 (build: 105200518)
-Subject: Re: [PATCH v14 3/4] wifi: brcmfmac: Add optional lpo clock enable support
+Subject: Re: [PATCH v14 4/4] wifi: brcmfmac: add flag for random seed during firmware download
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -68,29 +68,24 @@ MIME-Version: 1.0
 Content-Type: text/plain; format=flowed; charset="us-ascii"
 Content-Transfer-Encoding: 8bit
 
-On September 10, 2024 5:05:48 AM Jacobe Zang <jacobe.zang@wesion.com> wrote:
+On September 10, 2024 5:05:50 AM Jacobe Zang <jacobe.zang@wesion.com> wrote:
 
-> WiFi modules often require 32kHz clock to function. Add support to
-> enable the clock to PCIe driver and move "brcm,bcm4329-fmac" check
-> to the top of brcmf_of_probe. Change function prototypes from void
-> to int and add appropriate errno's for return values that will be
-> send to bus when error occurred.
+> Providing the random seed to firmware was tied to the fact that the
+> device has a valid OTP, which worked for some Apple chips. However,
+> it turns out the BCM43752 device also needs the random seed in order
+> to get firmware running. Suspect it is simply tied to the firmware
+> branch used for the device. Introducing a mechanism to allow setting
+> it for a device through the device table.
 >
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
 > Co-developed-by: Ondrej Jirman <megi@xff.cz>
 > Signed-off-by: Ondrej Jirman <megi@xff.cz>
 > Co-developed-by: Arend van Spriel <arend.vanspriel@broadcom.com>
 > Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-> Reviewed-by: Sai Krishna <saikrishnag@marvell.com>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
 > Signed-off-by: Jacobe Zang <jacobe.zang@wesion.com>
 > ---
-> .../wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c  |  4 ++--
-> .../wireless/broadcom/brcm80211/brcmfmac/common.c  |  3 ++-
-> .../net/wireless/broadcom/brcm80211/brcmfmac/of.c  | 25 ++++++++++++++++------
-> .../net/wireless/broadcom/brcm80211/brcmfmac/of.h  |  9 ++++----
-> .../wireless/broadcom/brcm80211/brcmfmac/pcie.c    |  3 +++
-> .../wireless/broadcom/brcm80211/brcmfmac/sdio.c    | 22 ++++++++++++-------
-> .../net/wireless/broadcom/brcm80211/brcmfmac/usb.c |  3 +++
-> 7 files changed, 47 insertions(+), 22 deletions(-)
+> .../wireless/broadcom/brcm80211/brcmfmac/pcie.c    | 52 ++++++++++++++++++----
+> .../broadcom/brcm80211/include/brcm_hw_ids.h       |  2 +
+> 2 files changed, 46 insertions(+), 8 deletions(-)
 
 
