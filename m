@@ -1,89 +1,111 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtp2.infineon.com (smtp2.infineon.com [217.10.52.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D8EA1D1E89;
-	Mon,  7 Oct 2024 14:43:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE5DF1D7E38
+	for <brcm80211@lists.linux.dev>; Mon,  7 Oct 2024 15:19:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.10.52.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728312182; cv=none; b=qwdhZe/jQ9Z5xkTdshxI4sArJpUybILCAk0smsIunUN5K5ciGeCPFbtm0IXtuQiwM5hDDkxezViyUZ5UFeAOAHXWoV9GLEFB72PT9EutzL46M4/ABjUNht+W06DXl15ZN3/QfbGwQEThTQEvmvBn9CrGx0dgos0YSUhw+n/6G4Y=
+	t=1728314395; cv=none; b=n/p3PO4i1ZM0muWItqeMFvg/wSF7aQTfLTHKPONN+mA2QDzKj+ecROWEIi9bxVlAVf/Z1eETZ7NQQoTspSCa/TJEQxcM6gwtlakHFtL3TiQvUH8CznSvqEveLnBQ8nEle3fQIzodmaYRRnWdvS/UtvPmn3pDeaR2L9iq0Z6Jm/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728312182; c=relaxed/simple;
-	bh=bxflFMmoIHHJ2/sBv0Phldh29w5xHLxp+lQC/bWZNv8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=HWuvKdhNnDD5Zujk2wCuyC4oNYqfVVkmFfYccPVCWqF34eReoPP8pUvasTCr/Dk9orYvNMCwzUzX4ZVaAVwrUpzoFcWkWw8exgGycKxG0HMGN3e/aUfvEwiUnIMVhLVcVckwq9EBQd0PMJo69tfpdKzsKRKHbTALgRAvRIKZQbU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CcuNPxs/; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1728314395; c=relaxed/simple;
+	bh=womHcMGrUaOTmX1NCiQbkClbye0iTjbwg8XuB5oKQRQ=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Mmk2thXJCFbZhoYhJNfymX2Ips92bd2zzOzUJH1CftwQ4Rld0CteGLfMaqTe0XqZulyz1lVX5XOGmAJPpTh904Wy5LakugL7BmfuDl+dZhpnz5ct2xrZTuDVeySO3GQbmhJS0P4tz61AUVa/wLO0K+AELozTv54xuX7Aitk0moc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infineon.com; spf=pass smtp.mailfrom=infineon.com; dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b=pxDZh6b5; arc=none smtp.client-ip=217.10.52.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infineon.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infineon.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CcuNPxs/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21C18C4CEC6;
-	Mon,  7 Oct 2024 14:42:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1728312182;
-	bh=bxflFMmoIHHJ2/sBv0Phldh29w5xHLxp+lQC/bWZNv8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-	b=CcuNPxs/u1FJaZxX+XoWvGn/ym3/gjY60SIr/QO7BtA5UVKVBHiobJSrcEAotYKxt
-	 lNGDTf2pQ5PDkAiehu7DPJRJNpkC0JJ6geditV/CVgGfjzrhlfHLxy4grpZdRVsBvd
-	 h9nL0GNt+jdZamVZ9ztoeXVjgygtinbH6wKb1XHXxRIZRPN7e+R/UJ90Ttxf4vVUjC
-	 6Aa9Rt+DcWGbVWLiaGJb4XF0Mu++6boeq803kYVMS7uPPt3sbe25p50loq2JEXpjpp
-	 AQOlo1EUL+Fga8INzSuqo15zb1lVokP3q0ZjXMBzVMhbiljbi4mNYdGiYFaRlM0FVT
-	 pppiAmPa+c4SQ==
-From: Kalle Valo <kvalo@kernel.org>
-To: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
-Cc: Arend van Spriel <arend.vanspriel@broadcom.com>,
- Vinoth.Sampath@infineon.com, Syed.Hussain@infineon.com>,
- <Double.Lo@infineon.com>,  <Carter.Chen@infineon.com>,
- <wlan-kernel-dev-list@infineon.com>,  <brcm80211@lists.linux.dev>,
- <linux-wireless@vger.kernel.org>
+	dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b="pxDZh6b5"
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=infineon.com; i=@infineon.com; q=dns/txt; s=IFXMAIL;
+  t=1728314393; x=1759850393;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=womHcMGrUaOTmX1NCiQbkClbye0iTjbwg8XuB5oKQRQ=;
+  b=pxDZh6b5rWpJ3YMcFBv5xqMJmJDVxGloV5DbtuP2zoYKopXxY4phefZT
+   KeVAnPYo0aeVpj5xErFr89bL178LCPfGCVPt4DN55+C1LVy1MGbGRWfTr
+   +Rsrfa81PSxh3bawXW9ZSR6v97YNKZ/VFK0k2UjFCfOJkwfKU8OqQZE/3
+   I=;
+X-CSE-ConnectionGUID: 1333NPmQRsWemHTXpjmmVA==
+X-CSE-MsgGUID: Mv5VL3bdRM6c+i5mwZyZPQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11218"; a="89805678"
+X-IronPort-AV: E=Sophos;i="6.11,184,1725314400"; 
+   d="scan'208";a="89805678"
+Received: from unknown (HELO MUCSE819.infineon.com) ([172.23.29.45])
+  by smtp2.infineon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Oct 2024 17:19:51 +0200
+Received: from MUCSE827.infineon.com (172.23.29.20) by MUCSE819.infineon.com
+ (172.23.29.45) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.34; Mon, 7 Oct
+ 2024 17:19:50 +0200
+Received: from ISCN5CG14747PP.infineon.com (10.161.6.196) by
+ MUCSE827.infineon.com (172.23.29.20) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1258.34; Mon, 7 Oct 2024 17:19:48 +0200
+Date: Mon, 7 Oct 2024 20:49:35 +0530
+From: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
+To: Kalle Valo <kvalo@kernel.org>
+CC: Arend van Spriel <arend.vanspriel@broadcom.com>,
+	<Syed.Hussain@infineon.com>, <Vinoth.Sampath@infineon.com>,
+	<Double.Lo@infineon.com>, <Carter.Chen@infineon.com>,
+	<wlan-kernel-dev-list@infineon.com>, <brcm80211@lists.linux.dev>,
+	<linux-wireless@vger.kernel.org>
 Subject: Re: [PATCH] MAINTAINERS: wifi: brcm80211: add Infineon DEV list for
  communication & maintenance
-In-Reply-To: <20241007142955.111232-1-gokulkumar.sivakumar@infineon.com>
-	(Gokul Sivakumar's message of "Mon, 7 Oct 2024 19:59:55 +0530")
+Message-ID: <ZwP8B8FgDPKEUTXp@ISCN5CG14747PP.infineon.com>
 References: <20241007142955.111232-1-gokulkumar.sivakumar@infineon.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
-Date: Mon, 07 Oct 2024 17:42:58 +0300
-Message-ID: <87zfng3rf1.fsf@kernel.org>
+ <87zfng3rf1.fsf@kernel.org>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <87zfng3rf1.fsf@kernel.org>
+X-ClientProxiedBy: MUCSE812.infineon.com (172.23.29.38) To
+ MUCSE827.infineon.com (172.23.29.20)
 
-Gokul Sivakumar <gokulkumar.sivakumar@infineon.com> writes:
+On 10/07, Kalle Valo wrote:
+> Gokul Sivakumar <gokulkumar.sivakumar@infineon.com> writes:
+> 
+> > The Infineon E-Mail distribution list <wlan-kernel-dev-list@infineon.com>
+> > is a replacement for the obsolete list <SHA-cyfmac-dev-list@infineon.com>,
+> > which got removed from the BRCM80211 section in the MAINTAINERS file.
+> >
+> > The new distribution list can be used by the community to contact Infineon
+> > WLAN Kernel DEV team, and also for Infineon team to get notified with the
+> > activity in the upstream kernel brcm80211 subsystem.
+> >
+> > Signed-off-by: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
+> > ---
+> >  MAINTAINERS | 1 +
+> >  1 file changed, 1 insertion(+)
+> >
+> > diff --git a/MAINTAINERS b/MAINTAINERS
+> > index 77fcd6f802a5..adfbf5af9eb9 100644
+> > --- a/MAINTAINERS
+> > +++ b/MAINTAINERS
+> > @@ -4475,6 +4475,7 @@ M:      Arend van Spriel <arend.vanspriel@broadcom.com>
+> >  L:   linux-wireless@vger.kernel.org
+> >  L:   brcm80211@lists.linux.dev
+> >  L:   brcm80211-dev-list.pdl@broadcom.com
+> > +L:   wlan-kernel-dev-list@infineon.com
+> >  S:   Supported
+> >  F:   drivers/net/wireless/broadcom/brcm80211/
+> >  F:   include/linux/platform_data/brcmfmac.h
+> 
+> A lot simpler is that Infineon subscribes to brcm80211@lists.linux.dev
+> list, that way there's just one list for all communication. And actually
+> broadcom could do the same?
+> 
+> I'll also fix the linux-wireless list address, it was wrong originally.
+> 
 
-> The Infineon E-Mail distribution list <wlan-kernel-dev-list@infineon.com>
-> is a replacement for the obsolete list <SHA-cyfmac-dev-list@infineon.com>,
-> which got removed from the BRCM80211 section in the MAINTAINERS file.
->
-> The new distribution list can be used by the community to contact Infineon
-> WLAN Kernel DEV team, and also for Infineon team to get notified with the
-> activity in the upstream kernel brcm80211 subsystem.
->
-> Signed-off-by: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
-> ---
->  MAINTAINERS | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 77fcd6f802a5..adfbf5af9eb9 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -4475,6 +4475,7 @@ M:	Arend van Spriel <arend.vanspriel@broadcom.com>
->  L:	linux-wireless@vger.kernel.org
->  L:	brcm80211@lists.linux.dev
->  L:	brcm80211-dev-list.pdl@broadcom.com
-> +L:	wlan-kernel-dev-list@infineon.com
->  S:	Supported
->  F:	drivers/net/wireless/broadcom/brcm80211/
->  F:	include/linux/platform_data/brcmfmac.h
+For brcm80211 activity related notification, the brcm80211@lists.linux.dev
+list seems sufficient. But in addition, more importantly, for the people in
+the community having queries specifically regarding the Infineon WLAN
+chipset support, it would be helpful to have this E-Mail Distribution list,
+So they can notify and communicate with the Infineon WLAN Kernel DEV team.
 
-A lot simpler is that Infineon subscribes to brcm80211@lists.linux.dev
-list, that way there's just one list for all communication. And actually
-broadcom could do the same?
-
-I'll also fix the linux-wireless list address, it was wrong originally.
-
--- 
-https://patchwork.kernel.org/project/linux-wireless/list/
-
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+Gokul
