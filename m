@@ -1,104 +1,108 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79AF5216A11;
-	Fri, 11 Oct 2024 12:44:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13545231CB1
+	for <brcm80211@lists.linux.dev>; Mon, 14 Oct 2024 23:02:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728650661; cv=none; b=m2hc0qysKZxsNloH5qRfVGFr0g45/HhEWbRyA9jg2Ew3/3ti26caXE2cD8ktRIcIVf9ZpGMqKu70DBUFfWUF5GdDozOEhrlrOaPuNCsb1S4J42+0Lz8V8g/1aud9vnXSwva+4vtIx2p+/kAyIrUBEsK3P/aOgkvQWXdv9NO3/lw=
+	t=1728946925; cv=none; b=SkP8PrgKbp25NYHDH44bjPkDwB1H9zYrmGrt4/qbT7QMkJ5gI+TA6S3XU4NnNLf6R6PKz1YF5JuhxO40c9QzRlTCPpx6QTiuwDi+PZ7k0gwTHYnVwUgdF7WYoUILK9V1Gb8gf7v5mJ2hEisARj8WHz5p5jNrKTLOSgMHC1eRS74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728650661; c=relaxed/simple;
-	bh=tBrMY6G14CJqYgINJ5acrgKtzsOiWyaQGmIsQEg4IHw=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
-	 MIME-Version:Content-Type; b=ZkYRg4MqWHYNYHkKkbechwdysDd5Q9ZV6blCxp/vh5g3x6PRR5GYmcd5gtMfTf7wHdoD7c36QYkrPXKlh1c4URJ9TfIsMs77f7wicKTF2iroj6hkU7p6De05qCaOZFnnY0lnv8FFjAy7YsF/nraDKWdmC1eYNf9BrQU9rYwUwRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O6W1W9Lk; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1728946925; c=relaxed/simple;
+	bh=isxeY2F05qQsZ2WKXbGh/MaxpRRZpflVYsLI4JN7mzA=;
+	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=s9m9ve3iDSlVs2t/uRHC1cut5yvXMZO9qq4u7Rw8Kgrp7tA2tw9d5mkrcA6JpzUnnN+Kkn7df2uhIYPDpaXxKSIZqMaVNa08mx6cVCvxUg2KWbnzfjma9rafgiZaCsQ+NOkFXZlywAd/SV0c3daguWMaJqhjwYPM9CFBbFpxt5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IRji0I72; arc=none smtp.client-ip=209.85.221.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O6W1W9Lk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BDDDC4CEC3;
-	Fri, 11 Oct 2024 12:44:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1728650661;
-	bh=tBrMY6G14CJqYgINJ5acrgKtzsOiWyaQGmIsQEg4IHw=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
-	b=O6W1W9LkiNV3aJ6tZFXjNxRPfSdaTMziktsJFY5myjGso8FzgRhEeG/BJbXIT0IBw
-	 3Om9AYk0iezZL3sf9vty0Dv3urjms1d7pd7DZqAk2SWe43O8roTXodUWp4JFtpFa1y
-	 eXC347qi2FwGGsOGw7gQS0ATtFFoUL1zMIGxaXDtWtAlyPZTH69RODunkNRrgXh9cV
-	 qI11SPQcnozm3q5axM+klX53SkIVuv32um+0p4ZSTUPt/ZDnaoo8qbdznGEcDev/rj
-	 NGBZyOPV2Ai1RKecjMci8DOxhO+mQWY769I0ctqIG5kIWhLkQsorSq1DVUtHbnnyVH
-	 KfdprW6QRLWHQ==
-From: Kalle Valo <kvalo@kernel.org>
-To: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
-Cc: Arend van Spriel <arend.vanspriel@broadcom.com>,
-  <Syed.Hussain@infineon.com>,  <Vinoth.Sampath@infineon.com>,
-  <Double.Lo@infineon.com>,  <Carter.Chen@infineon.com>,
-  <wlan-kernel-dev-list@infineon.com>,  <brcm80211@lists.linux.dev>,
-  <linux-wireless@vger.kernel.org>
-Subject: Re: [PATCH] MAINTAINERS: wifi: brcm80211: add Infineon DEV list for
- communication & maintenance
-References: <20241007142955.111232-1-gokulkumar.sivakumar@infineon.com>
-	<87zfng3rf1.fsf@kernel.org>
-	<ZwP8B8FgDPKEUTXp@ISCN5CG14747PP.infineon.com>
-Date: Fri, 11 Oct 2024 15:44:17 +0300
-In-Reply-To: <ZwP8B8FgDPKEUTXp@ISCN5CG14747PP.infineon.com> (Gokul Sivakumar's
-	message of "Mon, 7 Oct 2024 20:49:35 +0530")
-Message-ID: <8734l23j32.fsf@kernel.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IRji0I72"
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-37d6a2aa748so1198578f8f.1
+        for <brcm80211@lists.linux.dev>; Mon, 14 Oct 2024 16:02:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728946922; x=1729551722; darn=lists.linux.dev;
+        h=content-transfer-encoding:subject:from:cc:to:content-language
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fIkS7pzP1CV8VNgOcTKZ+pJdHHTX/0kd0qi96EfGmwA=;
+        b=IRji0I72KKSkIT4qZdnGRtG8uqAoGudtNJ8N4DIzfsutICm6dohkAW+eVA+YRz0pLT
+         WbZIRmeBuBmLnZoQ/XktKKYvOQregYHMBPI7/G0V5IDQ0hP2AIFbLojULiP80r09MTLC
+         9rSlqlf7xGF6SFvSw03gTRoAPKsc4UntNHnu3OvGjKSBXO/go5kTIQNVkvF2Ss1uEToV
+         PAEjH7uFotMs6I9H8TesQzlfMT49FXk1uxSzmlcKUst/5yr2EXVGn5fgh3sJm7uBUZA0
+         Bxg0sRjYHYl6zcQT5/EG1D3zYBYSgCO/ohYYVh4r8iLEuJYQ7OLttxDMWzzf6mkGSFft
+         FPdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728946922; x=1729551722;
+        h=content-transfer-encoding:subject:from:cc:to:content-language
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=fIkS7pzP1CV8VNgOcTKZ+pJdHHTX/0kd0qi96EfGmwA=;
+        b=FEtYVD+aRYjtG7UWT3Uk9xsMiCgi/rmqlrxyD8371CTciUbSwJoWo3KBs2pxLGIbfo
+         6st+ppXBOQsapwp+Tpcnd59MTN51SGQgkR4fRDgfiTqCKZb06zkV4zqG3zH3yZb1UBD0
+         sRL5ibkfcScjWVsqXzh9c3J3FP+TLqK3odfdIB70gaMjADqOh+y14uB3fAf4zQCaF4tl
+         S155jDu+/WiV6DFkTA1WGZZFSYJiz1pQvXO9fqSDWKDOz2CTzqhvnGqcOtKERCgbLN1h
+         B/AZBcvgz2TmMRAPTsH4ih2T8MGU4k56DTt3NaJIEfhBFD3Bz8WdmgwXFz3zzAa3GSnH
+         ZDFQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUVz7/IadDev0KmbWxCTs7A86pMlLswGytDkCKeMrTgdSalklDM6RsD/CRIX9UpmBV2YkTtKETrd84=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyEV4fDM8Bc3PKXchGyR6rPQTuxNSM1XpCt65qKJwjOepiSNKFd
+	yjIGITWwRNS5CVs1MEj0AQ+2UiTdKVMxcOz6fLL8XtTr9AnrUhkb
+X-Google-Smtp-Source: AGHT+IGtA4bl0vTDiM0+34/hmRCDBCj/NNYNNYyHfcFZcCHzGIIQMEEMETQwN5PfPgRBOylVg4J0pA==
+X-Received: by 2002:a5d:4d8c:0:b0:374:bd48:fae9 with SMTP id ffacd0b85a97d-37d5ff2a6fbmr7178985f8f.20.1728946922222;
+        Mon, 14 Oct 2024 16:02:02 -0700 (PDT)
+Received: from [192.168.1.240] ([194.120.133.80])
+        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-37d7fa87c7dsm105712f8f.42.2024.10.14.16.02.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 14 Oct 2024 16:02:00 -0700 (PDT)
+Message-ID: <9c02683d-c688-4e39-913e-6b20b3bd76a0@gmail.com>
+Date: Tue, 15 Oct 2024 00:02:00 +0100
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: Arend van Spriel <arend.vanspriel@broadcom.com>,
+ "linux-wireless@vger.kernel.org" <linux-wireless@vger.kernel.org>,
+ brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com
+Cc: "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+From: "Colin King (gmail)" <colin.i.king@gmail.com>
+Subject: incorrect shift and mask operation in
+ drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_n.c
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Gokul Sivakumar <gokulkumar.sivakumar@infineon.com> writes:
+Hi,
 
-> On 10/07, Kalle Valo wrote:
->
->> Gokul Sivakumar <gokulkumar.sivakumar@infineon.com> writes:
->> 
->> > The Infineon E-Mail distribution list <wlan-kernel-dev-list@infineon.com>
->> > is a replacement for the obsolete list <SHA-cyfmac-dev-list@infineon.com>,
->> > which got removed from the BRCM80211 section in the MAINTAINERS file.
->> >
->> > The new distribution list can be used by the community to contact Infineon
->> > WLAN Kernel DEV team, and also for Infineon team to get notified with the
->> > activity in the upstream kernel brcm80211 subsystem.
->> >
->> > Signed-off-by: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
->> > ---
->> >  MAINTAINERS | 1 +
->> >  1 file changed, 1 insertion(+)
->> >
->> > diff --git a/MAINTAINERS b/MAINTAINERS
->> > index 77fcd6f802a5..adfbf5af9eb9 100644
->> > --- a/MAINTAINERS
->> > +++ b/MAINTAINERS
->> > @@ -4475,6 +4475,7 @@ M:      Arend van Spriel <arend.vanspriel@broadcom.com>
->> >  L:   linux-wireless@vger.kernel.org
->> >  L:   brcm80211@lists.linux.dev
->> >  L:   brcm80211-dev-list.pdl@broadcom.com
->> > +L:   wlan-kernel-dev-list@infineon.com
->> >  S:   Supported
->> >  F:   drivers/net/wireless/broadcom/brcm80211/
->> >  F:   include/linux/platform_data/brcmfmac.h
->> 
->> A lot simpler is that Infineon subscribes to brcm80211@lists.linux.dev
->> list, that way there's just one list for all communication. And actually
->> broadcom could do the same?
->> 
->> I'll also fix the linux-wireless list address, it was wrong originally.
->> 
->
-> For brcm80211 activity related notification, the brcm80211@lists.linux.dev
-> list seems sufficient. But in addition, more importantly, for the people in
-> the community having queries specifically regarding the Infineon WLAN
-> chipset support, it would be helpful to have this E-Mail Distribution list,
-> So they can notify and communicate with the Infineon WLAN Kernel DEV team.
+Static analysis on 
+drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_n.c has found 
+an issue with a mask and shift operation in function 
+wlc_phy_rxcal_radio_setup_nphy() as follows:
 
-You can add that to your documentation or website.
+lines 26326-26330:
 
--- 
-https://patchwork.kernel.org/project/linux-wireless/list/
+         offtune_val =
+                 (pi->tx_rx_cal_radio_saveregs
+                  [2] & 0xF0) >> 8;
+         offtune_val =
+                 (offtune_val <= 0x7) ? 0xF : 0;
 
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+and similar in lines 26376-26381 too.
+
+The issue is that the expression pi->tx_rx_cal_radio_saveregs[2] & 0xF0
+when shifted 8 places right is always zero, so this looks like a mistake 
+since some value value between 0..0xf is expected in the second statement.
+
+Since pi->tx_rx_cal_radio_saveregs[2] is a u16 value the expression 
+could plausible be:
+
+	(pi->tx_rx_cal_radio_saveregs[2] & 0xf0) >> 4
+or
+	(pi->tx_rx_cal_radio_saveregs[2] & 0xf00) >> 8
+
+I don't have knowledge of the hardware so I'm not sure what a suitable 
+fix is.
+
+Regards,
+
+Colin
+
