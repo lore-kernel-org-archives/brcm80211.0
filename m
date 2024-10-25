@@ -1,67 +1,101 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx.treblig.org (mx.treblig.org [46.235.229.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BAB71DDC24;
-	Thu, 17 Oct 2024 16:50:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 163AA18C021;
+	Fri, 25 Oct 2024 20:46:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.229.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729183808; cv=none; b=hkiU9Sxb46/pvsfQst+IvESyko2TVS0dOjFiBlHqe49bsDtVtYKYMr+cseBPx+CCfitbTErqih4mAdMbs1XCpao/OYEYPhv3/LDofWDAbd0yEzsX5/7AITBR5pEeedxGzzpUrNXKrD/p700g8u2cKJmcGtoXxosaz4/8uPb09Ag=
+	t=1729889220; cv=none; b=keBlbek1FmRcM1m1FzIGH71upnKJX4a39X41UPHs7Mbe6vUUPAk7Tkz95PsqbCaJAJJ7oAKOo+Ni2hcz4maLYuuzLPPxGYrEqHjYVk71nIwQD0IHZjKoGwhTEbFPs4ZfJWmV1rT7Nm08NGQXJbnpiFiRnlEmxv7c8Zy/gWPuasM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729183808; c=relaxed/simple;
-	bh=20vtws0AabuYgFOqtczHXHBoZwS8yMb2WxRkFSp4RCQ=;
-	h=Content-Type:MIME-Version:Subject:From:In-Reply-To:References:To:
-	 Cc:Message-ID:Date; b=GumPO/z/khzUJzPK+5vhulw8OjbKKIvgImj7BJl81RmxfzeuRagLkRowKiSfeg8RDie9C1Z0F9Kf8TnwckMdjBFTQQTJdqYYcIDPhhTacsjA69Qy9dMnAyvABEnIgvbURSuDDGedEDmCl7UKOZCwWYHJHE1pvsdL+kFHWFB6aOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZEL4qK5V; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1729889220; c=relaxed/simple;
+	bh=sbx7GKDOCDQxcPyycAmGy9ZEjXCDuDtk+cGxjR6R0HU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Z87eFmqelASQAmC/6MVOHOqq2yb2iHLvsgBHwpk/OC3brkdlo3tYlpMl3tALIl42kfCSdo6shKMH/yE99fB2E4UptUyJhYGte1LyAiJESxHeqU5QsPdLEWW2+BLYKWpXIc6X5lKKEAphxQmVVjKpZg26ZZp7ueOL4YEe0jOLVAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=treblig.org; spf=pass smtp.mailfrom=treblig.org; dkim=pass (2048-bit key) header.d=treblig.org header.i=@treblig.org header.b=l34c1oVs; arc=none smtp.client-ip=46.235.229.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=treblig.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=treblig.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZEL4qK5V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F789C4CECD;
-	Thu, 17 Oct 2024 16:50:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729183808;
-	bh=20vtws0AabuYgFOqtczHXHBoZwS8yMb2WxRkFSp4RCQ=;
-	h=Subject:From:In-Reply-To:References:To:Cc:Date:From;
-	b=ZEL4qK5Vtk0sFPCs9J2pjqAbiH14fx0HOOsPMovfcKS7P8IMXRk9LJlfSv59bLnyu
-	 ARTOJnT4anuvO6j+o1/M04QgP2bfIpuvEABbJybZsgivdFkHYBFj1lBqPAf7CwYK1w
-	 idwKXVxvnBxKw0QDpEoR4V//jUlUhx6+ApmctA36IY16tHlvjqk14sGh+afEOf5X30
-	 PCG5qbiGSgNhQgXNxWlDCYrsHcQilCJ5X2zHkBHC+iysPpekgOfn+sbXZbhGxjHwhZ
-	 ECLGKLSiAGytm5VgqT+x72wblxOTcg7G3/Z0KJWpO4CJSOFDC+2bL3tVJkJZrtYuY/
-	 P66FNribpOl1w==
-Content-Type: text/plain; charset="utf-8"
+	dkim=pass (2048-bit key) header.d=treblig.org header.i=@treblig.org header.b="l34c1oVs"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+	; s=bytemarkmx; h=MIME-Version:Message-ID:Date:Subject:From:Content-Type:From
+	:Subject; bh=eT6kiO3JGaQV7wsi4OCzn24QrjXvaYPh6+rZs8ak/nw=; b=l34c1oVsumRi8+/I
+	/NTvvwOvfP5xRoeu4ERWyk9/Oh3MMOasmkCnlGiP8FYDFAs+orZInV/jGwuSt0yQFRqQvHXy88fbb
+	TLwY4JA9vpmZVdWe7NzjFK+fVKhjjOgNj1gGgvqek/yN9YkVeCzViRR2XBj5HO+ysGlvVxIWSqB1V
+	7f9c5TzUvoL5CC8jSXPgrjws0/WRXB+d+aoENH4id/BX7ey5fEad04X/LijKv3pMfJiUgIt9i39tD
+	tIA0nUCNshcAxIib9zZTDPJwyAD77PH0YOWISRyGhaYRJCqEXzdfmQpevkyBikiRTFFlYkfvfwSjw
+	PuyVl+m2WKpx+UDWLA==;
+Received: from localhost ([127.0.0.1] helo=dalek.home.treblig.org)
+	by mx.treblig.org with esmtp (Exim 4.96)
+	(envelope-from <linux@treblig.org>)
+	id 1t4RCu-00Dc75-0j;
+	Fri, 25 Oct 2024 20:46:52 +0000
+From: linux@treblig.org
+To: arend.vanspriel@broadcom.com,
+	kvalo@kernel.org,
+	kees@kernel.org,
+	erick.archer@outlook.com
+Cc: linux-wireless@vger.kernel.org,
+	brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com,
+	linux-kernel@vger.kernel.org,
+	"Dr. David Alan Gilbert" <linux@treblig.org>
+Subject: [PATCH] wifi: brcm80211: Remove unused dma_txflush
+Date: Fri, 25 Oct 2024 21:46:51 +0100
+Message-ID: <20241025204651.244627-1-linux@treblig.org>
+X-Mailer: git-send-email 2.47.0
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH] wifi: brcmfmac: of: use
- devm_clk_get_optional_enabled_with_rate()
-From: Kalle Valo <kvalo@kernel.org>
-In-Reply-To: <20241007131639.98358-1-brgl@bgdev.pl>
-References: <20241007131639.98358-1-brgl@bgdev.pl>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Arend van Spriel <arend.vanspriel@broadcom.com>,
- linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
- brcm80211-dev-list.pdl@broadcom.com, linux-kernel@vger.kernel.org,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-User-Agent: pwcli/0.1.1-git (https://github.com/kvalo/pwcli/) Python/3.11.2
-Message-ID: <172918380489.970100.2558339761978591101.kvalo@kernel.org>
-Date: Thu, 17 Oct 2024 16:50:06 +0000 (UTC)
+Content-Transfer-Encoding: 8bit
 
-Bartosz Golaszewski <brgl@bgdev.pl> wrote:
+From: "Dr. David Alan Gilbert" <linux@treblig.org>
 
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> 
-> Fold the separate clk_set_rate() call into the clock getter.
-> 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+dma_fxflush() has been unused since 2013's
+commit 7b2385b95363 ("brcmsmac: rework of mac80211 .flush() callback
+operation")
 
-Patch applied to wireless-next.git, thanks.
+Remove it.
 
-7cc7267a0163 wifi: brcmfmac: of: use devm_clk_get_optional_enabled_with_rate()
+Signed-off-by: Dr. David Alan Gilbert <linux@treblig.org>
+---
+ drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.c | 9 ---------
+ drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.h | 1 -
+ 2 files changed, 10 deletions(-)
 
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.c
+index bd480239368a..80c35027787a 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.c
+@@ -1426,15 +1426,6 @@ int dma_txfast(struct brcms_c_info *wlc, struct dma_pub *pub,
+ 	return -ENOSPC;
+ }
+ 
+-void dma_txflush(struct dma_pub *pub)
+-{
+-	struct dma_info *di = container_of(pub, struct dma_info, dma);
+-	struct brcms_ampdu_session *session = &di->ampdu_session;
+-
+-	if (!skb_queue_empty(&session->skb_list))
+-		ampdu_finalize(di);
+-}
+-
+ int dma_txpending(struct dma_pub *pub)
+ {
+ 	struct dma_info *di = container_of(pub, struct dma_info, dma);
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.h b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.h
+index ff5b80b09046..7905fd081721 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.h
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.h
+@@ -88,7 +88,6 @@ bool dma_txreset(struct dma_pub *pub);
+ void dma_txinit(struct dma_pub *pub);
+ int dma_txfast(struct brcms_c_info *wlc, struct dma_pub *pub,
+ 	       struct sk_buff *p0);
+-void dma_txflush(struct dma_pub *pub);
+ int dma_txpending(struct dma_pub *pub);
+ void dma_kick_tx(struct dma_pub *pub);
+ void dma_txsuspend(struct dma_pub *pub);
 -- 
-https://patchwork.kernel.org/project/linux-wireless/patch/20241007131639.98358-1-brgl@bgdev.pl/
-
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+2.47.0
 
