@@ -1,101 +1,134 @@
-Received: from mx.treblig.org (mx.treblig.org [46.235.229.95])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 163AA18C021;
-	Fri, 25 Oct 2024 20:46:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.229.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64D301E22FF
+	for <brcm80211@lists.linux.dev>; Wed, 30 Oct 2024 10:58:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729889220; cv=none; b=keBlbek1FmRcM1m1FzIGH71upnKJX4a39X41UPHs7Mbe6vUUPAk7Tkz95PsqbCaJAJJ7oAKOo+Ni2hcz4maLYuuzLPPxGYrEqHjYVk71nIwQD0IHZjKoGwhTEbFPs4ZfJWmV1rT7Nm08NGQXJbnpiFiRnlEmxv7c8Zy/gWPuasM=
+	t=1730285938; cv=none; b=hCtmy0J1Um8433qmo1wNv06qbvKrqINrsrd10yN9k6bII5C4Ijp5uhb0YK7VlPNX6leKSLAo9lN6Ith7mpzxoQdY0OciC52zYIRTH3oHjTyZXWztzCNNSDNPDR7C5duwAQ62nI+PwylDrAUi86NMqoMIqk1kS1LE2C8ooD/geps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729889220; c=relaxed/simple;
-	bh=sbx7GKDOCDQxcPyycAmGy9ZEjXCDuDtk+cGxjR6R0HU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Z87eFmqelASQAmC/6MVOHOqq2yb2iHLvsgBHwpk/OC3brkdlo3tYlpMl3tALIl42kfCSdo6shKMH/yE99fB2E4UptUyJhYGte1LyAiJESxHeqU5QsPdLEWW2+BLYKWpXIc6X5lKKEAphxQmVVjKpZg26ZZp7ueOL4YEe0jOLVAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=treblig.org; spf=pass smtp.mailfrom=treblig.org; dkim=pass (2048-bit key) header.d=treblig.org header.i=@treblig.org header.b=l34c1oVs; arc=none smtp.client-ip=46.235.229.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=treblig.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=treblig.org
+	s=arc-20240116; t=1730285938; c=relaxed/simple;
+	bh=ausQ5aWSKSUZuprbbuF1jOXFG4+asVuUb1pBEXnZqP8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=KvUbRsrGvEiw5cMTQfxe5M1Vs+iZy4oZ2QoMdiecaFtVGweylUyghAboa08IOsBpZhZi14kcFhs6YdvFlK2NslxkwpKex8gGTn/3/AJ7u+KGMYAyiF0nD0ugGXw+78A0ZLM8K7bnczgmg0tQmAY6fUBi9diYyBtQxoPgVc4P7Sc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=gy4bx8fp; arc=none smtp.client-ip=209.85.214.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=treblig.org header.i=@treblig.org header.b="l34c1oVs"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
-	; s=bytemarkmx; h=MIME-Version:Message-ID:Date:Subject:From:Content-Type:From
-	:Subject; bh=eT6kiO3JGaQV7wsi4OCzn24QrjXvaYPh6+rZs8ak/nw=; b=l34c1oVsumRi8+/I
-	/NTvvwOvfP5xRoeu4ERWyk9/Oh3MMOasmkCnlGiP8FYDFAs+orZInV/jGwuSt0yQFRqQvHXy88fbb
-	TLwY4JA9vpmZVdWe7NzjFK+fVKhjjOgNj1gGgvqek/yN9YkVeCzViRR2XBj5HO+ysGlvVxIWSqB1V
-	7f9c5TzUvoL5CC8jSXPgrjws0/WRXB+d+aoENH4id/BX7ey5fEad04X/LijKv3pMfJiUgIt9i39tD
-	tIA0nUCNshcAxIib9zZTDPJwyAD77PH0YOWISRyGhaYRJCqEXzdfmQpevkyBikiRTFFlYkfvfwSjw
-	PuyVl+m2WKpx+UDWLA==;
-Received: from localhost ([127.0.0.1] helo=dalek.home.treblig.org)
-	by mx.treblig.org with esmtp (Exim 4.96)
-	(envelope-from <linux@treblig.org>)
-	id 1t4RCu-00Dc75-0j;
-	Fri, 25 Oct 2024 20:46:52 +0000
-From: linux@treblig.org
-To: arend.vanspriel@broadcom.com,
-	kvalo@kernel.org,
-	kees@kernel.org,
-	erick.archer@outlook.com
-Cc: linux-wireless@vger.kernel.org,
-	brcm80211@lists.linux.dev,
-	brcm80211-dev-list.pdl@broadcom.com,
-	linux-kernel@vger.kernel.org,
-	"Dr. David Alan Gilbert" <linux@treblig.org>
-Subject: [PATCH] wifi: brcm80211: Remove unused dma_txflush
-Date: Fri, 25 Oct 2024 21:46:51 +0100
-Message-ID: <20241025204651.244627-1-linux@treblig.org>
-X-Mailer: git-send-email 2.47.0
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="gy4bx8fp"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-20cb7139d9dso62638035ad.1
+        for <brcm80211@lists.linux.dev>; Wed, 30 Oct 2024 03:58:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google; t=1730285936; x=1730890736; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=lF7elXiFFzOT6P5cvxOSKmSBywtmOCP/Uderu+HlP0k=;
+        b=gy4bx8fpS3ohY8rPce8zwEgI3zy6jbWWUnrnM6TL2wVUZzfFM/ca/b5BvHrFIJmlJu
+         +LljpRRP4ox9rsvcPtdcWFHfJjPn5nyZFXpi92RGEFs62+zwYLE3YXJveJm08HNNv3zE
+         C6A3mp0ythFjkXj92clRolzYoHK35uEySlvL4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730285936; x=1730890736;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lF7elXiFFzOT6P5cvxOSKmSBywtmOCP/Uderu+HlP0k=;
+        b=SwZX1zcjtyqvQNFI7Ay+Vmg97Vcl4pvbptJSMvDD1IZdAV8g6e8RTnYvpNv68tzyma
+         qW+PMET7369LbxmLb6CTX68QbR+zroSOey2srqkH2suSgSh+Lg7CsB6ZTpL3UDMR6lnk
+         sLvc43k/U8VTN27xgfcwMURvAnjjQPzXZiTmm3Us84Z0merA5NKvQbTfEn6ptmC+s63O
+         k3OukJBld1jhBt84rWeM/Imqe4LhqVDrMxgZtKPVzLrjVFEp3EB04/In5ZFw98VcabqP
+         qUmi4Bi4v/IizQEaglekxo2CEcLlv3X5C9Mw9f8x5Ghv7jPiXA9KILeUCEmuS0rHU75j
+         htHw==
+X-Forwarded-Encrypted: i=1; AJvYcCVdz3JFnNXxhjJLeNEPi9yKBr6cQuZD3Eohb3ausbY89ytuOExTqjtMMqzjeH6NATKie2aphtb5DrU=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzntToNAm8XVECjPi/7KrbuNQzRW0jV3GngmK7KaguE/JDQYKhh
+	swSRGHxAqi/oBaau2aJADu4Zzai1zagKAZ+KY0xBmF5V1k1YpddXbZmyvmr09w==
+X-Google-Smtp-Source: AGHT+IFLh10b2Eh1Nyo78as4ynpfvHJIIzeCClG4dSLNaIRTAGrq5Hf1akED0SsXwzeM6tiOs6m4nA==
+X-Received: by 2002:a17:902:dac9:b0:20e:57c8:6aae with SMTP id d9443c01a7336-210c6879841mr206180445ad.3.1730285935654;
+        Wed, 30 Oct 2024 03:58:55 -0700 (PDT)
+Received: from [10.176.68.61] ([192.19.176.250])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-210bc0178cdsm78588935ad.174.2024.10.30.03.58.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 30 Oct 2024 03:58:55 -0700 (PDT)
+Message-ID: <0caf4870-072c-4285-aed9-66d2472a06b5@broadcom.com>
+Date: Wed, 30 Oct 2024 11:58:50 +0100
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] wifi: brcm80211: Remove unused dma_txflush
+To: linux@treblig.org, kvalo@kernel.org, kees@kernel.org,
+ erick.archer@outlook.com
+Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
+ brcm80211-dev-list.pdl@broadcom.com, linux-kernel@vger.kernel.org
+References: <20241025204651.244627-1-linux@treblig.org>
+Content-Language: en-US
+From: Arend van Spriel <arend.vanspriel@broadcom.com>
+Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
+ 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
+In-Reply-To: <20241025204651.244627-1-linux@treblig.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: "Dr. David Alan Gilbert" <linux@treblig.org>
+On 10/25/2024 10:46 PM, linux@treblig.org wrote:
+> From: "Dr. David Alan Gilbert" <linux@treblig.org>
+> 
+> dma_fxflush() has been unused since 2013's
+> commit 7b2385b95363 ("brcmsmac: rework of mac80211 .flush() callback
+> operation")
+> 
+> Remove it.
 
-dma_fxflush() has been unused since 2013's
-commit 7b2385b95363 ("brcmsmac: rework of mac80211 .flush() callback
-operation")
+Thanks!
 
-Remove it.
-
-Signed-off-by: Dr. David Alan Gilbert <linux@treblig.org>
----
- drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.c | 9 ---------
- drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.h | 1 -
- 2 files changed, 10 deletions(-)
-
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.c
-index bd480239368a..80c35027787a 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.c
-@@ -1426,15 +1426,6 @@ int dma_txfast(struct brcms_c_info *wlc, struct dma_pub *pub,
- 	return -ENOSPC;
- }
- 
--void dma_txflush(struct dma_pub *pub)
--{
--	struct dma_info *di = container_of(pub, struct dma_info, dma);
--	struct brcms_ampdu_session *session = &di->ampdu_session;
--
--	if (!skb_queue_empty(&session->skb_list))
--		ampdu_finalize(di);
--}
--
- int dma_txpending(struct dma_pub *pub)
- {
- 	struct dma_info *di = container_of(pub, struct dma_info, dma);
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.h b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.h
-index ff5b80b09046..7905fd081721 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.h
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.h
-@@ -88,7 +88,6 @@ bool dma_txreset(struct dma_pub *pub);
- void dma_txinit(struct dma_pub *pub);
- int dma_txfast(struct brcms_c_info *wlc, struct dma_pub *pub,
- 	       struct sk_buff *p0);
--void dma_txflush(struct dma_pub *pub);
- int dma_txpending(struct dma_pub *pub);
- void dma_kick_tx(struct dma_pub *pub);
- void dma_txsuspend(struct dma_pub *pub);
--- 
-2.47.0
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+> Signed-off-by: Dr. David Alan Gilbert <linux@treblig.org>
+> ---
+>   drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.c | 9 ---------
+>   drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.h | 1 -
+>   2 files changed, 10 deletions(-)
 
