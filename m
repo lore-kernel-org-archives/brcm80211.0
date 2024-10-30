@@ -1,57 +1,57 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64D301E22FF
-	for <brcm80211@lists.linux.dev>; Wed, 30 Oct 2024 10:58:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5491B1E500F
+	for <brcm80211@lists.linux.dev>; Wed, 30 Oct 2024 11:08:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730285938; cv=none; b=hCtmy0J1Um8433qmo1wNv06qbvKrqINrsrd10yN9k6bII5C4Ijp5uhb0YK7VlPNX6leKSLAo9lN6Ith7mpzxoQdY0OciC52zYIRTH3oHjTyZXWztzCNNSDNPDR7C5duwAQ62nI+PwylDrAUi86NMqoMIqk1kS1LE2C8ooD/geps=
+	t=1730286495; cv=none; b=EypBxaIXnJTiPLfMaRCuSQx5vidk4ZCdbD4rkiR2brMiOPUNFrXjv2pVzohMaZHYXl0R56sKYqjKC3F3MgZhTCuwTanhVq0EG5nlsxT0vWW76BFkxw5oE4Bvqq4MSUh4gfVp7N6HQxFK4JCWehxdpLUjlHHsZIqLIp+nRnjgN1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730285938; c=relaxed/simple;
-	bh=ausQ5aWSKSUZuprbbuF1jOXFG4+asVuUb1pBEXnZqP8=;
+	s=arc-20240116; t=1730286495; c=relaxed/simple;
+	bh=mQhweHZtfQd/nfsfIKR/19URa4f+qVo3ER/TW2Dj1Y0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KvUbRsrGvEiw5cMTQfxe5M1Vs+iZy4oZ2QoMdiecaFtVGweylUyghAboa08IOsBpZhZi14kcFhs6YdvFlK2NslxkwpKex8gGTn/3/AJ7u+KGMYAyiF0nD0ugGXw+78A0ZLM8K7bnczgmg0tQmAY6fUBi9diYyBtQxoPgVc4P7Sc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=gy4bx8fp; arc=none smtp.client-ip=209.85.214.175
+	 In-Reply-To:Content-Type; b=UWx8Etz+MTQtwO/fcvNwcWq3cohuqkRdWfajkR6z9dEnv6OzCtlNV6UT6OlbyWcSv5+m410sBrYZmDKsQspNvj11KM3GbyeCyU+Fn5QwnBmZIJp2lZgV/A3cbMxbM60lZ8klzgvG7h3aAxQoR9G+t2acPp0RiiLoi53Gia7OKo4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=YFACtBth; arc=none smtp.client-ip=209.85.210.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="gy4bx8fp"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-20cb7139d9dso62638035ad.1
-        for <brcm80211@lists.linux.dev>; Wed, 30 Oct 2024 03:58:56 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="YFACtBth"
+Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-71e5a1c9071so5043172b3a.0
+        for <brcm80211@lists.linux.dev>; Wed, 30 Oct 2024 04:08:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1730285936; x=1730890736; darn=lists.linux.dev;
+        d=broadcom.com; s=google; t=1730286492; x=1730891292; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=lF7elXiFFzOT6P5cvxOSKmSBywtmOCP/Uderu+HlP0k=;
-        b=gy4bx8fpS3ohY8rPce8zwEgI3zy6jbWWUnrnM6TL2wVUZzfFM/ca/b5BvHrFIJmlJu
-         +LljpRRP4ox9rsvcPtdcWFHfJjPn5nyZFXpi92RGEFs62+zwYLE3YXJveJm08HNNv3zE
-         C6A3mp0ythFjkXj92clRolzYoHK35uEySlvL4=
+        bh=SDC5+p/fN+8HeECl2TRb5z1+IbrstnK0lNDWpJYgTbY=;
+        b=YFACtBthuZnrgbjgFp3sZklDQ+hHhPmZ8QcOBVXmELSHKadMdYF7ofLyFKDqecelv2
+         ycMB6Vm6jacK/CYND4WKG+T4bF5eqTJi+lX0BNoJxGtqxpsTGcAgM7K7b+T2hH6vo3Qq
+         INB7td37vSzX58GAAIXqlEhMjHIvoX0ZHP/C0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730285936; x=1730890736;
+        d=1e100.net; s=20230601; t=1730286492; x=1730891292;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=lF7elXiFFzOT6P5cvxOSKmSBywtmOCP/Uderu+HlP0k=;
-        b=SwZX1zcjtyqvQNFI7Ay+Vmg97Vcl4pvbptJSMvDD1IZdAV8g6e8RTnYvpNv68tzyma
-         qW+PMET7369LbxmLb6CTX68QbR+zroSOey2srqkH2suSgSh+Lg7CsB6ZTpL3UDMR6lnk
-         sLvc43k/U8VTN27xgfcwMURvAnjjQPzXZiTmm3Us84Z0merA5NKvQbTfEn6ptmC+s63O
-         k3OukJBld1jhBt84rWeM/Imqe4LhqVDrMxgZtKPVzLrjVFEp3EB04/In5ZFw98VcabqP
-         qUmi4Bi4v/IizQEaglekxo2CEcLlv3X5C9Mw9f8x5Ghv7jPiXA9KILeUCEmuS0rHU75j
-         htHw==
-X-Forwarded-Encrypted: i=1; AJvYcCVdz3JFnNXxhjJLeNEPi9yKBr6cQuZD3Eohb3ausbY89ytuOExTqjtMMqzjeH6NATKie2aphtb5DrU=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzntToNAm8XVECjPi/7KrbuNQzRW0jV3GngmK7KaguE/JDQYKhh
-	swSRGHxAqi/oBaau2aJADu4Zzai1zagKAZ+KY0xBmF5V1k1YpddXbZmyvmr09w==
-X-Google-Smtp-Source: AGHT+IFLh10b2Eh1Nyo78as4ynpfvHJIIzeCClG4dSLNaIRTAGrq5Hf1akED0SsXwzeM6tiOs6m4nA==
-X-Received: by 2002:a17:902:dac9:b0:20e:57c8:6aae with SMTP id d9443c01a7336-210c6879841mr206180445ad.3.1730285935654;
-        Wed, 30 Oct 2024 03:58:55 -0700 (PDT)
+        bh=SDC5+p/fN+8HeECl2TRb5z1+IbrstnK0lNDWpJYgTbY=;
+        b=f9M3VCuTLOoepHnxoeb0pyfgpBU6sLAbZpPWOGomiGqRbJaU7s+kKLSfVHcZldo6AO
+         IaR+wCTB6AshqOc2fqOq0elBp3tFQyLiNqptEV/AGj7o7UkrCA8Q6lRJSbBl2dsDCpY1
+         bZoX6+9pNhV7SdymheOHiVF3O1cVzYQxcESW1V66MuZ2f6HZsdrMvsbPU/YZ6iiuiYM2
+         HlD/+fWEidVGpa1TGmimIGXst/Z2MB8AyXvRF5GqhkFq3WRcfyVOCb+YT1No1YNWrIaL
+         gMYakgCleS/n63BMI34N2mqRcgr/lfd06fXXYEl4ir6qX1yGM0aylEJOXsy4ghoWhbY9
+         8rAQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUCPNiZpt5HpzmExBsQbQ289rXWbDWcu52wlPztoM2rHW+4UW7b7Zs7ZtOz6mRad4o2qqicT349llk=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxqYiRCGJhTVJGWbGjBEWgMHdkXDq5MU8tIZ3xp0wObVuPIVEhf
+	O7qokmzi4ZGdmshFL7M+PF6UGeeVkma234lvNBMEgf24A+DXklTONUqqXxE7sA==
+X-Google-Smtp-Source: AGHT+IGaKpkSr3ONj/8tkf0uNIDs04G8IQUfN4JFdlW6rWyabr4OE6nAnW+LkU/GJjSgkungmU1zJg==
+X-Received: by 2002:a05:6a00:811:b0:71e:50ef:20f3 with SMTP id d2e1a72fcca58-720ab4c705fmr3538687b3a.28.1730286492478;
+        Wed, 30 Oct 2024 04:08:12 -0700 (PDT)
 Received: from [10.176.68.61] ([192.19.176.250])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-210bc0178cdsm78588935ad.174.2024.10.30.03.58.53
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7205793189esm8950018b3a.58.2024.10.30.04.08.10
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Oct 2024 03:58:55 -0700 (PDT)
-Message-ID: <0caf4870-072c-4285-aed9-66d2472a06b5@broadcom.com>
-Date: Wed, 30 Oct 2024 11:58:50 +0100
+        Wed, 30 Oct 2024 04:08:11 -0700 (PDT)
+Message-ID: <467fd994-01f0-4057-964c-4184a23e59c4@broadcom.com>
+Date: Wed, 30 Oct 2024 12:08:07 +0100
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -59,12 +59,14 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] wifi: brcm80211: Remove unused dma_txflush
-To: linux@treblig.org, kvalo@kernel.org, kees@kernel.org,
- erick.archer@outlook.com
-Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
- brcm80211-dev-list.pdl@broadcom.com, linux-kernel@vger.kernel.org
-References: <20241025204651.244627-1-linux@treblig.org>
+Subject: Re: incorrect shift and mask operation in
+ drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_n.c
+To: "Colin King (gmail)" <colin.i.king@gmail.com>,
+ "linux-wireless@vger.kernel.org" <linux-wireless@vger.kernel.org>,
+ brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com
+Cc: "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ Dmitry Antipov <dmantipov@yandex.ru>
+References: <9c02683d-c688-4e39-913e-6b20b3bd76a0@gmail.com>
 Content-Language: en-US
 From: Arend van Spriel <arend.vanspriel@broadcom.com>
 Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
@@ -110,25 +112,50 @@ Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
  NKowQLrlMBGXT4NnRNV0+yHmusXPOPIqQCKEtbWSx9s2slQxmXukPYvLnuRJqkPkvrTgjn5d
  eSE0Dkhni4292/Nn/TnZf5mxCNWH1p3dz/vrT6EIYk2GSJgCLoTkCcqaM6+5E4IwgYOq3UYu
  AAgeEbPV1QeTVAPrntrLb0t0U5vdwG7Xl40baV9OydTv7ghjYZU349w1d5mdxg==
-In-Reply-To: <20241025204651.244627-1-linux@treblig.org>
+In-Reply-To: <9c02683d-c688-4e39-913e-6b20b3bd76a0@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 10/25/2024 10:46 PM, linux@treblig.org wrote:
-> From: "Dr. David Alan Gilbert" <linux@treblig.org>
+On 10/15/2024 1:02 AM, Colin King (gmail) wrote:
+> Hi,
 > 
-> dma_fxflush() has been unused since 2013's
-> commit 7b2385b95363 ("brcmsmac: rework of mac80211 .flush() callback
-> operation")
+> Static analysis on drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/ 
+> phy_n.c has found an issue with a mask and shift operation in function 
+> wlc_phy_rxcal_radio_setup_nphy() as follows:
 > 
-> Remove it.
+> lines 26326-26330:
+> 
+>          offtune_val =
+>                  (pi->tx_rx_cal_radio_saveregs
+>                   [2] & 0xF0) >> 8;
+>          offtune_val =
+>                  (offtune_val <= 0x7) ? 0xF : 0;
+> 
+> and similar in lines 26376-26381 too.
+> 
+> The issue is that the expression pi->tx_rx_cal_radio_saveregs[2] & 0xF0
+> when shifted 8 places right is always zero, so this looks like a mistake 
+> since some value value between 0..0xf is expected in the second statement.
+> 
+> Since pi->tx_rx_cal_radio_saveregs[2] is a u16 value the expression 
+> could plausible be:
+> 
+>      (pi->tx_rx_cal_radio_saveregs[2] & 0xf0) >> 4
+> or
+>      (pi->tx_rx_cal_radio_saveregs[2] & 0xf00) >> 8
+> 
+> I don't have knowledge of the hardware so I'm not sure what a suitable 
+> fix is.
 
-Thanks!
+Thanks, Colin
 
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-> Signed-off-by: Dr. David Alan Gilbert <linux@treblig.org>
-> ---
->   drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.c | 9 ---------
->   drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.h | 1 -
->   2 files changed, 10 deletions(-)
+That looks pretty redundant indeed. I look into the history of it, but 
+ended up in an old end-of-life development tree and the code was pretty 
+much the same. It is one of the finer dark arts of our phy/radio 
+development team I guess ;-)
 
+I see that Dmitry Antipov submitted a patch to address this. Again 
+thanks for reporting.
+
+Regards,
+Arend
