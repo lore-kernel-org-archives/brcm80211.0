@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C247156CF;
-	Thu, 31 Oct 2024 14:18:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C535E156CF;
+	Thu, 31 Oct 2024 14:19:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730384302; cv=none; b=rMSKsUzpOZH2TpiTA9PjRRtp817gsNxxjJwHsecbdnygQDPxS0hgRtzvJ8qijfDsNGExVVNsY+Mrm5rEgpx1IwPEUIQGcXCs+oWbadSgvBV0MbCXuUmKkWfeYWsYgRrWfhsYc8F7VxObM1FJ8H2AwgOVWxWyvXlB4eV62hS9O2I=
+	t=1730384370; cv=none; b=JVJXDVbF/j16BE++eWFvh2sxGKia2kmqBOVXX+0HGREDHf/Fg1eDGfQ7wctcbjPt5z+4Kr4qaqiJFweP2xDsgbI7PEVN7qRYD0/RCUxsdepnCN1tFxjK4UM7YRG1sogDUV1OHEgT/N9bzYVqZeZMkfOD9sJHAkNW/DNQP4kV0QE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730384302; c=relaxed/simple;
-	bh=7GalZRZr9ww/O3wRh6kTLoYDD/ZpmZuKsl1CnhJIqqo=;
+	s=arc-20240116; t=1730384370; c=relaxed/simple;
+	bh=QJxJNeaj3gC0NUWb5CZdw1212FbzauRiC0Vy6rHljeA=;
 	h=Content-Type:MIME-Version:Subject:From:In-Reply-To:References:To:
-	 Cc:Message-ID:Date; b=oYfKqsA/hm4zQggUjG1fS2/hLwA68aCuumMIiKL3qhcVBfqCVxBs7k6q5cIX6PuCDkyoA6HqkzLZlnIeGCTEodll6SN4SLAyiSvHiFu9XDzPGjyUz7azoTCOKk4u94rvSoTPMRoz7wt7AomtVcpAZn0C++Do8NShNdR3DTKHoe4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YEf1FKCA; arc=none smtp.client-ip=10.30.226.201
+	 Cc:Message-ID:Date; b=rlG930XlDFo3Vtu/kfr5BzBoHP6g5qMBFwVdN60sV/h7WI1ztbXVu/TBtU+B4PxaqTg/EtfG4XL01hdKkFQwAS2/MW/f0R5wmXEcLoOzp8Mxdv01IyhzAkvILnUCvw3xQwRnuTrnhpIDTPnUBBAuDKs7H8S0QKcAS/Dbu6KE3aw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kh2Io39h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YEf1FKCA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87C70C4CEEA;
-	Thu, 31 Oct 2024 14:18:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kh2Io39h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 598ACC4DDED;
+	Thu, 31 Oct 2024 14:19:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730384302;
-	bh=7GalZRZr9ww/O3wRh6kTLoYDD/ZpmZuKsl1CnhJIqqo=;
+	s=k20201202; t=1730384370;
+	bh=QJxJNeaj3gC0NUWb5CZdw1212FbzauRiC0Vy6rHljeA=;
 	h=Subject:From:In-Reply-To:References:To:Cc:Date:From;
-	b=YEf1FKCA4Y1/Dp2xaYAdv4Yiwzrwe5ERJM8i97nBtVqS8Vn/amN06PXBEw+xq0y9q
-	 gecmwUUGyOqpkEmRbKexwQtSsvz46bVxqIqfdlW1WpQK2jiK9l0Jot22eU97T0jN+9
-	 m66VUXtnq/172x9EZvjbc89Zeh9VB/ejXlRAStENN2TaXwY1U0FHRgbYUinJ/X55Wf
-	 lKs7gi7WTTVT70bE87YgFJX8HIu2OQPuOUm+nuf2qpCBUjPbDneV8oz/E8cOVFQ1jz
-	 yo8Q2Kq8p/6xy730/dn/ud1Z6KEL4ez3/1Y+tVEGCbrN38PYv1aIvNTY9X/ju5X71B
-	 2WfPL3XHefxng==
+	b=kh2Io39hLbpuvosOg5J3WXfTKR9/K1A1ix/WnkWrIN+lp+0OtxXR7MGxCYdQxX7y4
+	 ugKYAwZGMcg1j1Ws0wDzr/vtgpFzMdloxNyRJ/zxGo29x8HslTGxjZU7MqWHJDX6BL
+	 XYwsG35daO/ZmVKe2hTWE+VtGubQ50qEq3M2eUXEA2tnsl4tTfumK4UsMx+9bI8Khm
+	 9nmacdkhLIkjro5fSrQ19rTCq+39YbzktZBwn57T9tVJ0DuWoeLPAFFgLf4befL4KB
+	 I3ire0G0CviGopLWv9LcHEBje7mf1ZXo3hH6+LOwlfDwhLVcV2YxH9zPyCabz9jWii
+	 Pk9tGhbHcj6eQ==
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
@@ -34,43 +34,38 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH net] wifi: brcmfmac: release 'root' node in all execution
- paths
+Subject: Re: wifi: brcm80211: Remove unused dma_txflush()
 From: Kalle Valo <kvalo@kernel.org>
-In-Reply-To: <20241030-brcmfmac-of-cleanup-v1-1-0b90eefb4279@gmail.com>
-References: <20241030-brcmfmac-of-cleanup-v1-1-0b90eefb4279@gmail.com>
-To: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Cc: Arend van Spriel <arend.vanspriel@broadcom.com>,
- Linus Walleij <linus.walleij@linaro.org>,
- "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
- Hector Martin <marcan@marcan.st>,
- =?utf-8?q?Alvin_=C5=A0ipraga?= <alsi@bang-olufsen.dk>,
+In-Reply-To: <20241025204651.244627-1-linux@treblig.org>
+References: <20241025204651.244627-1-linux@treblig.org>
+To: linux@treblig.org
+Cc: arend.vanspriel@broadcom.com, kees@kernel.org, erick.archer@outlook.com,
  linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
  brcm80211-dev-list.pdl@broadcom.com, linux-kernel@vger.kernel.org,
- stable@vger.kernel.org, Javier Carrasco <javier.carrasco.cruz@gmail.com>
+ "Dr. David Alan Gilbert" <linux@treblig.org>
 User-Agent: pwcli/0.1.1-git (https://github.com/kvalo/pwcli/) Python/3.11.2
-Message-ID: <173038429759.539202.17634636965892286169.kvalo@kernel.org>
-Date: Thu, 31 Oct 2024 14:18:19 +0000 (UTC)
+Message-ID: <173038436681.539202.501004601707648947.kvalo@kernel.org>
+Date: Thu, 31 Oct 2024 14:19:28 +0000 (UTC)
 
-Javier Carrasco <javier.carrasco.cruz@gmail.com> wrote:
+linux@treblig.org wrote:
 
-> The fixed patch introduced an additional condition to enter the scope
-> where the 'root' device_node is released (!settings->board_type,
-> currently 'err'), which avoid decrementing the refcount with a call to
-> of_node_put() if that second condition is not satisfied.
+> From: "Dr. David Alan Gilbert" <linux@treblig.org>
 > 
-> Move the call to of_node_put() to the point where 'root' is no longer
-> required to avoid leaking the resource if err is not zero.
+> dma_fxflush() has been unused since 2013's
+> commit 7b2385b95363 ("brcmsmac: rework of mac80211 .flush() callback
+> operation")
 > 
-> Cc: stable@vger.kernel.org
-> Fixes: 7682de8b3351 ("wifi: brcmfmac: of: Fetch Apple properties")
-> Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+> Remove it.
+> 
+> Signed-off-by: Dr. David Alan Gilbert <linux@treblig.org>
+> Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
 
-Wireless patches go to wireless trees, not net. But no need to resend because
-of this. And I think wireless-next is approriate for this fix.
+Patch applied to wireless-next.git, thanks.
+
+1e52d0061a83 wifi: brcm80211: Remove unused dma_txflush()
 
 -- 
-https://patchwork.kernel.org/project/linux-wireless/patch/20241030-brcmfmac-of-cleanup-v1-1-0b90eefb4279@gmail.com/
+https://patchwork.kernel.org/project/linux-wireless/patch/20241025204651.244627-1-linux@treblig.org/
 
 https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
