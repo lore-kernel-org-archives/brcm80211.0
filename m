@@ -1,33 +1,57 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD6311EABB3;
-	Thu,  7 Nov 2024 10:01:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1C301DF72F
+	for <brcm80211@lists.linux.dev>; Thu,  7 Nov 2024 11:28:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730973681; cv=none; b=J2gI2CYOQ+S/P/gRFonZAJIBTVUZswN2HZtdEamx1C8k+3jcDmelWrhoMyNe5HNUSqwPfuzv7k4TvRSbxTaV02wOxKRRQe4zkUQOrvNNKdvl7RJ26jZT7geZBcJ1VWfZX7jcAZ21xwQEOD9rMomUIM45q9urXOgvLf6NHZQFWEI=
+	t=1730978912; cv=none; b=LmuRBQsGJfeh44xKxWPvqf5Cl7xl66WUv7m9K5QsE/prjB6wOzBOMhdu59aJRaTdHSsqf9eQuPuLRT4lnFy7D7Nyg/87rn/zuWquEF7FtGIvkeUdMoLsi2XQJw7/I/0aJODKXq94vlwmggmZZNf4/D2L7fk9ZA60dxzxi1HSHGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730973681; c=relaxed/simple;
-	bh=kZpnoeo+yOi6IwHGZQ6A9p+1Cx22KzYBk6XOMAh7Phk=;
+	s=arc-20240116; t=1730978912; c=relaxed/simple;
+	bh=IY1HzpkIhhrUwXpZp/09h7bvq9rUYqLtageegWz70wg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hjLt8xc3f1g2F+GlSNvi95IQP+IHPOVvVdT1vSwfk6dyMd8eOq7tUDkkHCoC8P5bC8u3LjQUvO0816/j3Z5MrQzAOqkt8tKAdFPnv29H/+UX/ShMLchMqPwnjocLwbj3xGu0NHKj3ZfqWG8u+9zVY9uVsZ7X+SW/PYhIXARCWMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oJtqxUS4; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:Content-Type; b=eWHBv/VJaDBxU0FYKRJmdZRD/yvxfzYXfesmsfc49Q46RL4viBcjQwcH/yqR6tyglm3TpSAaQ//RZLl9rkZkuuvowHNECvuq36KyswgKirSd1U2BzgIZqvgwE2tgiw9+sDrjNJHbBL4sMNR7Kjmkc0hGLHGjKmUU6L8FuCJafxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=Ckt5GOKG; arc=none smtp.client-ip=209.85.215.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oJtqxUS4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FA20C4CECC;
-	Thu,  7 Nov 2024 10:01:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730973681;
-	bh=kZpnoeo+yOi6IwHGZQ6A9p+1Cx22KzYBk6XOMAh7Phk=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=oJtqxUS4FXmDdr1yfaBhzU6v24y9OW2HxGiEoHdouDekEi/I3KzujWaWJgTRMFQcT
-	 e0pkdBSaq/+iRrDPQy1sFtsyt5TlyxjPkknnjoru/NXTEYQ2VZXavCPdV2ncG7XpCm
-	 dqyHAZQE8Y7rdHUJJACt0AuJ7aGUTwgvj4WaHhPleu+18c05ut/D9bzIEUCWW/b2YW
-	 345yZCgo0MO4jyYGpqtdaKwpr1iSYbvt9Jb3YiyTIiPcoqsHjGoAZSik4TuztdWHKv
-	 roxt/Uqf/1KfcWuXwcj/TFeI853KRhgs54trIvSgipCyWIW8rYLs0EcIRSxFjlGQOZ
-	 xxHILT/8TPxMA==
-Message-ID: <d3890b5e-26e1-46ef-81ba-5427892517bf@kernel.org>
-Date: Thu, 7 Nov 2024 11:01:14 +0100
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="Ckt5GOKG"
+Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-656d8b346d2so619280a12.2
+        for <brcm80211@lists.linux.dev>; Thu, 07 Nov 2024 03:28:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google; t=1730978910; x=1731583710; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=C6fmBAnuvVsCHVvsoGL6ThhEmwXnlk0q1ZMQAsHbpDE=;
+        b=Ckt5GOKG8ypIUzxyJYDqy9k84MhTZ9lG7T6nrjQK+BKZ3lb2e3z1wdfsdJ2sNKo5VF
+         1LNeWs/3fyLqCvWr/4txmxgJ2yqzF+OVHXS46br6PFiXCk8uGq3krQn+zI4cUVS0yPZr
+         1a/PV2dcUEQP28H7smS2znJreN0uFazTuK7nw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730978910; x=1731583710;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=C6fmBAnuvVsCHVvsoGL6ThhEmwXnlk0q1ZMQAsHbpDE=;
+        b=cNI9LqsWga3HthN0qp/tmg2Uo8h7drDyPd5H5HIOlcGU7ccCMmpa3Dr1JVjFliMCGX
+         5Ftz+lZq2Olm6J8INE5loVqTe/tXmz3fSaKguoUidJIo43GEvSuPFrseNuV4zumux586
+         CFhAIaKa7ex8ojxOsEngwnLzhxsS+PzKtmdE6VH1CBtJ8gCIMMSgfkMH3Rfc6TdHDV9a
+         a3J04lYA7/4RRw5mtAznkUazKLaS43Slw287tKPurWRQCUJahMhO0UJh4FsdchbH1W/2
+         AtNama6rX8xgz71/s0rOsJiUeTpUZE8/Uysp/4uKJMSMyeb3HdGHzlWoDJMuPOEBHGWn
+         NjHA==
+X-Forwarded-Encrypted: i=1; AJvYcCVusxbpIM6QMmVXo/Tkxep6K9oFtLcjFamYNAzjpuW9gFHniTuhSuqV5N2rP8xBcqr+Z6XmrHZegBI=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyorM6IhZ6uznUjN4pHjT3DCHE4z4vPSGlUsP+adokdNBwRYopv
+	QYWZPfg8jkO1Ed14ORwY29SxTWiDDzl3GlQmX4o0PPjTU8JH5cjJYhjbpdQSfQ==
+X-Google-Smtp-Source: AGHT+IEwq0tMXR5n2ubnowE4i2DOhkMACMqZrUR9PRTTG4/gbkm/a3y5UpSWrwBlIoZ1B8AHrEM1mA==
+X-Received: by 2002:a05:6a21:78a8:b0:1db:e49a:abbc with SMTP id adf61e73a8af0-1dbe49aada6mr17912689637.21.1730978908915;
+        Thu, 07 Nov 2024 03:28:28 -0800 (PST)
+Received: from [10.176.68.61] ([192.19.176.250])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e99a541d06sm3256418a91.14.2024.11.07.03.28.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 07 Nov 2024 03:28:28 -0800 (PST)
+Message-ID: <d92ce5cd-2a28-4fae-b5fb-82d243f3ab88@broadcom.com>
+Date: Thu, 7 Nov 2024 12:28:24 +0100
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -35,95 +59,106 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] wifi: Switch back to struct platform_driver::remove()
-To: =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
- Kalle Valo <kvalo@kernel.org>
-Cc: Jeff Johnson <jjohnson@kernel.org>, Nick Kossifidis
- <mickflemm@gmail.com>, Luis Chamberlain <mcgrof@kernel.org>,
- =?UTF-8?Q?Toke_H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
- Loic Poulain <loic.poulain@linaro.org>,
- Arend van Spriel <arend.vanspriel@broadcom.com>, Felix Fietkau
- <nbd@nbd.name>, Lorenzo Bianconi <lorenzo@kernel.org>,
- Ryder Lee <ryder.lee@mediatek.com>, Shayne Chen <shayne.chen@mediatek.com>,
- Sean Wang <sean.wang@mediatek.com>, Matthias Brugger
- <matthias.bgg@gmail.com>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
- Peter Chiu <chui-hao.chiu@mediatek.com>, Breno Leitao <leitao@debian.org>,
- "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
- linux-wireless@vger.kernel.org, ath10k@lists.infradead.org,
- ath11k@lists.infradead.org, wcn36xx@lists.infradead.org,
- brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com,
- linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org
-References: <20241106170706.38922-2-u.kleine-koenig@baylibre.com>
+Subject: Re: [PATCH] wifi: brcmfmac: Fix oops due to NULL pointer dereference
+ in 'brcmf_sdiod_sglist_rw'
+To: Kalle Valo <kvalo@kernel.org>
+Cc: Norbert van Bolhuis <nvbolhuis@gmail.com>,
+ linux-wireless@vger.kernel.org,
+ Norbert van Bolhuis <norbert.vanbolhuis@ev-box.com>,
+ brcm80211@lists.linux.dev
+References: <20241105204011.1603148-1-norbert.vanbolhuis@ev-box.com>
+ <87bjyrxy9r.fsf@kernel.org>
+ <a2699327-0f86-4c70-8ca4-1225f3e712d1@broadcom.com>
+ <87iksz5q3h.fsf@kernel.org>
 Content-Language: en-US
-From: Jiri Slaby <jirislaby@kernel.org>
-Autocrypt: addr=jirislaby@kernel.org; keydata=
- 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
-In-Reply-To: <20241106170706.38922-2-u.kleine-koenig@baylibre.com>
+From: Arend van Spriel <arend.vanspriel@broadcom.com>
+Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
+ 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
+In-Reply-To: <87iksz5q3h.fsf@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 06. 11. 24, 18:07, Uwe Kleine-König wrote:
-> After commit 0edb555a65d1 ("platform: Make platform_driver::remove()
-> return void") .remove() is (again) the right callback to implement for
-> platform drivers.
+On 11/7/2024 10:51 AM, Kalle Valo wrote:
+> Arend van Spriel <arend.vanspriel@broadcom.com> writes:
 > 
-> Convert all platform drivers below drivers/net/wireless to use
-> .remove(), with the eventual goal to drop struct
-> platform_driver::remove_new(). As .remove() and .remove_new() have the
-> same prototypes, conversion is done by just changing the structure
-> member name in the driver initializer.
+>> On 11/7/2024 9:07 AM, Kalle Valo wrote:
+>>
+>>> Norbert van Bolhuis <nvbolhuis@gmail.com> writes:
+>>>
+>>>> This patch fixes a NULL pointer dereference bug in brcmfmac that occurs
+>>>> when a high 'sd_sgentry_align' value applies (e.g. 512) and a lot of queued SKBs
+>>>> are sent from the pkt queue.
+>>>>
+>>>> The problem is the number of entries in the pre-allocated sgtable, it is
+>>>> nents = max(rxglom_size, txglom_size) + max(rxglom_size, txglom_size) >> 4 + 1.
+>>>> Given the default [rt]xglom_size=32 it's actually 35 which is too small.
+>>>> Worst case, the pkt queue can end up with 64 SKBs. This occurs when a new SKB
+>>>> is added for each original SKB if tailroom isn't enough to hold tail_pad.
+>>>> At least one sg entry is needed for each SKB. So, eventually the "skb_queue_walk loop"
+>>>> in brcmf_sdiod_sglist_rw may run out of sg entries. This makes sg_next return
+>>>> NULL and this causes the oops.
+>>> BTW it would be good to fix (in a separate patch) the sg handling so
+>>> that the kernel won't oops when sg entries rung. That's not really
+>>> robust behaviour.
+>>>
+>>>> The patch sets nents to max(rxglom_size, txglom_size) * 2 to be able handle
+>>>> the worst-case.
+>>>> Btw. this requires only 64-35=29 * 16 (or 20 if CONFIG_NEED_SG_DMA_LENGTH) = 464
+>>>> additional bytes of memory.
+>>> s-o-b missing, please read our documentation from the link below.
+>>
+>> I have not seen the actual patch. Which mailing list was it sent to?
 > 
-> En passant several whitespace changes are done to make indentation
-> consistent in the struct initializers.
-...
->   drivers/net/wireless/ath/ath5k/ahb.c                   |  8 ++++----
+> Only to linux-wireless, adding brcm80211 now. But the patch is in
+> patchwork:
+> 
+> https://patchwork.kernel.org/project/linux-wireless/patch/20241105204011.1603148-1-norbert.vanbolhuis@ev-box.com/
 
-For the above:
+Thanks, Kalle
 
-Acked-by: Jiri Slaby <jirislaby@kernel.org>
+I am also subscribed to linux-wireless, but search in thunderbird client 
+did not come up with it. Thanks for the patchwork link. I should have 
+checked that first.
 
--- 
-js
-suse labs
+Gr. AvS
