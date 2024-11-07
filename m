@@ -1,92 +1,161 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB0E7DDBE;
-	Thu,  7 Nov 2024 17:24:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35F11143C69
+	for <brcm80211@lists.linux.dev>; Thu,  7 Nov 2024 19:31:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731000286; cv=none; b=kyrQfoVM4KoV9MYRoIFhzyFBeG7Ejag0qkt4Bd82tmaSuu4gohEJzRSYNMP5uaKUH92W3DK4N1So3YAbg3PcujwDpqFsZuOOlO18ZGRVdcA6JCWJa2g8nr9E/X/0YgxZMuK+vRnTLJyyZVqxjC8NGkyFQNONOS4Njt7+MQWaEPQ=
+	t=1731007875; cv=none; b=YEOgS2It+Ts6jQ83s5TdIGawvNOoxM827Nu5b4zXkaJ46ts69MXCTW5DMoAa2Hm9EKO+uZVIdaDMhRsscI8PXd/2h0fbfwc8YgIydEWa2p+L6A3zdTZXhDuMo8pK6DpBZg5msJMJZ0lwHy2CivQ3A18SDumZaAFNDrs3qvnm9xY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731000286; c=relaxed/simple;
-	bh=sg2Dc3F6xQkzhFA7IWW2guSDvBgmwZwByl6ILrJ9EIA=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
-	 MIME-Version:Content-Type; b=QfxejUWRxtievDJbB0eVV8+YKncmjFGYOzS1gBQLLUXz5tB3LuXgIPCJ2O5nu16/VxdbSHmZ0b5hKNV0h3BjxZt2lNnzCORjkPAOWW46KiBGuyhYxJFySpbr+fruAMp6kidcEXd4++ms4tTJomrxNWP50+ep6XgKCPAB2L6xlYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bPuEi8ki; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1731007875; c=relaxed/simple;
+	bh=knmK2kv+ltXn/nkFf97GXoRKkvrzpYGP7ZMmGKDG5f4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=OT8K/mtgVDIu4Sna3jEMK74f/y+4+bJ7TIaWJ+0nX7HqVZ+t1cqW5k1XzYciPfal9RUdFUAYoscu115CKCTvNSorkDvDMDp0s+K4oFuJNdORLaWtMMF3MhWb6F2fxl6qYufjqlxpiK54XPh9WgbLxE2H02oHiPA7hNOZKMDYB+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=UTzjdC1x; arc=none smtp.client-ip=209.85.210.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bPuEi8ki"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EB0EC4CECC;
-	Thu,  7 Nov 2024 17:24:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1731000286;
-	bh=sg2Dc3F6xQkzhFA7IWW2guSDvBgmwZwByl6ILrJ9EIA=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
-	b=bPuEi8kiWS44lOnll1Q/XLOMk/lcyjmhgKQbSGeTenMDfSJBp0eHXTbsoknYLst1B
-	 9a2Vvnx8mRGNMBp6mA421mcjI9UkdRcGJ/BaD8ndSKNVQBWJNra3KmJMyWng1UP1Gg
-	 POG+cX8YpVsC6hgn+r1W7z1p7M9T86cYVLPuTwFKzRkE1yx1IpqPMGF20neVE8KPPK
-	 tYvw8OOPZ+uIAYakDV29TDow2CI6BpDo3azWV+OMdZODWR9Ij+US3ntNePmf/Y1SOQ
-	 DHZck/gS/x1ecVsbDqUb5i8W65h9n4iykdOUm6O5d0UoiELmfWIYGNKDr09tT3eVe+
-	 NuD5xZjpadh3A==
-From: Kalle Valo <kvalo@kernel.org>
-To: N van Bolhuis <nvbolhuis@gmail.com>
-Cc: brcm80211@lists.linux.dev,  linux-wireless@vger.kernel.org,
-  arend.vanspriel@broadcom.com
-Subject: Re: [PATCH v2] wifi: brcmfmac: Fix oops due to NULL pointer
- dereference in 'brcmf_sdiod_sglist_rw'
-References: <20241107132903.13513-1-nvbolhuis@gmail.com>
-	<87ed3n5dxu.fsf@kernel.org>
-	<CAP6rjy=gjbQg6hF4xzKZjabdtGVYijrPhn7zUHiw3ZHFJbQfWA@mail.gmail.com>
-Date: Thu, 07 Nov 2024 19:24:43 +0200
-In-Reply-To: <CAP6rjy=gjbQg6hF4xzKZjabdtGVYijrPhn7zUHiw3ZHFJbQfWA@mail.gmail.com>
-	(N. van Bolhuis's message of "Thu, 7 Nov 2024 17:09:36 +0100")
-Message-ID: <875xoz5544.fsf@kernel.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="UTzjdC1x"
+Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-720d14c8dbfso1186283b3a.0
+        for <brcm80211@lists.linux.dev>; Thu, 07 Nov 2024 11:31:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google; t=1731007873; x=1731612673; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=C+iCuvSQqJG40d7+s/rONpRYtcKuCDDwr5ynxPe11Yg=;
+        b=UTzjdC1xTv325WP5d8pCiE1ftCPFZ8vgLDxe558/W+0W8vZG8E5YpQk5AH0kvm2YYV
+         5JWXHZwlyWlt+uY/gEznYFnqw3hMnhdApSSLG6OC9Ux5s2H3hul3DpeONQ60oyeZfWqs
+         gGr+b0SE8P8z0z1ddb37ePU+n0GuyhRErL3FM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731007873; x=1731612673;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=C+iCuvSQqJG40d7+s/rONpRYtcKuCDDwr5ynxPe11Yg=;
+        b=IbipIy3uqWFDnw+O/2B2LPHg+6XX1AfY2vy//YKc16gjRoV92JjM41Z/Vp8AbmyM5A
+         Uk3jKBxq4ykqyV5/EJOrIH3FFSH4IyisHwoIbLPqN8IFISmbL6XHlzOfZ7iKjVmdK86u
+         1554lW5HOQwqv9csq6Pus3QG9qBcHMqHwSb+8y/ixwRSowQk8tcXSv8pkMlwK3Wl5kG8
+         qowe2Rnv+AjQPM6G3sngNboXD/giBIIXmR86aGWFZeO1LktrtexoBh4KVGcS8jjpICiy
+         g/qWp4n8bzvRZ3IV097vzKeS+E7xAamyxwNJM1cY1DfjYAs86r/Wcsi35o+dWDiFqRsg
+         Ru4Q==
+X-Gm-Message-State: AOJu0Yw+mAqLg8gtdCTEWByEEblC3tCaYjJ1IcQRpUU3x6Obd1WrqQcc
+	SQDimLUkc31IAsnFI8RpunHCvFPE2CcwBcZ5r/Z1c610eOmtGuLS/NOTxsj5PDUSEtqKYVLanzq
+	7ZmL6
+X-Google-Smtp-Source: AGHT+IHgBuYtqPwLcO+FFlEugXGsvJyL82Klx8Ha/f4mHy0ZbO/ksRdJnXteZX9BNdj7JbG3Em8w/w==
+X-Received: by 2002:a05:6a20:7485:b0:1dc:154a:81fb with SMTP id adf61e73a8af0-1dc22b958e0mr132447637.44.1731007873486;
+        Thu, 07 Nov 2024 11:31:13 -0800 (PST)
+Received: from [192.168.178.137] (f215227.upc-f.chello.nl. [80.56.215.227])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7f41f65bd78sm1840491a12.78.2024.11.07.11.31.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 07 Nov 2024 11:31:13 -0800 (PST)
+Message-ID: <7c03993b-be89-45a9-bcec-6649e01e054b@broadcom.com>
+Date: Thu, 7 Nov 2024 20:31:07 +0100
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] wifi: brcmfmac: Fix oops due to NULL pointer
+ dereference in 'brcmf_sdiod_sglist_rw'
+To: N van Bolhuis <nvbolhuis@gmail.com>, Kalle Valo <kvalo@kernel.org>
+Cc: brcm80211@lists.linux.dev, linux-wireless@vger.kernel.org
+References: <20241107132903.13513-1-nvbolhuis@gmail.com>
+ <87ed3n5dxu.fsf@kernel.org>
+ <CAP6rjy=gjbQg6hF4xzKZjabdtGVYijrPhn7zUHiw3ZHFJbQfWA@mail.gmail.com>
+Content-Language: en-US
+From: Arend van Spriel <arend.vanspriel@broadcom.com>
+Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
+ 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
+In-Reply-To: <CAP6rjy=gjbQg6hF4xzKZjabdtGVYijrPhn7zUHiw3ZHFJbQfWA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-N van Bolhuis <nvbolhuis@gmail.com> writes:
-
+On 11/7/2024 5:09 PM, N van Bolhuis wrote:
 > Op do 7 nov 2024 om 15:14 schreef Kalle Valo <kvalo@kernel.org>:
->
 >>
 >> nvbolhuis@gmail.com writes:
 >>
->> > From: Norbert van Bolhuis <nvbolhuis@gmail.com>
->> >
->> > This patch fixes a NULL pointer dereference bug in brcmfmac that occurs
->> > when a high 'sd_sgentry_align' value applies (e.g. 512) and a lot of queued SKBs
->> > are sent from the pkt queue.
->> >
->> > The problem is the number of entries in the pre-allocated sgtable, it is
->> > nents = max(rxglom_size, txglom_size) + max(rxglom_size, txglom_size) >> 4 + 1.
->> > Given the default [rt]xglom_size=32 it's actually 35 which is too small.
->> > Worst case, the pkt queue can end up with 64 SKBs. This occurs when a new SKB
->> > is added for each original SKB if tailroom isn't enough to hold tail_pad.
->> > At least one sg entry is needed for each SKB. So, eventually the "skb_queue_walk loop"
->> > in brcmf_sdiod_sglist_rw may run out of sg entries. This makes sg_next return
->> > NULL and this causes the oops.
->> >
->> > The patch sets nents to max(rxglom_size, txglom_size) * 2 to be able handle
->> > the worst-case.
->> > Btw. this requires only 64-35=29 * 16 (or 20 if CONFIG_NEED_SG_DMA_LENGTH) = 464
->> > additional bytes of memory.
->> >
->> > Signed-off-by: Norbert van Bolhuis <nvbolhuis@gmail.com>
+>>> From: Norbert van Bolhuis <nvbolhuis@gmail.com>
+>>>
+>>> This patch fixes a NULL pointer dereference bug in brcmfmac that occurs
+>>> when a high 'sd_sgentry_align' value applies (e.g. 512) and a lot of queued SKBs
+>>> are sent from the pkt queue.
+>>>
+>>> The problem is the number of entries in the pre-allocated sgtable, it is
+>>> nents = max(rxglom_size, txglom_size) + max(rxglom_size, txglom_size) >> 4 + 1.
+>>> Given the default [rt]xglom_size=32 it's actually 35 which is too small.
+>>> Worst case, the pkt queue can end up with 64 SKBs. This occurs when a new SKB
+>>> is added for each original SKB if tailroom isn't enough to hold tail_pad.
+>>> At least one sg entry is needed for each SKB. So, eventually the "skb_queue_walk loop"
+>>> in brcmf_sdiod_sglist_rw may run out of sg entries. This makes sg_next return
+>>> NULL and this causes the oops.
+>>>
+>>> The patch sets nents to max(rxglom_size, txglom_size) * 2 to be able handle
+>>> the worst-case.
+>>> Btw. this requires only 64-35=29 * 16 (or 20 if CONFIG_NEED_SG_DMA_LENGTH) = 464
+>>> additional bytes of memory.
+>>>
+>>> Signed-off-by: Norbert van Bolhuis <nvbolhuis@gmail.com>
 >>
 >> What changed from v1? Please include a list of changes after '--' line,
 >> but no need to resend because of this.
 >>
->
+> 
 > Nothing changed, I just added the s-o-b.
 
-That's still something you should mention in the changelog, but this
-mail is good enough this time.
+Hoi Norbert,
 
--- 
-https://patchwork.kernel.org/project/linux-wireless/list/
+Welkom in de wondere wereld van linux kernel development. De proces 
+beschrijving van Kalle is een goede referentie. Go with the flow.
 
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+Jouw naam klonk mij bekend in de oren al is de Lucent tijd al ver achter 
+ons. Mijn kamergenoot hier op kantoor, Hante Meuleman, kon zich jou ook 
+herinneren, maar dat is dan ook minder lang geleden.
+
+Groeten,
+Arend
