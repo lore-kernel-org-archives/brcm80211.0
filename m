@@ -1,175 +1,99 @@
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C77A217F48
-	for <brcm80211@lists.linux.dev>; Thu,  7 Nov 2024 19:33:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F8A61E7C2E
+	for <brcm80211@lists.linux.dev>; Fri,  8 Nov 2024 12:56:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731008019; cv=none; b=MvY3KB3pOTpkSnuXoU/Z1F7gChLm4uOvur2vldGRy4atkmUt+nCocIQM/ZeD0gn+c0WToV/cI8TwlDUtIek5uyqk81ObMgsJTbGenjtJIPINoQkQ99A9DgkwMhAAbQwzWBdiSh0+16jNjPm33XJ53tfVeFs7aW2xFsDog/pkYEs=
+	t=1731070592; cv=none; b=EfWZoTFnEZMPzu9g9bRjv490KLsFaCeTL4UblMXeUWil5o3t5QL+EI1cMWqYdAgcOnb6qyrcUn0PXkeNVRZRNAFkBns9UafzkKHv8Mz71lz35PFngeouFI5Tn4EJ+eVf6fSRDb+PAR1DEhJ0uJcSquuUBa2enK7mrqkbkOPTkrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731008019; c=relaxed/simple;
-	bh=aqelv5vWt5lbaTebo+lyhaH+0KHlWlYq05m4ngTCpqA=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=BgOjI7D+mknjKtNfLGvrkfNLkLya26tS3P4RIQXdcYtjFN1uoOMNKHxKQ7UN3JAafebBUx+U7mYSNsqIfZkNCs2vupFzgshq5SnzbsN+FLbGPN+NcgUjWhL0oUOynMmEpcd7u//+r4OcGVLOdEWxj96h1vMH6m2JnizknjQwNEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=MiGAP9Du; arc=none smtp.client-ip=209.85.222.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+	s=arc-20240116; t=1731070592; c=relaxed/simple;
+	bh=hD3Y4qFa/J+cr4HJW7f2yt7j0/IUkwG6u7HeJERV1dc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=h06MZre47OaajeqM2unmEol9zsqPOIhFMjq0x+kazJSPr/752LxlhX7waPMRXfR4iU7xZNN00ITGFH7IL4ByM3Pu0kvwTKhoX3242Ax/aW0Xx/Jz93rRAe3fiGsEVDwRAGW3jzAGRQLVGp17ktGvx0G2AMX08pgvyxXWJHDoqHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OfjXYVLk; arc=none smtp.client-ip=209.85.218.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="MiGAP9Du"
-Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-7b31b66d2e3so67386585a.2
-        for <brcm80211@lists.linux.dev>; Thu, 07 Nov 2024 11:33:37 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OfjXYVLk"
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-a9a850270e2so360629666b.0
+        for <brcm80211@lists.linux.dev>; Fri, 08 Nov 2024 04:56:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1731008016; x=1731612816; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :references:cc:to:from:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=QgWta8y8zlvuLspKqB8M5mTztc8dpQe+1jItWxtNgCI=;
-        b=MiGAP9Duk0Z31/g0ItTvYplzcNKr4xKqErEez2pmK/C8VBIsYtPGIXgn4cFRAX6bgc
-         qhWbl32kNzgZCF+AB+7e+pSRw1AVL+Tu6GA9dprka8Df1qwcZlF4+dvLCuZ/XtEco5BU
-         wVDGGncuiS3EC4pZv0j2oTt0A0GNbRsZ8Xffw=
+        d=gmail.com; s=20230601; t=1731070589; x=1731675389; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=D0joV1BmRCBv88D0p4Iir5SGSAXsE60E5ZQGw3bVuWQ=;
+        b=OfjXYVLkzSxjxKpfA4SQEqEbOBsA+ecNGvsAQdon3UBNJB4q5eV9u1buFG/acVZiNP
+         A1An08JGMmi4mC1HTDwc18CMV4mtPGqvNHs24mRu2Gn+fylXZyRVJcrkHEaht6/96yCB
+         Z2j5IIC1yonevydbwpnOaqkQ6dkbzn3FurDuUm5MzhXXuMvrM+zO+Be1ftyIDBuaTtYX
+         kwHeTLLUviF/fEhk5bk2/258/A8H47x1Byzt8ZTZQtwhnv4CO3PR8srqgGGtqWxA2t+4
+         Drb5vYbE5nkVHaCzl2VQ9NmLvmZjcWFhlItfW+xp+d6of0a0uO+RgNZUunlYR7tT7EcD
+         iiZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731008016; x=1731612816;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :references:cc:to:from:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1731070589; x=1731675389;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=QgWta8y8zlvuLspKqB8M5mTztc8dpQe+1jItWxtNgCI=;
-        b=YujnAqDvD+TdklbaHaKgrBlReV3Rk5lMBc4q+3f6ckdcqutMmW8h0rmdi4Krhvm7cH
-         jo7Gh4vkQrJjWDnduYVdHCj7N740/tA4YW38uq7ZW2KlqAQ6R07VSbhxueRda7AlI9wc
-         ujCbkE0HP46i2d2lVAg6+rvoiPLFqe/McNpaWe/hHr/Vwken00fJoVjI/OXK05I5R1QM
-         hdCq6Py+LYm9Zgj/RYt4LAEUx+rC6cZqaaAwlCuSCcAD7+vVylcj4vpABXLSsHkj8M1o
-         gw53DepyXyxWDuRf671ILRX9fik7+2u+gf6XFlbhfyg0++7HRqT1SUhzqeGOtpW4f/om
-         LyeQ==
-X-Gm-Message-State: AOJu0Yz13vaAo0GwFme45jx1aYrmDtVWd1W5RXV1ECCao1LvpA3wLE+u
-	w17H41GkDzQxoZbuNJ9l/cOCf7O5qkg/ZXW3gvhcQbqkjerWreqvHKTWDu9zL137xIgH5d393c6
-	yHgu3
-X-Google-Smtp-Source: AGHT+IGgd5RO4cFBGpf80jbbG0uUWs4IWnrAzHcdrMZ5hLDrv7MCNA28boIsqYv6kVeDU6C5t5rDMg==
-X-Received: by 2002:a05:620a:191c:b0:7b1:453c:56b3 with SMTP id af79cd13be357-7b331f20c77mr40495185a.38.1731008016300;
-        Thu, 07 Nov 2024 11:33:36 -0800 (PST)
-Received: from [192.168.178.137] (f215227.upc-f.chello.nl. [80.56.215.227])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7b32ac2e180sm91961885a.23.2024.11.07.11.33.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 07 Nov 2024 11:33:35 -0800 (PST)
-Message-ID: <e922af14-8881-4019-8b6d-f36ae8e7e1f2@broadcom.com>
-Date: Thu, 7 Nov 2024 20:33:32 +0100
+        bh=D0joV1BmRCBv88D0p4Iir5SGSAXsE60E5ZQGw3bVuWQ=;
+        b=LIlT05IPtYHgG3mLsQoWrtsjRj3QgK1iL4XfJGr5ZrprJEdrpa8PAxszkCTPsnwyAR
+         1nePGhS0VidL7ho1XeUZ1zcEO2Xwymv3ZiPQaO9QO0jdfyFZnSlPFz11meqS6tbxLJ08
+         BdxN4CHUNsBKXiJj3PHBGmLBG8bnyXqU9e8j7XaA9eqS2PouPmYOqXWWJmzmzOjdljeI
+         /25DwWYY85BUFZHSScHwcdMK+GLij8FA2XU2uzn7J+5vmYXx1+WKcXxR+Ppti0K/cejr
+         KBf957T3ony2UQE9e4mwlAxit9k2j0zfdzB9+7pxMV2sg4qCQB6oKG7ek8J0HZztfJ4U
+         Kxog==
+X-Gm-Message-State: AOJu0YwMnClF3E0fQJyrN33dTScbkgoR7ahrMkbQ2vkoDxjStb8491HM
+	f5BrHwCGuze80JDRyW8/gCcpNfa/sfhAeo1a9W1zwi8YPcIL1rx9caklSoE5uIQ=
+X-Google-Smtp-Source: AGHT+IHPXoPd7Z4KNLTQ2FZog6p2rMAeE5YnaCRsmCQCCLDAj8qdUPS6wrUQX+D21pBuwSuQ13sgMQ==
+X-Received: by 2002:a17:907:1c98:b0:a99:543e:94b4 with SMTP id a640c23a62f3a-a9ef001909amr225544366b.56.1731070588951;
+        Fri, 08 Nov 2024 04:56:28 -0800 (PST)
+Received: from wlt.home (77-165-185-46.fixed.kpn.net. [77.165.185.46])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9ee0a4a7d3sm229584766b.70.2024.11.08.04.56.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 08 Nov 2024 04:56:28 -0800 (PST)
+From: nvbolhuis@gmail.com
+To: brcm80211@lists.linux.dev
+Cc: linux-wireless@vger.kernel.org,
+	kvalo@kernel.org,
+	arend.vanspriel@broadcom.com,
+	Norbert van Bolhuis <nvbolhuis@gmail.com>
+Subject: [PATCH] wifi: brcmfmac: fix scatter-gather handling by detecting end of sg list
+Date: Fri,  8 Nov 2024 13:52:30 +0100
+Message-ID: <20241108125609.107016-1-nvbolhuis@gmail.com>
+X-Mailer: git-send-email 2.42.0
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] wifi: brcmfmac: Fix oops due to NULL pointer
- dereference in 'brcmf_sdiod_sglist_rw'
-From: Arend van Spriel <arend.vanspriel@broadcom.com>
-To: N van Bolhuis <nvbolhuis@gmail.com>, Kalle Valo <kvalo@kernel.org>
-Cc: brcm80211@lists.linux.dev, linux-wireless@vger.kernel.org
-References: <20241107132903.13513-1-nvbolhuis@gmail.com>
- <87ed3n5dxu.fsf@kernel.org>
- <CAP6rjy=gjbQg6hF4xzKZjabdtGVYijrPhn7zUHiw3ZHFJbQfWA@mail.gmail.com>
- <7c03993b-be89-45a9-bcec-6649e01e054b@broadcom.com>
-Content-Language: en-US
-Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
- 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
-In-Reply-To: <7c03993b-be89-45a9-bcec-6649e01e054b@broadcom.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 11/7/2024 8:31 PM, Arend van Spriel wrote:
-> On 11/7/2024 5:09 PM, N van Bolhuis wrote:
->> Op do 7 nov 2024 om 15:14 schreef Kalle Valo <kvalo@kernel.org>:
->>>
->>> nvbolhuis@gmail.com writes:
->>>
->>>> From: Norbert van Bolhuis <nvbolhuis@gmail.com>
->>>>
->>>> This patch fixes a NULL pointer dereference bug in brcmfmac that occurs
->>>> when a high 'sd_sgentry_align' value applies (e.g. 512) and a lot of 
->>>> queued SKBs
->>>> are sent from the pkt queue.
->>>>
->>>> The problem is the number of entries in the pre-allocated sgtable, 
->>>> it is
->>>> nents = max(rxglom_size, txglom_size) + max(rxglom_size, 
->>>> txglom_size) >> 4 + 1.
->>>> Given the default [rt]xglom_size=32 it's actually 35 which is too 
->>>> small.
->>>> Worst case, the pkt queue can end up with 64 SKBs. This occurs when 
->>>> a new SKB
->>>> is added for each original SKB if tailroom isn't enough to hold 
->>>> tail_pad.
->>>> At least one sg entry is needed for each SKB. So, eventually the 
->>>> "skb_queue_walk loop"
->>>> in brcmf_sdiod_sglist_rw may run out of sg entries. This makes 
->>>> sg_next return
->>>> NULL and this causes the oops.
->>>>
->>>> The patch sets nents to max(rxglom_size, txglom_size) * 2 to be able 
->>>> handle
->>>> the worst-case.
->>>> Btw. this requires only 64-35=29 * 16 (or 20 if 
->>>> CONFIG_NEED_SG_DMA_LENGTH) = 464
->>>> additional bytes of memory.
->>>>
->>>> Signed-off-by: Norbert van Bolhuis <nvbolhuis@gmail.com>
->>>
->>> What changed from v1? Please include a list of changes after '--' line,
->>> but no need to resend because of this.
->>>
->>
->> Nothing changed, I just added the s-o-b.
-> 
-> Hoi Norbert,
-> 
-> Welkom in de wondere wereld van linux kernel development. De proces 
-> beschrijving van Kalle is een goede referentie. Go with the flow.
-> 
-> Jouw naam klonk mij bekend in de oren al is de Lucent tijd al ver achter 
-> ons. Mijn kamergenoot hier op kantoor, Hante Meuleman, kon zich jou ook 
-> herinneren, maar dat is dan ook minder lang geleden.
+From: Norbert van Bolhuis <nvbolhuis@gmail.com>
 
-Yikes. Sorry for the (dutch) spam. Blindly hit the 'reply to all' button.
+The scatter-gather handling uses a pre-allocated list (with nents entries).
+If the driver runs out of sg entries it will result in an oops. Let's detect
+this instead and make the SDIO block transfer fail.
 
-Regards,
-Arend
+Signed-off-by: Norbert van Bolhuis <nvbolhuis@gmail.com>
+---
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
+index 42d991d9f8cb..60eb95fc19a5 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
+@@ -455,6 +455,11 @@ static int brcmf_sdiod_sglist_rw(struct brcmf_sdio_dev *sdiodev,
+ 			if (sg_data_sz > max_req_sz - req_sz)
+ 				sg_data_sz = max_req_sz - req_sz;
+ 
++			if (!sgl) {
++				/* out of (pre-allocated) scatterlist entries */
++				ret = -ENOMEM;
++				goto exit;
++			}
+ 			sg_set_buf(sgl, pkt_data, sg_data_sz);
+ 			sg_cnt++;
+ 
+-- 
+2.42.0
+
