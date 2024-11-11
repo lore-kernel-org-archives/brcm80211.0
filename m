@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2433C19B3D3;
-	Mon, 11 Nov 2024 12:09:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8FB019C561;
+	Mon, 11 Nov 2024 12:11:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731326945; cv=none; b=BJf4iUgeh1oOuAdsnOwyLs0w63IKTfi1XI58YLic5NDKg7p28Hv+yfsHoFFD3HEBnX87eLnVhs8KS50ZdAIKZnyd0P2PW3j1xN+412r55VR7E7BR13lScJ/4TnR4ZuKH0/RNNTwWYQJl4atFgK6KfiTNTdhotUhHe6QeVsiuOQs=
+	t=1731327063; cv=none; b=ZNVwV8aWZUSfF5MJuhSIL6zDyV2E/K569UFCmNuwFM6cs3aoY/yWsNTOWWYtTsC68J+VBnT+SUImPF1GwW5WS+OcC9EleLU4GY7nIqmTcYu5eD/oj7DOlapWY7fznfDHAgvoCJBD/QOHkAP/qGD8Ua2uPbJQWY3PDahjPisw8E4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731326945; c=relaxed/simple;
-	bh=A+exTM+c4WEHboinnAW9kh9VZ91dw3lFctLT90geLgk=;
+	s=arc-20240116; t=1731327063; c=relaxed/simple;
+	bh=gjcOJBAgJBHb99bfi5+v1hj3THzAbdFhTu2HppVYKP8=;
 	h=Content-Type:MIME-Version:Subject:From:In-Reply-To:References:To:
-	 Cc:Message-ID:Date; b=X2Rjcfpg8B+mhoESKnpbcjuwMyppmrQxcMO19wwKqLuW26iVC8xjI3iicYTxRCkTfxxgKreoAo5RAY1LUBz8jdNidqvVMSAGWfgvhCxRkoWbOXuZXnreFqv8syMcnOFlsJpQ1eDUdfO/NI6y8Dw8kkpPPvrDZb1GU43uzJchuB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iiINp8/K; arc=none smtp.client-ip=10.30.226.201
+	 Cc:Message-ID:Date; b=Z8LO3Ajow1YqPC6GMz7oiozHBfdOIRL35pJ78W02ZDeUJChTX6yHmO/MPcspcHgCQrwRAU8neftia8l6Cd3Os1+7ztTgEkrRa9psQilrZZUarG8b1CcRrlphSNJbIj4ciitusBnLn4b5kfodj84o0Smb5lA83ynDkO/Ud/BSwsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mTNitgwr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iiINp8/K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8277FC4CECF;
-	Mon, 11 Nov 2024 12:09:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mTNitgwr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A69BC4CECF;
+	Mon, 11 Nov 2024 12:10:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1731326945;
-	bh=A+exTM+c4WEHboinnAW9kh9VZ91dw3lFctLT90geLgk=;
+	s=k20201202; t=1731327063;
+	bh=gjcOJBAgJBHb99bfi5+v1hj3THzAbdFhTu2HppVYKP8=;
 	h=Subject:From:In-Reply-To:References:To:Cc:Date:From;
-	b=iiINp8/Kc0BLa7lGG+Ox+hgHiTm+WclhaeF3NCjvFX/pTfBqzhv8yA+WwBjqmMrLH
-	 fKGM+iarEdfHexU9Oor4ecfAqHtX6y1j3vkC8S/mJC1a+St/1A3Xba6+ifBmsVTCYx
-	 qZ55V9La+xTiWIRVkwverlBSTJ0PYfUZdRp161XgkuMbnEGoRC4ksJf2HFHSyhRmld
-	 wzswPVwkPq/a4LsnQc764v9qhX2TpgFafQARLhuwnxqON93B0G5evGdHISBqlNhWT/
-	 1HyoDJUZqIGL0VbD/WDi23WDDtvfRV05igvEwyni2VEMQRd3YrsWEXajCujn/zZ5Cr
-	 MuDU1ZzaHm5Pw==
+	b=mTNitgwriKvXyx8LtAnfRpPEJ6rbpf63J9iYsWVCJc2KqQsxYnasa0wuSbOuPWiBm
+	 Sb15+hbZ3ccnJ4/HLFhl0n2jXB5xcAZ3delcLD8o3dhXAmU6VlQRjgk0eTMKvEi9Yk
+	 m155+/QR2a+UraJqBoq5/e2Jslikc4zSAhrujGYUR9vnbNYW+usy+kHEnYmpnc/F7V
+	 MZPnXJeIiaG8QydyvBSc7Iy50x9RZiR4PDU3pQizpfniBONEs+t7LGYLOzBnpqKG1N
+	 PIYod071416al6tl8E4O0wEUB/Oy62bAKYQjDJNUnnHSwZdyEnwV6X5Yu0Jli9v9IC
+	 P7Qm4oVyUb8zQ==
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
@@ -33,45 +33,60 @@ List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH net] wifi: brcmfmac: release 'root' node in all execution
- paths
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH] wifi: Switch back to struct platform_driver::remove()
 From: Kalle Valo <kvalo@kernel.org>
-In-Reply-To: <20241030-brcmfmac-of-cleanup-v1-1-0b90eefb4279@gmail.com>
-References: <20241030-brcmfmac-of-cleanup-v1-1-0b90eefb4279@gmail.com>
-To: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Cc: Arend van Spriel <arend.vanspriel@broadcom.com>,
- Linus Walleij <linus.walleij@linaro.org>,
+In-Reply-To: <20241106170706.38922-2-u.kleine-koenig@baylibre.com>
+References: <20241106170706.38922-2-u.kleine-koenig@baylibre.com>
+To: =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+Cc: Jeff Johnson <jjohnson@kernel.org>, Jiri Slaby <jirislaby@kernel.org>,
+ Nick Kossifidis <mickflemm@gmail.com>, Luis Chamberlain <mcgrof@kernel.org>,
+ =?utf-8?q?Toke_H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+ Loic Poulain <loic.poulain@linaro.org>,
+ Arend van Spriel <arend.vanspriel@broadcom.com>,
+ Felix Fietkau <nbd@nbd.name>, Lorenzo Bianconi <lorenzo@kernel.org>,
+ Ryder Lee <ryder.lee@mediatek.com>, Shayne Chen <shayne.chen@mediatek.com>,
+ Sean Wang <sean.wang@mediatek.com>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+ Peter Chiu <chui-hao.chiu@mediatek.com>, Breno Leitao <leitao@debian.org>,
  "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
- Hector Martin <marcan@marcan.st>,
- =?utf-8?q?Alvin_=C5=A0ipraga?= <alsi@bang-olufsen.dk>,
- linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
- brcm80211-dev-list.pdl@broadcom.com, linux-kernel@vger.kernel.org,
- stable@vger.kernel.org, Javier Carrasco <javier.carrasco.cruz@gmail.com>
+ linux-wireless@vger.kernel.org, ath10k@lists.infradead.org,
+ ath11k@lists.infradead.org, wcn36xx@lists.infradead.org,
+ brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com,
+ linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org
 User-Agent: pwcli/0.1.1-git (https://github.com/kvalo/pwcli/) Python/3.11.2
-Message-ID: <173132694092.852485.14071383005445209117.kvalo@kernel.org>
-Date: Mon, 11 Nov 2024 12:09:02 +0000 (UTC)
+Message-ID: <173132705627.852485.14271331752921398347.kvalo@kernel.org>
+Date: Mon, 11 Nov 2024 12:10:58 +0000 (UTC)
 
-Javier Carrasco <javier.carrasco.cruz@gmail.com> wrote:
+Uwe Kleine-König <u.kleine-koenig@baylibre.com> wrote:
 
-> The fixed patch introduced an additional condition to enter the scope
-> where the 'root' device_node is released (!settings->board_type,
-> currently 'err'), which avoid decrementing the refcount with a call to
-> of_node_put() if that second condition is not satisfied.
+> After commit 0edb555a65d1 ("platform: Make platform_driver::remove()
+> return void") .remove() is (again) the right callback to implement for
+> platform drivers.
 > 
-> Move the call to of_node_put() to the point where 'root' is no longer
-> required to avoid leaking the resource if err is not zero.
+> Convert all platform drivers below drivers/net/wireless to use
+> .remove(), with the eventual goal to drop struct
+> platform_driver::remove_new(). As .remove() and .remove_new() have the
+> same prototypes, conversion is done by just changing the structure
+> member name in the driver initializer.
 > 
-> Cc: stable@vger.kernel.org
-> Fixes: 7682de8b3351 ("wifi: brcmfmac: of: Fetch Apple properties")
-> Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+> En passant several whitespace changes are done to make indentation
+> consistent in the struct initializers.
+> 
+> Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+> Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+> Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+> Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+> Acked-by: Jiri Slaby <jirislaby@kernel.org>
 
 Patch applied to wireless-next.git, thanks.
 
-2e19a3b590eb wifi: brcmfmac: release 'root' node in all execution paths
+b41f96ecb9b7 wifi: Switch back to struct platform_driver::remove()
 
 -- 
-https://patchwork.kernel.org/project/linux-wireless/patch/20241030-brcmfmac-of-cleanup-v1-1-0b90eefb4279@gmail.com/
+https://patchwork.kernel.org/project/linux-wireless/patch/20241106170706.38922-2-u.kleine-koenig@baylibre.com/
 
 https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
