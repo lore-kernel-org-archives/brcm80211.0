@@ -1,81 +1,108 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D04E919CC29;
-	Mon, 11 Nov 2024 12:11:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4B7C1DFE05
+	for <brcm80211@lists.linux.dev>; Fri, 22 Nov 2024 18:04:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731327089; cv=none; b=IZ1tdPwP4iMmNc1AdAuVUQ/wNnSgD4KxtIY9Off9UuA/ohI7zzOROQYR765Bl/bEDpM7AfxD0qIBYKsHtLslMJ0pvjdehWhAjAasbRFBU4Nyf3foxgR7A2AgNOamut1AgGjt/kuKZm7ZPBXTfUlbvOfkoR/hRJbg3UwqDfyBUqQ=
+	t=1732298687; cv=none; b=CPkpdLu0TuCc2plsWCUw7Oa3lKAF33PNIyJ5AtnsV3pJr8q/NrdXXGm0SkIFOhUYvj4UwnpUGSJ8ouUO1P+ZnVKPdE5hbNFM0cTsMV4v4r7N89MOhgt7LRNjntaw8IO/RA+t7wQ9gPQCpKr3cnyN08nyJj5VLyo/iWsgkjbth64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731327089; c=relaxed/simple;
-	bh=DetFYAnfOFBjfg4pSj54b1ubIovVT0/G93VdF00jwzo=;
-	h=Content-Type:MIME-Version:Subject:From:In-Reply-To:References:To:
-	 Cc:Message-ID:Date; b=MzJr5hG+BCGFL2jULMec8+7FphJtAnr4Xv0Br/Z02JXGjn0qmExu2loGOxU3J+z47bpQNeTpewSNKItGpVEZHg4Sybi0r/Pyim8JFEY0noQPY0cuArGbpME+prI4k6w3859wq7B5QOkkdR0OkQzhTugYYQJDK2SK3f9YMyQL/9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f47wYn0x; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1732298687; c=relaxed/simple;
+	bh=GE9aQ4845Qpv/Mv6MUtLgA2EMelQ8RiZvoVebfNEeho=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=rOA2Dxfg0ORBPVITg7g2Ihn3fB8fIgIeRHx8BejyreUDddEVV74qgUVc3W+4mcQtSNF8J8y5xRv836SLb8Fq398ypUAATA7KS8yrVzBMEQTMtVQv32PCKSiyoTM03a3wivy7RyQMiv72KeEgZDcPTZTAI2qPsh/Lg5qmnrm7iGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ey1Vd5ol; arc=none smtp.client-ip=209.85.208.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f47wYn0x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44D05C4CED5;
-	Mon, 11 Nov 2024 12:11:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1731327089;
-	bh=DetFYAnfOFBjfg4pSj54b1ubIovVT0/G93VdF00jwzo=;
-	h=Subject:From:In-Reply-To:References:To:Cc:Date:From;
-	b=f47wYn0xzipkkXnTQmtgEVy2XTMJKKVMCjsoBiaSgYiUEnw88tOxgUbADfGE1a86Y
-	 IiUa6F540AdtiS8C/Aw7DXKcf6eKqUulsyLsrKZK/WADVwhNpsVtlySM6PMmAHIAXy
-	 ppuVb47MrVqraY1Ys9p7IW4bSS3PkRQsYasSz9QUjNrhUFeuarm+rB7bDyUolVDNi4
-	 GxQuJzAtRTjNl/QP+WuCvQGvFLuZf3QoFPsemy2Uxo9NSh1mhWdn15Zfp4SFQJCBTx
-	 IjNvWlA45UP7cs6dcRdNooAVXNUCCUBB9hZc4gjmSBOgxHV2noWVgevnyuyUMhx+3R
-	 kmJ76KVXkYY5w==
-Content-Type: text/plain; charset="utf-8"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ey1Vd5ol"
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2fb59652cb9so27274661fa.3
+        for <brcm80211@lists.linux.dev>; Fri, 22 Nov 2024 10:04:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1732298684; x=1732903484; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=kYyJYDqDJe69p5MWqb9Lql4avTJsJYhKFAm40pVHp2o=;
+        b=Ey1Vd5ol9kamJ6WpEF6tW10+dCY2UBkx96mBODRGaQNRANnvnczQd2LLoEZwrt/8qF
+         9IzEL0jgy+pBkpmH+iO7G8rEgRqvQ9n0tSE3ripctiw87suF7Za05lL1PnO6hCIv0MbT
+         Q/gcEQ9nQ4hh8AxMCOXno7Bzg5j7sykG2lXTCTegqhHCIcRSwWNUl7c7iqsfCbKMP9to
+         fJqLvAKN+motlx/YNBFWpCu/RAImlJLoIGlflDOlERO5Fh8FczWyjTiN2tK1mYnOLOQ+
+         0gyzHv2jE5nigz5I/65U/4ZhAEoSmCr1p2KwPjGYpRk7Ff4rW+Bklzli0zTQqN2kOV+1
+         09mQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732298684; x=1732903484;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kYyJYDqDJe69p5MWqb9Lql4avTJsJYhKFAm40pVHp2o=;
+        b=OFl74DPp6t2m62GtAiNZD/c3dxPmEPFUblGVIydn+qzCcaZQvoZ6lxkJVQ4rO5/i8t
+         AYK+dEwdJxkeUEu/q6imIV3pqaiQ83X3fiyqgGJQ+XEUWrnH1pnfCKxtdehk0oB82rMj
+         lSCb/Hy8+8B9RIl2Xmix9tbzAv0iwGMeqNJqI4eK3aOj4CFJj92cjlTTKjOGQ+KnDTtX
+         IdSH2AgYKORlrV32ZlyPQPt+8qfnZOtUYpkefkbBjvGf8AEHiS3N7MHJPPcA7cPNFibN
+         ys56SFKvCXaR+O5en5Sm1Vedmjis7HIqjSqm8+wBc66M6WVh8TiyyQjJeI/Mr5bhl4CK
+         pOug==
+X-Forwarded-Encrypted: i=1; AJvYcCWib4Nqz/4D+8plboO7CcC/YuMyVKhZDcWJs9aKylmzd1hAvYSpKA8q55Qw54ra/cRSmvywAI5pR6o=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxAxZ6OpC+N+/yfZBnKIEqAbuyxcmDXU69i5QS2avrqJIY0GaFn
+	6JPIIFtI3S1rT08rEaUbQueV3IykYPj+DS+zPuq2rsEPBbgSxSjP
+X-Gm-Gg: ASbGncuudxUXXvG6vVeg3VLOvXjRlFi+mLUxtt3xZNHhqlddYPaBg4R1Yso8aiHNcHV
+	0944tjGP0iCNED0/Pe6BJ4BaQULGnt1lCVf/u6RwezcxpHh7fzzk7HeiQqz/ZxLLeT2t61ICCrK
+	sKc+TBnTbSzKeshYUY3mPSzzHbZUJDpoLdOf0SBixCMIaLcodPOS7v+lz7i+WhF67y/dB2DA59F
+	H3b3vGbAlBdawNVZKHGVNbdAu3+NUDiOo9HJc6FBqcGrh2xoJ+GrOp4dhg=
+X-Google-Smtp-Source: AGHT+IFMT1jZ0OG+uq5izFMfMfSmIicgWhHMQIScinvKrk/fbovg8oIImmx/lrryRLrCRN/udLycOA==
+X-Received: by 2002:a05:651c:98e:b0:2fb:4982:daea with SMTP id 38308e7fff4ca-2ffa718296amr27123141fa.32.1732298683522;
+        Fri, 22 Nov 2024 10:04:43 -0800 (PST)
+Received: from alex3d.netup (team.netup.ru. [91.213.249.1])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ffa53a112dsm4330891fa.119.2024.11.22.10.04.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 Nov 2024 10:04:42 -0800 (PST)
+From: Alex Shumsky <alexthreed@gmail.com>
+To: linux-wireless@vger.kernel.org
+Cc: Alex Shumsky <alexthreed@gmail.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Kalle Valo <kvalo@kernel.org>,
+	brcm80211-dev-list.pdl@broadcom.com,
+	brcm80211@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] wifi: brcmfmac: remove misleading log messages
+Date: Fri, 22 Nov 2024 21:04:35 +0300
+Message-Id: <20241122180435.1637479-1-alexthreed@gmail.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Subject: Re: [v2] wifi: brcmfmac: Fix oops due to NULL pointer dereference in
- brcmf_sdiod_sglist_rw()
-From: Kalle Valo <kvalo@kernel.org>
-In-Reply-To: <20241107132903.13513-1-nvbolhuis@gmail.com>
-References: <20241107132903.13513-1-nvbolhuis@gmail.com>
-To: nvbolhuis@gmail.com
-Cc: brcm80211@lists.linux.dev, linux-wireless@vger.kernel.org,
- arend.vanspriel@broadcom.com, Norbert van Bolhuis <nvbolhuis@gmail.com>
-User-Agent: pwcli/0.1.1-git (https://github.com/kvalo/pwcli/) Python/3.11.2
-Message-ID: <173132708642.852485.9343648144353048729.kvalo@kernel.org>
-Date: Mon, 11 Nov 2024 12:11:28 +0000 (UTC)
+Content-Transfer-Encoding: 8bit
 
-nvbolhuis@gmail.com wrote:
+Currently when debug info enabled, dmesg spammed every few minutes with
+misleading messages like:
+  brcmf_netdev_start_xmit phy0-sta0: insufficient headroom (0)
 
-> From: Norbert van Bolhuis <nvbolhuis@gmail.com>
-> 
-> This patch fixes a NULL pointer dereference bug in brcmfmac that occurs
-> when a high 'sd_sgentry_align' value applies (e.g. 512) and a lot of queued SKBs
-> are sent from the pkt queue.
-> 
-> The problem is the number of entries in the pre-allocated sgtable, it is
-> nents = max(rxglom_size, txglom_size) + max(rxglom_size, txglom_size) >> 4 + 1.
-> Given the default [rt]xglom_size=32 it's actually 35 which is too small.
-> Worst case, the pkt queue can end up with 64 SKBs. This occurs when a new SKB
-> is added for each original SKB if tailroom isn't enough to hold tail_pad.
-> At least one sg entry is needed for each SKB. So, eventually the "skb_queue_walk loop"
-> in brcmf_sdiod_sglist_rw may run out of sg entries. This makes sg_next return
-> NULL and this causes the oops.
-> 
-> The patch sets nents to max(rxglom_size, txglom_size) * 2 to be able handle
-> the worst-case.
-> Btw. this requires only 64-35=29 * 16 (or 20 if CONFIG_NEED_SG_DMA_LENGTH) = 464
-> additional bytes of memory.
-> 
-> Signed-off-by: Norbert van Bolhuis <nvbolhuis@gmail.com>
+Do not log this when headroom is actually sufficient.
 
-Patch applied to wireless-next.git, thanks.
+Signed-off-by: Alex Shumsky <alexthreed@gmail.com>
+---
 
-857282b819cb wifi: brcmfmac: Fix oops due to NULL pointer dereference in brcmf_sdiod_sglist_rw()
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
+index da72fd2d541f..25c77014af9c 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
+@@ -327,8 +327,9 @@ static netdev_tx_t brcmf_netdev_start_xmit(struct sk_buff *skb,
+ 	if (skb_headroom(skb) < drvr->hdrlen || skb_header_cloned(skb)) {
+ 		head_delta = max_t(int, drvr->hdrlen - skb_headroom(skb), 0);
+ 
+-		brcmf_dbg(INFO, "%s: insufficient headroom (%d)\n",
+-			  brcmf_ifname(ifp), head_delta);
++		if (head_delta > 0)
++			brcmf_dbg(INFO, "%s: insufficient headroom (%d)\n",
++				  brcmf_ifname(ifp), head_delta);
+ 		atomic_inc(&drvr->bus_if->stats.pktcowed);
+ 		ret = pskb_expand_head(skb, ALIGN(head_delta, NET_SKB_PAD), 0,
+ 				       GFP_ATOMIC);
 -- 
-https://patchwork.kernel.org/project/linux-wireless/patch/20241107132903.13513-1-nvbolhuis@gmail.com/
-
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+2.34.1
 
