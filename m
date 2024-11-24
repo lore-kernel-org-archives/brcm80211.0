@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E014B24571F;
-	Sun, 24 Nov 2024 13:55:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9171E24A95C;
+	Sun, 24 Nov 2024 13:56:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732456516; cv=none; b=WcoeTgNnYzIz92tT1KTgOJYmWA2ymCc3VpY4LmZjE4zUL7OehWgsQjXYomC9YINB3UamT9Qdt9FU/Lnic6Wmt7YVo7uVT8ZD+t77pDGLJ8P0zTiW4qaRM6fv/A7jGEvL5pasMP2q4Cl1uB+g970zQ8ajxO5SR9aWdhdE8M6xwEA=
+	t=1732456601; cv=none; b=akvCSdkj4qa4pqjKZG75wGQ79xS3o9516cIeYbBnn949MYUuMuwoDJOUCH2Ves1TzW8AJKESu+epkDVn/8epWZqGOVwamu+Cy9nr/kT29ItHRifzNajptWAGssVsDFMU+Rpa6GhsDijwci4S6hZYypv6+2X0LpLwAcx/JYfyZAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732456516; c=relaxed/simple;
-	bh=Gl5dMb5qF+W+jWw8poTEZejspiar37EFpQlLQ2P1IhM=;
+	s=arc-20240116; t=1732456601; c=relaxed/simple;
+	bh=I/6qRk4lus8uf3NjtujTkW6UtnT8+ezW2o0ITP9QQZo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jRhKCwIRdamJh5D6ahxXuRZCFr8N8PcEVb6VGPVBUe7Tb2slA4Q2Mw1qeBJ6QWVe0A5LcFQWblDPgBK+9v1JEPdup8c1e1ON3ywfTM7aiD+ST9yOK1EIWBdPt/GKcvq8QFfu83ZRZ2eghKuBUcxUipiD3Uv/XaPWcX2wx3IckoE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZetVk/aC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WudYkxEVXkPL2jhIA0dH1LJ+Xw3dJOgMS/hXYuVgG9RXlRqkBf+iT4furTu8gEgT8C0m7igJnzEbcXJ/Nve4cPK7GDnFqa+AHyiRjR8BB1X1RhVw//ijzAAeOHC3HEbxx0uBtSF+89Ei/kcB3WeGo3a3HjOOxR9W6GKpihwgIig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jJLCSd1T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZetVk/aC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E41BEC4CED3;
-	Sun, 24 Nov 2024 13:55:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jJLCSd1T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7D6BC4CED1;
+	Sun, 24 Nov 2024 13:56:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732456515;
-	bh=Gl5dMb5qF+W+jWw8poTEZejspiar37EFpQlLQ2P1IhM=;
+	s=k20201202; t=1732456601;
+	bh=I/6qRk4lus8uf3NjtujTkW6UtnT8+ezW2o0ITP9QQZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZetVk/aCc/yBlDw+oEAUzsgGh7xG+S7+Ooavz5CkCe3R6TMl27oI2NhYAeGsyaz+z
-	 8F4onMye5AhKWx2Z7wZpCgxZxJhGVKZGHQUYxOUgcucJwNVimY4FCybRZoIu9EkN4y
-	 RDJuCRRB4Ov+/nY+x1KyuxihVDV43i5K+fa3Zers2leRHoepCKuB5zvoABaRb5hLdU
-	 +4JEqZxUfvnFcQ2GGPMSfL++K+0BegHV7PvLMT8PzGQM+cp5aibgmIviINc+imKMS+
-	 YqECtN+3aS5WVXZYjU7g5aXWPq6JadFsWGwh9Z9tcbajo83v08hK+CRcs+7Le76mKw
-	 yWDHywldZWn/g==
+	b=jJLCSd1TlV2Z2sAv/hinliLevPo35Y/ZOOaQRk6ET2iiHL/t2h+SoVqm8OVRF4ltT
+	 SwwnaAZZ4ikHpQyV1EQmQAMKo9dzTkGYv/sb8DO9S1/zcekvAaM2wrgkcplwMcTUAY
+	 hOI0XorDHXHVSfVoGiF88CqfnNR6TaXoyHgzpWBya2knHzAJBarYn0ORPPUPE/rSiA
+	 kIDaTdlHcG45XVxeDyWvES9A747rT9Rq0f9zb46SD3ANXz4F76vf7Z+L6vaCc03CQi
+	 SCwS5Q0n21y/e9CNafioNI0CGvq/R03w6zpDVe/VzGZCY5+luEQN7EB+VbV0z6cOPy
+	 RnVsGcVIz3MAw==
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
@@ -33,20 +33,20 @@ Cc: Norbert van Bolhuis <nvbolhuis@gmail.com>,
 	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
 	arend.vanspriel@broadcom.com,
+	megi@xff.cz,
 	saikrishnag@marvell.com,
-	sebastian.reichel@collabora.com,
 	erick.archer@outlook.com,
 	jacobe.zang@wesion.com,
 	krzysztof.kozlowski@linaro.org,
 	linux-wireless@vger.kernel.org,
 	brcm80211@lists.linux.dev,
 	brcm80211-dev-list.pdl@broadcom.com
-Subject: [PATCH AUTOSEL 5.10 28/33] wifi: brcmfmac: Fix oops due to NULL pointer dereference in brcmf_sdiod_sglist_rw()
-Date: Sun, 24 Nov 2024 08:53:40 -0500
-Message-ID: <20241124135410.3349976-28-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.4 23/28] wifi: brcmfmac: Fix oops due to NULL pointer dereference in brcmf_sdiod_sglist_rw()
+Date: Sun, 24 Nov 2024 08:55:23 -0500
+Message-ID: <20241124135549.3350700-23-sashal@kernel.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241124135410.3349976-1-sashal@kernel.org>
-References: <20241124135410.3349976-1-sashal@kernel.org>
+In-Reply-To: <20241124135549.3350700-1-sashal@kernel.org>
+References: <20241124135549.3350700-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -55,7 +55,7 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 5.10.230
+X-stable-base: Linux 5.4.286
 Content-Transfer-Encoding: 8bit
 
 From: Norbert van Bolhuis <nvbolhuis@gmail.com>
@@ -89,10 +89,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
-index b6d0bc73923fc..75dc7904a4bd6 100644
+index c492d2d2db1df..32ac1fa5bdecf 100644
 --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
 +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
-@@ -769,7 +769,7 @@ void brcmf_sdiod_sgtable_alloc(struct brcmf_sdio_dev *sdiodev)
+@@ -770,7 +770,7 @@ void brcmf_sdiod_sgtable_alloc(struct brcmf_sdio_dev *sdiodev)
  
  	nents = max_t(uint, BRCMF_DEFAULT_RXGLOM_SIZE,
  		      sdiodev->settings->bus.sdio.txglomsz);
