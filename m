@@ -1,106 +1,73 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2E2524F25C;
-	Sun, 24 Nov 2024 13:57:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41F55376E0;
+	Mon, 25 Nov 2024 11:58:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732456670; cv=none; b=gZg7fD4AO0hBElNCVrK3GMJHsijxxydgdvk7C+sM2MqdhdDCW7xbgcqpRboC7tFxurbrFzPJpRsWeY7T6Awm6eETwA2JQvNRkFsZL9wD3dTsu41PBLwS/kKzArXENanzZmtQro6+ArfoJiTEA/SbvnIO9+A5J2toP20gHYDDNb8=
+	t=1732535904; cv=none; b=HwHxKLRiZB8M4xhtqv09EES9xvCXzaD7TvS7/Q/LmxsSjMe7URRQ/wCFlDtro8BgPmOivfNWz1TZVNbO2ktx8XLm7F1zEJUWe1Xx6rJ82HXCVUNquQFZTbmrCsuPSgGN4Mnylhyf3NpZCwRrwGKT6OAQnurvQY0sH98OsQst4/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732456670; c=relaxed/simple;
-	bh=tzdgRpBlFIm+PD09acrAcKWHIEWDJIX3DFIlN8uYEeU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ecHaLwS7UgxdJSVtS/8Zc7FuVz1iGHLcEkGz5EaR3NBqPmx0RsiKIK3E1zHQIFfVUTPqxGhTNXd0MnLfFDyhbYJbnRnKGQ71rFhUPXMYwDTNlmWmkh9WiJiUTzRY5Ybd+0mbwG0Tl79n97bnTPh6UXhoVsTYW5tpH0vVQFcIzWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h+m6b6NV; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1732535904; c=relaxed/simple;
+	bh=XPeICkEr0+V297XB982f0NK/O5g1go5UUG3H/yTQouY=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=FfQnq75MyQkPPLKyy7kjGvuMY32ISCu8GDOCS9xgyo99YRwyAK5vplXhF/Kt/iHF1xo+WzoVgfGz/IEO/IrodB6lwUvPgMPT18G4M76v69acUp6tWmV0Fgc/ehnvBL69CZQWQXW9oTZJtputOG5bUVPSTAHA22LfyEdtMNyUUu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=az5roZdr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h+m6b6NV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08CDDC4CECC;
-	Sun, 24 Nov 2024 13:57:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="az5roZdr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C7F7C4CECE;
+	Mon, 25 Nov 2024 11:58:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732456669;
-	bh=tzdgRpBlFIm+PD09acrAcKWHIEWDJIX3DFIlN8uYEeU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h+m6b6NVtPmBpGDYdfL1kxUHHtmSVb888UmwYOyqb1L6lPi3hGUhbOv9mYWk/xvch
-	 UHM0bNcQKQjq8qNhJ6gEoOnMLVEwSCofbl3n7LdVmBrGKhMK80XSUE8s+96hrLCV5s
-	 flIQq8JCxVbRTtSd/fMHHUQM3DJ0dVYuqoOmFk9HDBVDor3oYQbbO3aSF7euvqfGOd
-	 +mOn9IotpTmBGe9z1Toyvxl42na1tma5nAPg25zlXYe1/UILE4JWVCtmr8ZLVgyzeo
-	 l2irCY5cbVBsF9K2lvEfW8xK76DirD1Mxudf8kSjhnhFjHoddhQVK1OaA6Q2FWtMmk
-	 GbFnpQ1STFmlQ==
-From: Sasha Levin <sashal@kernel.org>
-To: linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Cc: Norbert van Bolhuis <nvbolhuis@gmail.com>,
-	Kalle Valo <kvalo@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	arend.vanspriel@broadcom.com,
-	erick.archer@outlook.com,
-	sebastian.reichel@collabora.com,
-	saikrishnag@marvell.com,
-	krzysztof.kozlowski@linaro.org,
-	jacobe.zang@wesion.com,
-	linux-wireless@vger.kernel.org,
-	brcm80211@lists.linux.dev,
-	brcm80211-dev-list.pdl@broadcom.com
-Subject: [PATCH AUTOSEL 4.19 18/21] wifi: brcmfmac: Fix oops due to NULL pointer dereference in brcmf_sdiod_sglist_rw()
-Date: Sun, 24 Nov 2024 08:56:51 -0500
-Message-ID: <20241124135709.3351371-18-sashal@kernel.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241124135709.3351371-1-sashal@kernel.org>
-References: <20241124135709.3351371-1-sashal@kernel.org>
+	s=k20201202; t=1732535903;
+	bh=XPeICkEr0+V297XB982f0NK/O5g1go5UUG3H/yTQouY=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+	b=az5roZdrft9m47fEWLZnbCOLrJ15hJGb9uQx+aRIrZ4VJMN4eNu/wyjhvMOmi4/3T
+	 Ichjgt+zrPAagmPt6TfbriBhg4UE+apOQkeiGoBVoBaLIvYnfOt48sT+CxSwKGf77x
+	 G7NKq0Auza9eZqB6gopYod70BF0ix92SYSdl1RV+UNQy2RqUotedrBHzaJSdUSXaWp
+	 3EQuwlQvasfLuIkzEGy3MRABJ12wIoa3TUpZjR2VDPVlavC2JiLkqdVLrDV9/Wm8eD
+	 u1uRmXKRLWIlc0hj6ykUdZrkN9kxmM7Yzj+u2GxDLxZlSX0HzlpwhwLYtjUWTnaYg5
+	 P5zueNY5ktXOQ==
+From: Kalle Valo <kvalo@kernel.org>
+To: Alex Shumsky <alexthreed@gmail.com>
+Cc: linux-wireless@vger.kernel.org,  Alexey Berezhok <a@bayrepo.ru>,  Alvin
+ =?utf-8?Q?=C5=A0ipraga?= <ALSI@bang-olufsen.dk>,  Arend van Spriel
+ <arend.vanspriel@broadcom.com>,  Hector Martin <marcan@marcan.st>,  Janne
+ Grunau <j@jannau.net>,  Kees Cook <kees@kernel.org>,  Neal Gompa
+ <neal@gompa.dev>,  Wolfram Sang <wsa+renesas@sang-engineering.com>,
+  brcm80211-dev-list.pdl@broadcom.com,  brcm80211@lists.linux.dev,
+  linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] brcmfmac: fix RSSI report in AP mode
+References: <20241122210346.2848578-1-alexthreed@gmail.com>
+Date: Mon, 25 Nov 2024 13:58:19 +0200
+In-Reply-To: <20241122210346.2848578-1-alexthreed@gmail.com> (Alex Shumsky's
+	message of "Sat, 23 Nov 2024 00:03:46 +0300")
+Message-ID: <87a5dnv82s.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 4.19.324
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-From: Norbert van Bolhuis <nvbolhuis@gmail.com>
+Alex Shumsky <alexthreed@gmail.com> writes:
 
-[ Upstream commit 857282b819cbaa0675aaab1e7542e2c0579f52d7 ]
+> After commit 9a1590934d9a ("brcmfmac: correctly report average RSSI in
+> station info") it is required from firmware to provide rx_lastpkt_rssi.
+> If this field is not provided brcmfmac doesn't report any RSSI at all.
+> Unfortunately some firmwares doesn't provide it. One example is firmware
+> for BCM43455 found in Raspbberry Pi.
+> See https://github.com/raspberrypi/linux/issues/4574
+>
+> Fix it by falling back to rssi field if rx_lastpkt_rssi is not provided
+> (like it was before 9a1590934d9a).
+>
+> Fixes: 9a1590934d9a ("brcmfmac: correctly report average RSSI in station info")
+> Signed-off-by: Alex Shumsky <alexthreed@gmail.com>
 
-This patch fixes a NULL pointer dereference bug in brcmfmac that occurs
-when a high 'sd_sgentry_align' value applies (e.g. 512) and a lot of queued SKBs
-are sent from the pkt queue.
+'wifi:' missing but I can add it, no need to resend because of this.
 
-The problem is the number of entries in the pre-allocated sgtable, it is
-nents = max(rxglom_size, txglom_size) + max(rxglom_size, txglom_size) >> 4 + 1.
-Given the default [rt]xglom_size=32 it's actually 35 which is too small.
-Worst case, the pkt queue can end up with 64 SKBs. This occurs when a new SKB
-is added for each original SKB if tailroom isn't enough to hold tail_pad.
-At least one sg entry is needed for each SKB. So, eventually the "skb_queue_walk loop"
-in brcmf_sdiod_sglist_rw may run out of sg entries. This makes sg_next return
-NULL and this causes the oops.
-
-The patch sets nents to max(rxglom_size, txglom_size) * 2 to be able handle
-the worst-case.
-Btw. this requires only 64-35=29 * 16 (or 20 if CONFIG_NEED_SG_DMA_LENGTH) = 464
-additional bytes of memory.
-
-Signed-off-by: Norbert van Bolhuis <nvbolhuis@gmail.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://patch.msgid.link/20241107132903.13513-1-nvbolhuis@gmail.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
-index 710dc59c5d34d..532733db4de85 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
-@@ -770,7 +770,7 @@ void brcmf_sdiod_sgtable_alloc(struct brcmf_sdio_dev *sdiodev)
- 
- 	nents = max_t(uint, BRCMF_DEFAULT_RXGLOM_SIZE,
- 		      sdiodev->settings->bus.sdio.txglomsz);
--	nents += (nents >> 4) + 1;
-+	nents *= 2;
- 
- 	WARN_ON(nents > sdiodev->max_segment_count);
- 
 -- 
-2.43.0
+https://patchwork.kernel.org/project/linux-wireless/list/
 
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
