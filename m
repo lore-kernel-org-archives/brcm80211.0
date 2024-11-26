@@ -1,62 +1,62 @@
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
+Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60C2D199384
-	for <brcm80211@lists.linux.dev>; Tue, 26 Nov 2024 11:02:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 565DF1CBEA4
+	for <brcm80211@lists.linux.dev>; Tue, 26 Nov 2024 11:13:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732618933; cv=none; b=k7E91o0JnDg54Ko1hPlMa+BLbFRRBFAzWzV+5yQDQBwT+GWZJVWlcEKl1x1xh3vjJ6tuh8xkXAwwd+Q+5a98LejUNT8yGwZ0IXbSi0VX/nsKRcu96rxlID8ovIrzHg20hSljipBU5cZG8Qo60E9S3bhFvEJ+L+WBH44aBMXrBZ0=
+	t=1732619633; cv=none; b=YJed92NDhY4n06W6pMVp9zOjVaPLtFvnG29vt04uis+vxykf8RsBdykOIWhD0cmN7uk82irGefAm+YqabQLbWCK96qb2LCJXI/CExYdddpfgvR7nD4FWSH7YkreRovcEBZJaqa/GtPwpooFjViHXQxxJyP0gKK9MKFCQ3JuKFMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732618933; c=relaxed/simple;
-	bh=T4C+3nl3eof/XS79hZq3xaCp4pTUojcLDFnIrRYu0/I=;
+	s=arc-20240116; t=1732619633; c=relaxed/simple;
+	bh=P+f4x4cp34/QK2b5aXO1a6r0IdOJPje9zK6YfmUgAng=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Fuq7FVckU2Y9PJKxVc8Hh2kaWnlFsyfs5jSIno8f2BXmAPzSloLSzRfT7hRkhk9caSW06oDXzgDgENs0UCfaSd6pS0VmljIXxHYGoIe37fABDXMVOMA7cLrUKxjINOnX+czI1oe6er3FTGCxwQYcaxMulCpbA9fioboYWaNfOYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=gcBljvJw; arc=none smtp.client-ip=209.85.160.182
+	 In-Reply-To:Content-Type; b=eYrRl72v5CjxvnXUQpytt4HTnUbzvBx3DvCKW25/b2kwru1MGxY70OrbrGPxapuJyi0OJxjSvueMbaGE9yiQ7AHrzxfT6l9DV98N20zSeKxHa9GiXFW0aRR9AwLpvRMsPwGlz8eJ/24mtdvya2KF/XrdSfvlMjaAI5s817jzEZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=V56cUnXN; arc=none smtp.client-ip=209.85.216.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="gcBljvJw"
-Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-46695478d03so12684811cf.1
-        for <brcm80211@lists.linux.dev>; Tue, 26 Nov 2024 03:02:11 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="V56cUnXN"
+Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-2eacc4c9164so4702349a91.0
+        for <brcm80211@lists.linux.dev>; Tue, 26 Nov 2024 03:13:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1732618930; x=1733223730; darn=lists.linux.dev;
+        d=broadcom.com; s=google; t=1732619631; x=1733224431; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=JIGO2V+Aknmyl0rZGfpcAHDpHftic2KCLqbM/fdPnyM=;
-        b=gcBljvJwQ7vsLw3NCDPhRUSINJ0mqZDtJnS4DH5/riDw9bWiISDxnIkQvEe/fym8Ci
-         9oHGIayjHwYYWFwNacox9DxYdc3gsZjpG3Z0PyX86MAFGGjR1phB9B+1/I2JikpF5LkI
-         2iIXlxoo/tkgllONubVp1t/DqtWcgzbYMfrWM=
+        bh=WaedEROScXbmZLW2dLxh5VEj9F18yKa88b9QQRbmaog=;
+        b=V56cUnXN57nwiLi0A9qd1xOHz4y5UCHYqY9AZCkVfeRM4WERxKK3UVelkd0/mp2V7C
+         cBXsMoatguxfCAetSgeAj90MvbJ/SrrjRki4JwQakNmN/Z0xuhoUKkqhJPw657+lhBR1
+         ISmAZp1gRU0QLbu6W0o8m8ph9sHU3nOHpqNm8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732618930; x=1733223730;
+        d=1e100.net; s=20230601; t=1732619631; x=1733224431;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=JIGO2V+Aknmyl0rZGfpcAHDpHftic2KCLqbM/fdPnyM=;
-        b=qgMottDtBGsd9rH+V7wvN1qYHPnLhr/ndFKpB5P+yvJK4fUCW5+PTjfLkirrJoQeNV
-         q8FaRwtMhz4AnY120T0+Veh8E2uxdG1WtNOtYDX8HKHmYBuDwDy21s5zNtCgYVDYRM89
-         dUw6uGClX1EGWQ1g8ibpy6/s2YXE44ch1BFePcep9jjnmIJBAx9FzF6948pmt2mWS9TU
-         68tCyDqBP5jK3cgX9uPPXdDjBOiaUmixVWTM/3rlb5KqtaYQqL9wNww3BzWJZgkUU41d
-         za/0KKCHd7jip9XHMDls2OLucKG1e9JkmnMwVGNJrtDRD4uzlYigGvq1tUdO31CcqpNk
-         S/lg==
-X-Forwarded-Encrypted: i=1; AJvYcCXLfMkNSlLR1JR7Yf/ZsbOWU38+/aICdCP5HQ7kF/X72zDrvW/tK3JeRqHd7SmihzLUVXDd15syGvM=@lists.linux.dev
-X-Gm-Message-State: AOJu0YycJ9iMuuQR7PsSPBI/Z+b/+pcsje0rfYwFj8tujI+ZEbgx2iFo
-	b6Onm6Jga6SLWfS0Eik90YWbyjd2FKIavRJmpE0yJfd4rKI90mIZ+yVx55pt9A==
-X-Gm-Gg: ASbGncubSkleXSqVI1wYZFKRpZNvZxTA/OIEwbzKabNC/lBZ7cnJDdbgtbH8RmHTThY
-	xyaXRKGqN0m0VjZH51GukpBXyGHdAcy11rBfBWlFdYOSg+yN+6Erc9ZcdJJa3EwfhBxWm/PCLRO
-	mgmbHuTdDPHFc9lpRtH/DsZ30bk7RpoxAwtIv5dg39N4nvcJw6+VC1bWZEK4nzwXeJVZD7xX4fU
-	OhaI1BMYjwg1WEUjZEMVForh5IyRIJw+ejcTFbQxEdC/CaLvIVEl6K7C+ebazq+JjAl2nt9ht0t
-	Zw==
-X-Google-Smtp-Source: AGHT+IH/jmDmkC5DmQu93LOAi/DuOAb8/CmK3ri34pbBtJjGk1j15AJ391d/foqyb5jZPRXF6oKrJA==
-X-Received: by 2002:a05:622a:2294:b0:464:b81c:3171 with SMTP id d75a77b69052e-4653d52263bmr219566121cf.6.1732618930095;
-        Tue, 26 Nov 2024 03:02:10 -0800 (PST)
+        bh=WaedEROScXbmZLW2dLxh5VEj9F18yKa88b9QQRbmaog=;
+        b=hnZeBERfVAZ05RBRLNvlUSQZhC6QaQ06rQAzlmoHCngUEBCXX6BiFP5fQyDPO/ZqGO
+         ITyFtKhdMKmY4RLdC3d1xlmxrBplvKp3v0I/ThGVa3fuyrbGubWkGPJI0TChlsUoRqYJ
+         nzvKvkgukiabOmTmpyd9fLhamJ39lvPxqPRSu18OOdXNbZMkPQKL5fqc6OyCVQd8N75c
+         VJKBULUh+YHOQB+6w/NY+2lYPSprCMklZK9CoHWg/yOriyqS/xBT9C0CeLPMlTRInXyN
+         SWeGBaAJFVzDupLPJBe6MWA+iNkwlxIbTzqqP1/2ik3X271hoz+s+hmpZocLmp7eHFuD
+         lVKw==
+X-Forwarded-Encrypted: i=1; AJvYcCVHDJwWkcO1osZ9ZiscKIAxwaYOXJeVfLrohvDKQnhWxbH4FuE+Nsx48BlBmLkm/Whnbt+JFUyLyG8=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yy3u8DeoB8dzO4mxWjGvQWqo5x3NpvhHgpdj13b/+0hZZH5d9TW
+	UkZFlH536u1Nt/3eorzuNz9ZFQrI374ftWbIP/jbhrv8VUDc+JhnudpN0SryiA==
+X-Gm-Gg: ASbGncu3s9aTq5obz+I4kuVU4N4R1jnowKvV0gc9whPPThICfkFyHEbu3sJ0KwW80FF
+	dFOaqK80MnkW4iM3bJ1Tp8EEw1JM/Adh84jnFNT+iVfdcGW8DAML1+EoLrXCS+J3mtH224St06X
+	itEZMTt0v3apbtDwiFhcol0tBth4pYc96IRsJ83zP0R3l66H8NcV+gGybtlXYM2Gqg2Cnof6H/w
+	V/mQWRq6x1IoJmf79rnKXVtconqBiYv2W3msqkCWQD/99i9tj7MTdlIoyVVT1rng6XfXjVN8T7C
+	Yw==
+X-Google-Smtp-Source: AGHT+IEx0dge3AH0eYaowfAlKd02/aR04hcx31QrPIxtxydsY8h2mdiB4Ia2A2kz1H2Z+4+2qJx63A==
+X-Received: by 2002:a17:90b:4c89:b0:2ea:97b6:c466 with SMTP id 98e67ed59e1d1-2eb0e22f524mr25752876a91.12.1732619631574;
+        Tue, 26 Nov 2024 03:13:51 -0800 (PST)
 Received: from [10.176.68.139] ([192.19.176.250])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-46689cca8dcsm28855701cf.77.2024.11.26.03.02.07
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2eb0cff9c88sm8541644a91.19.2024.11.26.03.13.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Nov 2024 03:02:09 -0800 (PST)
-Message-ID: <be2f054e-5ff8-4fcb-ad50-0dc0d5c03bf5@broadcom.com>
-Date: Tue, 26 Nov 2024 12:02:05 +0100
+        Tue, 26 Nov 2024 03:13:51 -0800 (PST)
+Message-ID: <980c5cee-2dc3-4d26-b749-6ba00b9c2091@broadcom.com>
+Date: Tue, 26 Nov 2024 12:13:44 +0100
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -64,12 +64,16 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] wifi: brcmfmac: remove misleading log messages
+Subject: Re: [PATCH] brcmfmac: fix RSSI report in AP mode
 To: Alex Shumsky <alexthreed@gmail.com>, linux-wireless@vger.kernel.org
-Cc: Al Viro <viro@zeniv.linux.org.uk>, Kalle Valo <kvalo@kernel.org>,
+Cc: Alexey Berezhok <a@bayrepo.ru>, =?UTF-8?Q?Alvin_=C5=A0ipraga?=
+ <ALSI@bang-olufsen.dk>, Hector Martin <marcan@marcan.st>,
+ Janne Grunau <j@jannau.net>, Kalle Valo <kvalo@kernel.org>,
+ Kees Cook <kees@kernel.org>, Neal Gompa <neal@gompa.dev>,
+ Wolfram Sang <wsa+renesas@sang-engineering.com>,
  brcm80211-dev-list.pdl@broadcom.com, brcm80211@lists.linux.dev,
  linux-kernel@vger.kernel.org
-References: <20241122180435.1637479-1-alexthreed@gmail.com>
+References: <20241122210346.2848578-1-alexthreed@gmail.com>
 Content-Language: en-US
 From: Arend van Spriel <arend.vanspriel@broadcom.com>
 Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
@@ -115,22 +119,29 @@ Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
  NKowQLrlMBGXT4NnRNV0+yHmusXPOPIqQCKEtbWSx9s2slQxmXukPYvLnuRJqkPkvrTgjn5d
  eSE0Dkhni4292/Nn/TnZf5mxCNWH1p3dz/vrT6EIYk2GSJgCLoTkCcqaM6+5E4IwgYOq3UYu
  AAgeEbPV1QeTVAPrntrLb0t0U5vdwG7Xl40baV9OydTv7ghjYZU349w1d5mdxg==
-In-Reply-To: <20241122180435.1637479-1-alexthreed@gmail.com>
+In-Reply-To: <20241122210346.2848578-1-alexthreed@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 11/22/2024 7:04 PM, Alex Shumsky wrote:
-> Currently when debug info enabled, dmesg spammed every few minutes with
-> misleading messages like:
->    brcmf_netdev_start_xmit phy0-sta0: insufficient headroom (0)
+On 11/22/2024 10:03 PM, Alex Shumsky wrote:
+> After commit 9a1590934d9a ("brcmfmac: correctly report average RSSI in
+> station info") it is required from firmware to provide rx_lastpkt_rssi.
+> If this field is not provided brcmfmac doesn't report any RSSI at all.
+> Unfortunately some firmwares doesn't provide it. One example is firmware
+> for BCM43455 found in Raspbberry Pi.
+> See https://github.com/raspberrypi/linux/issues/4574
 > 
-> Do not log this when headroom is actually sufficient.
+> Fix it by falling back to rssi field if rx_lastpkt_rssi is not provided
+> (like it was before 9a1590934d9a).
 
-Thanks for your patch. The message may be misleading, but it is actually 
-information that we need to cow the packet. The zero value indicates 
-that this is needed because skb_header_cloned(skb) is true. So it is 
-still useful in my opinion. If you want to make the message less 
-misleading for that case I would be happy to ack the patch.
+Sounds like a reasonable approach. However, I would like to learn more 
+about the issue. Maybe it is a per-vendor issue so I am interested what 
+the sta_info version is that we get from firmware. It is printed in 
+brcmf_cfg80211_get_station() with brcmf_dbg(). You can make it a 
+bphy_err() call instead or enable TRACE level debug messages in the driver.
+
+Also would be good to know the firmware version and kernel version of 
+the BCM43455.
 
 Regards,
 Arend
