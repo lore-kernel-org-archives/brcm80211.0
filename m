@@ -1,298 +1,107 @@
-Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13FA01B6D0A
-	for <brcm80211@lists.linux.dev>; Thu, 12 Dec 2024 20:17:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3888192D70
+	for <brcm80211@lists.linux.dev>; Fri, 13 Dec 2024 08:14:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734034661; cv=none; b=RjdbrAZiyggsMf89uQgoZ4thRbN742q22yCJiPdSkyEQXAKYO7VT5KQHEXd2czpyctNj0WM9DqJfxpdQcvmqRjc2BZ9Dqfqse8u1pJwLFsMjpcwVDB70+OxaHSY/yAGLDAjrc0uGVe6Ss2vDGYcWJ0MpnIrv8iyyO2CQy288hmg=
+	t=1734077652; cv=none; b=jan8OUx0mf7ueg8W/j3Ng386cgESWhd1iqaU+l7quDjCG8E+1WVGa2SrvCsXW/5uIXCV08pyQqJrAYOtgW/iKUrnqTTQSgFO7YbaJnebAexfSKjrV5SXdE6Bh4YWZ/YRjFdGsTXVyzqbaN8Ce9RVqcQOpyv2E0p00BjQ2TRyKdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734034661; c=relaxed/simple;
-	bh=nWym5n/Wf6JKNITmyE9lQSEkwprphkPbE34RpZqiBhM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=FUm0X2YqMe/ixAmpMkvaZWjtuz6gAuujfRt1sxi4qSS6SEb9QNAhtFS6zhQLs3O07PisS1UqAjdbRxLHl41UcO9USRvwbvrUuQaFPbZWGrCtg70hBszVGYwim+YmZ7secOWZdvCTI6dtYcsdmtUeLUsQsvBeJfjSN+mJWMymwbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=OhLBetnt; arc=none smtp.client-ip=209.85.210.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+	s=arc-20240116; t=1734077652; c=relaxed/simple;
+	bh=DeuTWikIwBDL8XxaGJqSSaBzW8ftzrIQcnnjpV15GrE=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=UNVyn3WON/NkR/ye+FrmnpojtPn9Sd/s8DqvsopccdKltF7MhNxyIWtwoUovh317Cy4cu3FBbDt9CNPvLTOL5MBJAmRY668WwYsUhvwvFudUVXuQ0PQ27CSiC774sZJLC43qVnVPTXbVI1mZUAW/ENf3Q4MR7Z9+xdPsXKmcJ5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ITJujvKE; arc=none smtp.client-ip=209.85.167.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="OhLBetnt"
-Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-725ee27e905so1316585b3a.2
-        for <brcm80211@lists.linux.dev>; Thu, 12 Dec 2024 12:17:39 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ITJujvKE"
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-53e3778bffdso1615626e87.0
+        for <brcm80211@lists.linux.dev>; Fri, 13 Dec 2024 00:14:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1734034659; x=1734639459; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=cVnndxdnod3A+Ruq3XCNZDJmnImxvPgYtgRgRLmBIQw=;
-        b=OhLBetnt+d09ZD0Eloa1gAVGCGstz+C779EiGkGVtC0HwLEPABa4NMaHo7uTncbJHY
-         dvlf/eJhYy+wIZIF5XfaMm1WEUlKujbECYgjLlstS0LF1VV2tciFPh9i0VWswuGcqb9G
-         19e1G3+rp6FW2Bpcb2o3wcrv6ansCjwy8/ePk=
+        d=gmail.com; s=20230601; t=1734077649; x=1734682449; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=kXFXfj7o8MwwmFfKPy6HLkitXoH/KOnee4XhQ59bWDA=;
+        b=ITJujvKE1Uuy8NouVknUG4txhqsX1TGyVgAiZNo+35Jq4s6WdKJWr6Ih+FZZj8oIvq
+         Gr8xdzl3dk0Rb4D2SAaiF3+T+xJ2QDBkkP+NSyOH6qtFo9AWVjA/x5iMzzjAH84RaOya
+         xSFk8RPrUfq5Povn8Aan5Pm0jM1doiFXQPq7dnp05pStn+z7bFGLH/VrTaDVPDc5Lteh
+         kYJyafTimNkll+xJ99NZIaTrcqYkDSioO8mOGi5X8Upbb7kIV1WVo9/mYrK3xnLPgLfP
+         Ua2u6CCrujf87nvwlkCXCnDbRjCBDZ+MVuH1Gw72KNwkpNHSEocbxXMhDTvqEqkFGd74
+         /psQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734034659; x=1734639459;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1734077649; x=1734682449;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=cVnndxdnod3A+Ruq3XCNZDJmnImxvPgYtgRgRLmBIQw=;
-        b=xICKXP8XugZAEEbObK9Ik/gZpTla5s7flSYNv6108PNteog0ahux9obwbd4Kclsle1
-         eJW0O/kRXHA04HCer0+EL8h0B4Gi5NkIqPqviyfGPKfOfw3FvPSzvW3luoIaX5w9s6wy
-         U550MBb2SN3IcMuYPaqqsMKLwPkB9k/PH756AgCc1FF/5PbOqwJrnUfxtlj8ETtoVkTb
-         jVx6zPHm6YqhXXLEcW0Uie7uRJMvkM31D5D9ivjEU+WvKaOwBsFKQFufqGPUtP6buEzp
-         bqeYzfMSX4gYQO2Al78GkVH4vuD6BeaGQrnwTUxe2cUJJ2qvtPVmpT7SPOvcSESzJJz1
-         Zlow==
-X-Forwarded-Encrypted: i=1; AJvYcCWOfJXXV2rHGACIBDkrbyWkAAMKbgLpAfYfLNDrIsAzEUv9DAVLw7VeNYpB47gFPah6V4rqdZPK/88=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx/wVkl4llMtFii4mdcHAxBbaOwdYi+CGS2CMmbSJTjmqyZH5ST
-	VdNoW+1xV+24Uaa5J7EboFEX73oByQwVtT+N2bOJOKr7tb98jl7DSuk4MG0sYQ==
-X-Gm-Gg: ASbGnctPSIeG/y2XI2dLacejLHw2Rtnb6NU7xR66y74t04XJneQhIDv7sT+gtuO5RVy
-	MEb+Z4DYwTzyPj1QIn9rZqZJaM0IM1gJg3/vlmSHr7/9rVb/MDgW24RwgsswH0u6D8XMsvxv6g6
-	KL+66lQ0Qw5T6u3D1uTZ3pe/z8vlrohc+THyXFhwMsL/g3JZTLFvL+M1+Zfu/NQrs/SD+S/KIzB
-	tt0KYndf7J3FPzl4gY1lK7xDxmFMOoYQsKRKynMN54o/9T0RrnsFcJrYIa1plqc0v6/aq4KomH0
-	CGpgn55xzVbilzUprrkyAP1u6o+sMFMB
-X-Google-Smtp-Source: AGHT+IGcwDJl6gsdi542HBiEir5XSugjSbwM/GQetZecFSpg9GT27fCcTtjBKlZywvbGFrGmjRPSKg==
-X-Received: by 2002:a05:6a00:4386:b0:725:df1a:282 with SMTP id d2e1a72fcca58-729069ac8c6mr2511334b3a.10.1734034659165;
-        Thu, 12 Dec 2024 12:17:39 -0800 (PST)
-Received: from [192.168.178.137] (f215227.upc-f.chello.nl. [80.56.215.227])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-725f27a9854sm7097503b3a.0.2024.12.12.12.17.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Dec 2024 12:17:38 -0800 (PST)
-Message-ID: <ff9c1192-42b5-4a28-a8c9-31af9765cbff@broadcom.com>
-Date: Thu, 12 Dec 2024 21:17:32 +0100
+        bh=kXFXfj7o8MwwmFfKPy6HLkitXoH/KOnee4XhQ59bWDA=;
+        b=Er9bjHMWABiM5QNqP1c/XIC1fP9hUl+99hcWRsAyxbQdWGnerqBWMe28/ayFKoPH0s
+         +grCkO5xXigOFQdYsKxjOxEehGlwJ+imylm2KQ2+P2TRT6TD/ZbqgF+xNVC9odeFfddp
+         z99QZQdzClX/0CR+wuuoEqM7ElpWSbqrfEpy9R2szyUL62jqTU6t5oFvES2iBT9z6+xs
+         GE1gKMbQZOVTZRqDdg04OyyEitcRVSSEpDS88cUdMmfc5rX1Zg9sR2+TtQLBSpxcyDxq
+         F38eHTjLG6xW1PMyh0j2JB7GaUdUVuJx3hSqBuJspi3UzgjKCte1cBUeKHzi5E4x1P2y
+         PiIg==
+X-Forwarded-Encrypted: i=1; AJvYcCW+14TR2JjiM/vvZKWM0mmDTyBHU23crDQ89anYF1Gn6tsTAus3TQMo1OoYsYNOPBUx9saNcBFD2QI=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyG1XtG2dezYSmfwEp3pKisJSMHAw2694ZfkVSb3ZEzl0mOMgzF
+	oYEZazaoFAgYFZSFwnZoAhscseb0P+Oq0ETO4/QC2nefD3SYwzmh
+X-Gm-Gg: ASbGncvVYQK1J7BDAS0BsGD9hIpiokRkMJ5Mz1Uu0XJI5Q8sfD0gtzJPv8AYHa5qPtu
+	WeSsVnczMLDXO7anV2gOinmWTPXwVDVnh+w/5zhAeMI0lzHDkTsLuIwxSZjBZjGT1znqJJzlDU3
+	dpb+xamVsC2LWw+XYhVxSNLUA35GqC343/W0ZPiPAoxv2/UXBLBkk/88NYW5B2EOiiKgwE2trMx
+	0mDyipi/qtfkaVy3zyniXNA5frSunQtx/9sQ1mBYaq99r0AyFf2onxgSsRNxs4CeA==
+X-Google-Smtp-Source: AGHT+IG5nk114gmKOdKv3MZJeb4DCsyi11f7Ro9alkdACiWlDrzYvWpKnd/qR9uD5+29IvGYRN8Ldg==
+X-Received: by 2002:a05:6512:3b26:b0:53e:350a:72a0 with SMTP id 2adb3069b0e04-54099b69aabmr495775e87.51.1734077648604;
+        Fri, 13 Dec 2024 00:14:08 -0800 (PST)
+Received: from alex3d.netup (team.netup.ru. [91.213.249.1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5401a3a4c24sm1822010e87.199.2024.12.13.00.14.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Dec 2024 00:14:07 -0800 (PST)
+From: Alex Shumsky <alexthreed@gmail.com>
+To: linux-wireless@vger.kernel.org
+Cc: Alex Shumsky <alexthreed@gmail.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Kalle Valo <kvalo@kernel.org>,
+	brcm80211-dev-list.pdl@broadcom.com,
+	brcm80211@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v2] wifi: brcmfmac: clarify unmodifiable headroom log message
+Date: Fri, 13 Dec 2024 11:14:02 +0300
+Message-Id: <20241213081402.625003-1-alexthreed@gmail.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: brcmfmac SAE/WPA3 negotiation
-To: KeithG <ys3al35l@gmail.com>, brcm80211@lists.linux.dev,
- linux-wireless@vger.kernel.org, Denis Kenzior <denkenz@gmail.com>
-References: <CAG17S_OwtNxetb7XzsxkZcygH_CWkZx15evQZkThb3WjqpiKTQ@mail.gmail.com>
- <CAG17S_M9wxMsSNyqAQv2oxaCQZ9CAe=GHNjZCbw__2bsAg1hdg@mail.gmail.com>
-Content-Language: en-US
-From: Arend van Spriel <arend.vanspriel@broadcom.com>
-Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
- 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
-In-Reply-To: <CAG17S_M9wxMsSNyqAQv2oxaCQZ9CAe=GHNjZCbw__2bsAg1hdg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-On 12/12/2024 3:24 PM, KeithG wrote:
-> Based on a hunch that brcmfmac dbug might reveal something, I turned
-> it on to see what turned up. I attempted the same as before: using iwd
-> to connect to the WPA3 AP.
-> 
-> [iwd]# station wlan0 connect deskSAE
-> Type the network passphrase for deskSAE psk.
-> Passphrase: *********
-> [iwd]# station wlan0 show
->                                   Station: wlan0
-> --------------------------------------------------------------------------------
->    Settable  Property              Value
-> --------------------------------------------------------------------------------
->              Scanning              no
->              State                 connecting
->              Connected network     deskSAE
->              IPv4 address          169.254.203.147
-> 
-> the attached log shows brcmfmac debug
-> 
-> it always shows 'State connecting' never connected.
-> 
-> Is one of these what is causing it to error out:
-> Dec 09 18:11:06 jackrune kernel: brcmfmac: brcmf_fil_cmd_data Firmware
-> error: BCME_UNSUPPORTED (-23)
-> Dec 09 18:11:06 jackrune kernel: brcmfmac: brcmf_fil_iovar_data_get
-> ifidx=0, name=tdls_sta_info, len=296, err=-52
-> ...
-> Dec 09 18:11:06 jackrune kernel: brcmfmac: brcmf_fil_cmd_data Firmware
-> error: BCME_BADADDR (-21)
-> Dec 09 18:11:06 jackrune kernel: brcmfmac: brcmf_fil_iovar_data_get
-> ifidx=0, name=sta_info, len=296, err=-52
-> ...
-> Dec 09 18:33:32 jackrune kernel: ieee80211 phy0:
-> brcmf_cfg80211_get_station: GET STA INFO failed, -52
-> 
-> I do not know what BCME is.
+Replace misleading log "insufficient headroom (0)" with more clear
+"unmodifiable headroom".
 
-BCME are the error codes produced by the firmware. Without debug prints 
-you will only see a generic error code, ie. -52 (-EBADE). So you always 
-see the "Firmware error" message following by the "generic" error 
-message. It is not truly generic as it mentions the command name. So the 
-above says the command "tdls_sta_info" is unsupported and the mac 
-address provided in the "sta_info" command is not found in firmware.
+Signed-off-by: Alex Shumsky <alexthreed@gmail.com>
+---
 
-Looking at the log I see periodically:
+Changes in v2:
+- don't remove log completely, but reword it
 
-Dec 09 18:32:55 jackrune kernel: brcmfmac: brcmf_fil_cmd_data Firmware 
-error: BCME_NOTASSOCIATED (-17)
-Dec 09 18:32:55 jackrune kernel: brcmfmac: brcmf_fil_cmd_data_get 
-ifidx=0, cmd=23, len=6, err=-52
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-According fwil.h the driver sends BRCMF_C_GET_BSSID command. When 
-associated is returns the BSSID of your AP. As you are not yet 
-associated it fails. Not really related to the external auth procedure I 
-think.
-
-The following is more interesting:
-
-Dec 09 18:32:55 jackrune kernel: brcmfmac: brcmf_cfg80211_external_auth 
-Enter
-Dec 09 18:32:55 jackrune kernel: brcmfmac: brcmf_fil_iovar_data_set 
-ifidx=0, name=auth_status, len=44
-Dec 09 18:32:55 jackrune kernel: brcmutil: data
-Dec 09 18:32:55 jackrune kernel: 00000000: 04 00 d8 3a dd 60 a3 0c 07 00 
-00 00 64 65 73 6b  ...:.`......desk
-Dec 09 18:32:55 jackrune kernel: 00000010: 53 41 45 00 00 00 00 00 00 00 
-00 00 00 00 00 00  SAE.............
-Dec 09 18:32:55 jackrune kernel: 00000020: 00 00 00 00 00 00 00 00 00 00 
-00 00              ............
-Dec 09 18:32:55 jackrune kernel: brcmfmac: brcmf_sdio_bus_txctl Enter
-Dec 09 18:32:55 jackrune kernel: brcmfmac: brcmf_sdio_bus_rxctl Enter
-Dec 09 18:32:55 jackrune kernel: brcmfmac: brcmf_sdio_isr Enter
-Dec 09 18:32:55 jackrune kernel: brcmfmac: brcmf_sdio_bus_rxctl resumed 
-on rxctl frame, got 72 expected 72
-Dec 09 18:32:55 jackrune kernel: brcmfmac: brcmf_fil_cmd_data Firmware 
-error: BCME_BADLEN (-24)
-Dec 09 18:32:55 jackrune kernel: ieee80211 phy0: 
-brcmf_cfg80211_external_auth: auth_status iovar failed: ret=-52
-
-So the "auth_status" command fails and the firmware error code indicates 
-the length is invalid. The length of the "auth_status" command as sent 
-by the driver to the device is 44 and apparently the firmware expects 
-some other length. Here is what I did in my patch:
-
-+static int
-+brcmf_cyw_external_auth(struct wiphy *wiphy, struct net_device *dev,
-+			struct cfg80211_external_auth_params *params)
-+{
-+	struct brcmf_if *ifp;
-+	struct brcmf_pub *drvr;
-+	struct brcmf_auth_req_status_le auth_status;
-+	int ret = 0;
-+
-+	brcmf_dbg(TRACE, "Enter\n");
-+
-+	ifp = netdev_priv(dev);
-+	drvr = ifp->drvr;
-+	if (params->status == WLAN_STATUS_SUCCESS) {
-+		auth_status.flags = cpu_to_le16(BRCMF_EXTAUTH_SUCCESS);
-+	} else {
-+		bphy_err(drvr, "External authentication failed: status=%d\n",
-+			 params->status);
-+		auth_status.flags = cpu_to_le16(BRCMF_EXTAUTH_FAIL);
-+	}
-+
-+	memcpy(auth_status.peer_mac, params->bssid, ETH_ALEN);
-+	auth_status.ssid_len = cpu_to_le32(min_t(u8, params->ssid.ssid_len,
-+						 IEEE80211_MAX_SSID_LEN));
-+	memcpy(auth_status.ssid, params->ssid.ssid, auth_status.ssid_len);
-+
-+	ret = brcmf_fil_iovar_data_set(ifp, "auth_status", &auth_status,
-+				       sizeof(auth_status));
-+	if (ret < 0)
-+		bphy_err(drvr, "auth_status iovar failed: ret=%d\n", ret);
-+
-+	return ret;
-+}
-
-So the type struct brcmf_auth_req_status_le is used for external auth 
-request and for auth_status. Maybe for the "auth_status" it only needs a 
-subset of fields. Here is the struct declaration:
-
-+/**
-+ * struct brcmf_auth_req_status_le - external auth request and status 
-update
-+ *
-+ * @flags: flags for external auth status
-+ * @peer_mac: peer MAC address
-+ * @ssid_len: length of ssid
-+ * @ssid: ssid characters
-+ */
-+struct brcmf_auth_req_status_le {
-+	__le16 flags;
-+	u8 peer_mac[ETH_ALEN];
-+	__le32 ssid_len;
-+	u8 ssid[IEEE80211_MAX_SSID_LEN];
-+};
-
-Maybe flags and peer_mac is sufficient? That would be 8 bytes so can you 
-try and change brcmf_cyw_external_auth() such that it does:
-
-+	ret = brcmf_fil_iovar_data_set(ifp, "auth_status", &auth_status, 8);
-
-Without firmware source code we can only guess.
-
-Regards,
-Arend
-
-> On Mon, Dec 9, 2024 at 8:30 AM KeithG <ys3al35l@gmail.com> wrote:
->>
->> I poked at this a while back and decided to try it again over the weekend.
->>
->> Infineon has released a new firmware:
->> Firmware: BCM4345/6 wl0: Oct 28 2024 23:27:00 version 7.45.286
->> (be70ab3 CY) FWID 01-95efe7fa
->> it is not in the RPiOS release, yet, but I installed it on a Pi3B+ and
->> decided to give it a try. I have an AP running WPA3 personal on a
->> desktop in the home and can connect to it with my phone as proof that
->> it 'works'.
->>
->> I tried to connect to it once again from the Pi while running this new
->> firmware. It gets closer than last time I checked, but it does not
->> actually negotiate a functional connection.
->> I tried with connman/iwd, NetworkManager/iwd and it gets close, but
->> still errors out. I get a number of these in the iwmon log:
->>
->>> Response: Get Station (0x11) len 4                                  38.439787
->>      Status: Invalid exchange (52)
->>
->> Can I probe this further to assist in diagnosing the cause and
->> potentially help with a solution?
->> The log is attached.
->>
->> Regards,
->>
->> Keith
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
+index da72fd2d541f..c3a57e30c855 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
+@@ -327,8 +327,8 @@ static netdev_tx_t brcmf_netdev_start_xmit(struct sk_buff *skb,
+ 	if (skb_headroom(skb) < drvr->hdrlen || skb_header_cloned(skb)) {
+ 		head_delta = max_t(int, drvr->hdrlen - skb_headroom(skb), 0);
+ 
+-		brcmf_dbg(INFO, "%s: insufficient headroom (%d)\n",
+-			  brcmf_ifname(ifp), head_delta);
++		brcmf_dbg(INFO, "%s: %s headroom\n", brcmf_ifname(ifp),
++			  head_delta ? "insufficient" : "unmodifiable");
+ 		atomic_inc(&drvr->bus_if->stats.pktcowed);
+ 		ret = pskb_expand_head(skb, ALIGN(head_delta, NET_SKB_PAD), 0,
+ 				       GFP_ATOMIC);
+-- 
+2.34.1
 
