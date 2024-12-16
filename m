@@ -1,61 +1,62 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1114B201100
-	for <brcm80211@lists.linux.dev>; Mon, 16 Dec 2024 09:43:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D151E202C27
+	for <brcm80211@lists.linux.dev>; Mon, 16 Dec 2024 09:47:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734342237; cv=none; b=NW0yOEOAzPqE+Rj7FSjhMkebCcJr6oK7SgQimueWdxx4P8nP7Uz+Y4V9Neez64qTxWwvwVz3INNrNl6AdfXp00GZ1wHHffrDct+uSCRHT2DWBUkLTe9pO29CnWXtGnPF+nzNXfi//4iJLkvAU+S+m2VLx/CqW/lkuTxzj7pvA+I=
+	t=1734342443; cv=none; b=CPfq1CvN29l51ggK2tHgzyfT6yGXKqWcBLBuiPIZYvHSvzykvop4dr8f9Wz82cqtvfATBJ+8XvqoEon3A3SP+/JEvzhOFwd4N4bHT490FVqjCAmcagfEcY2zYRDZSmmgo6prVv9iVdLIzrX/b/fuLUWQTsA/39Ir2rI6RKSlEPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734342237; c=relaxed/simple;
-	bh=wrjU9tefF5nla8es5bkmKpMX98aF1/pLFqZo1hvJmFw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LgsHRgX9thWrVJyKUk6+hiNqV9DNy5F6f9WzQQvfDXcVL0G+WN8/ZM5smiagSXjVAJQccRmatUq6NkbijRzeh8090EM36u187RIfO8NRW2zBCc6Yeba0eM6SLT2qEkcLWL48bhF6wgIo+jWu0755d4IZ3fCxbvWi0Bnoqbk/vkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=GJSFTU/6; arc=none smtp.client-ip=209.85.214.180
+	s=arc-20240116; t=1734342443; c=relaxed/simple;
+	bh=IRjn40il3SQhE2uIEcMjacNa+gsinEVH2XPdFrjoWcw=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=AXrvnR5KtakxuzTC1E2efsA0WPwhB6Oi6K8mkSZSVajs/M0FVEgS4yTUGZ/mZ6HenW/9ZIMs/VipBVd2iDjbQRIgrTMIa2W8FRo8s2WcqTbKGOWDg4ZNIHJODfz4ILJuvcwkZp/qJKfdI4MiM/O1fBWmScB59/mYq5DggA83sjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=L75Q39rK; arc=none smtp.client-ip=209.85.214.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="GJSFTU/6"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-21670dce0a7so42203245ad.1
-        for <brcm80211@lists.linux.dev>; Mon, 16 Dec 2024 01:43:55 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="L75Q39rK"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2164b1f05caso34696665ad.3
+        for <brcm80211@lists.linux.dev>; Mon, 16 Dec 2024 01:47:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1734342235; x=1734947035; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=gC4zE/XvjoDkcqTaVpet6XxX2h4Mm1HAHxEJmB5OxUY=;
-        b=GJSFTU/6O7PdAIA9uvdxwRNlbcXWqOBrZe8SghmYkOoJGJ6uTReJng8UlcwnavkBHX
-         KKcpcf9JysZxzA4EjAAnRgOp1G0Bv+EoGp9hZSMbL1thfLB1oWU/gWhU9LfZrMRzSIsF
-         Mao2zckdWscd1OfbfGXoOOUvIKpBdVNuT1Qt8=
+        d=broadcom.com; s=google; t=1734342441; x=1734947241; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :references:cc:to:from:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=/HCPRB4VyzDsMOFgx4inSgYlFtMRCoevEhML9QepDeY=;
+        b=L75Q39rK89nfJwG2j0ltjE80J1PLICHxS/ATxDYBra2AMQhwO2DLanoq+Y4VqfIhJU
+         47W6Q5sW4O7wW/Nmk4xedXGzQZaPduZH3RBjKdGWnWgEejaxaikpvvZGpLBe1Dkn87ja
+         uWdIRzfMCkhqIF4aLo1rHF4emDv3gW0xQNGjU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734342235; x=1734947035;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gC4zE/XvjoDkcqTaVpet6XxX2h4Mm1HAHxEJmB5OxUY=;
-        b=Be/HgcOxuqvIjWAtqeWhHm3kZGlhpCSRQCZTvCFZnY9zWpDcBOG42CTsOhLIXB7KAn
-         tqdkuAetr5W5Ec2P9+sEPmqhGbyExVMlD86+dESo4cAtsfFJ6K+EW7/1Gx9+LX/uDk7Z
-         ZE8GzEAjiQuCKUhl97YWBwQam5oGMFp7ksRf1prrj0ihZd6xv4PWxqcPR65cfaB8imFw
-         NUTy2QVhp2m3O2CTtoSMzD1P6tdMmg7Lt1te1DNB8czcin+avVQXcKqA9AapPT0UBGVO
-         lvMScuzmUU915hf0BF6k3Unf0jop8z7kddMxuAXbYa9WiHnXtGHACK+iZJiLYtI+HpPG
-         mcQA==
-X-Gm-Message-State: AOJu0YxJiYCN2br7hEcA/7NE1ozWJ8bLpAlWHzlXOggQye2dYnwIdeI+
-	cMwqyGEY1FmgwJ3hkfpzvK8ADHq0QuKLgx54JxppcGua2sh6HOaw5B1ukwW5Nw==
-X-Gm-Gg: ASbGncvja2Yx49J+cWgbuvrvbFviCLswerMcm89KumFimk1XAsp2fT6na9sDMfClwSp
-	XI0poAo2U9sxce8kOPEwfaXZ0TX0/ZNxkBSP+oqNYuiFlXIGnVsiO1AQjMGOVAAAx3JjUOF45uU
-	TGvAQq9j7VnOEfAMN4QPt4ngDFIr0PsBODmtuBq4sBYB7NCtOW+Eq+lP8qTQ6iEDKFKpK6xJQM9
-	7MQKyFNuL4OtDG9QVrgiYLbCtmFWIiqwKj+OCAs70Njv55MkJJ+ZrUZ2+quysjbeEfgFzA+xXfQ
-	Cts/fSMG
-X-Google-Smtp-Source: AGHT+IFcyf8lWbweopZyrRHAf3WRxRQE8Vh3wD8AC4e7mC3Pmd85yzWXts4j20w89UYWRBZQrgKGyA==
-X-Received: by 2002:a17:902:ea08:b0:215:6489:cfbf with SMTP id d9443c01a7336-21892981002mr167255095ad.11.1734342235214;
-        Mon, 16 Dec 2024 01:43:55 -0800 (PST)
+        d=1e100.net; s=20230601; t=1734342441; x=1734947241;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :references:cc:to:from:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/HCPRB4VyzDsMOFgx4inSgYlFtMRCoevEhML9QepDeY=;
+        b=wPyG1fM+XpAj6qhupMHWMh/Bu/fvmsbQDq8DLLzS9dqJ7opjOAD7UURTai93fIUPs1
+         s5MJ7K6u4SVeZn5rRCjjzsjMD01dODrdeJZ0RJ3+puZfoR+0uzq++BGnjXHtHwKmHuiR
+         AtjrdzZDa8277mB2ftA8e58UBLByAHw3bj6sgA58oAz0axyvWpv35MfuvxfZZMIF92ul
+         2gkFVr2NDgb0yGUKBDh9wohUFEty8qzRB1Sf5Xqgx/ddNapf+czQgloezz7bCTk+gAgg
+         RLWNyYBXLhqxelIZYW5QrC246qv6CUfcV90cHGT+N1xFZu0qaTewpUYd+ONEKc48mbAj
+         9FIw==
+X-Gm-Message-State: AOJu0YzkWaBdY+4zr1DDnUsrsUq3L83vegL9GPZhOPNOrq8yTk7xD66O
+	2ORss6DLfFPewMh2pVbhe6egyHQi0A571QfCmo4Z2MXUhYkUaVSDFzaCC6ao2S1FOOaQMwJkQQi
+	iGg==
+X-Gm-Gg: ASbGnct6sJqJvhyHgF2qRTzC/9ttkBR80HVIhn63v0cTIhxRR2OH967X/Kz50cH4Ox7
+	xiXGJFeCIE3j54R8wFcV2ym9znNyHFHZTeDZZsHvNvP9/ArgCdV6f6xtj/7X+P0p/e3lnsWesvn
+	C8iIHQUvpPfjXSBD9hBsETGp5Ogf/BP2KndD5VbaJ9UdKXqLHMnz3v20PRwr1lJ6CQtxd9RONb9
+	yXWARp+JbEL6NSWWjCh3qBuWzbhHme02mRPMrSi+PaLZ7O8VoDt1HEJABjIqSJLACGVKdagzjxA
+	nH2xyXYi
+X-Google-Smtp-Source: AGHT+IGpdPX9BY5G4+X8tRNio+DwzD9E2KOs35B0CWfQ1RXsBH/dYk8950ss/BwQXp/Z3+KC1wCJFw==
+X-Received: by 2002:a17:902:f644:b0:212:1ebf:9a03 with SMTP id d9443c01a7336-2189298250bmr176045185ad.2.1734342441108;
+        Mon, 16 Dec 2024 01:47:21 -0800 (PST)
 Received: from [10.176.68.154] ([192.19.176.227])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-218a1e5c476sm38773015ad.174.2024.12.16.01.43.53
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-218a1dbaf69sm38920395ad.6.2024.12.16.01.47.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 Dec 2024 01:43:54 -0800 (PST)
-Message-ID: <14ec6009-7b91-4a25-9943-f63da91d8c41@broadcom.com>
-Date: Mon, 16 Dec 2024 10:43:50 +0100
+        Mon, 16 Dec 2024 01:47:20 -0800 (PST)
+Message-ID: <caa186d8-1e07-421d-a127-7bb6482ac704@broadcom.com>
+Date: Mon, 16 Dec 2024 10:47:16 +0100
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -64,6 +65,7 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: brcmfmac SAE/WPA3 negotiation
+From: Arend van Spriel <arend.vanspriel@broadcom.com>
 To: KeithG <ys3al35l@gmail.com>
 Cc: brcm80211@lists.linux.dev, linux-wireless@vger.kernel.org,
  Denis Kenzior <denkenz@gmail.com>, James Prestwood <prestwoj@gmail.com>
@@ -78,8 +80,8 @@ References: <CAG17S_OwtNxetb7XzsxkZcygH_CWkZx15evQZkThb3WjqpiKTQ@mail.gmail.com>
  <CAG17S_O5K4Uh2c6xqph5sUZe8gMjhD3z4FDkSSQ0dhCuZA6aug@mail.gmail.com>
  <193cb61e210.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
  <CAG17S_P+cOQMpQda00JTCCKEB6MpPE4X2i8mRrEaM-n5YKdpNg@mail.gmail.com>
+ <14ec6009-7b91-4a25-9943-f63da91d8c41@broadcom.com>
 Content-Language: en-US
-From: Arend van Spriel <arend.vanspriel@broadcom.com>
 Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
  xsFNBGP96SABEACfErEjSRi7TA1ttHYaUM3GuirbgqrNvQ41UJs1ag1T0TeyINqG+s6aFuO8
  evRHRnyAqTjMQoo4tkfy21XQX/OsBlgvMeNzfs6jnVwlCVrhqPkX5g5GaXJnO3c4AvXHyWik
@@ -123,65 +125,76 @@ Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
  NKowQLrlMBGXT4NnRNV0+yHmusXPOPIqQCKEtbWSx9s2slQxmXukPYvLnuRJqkPkvrTgjn5d
  eSE0Dkhni4292/Nn/TnZf5mxCNWH1p3dz/vrT6EIYk2GSJgCLoTkCcqaM6+5E4IwgYOq3UYu
  AAgeEbPV1QeTVAPrntrLb0t0U5vdwG7Xl40baV9OydTv7ghjYZU349w1d5mdxg==
-In-Reply-To: <CAG17S_P+cOQMpQda00JTCCKEB6MpPE4X2i8mRrEaM-n5YKdpNg@mail.gmail.com>
+In-Reply-To: <14ec6009-7b91-4a25-9943-f63da91d8c41@broadcom.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-On 12/16/2024 1:17 AM, KeithG wrote:
-> On Sun, Dec 15, 2024 at 11:33 AM Arend Van Spriel
-> <arend.vanspriel@broadcom.com> wrote:
->>
->> On December 15, 2024 5:08:12 PM KeithG <ys3al35l@gmail.com> wrote:
->>
->>> On Sun, Dec 15, 2024 at 6:12 AM Arend van Spriel
->>> <arend.vanspriel@broadcom.com> wrote:
->>>>
->>>> On 12/14/2024 2:34 PM, KeithG wrote:
->>>>> Arend,
->>>>>
->>>>> I looked through the info where I got the latest firmware:
->>>>> https://community.infineon.com/t5/Wi-Fi-Bluetooth-for-Linux/Wi-Fi-A-class-Linux-Driver-release-FMAC-2024-11-21-Documents/td-p/905045
->>>>> https://community.infineon.com/t5/AIROC-Wi-Fi-and-Wi-Fi-Bluetooth/Cypress-Linux-WiFi-Driver-Release-FMAC-2024-11-21/td-p/902888
->>>>> and did not find anything, but I really do not know what I am looking for.
->>>>
->>>> I think I had a bit more luck and maybe found the needle. I sent out
->>>> another RFT patch which hopefully gets rid of the BCME_BADLEN error.
->>>>
->>>> Regards,
->>>> Arend
->>> Arend,
+On 12/16/2024 10:43 AM, Arend van Spriel wrote:
+> On 12/16/2024 1:17 AM, KeithG wrote:
+>> On Sun, Dec 15, 2024 at 11:33 AM Arend Van Spriel
+>> <arend.vanspriel@broadcom.com> wrote:
 >>>
->>> Can you send me a link to that patch? I want to try it.
+>>> On December 15, 2024 5:08:12 PM KeithG <ys3al35l@gmail.com> wrote:
+>>>
+>>>> On Sun, Dec 15, 2024 at 6:12 AM Arend van Spriel
+>>>> <arend.vanspriel@broadcom.com> wrote:
+>>>>>
+>>>>> On 12/14/2024 2:34 PM, KeithG wrote:
+>>>>>> Arend,
+>>>>>>
+>>>>>> I looked through the info where I got the latest firmware:
+>>>>>> https://community.infineon.com/t5/Wi-Fi-Bluetooth-for-Linux/Wi-Fi- 
+>>>>>> A-class-Linux-Driver-release-FMAC-2024-11-21-Documents/td-p/905045
+>>>>>> https://community.infineon.com/t5/AIROC-Wi-Fi-and-Wi-Fi-Bluetooth/ 
+>>>>>> Cypress-Linux-WiFi-Driver-Release-FMAC-2024-11-21/td-p/902888
+>>>>>> and did not find anything, but I really do not know what I am 
+>>>>>> looking for.
+>>>>>
+>>>>> I think I had a bit more luck and maybe found the needle. I sent out
+>>>>> another RFT patch which hopefully gets rid of the BCME_BADLEN error.
+>>>>>
+>>>>> Regards,
+>>>>> Arend
+>>>> Arend,
+>>>>
+>>>> Can you send me a link to that patch? I want to try it.
+>>>
+>>> Hmm. I explicitly sent it to you, but here is a link to patchwork:
+>>>
+>>> https://patchwork.kernel.org/project/linux-wireless/ 
+>>> patch/20241215120401.238320-1-arend.vanspriel@broadcom.com/
+>>>
+>>> You can apply it on top of the other 3 patches.
+>>>
+>>> Regards,
+>>> Arend
+>>>
+>> Thanks! I got it.
+>> I am building now and have tried to apply what I think are the correct
+>> patches. They do not apply cleanly and I had to hand edit things. My
+>> guess is I messed something up.
+>> I will see what happens when I reboot. It'll take a few hours to build
+>> on my Pi4 then for me to install it on the 3b+ to test.
 >>
->> Hmm. I explicitly sent it to you, but here is a link to patchwork:
+>> I hope I understand which are the '3 other' patches.
 >>
->> https://patchwork.kernel.org/project/linux-wireless/patch/20241215120401.238320-1-arend.vanspriel@broadcom.com/
+>> This is the one I got from your link:
+>> RFT-brcmfmac-Fix-structure-size-for-WPA3-external-SAE.diff
 >>
->> You can apply it on top of the other 3 patches.
+>> These are what I understand are the '3 other patches'
+>> RFT-v2-1-3-wifi-brcmfmac-support-per-vendor-cfg80211-callbacks-and- 
+>> firmware-events.patch.diff
+>> RFT-v2-2-3-wifi-brcmfmac-make-per-vendor-event-map-const.patch.diff
+>> RFT-v2-3-3-wifi-brcmfmac-cyw-support-external-SAE-authentication-in- 
+>> station-mode.patch.diff
 >>
->> Regards,
->> Arend
->>
-> Thanks! I got it.
-> I am building now and have tried to apply what I think are the correct
-> patches. They do not apply cleanly and I had to hand edit things. My
-> guess is I messed something up.
-> I will see what happens when I reboot. It'll take a few hours to build
-> on my Pi4 then for me to install it on the 3b+ to test.
+>> If they are not correct could you send me links to them and I'll try 
+>> again.
 > 
-> I hope I understand which are the '3 other' patches.
-> 
-> This is the one I got from your link:
-> RFT-brcmfmac-Fix-structure-size-for-WPA3-external-SAE.diff
-> 
-> These are what I understand are the '3 other patches'
-> RFT-v2-1-3-wifi-brcmfmac-support-per-vendor-cfg80211-callbacks-and-firmware-events.patch.diff
-> RFT-v2-2-3-wifi-brcmfmac-make-per-vendor-event-map-const.patch.diff
-> RFT-v2-3-3-wifi-brcmfmac-cyw-support-external-SAE-authentication-in-station-mode.patch.diff
-> 
-> If they are not correct could you send me links to them and I'll try again.
+> You got it right. Kuddos.
 
-You got it right. Kuddos.
+Ignored my spelling checker, but apparently it should be "kudos". 
+Another lesson learned today.
 
 Regards,
 Arend
