@@ -1,309 +1,287 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A6DC20B1E4
-	for <brcm80211@lists.linux.dev>; Mon, 16 Dec 2024 19:50:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C7ECA29
+	for <brcm80211@lists.linux.dev>; Tue, 17 Dec 2024 00:13:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734378606; cv=none; b=k10bhidI/lDIi2TYp0ZSrDL4sQKTbPjLXjQLQbJkLwPHNYsdacRNh+p+LM+KAAbbSrNUlCCN8z1UFOq3mngPyWu3r8xC/Vy8Bj2OBjZ7Skxx9ZslXxlk66ChDdZ3mPUoo2HzW+n7oqFx/BVblyco1MSdNbOgjGrTprhRMSNwd9k=
+	t=1734394420; cv=none; b=B4C4rpyrG08ts+5Mu7ucuj4dYzZ0LnOd9PXQ5XxVUNu4UlFlJNVmIj+9JZo4Q+hvHrTqdbhE/pjnJuiyasKq86oulxXpmtMDk7OvGQS0TjSWc/u5B/EORqZFgJhRijx8pvz6SZ5FDFmSrW/uRCcPzDdtfKwUsxgSdy85K5xf4zI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734378606; c=relaxed/simple;
-	bh=Wa2cjjxPr3xON0EJNI3xzh+mkTyVdB/Oatm6BcMluOc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=k+52zKS9vBOUCcvWiiCRyWq2PnSr5bi8cs65aEA0OOD5YCV2nCxu+vOPyK8uGz+Iu7QxS27O8xcU9Zm0DmEKNDId9HMUqc5CtZygVjs4ehYHwrxT/PYZw7zMes5+OBkgDMXWw/LZKBF2wJqyjSEnepk9EyDz+8CuYJ6MRdnHFOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=CynMBSyi; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+	s=arc-20240116; t=1734394420; c=relaxed/simple;
+	bh=Eq6e+Iy+6Y/uUCJtG4zEQrS2FYB7VtBPPclfmv/HM7Y=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=N9xbeYhXfC5s7cnFdP6Qx2ZLMk2c3AdcAH8HV7mou6w+wNNGSbBVkKawRMSMxrf9HYrqGZf1gfZ1gd6VQrdD6mZ3HD+t40/Ts8xcoCvU4Omea6fFFV1R7zHF1ryfHkQrQKfgVzWll29LqTDPazpATwTZCxrOCyjYDsoiWl/bjvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=esGW2PmE; arc=none smtp.client-ip=209.85.216.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="CynMBSyi"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4361a50e337so31557985e9.0
-        for <brcm80211@lists.linux.dev>; Mon, 16 Dec 2024 11:50:04 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="esGW2PmE"
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-2eec9b3a1bbso3221569a91.3
+        for <brcm80211@lists.linux.dev>; Mon, 16 Dec 2024 16:13:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1734378603; x=1734983403; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=+3zmBXBlXpUyKwAL6RoG9gHrRmJ8ahukSyPXEYuYUtM=;
-        b=CynMBSyirIZt3BdkW5aCjN5/2jkX/9v8hirDPrRKfqRVAVNvmA0N1XxLeohfKebNfa
-         w/9tGLgztiE6Wa1sLkC1BFqHOQjV7Bq02O8KzRiqxtqiTk9Io3IsfISPmhPTK3QbLVju
-         Hd9y6wyW4maR5wM9cKoJUe6KHCrWrzfDUzwz0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734378603; x=1734983403;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1734394418; x=1734999218; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=+3zmBXBlXpUyKwAL6RoG9gHrRmJ8ahukSyPXEYuYUtM=;
-        b=Fc87HP3BtEkdqWkTBSveuYPj4Lr+2mp7ptssBGTjdaadvPSqJiRtTnw/Ljz0PKHR1/
-         eG2GgOS5tFkgkg3CWZgCXaqDxiL7isizhQvv/pod+H2Md4KG/I5jbtzv/GP+8LqfwRN5
-         0iKBGex2RXD6NQUDVX64OhZdgz6qrMGYsimZXFGZXGkCdgtQxPdD7Et5GrtBaGSQKHbv
-         Y4CtlpvVy8Xb+A1OMKyeM/l49lNiyIyTu1YNjI3GOn6OeO6W5VSuBydH8m9XWM5kwPhZ
-         osbJNHAvdzskohBGoXWQq1HrPdi1mLYBKzWQlyWQkfwg6VCHH4FRhCFNkyTSWUV8bYMG
-         uqAA==
-X-Gm-Message-State: AOJu0YxP619SaGLU187kosYamfSMpF1PfH6R/J6K0PpgziZetfgSbEMj
-	qnPXtrv2kBb2SHr/EjQ1BgN5SOvns3HCbV91mnDMza55rIgDLFzjARrfkH5vXIJS0ZezilzpNe4
-	vSw==
-X-Gm-Gg: ASbGncuoR/Zff4Kx7YUNiiJpWrKB5tX9p1WhQ1lNwY6YUW7M9YaYviwwQaY2vexRLKb
-	P0vGB/KsTv+Xcar/Otr/pd/li8fMFXscCnxvi0uxbPyf5WuWji+oqaAJsc5bbb+96a+dxGPRojo
-	NiapK53LE/Scw2T7hD20eDDSssyi+tQGU24S13npkGLIB0gmji9jes+8ek8w7VDoAgu0tvSFxz3
-	YD19uqZX1PePE8sG3hcc739UrXStftw3sYUdTIaXO+WFD/Jm6n7E9hHGolilQOlGWNCXjqvtI2s
-	kS5ie+c=
-X-Google-Smtp-Source: AGHT+IHxeS77iNEP6vMVngBOdtAjbEqPbgEye0jehv19AwjXEi/jp8aDt8SsF6o1CSrbYDsq6TmgOg==
-X-Received: by 2002:a05:600c:3c8d:b0:431:52f5:f48d with SMTP id 5b1f17b1804b1-4362aab939bmr134955135e9.31.1734378602819;
-        Mon, 16 Dec 2024 11:50:02 -0800 (PST)
-Received: from [10.229.43.16] ([192.19.176.227])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4362559ed6csm148664115e9.24.2024.12.16.11.50.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 Dec 2024 11:50:02 -0800 (PST)
-Message-ID: <ec23f0d9-a23c-4684-b0b6-a89141c5ec37@broadcom.com>
-Date: Mon, 16 Dec 2024 20:49:59 +0100
+        bh=Eq6e+Iy+6Y/uUCJtG4zEQrS2FYB7VtBPPclfmv/HM7Y=;
+        b=esGW2PmEw0PO/GCJDc7PyDCuRJhvIIVqFxe2XZHOeG8wwbnYPmSll+UPtX6nD0MBsV
+         bsv3ZswRAHDuNNW5e0aOSilSHgodyy6Cu3AxSU3cnovW4Tr2JumP+f50Ce5Ajmt98S25
+         bbobcxPIZucnOoOcRfGU2Jty4sa4ZvEQbQY9Yv3q18DXePUHyX3VnX6QNKfRWrPBUSJf
+         5I6NZ9I1UOkYbRbI//Wj2c1hHT7GcvE6ZJ6qb4DbCrRuX+AD6HPBtRDf+2QYLHmf/0R1
+         dEnEKKIQmQUGhqK24P2HSpOoZp446BsXhb7lBuY17OKx/BaR6+qM2dzt3IGzY6bErpt+
+         qcvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734394418; x=1734999218;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Eq6e+Iy+6Y/uUCJtG4zEQrS2FYB7VtBPPclfmv/HM7Y=;
+        b=HnaCKvBk3CjxPX32vz5DxtrvIdiTrG5eyDx2U54kE3Bp4TBurmXute3DK9Q29tdzVU
+         cCyHv8htTCpeuKibGpD8telsWhC51lu1A7dwZm+1h4QeWCHzYrGOhUjMUKwPXmOXPaux
+         u2oOv1JfZcqbFhkv8+M2m8xmKg0Wdt2FQ9A5XwKu5uIOHpYJxBxszRNNtcmlzZRtricV
+         StIk8trK3cu9J5JhgtYUMTGuFiaiSoflnwTUBujgZuQUVyOruxJ6BfVgqUPbEteLOJKo
+         xYXK4y6cHCPFVBNgGl4y71O9CkqmeslL6Y/trk0U6/8NyC1zpacQ8OIa793XUWI9GpMh
+         VkKw==
+X-Gm-Message-State: AOJu0YxdkOPU2UFe2oTSswOLKajKrJTIjgtHFEz+CTmZNIqfpthaFddl
+	wcHmXHcdDAjEPiDDpB0Rg0S4eV0ZLvTXMRy++VsBe1XRjsrn/lIQ4sPvRSD+QPvF/LFU89EIqM1
+	ybhQbiEQUxhFL+O4OY/VixOMXHZI=
+X-Gm-Gg: ASbGncuk7ZJ+jG0t10ui6sVNeu1ZQG6+QDgkjdPn47aa9LmBuomPkGJjg6dTjRPYwQ7
+	Bwjy2fdKtRe7sToAseHjH6lSxlFjeETCn6ROW+RECVwXt8Hx2h6QrV4Azw/hoVlBeHvayLTSC
+X-Google-Smtp-Source: AGHT+IECVaH0EpV01FwfEyMg5UJRvQ86VjzOfusekHopJEImmYd9bn+YjYOHpX1K9VONn207fbleSvwGwouahO0awiU=
+X-Received: by 2002:a17:90a:ea93:b0:2ee:9a82:5a93 with SMTP id
+ 98e67ed59e1d1-2f28fb67161mr22525767a91.14.1734394418414; Mon, 16 Dec 2024
+ 16:13:38 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: brcmfmac SAE/WPA3 negotiation
-To: KeithG <ys3al35l@gmail.com>
-Cc: brcm80211@lists.linux.dev, linux-wireless@vger.kernel.org,
- Denis Kenzior <denkenz@gmail.com>, James Prestwood <prestwoj@gmail.com>
 References: <CAG17S_OwtNxetb7XzsxkZcygH_CWkZx15evQZkThb3WjqpiKTQ@mail.gmail.com>
  <CAG17S_M9wxMsSNyqAQv2oxaCQZ9CAe=GHNjZCbw__2bsAg1hdg@mail.gmail.com>
- <ff9c1192-42b5-4a28-a8c9-31af9765cbff@broadcom.com>
- <CAG17S_PrigpkFP=5wcTL9UETwc6aHqXnuTEyeRrZ7Ey1cb-ZLw@mail.gmail.com>
+ <ff9c1192-42b5-4a28-a8c9-31af9765cbff@broadcom.com> <CAG17S_PrigpkFP=5wcTL9UETwc6aHqXnuTEyeRrZ7Ey1cb-ZLw@mail.gmail.com>
  <193c1173968.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
  <CAG17S_NwSKEJzbk7RNiOKqU_25f6muydbh0DN+ec1Ke6QrR1Qw@mail.gmail.com>
  <CAG17S_NqbLogvTWyoYobZ6kOpfXHnScfm4-dB1EqsmpB+q+zxA@mail.gmail.com>
- <21a81894-2e1e-440b-b7ea-27660fa08d9d@broadcom.com>
- <CAG17S_O5K4Uh2c6xqph5sUZe8gMjhD3z4FDkSSQ0dhCuZA6aug@mail.gmail.com>
+ <21a81894-2e1e-440b-b7ea-27660fa08d9d@broadcom.com> <CAG17S_O5K4Uh2c6xqph5sUZe8gMjhD3z4FDkSSQ0dhCuZA6aug@mail.gmail.com>
  <193cb61e210.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
  <CAG17S_P+cOQMpQda00JTCCKEB6MpPE4X2i8mRrEaM-n5YKdpNg@mail.gmail.com>
- <14ec6009-7b91-4a25-9943-f63da91d8c41@broadcom.com>
- <caa186d8-1e07-421d-a127-7bb6482ac704@broadcom.com>
- <CAG17S_N0V=_Es0C7wA3fPu2MrBKBM7tEHRXOnVGWiUSxPucaRQ@mail.gmail.com>
-Content-Language: en-US
-From: Arend van Spriel <arend.vanspriel@broadcom.com>
-Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
- xsFNBGP96SABEACfErEjSRi7TA1ttHYaUM3GuirbgqrNvQ41UJs1ag1T0TeyINqG+s6aFuO8
- evRHRnyAqTjMQoo4tkfy21XQX/OsBlgvMeNzfs6jnVwlCVrhqPkX5g5GaXJnO3c4AvXHyWik
- SOd8nOIwt9MNfGn99tkRAmmsLaMiVLzYfg+n3kNDsqgylcSahbd+gVMq+32q8QA+L1B9tAkM
- UccmSXuhilER70gFMJeM9ZQwD/WPOQ2jHpd0hDVoQsTbBxZZnr2GSjSNr7r5ilGV7a3uaRUU
- HLWPOuGUngSktUTpjwgGYZ87Edp+BpxO62h0aKMyjzWNTkt6UVnMPOwvb70hNA2v58Pt4kHh
- 8ApHky6IepI6SOCcMpUEHQuoKxTMw/pzmlb4A8PY//Xu/SJF8xpkpWPVcQxNTqkjbpazOUw3
- 12u4EK1lzwH7wjnhM3Fs5aNBgyg+STS1VWIwoXJ7Q2Z51odh0XecsjL8EkHbp9qHdRvZQmMu
- Ns8lBPBkzpS7y2Q6Sp7DcRvDfQQxPrE2sKxKLZVGcRYAD90r7NANryRA/i+785MSPUNSTWK3
- MGZ3Xv3fY7phISvYAklVn/tYRh88Zthf6iDuq86m5mr+qOO8s1JnCz6uxd/SSWLVOWov9Gx3
- uClOYpVsUSu3utTta3XVcKVMWG/M+dWkbdt2KES2cv4P5twxyQARAQABzS9BcmVuZCB2YW4g
- U3ByaWVsIDxhcmVuZC52YW5zcHJpZWxAYnJvYWRjb20uY29tPsLBhwQTAQgAMRYhBLX1Z69w
- T4l/vfdb0pZ6NOIYA/1RBQJj/ek9AhsDBAsJCAcFFQgJCgsFFgIDAQAACgkQlno04hgD/VGw
- 8A//VEoGTamfCks+a12yFtT1d/GjDdf3i9agKMk3esn08JwjJ96x9OFFl2vFaQCSiefeXITR
- K4T/yT+n/IXntVWT3pOBfb343cAPjpaZvBMh8p32z3CuV1H0Y+753HX7gdWTEojGWaWmKkZh
- w3nGoRZQEeAcwcF3gMNwsM5Gemj7aInIhRLUeoKh/0yV85lNE1D7JkyNheQ+v91DWVj5/a9X
- 7kiL18fH1iC9kvP3lq5VE54okpGqUj5KE5pmHNFBp7HZO3EXFAd3Zxm9ol5ic9tggY0oET28
- ucARi1wXLD/oCf1R9sAoWfSTnvOcJjG+kUwK7T+ZHTF8YZ4GAT3k5EwZ2Mk3+Rt62R81gzRF
- A6+zsewqdymbpwgyPDKcJ8YUHbqvspMQnPTmXNk+7p7fXReVPOYFtzzfBGSCByIkh1bB45jO
- +TM5ZbMmhsUbqA0dFT5JMHjJIaGmcw21ocgBcLsJ730fbLP/L08udgWHywPoq7Ja7lj5W0io
- ZDLz5uQ6CEER6wzD07vZwSl/NokljVexnOrwbR3wIhdr6B0Hc/0Bh7T8gpeM+QcK6EwJBG7A
- xCHLEacOuKo4jinf94YQrOEMnOmvucuQRm9CIwZrQ69Mg6rLn32pA4cK4XWQN1N3wQXnRUnb
- MTymLAoxE4MInhDVsZCtIDFxMVvBUgZiZZszN33OwU0EY/3pIgEQAN35Ii1Hn90ghm/qlvz/
- L+wFi3PTQ90V6UKPv5Q5hq+1BtLA6aj2qmdFBO9lgO9AbzHo8Eizrgtxp41GkKTgHuYChijI
- kdhTVPm+Pv44N/3uHUeFhN3wQ3sTs1ZT/0HhwXt8JvjqbhvtNmoGosZvpUCTwiyM1VBF/ICT
- ltzFmXd5z7sEuDyZcz9Q1t1Bb2cmbhp3eIgLmVA4Lc9ZS3sK1UMgSDwaR4KYBhF0OKMC1OH8
- M5jfcPHR8OLTLIM/Thw0YIUiYfj6lWwWkb82qa4IQvIEmz0LwvHkaLU1TCXbehO0pLWB9HnK
- r3nofx5oMfhu+cMa5C6g3fBB8Z43mDi2m/xM6p5c3q/EybOxBzhujeKN7smBTlkvAdwQfvuD
- jKr9lvrC2oKIjcsO+MxSGY4zRU0WKr4KD720PV2DCn54ZcOxOkOGR624d5bhDbjw1l2r+89V
- WLRLirBZn7VmWHSdfq5Xl9CyHT1uY6X9FRr3sWde9kA/C7Z2tqy0MevXAz+MtavOJb9XDUlI
- 7Bm0OPe5BTIuhtLvVZiW4ivT2LJOpkokLy2K852u32Z1QlOYjsbimf77avcrLBplvms0D7j6
- OaKOq503UKfcSZo3lF70J5UtJfXy64noI4oyVNl1b+egkV2iSXifTGGzOjt50/efgm1bKNkX
- iCVOYt9sGTrVhiX1ABEBAAHCwXYEGAEIACAWIQS19WevcE+Jf733W9KWejTiGAP9UQUCY/3p
- PgIbDAAKCRCWejTiGAP9UaC/EACZvViKrMkFooyACGaukqIo/s94sGuqxj308NbZ4g5jgy/T
- +lYBzlurnFmIbJESFOEq0MBZorozDGk+/p8pfAh4S868i1HFeLivVIujkcL6unG1UYEnnJI9
- uSwUbEqgA8vwdUPEGewYkPH6AaQoh1DdYGOleQqDq1Mo62xu+bKstYHpArzT2islvLdrBtjD
- MEzYThskDgDUk/aGPgtPlU9mB7IiBnQcqbS/V5f01ZicI1esy9ywnlWdZCHy36uTUfacshpz
- LsTCSKICXRotA0p6ZiCQloW7uRH28JFDBEbIOgAcuXGojqYx5vSM6o+03W9UjKkBGYFCqjIy
- Ku843p86Ky4JBs5dAXN7msLGLhAhtiVx8ymeoLGMoYoxqIoqVNaovvH9y1ZHGqS/IYXWf+jE
- H4MX7ucv4N8RcsoMGzXyi4UbBjxgljAhTYs+c5YOkbXfkRqXQeECOuQ4prsc6/zxGJf7MlPy
- NKowQLrlMBGXT4NnRNV0+yHmusXPOPIqQCKEtbWSx9s2slQxmXukPYvLnuRJqkPkvrTgjn5d
- eSE0Dkhni4292/Nn/TnZf5mxCNWH1p3dz/vrT6EIYk2GSJgCLoTkCcqaM6+5E4IwgYOq3UYu
- AAgeEbPV1QeTVAPrntrLb0t0U5vdwG7Xl40baV9OydTv7ghjYZU349w1d5mdxg==
-In-Reply-To: <CAG17S_N0V=_Es0C7wA3fPu2MrBKBM7tEHRXOnVGWiUSxPucaRQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+ <14ec6009-7b91-4a25-9943-f63da91d8c41@broadcom.com> <caa186d8-1e07-421d-a127-7bb6482ac704@broadcom.com>
+ <CAG17S_N0V=_Es0C7wA3fPu2MrBKBM7tEHRXOnVGWiUSxPucaRQ@mail.gmail.com> <ec23f0d9-a23c-4684-b0b6-a89141c5ec37@broadcom.com>
+In-Reply-To: <ec23f0d9-a23c-4684-b0b6-a89141c5ec37@broadcom.com>
+From: KeithG <ys3al35l@gmail.com>
+Date: Mon, 16 Dec 2024 18:13:27 -0600
+Message-ID: <CAG17S_PmXNP2bdUU5ErQd-N2jyScqvfKTFsnWgADb3uhqpBsZA@mail.gmail.com>
+Subject: Re: brcmfmac SAE/WPA3 negotiation
+To: Arend van Spriel <arend.vanspriel@broadcom.com>
+Cc: brcm80211@lists.linux.dev, linux-wireless@vger.kernel.org, 
+	Denis Kenzior <denkenz@gmail.com>, James Prestwood <prestwoj@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 12/16/2024 1:21 PM, KeithG wrote:
-> On Mon, Dec 16, 2024 at 3:47 AM Arend van Spriel
-> <arend.vanspriel@broadcom.com> wrote:
->>
->> On 12/16/2024 10:43 AM, Arend van Spriel wrote:
->>> On 12/16/2024 1:17 AM, KeithG wrote:
->>>> On Sun, Dec 15, 2024 at 11:33 AM Arend Van Spriel
->>>> <arend.vanspriel@broadcom.com> wrote:
->>>>>
->>>>> On December 15, 2024 5:08:12 PM KeithG <ys3al35l@gmail.com> wrote:
->>>>>
->>>>>> On Sun, Dec 15, 2024 at 6:12 AM Arend van Spriel
->>>>>> <arend.vanspriel@broadcom.com> wrote:
->>>>>>>
->>>>>>> On 12/14/2024 2:34 PM, KeithG wrote:
->>>>>>>> Arend,
->>>>>>>>
->>>>>>>> I looked through the info where I got the latest firmware:
->>>>>>>> https://community.infineon.com/t5/Wi-Fi-Bluetooth-for-Linux/Wi-Fi-
->>>>>>>> A-class-Linux-Driver-release-FMAC-2024-11-21-Documents/td-p/905045
->>>>>>>> https://community.infineon.com/t5/AIROC-Wi-Fi-and-Wi-Fi-Bluetooth/
->>>>>>>> Cypress-Linux-WiFi-Driver-Release-FMAC-2024-11-21/td-p/902888
->>>>>>>> and did not find anything, but I really do not know what I am
->>>>>>>> looking for.
->>>>>>>
->>>>>>> I think I had a bit more luck and maybe found the needle. I sent out
->>>>>>> another RFT patch which hopefully gets rid of the BCME_BADLEN error.
->>>>>>>
->>>>>>> Regards,
->>>>>>> Arend
->>>>>> Arend,
->>>>>>
->>>>>> Can you send me a link to that patch? I want to try it.
->>>>>
->>>>> Hmm. I explicitly sent it to you, but here is a link to patchwork:
->>>>>
->>>>> https://patchwork.kernel.org/project/linux-wireless/
->>>>> patch/20241215120401.238320-1-arend.vanspriel@broadcom.com/
->>>>>
->>>>> You can apply it on top of the other 3 patches.
->>>>>
->>>>> Regards,
->>>>> Arend
->>>>>
->>>> Thanks! I got it.
->>>> I am building now and have tried to apply what I think are the correct
->>>> patches. They do not apply cleanly and I had to hand edit things. My
->>>> guess is I messed something up.
->>>> I will see what happens when I reboot. It'll take a few hours to build
->>>> on my Pi4 then for me to install it on the 3b+ to test.
->>>>
->>>> I hope I understand which are the '3 other' patches.
->>>>
->>>> This is the one I got from your link:
->>>> RFT-brcmfmac-Fix-structure-size-for-WPA3-external-SAE.diff
->>>>
->>>> These are what I understand are the '3 other patches'
->>>> RFT-v2-1-3-wifi-brcmfmac-support-per-vendor-cfg80211-callbacks-and-
->>>> firmware-events.patch.diff
->>>> RFT-v2-2-3-wifi-brcmfmac-make-per-vendor-event-map-const.patch.diff
->>>> RFT-v2-3-3-wifi-brcmfmac-cyw-support-external-SAE-authentication-in-
->>>> station-mode.patch.diff
->>>>
->>>> If they are not correct could you send me links to them and I'll try
->>>> again.
->>>
->>> You got it right. Kuddos.
->>
->> Ignored my spelling checker, but apparently it should be "kudos".
->> Another lesson learned today.
->>
->> Regards,
->> Arend
-> Arend,
-> 
-> Thanks for the confirmation. My attempt at a hand edit to apply the
-> rejected portions resulted in a failed build with the current RPiOS
-> kernel in the git repo:
-> # uname -a
-> Linux jackrune 6.6.64-v8+ #6 SMP PREEMPT Sun Dec 15 23:55:30 CST 2024
-> aarch64 GNU/Linux
-> 
-> When I try to apply them, I get this:
-> $ patch -Np1 -i
-> RFT-v2-1-3-wifi-brcmfmac-support-per-vendor-cfg80211-callbacks-and-firmware-events.patch.diff
-> patching file drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-> Hunk #1 FAILED at 6752.
-> 1 out of 1 hunk FAILED -- saving rejects to file
-> drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c.rej
-> patching file drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
-> Hunk #1 succeeded at 524 (offset 33 lines).
-> patching file drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
-> Hunk #1 FAILED at 1359.
-> 1 out of 1 hunk FAILED -- saving rejects to file
-> drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c.rej
-> patching file drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c
-> Hunk #1 succeeded at 74 (offset -1 lines).
-> Hunk #2 succeeded at 336 (offset -70 lines).
-> patching file drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h
-> Hunk #1 FAILED at 15.
-> Hunk #2 succeeded at 47 with fuzz 1 (offset -9 lines).
-> 1 out of 2 hunks FAILED -- saving rejects to file
-> drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h.rej
-> $ patch -Np1 -i RFT-v2-
-> RFT-v2-1-3-wifi-brcmfmac-support-per-vendor-cfg80211-callbacks-and-firmware-events.patch.diff
-> RFT-v2-2-3-wifi-brcmfmac-make-per-vendor-event-map-const.patch.diff
-> RFT-v2-3-3-wifi-brcmfmac-cyw-support-external-SAE-authentication-in-station-mode.patch.diff
-> $ patch -Np1 -i
-> RFT-v2-2-3-wifi-brcmfmac-make-per-vendor-event-map-const.patch.diff
-> patching file drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.h
-> Hunk #1 FAILED at 337.
-> 1 out of 1 hunk FAILED -- saving rejects to file
-> drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.h.rej
-> $ patch -Np1 -i
-> RFT-v2-3-3-wifi-brcmfmac-cyw-support-external-SAE-authentication-in-station-mode.patch.diff
-> patching file drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-> Hunk #1 succeeded at 75 (offset 1 line).
-> Hunk #2 FAILED at 1940.
-> Hunk #3 FAILED at 2158.
-> Hunk #4 FAILED at 2216.
-> Hunk #5 succeeded at 5522 (offset 22 lines).
-> Hunk #6 succeeded at 5697 (offset 90 lines).
-> Hunk #7 succeeded at 6126 (offset 125 lines).
-> Hunk #8 succeeded at 7596 with fuzz 1 (offset 255 lines).
-> Hunk #9 FAILED at 7647.
-> 4 out of 9 hunks FAILED -- saving rejects to file
-> drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c.rej
-> patching file drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.h
-> Hunk #3 succeeded at 243 (offset 15 lines).
-> Hunk #4 FAILED at 244.
-> Hunk #5 succeeded at 507 (offset 18 lines).
-> 1 out of 5 hunks FAILED -- saving rejects to file
-> drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.h.rej
-> patching file drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
-> Hunk #1 FAILED at 8.
-> Hunk #2 FAILED at 39.
-> Hunk #3 FAILED at 49.
-> 3 out of 3 hunks FAILED -- saving rejects to file
-> drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c.rej
-> patching file drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/fwil_types.h
-> patching file drivers/net/wireless/broadcom/brcm80211/brcmfmac/feature.c
-> Hunk #1 FAILED at 42.
-> 1 out of 1 hunk FAILED -- saving rejects to file
-> drivers/net/wireless/broadcom/brcm80211/brcmfmac/feature.c.rej
-> patching file drivers/net/wireless/broadcom/brcm80211/brcmfmac/feature.h
-> Hunk #1 succeeded at 32 with fuzz 2 (offset 1 line).
-> Hunk #2 succeeded at 60 with fuzz 1 (offset 2 lines).
-> patching file drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c
-> Hunk #1 FAILED at 450.
-> 1 out of 1 hunk FAILED -- saving rejects to file
-> drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c.rej
-> patching file drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.h
-> Hunk #1 FAILED at 94.
-> 1 out of 1 hunk FAILED -- saving rejects to file
-> drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.h.rej
-> patching file drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h
-> Hunk #1 FAILED at 15.
-> Hunk #2 succeeded at 47 with fuzz 1 (offset -11 lines).
-> 1 out of 2 hunks FAILED -- saving rejects to file
-> drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h.rej
-> $ patch -Np1 -i RFT-brcmfmac-Fix-structure-size-for-WPA3-external-SAE.diff
-> patching file drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/fwil_types.h
-> 
-> Is there another missing patch?
-> 
-> The kernel for the RPi is at this commit:
-> commit 80533a952218696c0ef1b346bab50dc401e6b74c (HEAD -> rpi-6.6.y,
-> origin/rpi-6.6.y, origin/HEAD)
+On Mon, Dec 16, 2024 at 1:50=E2=80=AFPM Arend van Spriel
+<arend.vanspriel@broadcom.com> wrote:
+>
+> On 12/16/2024 1:21 PM, KeithG wrote:
+> > On Mon, Dec 16, 2024 at 3:47=E2=80=AFAM Arend van Spriel
+> > <arend.vanspriel@broadcom.com> wrote:
+> >>
+> >> On 12/16/2024 10:43 AM, Arend van Spriel wrote:
+> >>> On 12/16/2024 1:17 AM, KeithG wrote:
+> >>>> On Sun, Dec 15, 2024 at 11:33=E2=80=AFAM Arend Van Spriel
+> >>>> <arend.vanspriel@broadcom.com> wrote:
+> >>>>>
+> >>>>> On December 15, 2024 5:08:12 PM KeithG <ys3al35l@gmail.com> wrote:
+> >>>>>
+> >>>>>> On Sun, Dec 15, 2024 at 6:12=E2=80=AFAM Arend van Spriel
+> >>>>>> <arend.vanspriel@broadcom.com> wrote:
+> >>>>>>>
+> >>>>>>> On 12/14/2024 2:34 PM, KeithG wrote:
+> >>>>>>>> Arend,
+> >>>>>>>>
+> >>>>>>>> I looked through the info where I got the latest firmware:
+> >>>>>>>> https://community.infineon.com/t5/Wi-Fi-Bluetooth-for-Linux/Wi-F=
+i-
+> >>>>>>>> A-class-Linux-Driver-release-FMAC-2024-11-21-Documents/td-p/9050=
+45
+> >>>>>>>> https://community.infineon.com/t5/AIROC-Wi-Fi-and-Wi-Fi-Bluetoot=
+h/
+> >>>>>>>> Cypress-Linux-WiFi-Driver-Release-FMAC-2024-11-21/td-p/902888
+> >>>>>>>> and did not find anything, but I really do not know what I am
+> >>>>>>>> looking for.
+> >>>>>>>
+> >>>>>>> I think I had a bit more luck and maybe found the needle. I sent =
+out
+> >>>>>>> another RFT patch which hopefully gets rid of the BCME_BADLEN err=
+or.
+> >>>>>>>
+> >>>>>>> Regards,
+> >>>>>>> Arend
+> >>>>>> Arend,
+> >>>>>>
+> >>>>>> Can you send me a link to that patch? I want to try it.
+> >>>>>
+> >>>>> Hmm. I explicitly sent it to you, but here is a link to patchwork:
+> >>>>>
+> >>>>> https://patchwork.kernel.org/project/linux-wireless/
+> >>>>> patch/20241215120401.238320-1-arend.vanspriel@broadcom.com/
+> >>>>>
+> >>>>> You can apply it on top of the other 3 patches.
+> >>>>>
+> >>>>> Regards,
+> >>>>> Arend
+> >>>>>
+> >>>> Thanks! I got it.
+> >>>> I am building now and have tried to apply what I think are the corre=
+ct
+> >>>> patches. They do not apply cleanly and I had to hand edit things. My
+> >>>> guess is I messed something up.
+> >>>> I will see what happens when I reboot. It'll take a few hours to bui=
+ld
+> >>>> on my Pi4 then for me to install it on the 3b+ to test.
+> >>>>
+> >>>> I hope I understand which are the '3 other' patches.
+> >>>>
+> >>>> This is the one I got from your link:
+> >>>> RFT-brcmfmac-Fix-structure-size-for-WPA3-external-SAE.diff
+> >>>>
+> >>>> These are what I understand are the '3 other patches'
+> >>>> RFT-v2-1-3-wifi-brcmfmac-support-per-vendor-cfg80211-callbacks-and-
+> >>>> firmware-events.patch.diff
+> >>>> RFT-v2-2-3-wifi-brcmfmac-make-per-vendor-event-map-const.patch.diff
+> >>>> RFT-v2-3-3-wifi-brcmfmac-cyw-support-external-SAE-authentication-in-
+> >>>> station-mode.patch.diff
+> >>>>
+> >>>> If they are not correct could you send me links to them and I'll try
+> >>>> again.
+> >>>
+> >>> You got it right. Kuddos.
+> >>
+> >> Ignored my spelling checker, but apparently it should be "kudos".
+> >> Another lesson learned today.
+> >>
+> >> Regards,
+> >> Arend
+> > Arend,
+> >
+> > Thanks for the confirmation. My attempt at a hand edit to apply the
+> > rejected portions resulted in a failed build with the current RPiOS
+> > kernel in the git repo:
+> > # uname -a
+> > Linux jackrune 6.6.64-v8+ #6 SMP PREEMPT Sun Dec 15 23:55:30 CST 2024
+> > aarch64 GNU/Linux
+> >
+> > When I try to apply them, I get this:
+> > $ patch -Np1 -i
+> > RFT-v2-1-3-wifi-brcmfmac-support-per-vendor-cfg80211-callbacks-and-firm=
+ware-events.patch.diff
+> > patching file drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211=
+.c
+> > Hunk #1 FAILED at 6752.
+> > 1 out of 1 hunk FAILED -- saving rejects to file
+> > drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c.rej
+> > patching file drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
+> > Hunk #1 succeeded at 524 (offset 33 lines).
+> > patching file drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
+> > Hunk #1 FAILED at 1359.
+> > 1 out of 1 hunk FAILED -- saving rejects to file
+> > drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c.rej
+> > patching file drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c
+> > Hunk #1 succeeded at 74 (offset -1 lines).
+> > Hunk #2 succeeded at 336 (offset -70 lines).
+> > patching file drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h
+> > Hunk #1 FAILED at 15.
+> > Hunk #2 succeeded at 47 with fuzz 1 (offset -9 lines).
+> > 1 out of 2 hunks FAILED -- saving rejects to file
+> > drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h.rej
+> > $ patch -Np1 -i RFT-v2-
+> > RFT-v2-1-3-wifi-brcmfmac-support-per-vendor-cfg80211-callbacks-and-firm=
+ware-events.patch.diff
+> > RFT-v2-2-3-wifi-brcmfmac-make-per-vendor-event-map-const.patch.diff
+> > RFT-v2-3-3-wifi-brcmfmac-cyw-support-external-SAE-authentication-in-sta=
+tion-mode.patch.diff
+> > $ patch -Np1 -i
+> > RFT-v2-2-3-wifi-brcmfmac-make-per-vendor-event-map-const.patch.diff
+> > patching file drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.h
+> > Hunk #1 FAILED at 337.
+> > 1 out of 1 hunk FAILED -- saving rejects to file
+> > drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.h.rej
+> > $ patch -Np1 -i
+> > RFT-v2-3-3-wifi-brcmfmac-cyw-support-external-SAE-authentication-in-sta=
+tion-mode.patch.diff
+> > patching file drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211=
+.c
+> > Hunk #1 succeeded at 75 (offset 1 line).
+> > Hunk #2 FAILED at 1940.
+> > Hunk #3 FAILED at 2158.
+> > Hunk #4 FAILED at 2216.
+> > Hunk #5 succeeded at 5522 (offset 22 lines).
+> > Hunk #6 succeeded at 5697 (offset 90 lines).
+> > Hunk #7 succeeded at 6126 (offset 125 lines).
+> > Hunk #8 succeeded at 7596 with fuzz 1 (offset 255 lines).
+> > Hunk #9 FAILED at 7647.
+> > 4 out of 9 hunks FAILED -- saving rejects to file
+> > drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c.rej
+> > patching file drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211=
+.h
+> > Hunk #3 succeeded at 243 (offset 15 lines).
+> > Hunk #4 FAILED at 244.
+> > Hunk #5 succeeded at 507 (offset 18 lines).
+> > 1 out of 5 hunks FAILED -- saving rejects to file
+> > drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.h.rej
+> > patching file drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core=
+.c
+> > Hunk #1 FAILED at 8.
+> > Hunk #2 FAILED at 39.
+> > Hunk #3 FAILED at 49.
+> > 3 out of 3 hunks FAILED -- saving rejects to file
+> > drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c.rej
+> > patching file drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/fwil=
+_types.h
+> > patching file drivers/net/wireless/broadcom/brcm80211/brcmfmac/feature.=
+c
+> > Hunk #1 FAILED at 42.
+> > 1 out of 1 hunk FAILED -- saving rejects to file
+> > drivers/net/wireless/broadcom/brcm80211/brcmfmac/feature.c.rej
+> > patching file drivers/net/wireless/broadcom/brcm80211/brcmfmac/feature.=
+h
+> > Hunk #1 succeeded at 32 with fuzz 2 (offset 1 line).
+> > Hunk #2 succeeded at 60 with fuzz 1 (offset 2 lines).
+> > patching file drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c
+> > Hunk #1 FAILED at 450.
+> > 1 out of 1 hunk FAILED -- saving rejects to file
+> > drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c.rej
+> > patching file drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.h
+> > Hunk #1 FAILED at 94.
+> > 1 out of 1 hunk FAILED -- saving rejects to file
+> > drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.h.rej
+> > patching file drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h
+> > Hunk #1 FAILED at 15.
+> > Hunk #2 succeeded at 47 with fuzz 1 (offset -11 lines).
+> > 1 out of 2 hunks FAILED -- saving rejects to file
+> > drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h.rej
+> > $ patch -Np1 -i RFT-brcmfmac-Fix-structure-size-for-WPA3-external-SAE.d=
+iff
+> > patching file drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/fwil=
+_types.h
+> >
+> > Is there another missing patch?
+> >
+> > The kernel for the RPi is at this commit:
+> > commit 80533a952218696c0ef1b346bab50dc401e6b74c (HEAD -> rpi-6.6.y,
+> > origin/rpi-6.6.y, origin/HEAD)
+>
+> Sorry. I probably missed something, but earlier you had a log where the
+> ext_auth exchange between iwd and brcmfmac almost worked, but firmware
+> return BCME_BADLEN. What code base was that tested with. I assumed with
+> my 3 patches, but now I am confused.
+>
+> Regards,
+> Arend
 
-Sorry. I probably missed something, but earlier you had a log where the 
-ext_auth exchange between iwd and brcmfmac almost worked, but firmware 
-return BCME_BADLEN. What code base was that tested with. I assumed with 
-my 3 patches, but now I am confused.
+Arend,
 
-Regards,
-Arend
+Sorry for the confusion. That was with the Basic/Standard kernel as it
+existed at the time. 6.6.63 or so. No patches added.
+
+Keith
