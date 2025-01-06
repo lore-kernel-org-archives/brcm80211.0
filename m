@@ -1,135 +1,151 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E6A81D5AA0;
-	Mon,  6 Jan 2025 17:13:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2AE3B1A2
+	for <brcm80211@lists.linux.dev>; Mon,  6 Jan 2025 20:34:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736183632; cv=none; b=kmEniCvc9CPEGtg0Ir5Wkxyw7Ve6UM2Lpah3mBSqfPdIIGMZGJoe/eq3XEkfaSBAQGuuqJ9QNHcr0YY08/eucT8e04Ym8+CTfwSm/iW3duBCQ53mzd49Q6cNQb0giS83OvrDwJzFqOkDZTTbBiN3Hvt27DXWtX5ZO+Z3oksaPJw=
+	t=1736195648; cv=none; b=FauHrR2/c4ANhKXSY/xtU0c23sGiRjDTnXFzg6MiM1BU7nnNsK2A07pztRfnctkkELCSOcPkKFugNg3KoSZhqJhW86rxL4Y+9eohnb6y6GF/ZVty5cV9i9wzoja2m8JltLsS6aCg93P1SX+IRyBstIRYWExuhWFq1aQD8i9lSN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736183632; c=relaxed/simple;
-	bh=4X6zyYxK1QCiG9SsBLkpMIskQ4/0BPLxlhV1jv2pTrM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ptg2gYax1k7xmIRgMYmQ1WKyEMKwozUBAXsQILbqg10Onco4dBXxOIfVupWB/HhHsswKqwwr0IK0ZClLT9/rSwYqQ8Gb9y07VothAACSCjVN+R09uzdtp3JUHuk27TzmH4e8lyjiQQAnstfb51yDlILDZ8E4VLyjFkSxOaYg0zE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EUnuWz6p; arc=none smtp.client-ip=209.85.214.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1736195648; c=relaxed/simple;
+	bh=5BevhNW2iK55uA4Y0c1MHgtpjZI0IOrACQc4C/pl/l0=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=hC+Vw7KMkZSIVstlA2zCm7suhO804sF3EVqsEFjS97YZlr+4tTkYVo3qH91bAL14yP7WZFFTcEgDKIrZt6eTyuf/Ouiiq7uxZjxp1XGRIvJF5E/bSVH16H+n3dbptqgLutCZD9vl+BUwOAKJJFvih5XkQzSllbLLSP99SCv6Xb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=FMychppz; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EUnuWz6p"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-21675fd60feso11630885ad.2;
-        Mon, 06 Jan 2025 09:13:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736183630; x=1736788430; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1E4VBveUTiXAQY0x0OPSL/+vTNEOjG/u16OolfG/dLM=;
-        b=EUnuWz6pjS7vvamW/9Q8pMF/9ybB+RcwsY7UtscUStub3JHnwt085vk6Enym5axi6G
-         Yp9YNltffECh+5QNI98MoXVEihZYGwwu1/89P4R7fE8t7JxIon9DoMsDSUEXxiWYB9rg
-         6ZY/uLSdVuk2AdS83YT6YDygnXniXpvbDbjV4Kfnfyl/C2nyvc7lGtax8yclQGfiWuN+
-         g2Bs8H8DANDfY5fz1ESq4OrHUfJ7I4IPkPvLegnKRYZ1Z+5lUkc9ZJNYJvx/pHC9rYAA
-         KlYO9KNIkKsOi1dAw75VqrkqxwfTryzBH9JO7sIL5ChEfKzE1SIWtXEs/RKvGzHZm/De
-         ISwQ==
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="FMychppz"
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 506GbmKb006586
+	for <brcm80211@lists.linux.dev>; Mon, 6 Jan 2025 20:34:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=q/INDQ7qjJ0ZJyPA3Jb+3D
+	Xmxw6G5RVrvKrAA+KLfMo=; b=FMychppzcMZbzg0Rar8uO5wMwUJhKvl0gjGnWK
+	a9eCfncGDekyUQdTy46AeFyXFh1b/a2oBGMplqjsla4j0In88TSBGeT5DBby7Dlr
+	8nb6HbGR6RLN/rQ9VLnQCUvuKSrPu7TFZRAwzGMlv5jgt2udNYueuPN/YSU7bn2Y
+	GYyUUS4VO34xzyxivMfV7BV7wAPn55L/VCkn/O8igzUfMD5STVa6/wXNYzVGIoif
+	ta22mO7d5xJMNtCqSk2neLcZzKEFFJ+AAQfwIZPs35CzDLamLNco+iTuSWYFyL/P
+	nspBiNjJS5zA/5QKljjSYWvOU6ok2r0o28M64FlnGSWXm3yg==
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 440jv38fhv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <brcm80211@lists.linux.dev>; Mon, 06 Jan 2025 20:34:05 +0000 (GMT)
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-21661949f23so351866685ad.3
+        for <brcm80211@lists.linux.dev>; Mon, 06 Jan 2025 12:34:05 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736183630; x=1736788430;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=1E4VBveUTiXAQY0x0OPSL/+vTNEOjG/u16OolfG/dLM=;
-        b=jRPb6MeAdV37n454IPyzS/8Xm5PHCatfVZhgpqgSIna9SA+CnFhbQ0j1c0Tj2P47LT
-         2TSfsHJEzzA2BWgyfT8Nq6BmmJ9DU4LdF4Qov2IQpzs9OZik7D08VLki0c+qg2d0ZdQF
-         dMr/6M5vo248FIjPlJpj68qCGz2NMQ5D56BuIf6KSUaBM7Fbm8ZQ18SZQUjUyyLlvsDd
-         C1S+GTqJkrr8QsRMQ7XYUFyf0zlFlVzA5W9CJ7/bYdKz55c+on2RhchRdqCUUShHoYEQ
-         uS1oeVhC4rjSgoG7wV4tC5iD5iU6LfqaPrVWih9I7eyTmPFVQdaNmDYXLvt/e+In147c
-         1TLA==
-X-Forwarded-Encrypted: i=1; AJvYcCUdupgatycQGftCYdOi/zhvuZk9xL1PQQTHWAaoWyJVCqFx7vXg3eK4WM5GCJpkgbCmtriz59CF+8o=@lists.linux.dev, AJvYcCVwlayCW9O7KpTMk52cuTEirjr9ifLgp07ZoGFoEw0TjzAfn8pQWwIeTx9nLX/L+xH74PMLMRPjJw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxklaZ15bdRA/wt8EKf8Q3cnoX/F9na02hK8sF4+RGy1wP8Q+yY
-	HQwfs/IslroQ5qiONV2cJoT7wG3kiDrQatXonjipkyKko+1ZqTCg4ppQVdUrwgIEO+shLwRr3fc
-	ES8YwFdaFkyMX4QcuhAlufA5NoySPxn1N
-X-Gm-Gg: ASbGncsGjp0rAxGdafBa9yRZF6INkuCr308bJyVIQGqDUzCcT7KY1Uc3rD7kKcaGxhW
-	iOUKulAYQITnIoAEVmxjWfsv/A037aPVJHkOuXAYx
-X-Google-Smtp-Source: AGHT+IGFEmKlsE7w4ki0FRERAZd7MgyKM/i6eTRH2L7lzZ9eaCyLEYA1hsVHBLYEJEXYfzPLxFzRrjHg8V+00MjhZ6c=
-X-Received: by 2002:a17:90b:2543:b0:2f4:432d:250d with SMTP id
- 98e67ed59e1d1-2f452e372edmr79317340a91.21.1736183630396; Mon, 06 Jan 2025
- 09:13:50 -0800 (PST)
+        d=1e100.net; s=20230601; t=1736195644; x=1736800444;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=q/INDQ7qjJ0ZJyPA3Jb+3DXmxw6G5RVrvKrAA+KLfMo=;
+        b=AWC6DKAbU5DGi6LZqaknJw+l5Hd4fWMQHyU5u337w7wzjw+A+TO+AWZ3wUw5Dc+z3o
+         hR2X4+KudqDYBnSfqsylLYn3HlwsUrOYI8E4CARXBR2kgqj+4OQUnujzcVWUYrQiL6io
+         hhM0z9K1zJ0yJ3QZgdtapxgEP7XMcJyZoFP2zM/Zv0OeAjv52E7kX9mH74xn+0rGdkIz
+         +wTLE3ewmdQZjba0JhkcFCqdt8HEDSQ52I/uB+tWTqLTHPK1OrXL0saqv6/C4M6609IF
+         Hv4ksdxCBxK2cRHc3f67ULddZbE5nR/2n8ZThFr+JCigj17KrIBh484JXVtzF+q/FIWe
+         ysOQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVkPmwS0/QGWyPsbFByWikSZANgTEyOhf+5j/iBudMdT0ejsmutUAIfBgjmybIjYZqRNKUEwOw3Jfc=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyFTsM47fozJsah6BDCAKnhGDYHTokHhgmW0n3r3MIwMDLpy+D8
+	93hGmqQbxZWmBun7ej9IPca8LD4nHsZOg1NMdlMR8jaQiSti/W6wNhhsOmCT3bVUKG/p+nWRFNu
+	8gb7GL9K+q4YiBJuqC/JuKFTZ3+MhUT2vGAGJ3MBPBOnSCYk0fsM5D5v5M4k=
+X-Gm-Gg: ASbGnctvcSXdS/FnEcuBjLhLno739A/n0g2/LOC2XmyGSz+dPdDZBVcQ/hw4Kcn2eGo
+	n6/Gf2u2gal+lfzS476hoX/CMrjIy4NnEEg5rgKQho6lF0tV0quBKDV1j2zmqJ8RGanlDnOEECE
+	kXT5U1v48G4OnYS2vq9XA2/xWdvggfcRoLrMQwid0X7gTphhyh+dsG2ybxEI8l/cL31lqjy8i0N
+	LwojT8+Ykn9rpIiOYtyP5nLyDTD18vjP1CqQ01vu4oYkVuX3qID4K5SSAsrVBfBXl0EwHu04BsG
+	dNun1gGI9ap17wJN6Q==
+X-Received: by 2002:a17:903:120d:b0:216:5af7:5a8e with SMTP id d9443c01a7336-219e6ebdc17mr897346975ad.26.1736195644262;
+        Mon, 06 Jan 2025 12:34:04 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH1weE5s3+aLjElRwpdx44ObYuQj/BDyTP7J1GtI39oyYh/6nED8ahsQdSpNFr2DPhdiLxiTQ==
+X-Received: by 2002:a17:903:120d:b0:216:5af7:5a8e with SMTP id d9443c01a7336-219e6ebdc17mr897346725ad.26.1736195643802;
+        Mon, 06 Jan 2025 12:34:03 -0800 (PST)
+Received: from [169.254.0.1] (Global_NAT1.qualcomm.com. [129.46.96.20])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-219dc9d44a0sm296196145ad.165.2025.01.06.12.34.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Jan 2025 12:34:03 -0800 (PST)
+From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Date: Mon, 06 Jan 2025 12:34:02 -0800
+Subject: [PATCH] wifi: brcmfmac: Add missing Return: to function
+ documentation
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <CAG17S_OwtNxetb7XzsxkZcygH_CWkZx15evQZkThb3WjqpiKTQ@mail.gmail.com>
- <CAG17S_NVmXZsAShc1VFh6iTgtT30CdHSBNxhmT=xs4q41--tcw@mail.gmail.com>
- <fc4c196b-1f55-43a0-90ac-ca282aa6eb7d@gmail.com> <CAG17S_O7rJLXiLv8OcRaoxQWu4jk=L_ut3HpY7BbwkSbRfMWjA@mail.gmail.com>
- <c586f9fe-e1f8-44dd-a867-ec21c78c7de9@gmail.com> <CAG17S_N6Gw1G8e5dh_1cm3P2DNt_gSbQSAKWd27hvpMZui4yxg@mail.gmail.com>
- <CAG17S_NgkTQ5wT5nb=6FZZ9gnVMTqOWfWJve47JmfOoVAHZy8A@mail.gmail.com>
- <CAG17S_Oq+RGOZpE+xa-CV8=VtmJu7G8GWxfVYqg1edEG9wC+yA@mail.gmail.com>
- <CAG17S_NdA9LdwmA_XfvPOVrhCdqp+BOtAssH0=RE-VSjg=WFnA@mail.gmail.com>
- <CAG17S_O6Bpc+JhhUuDvE70a+ef9wt9D7jG1gMJDNo1qZCUOg8w@mail.gmail.com>
- <194115affe0.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
- <CAG17S_O7HbPFB0gubWWP9P-Oecps8K_LG0Y7YDo5DbNGKSLjpA@mail.gmail.com>
- <CAG17S_MwJC+h7O-htyUxEgB4zHKeGf+9B4QaQ6ZLiVStU_Egkw@mail.gmail.com>
- <CAG17S_NfqFjjaWj6vGS1HXux6JDy0QKcg8aQAR=aOzNGhO0a3w@mail.gmail.com> <eace9233-1b65-4793-8abe-abd3c640dba8@gmail.com>
-In-Reply-To: <eace9233-1b65-4793-8abe-abd3c640dba8@gmail.com>
-From: KeithG <ys3al35l@gmail.com>
-Date: Mon, 6 Jan 2025 11:13:39 -0600
-Message-ID: <CAG17S_MfQ+FjWQJoiNs30rt4u1O9Z_FXFB7BiS6RAQsG9ReNkA@mail.gmail.com>
-Subject: Re: brcmfmac SAE/WPA3 negotiation - Part 2
-To: Denis Kenzior <denkenz@gmail.com>
-Cc: Arend Van Spriel <arend.vanspriel@broadcom.com>, James Prestwood <prestwoj@gmail.com>, 
-	connman@lists.linux.dev, brcm80211@lists.linux.dev, 
-	linux-wireless@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250106-brcmfmac-kdoc-v1-1-ed72196e21a1@oss.qualcomm.com>
+X-B4-Tracking: v=1; b=H4sIADk+fGcC/x3MSw7CMAwA0atUXmMpiSi/qyAWTuJSC5KiGNFKV
+ e+OYfkWMysoN2GFS7dC44+oTNXgdx2kkeqdUbIZggu98+6AsaUyFEr4yFNCn/fn0zGESDGDNa/
+ Ggyz/3/VmjqRsCdU0/i6zNH6yKlZe3lhIKmzbF8JMt++EAAAA
+To: Arend van Spriel <arend.vanspriel@broadcom.com>,
+        Kalle Valo <kvalo@kernel.org>
+Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
+        brcm80211-dev-list.pdl@broadcom.com, linux-kernel@vger.kernel.org,
+        Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+X-Mailer: b4 0.14.0
+X-Proofpoint-GUID: RmhB5RYClYpOu2ieEtW7xtIcAZVE8pco
+X-Proofpoint-ORIG-GUID: RmhB5RYClYpOu2ieEtW7xtIcAZVE8pco
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 clxscore=1011
+ spamscore=0 bulkscore=0 phishscore=0 mlxscore=0 malwarescore=0
+ suspectscore=0 lowpriorityscore=0 impostorscore=0 mlxlogscore=999
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2501060179
 
-On Mon, Jan 6, 2025 at 9:26=E2=80=AFAM Denis Kenzior <denkenz@gmail.com> wr=
-ote:
->
-> Hi Keith,
->
-> On 1/5/25 6:41 PM, KeithG wrote:
-> > I am looking at the iwmon logs for a successful wpa_supplicant
-> > connection versus one from IWD. Both connect and both pass data and
-> > both grab a DHCP address. I do note one difference in the connection,
-> > though.
-> >
-> > Request : Connect
-> > through the responses RTNL
-> > wpa_supplicant knows it is dynamic
->
-> wpa_supplicant doesn't manage network interfaces.  I assume you're using =
-ConnMan
-> for this? If so, ConnMan sets the IFF_DYNAMIC flag.  See
-> https://git.kernel.org/pub/scm/network/connman/connman.git/tree/src/inet.=
-c#n372
->
-> >
-> > Whereas the iwd log does not:
->
-> iwd doesn't use IFF_DYNAMIC in its DHCP implementation at the moment.
->
-> According to 'man netdevice':
->
->                IFF_DYNAMIC       The addresses are lost when the interfac=
-e
->                                  goes down.
->
-> I doubt this is the cause of your DHCP / connection problems.
->
-> Regards,
-> -Denis
+Running 'scripts/kernel-doc -Wall -Werror -none' flagged the following
+kernel-doc issues:
 
-Denis,
+drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c:823: warning: No description found for return value of 'brcmf_apsta_add_vif'
+drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c:907: warning: No description found for return value of 'brcmf_mon_add_vif'
+drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c:7419: warning: No description found for return value of 'brcmf_setup_ifmodes'
 
-I am using connman to manage the connections. The connman config is
-the same. The one iwmon snippet was with iwd masked and stopped but
-wpa_supplicant installed and the connect performed in connmanctl. The
-other is with wpa_supplicant removed and purged and iwd started,
-running then restarted connman then initiated a connect form
-connmanctl.
+Add the missing 'Return:' tags to the kernel-doc of these functions.
 
-I pored over these logs yesterday and saw a few differences, but this
-was one that stood out. I can look closer again tonight and see if I
-notice anything else that I can summarize.
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+---
+FYI these issues were observed as part of my internal pre-commit
+checking of an upcoming cfg80211 change that modifies a driver API.
+---
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-Keith
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+index 902ac3108782..4b70845e1a26 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -814,6 +814,8 @@ static int brcmf_cfg80211_request_ap_if(struct brcmf_if *ifp)
+  * @name: name of the new interface.
+  * @params: contains mac address for AP or STA device.
+  * @type: interface type.
++ *
++ * Return: pointer to new vif on success, ERR_PTR(-errno) if not
+  */
+ static
+ struct wireless_dev *brcmf_apsta_add_vif(struct wiphy *wiphy, const char *name,
+@@ -900,6 +902,8 @@ static bool brcmf_is_ibssmode(struct brcmf_cfg80211_vif *vif)
+  *
+  * @wiphy: wiphy device of new interface.
+  * @name: name of the new interface.
++ *
++ * Return: pointer to new vif on success, ERR_PTR(-errno) if not
+  */
+ static struct wireless_dev *brcmf_mon_add_vif(struct wiphy *wiphy,
+ 					      const char *name)
+@@ -7412,6 +7416,8 @@ brcmf_txrx_stypes[NUM_NL80211_IFTYPES] = {
+  * p2p, rsdb, and no mbss:
+  *	#STA <= 1, #P2P-DEV <= 1, #{P2P-CL, P2P-GO} <= 2, AP <= 2,
+  *	 channels = 2, 4 total
++ *
++ * Return: 0 on success, negative errno on failure
+  */
+ static int brcmf_setup_ifmodes(struct wiphy *wiphy, struct brcmf_if *ifp)
+ {
+
+---
+base-commit: b73e56f16250c6124f8975636f1844472f6fd450
+change-id: 20250106-brcmfmac-kdoc-1d498722babd
+
