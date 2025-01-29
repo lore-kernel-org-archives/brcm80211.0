@@ -1,85 +1,91 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mxout4.routing.net (mxout4.routing.net [134.0.28.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEBB018C004;
-	Tue, 28 Jan 2025 18:18:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB4511A76D4
+	for <brcm80211@lists.linux.dev>; Wed, 29 Jan 2025 11:13:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=134.0.28.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738088318; cv=none; b=s0M3NsqlwZS69dLIprRlH3ybf+okN90ej2r7G/BqwVdmwkSd5OBtrwyFh5qG6iq8Kyg8tdk81Uog2e6bVz0+w07/lwTOvrefQxs1AHceGw3/c0bNFvBn0MeSUhModtMqmkRzq5MuI7YuQiusjvfKJDMONoHpUSDjMfFUZrtiRyY=
+	t=1738149183; cv=none; b=YK7vhTWcwf4gg5UZPs4Qbc7X1YwZjLWK3xZJnG49LIUNho3HlLqKCAF+lwoiP4u5TXw6TxQNbgelp92sldAbLALkmO5jlMrpbLh4S+/J/EnKg2coknViglGBOohl8AWB9UQcp812zqbCRkTHvtRbeRNxp5PkoU/01U1/UHHnu8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738088318; c=relaxed/simple;
-	bh=rk0MZJ6NzbgfWYcohF1MDeZKZ/XoT2cU1Q5+Rgs82bk=;
-	h=Content-Type:MIME-Version:Subject:From:In-Reply-To:References:To:
-	 Cc:Message-ID:Date; b=s32RTCoiKPi18jm4786qWg1UE99mXzlYj/7T7AjfJYZCpFciLVS3G5GhNFKYHKUbh7xXY66nOBXzW0TAO1iD73MeVPFrYqzAfzJvJLjPiLLn5l/iW7YsgDy5LjkXeACr/v+FEtDFNb2Uk2/wzc37S66o3sO1p+d+FKpfZCLB5HU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BsurlDlm; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1738149183; c=relaxed/simple;
+	bh=QxAVoLmftN4EymphVfBfD7Nk364kzNUU2g3490kLqmE=;
+	h=Message-ID:Date:MIME-Version:From:To:Subject:Content-Type; b=ZxvKl87NW/rlKkBOUBfEUdhm9VK7w9I/rygZx+XpvkANm45BNKbBfq9baJqL9JGzcGOd/WWbo+cYPxDRfywN4ZxuwrCLvn8QJIeHPc+TLJ472baQJ3XH7pYAWkrX9Gj1AeF4JxATPeVg6XihIP0P59/QGnRzTKbJh+PoeWCFRiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=matthias-proske.de; spf=pass smtp.mailfrom=matthias-proske.de; dkim=pass (1024-bit key) header.d=mailerdienst.de header.i=@mailerdienst.de header.b=m0KhAh/m; arc=none smtp.client-ip=134.0.28.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=matthias-proske.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=matthias-proske.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BsurlDlm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34C5AC4CED3;
-	Tue, 28 Jan 2025 18:18:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1738088317;
-	bh=rk0MZJ6NzbgfWYcohF1MDeZKZ/XoT2cU1Q5+Rgs82bk=;
-	h=Subject:From:In-Reply-To:References:To:Cc:Date:From;
-	b=BsurlDlmnLDgDP1BlpbwyXu1HjJcSFwjoOVWfXae4yJMr/ywSXEw6eU7Ks8FDBYPZ
-	 mJ1UAi2wXiAq1WXNVHd6G8K901Ro2RtLdht+5m7Dx9sRGFqDTCprOQg//7Hkg55O9n
-	 TlTTcW+s+drhUCOL30cbxddtTeNUndN2JbeNIVs0PahMBBgv6DWsIRJDN2TlBAvxwE
-	 3LEaP5ts2E/29pNs7ftjGBnR+a9MQ1tlYnkrNtY0cxrJjuJoUBvgcOXo/GIauuHbH+
-	 5Ew9I2nvKn/QDFMoKkH+3iZ1gMcO7T1/yKY+B9U5XfbBULqrkbSo9FI16SrGh20Kol
-	 mnlZ3cTGbPhoA==
-Content-Type: text/plain; charset="utf-8"
+	dkim=pass (1024-bit key) header.d=mailerdienst.de header.i=@mailerdienst.de header.b="m0KhAh/m"
+Received: from mxbox2.masterlogin.de (unknown [192.168.10.89])
+	by mxout4.routing.net (Postfix) with ESMTP id A81AC100569;
+	Wed, 29 Jan 2025 11:05:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailerdienst.de;
+	s=20200217; t=1738148712;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=h3f9LbXRtSCdNMd0f5+4b/pF8FHO8PF7pHBNKayw4QA=;
+	b=m0KhAh/mNVSMU5Ijc9cmnf3DLmQbkdRnBQGHUo4y4zadxfLJMJ3yjTfxLOB6Q8QXqhQ19N
+	s6EEoljpcJIBOnV3bm4tWe42nCavWHvo7kN0BBseuara7Jaj2P/O+CylpUecQruX3clCUK
+	cT/uwWykwtH5/76jM4Y8WJsuSh1DaCY=
+Received: from [192.168.178.89] (unknown [113.30.222.34])
+	by mxbox2.masterlogin.de (Postfix) with ESMTPSA id 1E8A41002C8;
+	Wed, 29 Jan 2025 11:05:12 +0000 (UTC)
+Message-ID: <cd1b13d4-b01d-4237-813e-bd48c55d9ca9@matthias-proske.de>
+Date: Wed, 29 Jan 2025 12:05:06 +0100
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+From: Matthias Proske <email@matthias-proske.de>
+To: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
+ brcm80211-dev-list.pdl@broadcom.com, linux-mmc@vger.kernel.org,
+ Ulf Hansson <ulf.hansson@linaro.org>
+Subject: DT property keep-power-in-suspend and how WiFi drivers use it
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH] wifi: brcmfmac: use random seed flag for BCM4355 and
- BCM4364
- firmware
-From: Kalle Valo <kvalo@kernel.org>
-In-Reply-To: <47E43F07-E11D-478C-86D4-23627154AC7C@live.com>
-References: <47E43F07-E11D-478C-86D4-23627154AC7C@live.com>
-To: Aditya Garg <gargaditya08@live.com>
-Cc: Arend van Spriel <arend.vanspriel@broadcom.com>, Arend van Spriel
-	<aspriel@gmail.com>, Hector Martin
-	<marcan@marcan.st>, Janne Grunau <j@jannau.net>,
- Orlando Chamberlain <orlandoch.dev@gmail.com>, "stable@vger.kernel.org"
-	<stable@vger.kernel.org>, "linux-wireless@vger.kernel.org"
-	<linux-wireless@vger.kernel.org>, "brcm80211@lists.linux.dev"
-	<brcm80211@lists.linux.dev>, "brcm80211-dev-list.pdl@broadcom.com"
-	<brcm80211-dev-list.pdl@broadcom.com>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>
-User-Agent: pwcli/0.1.1-git (https://github.com/kvalo/pwcli/) Python/3.11.2
-Message-ID: <173808831366.1321818.12181240056808824268.kvalo@kernel.org>
-Date: Tue, 28 Jan 2025 18:18:35 +0000 (UTC)
+X-Mail-ID: 210eb5dc-780b-4c8c-a09c-37c30dd157e2
 
-Aditya Garg <gargaditya08@live.com> wrote:
+Hello,
 
-> From: Aditya Garg <gargaditya08@live.com>
-> 
-> Before 6.13, random seed to the firmware was given based on the logic
-> whether the device had valid OTP or not, and such devices were found
-> mainly on the T2 and Apple Silicon Macs. In 6.13, the logic was changed,
-> and the device table was used for this purpose, so as to cover the special
-> case of BCM43752 chip.
-> 
-> During the transition, the device table for BCM4364 and BCM4355 Wi-Fi chips
-> which had valid OTP was not modified, thus breaking Wi-Fi on these devices.
-> This patch adds does the necessary changes, similar to the ones done for
-> other chips.
-> 
-> Fixes: ea11a89c3ac6 ("wifi: brcmfmac: add flag for random seed during firmware download")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Aditya Garg <gargaditya08@live.com>
-> Acked-by: Arend van Spriel  <arend.vanspriel@broadcom.com>
+I have a question regarding the usage of the Device Tree property 
+`keep-power-suspend`.
 
-Patch applied to wireless.git, thanks.
+In the Device Tree documentation it reads:
+"SDIO only. Preserves card power during a suspend/resume cycle."
 
-0e9724d0f89e wifi: brcmfmac: use random seed flag for BCM4355 and BCM4364 firmware
+Does that mean that the SDIO Host Controller will remain powered or 
+should this equally apply to anything that is connected to this SDIO 
+Host Controller?
 
--- 
-https://patchwork.kernel.org/project/linux-wireless/patch/47E43F07-E11D-478C-86D4-23627154AC7C@live.com/
+To give a bit more background:
 
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+I have an embedded board with a brcm_fmac WiFi module. It seems that due 
+to a hardware limitation we are not permitted to switch the module off. 
+It simply cannot be re-probed afterwards.
 
+The property `keep-power-in-suspend` was used and that used to work fine 
+until 92caded ("brcmfmac: Avoid keeping power to SDIO card
+unless WOWL is used"), which made the wifi adapter by default turn off 
+on suspend to be re-probed on resume. Not working on our board...
+
+
+I have also looked at other WiFi drivers with an SDIO interface and it 
+seems that none of them are really honoring the `keep-power-in-suspend` 
+flag. Is this flag for the SDIO Host Controller only?
+
+
+What would be proper way to implement it so that the brcm_fmac return to 
+its old behaviour if necessary?
+Add a Device Tree property directly for the brcm_fmac driver..?
+
+I would like to write a patch, but I would like to know in which 
+direction to go.
+
+
+Thank you for any feedback
+
+Matthias
