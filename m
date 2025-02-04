@@ -1,142 +1,152 @@
-Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mxout2.routing.net (mxout2.routing.net [134.0.28.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1374E21421B
-	for <brcm80211@lists.linux.dev>; Tue,  4 Feb 2025 15:27:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC04D215768
+	for <brcm80211@lists.linux.dev>; Tue,  4 Feb 2025 16:34:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=134.0.28.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738682839; cv=none; b=LvkUWY3kT8jzkYrfkE0XXNUqs26hyQaMpn0OYOW/W2n9npcDTfXgQLUgRfxo9+B3pIDEA0eqfk0Plf7IKAOuGwd4f5BzXA7Wn8uHs1iNpWu2+5dIb70g8+f9b6UYgNP/4NWZ5NzETnqWokcCy887OWSbGNG2WnfIsjDy4anraN0=
+	t=1738686900; cv=none; b=I9CI7ulX7ykDldBe6tx+ExeghLtbDkl1cvSB7mH3KhD116+YCLn2/W+8XouFFSyE6rnvNy6otGvzneTmoPJZ4BfrtPabZHsH2xeC/Yjd5eYXJEmYikA0haL3idPbUNuoMQDrAg9htR8urU7qktunBgAO5RcyoPPJgFNkvGpNzFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738682839; c=relaxed/simple;
-	bh=6bbw6NuplC45g5e415URYITIdUl4aCpORburWx1YQSQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jiue5ilHrMLzO9rglamSq2RBIMt15NOOARtYtTU4V52Py09dr8V3vRjU+0mh3REHTce0AXJnlvszPOy780vETACRYFVVyRKuKASehNNeGWoUsfyEkT0yJXkHQapih4fiBtbxE3KfcyYbUzOrKRLJJ/GwSXyR/DVJvND5yU175Oo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DPc/lP9X; arc=none smtp.client-ip=209.85.219.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1738686900; c=relaxed/simple;
+	bh=JWuL72d2BMcYAzCqqX/ObYlKkPfRZMidUKhZETqEsxk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=KlY6OLcTj8jh9lYbeH9NM957RBYm9JkkUdT4bpVQK1JWnEuvuB/0bcGXR3lQ+ss2F9R8E+QG5TCKd/8mfv8lu3k7zKATvZmm98iAuESEsOLLgJakgLOfI4wPYHJquE9IYT1IXAoDYrR8b8Yrcrl1xvmzFjGAE2tYXKQZOvzxOsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=matthias-proske.de; spf=pass smtp.mailfrom=matthias-proske.de; dkim=pass (1024-bit key) header.d=mailerdienst.de header.i=@mailerdienst.de header.b=pzoGAQI+; arc=none smtp.client-ip=134.0.28.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=matthias-proske.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=matthias-proske.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DPc/lP9X"
-Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-e5acbbfc4e7so5446591276.2
-        for <brcm80211@lists.linux.dev>; Tue, 04 Feb 2025 07:27:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1738682837; x=1739287637; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=6bbw6NuplC45g5e415URYITIdUl4aCpORburWx1YQSQ=;
-        b=DPc/lP9Xj3vK7YFYLCENsf1RWCAT/AK8HslSq8TY7sJVc7gwx2KClmM5CgTrLh+bEv
-         fc0hzXU2dU/lDpAsf9JVXX/k9jJGRTrWZe5A+PUoYhzJCaCpnA3sanezr9YcWHiyTLBy
-         njxrG2DATE6+pzkBXd7Uj8l1ftYfk85Y4wuAmWBXgY7MFFwcjrlh33qzbOrALj8WSXkQ
-         HR+U+gy9O7gWTH6NBOP/Z87V/YEmE0/YP7D9cobgewasoOyBuKa/vcHMYXR4BYFBwSdF
-         q4gBw5JKlJ3GDsI1QwJImbz2Kq8aIe6ee0d9ltU4Im0ZEs7w8IHJMJTmIymUdVhQdIz4
-         p6/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738682837; x=1739287637;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=6bbw6NuplC45g5e415URYITIdUl4aCpORburWx1YQSQ=;
-        b=A3KRCA0GtHzIV/CNTN7e9iitDvlpV7EAdalBrzRa6smc2DQWoLfiSVl2Fy7FX2PKQE
-         Z69XAgT2uOpGp/RhgaSbxmZjNIptllbAtGgvI9q/HAxy20UME28oGAW8yQCLmWxpq7CE
-         5TP+lk6qt6EbQlts117YEMz40pE1M3uCU7NvcyRevJ+1YNbqxsIi/vyWiHHfIfPJw1sM
-         EZAUwQJvkOCQBr4czg9+cq9NwuMFyUOBbJg8pI7ytGkT78aJ0BRycejw+0TQWk2JFGaS
-         CcUxVRkMhyPhLMlWiTwG3+170CGi22zGkOxJ6RwwcB+GCtK21RJxP7zTx+X8t+qHbiWw
-         5rgQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWbf7pc6KWrMLNzeeR2700Xpes7bf4qo659oN8CUMihK1OnewGmqVO1ENIF9F51Gc45f5T0TVJ0WGs=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzEO4Zj3A9ipLGp1FwhDt9lvBnI3bolkrTNEaKKjervtT+X6/hP
-	0dLmVeSuCmA0/kNSx/claPX6pjs2+n/vrlIXLQX/bH5OyiSE/lhcD0+ZENUm1ZBQjkBszCUGG3H
-	nVQfNW7XZazckJAktieFIgH2prIstqd1vmH9kYw==
-X-Gm-Gg: ASbGncvACIw6RoNY80BkMcXt/dMxDu6XLHhTjilqhfUyWqEOkklcy5WH3VVKf5q8CYg
-	y50ptdDTVCtYxLiJnmqsKMvStzi2bVWQ/WfuXlbzUaFCtysNVPw7Z3lEJbe7vo1Q64jmOJvaveg
-	==
-X-Google-Smtp-Source: AGHT+IGuTehydOk3Axr20URL8vBy9g3qWXoLiXwzZEf5vxniYy62jE4Kl9yHuwqLqMu97MIGL+LC7qy+k9L+D/GoJRY=
-X-Received: by 2002:a05:6902:2808:b0:e5a:e625:e513 with SMTP id
- 3f1490d57ef6-e5ae625e61emr11909922276.12.1738682836852; Tue, 04 Feb 2025
- 07:27:16 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=mailerdienst.de header.i=@mailerdienst.de header.b="pzoGAQI+"
+Received: from mxbox3.masterlogin.de (unknown [192.168.10.78])
+	by mxout2.routing.net (Postfix) with ESMTP id EAF7F602FC;
+	Tue,  4 Feb 2025 16:25:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailerdienst.de;
+	s=20200217; t=1738686340;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=NhXltd/RAA4tdApb1z8cvqOm1VvOvEorkNbrJ/OD54E=;
+	b=pzoGAQI+poPsyTwzAWxEYO4BKfBRcJUyOLra02Ze6DR9+rxM78WNRlsXiXQGajCPRH2IvQ
+	ttXSlmi+sZJLZ2G4jNpGe1c4CkmH/BdhMZgpKtaEqLaU7KtAgQ6jXPeJpq6kSwLqYy72wc
+	jSZ8EfHXspYnVv60HmqLOtkmJV0/tNs=
+Received: from [192.168.178.89] (unknown [185.181.130.204])
+	by mxbox3.masterlogin.de (Postfix) with ESMTPSA id 6F81E3604F8;
+	Tue,  4 Feb 2025 16:25:39 +0000 (UTC)
+Message-ID: <6aa67bad-5712-441e-a24b-f787474472bb@matthias-proske.de>
+Date: Tue, 4 Feb 2025 17:25:35 +0100
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <cd1b13d4-b01d-4237-813e-bd48c55d9ca9@matthias-proske.de>
-In-Reply-To: <cd1b13d4-b01d-4237-813e-bd48c55d9ca9@matthias-proske.de>
-From: Ulf Hansson <ulf.hansson@linaro.org>
-Date: Tue, 4 Feb 2025 16:26:41 +0100
-X-Gm-Features: AWEUYZmzVPGqQjAUScsSlKOO9d6YlW9_MWDY69DsffBTqZs8gHgQdoTz5D-t8mI
-Message-ID: <CAPDyKFr=XyLg2VjuEq1ZTrdAwSJJmYFDn9wSFj4zWD1+ZB9MTQ@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
 Subject: Re: DT property keep-power-in-suspend and how WiFi drivers use it
-To: Matthias Proske <email@matthias-proske.de>
-Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev, 
-	brcm80211-dev-list.pdl@broadcom.com, linux-mmc@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+To: Ulf Hansson <ulf.hansson@linaro.org>
+Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
+ brcm80211-dev-list.pdl@broadcom.com, linux-mmc@vger.kernel.org
+References: <cd1b13d4-b01d-4237-813e-bd48c55d9ca9@matthias-proske.de>
+ <CAPDyKFr=XyLg2VjuEq1ZTrdAwSJJmYFDn9wSFj4zWD1+ZB9MTQ@mail.gmail.com>
+Content-Language: en-US
+From: Matthias Proske <email@matthias-proske.de>
+In-Reply-To: <CAPDyKFr=XyLg2VjuEq1ZTrdAwSJJmYFDn9wSFj4zWD1+ZB9MTQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Mail-ID: 0bf1165b-eb46-4642-9087-12bc0afec4d0
 
-On Wed, 29 Jan 2025 at 12:05, Matthias Proske <email@matthias-proske.de> wrote:
->
-> Hello,
->
-> I have a question regarding the usage of the Device Tree property
-> `keep-power-suspend`.
->
-> In the Device Tree documentation it reads:
-> "SDIO only. Preserves card power during a suspend/resume cycle."
->
-> Does that mean that the SDIO Host Controller will remain powered or
-> should this equally apply to anything that is connected to this SDIO
-> Host Controller?
+On 2/4/25 4:26 PM, Ulf Hansson wrote:
+> On Wed, 29 Jan 2025 at 12:05, Matthias Proske <email@matthias-proske.de> wrote:
+>>
+>> Hello,
+>>
+>> I have a question regarding the usage of the Device Tree property
+>> `keep-power-suspend`.
+>>
+>> In the Device Tree documentation it reads:
+>> "SDIO only. Preserves card power during a suspend/resume cycle."
+>>
+>> Does that mean that the SDIO Host Controller will remain powered or
+>> should this equally apply to anything that is connected to this SDIO
+>> Host Controller?
+> 
+> Unfortunately the documentation isn't really clear.
+> "keep-power-in-suspend" means that the platform is *capable* of
+> keeping the SDIO card powered when the system is suspended.
+> 
+> Depending on what the SDIO func-driver (like the brcm_fmac driver)
+> decides to do during system suspend/resume, the mmc core we may or may
+> not keep the SDIO card powered.
+> 
+>>
+>> To give a bit more background:
+>>
+>> I have an embedded board with a brcm_fmac WiFi module. It seems that due
+>> to a hardware limitation we are not permitted to switch the module off.
+>> It simply cannot be re-probed afterwards.
+> 
+> How did we manage to power it on and probe it in the first place?
 
-Unfortunately the documentation isn't really clear.
-"keep-power-in-suspend" means that the platform is *capable* of
-keeping the SDIO card powered when the system is suspended.
+Sorry if this was misleading. By "we" I meant whoever uses our hardware. 
+I probably should have written "I" instead.
 
-Depending on what the SDIO func-driver (like the brcm_fmac driver)
-decides to do during system suspend/resume, the mmc core we may or may
-not keep the SDIO card powered.
+I have a hardware with the limitation that I can only power off WiFi 
+whenever I power off the complete SoC.
 
->
-> To give a bit more background:
->
-> I have an embedded board with a brcm_fmac WiFi module. It seems that due
-> to a hardware limitation we are not permitted to switch the module off.
-> It simply cannot be re-probed afterwards.
+Was it fixed it in newer HW designs? Yes.
+Is there HW out there with the problem? Also yes.
 
-How did we manage to power it on and probe it in the first place?
+How could I probe it in the first place?
+The brcm_fmac module was responding because it was still in its initial 
+phase after being booted.
 
->
-> The property `keep-power-in-suspend` was used and that used to work fine
-> until 92caded ("brcmfmac: Avoid keeping power to SDIO card
-> unless WOWL is used"), which made the wifi adapter by default turn off
-> on suspend to be re-probed on resume. Not working on our board...
+> 
+>>
+>> The property `keep-power-in-suspend` was used and that used to work fine
+>> until 92caded ("brcmfmac: Avoid keeping power to SDIO card
+>> unless WOWL is used"), which made the wifi adapter by default turn off
+>> on suspend to be re-probed on resume. Not working on our board...
+> 
+> Would you mind elaborating why it isn't working?
 
-Would you mind elaborating why it isn't working?
+I can no longer probe the device after the resume.
 
->
->
-> I have also looked at other WiFi drivers with an SDIO interface and it
-> seems that none of them are really honoring the `keep-power-in-suspend`
-> flag. Is this flag for the SDIO Host Controller only?
+[   61.390016] brcmfmac: brcmf_sdio_bus_rxctl: resumed on timeout
+[   61.390128] ieee80211 phy1: brcmf_bus_started: failed: -110
+[   61.390294] ieee80211 phy1: brcmf_attach: dongle is not responding: 
+err=-110
+[   61.426594] brcmfmac: brcmf_sdio_firmware_callback: brcmf_attach failed
 
-See above.
+I assume that I have this problem because I cannot power off the WiFi 
+module using the two GPIOs, usually controlled by a mmc-pwrseq. In fact 
+I don't see these errors with the newer HW revisions where I can toggle 
+the GPIOs.
 
->
->
-> What would be proper way to implement it so that the brcm_fmac return to
-> its old behaviour if necessary?
-> Add a Device Tree property directly for the brcm_fmac driver..?
 
-The corresponding SDIO func-driver may call
-sdio_set_host_pm_flags(func, MMC_PM_KEEP_POWER). In this way, the mmc
-core will leave the SDIO card powered-on during system suspend.
-Although, unless it's really necessary, it's ofcourse a bad idea as it
-would mean wasting energy when the system is suspended.
+> 
+>>
+>>
+>> I have also looked at other WiFi drivers with an SDIO interface and it
+>> seems that none of them are really honoring the `keep-power-in-suspend`
+>> flag. Is this flag for the SDIO Host Controller only?
+> 
+> See above.
+> 
+>>
+>>
+>> What would be proper way to implement it so that the brcm_fmac return to
+>> its old behaviour if necessary?
+>> Add a Device Tree property directly for the brcm_fmac driver..?
+> 
+> The corresponding SDIO func-driver may call
+> sdio_set_host_pm_flags(func, MMC_PM_KEEP_POWER). In this way, the mmc
+> core will leave the SDIO card powered-on during system suspend.
+> Although, unless it's really necessary, it's ofcourse a bad idea as it
+> would mean wasting energy when the system is suspended.
 
->
-> I would like to write a patch, but I would like to know in which
-> direction to go.
->
->
-> Thank you for any feedback
->
-> Matthias
+Just to get my understanding right: The brcm_fmac driver would be the 
+SDIO func-driver in my case, right?
 
-Kind regards
-Uffe
+Thanks for the feedback
+
+Matthias
+
