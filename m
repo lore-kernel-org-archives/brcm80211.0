@@ -1,145 +1,149 @@
-Received: from mxout2.routing.net (mxout2.routing.net [134.0.28.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C5BF260A5D
-	for <brcm80211@lists.linux.dev>; Wed, 12 Feb 2025 19:10:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=134.0.28.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53504201001
+	for <brcm80211@lists.linux.dev>; Wed, 12 Feb 2025 20:07:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739387405; cv=none; b=oIks1yYWcUOYLTVJpxAtgr29u6ISMU7TR77NxCk1+uUdYfn1UAYoWk0ttKw0RngOgLhD553eGCaRolu1DEMW08S/oIme4b79UYBo2AKGQh3ddxnNbbR2MXGu3NBEjN2Z8bjvZ2puOJ+nkDmoq4uXOufgEVJS5SWx3U3JrxbjDBA=
+	t=1739390841; cv=none; b=u/5c4FyartxqwNg7/3L0LtKm8Lg0pG5nofoCeyXYfiVHBuas8YWFSYjE1++0m4Qzr2B+oGKxMbZGeIO+qhaO9U1MjRJuh9VLToGv3ytmUqfPS4FFbLUq3FDFYnwJLJviY+/9nT2yYhoyyRQkDSoo4AsDcVoptM8q/bJ8NArRhBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739387405; c=relaxed/simple;
-	bh=3YhrClgMV1aKi0S4z5olXFmU2m1U1F09UvqrHJPICx4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=FswYNfS33tenJuIWYHgv4E12hll3fktjHqeIB7GUBf/L/RxAURngDNAwVlowWeOfXOK41meySj24ym7yancoXoLrRpMk0twQUdpsJXeJyZAL+E8OmAf1Kt4hafsbhNjSMOZa7sGMoLeiIx8jFc72r/cXrqSbHKq5yihuDLAkopg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=matthias-proske.de; spf=pass smtp.mailfrom=matthias-proske.de; dkim=pass (1024-bit key) header.d=mailerdienst.de header.i=@mailerdienst.de header.b=JgLa8KsE; arc=none smtp.client-ip=134.0.28.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=matthias-proske.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=matthias-proske.de
+	s=arc-20240116; t=1739390841; c=relaxed/simple;
+	bh=cGC1rqqEGlY113Qnsbpy/9xYPW8DwQek7iDwMOerZxQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=eapSbqQGeYz27SjHG6ESM4xkIkeaHw7VswIhnLBuQRdr5A9ed6lgWPnGNBq2RR0XtGUAzwUeXrZAvKxQd3dcGJ4kGHRJqqonqg9SXJJAGwx/oe+4pVvOrYp+LVC8TMvRZGzrXDTudqvm0W1U+n7u+WCs3t/Y69Ps/rZJIwsC/uQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=C+T4olix; arc=none smtp.client-ip=209.85.167.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=mailerdienst.de header.i=@mailerdienst.de header.b="JgLa8KsE"
-Received: from mxbox3.masterlogin.de (unknown [192.168.10.78])
-	by mxout2.routing.net (Postfix) with ESMTP id 93B07601DA;
-	Wed, 12 Feb 2025 19:01:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailerdienst.de;
-	s=20200217; t=1739386880;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=q+TDqPY/j9LuymxqoSxnd/KR0pzmWLDlKhqHng4rETU=;
-	b=JgLa8KsEvxf83OU/YJW3Jxvkg79AMmbPexqGyMa1YFE3lWzQ9K24njhnA1T2zFciGesa60
-	cq295GydBWSzqjYKdViddtlnAJj5hun6/0rZUe3lZekuVJSPtJVwUdeGdKepT5u0L2GTZP
-	260a6iSPy9Sh9uTweqcOIfsFZmXhgDQ=
-Received: from localhost.localdomain (unknown [217.26.232.248])
-	by mxbox3.masterlogin.de (Postfix) with ESMTPSA id 8CC40360077;
-	Wed, 12 Feb 2025 19:01:19 +0000 (UTC)
-From: Matthias Proske <email@matthias-proske.de>
-To: Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Kalle Valo <kvalo@kernel.org>,
-	Norbert van Bolhuis <nvbolhuis@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Ondrej Jirman <megi@xff.cz>,
-	Erick Archer <erick.archer@outlook.com>,
-	Matthias Proske <email@matthias-proske.de>,
-	Jacobe Zang <jacobe.zang@wesion.com>
-Cc: linux-wireless@vger.kernel.org,
-	brcm80211@lists.linux.dev,
-	brcm80211-dev-list.pdl@broadcom.com,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] wifi: brcmfmac: keep power during suspend if board requires it
-Date: Wed, 12 Feb 2025 19:59:35 +0100
-Message-ID: <20250212185941.146958-2-email@matthias-proske.de>
-X-Mailer: git-send-email 2.48.1
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="C+T4olix"
+Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-3f3bac262f9so56172b6e.1
+        for <brcm80211@lists.linux.dev>; Wed, 12 Feb 2025 12:07:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google; t=1739390838; x=1739995638; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZxGXdtfxhIi93S3Cb2J8z+v+OBi6ejm654vjeGIotlI=;
+        b=C+T4olix2cT3oSGU3EVfLjt7VfAQ7hT+C0Lmp4au2Q9yPzUpoBSfjYQMN2meIBihwk
+         vQ9XU/ntKySem9RdI4eEZE5Hyf5iLJFIBakZVmfX5qtgBfqV130C2jYVDSi0N6SS+VmH
+         yzf416anbmpDf+u7OSrlzfkhhEaJDntx3d4iE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739390838; x=1739995638;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZxGXdtfxhIi93S3Cb2J8z+v+OBi6ejm654vjeGIotlI=;
+        b=Ed710UzDiyz3MuLbKnjjqAxl5GRdg5sjwIPpt6VV4Q2T0qjz6qFL7iLe6jC2KsWveY
+         U1zYNTCbkqsprrxru6dtYQMQDQCbr5bJAx0nHszzYsS618xowbX4HCcZWpCqLsMPN0bq
+         w9Wt0F2kXh+36oTB6cE9esW3TpA7dM5315y5pM49fRBvPNXdPap6VOLipPKTo/qHdsL7
+         klEPkjyD1V/wS4ly6CcJGMQrWDmvjtontwOvI39sZL3FmPA719k6WC07VruVOdfamOEj
+         Aai4cibp+i68WIeBDlP/bmb5SvLI0mm7z6cdHSz/HY4eIS9ZdeTDJLrcwyVzU9lMle9g
+         VAEg==
+X-Forwarded-Encrypted: i=1; AJvYcCWjTdQA/RanhyqKHzO1sJSKuUnVtmedMBbWMyNoxbD4lL4uYwHktoEUqDAFhaRyPK1GJamaaXq4b/g=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwcJ/qaF+eZ4NuPvJzn8AKFia5cWpgy/hMulU7JkzRjOylkCeea
+	AUGBvZcaG87Sg4JrJGgDkgaMJPjlIB27veTRrxhUu9kteJHfJcEo/Sc32xiXlQ==
+X-Gm-Gg: ASbGnctVMPip6r6O9HyrEZPDcNPbPOkJ0K8WTzZG+tKm7qlQJVsZlR0HwCSyoxSbdfR
+	tXxcgnNtta9Q+q2BUTCYeFqzMXx5JLMegHvbSXGtzhtZ+efKoeybg7ZHo7sFba2bCujeaEXVX7J
+	pqhubfv7z8nkAzoAEuTinpTzQSkqhQSSPz3hXXKCmOnhjcB8EtlEKJuDtopR+jK54lnmxNvr7ma
+	RIpnwg498DQebyS9U5QY6tE/DqHnaVy4be6ig5CnrgQLQNNGiQGlYEMqaLBT74ea6hgMJrZb7t6
+	36eUTe8aqNqalNbSS0BllbO3IBMdMtauMaF8ADArYzWMyJkV2OJ7MbHiP31sTaRcv+8=
+X-Google-Smtp-Source: AGHT+IGYzk9T0MFCslT3GehXKMN1D4HHliXmrU5o4/Eiadc4Md49P45SLWZSibKaECMiJpTO58q0fA==
+X-Received: by 2002:a05:6870:1690:b0:29e:48d6:2e62 with SMTP id 586e51a60fabf-2b8d64fda20mr2929878fac.9.1739390838301;
+        Wed, 12 Feb 2025 12:07:18 -0800 (PST)
+Received: from [192.168.178.137] (f215227.upc-f.chello.nl. [80.56.215.227])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-2b8abc164b7sm2784158fac.4.2025.02.12.12.07.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 12 Feb 2025 12:07:16 -0800 (PST)
+Message-ID: <8d5ae153-24fb-44bf-89a9-e366e0f205f3@broadcom.com>
+Date: Wed, 12 Feb 2025 21:07:10 +0100
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Mail-ID: 87371727-d5df-497f-88f1-efc5d1639e48
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] wifi: brcmfmac: keep power during suspend if board
+ requires it
+To: Matthias Proske <email@matthias-proske.de>, Kalle Valo
+ <kvalo@kernel.org>, Norbert van Bolhuis <nvbolhuis@gmail.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Ondrej Jirman <megi@xff.cz>, Erick Archer <erick.archer@outlook.com>,
+ Jacobe Zang <jacobe.zang@wesion.com>
+Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
+ brcm80211-dev-list.pdl@broadcom.com, linux-kernel@vger.kernel.org
+References: <20250212185941.146958-2-email@matthias-proske.de>
+Content-Language: en-US
+From: Arend van Spriel <arend.vanspriel@broadcom.com>
+Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
+ 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
+In-Reply-To: <20250212185941.146958-2-email@matthias-proske.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-After commit 92cadedd9d5f ("brcmfmac: Avoid keeping power to SDIO card
-unless WOWL is used"), the wifi adapter by default is turned off on
-suspend and then re-probed on resume.
+On 2/12/2025 7:59 PM, Matthias Proske wrote:
+> After commit 92cadedd9d5f ("brcmfmac: Avoid keeping power to SDIO card
+> unless WOWL is used"), the wifi adapter by default is turned off on
+> suspend and then re-probed on resume.
+> 
+> This conflicts with some embedded boards that require to remain powered.
+> They will fail on resume with:
+> 
+> brcmfmac: brcmf_sdio_bus_rxctl: resumed on timeout
+> ieee80211 phy1: brcmf_bus_started: failed: -110
+> ieee80211 phy1: brcmf_attach: dongle is not responding: err=-110
+> brcmfmac: brcmf_sdio_firmware_callback: brcmf_attach failed
+> 
+> This commit checks for the Device Tree property 'cap-power-off-cards'.
+> If this property is not set, it means that we do not have the capability
+> to power off and should therefore remain powered.
 
-This conflicts with some embedded boards that require to remain powered.
-They will fail on resume with:
+Thanks! Looks good to me.
 
-brcmfmac: brcmf_sdio_bus_rxctl: resumed on timeout
-ieee80211 phy1: brcmf_bus_started: failed: -110
-ieee80211 phy1: brcmf_attach: dongle is not responding: err=-110
-brcmfmac: brcmf_sdio_firmware_callback: brcmf_attach failed
-
-This commit checks for the Device Tree property 'cap-power-off-cards'.
-If this property is not set, it means that we do not have the capability
-to power off and should therefore remain powered.
-
-Signed-off-by: Matthias Proske <email@matthias-proske.de>
----
- .../broadcom/brcm80211/brcmfmac/bcmsdh.c      | 20 ++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
-
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
-index 60eb95fc19a5..6bc107476a2a 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
-@@ -1172,6 +1172,7 @@ static int brcmf_ops_sdio_suspend(struct device *dev)
- 	struct brcmf_bus *bus_if;
- 	struct brcmf_sdio_dev *sdiodev;
- 	mmc_pm_flag_t sdio_flags;
-+	bool cap_power_off;
- 	int ret = 0;
- 
- 	func = container_of(dev, struct sdio_func, dev);
-@@ -1179,19 +1180,23 @@ static int brcmf_ops_sdio_suspend(struct device *dev)
- 	if (func->num != 1)
- 		return 0;
- 
-+	cap_power_off = !!(func->card->host->caps & MMC_CAP_POWER_OFF_CARD);
- 
- 	bus_if = dev_get_drvdata(dev);
- 	sdiodev = bus_if->bus_priv.sdio;
- 
--	if (sdiodev->wowl_enabled) {
-+	if (sdiodev->wowl_enabled || !cap_power_off) {
- 		brcmf_sdiod_freezer_on(sdiodev);
- 		brcmf_sdio_wd_timer(sdiodev->bus, 0);
- 
- 		sdio_flags = MMC_PM_KEEP_POWER;
--		if (sdiodev->settings->bus.sdio.oob_irq_supported)
--			enable_irq_wake(sdiodev->settings->bus.sdio.oob_irq_nr);
--		else
--			sdio_flags |= MMC_PM_WAKE_SDIO_IRQ;
-+
-+		if (sdiodev->wowl_enabled) {
-+			if (sdiodev->settings->bus.sdio.oob_irq_supported)
-+				enable_irq_wake(sdiodev->settings->bus.sdio.oob_irq_nr);
-+			else
-+				sdio_flags |= MMC_PM_WAKE_SDIO_IRQ;
-+		}
- 
- 		if (sdio_set_host_pm_flags(sdiodev->func1, sdio_flags))
- 			brcmf_err("Failed to set pm_flags %x\n", sdio_flags);
-@@ -1213,18 +1218,19 @@ static int brcmf_ops_sdio_resume(struct device *dev)
- 	struct brcmf_sdio_dev *sdiodev = bus_if->bus_priv.sdio;
- 	struct sdio_func *func = container_of(dev, struct sdio_func, dev);
- 	int ret = 0;
-+	bool cap_power_off = !!(func->card->host->caps & MMC_CAP_POWER_OFF_CARD);
- 
- 	brcmf_dbg(SDIO, "Enter: F%d\n", func->num);
- 	if (func->num != 2)
- 		return 0;
- 
--	if (!sdiodev->wowl_enabled) {
-+	if (!sdiodev->wowl_enabled && cap_power_off) {
- 		/* bus was powered off and device removed, probe again */
- 		ret = brcmf_sdiod_probe(sdiodev);
- 		if (ret)
- 			brcmf_err("Failed to probe device on resume\n");
- 	} else {
--		if (sdiodev->settings->bus.sdio.oob_irq_supported)
-+		if (sdiodev->wowl_enabled && sdiodev->settings->bus.sdio.oob_irq_supported)
- 			disable_irq_wake(sdiodev->settings->bus.sdio.oob_irq_nr);
- 
- 		brcmf_sdiod_freezer_off(sdiodev);
--- 
-2.48.1
-
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+> Signed-off-by: Matthias Proske <email@matthias-proske.de>
+> ---
+>   .../broadcom/brcm80211/brcmfmac/bcmsdh.c      | 20 ++++++++++++-------
+>   1 file changed, 13 insertions(+), 7 deletions(-)
