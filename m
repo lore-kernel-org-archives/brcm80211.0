@@ -1,105 +1,130 @@
-Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
+Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C19811F78E4
-	for <brcm80211@lists.linux.dev>; Mon, 10 Feb 2025 12:47:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C6920FA94
+	for <brcm80211@lists.linux.dev>; Wed, 12 Feb 2025 13:42:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739191680; cv=none; b=bfw6cwFK/NCo/7BrqVKEFjFcVPPlj048zyvN5vo1aDya8r/8GBWyeG+BhloZ87Ry595vxLVpOEgjLBKegFrCPTApA8joDuap3+irDz5kQoEUXUgXCuVJzqV4Bc99qjkJ4oVvMRGmphERiDDpdbkPhEGjf3Q7sxH6U66QjzSozfQ=
+	t=1739367744; cv=none; b=OCI5Oj4DMbrlgtE7W8mLZOM6j0eqjV5q65n5Fnb402zP5Jl0r6M7hVtX5+OBel5ZNdJ9hKTcLzUI7CcELFq99KcMrBtOxogeQM7O0Ccc84GvK61oJHnZmHJ2eJc80Dua10J04FF2HQLDZJMBtojArerzu06qIdrr7WvG20q76MI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739191680; c=relaxed/simple;
-	bh=sw4GIsTupaH+lw8i0Nwr5L7XDu0thVQ7gAEmZQ0sbUg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=R+PHKVgKmXgByDfdgDCuvTqzugPPiT+bUPxfzip/wo+MdUj5nbUAhI8uFSPY5yuLUA+QGrluvEmPgXlCh83sZ/vSQ5PNkyzdBL6MqKb7sFTK7+BdCkHFKOdE5Ow8gc7DSsB3i0YC8hFyslkBmxF/fJ1lm5wDxT171mSnuysCqYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gWgGnkbv; arc=none smtp.client-ip=209.85.219.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1739367744; c=relaxed/simple;
+	bh=Z0fxZBAzfIYmUMXhU2cA1/PmrwTC6A92uK2aSyK7QNI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Fc6IsitKVRZcjHRTtkwDGQc6BooFm8nnCGYBY5sVh+MlvAd2bcmxT4+mKVWUQSffmITB/Ua0ExiVVq1yKoJeFeZoCaBdJXndZDFE7pwg/VbgUy9QxMmikZtl6f/C+V5HIqh+3iawkKZ3MndO1hbOx7fqmGUBAG2Y5pHyXGopPOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DP2Eig9G; arc=none smtp.client-ip=209.85.219.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gWgGnkbv"
-Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-e5b29779d74so3760037276.2
-        for <brcm80211@lists.linux.dev>; Mon, 10 Feb 2025 04:47:58 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DP2Eig9G"
+Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-6e44fda56e3so8292486d6.1
+        for <brcm80211@lists.linux.dev>; Wed, 12 Feb 2025 05:42:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739191677; x=1739796477; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=sw4GIsTupaH+lw8i0Nwr5L7XDu0thVQ7gAEmZQ0sbUg=;
-        b=gWgGnkbvJiUb708I42Km7MtvahKrFRU/n2sK+wZTpROX053zdyOKkVTs54nKSf+zQD
-         3niGuD8Ez6Z4Olsnk3kEwzRmyvhewe02GnKPdRxRObhMKC5v0hAOw4P3nBV2D5be0VLe
-         1gTGiGd7PfqeJfC0FbaPWNXzb2hCGGPGwcasH8agHC9Bfj7BlCqjlvJdDTAM7VUVIcWP
-         WU57sRETQujRs/NWT1Wk7qVoBuXjybJpQy8vR9FGhzPZHMdzn3ULgLJmoXSn6NgrQFZ4
-         E3f3+9iA74QeKWMnEDp4T4amU1ZSUkhQA3XVT++1rmf8LnTsfdI+7Ob27XEStDiFXuYt
-         YVgw==
+        d=gmail.com; s=20230601; t=1739367741; x=1739972541; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=sgqcJMrN+oO4Lcfjo9FO29l2+bXN3T74siFMzmQQ8Ps=;
+        b=DP2Eig9G8wMndVsjtEeb54p+ZAEXgSFLhs103QcuhM//dC6BekbuKFsc/kAFxL9s0U
+         81CAxaD+Dyw9CH7LAhwCWYix+d0joDIKDqY0HLvs4HEmTTZqbXBXFcQ05NnTTr6SXBFr
+         dcPQg2tlII3oLp+syKXbdsU3vTl/PlvbTSnREwdVpfKZNQwjFujky/+BqlM75p6ZFpdQ
+         c8e03n3DNRDwFJBqLhE5Iks2FezI5M+URYjYN4OPIDV5OtDhIONnnV2kEUyA9a/BpQg9
+         YerdCQF6RUjSaJGWet2AJg5eFLfU5JeA/iSqByDn0VxPDA7hDzPxhqt12ZcFTzDQrR7T
+         BYMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739191677; x=1739796477;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=sw4GIsTupaH+lw8i0Nwr5L7XDu0thVQ7gAEmZQ0sbUg=;
-        b=EApaSOlbcdczFa326mA0KNnV2XEHUs4slpTHPoG6MOQYRo0XweKDnVQRIZ5mnOGslY
-         2hOZHjJL1+m15GfVdleTsXuRj92gangVzh2ebPIVwrmG1Rom2hQPHfmqxDGhQjb0Wyqp
-         XfJsr+2GgJR3maeJqa2REMPpX3NV9rCaynGMtGp8wUF9bQD9jVX123hprg+ncmCDYiCc
-         7OPm1WcOQGn/40f0vSuX+Ni7D40VgviFKovB48a24Y9X6L/GgQmNrTeJ25cqfwcFDeVJ
-         mWT0Ggt8VaqzYrkXzdZ5nJXuBXHnbxDOsO8nEjFTQ4rktqUL6MR/BXVQ07x9AybD8/Pd
-         34+g==
-X-Forwarded-Encrypted: i=1; AJvYcCV/OJU0Q6/hO1LcNDcZgJFbnRnqPfdvjOMtxaVDQScQfe7Z5GkWVBzDOOPs6keSHdil20dOzw05vyc=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzu68UZjgbiU8OMVtMI0c/2Dd6IYyrcV9mujtc2QQ9IRVk3jUqj
-	rH/RXOqlzH5LJV7/KqrBhm2yGeXI5PUS1+ak8V5ef/llzXCqvgOKSTfjy0DTZms1n87B3lKYAdj
-	9CnJRE4GmbU5g0lNpHmHH/Qrc1iHXP+JNmjbKBQ==
-X-Gm-Gg: ASbGncvY7vO7UQxev28OKmP0ju3odg7cuVONUAadSrZclPjmqD6YxRpwIwKmSUvrHb/
-	Y3TNCiSXg2w/4Otrlou3k6UFvxFQApyq7l5RghGRl+qS/IPRl/BlklydaCTaF5peR6C3j/cqb1g
-	==
-X-Google-Smtp-Source: AGHT+IHCARCr3W2dsFBPoy0teQ9rJvEN+LQ+nr51lkt6u9aAaTFigHQA3uE9MDY3wAtkCUkPpWDJGs8q+V4NX86c+fw=
-X-Received: by 2002:a05:690c:9989:b0:6ef:6a71:aa55 with SMTP id
- 00721157ae682-6f9b2345b63mr118817667b3.0.1739191677606; Mon, 10 Feb 2025
- 04:47:57 -0800 (PST)
+        d=1e100.net; s=20230601; t=1739367741; x=1739972541;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=sgqcJMrN+oO4Lcfjo9FO29l2+bXN3T74siFMzmQQ8Ps=;
+        b=wuoNyeGgCXFKry1IhyHRNo1zXHGglkyZXghYSsWHw4lkS/l2jzUAbzPi0mREpzJ3u7
+         JBfFITKgtnc6wYtoNql8VuzagkclmEc/H5EEc4R8Q7NQStT/qEhX5xjciRDsGSttQRtv
+         vrx5i8BHxOuUinKFF4vr6rhaOzPA5b2RsswzctfsXgFki/MSKMW69G72NruvE8jEVAD5
+         WTuKjbAC87ytxGKVWcRm6YkdufCwUYNcJhvYvmOWULQwpVf6hWf9INAB4vEBIgbBfJNN
+         nRFkWYKPvOJxIGRS0yg57ZcHA019yxoQFgKGsbJOL1NtvUZ36RHNN0M3sDdQHDtLvBwY
+         48gg==
+X-Forwarded-Encrypted: i=1; AJvYcCVnmM6qSO2rQTUj7zbZSbR7vVP/AusFKLVbFUPDlaeCTrNTK/puCYRmgDmb1hKeH3vRSSZLyAQSVMQ=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yy8P57vCG+FHWEDRj72ai9gXdENuCWy+XI5Oaqc2vVej4wGYibv
+	z9p6sLrggkBuOEoLPMlHxpXWBvYa15072k1CHJW0pRu68TJ+5Qxv
+X-Gm-Gg: ASbGncu5M4CGW/4r5H6vgBPRi19kPIqCXVz8EKnD2KqwTT5RVWfCfcmY2RB0r3ditvM
+	oBx8Jqdl2/Gu5TLhhTEQojIcns6BPSb2VTLdFN4cPOwZwXwMZSoSCs8JQrN0T5sJYg+9FgMy9UR
+	YRCTGo5Dmg7N/kcg/8nj5zQU7z+gEI/oUmNifS7nNmRFpM9tM021S/WAiAY4uhBzLfL3pP2BOBk
+	yBQFDFqrElLNIaBsyVO0atbfsTH09oyk+uc78NYopP6sKZluUimzH9TQiSBoYdyemFo3nKW812E
+	SGpWfNsFOJIVVvXYUMc=
+X-Google-Smtp-Source: AGHT+IGvLi0Vi9L+OJ7SRIrHcZ/sC6Mlffs6Z6HHzv/IgRwyJcIWLK5MakJyGmFrnokUQyGDt0+M1A==
+X-Received: by 2002:a05:6214:2481:b0:6e2:4da9:4e2d with SMTP id 6a1803df08f44-6e46f18da31mr47019176d6.9.1739367741469;
+        Wed, 12 Feb 2025 05:42:21 -0800 (PST)
+Received: from [10.100.121.195] ([152.193.78.90])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6e44087b4afsm74860386d6.19.2025.02.12.05.42.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 12 Feb 2025 05:42:21 -0800 (PST)
+Message-ID: <69874369-495c-4698-af1f-502d21371f7d@gmail.com>
+Date: Wed, 12 Feb 2025 05:42:18 -0800
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <cd1b13d4-b01d-4237-813e-bd48c55d9ca9@matthias-proske.de>
- <CAPDyKFr=XyLg2VjuEq1ZTrdAwSJJmYFDn9wSFj4zWD1+ZB9MTQ@mail.gmail.com>
- <6aa67bad-5712-441e-a24b-f787474472bb@matthias-proske.de> <CAPDyKFooyDSPu7RG18sp9cV1ndRPpg5yia1BAiqtb-c3cOqv5Q@mail.gmail.com>
- <efb9b9b7-bf56-4b3f-87eb-afd356453e62@matthias-proske.de>
-In-Reply-To: <efb9b9b7-bf56-4b3f-87eb-afd356453e62@matthias-proske.de>
-From: Ulf Hansson <ulf.hansson@linaro.org>
-Date: Mon, 10 Feb 2025 13:47:20 +0100
-X-Gm-Features: AWEUYZkEspBPxh6Dm0nzMsm9DEgeqY_Rih6Dn3IzNI5XKW2fr4WXaZ5Q7HUECLM
-Message-ID: <CAPDyKFqH+YHu-uxmTN_LJi7Q2DjcRLx2WBu6-hKsaz+3T0L+iQ@mail.gmail.com>
-Subject: Re: DT property keep-power-in-suspend and how WiFi drivers use it
-To: Matthias Proske <email@matthias-proske.de>
-Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev, 
-	brcm80211-dev-list.pdl@broadcom.com, linux-mmc@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFT] brcmfmac: Fix structure size for WPA3 external SAE
+To: Arend van Spriel <arend.vanspriel@broadcom.com>,
+ KeithG <ys3al35l@gmail.com>
+Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
+ Ting-Ying Li <tingying.li@cypress.com>,
+ Ting-Ying Li <tingying.li@infineon.com>
+References: <CAG17S_NqbLogvTWyoYobZ6kOpfXHnScfm4-dB1EqsmpB+q+zxA@mail.gmail.com>
+ <20241215120401.238320-1-arend.vanspriel@broadcom.com>
+Content-Language: en-US
+From: James Prestwood <prestwoj@gmail.com>
+In-Reply-To: <20241215120401.238320-1-arend.vanspriel@broadcom.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-[...]
+Hi Arend,
 
-> >>>
-> >>> The corresponding SDIO func-driver may call
-> >>> sdio_set_host_pm_flags(func, MMC_PM_KEEP_POWER). In this way, the mmc
-> >>> core will leave the SDIO card powered-on during system suspend.
-> >>> Although, unless it's really necessary, it's ofcourse a bad idea as it
-> >>> would mean wasting energy when the system is suspended.
-> >>
-> >> Just to get my understanding right: The brcm_fmac driver would be the
-> >> SDIO func-driver in my case, right?
-> >
-> > Correct. The one that is registered with sdio_register_driver().
+On 12/15/24 4:04 AM, Arend van Spriel wrote:
+> From: Ting-Ying Li <tingying.li@cypress.com>
 >
-> I guess I would just write a patch for the corresponding SDIO
-> func-driver, adding a DeviceTree property directly in that SDIO
-> func-driver (not the mmc host driver) so this can be enabled just for
-> these specific boards, or would you suggest a different solution?
+> Add pmkid parameter in "brcmf_auth_req_status_le" structure to
+> align the buffer size defined in firmware "wl_auth_req_status"
+> structure.
+>
+> Signed-off-by: Ting-Ying Li <tingying.li@infineon.com>
+> [arend: adapted path to apply to per-vendor variant]
+> Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+> ---
+>   .../net/wireless/broadcom/brcm80211/brcmfmac/cyw/fwil_types.h    | 1 +
+>   1 file changed, 1 insertion(+)
+>
+> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/fwil_types.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/fwil_types.h
+> index 18129adb5dc2..1cbe66526d82 100644
+> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/fwil_types.h
+> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/fwil_types.h
+> @@ -54,6 +54,7 @@ struct brcmf_auth_req_status_le {
+>   	u8 peer_mac[ETH_ALEN];
+>   	__le32 ssid_len;
+>   	u8 ssid[IEEE80211_MAX_SSID_LEN];
+> +	u8 pmkid[WLAN_PMKID_LEN];
+>   };
+>   
+>   /**
+>
+> base-commit: 1cac3bd863bef434d43e6b0554ac5d7f7f6350fe
+> prerequisite-patch-id: d5b3eb93d54bd6a0508a91f4627ec3e59a810928
+> prerequisite-patch-id: 653281e1349a038c7f48b3513243f3211fffab9e
+> prerequisite-patch-id: 0e47ab711ef159237e20c860834d3ac269b05eb2
 
-Right, a DT property indicating that we can't power-cycle the SDIO
-card is probably the correct way.
+I've tested this and can also confirm it does fix external auth on 
+brcmfmac. I adapted it to work with the upstream 6.6 raspi kernel and 
+had no issues using IWD + external auth to connect to a WPA3 network. Is 
+this something that can be upstreamed?
 
-We have a bunch of properties already in the host's node related to
-this, so adding another one there should be fine too, I think.
-Otherwise, an SDIO func device may be described in a child-node of the
-mmc host's node (see
-Documentation/devicetree/bindings/mmc/mmc-controller-common.yaml).
+This is the firmware I'm using (no changes to the default raspi distro):
 
-Kind regards
-Uffe
+Firmware: BCM4345/6 wl0: Aug 29 2023 01:47:08 version 7.45.265 (28bca26 
+CY) FWID 01-b677b91b
+
+Thanks,
+
+James
+
