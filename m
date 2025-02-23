@@ -1,62 +1,62 @@
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BA291474A0
-	for <brcm80211@lists.linux.dev>; Sun, 23 Feb 2025 16:45:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C309914884F
+	for <brcm80211@lists.linux.dev>; Sun, 23 Feb 2025 16:45:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740329117; cv=none; b=PjNKAuOu3Y7qlF72Xue3OOjPiQFrHflVMvFe8q/yYSZ8tvpVaQSwLvdkXn8+xa/Hwj2rQvjmnBUNtQ5ZHU5b8oAirXL6BswdpL0jr1MKnsMCBp1mF1x9YWTEqtAHMW7frm3jswZAf552DqZc75xI/0u9wXEYYqAlra3axGoVWjU=
+	t=1740329127; cv=none; b=UwRX8ihnz9tgzHgswkzMQk8b+uFNIc5JjuNY91rk/yp0OuYziCoHNdzIFPFUAp/c6f1eDyhne0nX8AqnZ+o8Nx7lc7Te/Py01PyQgkuMRulzfplGcYTK/A/hilIqYJqt86EKzqXKvp/JANpVgTpSZaGY9yrE9jhKpx3fB//AQ5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740329117; c=relaxed/simple;
-	bh=ZR7k7WuXjWgoiKosaPdwElgny5Md8dRLy7kh+y/t7/4=;
+	s=arc-20240116; t=1740329127; c=relaxed/simple;
+	bh=6rZCyADuBKXQMtzY8frtZm7r8BeFGku217x/vpm4MWM=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=pAcMZuvattZMnP1WsrCOrYkpAjrl+0b+vksnsPSvPlk4uVpbZFpVizsaMe/0kg93/Avnjfe8OLSDqivjdxH0KHSv9+c/J8hM1YaTShZGBGx5bzHyIKdRPFeaFs5RlS1n9AqnJHk5y9ncvWivB+77UWhgQXo+64IT9tTP3Bz4IN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KMmAhwf8; arc=none smtp.client-ip=209.85.216.44
+	 MIME-Version; b=Rxop20NNpPU8ixfZwn/UlNae0TyDyjd1mfIVYo0t5LCKzkGM4dE5lPfGgSvt8dKGQzkdKy1KxneYa6ouiHqTdqOVb67nQm9v1gU5fCCHZtI2oH4P123aYomEk8EBAjkT7fu/LoR6Bfvi5uwETNvNncxGYmoXBIILuyQGk3J+n40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G1NxVP2O; arc=none smtp.client-ip=209.85.214.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KMmAhwf8"
-Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-2f9b91dff71so5518704a91.2
-        for <brcm80211@lists.linux.dev>; Sun, 23 Feb 2025 08:45:15 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G1NxVP2O"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-220c665ef4cso61068695ad.3
+        for <brcm80211@lists.linux.dev>; Sun, 23 Feb 2025 08:45:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740329115; x=1740933915; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1740329125; x=1740933925; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=M0fPaIWjdscIdDk4T1YIhhdJwaKRFyAzbGum2CZXkTo=;
-        b=KMmAhwf8idodbHGA8+/z6KpoUUM4k1htD9WQ7BOACjrIfYOZP3Wg18BfL0d4yE/Xbg
-         wGpQqFVB6684Zf6dttM5quNvuELPy8Ctvp6muyZtTNieOW/dJXI6c7jUe0hvSg49Auyf
-         9wjwcyk+lmlj+G4lnjFD7bNJ9ekCf0SKRCDm7YCoo6EGZxmZxxWIY976Zsnn5xW5m8Lq
-         0cZ6dzHrVkaRDLeISO5sxCiGvaHQske7RD65SW2ZDTstrKWyLyXR7yh15SUlZmD4SCZX
-         j5KPnYAbUyjz8NSEUEBLrO5qqH9FJ4fQMHBHGHG5LMkGR/BJHvCM0EgAbKbwNmwKTj9o
-         T96A==
+        bh=gCIStMwChzl4Z+E/b6UIovNeeE8MF3lkiK/lI/bZwfc=;
+        b=G1NxVP2OWbWSWSPr0p+KbeqP8VZhIt0lMTpCeVY/Kb6LxY/R0ptPdO8s1qYgP9VDHC
+         MpklB98kxgLj9ppXc/L4M6hfTRsrpyn7SxSVU15hbPwwWQP6ebnpfenzKhqs4jWdDi+R
+         /hI7GnuW28TjN+KWaujHrJQQZKuqBF1Gp1PoXJcKziNyTNe78mWY4i0dd3MnRpxCxObh
+         dElvS7CFYWvYNuXRB/wvXD2Xh/IEuK7hyf962gECX//KRlOQS8RamDhZvo6Y/X9MXxoX
+         BogAs1/sq18zXl4ajCwaReNxN29OE4ScXYrHhsi8rLP+4MLHzUR+bXlstDU8RGSSgys4
+         42YQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740329115; x=1740933915;
+        d=1e100.net; s=20230601; t=1740329125; x=1740933925;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=M0fPaIWjdscIdDk4T1YIhhdJwaKRFyAzbGum2CZXkTo=;
-        b=by9s+lTrpAutZ8T1h2iaV2gd7/XYK/3LAjBhdR+gUwGITEvs440Gaa/G3x4A78zIVW
-         qy7NE8AqjN76y2rZNKWGBWe0jqd0VBcCJehEQse2MJujW+/wnfmaUehKNwV9Bokn1EUn
-         2bZ5iVme8DWPDtHNSznjkA2vlMgUxuul8p7u0MSQjk0QtBcKHdSvoljajq/J0jqph98+
-         eRCClP9bWk4ZN9ZaPkthCfRtbxsuWfDC47KlTzi1TGWWHPu3C6Necg8zgcdolwOOGtPK
-         zxE6lz+61WqRmfe+xBZn3F5Arkyo1kzaN92AdTktG236SN09LBUM+12yCzBbY1J0ldbg
-         EVEw==
-X-Forwarded-Encrypted: i=1; AJvYcCWmgotvo41rB5YNJZqAmcumFVWjex94fTkBMaIyLMvaAucsAOEQpsZETCi8Pl52+EyQl8IPgx+8i2I=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz41dF1ozshV19xYEFH0nycrFPsIY+psInyX1R3NL0y1uqnA1Ip
-	8UovBUyhIZC9h67qDPdboBJEoX8enF92Nngs0mj5XOaPi9dxceo0
-X-Gm-Gg: ASbGncsqrV3ekL66yjLehKCuW8XId9kZK0GKV2YzuIPXJ5N4W9vH/O6VQhsAHUp0cN/
-	WcKufem4hKQherP9IsEIRm93+RyUHlztUf29PBm6LiSszvodUs+X1weOs/OhMx8QrXHSLPun72f
-	CXbIvDkAvQJG+boYjE57I7jWYZ61FHvSTyDbKw45uK6bVJTRjNpQbr/PJRG6HulGq5bWhlqCGdN
-	1BvzK4NKKjsbeEWaPySc4yCsLBoBJEjvzVF33WIZt6Jk6AKFJcaUSGjsmt/QaX9n5l1OGsnOyoV
-	VhckCEQyNLIeAoPcnSvWva9AypjLttQX0lhSSwWeHa5xI3Nve0MMUx2x
-X-Google-Smtp-Source: AGHT+IGRfmJ1JykXVI/nOn1hWPryN6XcmSxHhj3JPmFZZoIcxcyuC/O0UeP8Z39VhK9JcSyFdzE6jQ==
-X-Received: by 2002:a17:90b:548c:b0:2ee:c04a:4276 with SMTP id 98e67ed59e1d1-2fce77a4863mr16234632a91.5.1740329114693;
-        Sun, 23 Feb 2025 08:45:14 -0800 (PST)
+        bh=gCIStMwChzl4Z+E/b6UIovNeeE8MF3lkiK/lI/bZwfc=;
+        b=MtyxhPSiTTdXePsuMkdsz+IjtZcAw2pSbrcwLEW2uyKCKZWCcwz3UdDNHdLiD0fL9Z
+         tg95M8w4f+OUdz1Vy1H7JGtu36WV/qRvOifVo5tNkkEPzNYxrXQzHmVU+g11p8irRZxf
+         Vzd8ImpxuP3AqJAys/6Uw3/Aa2SPolmSDWjcc8N7K1g+f2LQtygwnwHakpJsdP17TupU
+         jQUj07wJm/g9uCNLRvqAJ+HApIT/ZVDOtKM0LbbV8Stz6D+FJQBXy0SYr0d7UG3HtXnL
+         /E4Hn0teemKUgO4OVQqepLgJAxM1s3QQ1evsbAn0Y2Q9X5fmZG+mvy7xvlviqs6iL/fU
+         9wSw==
+X-Forwarded-Encrypted: i=1; AJvYcCU/0ndJmuLk8hB5X3pWlyHAtk5hQcDmRK7uI4uTAUgMIuiTAt/tWrts3t0khjnnO0ZiuZ5iOfHstAQ=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyJ02hxqyn6OiCOO4jVMYYnQHaaXSOgbMLKJRbN52+hLvIwwGr1
+	6bi436CBI0je+uTGxlhXN05TsQIk6+imNSjsgDsgTfpFS06e3DRk
+X-Gm-Gg: ASbGncvA2+wnOx5juVpcknMqqXnOm8qpRcnwDT7fHYhGwPkyC7p7Rwpbn1eaBuybheF
+	zOV42cHNdx7SE0PayVniTy6FCpXMRqWNQkuf5fwz0pUA1JBHQacs5aEA2X3wINPVIZO59UyHm4U
+	acsjCvF66sau3XtqW3WCesk9l8rX+O0aS1XNfd5wRAilNWAhlrjNvxSv9lAq8siuU9KTKOEiSgy
+	3+n/VMJUBdBLcap4kkgTxtG7T8X+z1jI3ADFJA4NDFQfPfnPkgTf8+yXxwkjCPMKYsY0eug8kqe
+	V0YsAPtrA4CIfKP3f44l5ItSSlhuR6L81Vv3gtxFAOs1kXtRNU0M1t4C
+X-Google-Smtp-Source: AGHT+IFs3TQ1rSxmmbPXVRsSl3rqDEDcDSV6UQtHXLRs1szh2ELiA6tHTHYs6po5Gu/F9oStBVoG9Q==
+X-Received: by 2002:a17:90b:4fc9:b0:2ee:dd79:e046 with SMTP id 98e67ed59e1d1-2fce78a3738mr17084857a91.13.1740329124995;
+        Sun, 23 Feb 2025 08:45:24 -0800 (PST)
 Received: from visitorckw-System-Product-Name.. ([140.113.216.168])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2fceb09f6e0sm4935080a91.44.2025.02.23.08.45.05
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2fceb09f6e0sm4935080a91.44.2025.02.23.08.45.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 23 Feb 2025 08:45:14 -0800 (PST)
+        Sun, 23 Feb 2025 08:45:24 -0800 (PST)
 From: Kuan-Wei Chiu <visitorckw@gmail.com>
 To: tglx@linutronix.de,
 	mingo@redhat.com,
@@ -116,9 +116,9 @@ Cc: hpa@zytor.com,
 	jserv@ccns.ncku.edu.tw,
 	Kuan-Wei Chiu <visitorckw@gmail.com>,
 	Yu-Chun Lin <eleanor15x@gmail.com>
-Subject: [PATCH 13/17] mtd: ssfdc: Replace open-coded parity calculation with parity32()
-Date: Mon, 24 Feb 2025 00:42:13 +0800
-Message-Id: <20250223164217.2139331-14-visitorckw@gmail.com>
+Subject: [PATCH 14/17] fsi: i2cr: Replace open-coded parity calculation with parity32()
+Date: Mon, 24 Feb 2025 00:42:14 +0800
+Message-Id: <20250223164217.2139331-15-visitorckw@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250223164217.2139331-1-visitorckw@gmail.com>
 References: <20250223164217.2139331-1-visitorckw@gmail.com>
@@ -138,51 +138,37 @@ Co-developed-by: Yu-Chun Lin <eleanor15x@gmail.com>
 Signed-off-by: Yu-Chun Lin <eleanor15x@gmail.com>
 Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
 ---
- drivers/mtd/ssfdc.c | 17 ++---------------
- 1 file changed, 2 insertions(+), 15 deletions(-)
+ drivers/fsi/fsi-master-i2cr.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/mtd/ssfdc.c b/drivers/mtd/ssfdc.c
-index 46c01fa2ec46..e7f9e73da644 100644
---- a/drivers/mtd/ssfdc.c
-+++ b/drivers/mtd/ssfdc.c
-@@ -7,6 +7,7 @@
-  * Based on NTFL and MTDBLOCK_RO drivers
-  */
+diff --git a/drivers/fsi/fsi-master-i2cr.c b/drivers/fsi/fsi-master-i2cr.c
+index 40f1f4d231e5..8212b99ab2f9 100644
+--- a/drivers/fsi/fsi-master-i2cr.c
++++ b/drivers/fsi/fsi-master-i2cr.c
+@@ -1,6 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0
+ /* Copyright (C) IBM Corporation 2023 */
  
 +#include <linux/bitops.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/init.h>
-@@ -178,20 +179,6 @@ static int read_raw_oob(struct mtd_info *mtd, loff_t offs, uint8_t *buf)
- 	return 0;
+ #include <linux/device.h>
+ #include <linux/fsi.h>
+ #include <linux/i2c.h>
+@@ -38,14 +39,7 @@ static const u8 i2cr_cfam[] = {
+ 
+ static bool i2cr_check_parity32(u32 v, bool parity)
+ {
+-	u32 i;
+-
+-	for (i = 0; i < 32; ++i) {
+-		if (v & (1u << i))
+-			parity = !parity;
+-	}
+-
+-	return parity;
++	return parity ^ parity32(v);
  }
  
--/* Parity calculator on a word of n bit size */
--static int get_parity(int number, int size)
--{
-- 	int k;
--	int parity;
--
--	parity = 1;
--	for (k = 0; k < size; k++) {
--		parity += (number >> k);
--		parity &= 1;
--	}
--	return parity;
--}
--
- /* Read and validate the logical block address field stored in the OOB */
- static int get_logical_address(uint8_t *oob_buf)
- {
-@@ -215,7 +202,7 @@ static int get_logical_address(uint8_t *oob_buf)
- 			block_address &= 0x7FF;
- 			block_address >>= 1;
- 
--			if (get_parity(block_address, 10) != parity) {
-+			if (parity32(block_address & 0x3ff) == parity) {
- 				pr_debug("SSFDC_RO: logical address field%d"
- 					"parity error(0x%04X)\n", j+1,
- 					block_address);
+ static bool i2cr_check_parity64(u64 v)
 -- 
 2.34.1
 
