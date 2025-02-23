@@ -1,62 +1,62 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0D39152E02
-	for <brcm80211@lists.linux.dev>; Sun, 23 Feb 2025 16:44:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70C50139D0A
+	for <brcm80211@lists.linux.dev>; Sun, 23 Feb 2025 16:44:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740329073; cv=none; b=K/sez1s78HQ72++g0Mc5CpV5ry097QhQiUzdBQ8EbkrWAQzTWWBcUgTkajP7zYfc9RsWmURuckbwzMXldNXcGiPbvgRSJRx0FL7juuDGYl3GHs9SkiSyP288/jzidj7Qa2F5bejQ0V/BK4MBFlUOfX5q5SwyjLE9C0dCETS2EmQ=
+	t=1740329083; cv=none; b=LMzdff1QPk0TyfwKaTXo1b5wdIXvhlB8lL+sS8p51ozJWwzqdjYAVrB1Q4YDdXGg2fCCMq1qRhfUBvvB3akN/JwZvdu6BLipJBRAK3aAKvgCO/2zolbYgS8U0RfpMVOag7gHKPqjTAsb5gDjv6YdiaxYWCRSFUPzDq4eEKr+Urg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740329073; c=relaxed/simple;
-	bh=1i40o1s3Vqdk2RW0JIo3piubrRjz0Cy5aa5u5siB9VI=;
+	s=arc-20240116; t=1740329083; c=relaxed/simple;
+	bh=WDPrYaKj7s26kse115+qww0IFHKFhkIMhznNoEr7JrI=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=dkYtLeQFPDppvDtWI+YL3eQl0EM9nVbjll91kFCR420UyXJ0nYep0jvKpgVCrver4l8oG97wlX+wBLOITu+DJ02TamoG6FFmXiAMseFG0b7Mfuc7XuwZhlZ2Ew5FyY16IffldNwjN6riEn5rs+ALoebkulW2MP2Wusr0dksxJCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B9WL75Mc; arc=none smtp.client-ip=209.85.214.175
+	 MIME-Version; b=sH68+igD1+43EbmOW+GL+FfWsjF5jU7a/zqRtm416Q3uHd2NLfdCcUEu8WjZ5ahIgtx9cQ4VHUUI7Y+eEwzLOdhRRAMX2V0N/RgDfDQZY022dPDJQ6j0cDQ7DkJ0LPPIx5SzydW35JPtRqPLs/YWXSiNnS1pkkn+Qi+qgis/b78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cuuYKaDH; arc=none smtp.client-ip=209.85.214.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B9WL75Mc"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-220c4159f87so49596155ad.0
-        for <brcm80211@lists.linux.dev>; Sun, 23 Feb 2025 08:44:31 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cuuYKaDH"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-21c2f1b610dso104724265ad.0
+        for <brcm80211@lists.linux.dev>; Sun, 23 Feb 2025 08:44:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740329071; x=1740933871; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1740329082; x=1740933882; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=U4Bkihj4DGACHQctYAnhtp6nEz1RGAPDBfirVsTzUzk=;
-        b=B9WL75McAE10HIyP4xhdLEOdXeixkk5Qw7/OACQ1cIWSQfu0vg4FCabj+3fz6ucdCM
-         FKKVrz4cuvjzFqsAg7xZJ2EHPZNkPoXpmuqyXmX3+haGcUvvqyqfb5ouymqRq987Sdus
-         7hhmfJhLgnRrcYvKkpUIfct/o/qi7ZYY2fLorouebO1QQ9uNw2Qzml+H0xQt4BH+0CzP
-         0JLo7Sgaiux12Bf9BG47+RPrgY8JR49yBRlSsxewj3H8OCe/JOXrgX7Q8GP0NIS06mfy
-         4x0yktX3iXRuq6UMV+K9Kkp3SomOXj89REA9nf1sz+zDzUDYKdX9lSfKVBk1MozU0tED
-         ClZQ==
+        bh=OqxvpgZHoGiLr6YH8sD6RZa4e3r1mx+K51Pz7JFmQwA=;
+        b=cuuYKaDHCGIRY/rNdNwrAuzA4cekKtUj3EwOmEEZTTGHbSJIdjKR+ZyOSb4+kOWZ5x
+         +vjbmY9YYeg2oYnc1PZXEMj7+TzjFFxy/LjK2vH3IezPgFwM7YYm286QX84nNrrXKACM
+         g1YlF/5QwfFl+IXb+6zSuc2LXxc35dWYWnN7Hw8PGpAQuG3qpc532+chG8bJdg9X0f6q
+         gHQdtUvgY5KtNmPgPwESXb1nnrbA4Sb/yHDEGKr5v9//QVDE7M033IjNV7Ks79bmqw9r
+         cUVwROLTag+QNOBPDORzhoTmRndG+g2oyAh0+CAoPAO8+tMp3Hdgm/i/7m/0ldfTBsKJ
+         +WgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740329071; x=1740933871;
+        d=1e100.net; s=20230601; t=1740329082; x=1740933882;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=U4Bkihj4DGACHQctYAnhtp6nEz1RGAPDBfirVsTzUzk=;
-        b=HCn93y8dd1u5k5MYNfOzvL5Qz2vA35l/EzrHIsf9UdeJmEQUYLAHfm9Bf3YiED84jq
-         MYEipAV8Shl5izkbDYU8jSFQUM9RnraXy3QZZ7v7x6hCEo0GeToNp1E3au5nojR985Bl
-         vb3Nbz4g/C6ZkK4paYc5XjB3JJf6F3Gv1D8UhR1z9FM6Cv6kEI4hBY4Wdg0xWo5LQanh
-         YIYMZJdgAcOQkp9X178bYKQOwgOWwNMz1AGzQosE9l0J+mTPFwhow1y7TTQsO56lL01H
-         gOYsDBnqfzHLO+yqzjyFsV0SWbwKMjt4LVgrgVQNirYNdn/wS6OETMaq+orDb/XZvFpP
-         NfYA==
-X-Forwarded-Encrypted: i=1; AJvYcCXtOER93/T1nNoTPUateBuwi3j7yt6MTw0lN1UU4TE7xx7yxceXVRu3GajOypwJB0E1rcKAN5UcUdU=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzYxV/1CYb91qK12MQkZLXvGN0/MDFMj5ZS4dfsi8WV5iETTe2/
-	nwvaQMe3TtgpE/8NFDxrLXmVpdI75dhWKSmNd0ot3W/uvwptXl1Z
-X-Gm-Gg: ASbGnct6g7GWL6QLtWHbL2HA6mxmm6FcwmMx05YE4gNgW2Qm/oJUPasf7aL+RoFlybC
-	2ZNmPmxTqv76KT+G6FvpAl0MVH6/FDHI5plgEVgm6TTviD0i7zQE+YFtbdeXFnECM4YnI6tWtX5
-	Fbe0iWOXHKpoHg8MonQOYEh/50hRbrZrH1KgyIa5prDiO1/ybUbyRwADgRnhi1qbJQRgW9AVhHd
-	jDzp7yt5sJC1FiudQF+fX/CHCnf1G8asVoCIZY/jfriaQKRdueRtDfiEhqPdbS1KOeNHS4FHidI
-	H8uXmjqA8J/09GvvcyTUvvQHmdf7Sxj0Xc+JnZja476WcOJjlRGy2mEJ
-X-Google-Smtp-Source: AGHT+IFqMPtN+gPmr77Z5+UXqcepcxQO5H8AaDoUEcywHGCumZ53dM6PMFmuD7xMrlzO6YmaaybKmg==
-X-Received: by 2002:a17:903:2286:b0:220:cd9f:a186 with SMTP id d9443c01a7336-2219fdc2dfcmr186405365ad.0.1740329071014;
-        Sun, 23 Feb 2025 08:44:31 -0800 (PST)
+        bh=OqxvpgZHoGiLr6YH8sD6RZa4e3r1mx+K51Pz7JFmQwA=;
+        b=hjCcPsjWmxnXKRDcUJyy0JVNOwaD0SLOF5VybGPRf74U1lqO8Umx7xzWSoyD2tTFGV
+         5bPWTiyH6t38gZcU+zKdnwbjry236Nl7dIgsZ+8qm8B2n0rkSXrN4njRhcI0yy/Nhsvz
+         Nny2c85zBg4gEoKi9yGypewj/uac3K7n300aAE+C1QVcihF4hlvqL7RuEyljXBVYA/Vb
+         T5NhSpGER8hwYP9PeZ+b65vnRf8BaVYRHvDj1vLfgInAoKLueG9pyTEM6x+Hh1QXO3Qx
+         5ZHvPYWB17eH9Wru8Al/LQMwRvTCF8IDApR7gh5Tinorm7JuXgEKE9rZBpmx5qrD/MnC
+         NwQQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXs34zRhldSQeSkAjNrnii/i3FvA5xeuu/lQGbVCIeZDy5tSa6yMhEYQTTH3Gv/0rB6QQU4yPqWzl4=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyZunAqmM4dwN9Ua0Rt8oUgO2OPA5aS4lvlF0Y/3hA8ObJQTSkd
+	8CSssFladrH97ymNNBRWifK1iB0gtX0DQlLSgU7n6tu7s21Fe2dU
+X-Gm-Gg: ASbGncuc0IuMhkauZozLqmd2asUO8pbX6QQdVevkZ6T5vEvQo/wR/mUiyzixv8GKdG/
+	52uL0ZWFlSwzLMJfd3YHJj3fad4uABz9dXGDjCdo8QaU97+2c9TkTicwmhozc/cXY8uY+oiJUIL
+	kmGooYEbTOvPjknpdZwPZM7t1hCh416yYepgArWLECyXYaGl1+xaLlppHtuxSSwZURnqdvzs021
+	XXIpj8PbutWnIkk+RkubZttznNLGnyqgM3SMm8ZRBgKadwgBxu0aNy1abgPUZBLyAoLPFBn0dmH
+	AnOnmZ2cFXhagwFAiqnRmE7P5it89TEhQUE6drvJ6aJo5qlvC9S3xBbG
+X-Google-Smtp-Source: AGHT+IGsE1LtqpOiLzBH/xsJP0qffWffejZOaFdgJ8XT2KOaHV87U7eq24SL1hIn8uNFPIxHHHWZ4w==
+X-Received: by 2002:a17:902:d54c:b0:220:e023:8fa6 with SMTP id d9443c01a7336-2219ffd8556mr169735225ad.50.1740329081702;
+        Sun, 23 Feb 2025 08:44:41 -0800 (PST)
 Received: from visitorckw-System-Product-Name.. ([140.113.216.168])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2fceb09f6e0sm4935080a91.44.2025.02.23.08.44.22
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2fceb09f6e0sm4935080a91.44.2025.02.23.08.44.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 23 Feb 2025 08:44:30 -0800 (PST)
+        Sun, 23 Feb 2025 08:44:41 -0800 (PST)
 From: Kuan-Wei Chiu <visitorckw@gmail.com>
 To: tglx@linutronix.de,
 	mingo@redhat.com,
@@ -116,9 +116,9 @@ Cc: hpa@zytor.com,
 	jserv@ccns.ncku.edu.tw,
 	Kuan-Wei Chiu <visitorckw@gmail.com>,
 	Yu-Chun Lin <eleanor15x@gmail.com>
-Subject: [PATCH 09/17] Input: joystick - Replace open-coded parity calculation with parity32()
-Date: Mon, 24 Feb 2025 00:42:09 +0800
-Message-Id: <20250223164217.2139331-10-visitorckw@gmail.com>
+Subject: [PATCH 10/17] net: ethernet: oa_tc6: Replace open-coded parity calculation with parity32()
+Date: Mon, 24 Feb 2025 00:42:10 +0800
+Message-Id: <20250223164217.2139331-11-visitorckw@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250223164217.2139331-1-visitorckw@gmail.com>
 References: <20250223164217.2139331-1-visitorckw@gmail.com>
@@ -138,51 +138,60 @@ Co-developed-by: Yu-Chun Lin <eleanor15x@gmail.com>
 Signed-off-by: Yu-Chun Lin <eleanor15x@gmail.com>
 Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
 ---
- drivers/input/joystick/grip_mp.c | 17 ++---------------
- 1 file changed, 2 insertions(+), 15 deletions(-)
+ drivers/net/ethernet/oa_tc6.c | 19 +++----------------
+ 1 file changed, 3 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/input/joystick/grip_mp.c b/drivers/input/joystick/grip_mp.c
-index 5eadb5a3ca37..897ce13753dc 100644
---- a/drivers/input/joystick/grip_mp.c
-+++ b/drivers/input/joystick/grip_mp.c
-@@ -18,6 +18,7 @@
- #include <linux/delay.h>
- #include <linux/proc_fs.h>
- #include <linux/jiffies.h>
+diff --git a/drivers/net/ethernet/oa_tc6.c b/drivers/net/ethernet/oa_tc6.c
+index db200e4ec284..f02dba7b89a1 100644
+--- a/drivers/net/ethernet/oa_tc6.c
++++ b/drivers/net/ethernet/oa_tc6.c
+@@ -6,6 +6,7 @@
+  */
+ 
+ #include <linux/bitfield.h>
 +#include <linux/bitops.h>
+ #include <linux/iopoll.h>
+ #include <linux/mdio.h>
+ #include <linux/phy.h>
+@@ -177,19 +178,6 @@ static int oa_tc6_spi_transfer(struct oa_tc6 *tc6,
+ 	return spi_sync(tc6->spi, &msg);
+ }
  
- #define DRIVER_DESC	"Gravis Grip Multiport driver"
- 
-@@ -112,20 +113,6 @@ static const int axis_map[] = { 5, 9, 1, 5, 6, 10, 2, 6, 4, 8, 0, 4, 5, 9, 1, 5
- 
- static int register_slot(int i, struct grip_mp *grip);
- 
--/*
-- * Returns whether an odd or even number of bits are on in pkt.
-- */
--
--static int bit_parity(u32 pkt)
+-static int oa_tc6_get_parity(u32 p)
 -{
--	int x = pkt ^ (pkt >> 16);
--	x ^= x >> 8;
--	x ^= x >> 4;
--	x ^= x >> 2;
--	x ^= x >> 1;
--	return x & 1;
+-	/* Public domain code snippet, lifted from
+-	 * http://www-graphics.stanford.edu/~seander/bithacks.html
+-	 */
+-	p ^= p >> 1;
+-	p ^= p >> 2;
+-	p = (p & 0x11111111U) * 0x11111111U;
+-
+-	/* Odd parity is used here */
+-	return !((p >> 28) & 1);
 -}
 -
- /*
-  * Poll gameport; return true if all bits set in 'onbits' are on and
-  * all bits set in 'offbits' are off.
-@@ -236,7 +223,7 @@ static int mp_io(struct gameport* gameport, int sendflags, int sendcode, u32 *pa
- 		pkt = (pkt >> 2) | 0xf0000000;
- 	}
+ static __be32 oa_tc6_prepare_ctrl_header(u32 addr, u8 length,
+ 					 enum oa_tc6_register_op reg_op)
+ {
+@@ -202,7 +190,7 @@ static __be32 oa_tc6_prepare_ctrl_header(u32 addr, u8 length,
+ 		 FIELD_PREP(OA_TC6_CTRL_HEADER_ADDR, addr) |
+ 		 FIELD_PREP(OA_TC6_CTRL_HEADER_LENGTH, length - 1);
+ 	header |= FIELD_PREP(OA_TC6_CTRL_HEADER_PARITY,
+-			     oa_tc6_get_parity(header));
++			     !parity32(header));
  
--	if (bit_parity(pkt) == 1)
-+	if (parity32(pkt) == 1)
- 		return IO_RESET;
+ 	return cpu_to_be32(header);
+ }
+@@ -940,8 +928,7 @@ static __be32 oa_tc6_prepare_data_header(bool data_valid, bool start_valid,
+ 		     FIELD_PREP(OA_TC6_DATA_HEADER_END_BYTE_OFFSET,
+ 				end_byte_offset);
  
- 	/* Acknowledge packet receipt */
+-	header |= FIELD_PREP(OA_TC6_DATA_HEADER_PARITY,
+-			     oa_tc6_get_parity(header));
++	header |= FIELD_PREP(OA_TC6_DATA_HEADER_PARITY, !parity32(header));
+ 
+ 	return cpu_to_be32(header);
+ }
 -- 
 2.34.1
 
