@@ -1,38 +1,38 @@
 Received: from mail.zytor.com (terminus.zytor.com [198.137.202.136])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF10421ABB0
-	for <brcm80211@lists.linux.dev>; Tue, 25 Feb 2025 15:23:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D523A26B2AD
+	for <brcm80211@lists.linux.dev>; Tue, 25 Feb 2025 15:25:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.136
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740496993; cv=none; b=jjVxid6As24ZkkzV0icI9j2P23In0JLfNVlsXGDt9CV6ioy44kgQuGQgVmtOV7wGY9xgip9UsWYM4i16g1WIXXO0F1lRWvwXQfNicOjRh4HAwtiCmkhY7BBA3b8YceLkJt6u2JDzPt1SedBLPoJ6QLTAt8JLFO5CclbSd6FnL4c=
+	t=1740497110; cv=none; b=fZShnwBBpt060BTrZ17ih9X4diXF5APgDRYUZcPE/gA2s2WeaEXUppbo8x//8QRrqphe3l/LvGwZZ2EnorsNde8hpMddVQ2I+2CtAzaIhkEDKkZQNKqGACGVMVZGSKIs1Ek4XTIcz+L24JuZjSmIjkhPd8LVgw65Cnb3F0iSmp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740496993; c=relaxed/simple;
-	bh=kZ993xbPUrqxt9evRYhTDaW4rgAsxIjUaJ0fumHopmc=;
+	s=arc-20240116; t=1740497110; c=relaxed/simple;
+	bh=A3Y5LEMr0FObgFw5//qt/N703D8BZZFeuCXY982Ay8s=;
 	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=jrsuWCtqg7hC/WKZCpMex5hufjakq6Eu44bcCr0rUgmax/tcECRwPRptrXdR6eB1c99+jqVEz9UAaQinwxefSpjwauqFewOlfhITcyU5rer8IRcM/PMw+x9PhsErJTCm2xXDuxrDViFdx/GPg9bRtk3h3uUhxhpE9UETCNctvnE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zytor.com; spf=pass smtp.mailfrom=zytor.com; dkim=pass (2048-bit key) header.d=zytor.com header.i=@zytor.com header.b=BUMWjRPI; arc=none smtp.client-ip=198.137.202.136
+	 MIME-Version:Content-Type; b=EDSts+OkfR5j8Vcmiwl6QSk32JSHiCj9cTR0jAZxmf8ZZltt0ZON60HscavGY08QbBR4yUZSQH0wPyXS+PXMtuvExFueXeNxEKCimoK6vl+4TurT4JEWZf5gd3rOl0KHlhsJ3Uy/k15gXXFzu2TRuRYoihrhw1pEoSBv8+tIhPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zytor.com; spf=pass smtp.mailfrom=zytor.com; dkim=pass (2048-bit key) header.d=zytor.com header.i=@zytor.com header.b=gFS3Qbg9; arc=none smtp.client-ip=198.137.202.136
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zytor.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zytor.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zytor.com header.i=@zytor.com header.b="BUMWjRPI"
+	dkim=pass (2048-bit key) header.d=zytor.com header.i=@zytor.com header.b="gFS3Qbg9"
 Received: from [127.0.0.1] ([76.133.66.138])
 	(authenticated bits=0)
-	by mail.zytor.com (8.18.1/8.17.1) with ESMTPSA id 51PFLeJx1321966
+	by mail.zytor.com (8.18.1/8.17.1) with ESMTPSA id 51PFOHRf1324298
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NO);
-	Tue, 25 Feb 2025 07:21:41 -0800
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.zytor.com 51PFLeJx1321966
+	Tue, 25 Feb 2025 07:24:17 -0800
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.zytor.com 51PFOHRf1324298
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zytor.com;
-	s=2025021701; t=1740496908;
-	bh=IFxVykDS0g8xLLyPz9dDn1sgxptbnK+YyCXg+3CY3aM=;
+	s=2025021701; t=1740497060;
+	bh=WwBGNG5GOM5EDBRYNhpg1dowM06WZaFYwprnE0ohGQo=;
 	h=Date:From:To:CC:Subject:In-Reply-To:References:From;
-	b=BUMWjRPIFaLk9eEljQvZOhLwrBHl5WiOz4myJbzxM1DiE4BYZIZywLpG+8lH6L2Ld
-	 bFtraaKU3/cK4+FeRWQF5FbFz83DA8Z/AQnawksvD4yyCe21dX2Z0rgdJKhBBHLj1z
-	 s4I9gcurp+Edn27zjQimLT1osW8ygdQmmUepB5mDrHI/BX4Xi6bUBzkmawhEaTO/H0
-	 x2/DVO+Y+FeNzDFJllD1SIrMR4JwTWu/5UrL2K1pJJDRRfeaeW4lVKsfyboLsLCJ0g
-	 GbLOzT769Ufnz8kospEBAiCZ1QDPJbYxD0w9NG/sbS9pBQyDxcESpuh28quuCen1V2
-	 4+wvwE+cqOncg==
-Date: Tue, 25 Feb 2025 07:21:38 -0800
+	b=gFS3Qbg9090zqrxMgWpV3QU2nlXkwzE0x821QukbyGIMgBkSQpuzxodk+NhODEkKN
+	 5h6k3fzgqnVQszi++Fm0zAWkcXoyd9Xkym/XQkMSrQQkzB32FJgavtpnoFmVqMt5+b
+	 Ut+jJOF2NsSesEP0cpHx79zg+1Hhp0iTas+P77VsgeosF4jA4YmppCVoZ6lUr/TsQ7
+	 y4TM2oB0LvUl/CGxwpwp0kGuvR8IUIGcaH+wHv+nRaIl2wg+GbRlNP1tQskp4yCPjq
+	 ++07dWpeKgWMhBWMggv61l0UzN3t+dVy4CTbKFqF+E15aNijxWhLEtzbDpNrb3YhKe
+	 U8ZjPhiVMLIiw==
+Date: Tue, 25 Feb 2025 07:24:16 -0800
 From: "H. Peter Anvin" <hpa@zytor.com>
 To: David Laight <david.laight.linux@gmail.com>,
         Jiri Slaby <jirislaby@kernel.org>
@@ -63,7 +63,7 @@ Subject: Re: [PATCH 02/17] bitops: Add generic parity calculation for u64
 User-Agent: K-9 Mail for Android
 In-Reply-To: <20250224133431.2c38213f@pumpkin>
 References: <20250223164217.2139331-1-visitorckw@gmail.com> <20250223164217.2139331-3-visitorckw@gmail.com> <bde62fee-4617-4db7-b92c-59fb958c4ca6@kernel.org> <20250224133431.2c38213f@pumpkin>
-Message-ID: <949B0809-3BB9-4E18-8FA1-A12BD47F2843@zytor.com>
+Message-ID: <3BC57C78-1DFF-4B83-85AA-A908DBF2B958@zytor.com>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -151,5 +151,4 @@ ag=2E
 >>=20
 >
 
-Sure you can; you do need an 8- and a 16-bit arch implementation though (t=
-he 16 bit one being xor %rh,%rl)
+Incidentally, in all of this, didn't anyone notice __builtin_parity()?
