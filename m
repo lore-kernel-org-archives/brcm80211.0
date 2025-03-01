@@ -1,63 +1,63 @@
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC4471E0DF5
-	for <brcm80211@lists.linux.dev>; Sat,  1 Mar 2025 14:25:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69DBA1ADFFE
+	for <brcm80211@lists.linux.dev>; Sat,  1 Mar 2025 14:25:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740839128; cv=none; b=EvpVw9yfqNiJ4bIS+4/Cw7+SfPnnDRAN/yb/y8dsxDfI6XL4CsewJheOasfq+tI61VzveJzXkLGTxFX39P03FwvERxjrXzazs3AEcb5fN3zYGdSWi0JW5BXAEyRKdL+EUAtRg87qJCS3dEfyrhQzGo7whKqYx66rig/r87vIJ6k=
+	t=1740839138; cv=none; b=i0PCy2rNgyP4P2tUwQYU1aQJzGR4RGSvznZNBuDVKVqknuHHTyUskYmTEBn/n5tVzP1dcfLAO/uJy3Oxq3hyfnboA4DPvprlQKV97f/6M8/aQldByFbbWLcia/sTljfv7TmpzLQgg6etg/taWzQboEHtBpD8+nlyOBzjjF0UtXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740839128; c=relaxed/simple;
-	bh=ba2kUP6U2nQhwPc/YT5wm25vzRDR53W9pxGrlJ+24E4=;
+	s=arc-20240116; t=1740839138; c=relaxed/simple;
+	bh=Hp0hGvKZ6hZDXmPlOHysECp6knm016n56jHAcRs/TUw=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=hwPQu8U12uYNRyu9E20Ax1nYFnRRmO0Y/7/C03KXd71K5slr3OVjtsqzYnXbuHww2TNVrqk1GbvKyHcdnASvzEwZuzHOtaHJfvMGgym5KDj/SAy+Ao6bKPthTv/Q4CsVCjFT6fhoggzwMIgXn3cMkuo/pbhMLBj+Fwwy8Y00JdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TicSlOxT; arc=none smtp.client-ip=209.85.214.172
+	 MIME-Version; b=OFgU2Ght9hCN8eB5JULOStFjNJUpZc1OtACZnQdmXWulX+8+8K8ohiBJe1d4EhwWi0PllXrsxelREJyH/4boSreKCprOu/Lsu5S8XYOn8QvQsvKbUgyqRFI0zkgPSG4M7jTttL643E4kuTefxSAqi3fXp1etcLUMw83WE/6b5S8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BcctvJtQ; arc=none smtp.client-ip=209.85.214.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TicSlOxT"
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-22374f56453so33955985ad.0
-        for <brcm80211@lists.linux.dev>; Sat, 01 Mar 2025 06:25:26 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BcctvJtQ"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2235c5818a3so14252485ad.1
+        for <brcm80211@lists.linux.dev>; Sat, 01 Mar 2025 06:25:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740839126; x=1741443926; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1740839136; x=1741443936; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=JXn6GKhF5PCrQUxpPI6cKx6cLS6wqLkAI6AcaLhK77k=;
-        b=TicSlOxTG+XbPJviwJ98ChwsMDmPokbQCeE3fBWOLgY5d7iCksXPqIp+nefVDvZ709
-         H6mkl59ylO4Dwq1WvpNEn3vIgwHMEYxhKNr1TfFiF/w9h5rJ9c2ZyuC+OQfUdMLU7Urk
-         bo3sbCxFIbCU8FuSy4xF+n/s9gLYLqvhGcPk1RuTu1noVIOgmdzXj7XxGxi0skp1fnB2
-         FrS9RwQp/n/+eXud4YmeG+dl9gUq9EZoE7c9r+pNCSTO4jgW71XdjtZO1YMbf1zoJ8Zh
-         QlLqT6xh/xAoZkmnJ/g5mfOS72v5c0sJ8z/Vz5aQc+x1ndtA6h3ogknrk5fQL2SKyqDp
-         +aRg==
+        bh=0DnAEglK79Mk3omljF0fSTgcHsRTccmWpKjUoP5FAFM=;
+        b=BcctvJtQXMqLwrxIC8sF2yApEfGP7qRekXMs5LNQ7nozJvYuVcYdV5qlsRMxk8fA5K
+         rJnQ+Ggva8GP8Yjj3foph3VZQyBANPEy8nu9j6wtKkVZQ6UeeL4VzWlP86srAwIKc2TV
+         wDwab2IbV1q+pxPWNee59LMnnJsYVfWvXQyQS1/rIlawnaXjaBy60cDPIjERx7cj18H+
+         2wLNWV3+I1u2dJTFNjyDyhCXCodXdPRtW3ougSU+NguCveoEVgrosdvhpIyERN3fYeVz
+         FfknvCb9f6AJE3YM2sJOXdZ0UzabMcHNVu5xi+YpDdqj3Kyl7BqLWTqsYTLz9vl0woom
+         gMxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740839126; x=1741443926;
+        d=1e100.net; s=20230601; t=1740839136; x=1741443936;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=JXn6GKhF5PCrQUxpPI6cKx6cLS6wqLkAI6AcaLhK77k=;
-        b=JFRoRYGuRIjy3npqTdakZRhGB4JijygjBI5Za+KbSpB65Ob21PbnZ44AMbVuI6zFdk
-         SqCIR51jfyyaRDg0N+ISEuCCvurqrJbDpsPD3qMtSspQmMeTufNQhUGODxOYOYKizTfK
-         hy26iQxcTWgptOunLmXgsWdxuBrh+9Ok0Oxs+ag4fBC4kai1Xi6pAEfwggk6i3GNCziy
-         cIecmxoHwrsxFygDhzUhVgZVTJgwYoTnunXWBqS/YdNwgIMl8lX1QUK2Bvk0z80OK8sj
-         a3E3YvhMVjmdrBSYx/t0sfjsu/2/EyG+hIAtVVRUC0Psp+GL7cwq7juZ3YgXlczbFd0E
-         7NbA==
-X-Forwarded-Encrypted: i=1; AJvYcCXscH3QmSKmurIK15b5+4SKYUtmQnXuJm3OmVfoFOjj7PsuIVplaJfUFakcZFWKnOvqOxwmVDoMPHA=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzFucY2wg6CTEm6Obt0qoISZKqYBkfsYCKe/qWqfyzeVtOx08+V
-	dkN3Hshxc2OAw8WSuTOVELZmNA8IP5RjqLfzB2CrRxP5OiBG+RCZ
-X-Gm-Gg: ASbGncuEBGiiXfUc3+rxNSMRauzTof3MmxNaCtXPlDpS3Ll041u48WCM7TjtrCg3nFY
-	+Y95TD6TnQ6gUArl9rAqvIF65SOc8sEWUhKV/JfnsmTFqrc6IAG1W+9Wnjn2ARhmpcihwHY/mht
-	zJl2d+nkY1PDT61G90UDvFX7fJSojPYsSgCT4iao75/FvCvUtL1TJUWgwUrLV/y9ldJti4g6xHk
-	6m0XzZV/j8UKI7mjF0Tl5+DVLmGiA+Xy4D3YvDUWHQAJyGrLZjO1Tm7MSGztLb2EDDs+VH1WWUs
-	ns8x/pvzmn6EUzyk+2lg2eU0CncQb2UzIVR2+8UI3EH8MZKYpH2I1eYk7VF1kmiHu0Qs3GlX79g
+        bh=0DnAEglK79Mk3omljF0fSTgcHsRTccmWpKjUoP5FAFM=;
+        b=qBNm2U6tO9datEUFEEPlLl1JJB6NQTF2Fr/t6IsxzdrSWpkMQI5PrMG+SEuTMQQp0x
+         XWWaUsGw+Wqf99/Rl0SjqUd+iLT/hVb9D4Gx68cvafRg5pjKL7D5Qd8WN7SOb06wQ5E4
+         b0lPJS9ltoYwsBIkqGA8diaxFvt/qe8wQAhzOkb/B6lxIx8tXCIRjjk4eRZnYN9kSS0K
+         EmJkVIHIWQXdejyMhtr++MdKIW8MID71py+crl7z79H76kMHxvBw9PJ8EDOgv6OeSptW
+         DikvYourMYpZA/GaFs8cAK2b5o0YZkZ1RfSy33xAci9wcmaMhLl5Bvd6SBx13DrQVN4Z
+         TzuQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVoJmJzYZuxgmRXBOHydZAYkf5XGXyAvfi3zMDfPCnbuaf0nL7BTIV++kEbJGyBvpCs8esddFfJAQs=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yy166BJjeAaTywa8RF70Hmz1erqBqetLXln8j+HBpc4W43qwo7I
+	wTrhNlMjzZp64Oqkh3tcP49ikNQpTs9mxuRWxjE9u19G0mQPP1DL
+X-Gm-Gg: ASbGncuWH5HmEa5qmcQ92K5w7Ntjx7tX97pCtecbDnZyBweqRgGVDRYlIvQUNwW7d+B
+	jalgc1e+KMWFnrvP2UIYgzdPVCNTvoQL8DqeXbFSaCh6mssxnNe8L3sdRg3/Y4sKCkzqlFBhPHD
+	+9/nLLGtXuaBzoBa+tFywhIxlTYE73rVUyraAwYcJAI6qYWVZljaxTkNygH0JJ6nv5sHuJgtVkS
+	NtfyRRf4ii1s5y4C97b+G16zSVE5xFDB8xbKW1io03FI5IgEI6627Qb22yBcwdLJVScOMawjt5I
+	Qe2UrdQThKoZvqUZfp5cu9il5Wesfcx8+ByUF3J+6ajVUp6DK6v6rQYaq2IjKw55LVXLrx3BNWQ
 	=
-X-Google-Smtp-Source: AGHT+IF5pURPLoHQQUwY6iobOMXaj/n4QtZUV4ZbycQ+e8lZRNMONMXX28RkgoVRrFQeanZPW34ebQ==
-X-Received: by 2002:a17:903:2346:b0:223:635d:3e38 with SMTP id d9443c01a7336-22368fa24bemr111392555ad.15.1740839125810;
-        Sat, 01 Mar 2025 06:25:25 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFRKRz4BN5AxlaA28KHfZNYjOTMLj0QAU9lL8VlPLbOS4h8EVG2ykvV/etQT7fBRPoRmphS1A==
+X-Received: by 2002:a17:902:d4c9:b0:223:5240:f831 with SMTP id d9443c01a7336-223690dff12mr91198085ad.25.1740839136548;
+        Sat, 01 Mar 2025 06:25:36 -0800 (PST)
 Received: from visitorckw-System-Product-Name.. ([140.113.216.168])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-223501fa8f1sm49231965ad.90.2025.03.01.06.25.17
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-223501fa8f1sm49231965ad.90.2025.03.01.06.25.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Mar 2025 06:25:25 -0800 (PST)
+        Sat, 01 Mar 2025 06:25:35 -0800 (PST)
 From: Kuan-Wei Chiu <visitorckw@gmail.com>
 To: tglx@linutronix.de,
 	mingo@redhat.com,
@@ -119,9 +119,9 @@ Cc: hpa@zytor.com,
 	andrew.cooper3@citrix.com,
 	Kuan-Wei Chiu <visitorckw@gmail.com>,
 	Yu-Chun Lin <eleanor15x@gmail.com>
-Subject: [PATCH v2 01/18] lib/parity: Add __builtin_parity() fallback implementations
-Date: Sat,  1 Mar 2025 22:23:52 +0800
-Message-Id: <20250301142409.2513835-2-visitorckw@gmail.com>
+Subject: [PATCH v2 02/18] bitops: Optimize parity8() using __builtin_parity()
+Date: Sat,  1 Mar 2025 22:23:53 +0800
+Message-Id: <20250301142409.2513835-3-visitorckw@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250301142409.2513835-1-visitorckw@gmail.com>
 References: <20250301142409.2513835-1-visitorckw@gmail.com>
@@ -133,92 +133,75 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add generic C implementations of __paritysi2(), __paritydi2(), and
-__parityti2() as fallback functions in lib/parity.c. These functions
-compute the parity of a given integer using a bitwise approach and are
-marked with __weak, allowing architecture-specific implementations to
-override them.
+Refactor parity8() to use __builtin_parity() when no
+architecture-specific implementation is available. If the input is a
+compile-time constant, expand it using the _parity_const() macro to
+enable constant folding, allowing the compiler to optimize it at
+compile time.
 
-This patch serves as preparation for using __builtin_parity() by
-ensuring a fallback mechanism is available when the compiler does not
-inline the __builtin_parity().
+Additionally, mark parity8() with __attribute_const__ to indicate its
+pure nature, ensuring better optimization opportunities.
+
+This change improves efficiency by leveraging compiler intrinsics while
+maintaining a fallback mechanism for architectures without specific
+implementations.
 
 Co-developed-by: Yu-Chun Lin <eleanor15x@gmail.com>
 Signed-off-by: Yu-Chun Lin <eleanor15x@gmail.com>
 Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
 ---
- lib/Makefile |  2 +-
- lib/parity.c | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 49 insertions(+), 1 deletion(-)
- create mode 100644 lib/parity.c
+ include/linux/bitops.h | 30 +++++++++++++++++++++++-------
+ 1 file changed, 23 insertions(+), 7 deletions(-)
 
-diff --git a/lib/Makefile b/lib/Makefile
-index 7bab71e59019..45affad85ee4 100644
---- a/lib/Makefile
-+++ b/lib/Makefile
-@@ -51,7 +51,7 @@ obj-y += bcd.o sort.o parser.o debug_locks.o random32.o \
- 	 bsearch.o find_bit.o llist.o lwq.o memweight.o kfifo.o \
- 	 percpu-refcount.o rhashtable.o base64.o \
- 	 once.o refcount.o rcuref.o usercopy.o errseq.o bucket_locks.o \
--	 generic-radix-tree.o bitmap-str.o
-+	 generic-radix-tree.o bitmap-str.o parity.o
- obj-y += string_helpers.o
- obj-y += hexdump.o
- obj-$(CONFIG_TEST_HEXDUMP) += test_hexdump.o
-diff --git a/lib/parity.c b/lib/parity.c
-new file mode 100644
-index 000000000000..a83ff8d96778
---- /dev/null
-+++ b/lib/parity.c
-@@ -0,0 +1,48 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * lib/parity.c
-+ *
-+ * Copyright (C) 2025 Kuan-Wei Chiu <visitorckw@gmail.com>
-+ * Copyright (C) 2025 Yu-Chun Lin <eleanor15x@gmail.com>
-+ *
-+ * __parity[sdt]i2 can be overridden by linking arch-specific versions.
-+ */
+diff --git a/include/linux/bitops.h b/include/linux/bitops.h
+index c1cb53cf2f0f..4c307d9c1545 100644
+--- a/include/linux/bitops.h
++++ b/include/linux/bitops.h
+@@ -229,6 +229,27 @@ static inline int get_count_order_long(unsigned long l)
+ 	return (int)fls_long(--l);
+ }
+ 
++#define _parity_const(val)	\
++({				\
++	u64 __v = (val);	\
++	int __ret;		\
++	__v ^= __v >> 32;	\
++	__v ^= __v >> 16;	\
++	__v ^= __v >> 8;	\
++	__v ^= __v >> 4;	\
++	__v ^= __v >> 2;	\
++	__v ^= __v >> 1;	\
++	__ret = __v & 1;	\
++	__ret;			\
++})
 +
-+#include <linux/export.h>
-+#include <linux/kernel.h>
-+
-+/*
-+ * One explanation of this algorithm:
-+ * https://funloop.org/codex/problem/parity/README.html
-+ */
-+int __weak __paritysi2(u32 val);
-+int __weak __paritysi2(u32 val)
++#ifndef _parity8
++static inline __attribute_const__ int _parity8(u8 val)
 +{
-+	val ^= val >> 16;
-+	val ^= val >> 8;
-+	val ^= val >> 4;
-+	return (0x6996 >> (val & 0xf)) & 1;
++	return __builtin_parity(val);
 +}
-+EXPORT_SYMBOL(__paritysi2);
++#endif
 +
-+int __weak __paritydi2(u64 val);
-+int __weak __paritydi2(u64 val)
-+{
-+	val ^= val >> 32;
-+	val ^= val >> 16;
-+	val ^= val >> 8;
-+	val ^= val >> 4;
-+	return (0x6996 >> (val & 0xf)) & 1;
-+}
-+EXPORT_SYMBOL(__paritydi2);
-+
-+int __weak __parityti2(u64 val);
-+int __weak __parityti2(u64 val)
-+{
-+	val ^= val >> 32;
-+	val ^= val >> 16;
-+	val ^= val >> 8;
-+	val ^= val >> 4;
-+	return (0x6996 >> (val & 0xf)) & 1;
-+}
-+EXPORT_SYMBOL(__parityti2);
+ /**
+  * parity8 - get the parity of an u8 value
+  * @value: the value to be examined
+@@ -250,14 +271,9 @@ static inline int get_count_order_long(unsigned long l)
+  *	if (parity8(val) == 0)
+  *		val ^= BIT(7);
+  */
+-static inline int parity8(u8 val)
++static inline __attribute_const__ int parity8(u8 val)
+ {
+-	/*
+-	 * One explanation of this algorithm:
+-	 * https://funloop.org/codex/problem/parity/README.html
+-	 */
+-	val ^= val >> 4;
+-	return (0x6996 >> (val & 0xf)) & 1;
++	return __builtin_constant_p(val) ? _parity_const(val) : _parity8(val);
+ }
+ 
+ /**
 -- 
 2.34.1
 
