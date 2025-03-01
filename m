@@ -1,63 +1,63 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A953B1DF755
-	for <brcm80211@lists.linux.dev>; Sat,  1 Mar 2025 14:28:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A25A1E25F9
+	for <brcm80211@lists.linux.dev>; Sat,  1 Mar 2025 14:28:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740839294; cv=none; b=ldMxWL4yZn8lRsi130p9un0LUiInR/nmXk3aWdxfF377b09YlcsvETrtmhnON83Ylfn1CNmIweKayL1Nt4PFDAGUhGPSljyHyO72+NJjh9iqklvBmFUgNB//CKJtGceaN7YYpt5o21i/3gnffDpElCogUGbUVA0NKbAccQQ6tZk=
+	t=1740839305; cv=none; b=F9/s2pARu8MBelwvv5UF4yfe6PE5QigRykOW+UVRtUblBEuBvgn780c3+UGhmJRv2htw1pdpaL7GxNWwtcxx5jlD+UOs9qN5/6a7TAuciwXrZvp9Qo1TRfT5uDEnfDkxkMFxkQh8XXoyzaQvwcFpV5TEETRR+I/CRFqQkHs//jc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740839294; c=relaxed/simple;
-	bh=VpxAbF0iBul4Uw/Lq+mofgkf8czO0+orTD3RsRZ9cYQ=;
+	s=arc-20240116; t=1740839305; c=relaxed/simple;
+	bh=wv6ajOFVKcvTUlaSn3pgXaNKGIdVIim/LCFNOWca2tg=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=at8cy7kAGT0WiDUKIATPaYmmOWZWO0c1Uz4KSF18RkaTBiDGCSam/si+lRyzLosYIZC7wZxluUuF9pShTw+j+HXohrdfupG/5AXvdwdvWZ2EGTj0MeukCtcCx4+1kKNnyCCiwa34VBRO+E/F++SsManfdjm3aC6wUAG9tpW4tHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IDJILduF; arc=none smtp.client-ip=209.85.214.178
+	 MIME-Version; b=tlUh9CKR48nrvz3Qmgr36ItRQvNYMj91+57RzX05T0oSsTTeGmup5IY+EldyxGCKxDlkf7UTev5DSMOgZ8jV02UVmfGpBSZqLVZKL6sUewFX5SKpazF8fP1lkeWrowJYeRuj8C1wVHLeiWS5wjgbtpp6QA+1aU06bGKZOHvHbOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BS40G4Dl; arc=none smtp.client-ip=209.85.214.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IDJILduF"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-22356471820so48813205ad.0
-        for <brcm80211@lists.linux.dev>; Sat, 01 Mar 2025 06:28:12 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BS40G4Dl"
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2234bec7192so28701525ad.2
+        for <brcm80211@lists.linux.dev>; Sat, 01 Mar 2025 06:28:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740839292; x=1741444092; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1740839303; x=1741444103; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=nzBrmzWckDIJwY51QBb0mQJ5Dqo6Ldx+jMH0V0Ck8/w=;
-        b=IDJILduFqGgCwbM4Qzf5znAPZhd1W+bBp8KCH0UTYyGAtaHyk7+kBHKvTa//rKAX9m
-         uqARJZtRjqghj2nfFAZsxHKpQOnT1ygTRicW+jOaUL/PF4v8BFF+hhgtIAp7cRnb3Zt0
-         8+4TFlqsqtmdhExfREgTE91vLfNFagqaZVdTwgm0VoPkXlcWNFBSQfa1V1/KqcjV996N
-         IUecV2/8TI2puwxMgKUmMf6oCy51HC4T/B9kao0OpKTHV+w56i6FlYU81rM/m1aQh3u5
-         BR/y1x0DG4AED1iaKewuv0vjuCpexQtAeeXH+78sPd9LEbwnzhhvDbBQAjfXi2ZGW5DO
-         pbww==
+        bh=U+YDx3nsS23nFYRYOsOtDL2pw2M9KWSnqwRamUvuzKU=;
+        b=BS40G4DlYFR6FF6HkhVOdnevCirPNkICvDYbfqRHG/gGbz5rCpGLaQ21S6SBQN04cI
+         QgwSs1qek9iaCTMrrmiM3VEf28ZKSZKw4Me6X2aSTYTgYi4lDD1WilZd3pn9Dy4KhHBh
+         I+FQSDJYSuaXsmelTc/3fPIj9KbY2d8Sjf5mOSstmrX5wpev7219B1mOi2runMDc36Nh
+         aMDuaBjyx97DEJql/xmngyTwMbUclxnWI9DUqBKyYSvIxjv9K2j5lDZNXbuJJxppBI5W
+         SDanpTKqIyXoIT//Z+ZKjwqPXxv3LOU3OAGE/aBCzWXR/VAlAshkLMy6JGJ3Z1NyXcNf
+         Kmpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740839292; x=1741444092;
+        d=1e100.net; s=20230601; t=1740839303; x=1741444103;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=nzBrmzWckDIJwY51QBb0mQJ5Dqo6Ldx+jMH0V0Ck8/w=;
-        b=eQCPaoAWVXmv/6qXytg7vik91vAPAvPFUZm7vyqvoPQGjL0DMNkKGdaxlIKehW78L6
-         4oFhNzgvdp+bsG3wDU/iQmOlrUn8KKwRt4NRPYY+C2MDpm2AJN6InDPnxr5jFQFUNFQl
-         hHDSjUwI8ea1c6Tvu5BbBWeKcMVt8DGKtYzhseGoPv/IJ7OK14d+iSN87txvcXcRF8+v
-         mhk4ega+qeu2wWYOP8kb0xCfLZQxLG5Q9A1TujW24NBVXnOuqa5tsKEg2jjiuIm8AzLm
-         zt8yxbOUjF9GwuoiGpuVCvjdY6Ij+EtM/xd/HM0vqvI91jt6wPKBSWVAMdXN6fNk2pAu
-         VifQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWEfVnScuzmpCd4SCpz1NAhBqGE5a5CuVxbnuG9DBCFRGMlAvNAKdZhtSXoyThbuuFy/UqTPbY4K6U=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yxj8Pjj9qDl7kC9nxxt1XIpSduoev+I6Lq+71jm5QquR7ta5c7P
-	dW4l3pQL6XiniIb4H+h07YTaVP1GicabKZZ3FL1lNY9ubopJ0McP
-X-Gm-Gg: ASbGncs2Y7fP+ZlTrPwLJJxNssIDeO5EKwzWH4o/zVrTWo4VJsO7CpncqHgqm75XHnC
-	TfJf3b3jxoaXMjwMO7SOj+r1FI1We7nSoGy+reruxpNO8eEga6EFtk7qkZLWYojuViZiAeRN8Xf
-	HsmQNE+89GUl9s8n2Dih8WeDFzFq+t0shZvt7b+15dJN9X/I3Jzi+pC3LRRD+vh1YcpvnjceGiP
-	W4vF5RbbVBMcqR9wQEyWXXTB6polHAuK3oXzKGf4fBTb4CR8DWuHRgseovzlPxS4VgXeVBBs02i
-	hHSm4iiOcJEGxXZ2mok4u3YWJGX7NoSItVDk4/9fVYzbRob2nKvDiqoARIRlmCEi22OFanIsr2Q
+        bh=U+YDx3nsS23nFYRYOsOtDL2pw2M9KWSnqwRamUvuzKU=;
+        b=g5ylAFlq1wL8XvLDGjnvv1aq1lQPKs6f+sjT4pVVRcw+2Q1ezxbigRnNQ5+pPWHHsF
+         xz4tcR+KPg72S7sD50xIiPfL50RXjbJ/aVgv97KYBBQvool7xqzaHGpAglbqURnEx2JD
+         v5KZcavAJ5ecy0eHawjO8JGdpYiPOYRUx0OTegaNAlEvTj0Rrkmm821cD4Up6lk91IeH
+         jgB2Nfj5RKgfqp/Z5MfDbmu8yAuuKfFwKAvDvZdSVb9Ljesu+STGJNFI/9xM8fIfsW12
+         OpBneLGKoQXi50NmQnY9k9mUmd+pjHGWwlzeUEjnq+Q60U4ofCWflYkrWBXyoJaHhV69
+         QbUQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW9ELuYiImFkmYIh9Dh22j6tjHTgvhSEb2j/o9RzThPDZcA8Ph+kRvtV5CCHh4SwInpm0xM0gHasjE=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwYGedIILlaJ+JZGsQxJfwI5yViLlx98ouuaaICfUzsyvBvr8wm
+	p7lHXi9VcFAERGdoB6Or+E62Pc7aasXRtwNrt3DaFT+J2wQN44FD
+X-Gm-Gg: ASbGncsfio+pVG1o5Mbsj/pYmXfaQCUH87SdRW67J19bTb7TmgKcgihad/+beVJjGTY
+	YAocD/Lj+H0dOAEQy0Z8m8cDCbBPJY6x3Z7hQAoOBgGZv86avg9ddyFGjSHPAdLr6OcQ7nBk6aV
+	1M0DXt2NqmfH3h1bWNZS0Y6XoYh1TdX2cLjOi0nwY3isYgRyIvk0w4G+/v0H9a+16+3qQJ72bNY
+	u2wjsXfHIMsLr0gZVpjTdM8FT+1bVI0M8r3iSMbyZwcpqb0XqJ1nQfOi7kPRjWT6AGMXV/2h7ru
+	gz2wozZrU22PjbUV9quLhjnjmihhHhhMGy0qq3qIJNpiuKbg2J3In0D1KoyiOo3WKqzHqhHCwIo
 	=
-X-Google-Smtp-Source: AGHT+IHOy6Wv/sKHhRUGc/3EBAQcCBF/SI4YUeW7LDGDR7+GStKywND2M264p9e2dxtzneP/WiNrxQ==
-X-Received: by 2002:a17:903:fa5:b0:220:f40c:71e9 with SMTP id d9443c01a7336-22368f71f0dmr96371785ad.9.1740839291945;
-        Sat, 01 Mar 2025 06:28:11 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGhHD61bMoj/kNCGfxuoRIMfZUbm2G8Vzi7r2Cl3xtga31v9ygF/WbFM3AD1XuJUCHC8w75/Q==
+X-Received: by 2002:a17:903:41cf:b0:21f:164d:93fe with SMTP id d9443c01a7336-2236922174bmr117354565ad.53.1740839303516;
+        Sat, 01 Mar 2025 06:28:23 -0800 (PST)
 Received: from visitorckw-System-Product-Name.. ([140.113.216.168])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-223501fa8f1sm49231965ad.90.2025.03.01.06.28.03
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-223501fa8f1sm49231965ad.90.2025.03.01.06.28.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Mar 2025 06:28:11 -0800 (PST)
+        Sat, 01 Mar 2025 06:28:22 -0800 (PST)
 From: Kuan-Wei Chiu <visitorckw@gmail.com>
 To: tglx@linutronix.de,
 	mingo@redhat.com,
@@ -119,9 +119,9 @@ Cc: hpa@zytor.com,
 	andrew.cooper3@citrix.com,
 	Kuan-Wei Chiu <visitorckw@gmail.com>,
 	Yu-Chun Lin <eleanor15x@gmail.com>
-Subject: [PATCH v2 17/18] nfp: bpf: Replace open-coded parity calculation with parity64()
-Date: Sat,  1 Mar 2025 22:24:08 +0800
-Message-Id: <20250301142409.2513835-18-visitorckw@gmail.com>
+Subject: [PATCH v2 18/18] bitops: Add parity() macro for automatic type-based selection
+Date: Sat,  1 Mar 2025 22:24:09 +0800
+Message-Id: <20250301142409.2513835-19-visitorckw@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250301142409.2513835-1-visitorckw@gmail.com>
 References: <20250301142409.2513835-1-visitorckw@gmail.com>
@@ -133,42 +133,57 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Refactor parity calculations to use the standard parity64() helper.
-This change eliminates redundant implementations and improves code
-efficiency.
+Introduce the parity() macro, which selects the appropriate parity
+function (parity8(), parity16(), parity32(), or parity64()) based on
+the size of the input type. This improves usability by allowing a
+generic parity calculation without requiring explicit function
+selection.
+
+If the input type does not match the supported sizes, BUILD_BUG() is
+triggered to catch invalid usage at compile time.
 
 Co-developed-by: Yu-Chun Lin <eleanor15x@gmail.com>
 Signed-off-by: Yu-Chun Lin <eleanor15x@gmail.com>
 Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
 ---
- drivers/net/ethernet/netronome/nfp/nfp_asm.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+Place this patch last in the series to avoid compilation errors.
 
-diff --git a/drivers/net/ethernet/netronome/nfp/nfp_asm.c b/drivers/net/ethernet/netronome/nfp/nfp_asm.c
-index 154399c5453f..3646f84a6e8c 100644
---- a/drivers/net/ethernet/netronome/nfp/nfp_asm.c
-+++ b/drivers/net/ethernet/netronome/nfp/nfp_asm.c
-@@ -295,11 +295,6 @@ static const u64 nfp_ustore_ecc_polynomials[NFP_USTORE_ECC_POLY_WORDS] = {
- 	0x0daf69a46910ULL,
- };
- 
--static bool parity(u64 value)
--{
--	return hweight64(value) & 1;
--}
--
- int nfp_ustore_check_valid_no_ecc(u64 insn)
- {
- 	if (insn & ~GENMASK_ULL(NFP_USTORE_OP_BITS, 0))
-@@ -314,7 +309,7 @@ u64 nfp_ustore_calc_ecc_insn(u64 insn)
- 	int i;
- 
- 	for (i = 0; i < NFP_USTORE_ECC_POLY_WORDS; i++)
--		ecc |= parity(nfp_ustore_ecc_polynomials[i] & insn) << i;
-+		ecc |= parity64(nfp_ustore_ecc_polynomials[i] & insn) << i;
- 
- 	return insn | (u64)ecc << NFP_USTORE_OP_BITS;
+ include/linux/bitops.h | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
+
+diff --git a/include/linux/bitops.h b/include/linux/bitops.h
+index 41e9e7fb894b..fa4e45741dff 100644
+--- a/include/linux/bitops.h
++++ b/include/linux/bitops.h
+@@ -339,6 +339,28 @@ static inline __attribute_const__ int parity64(u64 val)
+ 	return __builtin_constant_p(val) ? _parity_const(val) : _parity64(val);
  }
+ 
++#define parity(val)			\
++({					\
++	int __ret;			\
++	switch (BITS_PER_TYPE(val)) {	\
++	case 64:			\
++		__ret = parity64(val);	\
++		break;			\
++	case 32:			\
++		__ret = parity32(val);	\
++		break;			\
++	case 16:			\
++		__ret = parity16(val);	\
++		break;			\
++	case 8:				\
++		__ret = parity8(val);	\
++		break;			\
++	default:			\
++		BUILD_BUG();		\
++	}				\
++	__ret;				\
++})
++
+ /**
+  * __ffs64 - find first set bit in a 64 bit word
+  * @word: The 64 bit word
 -- 
 2.34.1
 
