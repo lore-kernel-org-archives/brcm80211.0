@@ -1,63 +1,63 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBCF71E261F
-	for <brcm80211@lists.linux.dev>; Sat,  1 Mar 2025 14:26:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7F921ADFFE
+	for <brcm80211@lists.linux.dev>; Sat,  1 Mar 2025 14:26:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740839179; cv=none; b=NMs8SZO8wvOH92yRvDbYnpq+8FO66Fp73dc9935F/mJCINl5vBmibFRRbjg58Ro/jF0hpOkIQvYKr7hobONj7vKUrSm5msfNZGW4dRHsYc0LMk5ivddWe/b0uWGAxPlsJ7Kb78hXJvTfeXk/O5ah0P4IA4KFvz3CWlXGmx8Msyg=
+	t=1740839189; cv=none; b=Pf0SuRFeuR9rDTrhsIDUeYsIbLTVm5WS4X76CSdFpZHJUNbrWL9S8VHJXJfTpEPGYNt/TUuk9H8l5rt/SYhuAiiP5rnEu5Tot6jKBybm7+7zWKvY+3YrtSPPSjUsaqBe3mWEfOqCQCyjEX4WunQD7ssJaIWW7WPsM7BK9TZ+XqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740839179; c=relaxed/simple;
-	bh=j2/wDG0L2QiKPBmNCWrxOGnHtFWO5kAL6+5E33WSh7Q=;
+	s=arc-20240116; t=1740839189; c=relaxed/simple;
+	bh=fpYEQHVmom7fh6D/Q1MDqtnrl6Xu5v8oqKaAQat+kYI=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=kiP0vD2szERpusFgDsl9wuW0gIN6zVX/08RP2zW/pTPWuNX84lsne6kMYUno0BhiCZmQKEZdgiGMX082HH1qzjHfXb/pCaPpAHWKgBNF+wmBvTPf1vaT5LeJ4g3Yvd/JWy91B1e1zYPDtLZyy07kkRrdp777mxLd3Mz/1FcYRrM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J5ZLBg2O; arc=none smtp.client-ip=209.85.214.174
+	 MIME-Version; b=nGZDiBHcor02l3yiXYy2zCRF6WXhLFvZoat/ELshWUCNsNcDG21p0DpjlpxVaRqQEKhTCMq8Ot+MvJQBDoa/tHyh/W9Ehlzm2Rhy+kD1+V7XW5xgAgm3A/2fXv/vvQhDId9eTdh0E4DKCfJx8p0GdeZ629Iuk5HbzLtX2Q6ROGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NB2aGfaG; arc=none smtp.client-ip=209.85.214.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J5ZLBg2O"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-22385253e2bso13322545ad.1
-        for <brcm80211@lists.linux.dev>; Sat, 01 Mar 2025 06:26:17 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NB2aGfaG"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-223378e2b0dso44910225ad.0
+        for <brcm80211@lists.linux.dev>; Sat, 01 Mar 2025 06:26:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740839177; x=1741443977; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1740839187; x=1741443987; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=TZw0QJRtM6IhR4KZmh2KNqroHre3ebnX5GDU+1y6qXk=;
-        b=J5ZLBg2OAyqC9ZSE4iuaKO61LVKYHqB/StIBpN56Jv479MxHLlKm+qH//wERMQkev6
-         FlAqBckpIK75B2T2QoMkfHUVAwYZ11AKtY9Wd4pDNMm7g53nBtB4eVd9//JgtKjYCfNx
-         FHug5b2hSwYYYziZkZJIskbmmLWkGTEuBv1/a/xckXhVcn8D64IXCQWijau7JVm21yeh
-         77dDRZSrUciGNZmHTYMerf4mwqninXG/x+fnPlFMJQUiIucECuz8Ashq4FYHFyvxr5gv
-         JlgUtuNinr/dYByjg4fltNP14NL/AUqNskKRhJjHkLkds9VYAPRWxgcBNI7SQzxz3IL1
-         1Raw==
+        bh=hp3kGqc16FF01of4e/8WmkeqsdCblTk7qrBu9qHKlh8=;
+        b=NB2aGfaG7/b7wn8mt9oEerMoeT27MYL6ymPmdGLbpW31cHtY8OhALSyKmHM9IL8iRb
+         ipdWG6pTrp8rnqCC+bOo4WmeYTIePXEaEVzewcxtwGLuBj9JLbk2Z+iv2KAci/26KTuP
+         /UhQ9nHQS9LV3hK/b2GduiS+BqCX0XYnpecDoo0EFWSZ6ECpR9cpXPgSv2A+n/sQGqS3
+         x3xys3DHpFNA+AG+z+PquPacsVml0cHkeWMNsQpWyeB0qYL7KpFb5LxDRhNoMErcLp/m
+         RxEh9ySt/w4E8lBTDgZC+StpXzzojb10OzLGIigfA6VWJsCGnNxW2TofK59wqij4+LgL
+         rB5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740839177; x=1741443977;
+        d=1e100.net; s=20230601; t=1740839187; x=1741443987;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=TZw0QJRtM6IhR4KZmh2KNqroHre3ebnX5GDU+1y6qXk=;
-        b=Y8Zz5azvgyaHwalkTPcGI7P9jnRESaJe8s02LzK/zlJ8E0xow+Krj0aej29KDZ0PJu
-         1lmsk+c7jyc37B4I+7zejhPiob3rlHad6wXiIEh1fvpv+7G8lB4E9B0JjKDG7LxsMmo4
-         aYvqDuSxyvj8JfYJRursNmH+0JeeOQRCoxu1ekQi6DHyb+K4l7+7TDYV1BW7hd9xvjI4
-         ZuOB6SeNynhDhwg1XgYko+02L4GApfMM20y9W6JvIeC4vFs1LcyLI2P4x46m+jPyZnWT
-         +TBylyHGhPfUSbEvofGAArfnOCBaB1Njxl+mVYe1R2pBJeZ6sW/6Mir+8J1NW+5bRH/S
-         kRfA==
-X-Forwarded-Encrypted: i=1; AJvYcCVyRkz0SWYnrZzfudNher5/T9D/i1KpWD0ndNsID5CyyWMMUVjS3DJwbXAfmCHnEAs8gqX83ZOJw8U=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyqJNO7FqC4O6cBTgToMJ41jOM6fW2vMZbq1bASkR1b+Jk406+N
-	MtWuuXV8txiEIJNivLwguvgRAwJ1GiOyT50iudB6cpi0G8YDHttf
-X-Gm-Gg: ASbGncsgkCbUZdnO1vMQWp17J2mGgT2PN+inZBK3U0pHcVmqZuAUrHjYsl7C1R26jhS
-	3kr8EOuyuk+LlGz2UGPDmYdzqxG+gp6yQDU2MJltbSjyhho/l2/paOkXuxiEUP0j8SR3Wj4wz+J
-	OGR/Pdx62DZ8RXjnAlO5KelPjvvrlVbTq8cUxFoB0SKXf8meu4Lm7ThRwXsX4enjxA5v+eLp/UM
-	qjT8d/Pg7Ku5LtGL6klOlbPvSM2wXap7oTLACMs3M1g40LNXpd7CIYX8oMiAfr05k0tC9Wjpafh
-	U1jdMYF3ypVGkABtsLX1hXogQZGymDkK97VHhzWD8y1Gys17Z71SK5znWE41OO21y+YsAbnbMw8
+        bh=hp3kGqc16FF01of4e/8WmkeqsdCblTk7qrBu9qHKlh8=;
+        b=UaKQkH8qRQm8cEBaFCUJD+unvbaMrmtpqJTrSlZxDXMgfvt6uPYoEEB9zHvWH8wC7q
+         P6467GHxs8PDRsxLAd+MmJJctxARgXul5CLp19sFdB3lBmNbKWDG5GvuvE0CNizrUP5u
+         au6WPdpBWvTR/l8mAqDAHo7o5+ItrL5dIiYZ7vgu4WnhDbrfuDOMF6kx6nVKYSpKJGlX
+         iOcslj1V33PgPacFlzaPgCmmjDg/g1j1X5ZK8qVFzv4pdl5EsQ13rTwLX0m3lUirn9ed
+         H4PFi0sYg3Kcr51MSDXx3SuRlJsnxcUW0iPpopv/kZ8geq4+qqKCbk4VZFl5TWMUTYiN
+         6gzw==
+X-Forwarded-Encrypted: i=1; AJvYcCVm9DWTwm0kMpRLvdx3UHfogiatMGApFGvXztStbiUpho5jNOTtgQxSFJI27G/mJTiPPPTCMs/G3DQ=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw+lmmLzWtrUQz3Co4JkiLCR0D6dGobZEOUiAugDBQMm6Y13NQH
+	l+Ww+S4tFGEYeNrQweFMbgTxAs7HPz/5IRtoTrykR/hZ2in+vMoq
+X-Gm-Gg: ASbGnctJEVbe7066hxPVyuo9iFJLZXnBPbJ555vNqOS6tEF+iYzLcVuIqM0cKncOTzW
+	nXs0hlMP8SsbB7IIoakNdrgWKFBVYqXkm4F51Dz9O3N6O3XOxZucSpjlIlTNjgE18WnZVBCBod2
+	7Hjt3HCF04dd0siod9UKY//pT8ZfFyySfHUCDOlYQ/us9M4opLJCPu+MVmOabP6bPiKF0PsWfWF
+	l6PJRFv4SnsVZ4EgzzZ+kzBL7lL4P5KEJwG4x3DhvvUQRz/ZNz3LBY8TuR3EM0dFg97Pan98NQC
+	78CWxKWKZJajNk9RyVZxbf0lTowaDsiUxM1SGkfN844V/ZQeL1hA/twIdqoygYZJqGue5pJEyFM
 	=
-X-Google-Smtp-Source: AGHT+IHr7/bNocCASgkhvMFxO0zdSkmZKMBxSgSw4TIYugdqe+gxkfqzHvRXHP0fkW72YV0RkO2YNg==
-X-Received: by 2002:a17:903:2ca:b0:223:4b88:780f with SMTP id d9443c01a7336-22368f7558dmr109533355ad.17.1740839177198;
-        Sat, 01 Mar 2025 06:26:17 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGHEYprq9u4C7FchZ9I6Y/Ibnse4qNPj1GVk/AdnINX25zgN7NgXyYUydYVyaa9stUlYFgdnA==
+X-Received: by 2002:a17:903:198c:b0:220:e1e6:4457 with SMTP id d9443c01a7336-22368fc987fmr121177295ad.26.1740839187181;
+        Sat, 01 Mar 2025 06:26:27 -0800 (PST)
 Received: from visitorckw-System-Product-Name.. ([140.113.216.168])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-223501fa8f1sm49231965ad.90.2025.03.01.06.26.08
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-223501fa8f1sm49231965ad.90.2025.03.01.06.26.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Mar 2025 06:26:16 -0800 (PST)
+        Sat, 01 Mar 2025 06:26:26 -0800 (PST)
 From: Kuan-Wei Chiu <visitorckw@gmail.com>
 To: tglx@linutronix.de,
 	mingo@redhat.com,
@@ -119,9 +119,9 @@ Cc: hpa@zytor.com,
 	andrew.cooper3@citrix.com,
 	Kuan-Wei Chiu <visitorckw@gmail.com>,
 	Yu-Chun Lin <eleanor15x@gmail.com>
-Subject: [PATCH v2 06/18] media: saa7115: Replace open-coded parity calculation with parity8()
-Date: Sat,  1 Mar 2025 22:23:57 +0800
-Message-Id: <20250301142409.2513835-7-visitorckw@gmail.com>
+Subject: [PATCH v2 07/18] serial: max3100: Replace open-coded parity calculation with parity8()
+Date: Sat,  1 Mar 2025 22:23:58 +0800
+Message-Id: <20250301142409.2513835-8-visitorckw@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250301142409.2513835-1-visitorckw@gmail.com>
 References: <20250301142409.2513835-1-visitorckw@gmail.com>
@@ -141,46 +141,30 @@ Co-developed-by: Yu-Chun Lin <eleanor15x@gmail.com>
 Signed-off-by: Yu-Chun Lin <eleanor15x@gmail.com>
 Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
 ---
- drivers/media/i2c/saa7115.c | 12 ++----------
- 1 file changed, 2 insertions(+), 10 deletions(-)
+ drivers/tty/serial/max3100.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/i2c/saa7115.c b/drivers/media/i2c/saa7115.c
-index a1c71187e773..b8b8f206ec3a 100644
---- a/drivers/media/i2c/saa7115.c
-+++ b/drivers/media/i2c/saa7115.c
-@@ -25,6 +25,7 @@
- 
- #include "saa711x_regs.h"
+diff --git a/drivers/tty/serial/max3100.c b/drivers/tty/serial/max3100.c
+index cde5f1c86353..3b05ed113a67 100644
+--- a/drivers/tty/serial/max3100.c
++++ b/drivers/tty/serial/max3100.c
+@@ -16,6 +16,7 @@
+ /* 4 MAX3100s should be enough for everyone */
+ #define MAX_MAX3100 4
  
 +#include <linux/bitops.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/slab.h>
-@@ -664,15 +665,6 @@ static const unsigned char saa7115_init_misc[] = {
- 	0x00, 0x00
- };
+ #include <linux/container_of.h>
+ #include <linux/delay.h>
+ #include <linux/device.h>
+@@ -133,7 +134,7 @@ static int max3100_do_parity(struct max3100_port *s, u16 c)
+ 	else
+ 		c &= 0xff;
  
--static int saa711x_odd_parity(u8 c)
--{
--	c ^= (c >> 4);
--	c ^= (c >> 2);
--	c ^= (c >> 1);
--
--	return c & 1;
--}
--
- static int saa711x_decode_vps(u8 *dst, u8 *p)
- {
- 	static const u8 biphase_tbl[] = {
-@@ -1227,7 +1219,7 @@ static int saa711x_decode_vbi_line(struct v4l2_subdev *sd, struct v4l2_decode_vb
- 		vbi->type = V4L2_SLICED_TELETEXT_B;
- 		break;
- 	case 4:
--		if (!saa711x_odd_parity(p[0]) || !saa711x_odd_parity(p[1]))
-+		if (!parity8(p[0]) || !parity8(p[1]))
- 			return 0;
- 		vbi->type = V4L2_SLICED_CAPTION_525;
- 		break;
+-	parity = parity ^ (hweight8(c) & 1);
++	parity = parity ^ parity8(c);
+ 	return parity;
+ }
+ 
 -- 
 2.34.1
 
