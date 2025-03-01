@@ -1,63 +1,63 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9A391E231F
-	for <brcm80211@lists.linux.dev>; Sat,  1 Mar 2025 14:27:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90C691E5B9C
+	for <brcm80211@lists.linux.dev>; Sat,  1 Mar 2025 14:28:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740839274; cv=none; b=sBMYZxf1pxaf4Dr2NUs0aeaLu9wsx3k44YlMdmBu48ye7S9KX3Q9Y1CyhV55iiun3dAnSNUprCNJPF8lZ77lq++adnlxGMxpQ64PY6YbFAW7XeUxGT5Fq4YQH965BlUDtBw3cMGZiqBWpH2C5wWNOa3JLFrmPYykPMaITy07sec=
+	t=1740839284; cv=none; b=hrbRwrlhxBruytDut8OkQIJUQQ2/5Ztrp4rlZRXpPJB2skUs2Zm088KDvL9gKQaY126cJUZvW7WcY/Mo/60nWHLNW19cCKa9d7/YvgyPwWbp0jCIaWqwtGtk+5XCFt8uJHPq3TmuwEQlV/UjNTXUgWgrcS/egnwg1k3as6HWmBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740839274; c=relaxed/simple;
-	bh=9MLeZfNC/T6rZivDo76ukvYaafOdf3Bq52OJ1FPtYmo=;
+	s=arc-20240116; t=1740839284; c=relaxed/simple;
+	bh=AY7VWX2z+11go+VbveW5z1yOms0/k4EYUoJbq8u7HBw=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=EZwkU5IxOKJvuoIMPXqcSe4u2d75uI3z7P8L3hFYF0F/dm21g4+aTw45rhtR+u053hTPq4eU19QGymq7q75iMZqV5/JzF467uUh9vJFFve0jD8Czi1T4Z6UHeRMHY+wj+LDY7LMRbKDX9a5QWa7pBiOp7aCQxLTLqERLc9q+d3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WyiXRt1W; arc=none smtp.client-ip=209.85.214.174
+	 MIME-Version; b=kmV5xQsF4zZG0fCcEY76Zt/ibVpBfr4hTm0VJXBAWq2gEGzpiGQj2nqEQMT8tlDtImJfJAKDOoJFK1a9hrjPF01il4mGFn8ahBUfGGyjXss6WU1Fv207YP+BlE6I6qCgBmyY4wa2241gSaK3vMApArLHyT9hEymlnymc/N5Tbbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VwlzbiHq; arc=none smtp.client-ip=209.85.214.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WyiXRt1W"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2234bec7192so28695255ad.2
-        for <brcm80211@lists.linux.dev>; Sat, 01 Mar 2025 06:27:52 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VwlzbiHq"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-22385253e2bso13341425ad.1
+        for <brcm80211@lists.linux.dev>; Sat, 01 Mar 2025 06:28:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740839272; x=1741444072; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1740839282; x=1741444082; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=H92cNXD8ivdLBJu7PZvS/WlFHsCPSxa0jaZByFXEmx4=;
-        b=WyiXRt1WCcXgV9E546o1bDQfXrLt4/Wb1Gv9MqzLCO2dNlnD2jOULcUJ0XlV/dvBKw
-         bk53hmGkUrGvnj+wvfrbT+HRDRAEz4D+H764KBLSQzbu7sX/oD3Hold0plcC/rz+DclO
-         GK1oNj0V5ybkWbX5uW+PlWRHHdb1pQ16xBHUGsbPwM/9i2kIzimeYAR1nIJr6O3L+/h+
-         vsUiAxvzuUD7r+JT0eQLqJ3FgiAghA8eqZyV+JNso5KaDHa7SuQ1xcoFRpPmc1Q/nCvS
-         n0/buBmwGuujO6x6wgzSP1NOxz9gqxYQHOJSnWKko9yPx+VoVEaGAxTUaMF6Y1CS3c/C
-         6Eog==
+        bh=rykqQnwPkGRFwR5KILLeuUxXhWjh1d/Lo2VO4W9LQtQ=;
+        b=VwlzbiHqfrTDN+Rsc3Vi/L14WjVclgvvCnXfP1xCbFqtr69mvwPV2EKsKTkNBO8sr6
+         bNNlvYWcxe1QXiijfUOqk9ctSiN24+bwd0YJAt9BVXHB5b2cwjCXZgqlo9v6eEjupyvn
+         eho3Z0upvPxI5Wb2Ws0hL4SlU8YsqN2/f4kbgwzCx2rminnM6qx37e0WCESWHeijRNIv
+         sEl3ur6qAoR7lKNo2DFrMI0pLsf+IJZ5kjzXLHNl9mxNuZP7WM1DkPdRoVLHsJ7JeuPw
+         w+fHhYGfkyeyHhJweE/uhJhO07/hptRJvEeB2w0afX/G9OXRqRwytJhUBqSDO1M+XMpE
+         sGPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740839272; x=1741444072;
+        d=1e100.net; s=20230601; t=1740839282; x=1741444082;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=H92cNXD8ivdLBJu7PZvS/WlFHsCPSxa0jaZByFXEmx4=;
-        b=WaFVBFqFQHOshkRt+wEm27lWXePz9DlcreALCBqyIvMUeeiIk+2Ff5qJL+3X07Z3Go
-         BF2BfxagiCLQoZ38c1udrfGDy+dqmpz1J85cwwIyy/WJimuOYIYuk/hVpbxQACi6qQo0
-         qxxnFOEdzv8nByKZ5eFQSXmbWc6o7KBQ6j7GNwuTPlM6gyjTtPoPE2+nFJIE78zDGVDI
-         5v5LGNlS54Y26cwckqVaxSg8nJfa58SSrPo5oW7pQ7z0Wjh/tY4YupygkLM0IHiMQe63
-         K1x77ac8E2dVxe6niXIe2ArkYA65y+9P2uWxoCzWE0KMb6RbhNYqPlD5jXcnA9horbAK
-         tQhQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWDaARK/4yX5wdDi+MHsj2ClVqlMZKkNFcxd9viz9QZKts8PSYMNO0qK2i6RtuPj+RiQD3oxoalLW4=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxjsPIp1SS+XctJTUn1XxsT4CF4uM0ny8PLOC4xRgCy509AwdQE
-	ox3Jz5CIUhlWKX+dndNPhVagRdaHL3i0OH/M13vcmQTtV90hllem
-X-Gm-Gg: ASbGnctc7MiWk0AOqs3G24lTtCPDRRNDuBADZjbmkjihcBsXC/NxzVy8V+/fGnB8J4g
-	1NXl//qtIebbP3USuu7sk2g6xXpL0WUmAtdawU6I9bLvnfs8oOMg1rnbKbHYsNejfuQkEpxAS7c
-	bCHSBluQqqVVhBqNqYMoASgONBrBxsB5fkU6Mt7HEuBWjGWNHBtCEYY6TR0vGZgj2HiqlJ+Jn0B
-	Za7pvteOQE6bvDXYe+907wWeSZoQCo1e9E0ulaSYGZNR9Uy2mCJSmAyGgNVLbDT7VwO0dCFayTw
-	BcyLiI/X/GR6p5Yp4LdNE/XvQDmVJIHsBlor2xANdRCf8j83dne5lmUD7ae8imr+97EMOQJLOe4
+        bh=rykqQnwPkGRFwR5KILLeuUxXhWjh1d/Lo2VO4W9LQtQ=;
+        b=LDBiXGwkgtcApZEGuX/oIgAoKRCvILwEQX6COVZc75fs1GTLc9xLTK216zJ8MI1ocS
+         zCa5g4E61r+SiJRZsVfEOBCe4QrIGMgl6A5tL4j1m2Lh9ebwlSHJk3x8wnSQm1H/naGs
+         VoNP8jtXIFSeLd9oKxiIV7ReVqTVqjerZsmnJxQCyC+ZKct7t0PueIixTW910kTiwhtX
+         GPmAahzDTcGi8Cic1Ug4S2cH1wG3DQfYv6u6RTqKpx7CdlJ8bzipjrA55QB0F9qqXw4j
+         eW0/hNyHpGpUYIWUEK1/9/jo0TJnwXW2Wptl7ZgmOS1JFv9W2yBhsVRmY9+pQeCPx70H
+         gKRw==
+X-Forwarded-Encrypted: i=1; AJvYcCV7n3T1xJ7HIxmQwr5I7YutXGqLvyyZ1G5OIKu07U3037jhT8ZYA8xwP/WBB6vCMJzwGc0VU4mGB0A=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxCqOHqnW5Fx87MIUhqvVKldAT607DRbsumS7u6j7u7cFI7SPhv
+	IMR8MO2KGfrpuie5QoH6nl4seyBQP7JdMiOrs5BgRhuDdiDYcUQz
+X-Gm-Gg: ASbGncsJCO2tMs9h+1iLCibu0b9HtL+v4GW5GwTz8R/vhKJ5RCl5tPdUUbUlpYsNIVE
+	H7DkcoB613EmU3oLD9ha7N2LhLuqfNUacQg0Wyrg1zOV9Jht8YggJOuVQoo1EEnwnZWyz+mrBUS
+	Tlp9X9QGr4N56vrMoEyWKaBpkOyJZFk4G/HJgxMlzTR3HONAS68h3cWIXkW6Hn5GzBDtNCqPEsu
+	Ihx/xQk2JZGK12pFlXIZSK4IUwk76fulliYbHtsYlR8AnmnKG4kbEc6I/3Ch6EEYKwPBhFRLIdh
+	vQSMmLUPCxl5J7hhC+5PEdA8Bf/or7PPEEdcbcemC0NMzx24s86mYkdxJilhsx2pl9KvSKUEIPU
 	=
-X-Google-Smtp-Source: AGHT+IFJ7v56//ubfe5SZfIgarRaf2kt414B71bZC0lL5Jm/hhEy1S8FPvdkgRl1jpN6UW8NLO4j1Q==
-X-Received: by 2002:a17:902:e5ca:b0:223:894e:4376 with SMTP id d9443c01a7336-223894e454dmr21360135ad.43.1740839272112;
-        Sat, 01 Mar 2025 06:27:52 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE6Wlnx/zKBNSK8vHDH90VpNnFUcC/6AIsKwE//R5+rZAZsk6Mdwf+K5eJJM57bLHOOu0BXag==
+X-Received: by 2002:a17:903:f86:b0:223:536d:f67b with SMTP id d9443c01a7336-2236920780dmr123851985ad.38.1740839281880;
+        Sat, 01 Mar 2025 06:28:01 -0800 (PST)
 Received: from visitorckw-System-Product-Name.. ([140.113.216.168])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-223501fa8f1sm49231965ad.90.2025.03.01.06.27.43
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-223501fa8f1sm49231965ad.90.2025.03.01.06.27.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Mar 2025 06:27:51 -0800 (PST)
+        Sat, 01 Mar 2025 06:28:01 -0800 (PST)
 From: Kuan-Wei Chiu <visitorckw@gmail.com>
 To: tglx@linutronix.de,
 	mingo@redhat.com,
@@ -119,9 +119,9 @@ Cc: hpa@zytor.com,
 	andrew.cooper3@citrix.com,
 	Kuan-Wei Chiu <visitorckw@gmail.com>,
 	Yu-Chun Lin <eleanor15x@gmail.com>
-Subject: [PATCH v2 15/18] fsi: i2cr: Replace open-coded parity calculation with parity64()
-Date: Sat,  1 Mar 2025 22:24:06 +0800
-Message-Id: <20250301142409.2513835-16-visitorckw@gmail.com>
+Subject: [PATCH v2 16/18] Input: joystick - Replace open-coded parity calculation with parity64()
+Date: Sat,  1 Mar 2025 22:24:07 +0800
+Message-Id: <20250301142409.2513835-17-visitorckw@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250301142409.2513835-1-visitorckw@gmail.com>
 References: <20250301142409.2513835-1-visitorckw@gmail.com>
@@ -141,30 +141,79 @@ Co-developed-by: Yu-Chun Lin <eleanor15x@gmail.com>
 Signed-off-by: Yu-Chun Lin <eleanor15x@gmail.com>
 Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
 ---
- drivers/fsi/fsi-master-i2cr.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ drivers/input/joystick/sidewinder.c | 24 +++++-------------------
+ 1 file changed, 5 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/fsi/fsi-master-i2cr.c b/drivers/fsi/fsi-master-i2cr.c
-index 8212b99ab2f9..8f558b7c6dbc 100644
---- a/drivers/fsi/fsi-master-i2cr.c
-+++ b/drivers/fsi/fsi-master-i2cr.c
-@@ -44,15 +44,9 @@ static bool i2cr_check_parity32(u32 v, bool parity)
+diff --git a/drivers/input/joystick/sidewinder.c b/drivers/input/joystick/sidewinder.c
+index 3a5873e5fcb3..9fe980096f70 100644
+--- a/drivers/input/joystick/sidewinder.c
++++ b/drivers/input/joystick/sidewinder.c
+@@ -7,6 +7,7 @@
+  * Microsoft SideWinder joystick family driver for Linux
+  */
  
- static bool i2cr_check_parity64(u64 v)
- {
--	u32 i;
- 	bool parity = I2CR_INITIAL_PARITY;
- 
--	for (i = 0; i < 64; ++i) {
--		if (v & (1llu << i))
--			parity = !parity;
--	}
--
--	return parity;
-+	return parity ^ parity64(v);
++#include <linux/bitops.h>
+ #include <linux/delay.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+@@ -240,21 +241,6 @@ static void sw_init_digital(struct gameport *gameport)
+ 	local_irq_restore(flags);
  }
  
- static u32 i2cr_get_command(u32 address, bool parity)
+-/*
+- * sw_parity() computes parity of __u64
+- */
+-
+-static int sw_parity(__u64 t)
+-{
+-	int x = t ^ (t >> 32);
+-
+-	x ^= x >> 16;
+-	x ^= x >> 8;
+-	x ^= x >> 4;
+-	x ^= x >> 2;
+-	x ^= x >> 1;
+-	return x & 1;
+-}
+ 
+ /*
+  * sw_ccheck() checks synchronization bits and computes checksum of nibbles.
+@@ -316,7 +302,7 @@ static int sw_parse(unsigned char *buf, struct sw *sw)
+ 
+ 			for (i = 0; i < sw->number; i ++) {
+ 
+-				if (sw_parity(GB(i*15,15)))
++				if (parity64(GB(i*15,15)))
+ 					return -1;
+ 
+ 				input_report_abs(sw->dev[i], ABS_X, GB(i*15+3,1) - GB(i*15+2,1));
+@@ -333,7 +319,7 @@ static int sw_parse(unsigned char *buf, struct sw *sw)
+ 		case SW_ID_PP:
+ 		case SW_ID_FFP:
+ 
+-			if (!sw_parity(GB(0,48)) || (hat = GB(42,4)) > 8)
++			if (!parity64(GB(0,48)) || (hat = GB(42,4)) > 8)
+ 				return -1;
+ 
+ 			dev = sw->dev[0];
+@@ -354,7 +340,7 @@ static int sw_parse(unsigned char *buf, struct sw *sw)
+ 
+ 		case SW_ID_FSP:
+ 
+-			if (!sw_parity(GB(0,43)) || (hat = GB(28,4)) > 8)
++			if (!parity64(GB(0,43)) || (hat = GB(28,4)) > 8)
+ 				return -1;
+ 
+ 			dev = sw->dev[0];
+@@ -379,7 +365,7 @@ static int sw_parse(unsigned char *buf, struct sw *sw)
+ 
+ 		case SW_ID_FFW:
+ 
+-			if (!sw_parity(GB(0,33)))
++			if (!parity64(GB(0,33)))
+ 				return -1;
+ 
+ 			dev = sw->dev[0];
 -- 
 2.34.1
 
