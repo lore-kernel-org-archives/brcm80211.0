@@ -1,65 +1,64 @@
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49BD512B93
-	for <brcm80211@lists.linux.dev>; Sun,  2 Mar 2025 03:10:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62A17EEC8
+	for <brcm80211@lists.linux.dev>; Sun,  2 Mar 2025 08:20:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740885027; cv=none; b=t1YwpWjBip4MbwgtdYj4nsTi8C5VU2t3MbWS5WjyiTAJpi3Mh9HX70asnIvpkDsLUunnAdqAjGP8pyACHu0EAQusq/zNUXftrx/LlIMJS5AaZ5Xur17spViLa6HxTNDXFbrFBwbuF8TAZclnaImdn0101INwUZlFx7qq6zVokb4=
+	t=1740903616; cv=none; b=mW/vqkhmK6p8Bt3ZkU4sT2mcsvXI/7V7VjtaafSCKBDX0tjYWHZdetqtW2nfe+do/16E1LgjBsUyC9ZK7jbrH8+wt/UwN6cNsr4ks1oqXgrEEAnCSmGZhD4jOulob00J7cf1+qrRcyPotpLUZsJwcsaVkXAgcK28bMQmLkqIwfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740885027; c=relaxed/simple;
-	bh=GfVA9iYjHO8XmgappW8jDQpwvJ712gVxe73p2a1Wyq0=;
+	s=arc-20240116; t=1740903616; c=relaxed/simple;
+	bh=BBOM7aE6y0/SX7NF6KVM2zPYvp2z+fQvq4fIL3RFlMY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CGU5t3DQ4Z/QWRzLSMty3lUuAw0qVXA2r5SamAz4QoEpIC3SWPJmxo4L8bqQFqn6V5cMDPGTFIAum/1H7PT7RlTfT5qoHK+bP03nSNSSYM9VevrbLhu98wPsgR1bSHmUNDR2p6QEe8EZOF9KEpkJ3i+CMU8QWAXbOp5QyWe5uwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UQ6IOBxa; arc=none smtp.client-ip=209.85.128.175
+	 Content-Type:Content-Disposition:In-Reply-To; b=T3HEcXrfi6Q3hCrNM3AHb7Pp8MPFYjPAU/kRL4N5HQxZITsphKZ8vkhRpnuRIuCW596Cv/KcyhRc+6WtOuag2t8sXhwlprC3PLehP/6pbzXbt/0ZsB6UvSNS5BHeo9MvItaJwBF0VAw+ooeBq0FxFTisSDQZN5YybSJ2VO3v+6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ycboic3l; arc=none smtp.client-ip=209.85.216.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UQ6IOBxa"
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-6fd5a24a8d8so10823697b3.1
-        for <brcm80211@lists.linux.dev>; Sat, 01 Mar 2025 19:10:25 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ycboic3l"
+Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-2feb9076cdcso5220606a91.0
+        for <brcm80211@lists.linux.dev>; Sun, 02 Mar 2025 00:20:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740885024; x=1741489824; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1740903613; x=1741508413; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=4LbN5fYyUHQt3Ti89i5IrvWdlm9UYzm7rEomie5t+cc=;
-        b=UQ6IOBxa1UyHQC9SkN3sYg1pCASenJb7hWR48iUfX+dPkSRXOreSSK3308UqQHKGG6
-         vnc2GB5CzDJyQgL5r6Hu5SsqBNlyfmZx4AAFZGuxqVfynHZKMb+T1MRjKlYLnwC8fHee
-         PmOcr62lsoatavs1cLGeihjgUT7dnnqwS65fC7Vai0zNR8yHsHtaPQZoD8aJ5t+dFPDn
-         z/5OAKPuWfymiTEgTwc83am5tUsSWYt1VMkH6DNxnxOd+H6s3ogBrTQ9Zk3JI9gXbafG
-         Groz/oLaSLXsfWWKr7E9FG0xFYH+hKTg5f4znBsILn+1s34TY2iVW66TIMHE90kGIdw5
-         C6wg==
+        bh=hvRvdsHloY5BTybtl092nj/Kn8Sd866ni5GmAJ3o96M=;
+        b=Ycboic3lmEGf42LX0qmH4ok3+IoCHoe1izQGbRMlTlnBJ3SUNzBs5U24VzsVZueWui
+         GctUWUKBcsVT/1BtMdZIKnzvRcb1CI63Yus+0SPeAIquH9bh2tAN3OUTSnNTkSfr9IJt
+         1YMnZjDo/5eoT6ZuqFykgYb0Re1pW/mDF3OYby2dZRwYi33mM+6ORFMd541AvH5h5muB
+         3eMH6+cIsSYo5JoIH1ZgrWlWnWvbl9zvRIRtWIu4+2wNxO+hf/Jbsr1QTJ/LDke5PBN7
+         1qXH/SXoQ/x/4uWxz7OjFljmAC7XfkPVepa9OxLoVb7XEHw0SXvm2vPol2IPA6c/iegL
+         H4bQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740885024; x=1741489824;
+        d=1e100.net; s=20230601; t=1740903614; x=1741508414;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4LbN5fYyUHQt3Ti89i5IrvWdlm9UYzm7rEomie5t+cc=;
-        b=A0obSOGyO3ud5p+MMx/f3eppj8UIe3VgyTyy5iInvHoWPFZjGvGNg6TmWbjFTdbmzX
-         EOc+6W8wrNPzCSzBwCSmJJupOIRoBbLACsKGIyHPrxZXuoY9an2WRgNCJNbWx4nm26HP
-         aASSs9uYKAmV3S425PgEfzSKGpfoNKQU5XZmHJX8uVtDeKH5snfCxLS7/d+2oD2QhPJx
-         FAxexsyIyU9cChNP9K9C11DH5FhI8kgScVPT1KnUWy2GCO12Ax+jNyF22i6ndV2L/GH1
-         yWeZ3tg7OO0+V4dmnc0WKt7HJdueAS+Jys/DGG0+blFNq3RXYxVGVhzyCLJNoiPW5FCl
-         3GhQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXML2/pj8xzH18e2UjtDclO7PjUlsDW4LJ2h0J+BE/v3amC7X9vHt6i57+oziU0mha1A7ExuF5rC7w=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwZm54X+HJtFbhH0ynI28F31o/7OEsIwbBaXaEQIQo1tnS7xvnM
-	V8X4ZPkZuGBwVYsXTZov5IzOzlS55o8zIr7Jb9yUG5VCDCgr/WSg
-X-Gm-Gg: ASbGncs18qMe5ZLwNwdOpaWEq5uU74kfG2SKO4QazajkrXNLoe22hIRVP46y0CJdiBA
-	egsIofDkaauNd3jWNNlGs6H85tdqxYd8zXYf+Y5sQ4Sb292dlNc1vA4tk43KOH5hDmDHo7tDUGE
-	QjLvH408T4VSqRryinIJ3AC4LQ5WEp0r6DKnxRIWL7YJc1zNb+2pfod252kM21psgsLQkd6gmPu
-	j8T1hbCgWkiTSoIKtqC+CABb8+Xlj1yDimL8n22D1iI/tY3NDtST9uIq6a6LWBKu2lLz/vx6Qep
-	LqDo6kHMb1/tXBTDIezWD9pHOA7hTgRSjV4Bqn2M7ltiulNi6QQ/pGoVVMyMDrDsWXFKnwU15hs
-	xeUFn
-X-Google-Smtp-Source: AGHT+IEy03FjYEvkbsUi6/ttRTlOKe4T1PD9HCNrsgjQ3AH1f8i6gR4SnirQZ7DNyXo/QUPkw2L8/g==
-X-Received: by 2002:a05:690c:4b12:b0:6fb:9450:b0c3 with SMTP id 00721157ae682-6fd4a02b0d8mr124121857b3.19.1740885024067;
-        Sat, 01 Mar 2025 19:10:24 -0800 (PST)
-Received: from localhost (c-73-224-175-84.hsd1.fl.comcast.net. [73.224.175.84])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6fd3cb9dac4sm13986657b3.102.2025.03.01.19.10.21
+        bh=hvRvdsHloY5BTybtl092nj/Kn8Sd866ni5GmAJ3o96M=;
+        b=Vwwbq7oIH3x1GWqJ30dYdcO4BnTAeLXDIDBCEAw+ltWbD2dB8J+wa9AdZggT/21Ccd
+         /7OqYOVhqEopIce+5lCQMqvgS03CIrx4KQNK8ww00CGOn7qHf3AXm6zZ22sbSYYFrDtZ
+         kqFo0mXyqWnkgEAT9r3vQrNSYjB95VceSYw/fIMcMlrllzfGGKptG8/qNN7APCz5vtsn
+         buwdWeBeBSrWyROiQG8/Q369kyTGjlp6OKwCg0RJ5ZFC++IUEy2gGRgAP6kVunQ/GOgl
+         SrFFaZmE9nheiwj3NfGBEB7KqsOWDB7opWvBaRXSi9JTGggBbfdtUTgtQrtxMyT/cDDA
+         V2VA==
+X-Forwarded-Encrypted: i=1; AJvYcCUVUPwio1cHlBW+5VXF6lFK0S7fELwZVKQOabo8R9+iX0fsBRpHh8XETpe3c11NrMjcjVJ85ImqenM=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyjjwkI0IeJRsggTrwYUUq+C063lmQ6hcOkGyL4HYP7Q87008kP
+	QoWFGZqWC6tiiyjZ3ltjyumrYQ7+6BDTWGSzGhD83bXOdM5iubPt
+X-Gm-Gg: ASbGnctRG+42e3fcahjKrOYVK+f2/XCAyACmPG9YwT3SlvqlpZOgL7vZ+rIlnFQ7tce
+	8BT6mgJCIsYCMCPA/DISJTB/BL36qr368KdYDHpAc9lX2yca9OiQIuJ0vznBYyN3RO0TvrBZ+mY
+	kThWlB/ep+RHHOe28UJX47m+cAObpvvLuR8+iumSiHaVkarDrxF26lRYY028WuNlvFat5c/Sod0
+	GOsk8uczb465lWFD3UOWPIVi+s4WQANxt47RRJb7/9zYFvKubj9AxLaWd/8K1dmtYYFr3Notsgm
+	8PmmrSez2Dnq3TL4pA9eISUFC0LV2mBvvmaWKOZJMNAqsejSvC2qWRX3+/VVo4jEwitXn23T
+X-Google-Smtp-Source: AGHT+IEhxHA+kpP3f6IyyP7qeoU3p0FUjq/2+GkVz3d5MRAoSIvjaHiRGY0TomgRz3SF6T/LAIMe2Q==
+X-Received: by 2002:a17:90b:17d2:b0:2ee:aef4:2c5d with SMTP id 98e67ed59e1d1-2febabdede3mr12777219a91.26.1740903613420;
+        Sun, 02 Mar 2025 00:20:13 -0800 (PST)
+Received: from visitorckw-System-Product-Name ([140.113.216.168])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2235052a622sm58034965ad.231.2025.03.02.00.20.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Mar 2025 19:10:22 -0800 (PST)
-Date: Sat, 1 Mar 2025 22:10:20 -0500
-From: Yury Norov <yury.norov@gmail.com>
-To: Kuan-Wei Chiu <visitorckw@gmail.com>
+        Sun, 02 Mar 2025 00:20:12 -0800 (PST)
+Date: Sun, 2 Mar 2025 16:20:02 +0800
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
+To: Yury Norov <yury.norov@gmail.com>
 Cc: tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
 	dave.hansen@linux.intel.com, x86@kernel.org, jk@ozlabs.org,
 	joel@jms.id.au, eajames@linux.ibm.com, andrzej.hajda@intel.com,
@@ -88,9 +87,10 @@ Cc: tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
 	Yu-Chun Lin <eleanor15x@gmail.com>
 Subject: Re: [PATCH v2 01/18] lib/parity: Add __builtin_parity() fallback
  implementations
-Message-ID: <Z8PMHLYHOkCZJpOh@thinkpad>
+Message-ID: <Z8QUsgpCB0m2qKJR@visitorckw-System-Product-Name>
 References: <20250301142409.2513835-1-visitorckw@gmail.com>
  <20250301142409.2513835-2-visitorckw@gmail.com>
+ <Z8PMHLYHOkCZJpOh@thinkpad>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -99,127 +99,214 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250301142409.2513835-2-visitorckw@gmail.com>
+In-Reply-To: <Z8PMHLYHOkCZJpOh@thinkpad>
 
-On Sat, Mar 01, 2025 at 10:23:52PM +0800, Kuan-Wei Chiu wrote:
-> Add generic C implementations of __paritysi2(), __paritydi2(), and
-> __parityti2() as fallback functions in lib/parity.c. These functions
-> compute the parity of a given integer using a bitwise approach and are
-> marked with __weak, allowing architecture-specific implementations to
-> override them.
+Hi Yury,
+
+On Sat, Mar 01, 2025 at 10:10:20PM -0500, Yury Norov wrote:
+> On Sat, Mar 01, 2025 at 10:23:52PM +0800, Kuan-Wei Chiu wrote:
+> > Add generic C implementations of __paritysi2(), __paritydi2(), and
+> > __parityti2() as fallback functions in lib/parity.c. These functions
+> > compute the parity of a given integer using a bitwise approach and are
+> > marked with __weak, allowing architecture-specific implementations to
+> > override them.
+> > 
+> > This patch serves as preparation for using __builtin_parity() by
+> > ensuring a fallback mechanism is available when the compiler does not
+> > inline the __builtin_parity().
+> > 
+> > Co-developed-by: Yu-Chun Lin <eleanor15x@gmail.com>
+> > Signed-off-by: Yu-Chun Lin <eleanor15x@gmail.com>
+> > Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+> > ---
+> >  lib/Makefile |  2 +-
+> >  lib/parity.c | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
+> >  2 files changed, 49 insertions(+), 1 deletion(-)
+> >  create mode 100644 lib/parity.c
+> > 
+> > diff --git a/lib/Makefile b/lib/Makefile
+> > index 7bab71e59019..45affad85ee4 100644
+> > --- a/lib/Makefile
+> > +++ b/lib/Makefile
+> > @@ -51,7 +51,7 @@ obj-y += bcd.o sort.o parser.o debug_locks.o random32.o \
+> >  	 bsearch.o find_bit.o llist.o lwq.o memweight.o kfifo.o \
+> >  	 percpu-refcount.o rhashtable.o base64.o \
+> >  	 once.o refcount.o rcuref.o usercopy.o errseq.o bucket_locks.o \
+> > -	 generic-radix-tree.o bitmap-str.o
+> > +	 generic-radix-tree.o bitmap-str.o parity.o
+> >  obj-y += string_helpers.o
+> >  obj-y += hexdump.o
+> >  obj-$(CONFIG_TEST_HEXDUMP) += test_hexdump.o
+> > diff --git a/lib/parity.c b/lib/parity.c
+> > new file mode 100644
+> > index 000000000000..a83ff8d96778
+> > --- /dev/null
+> > +++ b/lib/parity.c
+> > @@ -0,0 +1,48 @@
+> > +// SPDX-License-Identifier: GPL-2.0-only
+> > +/*
+> > + * lib/parity.c
+> > + *
+> > + * Copyright (C) 2025 Kuan-Wei Chiu <visitorckw@gmail.com>
+> > + * Copyright (C) 2025 Yu-Chun Lin <eleanor15x@gmail.com>
+> > + *
+> > + * __parity[sdt]i2 can be overridden by linking arch-specific versions.
+> > + */
+> > +
+> > +#include <linux/export.h>
+> > +#include <linux/kernel.h>
+> > +
+> > +/*
+> > + * One explanation of this algorithm:
+> > + * https://funloop.org/codex/problem/parity/README.html
 > 
-> This patch serves as preparation for using __builtin_parity() by
-> ensuring a fallback mechanism is available when the compiler does not
-> inline the __builtin_parity().
+> I already asked you not to spread this link. Is there any reason to
+> ignore it?
 > 
-> Co-developed-by: Yu-Chun Lin <eleanor15x@gmail.com>
-> Signed-off-by: Yu-Chun Lin <eleanor15x@gmail.com>
-> Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-> ---
->  lib/Makefile |  2 +-
->  lib/parity.c | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 49 insertions(+), 1 deletion(-)
->  create mode 100644 lib/parity.c
+In v2, this algorithm was removed from bitops.h, so I moved the link
+here instead. I'm sorry if it seemed like I ignored your comment.
+
+> > + */
+> > +int __weak __paritysi2(u32 val);
+> > +int __weak __paritysi2(u32 val)
+> > +{
+> > +	val ^= val >> 16;
+> > +	val ^= val >> 8;
+> > +	val ^= val >> 4;
+> > +	return (0x6996 >> (val & 0xf)) & 1;
+> > +}
+> > +EXPORT_SYMBOL(__paritysi2);
+> > +
+> > +int __weak __paritydi2(u64 val);
+> > +int __weak __paritydi2(u64 val)
+> > +{
+> > +	val ^= val >> 32;
+> > +	val ^= val >> 16;
+> > +	val ^= val >> 8;
+> > +	val ^= val >> 4;
+> > +	return (0x6996 >> (val & 0xf)) & 1;
+> > +}
+> > +EXPORT_SYMBOL(__paritydi2);
+> > +
+> > +int __weak __parityti2(u64 val);
+> > +int __weak __parityti2(u64 val)
+> > +{
+> > +	val ^= val >> 32;
+> > +	val ^= val >> 16;
+> > +	val ^= val >> 8;
+> > +	val ^= val >> 4;
+> > +	return (0x6996 >> (val & 0xf)) & 1;
+> > +}
+> > +EXPORT_SYMBOL(__parityti2);
 > 
-> diff --git a/lib/Makefile b/lib/Makefile
-> index 7bab71e59019..45affad85ee4 100644
-> --- a/lib/Makefile
-> +++ b/lib/Makefile
-> @@ -51,7 +51,7 @@ obj-y += bcd.o sort.o parser.o debug_locks.o random32.o \
->  	 bsearch.o find_bit.o llist.o lwq.o memweight.o kfifo.o \
->  	 percpu-refcount.o rhashtable.o base64.o \
->  	 once.o refcount.o rcuref.o usercopy.o errseq.o bucket_locks.o \
-> -	 generic-radix-tree.o bitmap-str.o
-> +	 generic-radix-tree.o bitmap-str.o parity.o
->  obj-y += string_helpers.o
->  obj-y += hexdump.o
->  obj-$(CONFIG_TEST_HEXDUMP) += test_hexdump.o
-> diff --git a/lib/parity.c b/lib/parity.c
-> new file mode 100644
-> index 000000000000..a83ff8d96778
-> --- /dev/null
-> +++ b/lib/parity.c
-> @@ -0,0 +1,48 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * lib/parity.c
-> + *
-> + * Copyright (C) 2025 Kuan-Wei Chiu <visitorckw@gmail.com>
-> + * Copyright (C) 2025 Yu-Chun Lin <eleanor15x@gmail.com>
-> + *
-> + * __parity[sdt]i2 can be overridden by linking arch-specific versions.
-> + */
-> +
-> +#include <linux/export.h>
-> +#include <linux/kernel.h>
-> +
-> +/*
-> + * One explanation of this algorithm:
-> + * https://funloop.org/codex/problem/parity/README.html
+> OK, it seems I wasn't clear enough on the previous round, so I'll try
+> to be very straightforward now.
+> 
+> To begin with, the difference between __parityti2 and __paritydi2 
+> doesn't exist. I'm seriously. I put them side by side, and there's
+> no difference at all.
+> 
+> Next, this all is clearly an overengineering. You bake all those weak,
+> const and (ironically, missing) high-efficient arch implementations.
+> But you show no evidence that:
+>  - it improves on code generation,
+>  - the drivers care about parity()'s performance, and
+>  - show no perf tests at all.
+> 
+> So you end up with +185/-155 LOCs.
+> 
+> Those +30 lines add no new functionality. You copy-paste the same
+> algorithm again and again in very core kernel files. This is a no-go
+> for a nice consolidation series.
+> 
+> In the previous round reviewers gave you quite a few nice suggestions.
+> H. Peter Anvin suggested to switch the function to return a boolean, I
+> suggested to make it a macro and even sent you a patch, Jiri and David
+> also spent their time trying to help you, and became ignored.
+> 
+> Nevertheless. NAK for the series. Whatever you end up, if it comes to
+> v3, please make it simple, avoid code duplication and run checkpatch.
+> 
+In v1, I used the same approach as parity8() because I couldn't justify
+the performance impact in a specific driver or subsystem. However,
+multiple people commented on using __builtin_parity or an x86 assembly
+implementation. I'm not ignoring their feedback-I want to address these
+comments. Before submitting, I sent an email explaining my current
+approach: using David's suggested method along with __builtin_parity,
+but no one responded. So, I decided to submit v2 for discussion
+instead.
 
-I already asked you not to spread this link. Is there any reason to
-ignore it?
+To avoid mistakes in v3, I want to confirm the following changes before
+sending it:
 
-> + */
-> +int __weak __paritysi2(u32 val);
-> +int __weak __paritysi2(u32 val)
-> +{
-> +	val ^= val >> 16;
-> +	val ^= val >> 8;
-> +	val ^= val >> 4;
-> +	return (0x6996 >> (val & 0xf)) & 1;
-> +}
-> +EXPORT_SYMBOL(__paritysi2);
-> +
-> +int __weak __paritydi2(u64 val);
-> +int __weak __paritydi2(u64 val)
-> +{
-> +	val ^= val >> 32;
-> +	val ^= val >> 16;
-> +	val ^= val >> 8;
-> +	val ^= val >> 4;
-> +	return (0x6996 >> (val & 0xf)) & 1;
-> +}
-> +EXPORT_SYMBOL(__paritydi2);
-> +
-> +int __weak __parityti2(u64 val);
-> +int __weak __parityti2(u64 val)
-> +{
-> +	val ^= val >> 32;
-> +	val ^= val >> 16;
-> +	val ^= val >> 8;
-> +	val ^= val >> 4;
-> +	return (0x6996 >> (val & 0xf)) & 1;
-> +}
-> +EXPORT_SYMBOL(__parityti2);
+(a) Change the return type from int to bool.
+(b) Avoid __builtin_parity and use the same approach as parity8().
+(c) Implement parity16/32/64() as single-line inline functions that
+    call the next smaller variant after xor.
+(d) Add a parity() macro that selects the appropriate parityXX() based
+    on type size.
+(e) Update users to use this parity() macro.
 
-OK, it seems I wasn't clear enough on the previous round, so I'll try
-to be very straightforward now.
+However, (d) may require a patch affecting multiple subsystems at once
+since some places that already include bitops.h have functions named
+parity(), causing conflicts. Unless we decide not to add this macro in
+the end.
 
-To begin with, the difference between __parityti2 and __paritydi2 
-doesn't exist. I'm seriously. I put them side by side, and there's
-no difference at all.
+As for checkpatch.pl warnings, they are mostly pre-existing coding
+style issues in this series. I've kept them as-is, but if preferred,
+I'm fine with fixing them.
 
-Next, this all is clearly an overengineering. You bake all those weak,
-const and (ironically, missing) high-efficient arch implementations.
-But you show no evidence that:
- - it improves on code generation,
- - the drivers care about parity()'s performance, and
- - show no perf tests at all.
+If anything is incorrect or if there are concerns, please let me know.
 
-So you end up with +185/-155 LOCs.
+Regards,
+Kuan-Wei
 
-Those +30 lines add no new functionality. You copy-paste the same
-algorithm again and again in very core kernel files. This is a no-go
-for a nice consolidation series.
+diff --git a/include/linux/bitops.h b/include/linux/bitops.h
+index c1cb53cf2f0f..47b7eca8d3b7 100644
+--- a/include/linux/bitops.h
++++ b/include/linux/bitops.h
+@@ -260,6 +260,43 @@ static inline int parity8(u8 val)
+ 	return (0x6996 >> (val & 0xf)) & 1;
+ }
 
-In the previous round reviewers gave you quite a few nice suggestions.
-H. Peter Anvin suggested to switch the function to return a boolean, I
-suggested to make it a macro and even sent you a patch, Jiri and David
-also spent their time trying to help you, and became ignored.
++static inline bool parity16(u16 val)
++{
++	return parity8(val ^ (val >> 8));
++}
++
++static inline bool parity32(u32 val)
++{
++	return parity16(val ^ (val >> 16));
++}
++
++static inline bool parity64(u64 val)
++{
++	return parity32(val ^ (val >> 32));
++}
++
++#define parity(val)			\
++({					\
++	bool __ret;			\
++	switch (BITS_PER_TYPE(val)) {	\
++	case 64:			\
++		__ret = parity64(val);	\
++		break;			\
++	case 32:			\
++		__ret = parity32(val);	\
++		break;			\
++	case 16:			\
++		__ret = parity16(val);	\
++		break;			\
++	case 8:				\
++		__ret = parity8(val);	\
++		break;			\
++	default:			\
++		BUILD_BUG();		\
++	}				\
++	__ret;				\
++})
++
+ /**
+  * __ffs64 - find first set bit in a 64 bit word
+  * @word: The 64 bit word
 
-Nevertheless. NAK for the series. Whatever you end up, if it comes to
-v3, please make it simple, avoid code duplication and run checkpatch.
-
-Thanks,
-Yury
