@@ -1,61 +1,63 @@
-Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
+Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80260213236
-	for <brcm80211@lists.linux.dev>; Thu,  6 Mar 2025 16:25:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E25E421930B
+	for <brcm80211@lists.linux.dev>; Thu,  6 Mar 2025 16:26:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741278360; cv=none; b=Ip4wrJ3B0WJDu5Sg32RHkU3qyGqKprjDXbq6e19kfA+coMeO//0G1QPXBccnGuGeEIrm/qDMMC5BPX6WkC9Gjf0QZuNFGkjXIVj6S84W/gU3HLMDuD+18fze96OPmcI8RsC7qCjoBZGINW1rarcfPzCbIo9moE1fZzbw7LotpXI=
+	t=1741278369; cv=none; b=cywCijkqNQARZ/lXBaqxE+JIOdcTbzRvZZ/XYqcTQX6Tm20FzRNTEj8DFnXla2nc0F/fMQaiAkBadUVoKh4dDsQdtf9uS5LG05JOJbh/jshDSSktwpmMftCgMgFUp12xOF9o0jCC4L3ViaqmNr4FWJza6XS9w71TabmPNQG1nJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741278360; c=relaxed/simple;
-	bh=X1osDnOd9IPjfmzORkmuJvIJiGkdvCzDfoi5CFuWloE=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=MSB5fqwmhU0aaqB0d/KSbcpKRVUplO0iMpkP8/xFdLla/lCD4HSAbtYbSdmDqWtOXvHIPMYYNiNZfee82wuqEGh1dugUSqKClr78hErWhgC2XVhQ/sjauaGoTSpmoqFZNRvaIkwlSq+9IQgrjcW/2Y5T7WcoyRrAHrUdhDgjV+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iNHk6EHh; arc=none smtp.client-ip=209.85.216.54
+	s=arc-20240116; t=1741278369; c=relaxed/simple;
+	bh=rGHJGCWU1PTrVgW6elmt7hoIQUKwiu2qrB2w4H98De4=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=FOCDTDctynSC3Z9wqQpWltlpfdBBCN9GbiI5nQad36xFk4vjy7VCpCrKuEwsXzbu4T21zVvfR6aKXgBiPzbAEsBTtZVcLXeDDyR/U/nmCfGRfjY3UG8gab6SUrs+ixlXoEM98uj5xjoeCAsPdNnBfSbzrdpfY3NX6B9/TmrcXbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DPmVPK1I; arc=none smtp.client-ip=209.85.216.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iNHk6EHh"
-Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-2ff087762bbso1423205a91.3
-        for <brcm80211@lists.linux.dev>; Thu, 06 Mar 2025 08:25:58 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DPmVPK1I"
+Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-2fea8d8c322so2025754a91.2
+        for <brcm80211@lists.linux.dev>; Thu, 06 Mar 2025 08:26:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741278358; x=1741883158; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=v1Sq6955SeW7fXdSe6bezpmzNTL9tmkfZyPLC9/YdtI=;
-        b=iNHk6EHhX0CYkk2/49VyFmRoXE9Tq5c+jmd8XEjamsdItW/BHk0xEdFfkjzTkwH3DJ
-         lBAdZh03Poc3XJsa5X95UuvvqmMJwQ6LYL6ScMIlBgou48rNz9TWtsxsgi2NF3Pshzi/
-         snRuclmGVP0NHLMeT2PSDBZYCaSfZVFY9THzzX3mZACKDVBcoyh5v/C1CwfnMUK3cIeh
-         B9Z1CF8xsNGC43aFm/lQ/Ocr6to1BrMoWAnFCPqNPQBrb16yr8AWxscTNCQ+yoB5cM8A
-         Hb+Yg6dsaIcQ/sdumnXETnNr0M1KC3xz/uADrtNI0LdVKbajO5L+qx1WshElMSIWjFu/
-         32+Q==
+        d=gmail.com; s=20230601; t=1741278367; x=1741883167; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Bwdp+8POnpYEEnQ2mWPyy8f6+vYv2yxFxSEYWvX3Jsg=;
+        b=DPmVPK1IO1ThAhyZUSipgriMP/r8ueJmoNQiiAiyROCVJjH6mLb/35P3iAt9Y44w+E
+         RDIkcPIcB6OO7LEkOpAIZhPQsYN1xhGRSh1MxHLKZgS8rsAwGxRT+Dhc0JfyIAVhZ4Ly
+         OSKNwDJwf6OwD97sEMgc+/pHQRLUqcWLnEdskWAIMJKzRLBR1TAHs9UK+8jR4gzfxXSZ
+         fVYyTAlaJdM2zK3dGDQswnZpnK+WhVnFTcyUXCIT0I5W9yJzrIZ6unbnHpeyUzKy4nVD
+         BODizUtATM12g5b8f9VN7lnIHyBO7VioviVFO+zT960FgdE7nG9Ij9ZdeoS5l4F/dZfE
+         pcbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741278358; x=1741883158;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=v1Sq6955SeW7fXdSe6bezpmzNTL9tmkfZyPLC9/YdtI=;
-        b=pz/75ytvMdR1ooQA4LgYjCcztEyiyXBJuvIj0OpbLW7rD+aksKwjrceSSvO0CBve2K
-         DyDSqih7Cc4eMhz9gAewnZH/stRAoaq7QDI0IHEg61EmUHQl/zl69vMCp3e8/OLbMhw2
-         imv1cp7QGMKwVkqStvR+6fhOyP2bWtErWM3qvtRM2Dpt7qhmVkSciLctv2fpc1lmXHzV
-         jbUfpjUM9XRNTGcZ5MQPAQDGr1I4jtqmVEiG/4IbGs/0ETJb5b8xVF04ChAHo/dmLwft
-         ts0b0sMLB/rOqvmCGBwIIn111vQ/6ySb9zLKMBEjLKrQVxupkQcWv3Y5CjH154tdkpQU
-         ABHw==
-X-Forwarded-Encrypted: i=1; AJvYcCWmCMId/dTwqcHulX9K945Vq5CvPSqeaMAaLzqFz/wEUDOcheCu/cq34XoVEpnzhUX8K1YDVG/seiE=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw9Tx+WyFV48MHFzxbvPyp8R/eV37pnMhORA4beU23mJGUgTP5i
-	9RV+sJCdGB9TGX+DqBJMjAISO7V43l/5QT8fUrI5WByp5LooSl8x
-X-Gm-Gg: ASbGnct5QoR351uhjdo32ICKcDlAXy3z39RRM/XTKdaGDBk4CHwS37+osJlBOCx5sE4
-	PoQedQ0Es+j5niWd4lcxRTyQagzrux074hqXCYPeTvimtGyJT/LwNna3v4pmzrt7r0jcOUSBhXZ
-	lZmu3t2hTrVQW1T8Rz7jE07ZBexjy/qrYfpoTdKiVU4/BqwReaqJQ/9H/hIchu8X+SQQX4fzlSK
-	fuoWtbNbE1XaKFftaTkzMf+wDF2p/7iXqKlQRErwX5W2Aq4kL60M4BHboinMVcDuafet93YFIOb
-	seXTwxP1RNKxFOC1Oq90F5ALhOoQ0/A/or7AuF+2cfLZ7NMfCQYCDkidFeqClQyFEszpJ1nJUFM
+        d=1e100.net; s=20230601; t=1741278367; x=1741883167;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Bwdp+8POnpYEEnQ2mWPyy8f6+vYv2yxFxSEYWvX3Jsg=;
+        b=v8WjbpvxiWbdEgmY2RCmluN9xol1i6HZ7Q51fsO+V2P+nLLS+3XxrQtkZ2Qp5+Gi5J
+         OS11CAclbcUoPb3JwzrU7GAaCtz3xbj5qIGRlN2Z7oqv0gZEHgp4d7IUmZjYbqZCNqkX
+         LzLwZmwDCyVrX7MM0O9MLCLeb2a5U9pAFMUv/rMJHmn5CcDTMyedaKI81Y+qeeyfX2I7
+         EYQIYUVIFvCmptn50fP/aODqNhqan9O2gIIY4UoNob4ZbKLb5EHjFjB8jGps/TLD8s1d
+         BhPGwIjTLacch+BoAWfxXX+Ss/NgdI6+5dQIWZKOgCwZ8l3htjp4rIwHv6wOH3ZCdVmY
+         akBg==
+X-Forwarded-Encrypted: i=1; AJvYcCVxafxRdZA+4mzgnfmwRU0/XVN7mlru1w+gXkPFB7FLZ7PyaHZUcU53GZXCEMGcWkmG63SKoQHPtUw=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yy+Njb5fQ5ufFBajjAOeQyCQUnxd3SrUGdBNtKzKYWFf8ndB6r4
+	Of4+7G0DX/LqkohTKLkiim+4T6h+19taiJFHo16zmmNiXKgFDF8w
+X-Gm-Gg: ASbGncs2bi1/Xcsep+5Wap21aJkZMJh1AGedw3HAPk9I3iwxEmDbROLHgFc63u87zdq
+	b6ZFpTHbbfi1KUGVvGZ0voKjy+tWl3F8qsHbWZ1Z2K5JiwH6cWVjmMiBgM3tY3dGFcSNMCcDvZK
+	kNtuba13jDwiLirH7ndpvpfFuD4p854A2DJuBRys1mEx44wqMD5nBdPC6azpo7hvBFKGFRdFOc/
+	acxbM7n6S4TYDyz3IL1mAsl1tqCHYKhZbZdL3n/IFmtlwjc0geMFALlcVH3nIorQ9XlaoHedvqb
+	+WAaVwDS/FtXq9BeNRR/TukClAX09uhJNgfo2fgry/wTFYFdz56T6BTaR2WNFT18NWyg6nlX8Js
 	=
-X-Google-Smtp-Source: AGHT+IHx/FA9q9VeYWlT31tM+odxs15FTKCjv2n+9fQOLwshtfFtm1FM7EynPDhqEgIZlabXqJLing==
-X-Received: by 2002:a17:90b:2702:b0:2fe:99cf:f566 with SMTP id 98e67ed59e1d1-2ff49775b54mr11884816a91.13.1741278357585;
-        Thu, 06 Mar 2025 08:25:57 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFHH+1zpB7N9XuTVJAOvoyUY8hkKo2wZOm3e52unMZzsjH5Hx1bGZW2MZ4mGhzudOerhh255w==
+X-Received: by 2002:a17:90b:4b44:b0:2ff:7b28:a51c with SMTP id 98e67ed59e1d1-2ff7b28a652mr259914a91.34.1741278367078;
+        Thu, 06 Mar 2025 08:26:07 -0800 (PST)
 Received: from visitorckw-System-Product-Name.. ([140.113.216.168])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2ff693e75bfsm1464298a91.33.2025.03.06.08.25.49
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2ff693e75bfsm1464298a91.33.2025.03.06.08.25.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Mar 2025 08:25:56 -0800 (PST)
+        Thu, 06 Mar 2025 08:26:06 -0800 (PST)
 From: Kuan-Wei Chiu <visitorckw@gmail.com>
 To: tglx@linutronix.de,
 	mingo@redhat.com,
@@ -115,10 +117,12 @@ Cc: hpa@zytor.com,
 	jserv@ccns.ncku.edu.tw,
 	Kuan-Wei Chiu <visitorckw@gmail.com>,
 	Yu-Chun Lin <eleanor15x@gmail.com>
-Subject: [PATCH v3 00/16] Introduce and use generic parity16/32/64 helper
-Date: Fri,  7 Mar 2025 00:25:25 +0800
-Message-Id: <20250306162541.2633025-1-visitorckw@gmail.com>
+Subject: [PATCH v3 01/16] bitops: Change parity8() return type to bool
+Date: Fri,  7 Mar 2025 00:25:26 +0800
+Message-Id: <20250306162541.2633025-2-visitorckw@gmail.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250306162541.2633025-1-visitorckw@gmail.com>
+References: <20250306162541.2633025-1-visitorckw@gmail.com>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -127,87 +131,54 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Several parts of the kernel contain redundant implementations of parity
-calculations for 16/32/64-bit values. Introduces generic
-parity16/32/64() helpers in bitops.h, providing a standardized
-and optimized implementation. 
-
-Subsequent patches refactor various kernel components to replace
-open-coded parity calculations with the new helpers, reducing code
-duplication and improving maintainability.
+Change return type to bool for better clarity. Update the kernel doc
+comment accordingly, including fixing "@value" to "@val" and adjusting
+examples. Also mark the function with __attribute_const__ to allow
+potential compiler optimizations.
 
 Co-developed-by: Yu-Chun Lin <eleanor15x@gmail.com>
 Signed-off-by: Yu-Chun Lin <eleanor15x@gmail.com>
 Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
 ---
-In v3, I use parityXX() instead of the parity() macro since the
-parity() macro may generate suboptimal code and requires special hacks
-to make GCC happy. If anyone still prefers a single parity() macro,
-please let me know.
+ include/linux/bitops.h | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-Additionally, I changed parityXX() << y users to !!parityXX() << y
-because, unlike C++, C does not guarantee that true casts to int as 1.
-
-Changes in v3:
-- Avoid using __builtin_parity.
-- Change return type to bool.
-- Drop parity() macro.
-- Change parityXX() << y to !!parityXX() << y.
-
-
-Changes in v2:
-- Provide fallback functions for __builtin_parity() when the compiler
-  decides not to inline it
-- Use __builtin_parity() when no architecture-specific implementation
-  is available
-- Optimize for constant folding when val is a compile-time constant
-- Add a generic parity() macro
-- Drop the x86 bootflag conversion patch since it has been merged into
-  the tip tree
-
-v1: https://lore.kernel.org/lkml/20250223164217.2139331-1-visitorckw@gmail.com/
-v2: https://lore.kernel.org/lkml/20250301142409.2513835-1-visitorckw@gmail.com/
-
-Kuan-Wei Chiu (16):
-  bitops: Change parity8() return type to bool
-  bitops: Add parity16(), parity32(), and parity64() helpers
-  media: media/test_drivers: Replace open-coded parity calculation with
-    parity8()
-  media: pci: cx18-av-vbi: Replace open-coded parity calculation with
-    parity8()
-  media: saa7115: Replace open-coded parity calculation with parity8()
-  serial: max3100: Replace open-coded parity calculation with parity8()
-  lib/bch: Replace open-coded parity calculation with parity32()
-  Input: joystick - Replace open-coded parity calculation with
-    parity32()
-  net: ethernet: oa_tc6: Replace open-coded parity calculation with
-    parity32()
-  wifi: brcm80211: Replace open-coded parity calculation with parity32()
-  drm/bridge: dw-hdmi: Replace open-coded parity calculation with
-    parity32()
-  mtd: ssfdc: Replace open-coded parity calculation with parity32()
-  fsi: i2cr: Replace open-coded parity calculation with parity32()
-  fsi: i2cr: Replace open-coded parity calculation with parity64()
-  Input: joystick - Replace open-coded parity calculation with
-    parity64()
-  nfp: bpf: Replace open-coded parity calculation with parity64()
-
- drivers/fsi/fsi-master-i2cr.c                 | 18 ++-----
- .../drm/bridge/synopsys/dw-hdmi-ahb-audio.c   |  8 +--
- drivers/input/joystick/grip_mp.c              | 17 +-----
- drivers/input/joystick/sidewinder.c           | 24 ++-------
- drivers/media/i2c/saa7115.c                   | 12 +----
- drivers/media/pci/cx18/cx18-av-vbi.c          | 12 +----
- .../media/test-drivers/vivid/vivid-vbi-gen.c  |  8 +--
- drivers/mtd/ssfdc.c                           | 20 ++-----
- drivers/net/ethernet/netronome/nfp/nfp_asm.c  |  7 +--
- drivers/net/ethernet/oa_tc6.c                 | 19 ++-----
- .../broadcom/brcm80211/brcmsmac/dma.c         | 16 +-----
- drivers/tty/serial/max3100.c                  |  3 +-
- include/linux/bitops.h                        | 52 +++++++++++++++++--
- lib/bch.c                                     | 14 +----
- 14 files changed, 77 insertions(+), 153 deletions(-)
-
+diff --git a/include/linux/bitops.h b/include/linux/bitops.h
+index c1cb53cf2f0f..44e5765b8bec 100644
+--- a/include/linux/bitops.h
++++ b/include/linux/bitops.h
+@@ -231,26 +231,26 @@ static inline int get_count_order_long(unsigned long l)
+ 
+ /**
+  * parity8 - get the parity of an u8 value
+- * @value: the value to be examined
++ * @val: the value to be examined
+  *
+  * Determine the parity of the u8 argument.
+  *
+  * Returns:
+- * 0 for even parity, 1 for odd parity
++ * false for even parity, true for odd parity
+  *
+  * Note: This function informs you about the current parity. Example to bail
+  * out when parity is odd:
+  *
+- *	if (parity8(val) == 1)
++ *	if (parity8(val) == true)
+  *		return -EBADMSG;
+  *
+  * If you need to calculate a parity bit, you need to draw the conclusion from
+  * this result yourself. Example to enforce odd parity, parity bit is bit 7:
+  *
+- *	if (parity8(val) == 0)
++ *	if (parity8(val) == false)
+  *		val ^= BIT(7);
+  */
+-static inline int parity8(u8 val)
++static inline __attribute_const__ bool parity8(u8 val)
+ {
+ 	/*
+ 	 * One explanation of this algorithm:
 -- 
 2.34.1
 
