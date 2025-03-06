@@ -1,63 +1,63 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 590A1215F7B
-	for <brcm80211@lists.linux.dev>; Thu,  6 Mar 2025 16:27:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19120218AAC
+	for <brcm80211@lists.linux.dev>; Thu,  6 Mar 2025 16:27:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741278430; cv=none; b=QEzubuaRe3sqRvJmR8kYiTTzvRydUwCNsP3hRtNIeKCKEy18jdgOc7W2A9q7mOHB6Qf7Fnu+TBjxLvREkldi4ywvC1X0/V0DxOIFqytzP93NXDe68clwE8Ro3uuwIQZ6isbVUB09MD8VqT4JN6M/FAd9xmVQf1oDpe2VU79PH04=
+	t=1741278440; cv=none; b=t6gMwytJgWgUkXNnkJf8jnHuc4B95Us4QdnXXg1sYV7jM0gY87HUFI+TNoLVirY0hyVeWOjxx5xb+gXlWRRD9of+p3B1+CZiZ6eF2pX83bdSpmWiqw5vT7raxrjCV/gzI1C8n0lQeyg0vW21tW9WNDF9qgv1bG3JRJGYuoEguIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741278430; c=relaxed/simple;
-	bh=wM97YBa5xgJ18K9vOB6OMMfkw7YXLYTsVU4qscf8g1s=;
+	s=arc-20240116; t=1741278440; c=relaxed/simple;
+	bh=3j2xCVO3a9Gv7A0MIU2nyyU4C5wyCWXboaTPOU2Xcdg=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=KBrE2KIO+aiWInrhVMDBp4Sszti+In47Cl6CmXJIcPbTJEGirOL7732+tCkyVV8ab1C17VPCq4TU7hv9+DYSjjVFZHA0slBYKrouqm/XU697c1pRae4yYlHS/w4F1mQeIaXxLPHNPygj89cNvbGekuiiqApG4cxyBdfqfjc6MN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kvWAVRqE; arc=none smtp.client-ip=209.85.216.43
+	 MIME-Version; b=qqa9Ra6+6NJcpcHLfAfEZm2eMjB4PWTwb34W3+dfoaw44ZuYhfGrMianT8s7aeJU97Z/mJg1ife9kmz8k2NSs9EbrIGnENHC/iGiqTKhAphj3i7lFpDnoUrTFuuOk4bHMi1BSyrhQXYP9+iJImB1D4SK++rhtWZ07r9/u7DU2Fg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RjGqvtcz; arc=none smtp.client-ip=209.85.214.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kvWAVRqE"
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-2ff187f027fso1638660a91.1
-        for <brcm80211@lists.linux.dev>; Thu, 06 Mar 2025 08:27:09 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RjGqvtcz"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-22401f4d35aso16462195ad.2
+        for <brcm80211@lists.linux.dev>; Thu, 06 Mar 2025 08:27:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741278428; x=1741883228; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1741278438; x=1741883238; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=vfkeURT+EbeVrjHOwezSCAhftS9inN7HFKHEaavRXXI=;
-        b=kvWAVRqE0xOX7wewkfsrwrRt3zels3upu5xRLSRNiThk/uIYcobZYTNQsITRC2CtV1
-         WJO/6WRZPR31GEjWYHJChiTErEjRX+toreKHppo3LYfnBuzKGL1IFjZtsjoHUUpvVpyB
-         U2giVFW9kCe7x1/FGtFGSdnVEehdriprU3EDV6YBpleiWA/dDJi2RgNB+iismALOIBtV
-         bnS6v2Wwaut9Ry29QLkan7pxA+K6f7BW4zhpKyCUIs96B4rw83ot+iHz1/jGjIQvLWd7
-         a+OwtTYBDy8eY2KQCvMuxlixnIrBaNR61x45yJ3MhscgQXnWOfy5khYyRKKBJiXsvQgU
-         yddQ==
+        bh=XN5ImNH6dAdBfCykY87Jt3WvSMwHnviLIgPuEMqr3Q4=;
+        b=RjGqvtcz0IXQ6up58AiX4ThKJ2KxY38tKMdlG+IwmIdZkF6nn1UB/c13NKoAhWzE5D
+         oa9lYkISNCtrRmLFNigVlqbnUWf4SuLJgH33jWDMAXbX97aj6Dd+oSh+0NmYYC81vcRQ
+         rG2CtaFRldOlG47izfWhzQWBIbfeANXWYXPDOzLAxODTI8IyItwOBdvHGtG0KeQFmZVN
+         MfOV0P2oJhF3bXqbvhf3LYq0+ymzCNz4e2UFULqU8GKHQGpTqNpU/wQv7lBkZpWddVfb
+         0mlqM0/l5Carg6WxKzgWmSSDoCWL0pPhfkuEPHq59vG/bvQ69iidjr+xzKxQsK8MS/j/
+         UFHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741278428; x=1741883228;
+        d=1e100.net; s=20230601; t=1741278438; x=1741883238;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=vfkeURT+EbeVrjHOwezSCAhftS9inN7HFKHEaavRXXI=;
-        b=EmGVWibUboMKADlNqZ+DoepDrfBUwoFz7fviYTp6pjITtzoJfZjCgw0KQJyE1MF4zL
-         km8y1wdzrZSv57yHo4WPCv+VdUCZPAo6TgdaLR7gr4G7mCOnReRCHAhRGYiCieUqhGtE
-         OQZmvv/dcb2DBYXdNc/GkxY+/GSJ9EFFRJFOQ3CU6GdPDlQSfAu79nyHzOdpfF9wnGx0
-         0pUSlw+jxIRC1dYQYx1Apoc9bLAHtTFgsHxgfKGrtxVkhe9WS+Rt2F1gIqKhxyhRobGA
-         QwruQ8ixXSYCanAeWcO6QcCj/qhVjsRfwwATQkCtMHvM1J7L/Sv5+g/YtCxpb/IYnase
-         vnQw==
-X-Forwarded-Encrypted: i=1; AJvYcCXQHFOuworU60hms8BcjcpkAjXnnH48cZU5mDx62kqejIJMt1DdDqcp/C+5eJLv9x68IXY9AHEwaAQ=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzCGs9eKQqBaGAKpdOFxXsalV0N/6m9GO46R570o786mBmm78zK
-	W0TYF5VdsRDHdZO8/9FSqj09YCmuBA8T9n3+L6aowL7PcRyuLVSW
-X-Gm-Gg: ASbGncszoI/Y32TtkyyRi4PA4hqjydcPU9YZ4QI9qmQaUlmERgqZhvR1vYK12o3B/Ah
-	4u6DqMZY+wf4RIQG6xTH/LtjiPuudln3j+NZmQc6jQvvnhdCYvqZimYGS8bh2KUBniJQGk0rFJk
-	AYNeerBnJKDzf1OoW4PfpD0UvLyoSfe6SLb4yZXkj5yZME+SG5EYQHBcXzZbw/S+6z3g8uPgNi4
-	5mb9Wp2zj5kJXsTS05Ourh4Bii6A+8t+i37zUlfN66/MJqysdOeKPTcdh3vCWr8VxgIE+ZGIolv
-	aengGn+UzrsfG1R7r1kx17yQPlmdPmCjf22sbQ/19zy3k9Pw33b3683245yNDDfPDqUOd3fJkxk
+        bh=XN5ImNH6dAdBfCykY87Jt3WvSMwHnviLIgPuEMqr3Q4=;
+        b=X+hGuoRfm3bdT/or/t3HraB2nSQN66onbqXJOkc/Cq5juxpRhUMBymdwmcK0CAqzpy
+         JYsGq14G/xQStFeC7e6lI0fAJnvbRTC32X1M2G2wJ09N1Z/3AnoiLeBt39yiC2ZtBtZ2
+         xvZSME6F7HlnCbd12MSIk/wf7hopOsayA5TMrU8tW6ku5NrZtNhgruG/4c16Vrl9yUZ1
+         XdJCWQlqqLStyPC2oWr0USAHotsXEaCDNPR0oBeYMDgLOwFHz0Y9dMKpQHhmEiTe6mbV
+         S8xn30MORamizs30dfUZHo5g5nANZTwSDBYm90kSfLlowxFhgeebtnU1udMsNY+P57yJ
+         M+Dg==
+X-Forwarded-Encrypted: i=1; AJvYcCV+pAgR1RzBh9kLFwBM7Umfo8iZikLifEJMIg2DHFbCkQp/dAqVgRvkvnVWqCZTzXGA1MT6TgeXoAo=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzFxGnjXR2vl/AFuI6NNwuhaxIREGfL0ztwY/A463fb6Lv9oJO2
+	V1zBCAq+3xVAnqt76iSLiVDcFwoMKPRX2iwrK0EHaOLxjEO1rMRa
+X-Gm-Gg: ASbGncsDBD7NLctzHhmS7TwGA3WQOxdH7bCKzirwDZuHLXgIYUbZxzWgjQBFpgjaSlc
+	7zjgUt3u3BT+QJ4DNP1IwZNXjYjDMe19MNAMVZB7s/fyvBSbADv2JBjgaVTuieIrqGafjG0odJj
+	+dg4gU83M1Ha+JgiYpeglo7BwgtfqA8fl5+EOOjnxeSX2x9qbTgJ+k/VMqpNeiA3gWZz5qTcIlz
+	2Z6qDigyzcs2xNnzIp5mi+QcfUaUzvbDuSTCU6y+KwF0GK2W5exJMVzjO0Dn8IC8h+5zxpXrFAS
+	ujn/5NswCLewBVI6FeCHX5Yq2Rx/cZj/HkNWW0wviHjKxTrvEsKDamoH3CsVrhSTHlDY3boOs2o
 	=
-X-Google-Smtp-Source: AGHT+IGNBcefivOmpQNsVFSdkYo/uQMo0VhzohCZYprzHPevS02kDmNn83LuER8aDdhmdhff3Ulvpw==
-X-Received: by 2002:a17:90b:1808:b0:2fa:17e4:b1cf with SMTP id 98e67ed59e1d1-2ff7b59dcffmr195851a91.2.1741278428557;
-        Thu, 06 Mar 2025 08:27:08 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF18uiSk+IKiG1ozkM3lMeST4qvi8jhpDhJUoUXK6z5h5Y70JgwenicEaPtYCl0NNS2nVYnUA==
+X-Received: by 2002:a17:902:e5cf:b0:224:1eaa:5de1 with SMTP id d9443c01a7336-2241eaa5f50mr17212195ad.18.1741278438234;
+        Thu, 06 Mar 2025 08:27:18 -0800 (PST)
 Received: from visitorckw-System-Product-Name.. ([140.113.216.168])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2ff693e75bfsm1464298a91.33.2025.03.06.08.27.00
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2ff693e75bfsm1464298a91.33.2025.03.06.08.27.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Mar 2025 08:27:08 -0800 (PST)
+        Thu, 06 Mar 2025 08:27:17 -0800 (PST)
 From: Kuan-Wei Chiu <visitorckw@gmail.com>
 To: tglx@linutronix.de,
 	mingo@redhat.com,
@@ -117,9 +117,9 @@ Cc: hpa@zytor.com,
 	jserv@ccns.ncku.edu.tw,
 	Kuan-Wei Chiu <visitorckw@gmail.com>,
 	Yu-Chun Lin <eleanor15x@gmail.com>
-Subject: [PATCH v3 07/16] lib/bch: Replace open-coded parity calculation with parity32()
-Date: Fri,  7 Mar 2025 00:25:32 +0800
-Message-Id: <20250306162541.2633025-8-visitorckw@gmail.com>
+Subject: [PATCH v3 08/16] Input: joystick - Replace open-coded parity calculation with parity32()
+Date: Fri,  7 Mar 2025 00:25:33 +0800
+Message-Id: <20250306162541.2633025-9-visitorckw@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250306162541.2633025-1-visitorckw@gmail.com>
 References: <20250306162541.2633025-1-visitorckw@gmail.com>
@@ -140,43 +140,53 @@ Signed-off-by: Yu-Chun Lin <eleanor15x@gmail.com>
 Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
 ---
 Changes in v3:
-- Change parity32(mask) to !!parity32(mask).
+- Change condition if(parity32(pkt) == 1) to if(parity32(pkt)).
 
- lib/bch.c | 14 +-------------
- 1 file changed, 1 insertion(+), 13 deletions(-)
+ drivers/input/joystick/grip_mp.c | 17 ++---------------
+ 1 file changed, 2 insertions(+), 15 deletions(-)
 
-diff --git a/lib/bch.c b/lib/bch.c
-index 1c0cb07cdfeb..6c29122c0982 100644
---- a/lib/bch.c
-+++ b/lib/bch.c
-@@ -311,18 +311,6 @@ static inline int deg(unsigned int poly)
- 	return fls(poly)-1;
- }
+diff --git a/drivers/input/joystick/grip_mp.c b/drivers/input/joystick/grip_mp.c
+index 5eadb5a3ca37..26a7ae785942 100644
+--- a/drivers/input/joystick/grip_mp.c
++++ b/drivers/input/joystick/grip_mp.c
+@@ -18,6 +18,7 @@
+ #include <linux/delay.h>
+ #include <linux/proc_fs.h>
+ #include <linux/jiffies.h>
++#include <linux/bitops.h>
  
--static inline int parity(unsigned int x)
+ #define DRIVER_DESC	"Gravis Grip Multiport driver"
+ 
+@@ -112,20 +113,6 @@ static const int axis_map[] = { 5, 9, 1, 5, 6, 10, 2, 6, 4, 8, 0, 4, 5, 9, 1, 5
+ 
+ static int register_slot(int i, struct grip_mp *grip);
+ 
+-/*
+- * Returns whether an odd or even number of bits are on in pkt.
+- */
+-
+-static int bit_parity(u32 pkt)
 -{
--	/*
--	 * public domain code snippet, lifted from
--	 * http://www-graphics.stanford.edu/~seander/bithacks.html
--	 */
--	x ^= x >> 1;
+-	int x = pkt ^ (pkt >> 16);
+-	x ^= x >> 8;
+-	x ^= x >> 4;
 -	x ^= x >> 2;
--	x = (x & 0x11111111U) * 0x11111111U;
--	return (x >> 28) & 1;
+-	x ^= x >> 1;
+-	return x & 1;
 -}
 -
- /* Galois field basic operations: multiply, divide, inverse, etc. */
- 
- static inline unsigned int gf_mul(struct bch_control *bch, unsigned int a,
-@@ -524,7 +512,7 @@ static int solve_linear_system(struct bch_control *bch, unsigned int *rows,
- 		tmp = 0;
- 		for (r = m-1; r >= 0; r--) {
- 			mask = rows[r] & (tmp|1);
--			tmp |= parity(mask) << (m-r);
-+			tmp |= !!parity32(mask) << (m-r);
- 		}
- 		sol[p] = tmp >> 1;
+ /*
+  * Poll gameport; return true if all bits set in 'onbits' are on and
+  * all bits set in 'offbits' are off.
+@@ -236,7 +223,7 @@ static int mp_io(struct gameport* gameport, int sendflags, int sendcode, u32 *pa
+ 		pkt = (pkt >> 2) | 0xf0000000;
  	}
+ 
+-	if (bit_parity(pkt) == 1)
++	if (parity32(pkt))
+ 		return IO_RESET;
+ 
+ 	/* Acknowledge packet receipt */
 -- 
 2.34.1
 
