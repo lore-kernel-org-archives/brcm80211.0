@@ -1,63 +1,63 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4346721A94F
-	for <brcm80211@lists.linux.dev>; Thu,  6 Mar 2025 16:27:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C50E921ABCD
+	for <brcm80211@lists.linux.dev>; Thu,  6 Mar 2025 16:27:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741278460; cv=none; b=etZ/CsUbRsKguZy0NOl5i+urGPjIXs0ey3ogi/yRpy8NtCjE/9r0FC+ijWQZ6ZG0h1gTQ/prGDSJfoncEN7r/Y8yc/IjZ5rRJ6s9cUx64YFrMCoLELf7KXO/Rf1uJHGcym0t2F0rrbdYnkjdpXsldiqsPHfPKOfLlqJHh8c8wWo=
+	t=1741278470; cv=none; b=hNQqfjBijUv+3Fj2trR8s3cVIzp9UqKyo1QRFqwyp655jSn2AMP4vfUM1Ax18Q1VgT170FUETOvfuL/To1IvAMTq5K5WShpDUBcEmr3kzn9i23q7WtEp0ExGUcOJGOl4XwBMlwc76SJytVhrpbU8bJ/uDC5yAnEJudtFz6dObcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741278460; c=relaxed/simple;
-	bh=LKQP83Z0dDVRvLCdrMNAz3pPTpKO+Di7Zsh2SQ1o/Vg=;
+	s=arc-20240116; t=1741278470; c=relaxed/simple;
+	bh=kbOoF3icqMO5cD9NY+9tgI31+VIx+Biv/oapmdtrbUY=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=g8McMBOorLJgZZpsTtJsjQA0f0dLMkLEx9Hb0pAZB6CcSmzbKkxNAN0dplnxgIx1ODYDnSwHqP5khMx9kfkHm2B6xHoKMkaiT+zKA4jImCZ8Fkw6qIjC5R6sMKZZj3ciBc8GfJgjs7Np92fy3uyV+WAdRt490zTU1dcfOJHmzeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VstVCiUy; arc=none smtp.client-ip=209.85.214.181
+	 MIME-Version; b=VaxKNLs9kafwL7WPPbDXFxeINuQAgBUefI2DWQ/Wa/ICiJNFF4x/BZ6wT47lOB4z0un8NnkiJaj/h3vqTwAcYEa2pLp5KQmG1BlRjC0cG4OCDv5JvBHPGsWFS/rmhDCsuw8Ct13YhBJZt6xKf2r5Rs7rm+xINfQKm8DPS6AbPOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mMYsOocO; arc=none smtp.client-ip=209.85.216.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VstVCiUy"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-22349bb8605so17157435ad.0
-        for <brcm80211@lists.linux.dev>; Thu, 06 Mar 2025 08:27:39 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mMYsOocO"
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-2ff797f8f1bso433738a91.3
+        for <brcm80211@lists.linux.dev>; Thu, 06 Mar 2025 08:27:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741278458; x=1741883258; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1741278468; x=1741883268; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Ih00TRqmhmd1Mh0sl7zFiAmpBAeBPMq/8Nno4TrvKu8=;
-        b=VstVCiUyr2dQToZ4JGiTgs9FjyVVWvjjxZ2+gHltBXTAwjrMsTZXveWKih6WSie6cA
-         OdYzFmSt7TVfy4mEKnkhL1wCvZt8SuElKHq/RwkR+mssXGUJGQVZDSzPeCzz8LkPJu1a
-         qWT4qNBXRkhTQPiPrxX6/M5yH7qHo0XAhEF9NR4xaW9rcFP+LKmDQNq3koj3FbNg55Bd
-         80N5vn12+6wy9FTaCR7S5z0xmrGtZTBPYxPFCtWiLn4edFVg+jg+4DYQJNfOUqxp2dd4
-         lXzCNbUqgFxVPrXZHblvyUIbpqRwrqSzIiczIrLP2Iqbwg4of+qQGqpKdWrup/9+PJj7
-         z9lA==
+        bh=/lzzZDV4xgSskf5edAWcKAl1UECahSIOp1fWE1tA1yk=;
+        b=mMYsOocOuLGGwgRxXyxMcb5MWZ/m1BwGg7E15SPEbVSE1hb1feKLX0Ya5jE3X19jAI
+         uH+3tie/B6nhaDViTvfoDr9IBjg8vb0WcbfDOZq2ls6JE1FqsNZ/oCraWu2VTfkeOKBS
+         Ha17p9tn1Zl6bnOyy+SxP08KB2df6D2/GymoRIylusUqXWdvygHgTFkuloXROLsXkfOx
+         dwfbJGkjYyMXMpRD4DdgS9Ti0L79o3ebDIojHXsaR2Q3hIeF3rNxJll3aXXJwkOh7Udh
+         r3mNeR865A8xnbYEuO+kGiieY2PpwDiLk1TCavZNJBJufttUjig7urJO0bLyUfBPseja
+         MWMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741278458; x=1741883258;
+        d=1e100.net; s=20230601; t=1741278468; x=1741883268;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Ih00TRqmhmd1Mh0sl7zFiAmpBAeBPMq/8Nno4TrvKu8=;
-        b=fPU4SyLNTEPr/+I7yMwbRfmOIEyhF5/zCxhD2o2wO3fZTm0tDfzVWKss7G6H1l0n+q
-         PpmuJHTdw2oMel9rLak7k/jaXAMuH8JKrJhtriCV0/guSBFj/OjRw1KGE6+KwO/nFFKn
-         SnjvKxgz60Je362/MshxELahMLvNGU/crDOiHD7Dhc+emc2OqJexN9Sp+px3pV08RXBu
-         tsrtuRV6r2dHujxCwCBFJ6L1Od98KFqGGKMiDrh8oEc4AmsKuQrz2CSEevmPZ/ig++21
-         eXA2EMuVGbeKTRUa4PEmPMX4Nq1GPmuElT15qzFNXXprylcupqLeDS92vU4sq3CINpUA
-         bdwg==
-X-Forwarded-Encrypted: i=1; AJvYcCVHeRw1SWAuP7OoGg2P/LM7Hm8PMJLvhRI/7zEiMvnHRcLQB2is4xEPRj/28+x1gyTwoZSXzVYzYss=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzljJdt9DELzuN9o/r6HFxdJU3BbPajVE9OM0BASlGmaUU8yEvD
-	f7WsJUozBZ75Zm2VOLVd7S23E1Q6+r5CClUzFOs6p994gt0X05Vp
-X-Gm-Gg: ASbGncsBWMB0IcX7CBrcCC+qoO7+wE91lobD4XLNG7etWagnUzZXfgOYuNXSS/VyRtl
-	/UZE4DJ1gaHN5uFCCh+62iifQuboRc60WD+vqtawwQMx1KqYaTqYAbeghC6aImviyQdELsLdoj1
-	sXlA2J9iAakVUHlwE6tX/6qK9khEgrcM4GwgzgzIIwY+Z/210HgiLExkgexnsqdZoQJuWCgGDGa
-	eA9DG+7Tjmug6xzrHnj542dltououS2itBZwEror6HbXAMjiT5QYNFohfYsKr4504TNq3f8sEY4
-	h3kO3rd9RwtSOZeO25NXnLlMQO7Ljkq5LkmDluP+DUwfEMx0uCF9oMasnA/wyB2kgOOMjL51WWc
+        bh=/lzzZDV4xgSskf5edAWcKAl1UECahSIOp1fWE1tA1yk=;
+        b=rNsJ0Sn3eLVFsw8h7ahG2fSbSlmUQPGnTbV+2kUOkybioHuB7OZwTQn0I++yx9LdY4
+         Ht2qZ/6uaEnxHwI2Oxy5BiJufWyQgpCneUhGrKaHmKZGEDTZGVQU+ffaP2DJNpJxPfMF
+         4EOQMlI1SUQ3Df+OIzpVQUlALmFhEbrHTc2JFlogBPlw1EKQaMxyQPIHFOgqQsGRgArY
+         lj2Dx0+mu7WdHD7L/VerUG0iUxDuQSwiiBU3Ht8RDnCnTPOJ++DfOnTlYHhb4JPRh1Xc
+         HhfCo2QS0ayKdXxjWso41RXNeqoGDpFysy5OkX2yYPpeFZc6hpaVxG7qK6SjWTcLYXFk
+         wagw==
+X-Forwarded-Encrypted: i=1; AJvYcCV3hbI+Uo5L9ehtjEkrHWxeCahIHeFTMBmjjWhSRY5wm117d4gW6B1KHaWWfP/klWT6nRSMwNf90Mg=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzWQJru4Naufpc0Gnqkh+SpOHWu7mOpQkONVU24Sk2KYoLDXiFP
+	RCetIByQTKAG4QrYpArC5g+NgzL/gFjUEMCACUOhF56HZjxbqRus
+X-Gm-Gg: ASbGncumXfdTCn+NLG42WIFXU2TzROZpbUjfq0et91HfKltiSBPQHr1GenU/R/izqMM
+	JL7whKXTWaO8PWCvTkBYT8myr5slbrv9y+pe9ohJXLr29WBnn6P20c3bpVU6lxJFFDFJDK+mElr
+	603hvNAJ4VH+yZeHT15F4D7NgsXy2UxrkWfVjpNB3W0L/89xqfS994j6r2IagnhrYYt44RImVsS
+	dNrKbAFLdVeXPjD9P5656fJBhQdGRVIpqn+4qOz39Hh9l639Z4aNhJ1RdzBpkfCagZV6mMgTxJS
+	jq8BDImLZ/CnbQokz+ZE9s7kQuC702ie49SCx7slDxbQYy+kekXO3GI+8JWXsyRolxTo6U6RDnQ
 	=
-X-Google-Smtp-Source: AGHT+IHic3IzGXhBZWP6zBd/pJJw64LoRGQ/N6k6+q6inZlCxRIB1pB5KkHjt//av4DrSwa4YWD19w==
-X-Received: by 2002:a17:90b:1e04:b0:2ee:a76a:830 with SMTP id 98e67ed59e1d1-2ff49841eeamr12538794a91.24.1741278458615;
-        Thu, 06 Mar 2025 08:27:38 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHWBk8+6ksfik0EhK6cGMIWVO4KCt6lAGGIta1FZHsm7ob/3ELoZ4FHcMM7AbzddV9ZAUKTxA==
+X-Received: by 2002:a17:90a:c888:b0:2fe:a77b:d97e with SMTP id 98e67ed59e1d1-2ff49728368mr13045551a91.11.1741278468014;
+        Thu, 06 Mar 2025 08:27:48 -0800 (PST)
 Received: from visitorckw-System-Product-Name.. ([140.113.216.168])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2ff693e75bfsm1464298a91.33.2025.03.06.08.27.30
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2ff693e75bfsm1464298a91.33.2025.03.06.08.27.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Mar 2025 08:27:38 -0800 (PST)
+        Thu, 06 Mar 2025 08:27:47 -0800 (PST)
 From: Kuan-Wei Chiu <visitorckw@gmail.com>
 To: tglx@linutronix.de,
 	mingo@redhat.com,
@@ -117,9 +117,9 @@ Cc: hpa@zytor.com,
 	jserv@ccns.ncku.edu.tw,
 	Kuan-Wei Chiu <visitorckw@gmail.com>,
 	Yu-Chun Lin <eleanor15x@gmail.com>
-Subject: [PATCH v3 10/16] wifi: brcm80211: Replace open-coded parity calculation with parity32()
-Date: Fri,  7 Mar 2025 00:25:35 +0800
-Message-Id: <20250306162541.2633025-11-visitorckw@gmail.com>
+Subject: [PATCH v3 11/16] drm/bridge: dw-hdmi: Replace open-coded parity calculation with parity32()
+Date: Fri,  7 Mar 2025 00:25:36 +0800
+Message-Id: <20250306162541.2633025-12-visitorckw@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250306162541.2633025-1-visitorckw@gmail.com>
 References: <20250306162541.2633025-1-visitorckw@gmail.com>
@@ -138,45 +138,39 @@ efficiency.
 Co-developed-by: Yu-Chun Lin <eleanor15x@gmail.com>
 Signed-off-by: Yu-Chun Lin <eleanor15x@gmail.com>
 Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
 ---
- .../wireless/broadcom/brcm80211/brcmsmac/dma.c   | 16 +---------------
- 1 file changed, 1 insertion(+), 15 deletions(-)
+Changes in v3:
+- Change parity32(sample) to !!parity32(sample).
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.c
-index 80c35027787a..d1a1ecd97d42 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.c
-@@ -17,6 +17,7 @@
- #include <linux/slab.h>
- #include <linux/delay.h>
- #include <linux/pci.h>
+ drivers/gpu/drm/bridge/synopsys/dw-hdmi-ahb-audio.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/gpu/drm/bridge/synopsys/dw-hdmi-ahb-audio.c b/drivers/gpu/drm/bridge/synopsys/dw-hdmi-ahb-audio.c
+index cf1f66b7b192..a992ecb149d7 100644
+--- a/drivers/gpu/drm/bridge/synopsys/dw-hdmi-ahb-audio.c
++++ b/drivers/gpu/drm/bridge/synopsys/dw-hdmi-ahb-audio.c
+@@ -4,6 +4,7 @@
+  *
+  * Written and tested against the Designware HDMI Tx found in iMX6.
+  */
 +#include <linux/bitops.h>
- #include <net/cfg80211.h>
- #include <net/mac80211.h>
+ #include <linux/io.h>
+ #include <linux/interrupt.h>
+ #include <linux/module.h>
+@@ -171,12 +172,7 @@ static void dw_hdmi_reformat_iec958(struct snd_dw_hdmi *dw,
  
-@@ -283,21 +284,6 @@ struct dma_info {
- 	bool aligndesc_4k;
- };
- 
--/* Check for odd number of 1's */
--static u32 parity32(__le32 data)
--{
--	/* no swap needed for counting 1's */
--	u32 par_data = *(u32 *)&data;
--
--	par_data ^= par_data >> 16;
--	par_data ^= par_data >> 8;
--	par_data ^= par_data >> 4;
--	par_data ^= par_data >> 2;
--	par_data ^= par_data >> 1;
--
--	return par_data & 1;
--}
--
- static bool dma64_dd_parity(struct dma64desc *dd)
+ static u32 parity(u32 sample)
  {
- 	return parity32(dd->addrlow ^ dd->addrhigh ^ dd->ctrl1 ^ dd->ctrl2);
+-	sample ^= sample >> 16;
+-	sample ^= sample >> 8;
+-	sample ^= sample >> 4;
+-	sample ^= sample >> 2;
+-	sample ^= sample >> 1;
+-	return (sample & 1) << 27;
++	return !!parity32(sample) << 27;
+ }
+ 
+ static void dw_hdmi_reformat_s24(struct snd_dw_hdmi *dw,
 -- 
 2.34.1
 
