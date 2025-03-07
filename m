@@ -1,150 +1,183 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4BB7241C87
-	for <brcm80211@lists.linux.dev>; Fri,  7 Mar 2025 18:50:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A24AD183CB0
+	for <brcm80211@lists.linux.dev>; Fri,  7 Mar 2025 19:30:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741373402; cv=none; b=AwMDuqTIsDjc8KBuqAWqkClsmJZyL+If2PilQw4rluTwCdJC1L4Xl8xNvkkiW8ZNu+ZJ/QHp0VkNAuajND56J2TrRgg8U2NeYDFzk7NU+17iR4z++fYYZLaPr+iJX3Y2e7n9KK4TcRpdpgvk6PPYUNQK2F+eyW0euvd0mDzoIY0=
+	t=1741375813; cv=none; b=sHsEYEoytr0y1oRmWHO9uJN05gKIZmOIF0KwjVIlLzzROgsBKx977Ht6Zrlo1CezaRVc0ZKdfSQwq08XUDJXBbK+IcaL5M8qsoq4TzIsjdps04D1zz9a6t8gi6zTbpEFgKcVcQBzumENCLf3Yhv6PrUnfxCXRZYtH+vC+aEUehw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741373402; c=relaxed/simple;
-	bh=iY8btfX+g/V/cLT+RlidyZhd+i1kGYYOkkkl+VytfXM=;
-	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
-	 In-Reply-To:Content-Type; b=uoo6oc3rBDSSmdqysNVdc5rm5dDKsDAsOUPJmgNaZnwMGeAYeYxAYciS7jjbQlfBW79S14PdzpQYqtPY7M9gd8cTNo1uf4tBfdtW8ndRGOuIJ/uKEGP7rocr0yYyFoWclgJZv9I/erbjCpZH4mLmIGeLMr2GJrgPY58BNa0NSsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=citrix.com; spf=pass smtp.mailfrom=cloud.com; dkim=pass (1024-bit key) header.d=citrix.com header.i=@citrix.com header.b=SM5K2orU; arc=none smtp.client-ip=209.85.221.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=citrix.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cloud.com
+	s=arc-20240116; t=1741375813; c=relaxed/simple;
+	bh=ES8fce8TYJh0CUhG3aOJvKwa0LbilzpFk3jZFOZFALk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tJSXmsZFgSJhKGxw7rSoS35pZtYdjs+TWyguzsokybCmtRj5C2YGaBlejMCoNqSSPbaRCPE3y9PrPTtd8SU7h3z6CKmnqWbVi5fYsiJjU6PVSCu4CFY0Dl+1/CPsHKHtmwz9rDgwKy8efrNBKVXyVmJiXCKPh7juPlrHd5T6B9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IXMbNXdi; arc=none smtp.client-ip=209.85.214.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=citrix.com header.i=@citrix.com header.b="SM5K2orU"
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3911748893aso1563292f8f.3
-        for <brcm80211@lists.linux.dev>; Fri, 07 Mar 2025 10:50:00 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IXMbNXdi"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-22401f4d35aso43596985ad.2
+        for <brcm80211@lists.linux.dev>; Fri, 07 Mar 2025 11:30:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=citrix.com; s=google; t=1741373399; x=1741978199; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:subject:references:cc:to:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=iY8btfX+g/V/cLT+RlidyZhd+i1kGYYOkkkl+VytfXM=;
-        b=SM5K2orUPDCsKSdiIo+EnWEEGUq3n+KNcU6kXgWKNREeM5cQbu/O3Gb8G9MrCfU5tD
-         NDT4W/CV7LmmwjgbFpO/EP6TmshI3zTYY6yiOrd/GbMD2J/yetrwDbXWVMufxXaRVlP0
-         1qjgwbNGlVwtXSpCRnIZJy4kwDEqay1/dFr3o=
+        d=gmail.com; s=20230601; t=1741375811; x=1741980611; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ujnt93n2ZnNyLSMeIXg1bvl3lYCF/JQ06NeoxLK/MdQ=;
+        b=IXMbNXdiT/6oo8EKQhSybREQ+1nnlS6IOhnbN0L3A1FnvxvrW1ejKMrD5XHAVumrAY
+         Ax41L/jc6E97LhONzvmrsw2zsNr71RN8qZtMarBMA8zBTE1qSgOuZ+7CrIJPE9ej31Ta
+         fZj63AqkUuwxRw5olqUzgu7HTm1xoWueKN8oApsDbZTs6zMXI6qwVjFEoigUUCWCkQBt
+         vRYc+CSchSuDk5g+Ep4334i+oFgAMD/wqvbddr85kmNT9MdHopyiL4FHUQcAoin0X9o5
+         pEgX4hM03IOYLIHfzM9KiLvlzRADggDz7ptbeBND7nJH5NRuG3Q3KgYOAfjdJPNdwB3L
+         19Hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741373399; x=1741978199;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:subject:references:cc:to:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20230601; t=1741375811; x=1741980611;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=iY8btfX+g/V/cLT+RlidyZhd+i1kGYYOkkkl+VytfXM=;
-        b=bk/Lo+4qbaQcNMNKfvjdmw+X+xaSGbP2TYaIIB5rMb5cknQ2YBzvMa5hgH1G6A5ifO
-         f0u+cQpTGb+xHKK1fBjFOrZGWFDiB9GfPgAePrYVzTZM+iA/gML2EyFUPLMCbYiAk37f
-         CeKuCMQNNXlBHsyb9H2b5GJj4ci2WSGBik+xsZ/spTZ9ED7KHTYw5dNTHFImsZw7uYBd
-         EAuxMxS1BnTj5a71Elq4cfGXvoHmejxIsh5sVv7Ed/cwN58b4TH9EaCiTVi45NAuw+cb
-         WOFVmorh7yG+qgn9usqtENE7FZ2W1046Y6jcSJylkBlcGIzpvx7KpySIrVionfWU3ymr
-         ZqEQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWvo9fHD6z4XHGKBctlGPh7f1Z9JUT9DxyCc4UC8EQD9ic2Bg8chbWFHFWfIM4JwIYmtNCtZSc+Kz4=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxVOrppQGprcwMOGaO43qq/L1cV7wKEWuiTnLOVe80egJukjp8Y
-	B1Dx2uH+5RDxsC7RUZ8UhjVMWehVtAma1O/M72vjB9bG3TjY1u+ZhLSK/HyKAfQ=
-X-Gm-Gg: ASbGncv1fNcNYeWTUs3Bf12WyWyrGwGuQrhnDH7zJsbp6iOMcEwkMCPdtf7+n3jShhY
-	kIEEm+G/TB703sjivFs0QRpvrDIIKom1WzLMaZ8+FSUHsSI9V3QAjS+uoD1yzpd5jieTRmxMvZe
-	pIBOEm7WkcM4j96DY9V5ODwxlCSSwgKPj6sJj4WgUuwfXx5EdWXaTXbsmbkVzh5s0V6tn/arx6a
-	VC9M+T7Yyt159o8keLtEaw1o1sY4Qbb+YIdXnMBFnzDCBMhgrUQj+NJMOV8hRiY7Xvmu3xFk5HS
-	YnhylvD417vuw54b78gjzGUR7+1rYR1mfbpZSnjjNeTO+xa/euV6mvB0B2Lfgyy1KBZa1vM1Bc+
-	PdHSoFcj1
-X-Google-Smtp-Source: AGHT+IGmeOPTWjHa0Be27hfI/1kYnZp0UHx0P0R/hj81LDLYhuR4kj7WMmpAAdsX/afUuDK/xqqF5Q==
-X-Received: by 2002:a5d:59a7:0:b0:391:1139:2653 with SMTP id ffacd0b85a97d-39132de145bmr3407200f8f.52.1741373399039;
-        Fri, 07 Mar 2025 10:49:59 -0800 (PST)
-Received: from [192.168.1.10] (host-92-26-98-202.as13285.net. [92.26.98.202])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3912bfba848sm6051474f8f.4.2025.03.07.10.49.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 07 Mar 2025 10:49:57 -0800 (PST)
-Message-ID: <efc2ee9d-5382-457f-b471-f3c44b81a190@citrix.com>
-Date: Fri, 7 Mar 2025 18:49:56 +0000
+        bh=Ujnt93n2ZnNyLSMeIXg1bvl3lYCF/JQ06NeoxLK/MdQ=;
+        b=pOh97i4wqoKiK8SJRLMm0jdwpe82k6iBNAyz+vNyv03xdMU1elt8bGoj3vt/RG5sAO
+         Vgsm7IxtxlYlMNBB2SHS2j1mQBSG9lmP1zBw9nnKVvfCb062LbwddRpzskPBSexhGJYX
+         XdNQuBgYVP15ngk/Ih7mMQI3d3r3FwFz0m6SffePo9krtZ8q6CGnThU4cer/Djk3GTur
+         r/J5uJq3wItpLYIP4dDNT+MX5S5PHXxq1c9KJUEbm4O6LlXekuhjlUAjfOFqP+l8teqn
+         NAHib7uzV0UgN+bh4tVgde13BewBhr4UCHN/FOq3lQHR5dK/qhh8mgP/EVc3DHkNUkO0
+         jm/g==
+X-Forwarded-Encrypted: i=1; AJvYcCWHlGRgEZRqwFneBJKmtQUsahls9QnCfc8hKpp4pzXhoEsGSGf7WkzihxGZIwfOWZb28NnQtNX8aMc=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz+vwWFXgckBScAl/buVOxbL58RoHkCNuf3y2XJEnAE5CTUQskG
+	2FCDKZn5jZoPzuXKlNxxy6ihHka7FLJXkhpvuuk/XAg8iUYojouk
+X-Gm-Gg: ASbGncu3TqdBQRemrletxUQCSv5jzDOC1RQo3Iy3wCqdBNMVNhKAakaxcIKJo5uevU0
+	QcdcQnG8T/LN0MZd6e0LIvUnEo/y+ReL6f2tjLTCRMr9lZ6E4+npV6U16rgQDlH1f41sAAmsZWx
+	7W7ywdnh+jry7Eji/GoZhLC2Uc04aRy1Pr5GB9yTZcri6P1lV0KTwdtwiAaNEPHSimlX9rLK3LJ
+	n5f/LGeQGAGLYQQRlz1QiJ2puU3DJf1k6pKsTBwvdiJE515zhVSfpHaZHvvbx5LFpPktyFr/G/W
+	U5+EKhQk6I8BD/aTBxFjmZ5VEW6EFMy4Xj8zMcmxgI3k
+X-Google-Smtp-Source: AGHT+IEmnovg8SODODeYbL7InF2WSqC9McWE/UoY4IWxbTzIc1jrQMfyhDSc++tBv5NrR3IGNpr8rQ==
+X-Received: by 2002:a17:902:f645:b0:21f:4c8b:c4de with SMTP id d9443c01a7336-22428ac90a6mr73028235ad.42.1741375810720;
+        Fri, 07 Mar 2025 11:30:10 -0800 (PST)
+Received: from localhost ([216.228.125.130])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-224109ddffesm34081415ad.40.2025.03.07.11.30.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Mar 2025 11:30:10 -0800 (PST)
+Date: Fri, 7 Mar 2025 14:30:08 -0500
+From: Yury Norov <yury.norov@gmail.com>
+To: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Ingo Molnar <mingo@kernel.org>, Jiri Slaby <jirislaby@kernel.org>,
+	Kuan-Wei Chiu <visitorckw@gmail.com>, tglx@linutronix.de,
+	mingo@redhat.com, bp@alien8.de, dave.hansen@linux.intel.com,
+	x86@kernel.org, jk@ozlabs.org, joel@jms.id.au,
+	eajames@linux.ibm.com, andrzej.hajda@intel.com,
+	neil.armstrong@linaro.org, rfoss@kernel.org,
+	maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+	tzimmermann@suse.de, airlied@gmail.com, simona@ffwll.ch,
+	dmitry.torokhov@gmail.com, mchehab@kernel.org,
+	awalls@md.metrocast.net, hverkuil@xs4all.nl,
+	miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
+	louis.peens@corigine.com, andrew+netdev@lunn.ch,
+	davem@davemloft.net, edumazet@google.com, pabeni@redhat.com,
+	parthiban.veerasooran@microchip.com, arend.vanspriel@broadcom.com,
+	johannes@sipsolutions.net, gregkh@linuxfoundation.org,
+	akpm@linux-foundation.org, alistair@popple.id.au,
+	linux@rasmusvillemoes.dk, Laurent.pinchart@ideasonboard.com,
+	jonas@kwiboo.se, jernej.skrabec@gmail.com, kuba@kernel.org,
+	linux-kernel@vger.kernel.org, linux-fsi@lists.ozlabs.org,
+	dri-devel@lists.freedesktop.org, linux-input@vger.kernel.org,
+	linux-media@vger.kernel.org, linux-mtd@lists.infradead.org,
+	oss-drivers@corigine.com, netdev@vger.kernel.org,
+	linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com, linux-serial@vger.kernel.org,
+	bpf@vger.kernel.org, jserv@ccns.ncku.edu.tw,
+	Yu-Chun Lin <eleanor15x@gmail.com>
+Subject: Re: [PATCH v3 01/16] bitops: Change parity8() return type to bool
+Message-ID: <Z8tJNt83uVBca0cj@thinkpad>
+References: <20250306162541.2633025-1-visitorckw@gmail.com>
+ <20250306162541.2633025-2-visitorckw@gmail.com>
+ <9d4b77da-18c5-4551-ae94-a2b9fe78489a@kernel.org>
+ <Z8ra0s9uRoS35brb@gmail.com>
+ <a4040c78-8765-425e-a44e-c374dfc02a9c@kernel.org>
+ <Z8ri5h-nvNXNp6NB@gmail.com>
+ <04AA7852-2D68-4B3F-9AA7-51AA57E3D23D@zytor.com>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: hpa@zytor.com
-Cc: Laurent.pinchart@ideasonboard.com, airlied@gmail.com,
- akpm@linux-foundation.org, alistair@popple.id.au, andrew+netdev@lunn.ch,
- andrzej.hajda@intel.com, arend.vanspriel@broadcom.com,
- awalls@md.metrocast.net, bp@alien8.de, bpf@vger.kernel.org,
- brcm80211-dev-list.pdl@broadcom.com, brcm80211@lists.linux.dev,
- dave.hansen@linux.intel.com, davem@davemloft.net, dmitry.torokhov@gmail.com,
- dri-devel@lists.freedesktop.org, eajames@linux.ibm.com, edumazet@google.com,
- eleanor15x@gmail.com, gregkh@linuxfoundation.org, hverkuil@xs4all.nl,
- jernej.skrabec@gmail.com, jirislaby@kernel.org, jk@ozlabs.org,
- joel@jms.id.au, johannes@sipsolutions.net, jonas@kwiboo.se,
- jserv@ccns.ncku.edu.tw, kuba@kernel.org, linux-fsi@lists.ozlabs.org,
- linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-media@vger.kernel.org, linux-mtd@lists.infradead.org,
- linux-serial@vger.kernel.org, linux-wireless@vger.kernel.org,
- linux@rasmusvillemoes.dk, louis.peens@corigine.com,
- maarten.lankhorst@linux.intel.com, mchehab@kernel.org, mingo@redhat.com,
- miquel.raynal@bootlin.com, mripard@kernel.org, neil.armstrong@linaro.org,
- netdev@vger.kernel.org, oss-drivers@corigine.com, pabeni@redhat.com,
- parthiban.veerasooran@microchip.com, rfoss@kernel.org, richard@nod.at,
- simona@ffwll.ch, tglx@linutronix.de, tzimmermann@suse.de, vigneshr@ti.com,
- visitorckw@gmail.com, x86@kernel.org, yury.norov@gmail.com
-References: <4732F6F6-1D41-4E3F-BE24-E54489BC699C@zytor.com>
-Subject: Re: [PATCH v3 00/16] Introduce and use generic parity16/32/64 helper
-Content-Language: en-GB
-From: Andrew Cooper <andrew.cooper3@citrix.com>
-Autocrypt: addr=andrew.cooper3@citrix.com; keydata=
- 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
- 6+ahAA==
-In-Reply-To: <4732F6F6-1D41-4E3F-BE24-E54489BC699C@zytor.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <04AA7852-2D68-4B3F-9AA7-51AA57E3D23D@zytor.com>
 
-> (int)true most definitely is guaranteed to be 1.
+On Fri, Mar 07, 2025 at 04:14:34AM -0800, H. Peter Anvin wrote:
+> On March 7, 2025 4:13:26 AM PST, Ingo Molnar <mingo@kernel.org> wrote:
+> >
+> >* Jiri Slaby <jirislaby@kernel.org> wrote:
+> >
+> >> On 07. 03. 25, 12:38, Ingo Molnar wrote:
+> >> > 
+> >> > * Jiri Slaby <jirislaby@kernel.org> wrote:
+> >> > 
+> >> > > On 06. 03. 25, 17:25, Kuan-Wei Chiu wrote:
+> >> > > > Change return type to bool for better clarity. Update the kernel doc
+> >> > > > comment accordingly, including fixing "@value" to "@val" and adjusting
+> >> > > > examples. Also mark the function with __attribute_const__ to allow
+> >> > > > potential compiler optimizations.
+> >> > > > 
+> >> > > > Co-developed-by: Yu-Chun Lin <eleanor15x@gmail.com>
+> >> > > > Signed-off-by: Yu-Chun Lin <eleanor15x@gmail.com>
+> >> > > > Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+> >> > > > ---
+> >> > > >    include/linux/bitops.h | 10 +++++-----
+> >> > > >    1 file changed, 5 insertions(+), 5 deletions(-)
+> >> > > > 
+> >> > > > diff --git a/include/linux/bitops.h b/include/linux/bitops.h
+> >> > > > index c1cb53cf2f0f..44e5765b8bec 100644
+> >> > > > --- a/include/linux/bitops.h
+> >> > > > +++ b/include/linux/bitops.h
+> >> > > > @@ -231,26 +231,26 @@ static inline int get_count_order_long(unsigned long l)
+> >> > > >    /**
+> >> > > >     * parity8 - get the parity of an u8 value
+> >> > > > - * @value: the value to be examined
+> >> > > > + * @val: the value to be examined
+> >> > > >     *
+> >> > > >     * Determine the parity of the u8 argument.
+> >> > > >     *
+> >> > > >     * Returns:
+> >> > > > - * 0 for even parity, 1 for odd parity
+> >> > > > + * false for even parity, true for odd parity
+> >> > > 
+> >> > > This occurs somehow inverted to me. When something is in parity means that
+> >> > > it has equal number of 1s and 0s. I.e. return true for even distribution.
+> >> > > Dunno what others think? Or perhaps this should be dubbed odd_parity() when
+> >> > > bool is returned? Then you'd return true for odd.
+> >> > 
+> >> > OTOH:
+> >> > 
+> >> >   - '0' is an even number and is returned for even parity,
+> >> >   - '1' is an odd  number and is returned for odd  parity.
+> >> 
+> >> Yes, that used to make sense for me. For bool/true/false, it no longer does.
+> >> But as I wrote, it might be only me...
+> >
+> >No strong opinion on this from me either, I'd guess existing practice 
+> >with other parity functions should probably control. (If a coherent 
+> >praxis exists.).
+> >
+> >Thanks,
+> >
+> >	Ingo
+> 
+> Instead of "bool" think of it as "bit" and it makes more sense
 
-That's not technically correct any more.
+So, to help people thinking that way we can introduce a corresponding
+type:
+        typedef unsigned _BitInt(1) u1;
 
-GCC has introduced hardened bools that intentionally have bit patterns
-other than 0 and 1.
+It already works for clang, and GCC is going to adopt it with std=c23.
+We can make u1 an alias to bool for GCC for a while. If you guys like
+it, I can send a patch.
 
-https://gcc.gnu.org/gcc-14/changes.html
+For clang it prints quite a nice overflow warning:
 
-~Andrew
+tst.c:59:9: warning: implicit conversion from 'int' to 'u1' (aka 'unsigned _BitInt(1)') changes value from 2 to 0 [-Wconstant-conversion]
+   59 |         u1 r = 2;
+      |            ~   ^
+
+Thanks,
+Yury
