@@ -1,156 +1,150 @@
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A1EE1C860C
-	for <brcm80211@lists.linux.dev>; Fri,  7 Mar 2025 18:30:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4BB7241C87
+	for <brcm80211@lists.linux.dev>; Fri,  7 Mar 2025 18:50:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741372220; cv=none; b=WcEPnnsZLKEJ4jUoCZMS3z4E5v+VWBL7yKZ5T8OjXv6NtdINt6dXiqc/0C6r2/zN5RfTiojIbBioYLXYaUXBegRacqe8m9nUnxlMPulr5L86afCmTUUXu4a6uyy/JGBj8tYG91OENfGGyPORNrr3pTPWngDd1Yqf8bmJBi5ltYk=
+	t=1741373402; cv=none; b=AwMDuqTIsDjc8KBuqAWqkClsmJZyL+If2PilQw4rluTwCdJC1L4Xl8xNvkkiW8ZNu+ZJ/QHp0VkNAuajND56J2TrRgg8U2NeYDFzk7NU+17iR4z++fYYZLaPr+iJX3Y2e7n9KK4TcRpdpgvk6PPYUNQK2F+eyW0euvd0mDzoIY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741372220; c=relaxed/simple;
-	bh=EG2i3mXMsc7HiAgkyOkrmMVNlKKHXZ/6dKrOfBJXUBI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MeahBgH7BVxU3KigZT2S1O7bZRwH86Yas7TnhxOmL81dE8NpksIGoYFyilgjSxrE73pPUJfzDpFwUZ/AFDWF/8P3ohKYq2KSdnW/eT/CKyoQ1dl+EC0PcA+gucE8UWBOQ6oAM5KrIappZqBrjPDdkkBnwUrRaMYRfsRbTNptDRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LolRwuWy; arc=none smtp.client-ip=209.85.214.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1741373402; c=relaxed/simple;
+	bh=iY8btfX+g/V/cLT+RlidyZhd+i1kGYYOkkkl+VytfXM=;
+	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
+	 In-Reply-To:Content-Type; b=uoo6oc3rBDSSmdqysNVdc5rm5dDKsDAsOUPJmgNaZnwMGeAYeYxAYciS7jjbQlfBW79S14PdzpQYqtPY7M9gd8cTNo1uf4tBfdtW8ndRGOuIJ/uKEGP7rocr0yYyFoWclgJZv9I/erbjCpZH4mLmIGeLMr2GJrgPY58BNa0NSsw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=citrix.com; spf=pass smtp.mailfrom=cloud.com; dkim=pass (1024-bit key) header.d=citrix.com header.i=@citrix.com header.b=SM5K2orU; arc=none smtp.client-ip=209.85.221.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=citrix.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cloud.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LolRwuWy"
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2232aead377so45522315ad.0
-        for <brcm80211@lists.linux.dev>; Fri, 07 Mar 2025 10:30:18 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=citrix.com header.i=@citrix.com header.b="SM5K2orU"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3911748893aso1563292f8f.3
+        for <brcm80211@lists.linux.dev>; Fri, 07 Mar 2025 10:50:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741372218; x=1741977018; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=ADljs+6QUrhT8gv23eyNcU2smhHAIyZh+jPjPfAngag=;
-        b=LolRwuWyPIJhh2Toj7RH+NfaDzYjg+qutlNlbXzjQv3NLjeNdIc71D1FBtoqNbsOjq
-         jfaCJ7p6IllcgDhtnexwvfuSOkjQG9WW3RtEsH6OBF59TAzLq8OaZiMQfNO2hdRijG9I
-         nagPBiqy90qOjfAoY7TWEmbDZ63iIv+Hgxb2+jrydKpioIYfuFFnZU4S1ekPBP0C9/OK
-         vVUAogFRx/+2QXgDD75EJfppBBkJal8oEAt4fl4KVrVzjQwU6LNrqjIqO6+doG+e/EhS
-         gp5jU/dk81KQJkllSsxguVbnYRifhC1YWXRvXM/uN7eR1q3anzsFzS9ulXOmZmOYG1+f
-         HQIw==
+        d=citrix.com; s=google; t=1741373399; x=1741978199; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:subject:references:cc:to:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=iY8btfX+g/V/cLT+RlidyZhd+i1kGYYOkkkl+VytfXM=;
+        b=SM5K2orUPDCsKSdiIo+EnWEEGUq3n+KNcU6kXgWKNREeM5cQbu/O3Gb8G9MrCfU5tD
+         NDT4W/CV7LmmwjgbFpO/EP6TmshI3zTYY6yiOrd/GbMD2J/yetrwDbXWVMufxXaRVlP0
+         1qjgwbNGlVwtXSpCRnIZJy4kwDEqay1/dFr3o=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741372218; x=1741977018;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ADljs+6QUrhT8gv23eyNcU2smhHAIyZh+jPjPfAngag=;
-        b=sG6n270K7TbCND61Vrzk4MfUAOyqFKA1L2/1PTHfQvEdpaTQ3DzqVNr+i8OWx1P2QQ
-         fe9aGBXu5yU2iLg4890pYpxb8M7ZtjF9EX0SlLozKsdlFcJhcqYnfvR+j/7CRe7BLjAn
-         m7/mMJai3+A5LMGWhbtoIpo2cI0Eg31UCgb1EwAYehLhO4IqYeLyK7L3SGFe1psHcRrL
-         4+g8028ZLvYhM+LlRvXcFDpywytKHK/mbdjGL7VctXBj22vlNDtoQWj5KflMVwCDkMDs
-         1ANUP9YQdf/YW27FuUHqajoIioDeZxIF5zuZU0gQTUfQ7B/2fMlELMBZMIeG8nVrJFAJ
-         gVcQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV5Dn+/cohvIPnslcEZz+XevzLgvSq5eX8JxK4OfrptMZv8RpL01A/aGBMHt87klKHJquWZ+J8xVyM=@lists.linux.dev
-X-Gm-Message-State: AOJu0Ywb8fZjiTJpx69qFFjLqC/v/NSuE1XovcckuXRQ9iT30Qq5SMoL
-	KtVwhcJVdtZWjRl17tQpYE9jbMRIos58pAKRCZGecd37P77vaiIA
-X-Gm-Gg: ASbGncsOHPzxYpo8eqPASA3ej00/ZwZQLihuocY1hikN21cTJdUUVyTv7vI7tlBpoPf
-	ok9jlLx4Wd+Q2TPgSZ6YVVjrij7VDP4rCywE8S1iyODsKnurbx+mvOlFlAVZBqtDDbDn4nmbUEr
-	09NYfmgoQ/jEtFyIrGAixKj+IH8ykfIgmreo37IKNvv8bq2XTkOw2L/ChwK5AjFeGA3evV7hi2F
-	8Nea8Qqb3s01f/CoHvLmb0Vvit5w1qES6wfRIESuyQRrADqSbSxrJsz9PMCPsaz3ZlOvSMbfiSE
-	4Jxli4yphyvUEfYadkUxKc0/h5dgYyuv7D1nBSUp0xbOQa+kr9k2h4g+3UuWlIapkTPlAZHb
-X-Google-Smtp-Source: AGHT+IHgn9VYVN+pY6VrcRSpGmZ1OnVGCCY/wp+YVj8MkJGAiDKX4lh0yxX6MBBGMkwIe7/wx2wiPQ==
-X-Received: by 2002:a05:6a00:139a:b0:736:520a:58f9 with SMTP id d2e1a72fcca58-736aaadf082mr5830777b3a.17.1741372218220;
-        Fri, 07 Mar 2025 10:30:18 -0800 (PST)
-Received: from visitorckw-System-Product-Name ([140.113.216.168])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-736984f7268sm3588473b3a.116.2025.03.07.10.30.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Mar 2025 10:30:17 -0800 (PST)
-Date: Sat, 8 Mar 2025 02:30:07 +0800
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
-To: Yury Norov <yury.norov@gmail.com>
-Cc: Jiri Slaby <jirislaby@kernel.org>, tglx@linutronix.de, mingo@redhat.com,
-	bp@alien8.de, dave.hansen@linux.intel.com, x86@kernel.org,
-	jk@ozlabs.org, joel@jms.id.au, eajames@linux.ibm.com,
-	andrzej.hajda@intel.com, neil.armstrong@linaro.org,
-	rfoss@kernel.org, maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org, tzimmermann@suse.de, airlied@gmail.com,
-	simona@ffwll.ch, dmitry.torokhov@gmail.com, mchehab@kernel.org,
-	awalls@md.metrocast.net, hverkuil@xs4all.nl,
-	miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
-	louis.peens@corigine.com, andrew+netdev@lunn.ch,
-	davem@davemloft.net, edumazet@google.com, pabeni@redhat.com,
-	parthiban.veerasooran@microchip.com, arend.vanspriel@broadcom.com,
-	johannes@sipsolutions.net, gregkh@linuxfoundation.org,
-	akpm@linux-foundation.org, hpa@zytor.com, alistair@popple.id.au,
-	linux@rasmusvillemoes.dk, Laurent.pinchart@ideasonboard.com,
-	jonas@kwiboo.se, jernej.skrabec@gmail.com, kuba@kernel.org,
-	linux-kernel@vger.kernel.org, linux-fsi@lists.ozlabs.org,
-	dri-devel@lists.freedesktop.org, linux-input@vger.kernel.org,
-	linux-media@vger.kernel.org, linux-mtd@lists.infradead.org,
-	oss-drivers@corigine.com, netdev@vger.kernel.org,
-	linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
-	brcm80211-dev-list.pdl@broadcom.com, linux-serial@vger.kernel.org,
-	bpf@vger.kernel.org, jserv@ccns.ncku.edu.tw,
-	Yu-Chun Lin <eleanor15x@gmail.com>
-Subject: Re: [PATCH v3 00/16] Introduce and use generic parity16/32/64 helper
-Message-ID: <Z8s7L+ZCI/yM5qm4@visitorckw-System-Product-Name>
-References: <20250306162541.2633025-1-visitorckw@gmail.com>
- <3dfc81eb-caa1-42fe-8fd6-61101de0ef13@kernel.org>
- <Z8sW4c5LxV-ITdCi@thinkpad>
+        d=1e100.net; s=20230601; t=1741373399; x=1741978199;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:subject:references:cc:to:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=iY8btfX+g/V/cLT+RlidyZhd+i1kGYYOkkkl+VytfXM=;
+        b=bk/Lo+4qbaQcNMNKfvjdmw+X+xaSGbP2TYaIIB5rMb5cknQ2YBzvMa5hgH1G6A5ifO
+         f0u+cQpTGb+xHKK1fBjFOrZGWFDiB9GfPgAePrYVzTZM+iA/gML2EyFUPLMCbYiAk37f
+         CeKuCMQNNXlBHsyb9H2b5GJj4ci2WSGBik+xsZ/spTZ9ED7KHTYw5dNTHFImsZw7uYBd
+         EAuxMxS1BnTj5a71Elq4cfGXvoHmejxIsh5sVv7Ed/cwN58b4TH9EaCiTVi45NAuw+cb
+         WOFVmorh7yG+qgn9usqtENE7FZ2W1046Y6jcSJylkBlcGIzpvx7KpySIrVionfWU3ymr
+         ZqEQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWvo9fHD6z4XHGKBctlGPh7f1Z9JUT9DxyCc4UC8EQD9ic2Bg8chbWFHFWfIM4JwIYmtNCtZSc+Kz4=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxVOrppQGprcwMOGaO43qq/L1cV7wKEWuiTnLOVe80egJukjp8Y
+	B1Dx2uH+5RDxsC7RUZ8UhjVMWehVtAma1O/M72vjB9bG3TjY1u+ZhLSK/HyKAfQ=
+X-Gm-Gg: ASbGncv1fNcNYeWTUs3Bf12WyWyrGwGuQrhnDH7zJsbp6iOMcEwkMCPdtf7+n3jShhY
+	kIEEm+G/TB703sjivFs0QRpvrDIIKom1WzLMaZ8+FSUHsSI9V3QAjS+uoD1yzpd5jieTRmxMvZe
+	pIBOEm7WkcM4j96DY9V5ODwxlCSSwgKPj6sJj4WgUuwfXx5EdWXaTXbsmbkVzh5s0V6tn/arx6a
+	VC9M+T7Yyt159o8keLtEaw1o1sY4Qbb+YIdXnMBFnzDCBMhgrUQj+NJMOV8hRiY7Xvmu3xFk5HS
+	YnhylvD417vuw54b78gjzGUR7+1rYR1mfbpZSnjjNeTO+xa/euV6mvB0B2Lfgyy1KBZa1vM1Bc+
+	PdHSoFcj1
+X-Google-Smtp-Source: AGHT+IGmeOPTWjHa0Be27hfI/1kYnZp0UHx0P0R/hj81LDLYhuR4kj7WMmpAAdsX/afUuDK/xqqF5Q==
+X-Received: by 2002:a5d:59a7:0:b0:391:1139:2653 with SMTP id ffacd0b85a97d-39132de145bmr3407200f8f.52.1741373399039;
+        Fri, 07 Mar 2025 10:49:59 -0800 (PST)
+Received: from [192.168.1.10] (host-92-26-98-202.as13285.net. [92.26.98.202])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3912bfba848sm6051474f8f.4.2025.03.07.10.49.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 07 Mar 2025 10:49:57 -0800 (PST)
+Message-ID: <efc2ee9d-5382-457f-b471-f3c44b81a190@citrix.com>
+Date: Fri, 7 Mar 2025 18:49:56 +0000
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Z8sW4c5LxV-ITdCi@thinkpad>
+User-Agent: Mozilla Thunderbird
+To: hpa@zytor.com
+Cc: Laurent.pinchart@ideasonboard.com, airlied@gmail.com,
+ akpm@linux-foundation.org, alistair@popple.id.au, andrew+netdev@lunn.ch,
+ andrzej.hajda@intel.com, arend.vanspriel@broadcom.com,
+ awalls@md.metrocast.net, bp@alien8.de, bpf@vger.kernel.org,
+ brcm80211-dev-list.pdl@broadcom.com, brcm80211@lists.linux.dev,
+ dave.hansen@linux.intel.com, davem@davemloft.net, dmitry.torokhov@gmail.com,
+ dri-devel@lists.freedesktop.org, eajames@linux.ibm.com, edumazet@google.com,
+ eleanor15x@gmail.com, gregkh@linuxfoundation.org, hverkuil@xs4all.nl,
+ jernej.skrabec@gmail.com, jirislaby@kernel.org, jk@ozlabs.org,
+ joel@jms.id.au, johannes@sipsolutions.net, jonas@kwiboo.se,
+ jserv@ccns.ncku.edu.tw, kuba@kernel.org, linux-fsi@lists.ozlabs.org,
+ linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-media@vger.kernel.org, linux-mtd@lists.infradead.org,
+ linux-serial@vger.kernel.org, linux-wireless@vger.kernel.org,
+ linux@rasmusvillemoes.dk, louis.peens@corigine.com,
+ maarten.lankhorst@linux.intel.com, mchehab@kernel.org, mingo@redhat.com,
+ miquel.raynal@bootlin.com, mripard@kernel.org, neil.armstrong@linaro.org,
+ netdev@vger.kernel.org, oss-drivers@corigine.com, pabeni@redhat.com,
+ parthiban.veerasooran@microchip.com, rfoss@kernel.org, richard@nod.at,
+ simona@ffwll.ch, tglx@linutronix.de, tzimmermann@suse.de, vigneshr@ti.com,
+ visitorckw@gmail.com, x86@kernel.org, yury.norov@gmail.com
+References: <4732F6F6-1D41-4E3F-BE24-E54489BC699C@zytor.com>
+Subject: Re: [PATCH v3 00/16] Introduce and use generic parity16/32/64 helper
+Content-Language: en-GB
+From: Andrew Cooper <andrew.cooper3@citrix.com>
+Autocrypt: addr=andrew.cooper3@citrix.com; keydata=
+ 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
+ 6+ahAA==
+In-Reply-To: <4732F6F6-1D41-4E3F-BE24-E54489BC699C@zytor.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Yury,
+> (int)true most definitely is guaranteed to be 1.
 
-On Fri, Mar 07, 2025 at 10:55:13AM -0500, Yury Norov wrote:
-> On Fri, Mar 07, 2025 at 07:57:48AM +0100, Jiri Slaby wrote:
-> > On 06. 03. 25, 17:25, Kuan-Wei Chiu wrote:
-> > > Several parts of the kernel contain redundant implementations of parity
-> > > calculations for 16/32/64-bit values. Introduces generic
-> > > parity16/32/64() helpers in bitops.h, providing a standardized
-> > > and optimized implementation.
-> > > 
-> > > Subsequent patches refactor various kernel components to replace
-> > > open-coded parity calculations with the new helpers, reducing code
-> > > duplication and improving maintainability.
-> > > 
-> > > Co-developed-by: Yu-Chun Lin <eleanor15x@gmail.com>
-> > > Signed-off-by: Yu-Chun Lin <eleanor15x@gmail.com>
-> > > Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-> > > ---
-> > > In v3, I use parityXX() instead of the parity() macro since the
-> > > parity() macro may generate suboptimal code and requires special hacks
-> > > to make GCC happy. If anyone still prefers a single parity() macro,
-> > > please let me know.
-> > 
-> > What is suboptimal and where exactly it matters? Have you actually measured
-> > it?
-> 
-> I asked exactly this question at least 3 times, and have never
-> received perf tests or asm listings - nothing. I've never received
-> any comments from driver maintainers about how performance of the
-> parity() is important for them, as well.
-> 
-To be clear, I use parityXX() was mainly because you dislike the >>
-16 >> 16 hack, and I dislike the #if gcc #else hack—not due to
-performance or generated code considerations.
+That's not technically correct any more.
 
-> With the absence of _any_ feedback, I'm not going to take this series,
-> of course, for the reason: overengineering.
-> 
-I'm quite surprised that three separate one-line functions are
-considered overengineering compared to a multi-line approach that
-requires special handling to satisfy gcc.
+GCC has introduced hardened bools that intentionally have bit patterns
+other than 0 and 1.
 
-> With that said, the simplest way would be replacing parity8(u8) with
-> parity(u64) 'one size fits all' thing. I even made a one extra step,
-> suggesting a macro that would generate a better code for smaller types
-> with almost no extra maintenance burden. This is another acceptable
-> option to me.
-> 
-I'm fine with unifying everything to a single parity(u64) function.
-Before I submit the next version, please let me know if anyone has
-objections to this approach.
+https://gcc.gnu.org/gcc-14/changes.html
 
-Regards,
-Kuan-Wei
+~Andrew
