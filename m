@@ -1,67 +1,65 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9126E26989D
-	for <brcm80211@lists.linux.dev>; Thu, 13 Mar 2025 16:24:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63E4BAD5E
+	for <brcm80211@lists.linux.dev>; Thu, 13 Mar 2025 16:26:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741883084; cv=none; b=cBCvIO8Yc7tavbznBrYxYv++4EspjkhkZnlR5GhHVk5Xai6726b3JbcPwdLo0KgrLsb/ygTj+3ktCMEl79z7lphmng4XnJh6/aaQ2/fzZBpMDDGNwnG1ryGUBMg/ssYUFHIybCcouo5y7n801q+PS9pxUijNoe6oddvnSXR+qYM=
+	t=1741883196; cv=none; b=SWXUGZh4rS1gFATBceBUrgicilZR8G/TjKlBJRmm1GjaZ8qQ7rCYb8dbrDhPgGpE2y9eSWY6gt2ZUW6rh4sWDvuBkwsGUqvsi2yqwOAzUlWReGgvVhuC/skMpOksl8ownY1p1v52QE/gkyo3Xj8RzSIcY/v/PcQ0EIjsq9csf8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741883084; c=relaxed/simple;
-	bh=qRKmvdz41Z9reFxLxCZQ5RSEmJTdaZd8ctgs5m87/cU=;
+	s=arc-20240116; t=1741883196; c=relaxed/simple;
+	bh=QtQeFXXUyqLXG+oE2hxpLfZohC2eCqSYFWR9RbXR29s=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=T8QrlLM1alUUg/I8SBoygQwS5VkcNC5IITPGcDNppFscESx3muC15P4A8zzUzd5f+uWOrUyo5s1vW/SYQAZS8dKaM2mfoG2MtkC/EX16LOLlcX6o0Zi2i9uGmTAMZiZnrcw8jD8MX6GSZqLe51Occo1shzjGVMd7UUi1TUBviZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GZ5tuH5N; arc=none smtp.client-ip=209.85.214.169
+	 Content-Type:Content-Disposition:In-Reply-To; b=n0h9JscqjkKhgLsggA/EhNdMYDZAGoO/K6MGTyo6fX4z96OBkK+7tT2ruOKOuiiGHpPrnUjkyCrYWL7zY6d3T5tVkCFDMA1YPcrhnRnlxYX5yJd6FxuzOj5UjTV3Q8OfWpULDMZXGFX+Qr63uOcToZ1Xe4OOaJnZEfMlrB+g6qg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XbjAtxgA; arc=none smtp.client-ip=209.85.216.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GZ5tuH5N"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-219f8263ae0so22876855ad.0
-        for <brcm80211@lists.linux.dev>; Thu, 13 Mar 2025 09:24:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XbjAtxgA"
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-2ff784dc055so2082198a91.1
+        for <brcm80211@lists.linux.dev>; Thu, 13 Mar 2025 09:26:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741883082; x=1742487882; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1741883194; x=1742487994; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=gfjeDfcFtBUkNo/zS3F1TWi9ohbnRv2k3DpKMTE74P8=;
-        b=GZ5tuH5NhFmc7CAWSqGswkIH5XZ/ClOG5i8eSgM47vPXrJIiXO9Okht6glY9XVlr87
-         d9vjPP0UriunpLDFSKB1mVs3lLOZkv6M3DiWLhMFCV/Zlb+aUqENqrAi6DsmHuYO11Z3
-         VDYVuHCWSe1fYbzy4A2o8VzBr0mjxPHVH2WGRJu7IwI5iwNdnOHIJBCKniHjdC9J/FOn
-         oZyWk+CSw6cP2yaATP01RGl0IpkKCrfTcB0U56MnXtIFjpiI+gMzyw7jCI1T002kQrH/
-         y8FfcylR50hoUdRbCJoJWA4tX/LJM0b9H+D8yFzEQohZ/qcedS23idp85KErQr5Ft/vM
-         YCmQ==
+        bh=6Dj58qb5Fdu7jAiSs8njputJgR05+QajXZnrH30MR1c=;
+        b=XbjAtxgAr0XHKnaePLt5KOOD1tI917t+UycJt+TfmbchiqMRo0lNH7ST+PN75QxZPB
+         Xy9YLiEQy67R9UHSqNUYteYnZwVihai+B4HF8kRubX/PLcGRhSYtycFc+RGqrmDKSFxN
+         fEQDRPjvUHNsWrnV1OsP72AvWCXkviW6OlOEEA8P1rHco9/WwdeAJkK55ydZ5UK39ihb
+         k9gY0UF+6g32nqC8wtsh+P9+yhBfS50l3rCgrx2J2pzASJZfrwAXglbN+bgTZNt7X9Xm
+         7cxTXYRIMfMbKgXGMKn6nJKaUbKVb9E6b602NNyFVYDvgVC8gQ4HlcYwJGAhz80JDUmv
+         stPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741883082; x=1742487882;
+        d=1e100.net; s=20230601; t=1741883194; x=1742487994;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=gfjeDfcFtBUkNo/zS3F1TWi9ohbnRv2k3DpKMTE74P8=;
-        b=Gff2rZXjlIJsdLzs/xIgdNfnbUJZ5OlHXGP4wnve8e4X92Pl755Me1PfU8EMz1qOdy
-         f+3wy00mUBETGbre1psWHioy16q+VfqG1VW4wST4pdOV6K/Lw+Gki5PTnfZvFWB+YKTI
-         APiIQBSHfTLDuFqrLk3yDd3j7Uzam1Q52yQxHejVGhmpnrtwiJMayLRWGquhQdVZIqS1
-         /Y9xs7FqzOZmY2KWR+fQq+w/uFcHz7o5XXE+qr56DDRRMA6JrZRnf3J8q3l/zg+1Hy9H
-         9j5ZkM8C7kpZv1y7m/2LR6oX2qc2aMvuhis/Ig8/B+sQ2b9GXFcRroPgocwY3s0VSMIJ
-         Xi+g==
-X-Forwarded-Encrypted: i=1; AJvYcCUlhUXs+9pVHGZYTLyvDCjaKxJfayB6BqQIJXfGUp9BMxOAk3unGgj5G/8fhS5YnUdJOHZzvCHS+kE=@lists.linux.dev
-X-Gm-Message-State: AOJu0YznMRunwBIwMfDJZaD+wCtfHBr4sGHtXcJPayzP+VR9I9+uf1HT
-	fqV9427PD/oa4x8mGs0fTH21Ac9DGi3slFrmlZJ1fx6aAbep3o4K
-X-Gm-Gg: ASbGncvY1/006nNGxi8jujsz6Uu4nHqNIgBjvkgMHciFRdeMukF+0D4F3+XosUtUTSE
-	wgiex1W/3FuW2Rebu8mIOxU1mQR7RiYE7vvZZTWWaZPPSaUI1Bvk/u0u+Bv2lBHYPVG4XIGOVAf
-	Ou0DdMEARMzbMqnkQyB7Y4YDuERGyTapvqV3mV0NZnviWuqRpkqo+hS2MCRDe7skGuXhPsXtAPF
-	CY1mf1quNXiPj1CqFebfS0hrBRQ4Cp0NBmFH+W4MhEOHJ6MUxjajeXygiC3uJZN7ni/EEXoYfF9
-	9tZMamWuJ6xu2GqP0e/EnMrG+YlP9aTdkg6fBNoyQkP4fxlxue5Lvg0=
-X-Google-Smtp-Source: AGHT+IEhm2UlrxnESPtEwBvMI/fgf4613dWJojNHjH0dA0YyQIoHXBBX22mwSMAlbcl6B7SrptBmaw==
-X-Received: by 2002:a17:902:f552:b0:224:216e:332f with SMTP id d9443c01a7336-225931ad2bemr163943215ad.48.1741883081419;
-        Thu, 13 Mar 2025 09:24:41 -0700 (PDT)
+        bh=6Dj58qb5Fdu7jAiSs8njputJgR05+QajXZnrH30MR1c=;
+        b=MnfHIW3M9bbMus6H4OVm9EzDNv6fJMVedkQatoRPxhEQR8qb9ALaHb/FccHmtEeEf3
+         +znx+MsaQ0WOsd6cOlTN1fEsaVfVPOTbylcXJavJxhhoPc+dip57VH1gvyT31cV+n6fm
+         BGWh4zwrvVtZ5am54XSPS2QMMFPZZdWtWXGLzSbxNZly+9fANyFRZLTIlJKNesmoDGqY
+         HS+esDt5tTqqneYIrZDHQKKp4GtFYBXThr/1qiHDafd1KnIX4zy3IQh6HIMSzE+xFJ7w
+         s2m8PMHr3de8sm1YtJYGPIc2F++sdKzB0lWELd+4syOQk+mzbe8raBXZW8ftSYEGNUSE
+         iLAA==
+X-Forwarded-Encrypted: i=1; AJvYcCWJ5P6nywZ79e1T/iwoHjLeDQnW+IjwTWt69ZxXUeaHnjJ0L3++SO5bLT1au87z1/jZQyA7Ra7GdgE=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyoQniY8Bthmgx9fdpWFXkWLTslnbCzfV01azuYZwb4Eo7Ka1G7
+	NZ9gB4ril6LKcLhr0k/MFr4CEyeCAKVeHRRUvhZIo9YGb5qlkBh8
+X-Gm-Gg: ASbGncvhqDIP65hQW/HTF971QvEhEjtH6wWPCZaDwMgbGdPvNmdm2tPsiFgcQZIoVV/
+	wn/kgi7b5drkbgOqdWcg4klhTkFyaR7TUjcuFg1NCzc2aC+qXnb+86ZeSVbto6cMfsQIVgSI/dy
+	lUd1IG6xBoEvNvjaect0r22m4Z/vQYaY8iBvqfM0AqPsUQQWHXmIaw941TAra9hNHrJFi4/kLNF
+	CmKsDF+rJKYQ6o8gzhEd3bm9kmLQ7yLZLsnvih9pwLEuULo1cERtszV64XAyDIVrmZS7v191eWK
+	j5piLdv8dQ+cS0rIZnkdniWIxYCrJOiHGnehH0JhelZo
+X-Google-Smtp-Source: AGHT+IGQ1B1r23bHH1y7f1P01LiOEnbRiq9HK7MEAu/5nbXG5vCyYer48OQlR5RqnwzzsBUWrNiOAw==
+X-Received: by 2002:a17:90b:3906:b0:2ee:c6c8:d89f with SMTP id 98e67ed59e1d1-300ff0d6160mr17644409a91.14.1741883194498;
+        Thu, 13 Mar 2025 09:26:34 -0700 (PDT)
 Received: from localhost ([216.228.125.129])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-225c6bbcba7sm15241975ad.173.2025.03.13.09.24.40
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-225c6888a02sm15453765ad.40.2025.03.13.09.26.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Mar 2025 09:24:40 -0700 (PDT)
-Date: Thu, 13 Mar 2025 12:24:38 -0400
+        Thu, 13 Mar 2025 09:26:33 -0700 (PDT)
+Date: Thu, 13 Mar 2025 12:26:32 -0400
 From: Yury Norov <yury.norov@gmail.com>
 To: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Jacob Keller <jacob.e.keller@intel.com>,
-	David Laight <david.laight.linux@gmail.com>,
-	Jiri Slaby <jirislaby@kernel.org>, Ingo Molnar <mingo@kernel.org>,
+Cc: Ingo Molnar <mingo@kernel.org>, Jiri Slaby <jirislaby@kernel.org>,
 	Kuan-Wei Chiu <visitorckw@gmail.com>, tglx@linutronix.de,
 	mingo@redhat.com, bp@alien8.de, dave.hansen@linux.intel.com,
 	x86@kernel.org, jk@ozlabs.org, joel@jms.id.au,
@@ -88,15 +86,16 @@ Cc: Jacob Keller <jacob.e.keller@intel.com>,
 	bpf@vger.kernel.org, jserv@ccns.ncku.edu.tw,
 	Yu-Chun Lin <eleanor15x@gmail.com>
 Subject: Re: [PATCH v3 01/16] bitops: Change parity8() return type to bool
-Message-ID: <Z9MGxknjluvbX19w@thinkpad>
+Message-ID: <Z9MHOOfnHnLsnhxu@thinkpad>
 References: <20250306162541.2633025-1-visitorckw@gmail.com>
  <20250306162541.2633025-2-visitorckw@gmail.com>
  <9d4b77da-18c5-4551-ae94-a2b9fe78489a@kernel.org>
  <Z8ra0s9uRoS35brb@gmail.com>
  <a4040c78-8765-425e-a44e-c374dfc02a9c@kernel.org>
- <20250307193643.28065d2d@pumpkin>
- <cbb26a91-807b-4227-be81-8114e9ea72cb@intel.com>
- <0F794C6F-32A9-4F34-9516-CEE24EA4BC49@zytor.com>
+ <Z8ri5h-nvNXNp6NB@gmail.com>
+ <04AA7852-2D68-4B3F-9AA7-51AA57E3D23D@zytor.com>
+ <Z8tJNt83uVBca0cj@thinkpad>
+ <783456A8-67F9-47DD-AB15-914622A921CD@zytor.com>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -105,30 +104,32 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <0F794C6F-32A9-4F34-9516-CEE24EA4BC49@zytor.com>
+In-Reply-To: <783456A8-67F9-47DD-AB15-914622A921CD@zytor.com>
 
-On Wed, Mar 12, 2025 at 05:09:16PM -0700, H. Peter Anvin wrote:
-> On March 12, 2025 4:56:31 PM PDT, Jacob Keller <jacob.e.keller@intel.com> wrote:
+On Fri, Mar 07, 2025 at 11:33:40AM -0800, H. Peter Anvin wrote:
+> On March 7, 2025 11:30:08 AM PST, Yury Norov <yury.norov@gmail.com> wrote:
 
 [...]
 
-> >This is really a question of whether you expect odd or even parity as
-> >the "true" value. I think that would depend on context, and we may not
-> >reach a good consensus.
+> >> Instead of "bool" think of it as "bit" and it makes more sense
 > >
-> >I do agree that my brain would jump to "true is even, false is odd".
-> >However, I also agree returning the value as 0 for even and 1 for odd
-> >kind of made sense before, and updating this to be a bool and then
-> >requiring to switch all the callers is a bit obnoxious...
+> >So, to help people thinking that way we can introduce a corresponding
+> >type:
+> >        typedef unsigned _BitInt(1) u1;
+> >
+> >It already works for clang, and GCC is going to adopt it with std=c23.
+> >We can make u1 an alias to bool for GCC for a while. If you guys like
+> >it, I can send a patch.
+> >
+> >For clang it prints quite a nice overflow warning:
+> >
+> >tst.c:59:9: warning: implicit conversion from 'int' to 'u1' (aka 'unsigned _BitInt(1)') changes value from 2 to 0 [-Wconstant-conversion]
+> >   59 |         u1 r = 2;
+> >      |            ~   ^
+> >
+> >Thanks,
+> >Yury
 > 
-> Odd = 1 = true is the only same definition. It is a bitwise XOR, or sum mod 1.
+> No, for a whole bunch of reasons.
 
-The x86 implementation will be "popcnt(val) & 1", right? So if we
-choose to go with odd == false, we'll have to add an extra negation.
-So because it's a purely conventional thing, let's just pick a simpler
-one?
-
-Compiler's builtin parity() returns 1 for odd.
-
-Thanks,
-Yury
+Can you please elaborate?
