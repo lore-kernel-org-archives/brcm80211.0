@@ -1,263 +1,134 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA3A125FA36
-	for <brcm80211@lists.linux.dev>; Thu, 13 Mar 2025 07:41:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9126E26989D
+	for <brcm80211@lists.linux.dev>; Thu, 13 Mar 2025 16:24:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741851713; cv=none; b=lL40LnbNgoSs0lWQ+789oTvbKO4lzFe8FsEhnHseDaoBzQf6+fvm4N26Gytar5n3/v4T0mcQ7aapv7AjuTiBph8eF+bRZWk9de9d8JBmOVQZGqso6mPGXJt3ydAgs+k+K/9S47rk2+DNqFvGR9IQPOHgPGnZH5Psh4Hq7Qfi42g=
+	t=1741883084; cv=none; b=cBCvIO8Yc7tavbznBrYxYv++4EspjkhkZnlR5GhHVk5Xai6726b3JbcPwdLo0KgrLsb/ygTj+3ktCMEl79z7lphmng4XnJh6/aaQ2/fzZBpMDDGNwnG1ryGUBMg/ssYUFHIybCcouo5y7n801q+PS9pxUijNoe6oddvnSXR+qYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741851713; c=relaxed/simple;
-	bh=y3UJqQA71PliM0uWczOz7c1eEjEc5KAgaQuZkbyvf/4=;
+	s=arc-20240116; t=1741883084; c=relaxed/simple;
+	bh=qRKmvdz41Z9reFxLxCZQ5RSEmJTdaZd8ctgs5m87/cU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HEGAukx8eNt74uiTmn59lG554Dl0j+48k7ap/109XUljK5j3Otxcc6VznPY9M2R5XhwdcZIMEKGsTI4pKisD3uCusBEBZZHMPwuLnzV2y0QLxQ0+EYmD1tBHEV88XO4F0Y+ezcb3v0ngyy59YMctJNG4Z9yi/tzExqxeDVYk5S0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iRVS3gn4; arc=none smtp.client-ip=209.85.214.176
+	 Content-Type:Content-Disposition:In-Reply-To; b=T8QrlLM1alUUg/I8SBoygQwS5VkcNC5IITPGcDNppFscESx3muC15P4A8zzUzd5f+uWOrUyo5s1vW/SYQAZS8dKaM2mfoG2MtkC/EX16LOLlcX6o0Zi2i9uGmTAMZiZnrcw8jD8MX6GSZqLe51Occo1shzjGVMd7UUi1TUBviZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GZ5tuH5N; arc=none smtp.client-ip=209.85.214.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iRVS3gn4"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-224171d6826so14552945ad.3
-        for <brcm80211@lists.linux.dev>; Thu, 13 Mar 2025 00:41:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GZ5tuH5N"
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-219f8263ae0so22876855ad.0
+        for <brcm80211@lists.linux.dev>; Thu, 13 Mar 2025 09:24:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741851710; x=1742456510; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=q+GuHgctQUjPu8SmpY2/kJHnsOJEHrIhv+etu/GaNm0=;
-        b=iRVS3gn4/9KDBRsi4h7+pmjJeuaRwVOUh3XKZfTIdXYIeMpxajJOrlmM24N5Dn/t8U
-         al0wKiswlrrg8vxb8BezweqVcEyzNOPJS4j5p0wiYrFny0k1U09eANR9r7tdxulpKJPp
-         HeeddSJiYxGPa9KL0pfdvdEb4RTCWHadA9p1CiazrSlY8sE24XcLQUi+3rfVklJW6mOa
-         aBw+LzC077N2xSsETEoSUkiqOp/sK9MtKIj08LGQb9wY0d1KOxdDqmC9LW88FA9Mgi2Q
-         yjHoTWRV8LLr7K4aNKd9zz0pPoYuNY/yRDq8I7EhEb10gCaIKZiSg9oPWvb4Cw+39wap
-         XbEA==
+        d=gmail.com; s=20230601; t=1741883082; x=1742487882; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=gfjeDfcFtBUkNo/zS3F1TWi9ohbnRv2k3DpKMTE74P8=;
+        b=GZ5tuH5NhFmc7CAWSqGswkIH5XZ/ClOG5i8eSgM47vPXrJIiXO9Okht6glY9XVlr87
+         d9vjPP0UriunpLDFSKB1mVs3lLOZkv6M3DiWLhMFCV/Zlb+aUqENqrAi6DsmHuYO11Z3
+         VDYVuHCWSe1fYbzy4A2o8VzBr0mjxPHVH2WGRJu7IwI5iwNdnOHIJBCKniHjdC9J/FOn
+         oZyWk+CSw6cP2yaATP01RGl0IpkKCrfTcB0U56MnXtIFjpiI+gMzyw7jCI1T002kQrH/
+         y8FfcylR50hoUdRbCJoJWA4tX/LJM0b9H+D8yFzEQohZ/qcedS23idp85KErQr5Ft/vM
+         YCmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741851710; x=1742456510;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=q+GuHgctQUjPu8SmpY2/kJHnsOJEHrIhv+etu/GaNm0=;
-        b=ejiqJxX5LCiuBOPvcU3xYj45xhEB7JGxCfKkjRyOcfj9CBNG5ffg8Efw5JU1s9ul7M
-         g5PeM202kb3KtIjRgSiK7QH5m1sd2QU/HVPdWJHPgPJ2/iK7uBhNdxKXYBI31oUpCitw
-         Nx/JjjvgCYNlkxHPkjNZRFlTlfI9E/jsUVIJUvXLw4AcTT7n82HM2oewv4sJ3IfsUgiL
-         BCD0SIFIltqF307cPtZhpYQQCITy5KCAZbPOE6x7syiaIC0T4FuThMJN/e11uL9jBiPJ
-         9IJPtIfAmagFV2n/yMIldlVu3mnW+YX6oeTwCAmMLr6aowR9RiaCQq4OY8b8jHVDFQMQ
-         YK/g==
-X-Forwarded-Encrypted: i=1; AJvYcCXov6uy77tp52nlx7J8MmMDaXYum+4WVPu3GhN2ZWnkzvDzKprQTcKbOv5waF5Kk0DYGhvpOujI2d8=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy2WvYnX+qozkkUzVugMRyQMqdaoPLM4AmtJ5MSkQztoh3TP0Ne
-	N+XM8vocvrlBvRdHU409tI0NMitc5vOvVOKjKl1cjnSIpFPv6O+Z
-X-Gm-Gg: ASbGncuC0Oh9XnX/BoMVkwaJU1cLGE7f8MPWUj1YgWefq/jo/Zw/1/DtMFPpbuYwlnl
-	Xy0R56XkdR586JT/0RP4wtb/ERiU7dA+6/sF4hvCSx3pOGxMyZEgzBOZTjTpbqDJsr30ZeD82Dh
-	7X7k/YAyhSN55yKhdewJ17VGjhLiXovp6z77A69EA0JdwpJ8gn5nJyNzvaXQVHgOwn29Pa5YPo7
-	Mdr5F2lQspqMxDW5qMIrKFlTMoqsIb+zCvf1NnQ8SyP/5MByjY56D0pD2ayJtq0IP3r8mp++bYt
-	0InLhH7mqQFb/X3UNUgHeycDe+4nPCTBoNVKsDT2gOzA48ZmjoTPl5uwVQW2QODh7G2DZDoK
-X-Google-Smtp-Source: AGHT+IEOnE1UaBfwg9ZU2VkCWkw1Gp3ScOp6qbkmR7UKjY7r7OwrFGhsef4Fbyqmd9ry/T9u8Qiz3A==
-X-Received: by 2002:a17:902:e5d2:b0:21f:859a:9eab with SMTP id d9443c01a7336-22428ab8647mr372797915ad.37.1741851709556;
-        Thu, 13 Mar 2025 00:41:49 -0700 (PDT)
-Received: from visitorckw-System-Product-Name ([140.113.216.168])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-225c6888d9bsm7284085ad.49.2025.03.13.00.41.40
+        d=1e100.net; s=20230601; t=1741883082; x=1742487882;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gfjeDfcFtBUkNo/zS3F1TWi9ohbnRv2k3DpKMTE74P8=;
+        b=Gff2rZXjlIJsdLzs/xIgdNfnbUJZ5OlHXGP4wnve8e4X92Pl755Me1PfU8EMz1qOdy
+         f+3wy00mUBETGbre1psWHioy16q+VfqG1VW4wST4pdOV6K/Lw+Gki5PTnfZvFWB+YKTI
+         APiIQBSHfTLDuFqrLk3yDd3j7Uzam1Q52yQxHejVGhmpnrtwiJMayLRWGquhQdVZIqS1
+         /Y9xs7FqzOZmY2KWR+fQq+w/uFcHz7o5XXE+qr56DDRRMA6JrZRnf3J8q3l/zg+1Hy9H
+         9j5ZkM8C7kpZv1y7m/2LR6oX2qc2aMvuhis/Ig8/B+sQ2b9GXFcRroPgocwY3s0VSMIJ
+         Xi+g==
+X-Forwarded-Encrypted: i=1; AJvYcCUlhUXs+9pVHGZYTLyvDCjaKxJfayB6BqQIJXfGUp9BMxOAk3unGgj5G/8fhS5YnUdJOHZzvCHS+kE=@lists.linux.dev
+X-Gm-Message-State: AOJu0YznMRunwBIwMfDJZaD+wCtfHBr4sGHtXcJPayzP+VR9I9+uf1HT
+	fqV9427PD/oa4x8mGs0fTH21Ac9DGi3slFrmlZJ1fx6aAbep3o4K
+X-Gm-Gg: ASbGncvY1/006nNGxi8jujsz6Uu4nHqNIgBjvkgMHciFRdeMukF+0D4F3+XosUtUTSE
+	wgiex1W/3FuW2Rebu8mIOxU1mQR7RiYE7vvZZTWWaZPPSaUI1Bvk/u0u+Bv2lBHYPVG4XIGOVAf
+	Ou0DdMEARMzbMqnkQyB7Y4YDuERGyTapvqV3mV0NZnviWuqRpkqo+hS2MCRDe7skGuXhPsXtAPF
+	CY1mf1quNXiPj1CqFebfS0hrBRQ4Cp0NBmFH+W4MhEOHJ6MUxjajeXygiC3uJZN7ni/EEXoYfF9
+	9tZMamWuJ6xu2GqP0e/EnMrG+YlP9aTdkg6fBNoyQkP4fxlxue5Lvg0=
+X-Google-Smtp-Source: AGHT+IEhm2UlrxnESPtEwBvMI/fgf4613dWJojNHjH0dA0YyQIoHXBBX22mwSMAlbcl6B7SrptBmaw==
+X-Received: by 2002:a17:902:f552:b0:224:216e:332f with SMTP id d9443c01a7336-225931ad2bemr163943215ad.48.1741883081419;
+        Thu, 13 Mar 2025 09:24:41 -0700 (PDT)
+Received: from localhost ([216.228.125.129])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-225c6bbcba7sm15241975ad.173.2025.03.13.09.24.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Mar 2025 00:41:48 -0700 (PDT)
-Date: Thu, 13 Mar 2025 15:41:31 +0800
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
-To: Yury Norov <yury.norov@gmail.com>
-Cc: "H. Peter Anvin" <hpa@zytor.com>,
+        Thu, 13 Mar 2025 09:24:40 -0700 (PDT)
+Date: Thu, 13 Mar 2025 12:24:38 -0400
+From: Yury Norov <yury.norov@gmail.com>
+To: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Jacob Keller <jacob.e.keller@intel.com>,
 	David Laight <david.laight.linux@gmail.com>,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	Laurent.pinchart@ideasonboard.com, airlied@gmail.com,
+	Jiri Slaby <jirislaby@kernel.org>, Ingo Molnar <mingo@kernel.org>,
+	Kuan-Wei Chiu <visitorckw@gmail.com>, tglx@linutronix.de,
+	mingo@redhat.com, bp@alien8.de, dave.hansen@linux.intel.com,
+	x86@kernel.org, jk@ozlabs.org, joel@jms.id.au,
+	eajames@linux.ibm.com, andrzej.hajda@intel.com,
+	neil.armstrong@linaro.org, rfoss@kernel.org,
+	maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+	tzimmermann@suse.de, airlied@gmail.com, simona@ffwll.ch,
+	dmitry.torokhov@gmail.com, mchehab@kernel.org,
+	awalls@md.metrocast.net, hverkuil@xs4all.nl,
+	miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
+	louis.peens@corigine.com, andrew+netdev@lunn.ch,
+	davem@davemloft.net, edumazet@google.com, pabeni@redhat.com,
+	parthiban.veerasooran@microchip.com, arend.vanspriel@broadcom.com,
+	johannes@sipsolutions.net, gregkh@linuxfoundation.org,
 	akpm@linux-foundation.org, alistair@popple.id.au,
-	andrew+netdev@lunn.ch, andrzej.hajda@intel.com,
-	arend.vanspriel@broadcom.com, awalls@md.metrocast.net, bp@alien8.de,
-	bpf@vger.kernel.org, brcm80211-dev-list.pdl@broadcom.com,
-	brcm80211@lists.linux.dev, dave.hansen@linux.intel.com,
-	davem@davemloft.net, dmitry.torokhov@gmail.com,
-	dri-devel@lists.freedesktop.org, eajames@linux.ibm.com,
-	edumazet@google.com, eleanor15x@gmail.com,
-	gregkh@linuxfoundation.org, hverkuil@xs4all.nl,
-	jernej.skrabec@gmail.com, jirislaby@kernel.org, jk@ozlabs.org,
-	joel@jms.id.au, johannes@sipsolutions.net, jonas@kwiboo.se,
-	jserv@ccns.ncku.edu.tw, kuba@kernel.org, linux-fsi@lists.ozlabs.org,
-	linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux@rasmusvillemoes.dk, Laurent.pinchart@ideasonboard.com,
+	jonas@kwiboo.se, jernej.skrabec@gmail.com, kuba@kernel.org,
+	linux-kernel@vger.kernel.org, linux-fsi@lists.ozlabs.org,
+	dri-devel@lists.freedesktop.org, linux-input@vger.kernel.org,
 	linux-media@vger.kernel.org, linux-mtd@lists.infradead.org,
-	linux-serial@vger.kernel.org, linux-wireless@vger.kernel.org,
-	linux@rasmusvillemoes.dk, louis.peens@corigine.com,
-	maarten.lankhorst@linux.intel.com, mchehab@kernel.org,
-	mingo@redhat.com, miquel.raynal@bootlin.com, mripard@kernel.org,
-	neil.armstrong@linaro.org, netdev@vger.kernel.org,
-	oss-drivers@corigine.com, pabeni@redhat.com,
-	parthiban.veerasooran@microchip.com, rfoss@kernel.org,
-	richard@nod.at, simona@ffwll.ch, tglx@linutronix.de,
-	tzimmermann@suse.de, vigneshr@ti.com, x86@kernel.org
-Subject: Re: [PATCH v3 00/16] Introduce and use generic parity16/32/64 helper
-Message-ID: <Z9KMKwnZXA2mkD2s@visitorckw-System-Product-Name>
-References: <4732F6F6-1D41-4E3F-BE24-E54489BC699C@zytor.com>
- <efc2ee9d-5382-457f-b471-f3c44b81a190@citrix.com>
- <5A790652-1B22-4D13-AAC5-5D9931E90903@zytor.com>
- <20250307195310.58abff8c@pumpkin>
- <EB85C3C1-8A0D-4CB9-B501-BFEABDF3E977@zytor.com>
- <Z824SgB9Dt5zdWYc@visitorckw-System-Product-Name>
- <Z9CyuowYsZyez36c@thinkpad>
- <80771542-476C-493E-858A-D2AF6A355CC1@zytor.com>
- <Z9GtcNJie8TRKywZ@thinkpad>
- <Z9G2Tyypb3iLoBjn@visitorckw-System-Product-Name>
+	oss-drivers@corigine.com, netdev@vger.kernel.org,
+	linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com, linux-serial@vger.kernel.org,
+	bpf@vger.kernel.org, jserv@ccns.ncku.edu.tw,
+	Yu-Chun Lin <eleanor15x@gmail.com>
+Subject: Re: [PATCH v3 01/16] bitops: Change parity8() return type to bool
+Message-ID: <Z9MGxknjluvbX19w@thinkpad>
+References: <20250306162541.2633025-1-visitorckw@gmail.com>
+ <20250306162541.2633025-2-visitorckw@gmail.com>
+ <9d4b77da-18c5-4551-ae94-a2b9fe78489a@kernel.org>
+ <Z8ra0s9uRoS35brb@gmail.com>
+ <a4040c78-8765-425e-a44e-c374dfc02a9c@kernel.org>
+ <20250307193643.28065d2d@pumpkin>
+ <cbb26a91-807b-4227-be81-8114e9ea72cb@intel.com>
+ <0F794C6F-32A9-4F34-9516-CEE24EA4BC49@zytor.com>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Z9G2Tyypb3iLoBjn@visitorckw-System-Product-Name>
+In-Reply-To: <0F794C6F-32A9-4F34-9516-CEE24EA4BC49@zytor.com>
 
-On Thu, Mar 13, 2025 at 12:29:13AM +0800, Kuan-Wei Chiu wrote:
-> On Wed, Mar 12, 2025 at 11:51:12AM -0400, Yury Norov wrote:
-> > On Tue, Mar 11, 2025 at 03:24:14PM -0700, H. Peter Anvin wrote:
-> > > On March 11, 2025 3:01:30 PM PDT, Yury Norov <yury.norov@gmail.com> wrote:
-> > > >On Sun, Mar 09, 2025 at 11:48:26PM +0800, Kuan-Wei Chiu wrote:
-> > > >> On Fri, Mar 07, 2025 at 12:07:02PM -0800, H. Peter Anvin wrote:
-> > > >> > On March 7, 2025 11:53:10 AM PST, David Laight <david.laight.linux@gmail.com> wrote:
-> > > >> > >On Fri, 07 Mar 2025 11:30:35 -0800
-> > > >> > >"H. Peter Anvin" <hpa@zytor.com> wrote:
-> > > >> > >
-> > > >> > >> On March 7, 2025 10:49:56 AM PST, Andrew Cooper <andrew.cooper3@citrix.com> wrote:
-> > > >> > >> >> (int)true most definitely is guaranteed to be 1.  
-> > > >> > >> >
-> > > >> > >> >That's not technically correct any more.
-> > > >> > >> >
-> > > >> > >> >GCC has introduced hardened bools that intentionally have bit patterns
-> > > >> > >> >other than 0 and 1.
-> > > >> > >> >
-> > > >> > >> >https://gcc.gnu.org/gcc-14/changes.html
-> > > >> > >> >
-> > > >> > >> >~Andrew  
-> > > >> > >> 
-> > > >> > >> Bit patterns in memory maybe (not that I can see the Linux kernel using them) but
-> > > >> > >> for compiler-generated conversations that's still a given, or the manager isn't C
-> > > >> > >> or anything even remotely like it.
-> > > >> > >> 
-> > > >> > >
-> > > >> > >The whole idea of 'bool' is pretty much broken by design.
-> > > >> > >The underlying problem is that values other than 'true' and 'false' can
-> > > >> > >always get into 'bool' variables.
-> > > >> > >
-> > > >> > >Once that has happened it is all fubar.
-> > > >> > >
-> > > >> > >Trying to sanitise a value with (say):
-> > > >> > >int f(bool v)
-> > > >> > >{
-> > > >> > >	return (int)v & 1;
-> > > >> > >}    
-> > > >> > >just doesn't work (see https://www.godbolt.org/z/MEndP3q9j)
-> > > >> > >
-> > > >> > >I really don't see how using (say) 0xaa and 0x55 helps.
-> > > >> > >What happens if the value is wrong? a trap or exception?, good luck recovering
-> > > >> > >from that.
-> > > >> > >
-> > > >> > >	David
-> > > >> > 
-> > > >> > Did you just discover GIGO?
-> > > >> 
-> > > >> Thanks for all the suggestions.
-> > > >> 
-> > > >> I don't have a strong opinion on the naming or return type. I'm still a
-> > > >> bit confused about whether I can assume that casting bool to int always
-> > > >> results in 0 or 1.
-> > > >> 
-> > > >> If that's the case, since most people prefer bool over int as the
-> > > >> return type and some are against introducing u1, my current plan is to
-> > > >> use the following in the next version:
-> > > >> 
-> > > >> bool parity_odd(u64 val);
-> > > >> 
-> > > >> This keeps the bool return type, renames the function for better
-> > > >> clarity, and avoids extra maintenance burden by having just one
-> > > >> function.
-> > > >> 
-> > > >> If I can't assume that casting bool to int always results in 0 or 1,
-> > > >> would it be acceptable to keep the return type as int?
-> > > >> 
-> > > >> Would this work for everyone?
-> > > >
-> > > >Alright, it's clearly a split opinion. So what I would do myself in
-> > > >such case is to look at existing code and see what people who really
-> > > >need parity invent in their drivers:
-> > > >
-> > > >                                     bool      parity_odd
-> > > >static inline int parity8(u8 val)       -               -
-> > > >static u8 calc_parity(u8 val)           -               -
-> > > >static int odd_parity(u8 c)             -               +
-> > > >static int saa711x_odd_parity           -               +
-> > > >static int max3100_do_parity            -               -
-> > > >static inline int parity(unsigned x)    -               -
-> > > >static int bit_parity(u32 pkt)          -               -
-> > > >static int oa_tc6_get_parity(u32 p)     -               -
-> > > >static u32 parity32(__le32 data)        -               -
-> > > >static u32 parity(u32 sample)           -               -
-> > > >static int get_parity(int number,       -               -
-> > > >                      int size)
-> > > >static bool i2cr_check_parity32(u32 v,  +               -
-> > > >                        bool parity)
-> > > >static bool i2cr_check_parity64(u64 v)  +               -
-> > > >static int sw_parity(__u64 t)           -               -
-> > > >static bool parity(u64 value)           +               -
-> > > >
-> > > >Now you can refer to that table say that int parity(uXX) is what
-> > > >people want to see in their drivers.
-> > > >
-> > > >Whichever interface you choose, please discuss it's pros and cons.
-> > > >What bloat-o-meter says for each option? What's maintenance burden?
-> > > >Perf test? Look at generated code?
-> > > >
-> > > >I personally for a macro returning boolean, something like I
-> > > >proposed at the very beginning.
-> > > >
-> > > >Thanks,
-> > > >Yury
-> > > 
-> > > Also, please at least provide a way for an arch to opt in to using the builtins, which seem to produce as good results or better at least on some architectures like x86 and probably with CPU options that imply fast popcnt is available.
-> > 
-> > Yeah. And because linux/bitops.h already includes asm/bitops.h
-> > the simplest way would be wrapping generic implementation with
-> > the #ifndef parity, similarly to how we handle find_next_bit case.
-> > 
-> > So:
-> > 1. Kuan-Wei, please don't invent something like ARCH_HAS_PARITY;
-> > 2. This may, and probably should, be a separate follow-up series,
-> >    likely created by corresponding arch experts.
-> > 
-> I saw discussions in the previous email thread about both
-> __builtin_parity and x86-specific implementations. However, from the
-> discussion, I learned that before considering any optimization, we
-> should first ask: which driver or subsystem actually cares about parity
-> efficiency? If someone does, I can help with a micro-benchmark to
-> provide performance numbers, but I don't have enough domain knowledge
-> to identify hot paths where parity efficiency matters.
+On Wed, Mar 12, 2025 at 05:09:16PM -0700, H. Peter Anvin wrote:
+> On March 12, 2025 4:56:31 PM PDT, Jacob Keller <jacob.e.keller@intel.com> wrote:
+
+[...]
+
+> >This is really a question of whether you expect odd or even parity as
+> >the "true" value. I think that would depend on context, and we may not
+> >reach a good consensus.
+> >
+> >I do agree that my brain would jump to "true is even, false is odd".
+> >However, I also agree returning the value as 0 for even and 1 for odd
+> >kind of made sense before, and updating this to be a bool and then
+> >requiring to switch all the callers is a bit obnoxious...
 > 
-IMHO,
+> Odd = 1 = true is the only same definition. It is a bitwise XOR, or sum mod 1.
 
-If parity is never used in any hot path and we don't care about parity:
+The x86 implementation will be "popcnt(val) & 1", right? So if we
+choose to go with odd == false, we'll have to add an extra negation.
+So because it's a purely conventional thing, let's just pick a simpler
+one?
 
-Then benchmarking its performance seems meaningless. In this case, a
-function with a u64 argument would suffice, and we might not even need
-a macro to optimize for different types—especially since the macro
-requires special hacks to avoid compiler warnings. Also, I don't think
-code size matters here. If it does, we should first consider making
-parity a non-inline function in a .c file rather than an inline
-function/macro in a header.
+Compiler's builtin parity() returns 1 for odd.
 
-If parity is used in a hot path:
-
-We need different handling for different type sizes. As previously
-discussed, x86 assembly might use different instructions for u8 and
-u16. This may sound stubborn, but I want to ask again: should we
-consider using parity8/16/32/64 interfaces? Like in the i3c driver
-example, if we only have a single parity macro that selects an
-implementation based on type size, users must explicitly cast types.
-If future users also need parity in a hot path, they might not be aware
-of this requirement and end up generating suboptimal code. Since we
-care about efficiency and generated code, why not follow hweight() and
-provide separate implementations for different sizes?
-
-Regards,
-Kuan-Wei
+Thanks,
+Yury
