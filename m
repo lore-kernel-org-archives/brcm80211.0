@@ -1,153 +1,290 @@
-Received: from mail.zytor.com (terminus.zytor.com [198.137.202.136])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1E2736D
-	for <brcm80211@lists.linux.dev>; Sat, 15 Mar 2025 00:16:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.136
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A3CF20EB
+	for <brcm80211@lists.linux.dev>; Sun, 23 Mar 2025 15:16:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741997785; cv=none; b=nBY3QbgFDJzq+nHCJP2CL9DzmIn36LS3liJSqSTrewn8t4R1o/4R5oIs3Er+GidFUriNak/1HgMkn+wVO+OdYc2wMwn7UdLiWxxYu8AhSyYuRgHRVZo5A0vEkn/jgmy8GPvTT2JGXRXrg++qBJLejw2ZHsF3AA5DcEI1GtxKYn8=
+	t=1742742997; cv=none; b=B/t90X4rtR1Nlh3rvPUdfLo3O8+jAjYbS3EMqVbjxwMcnYhqvrbuHYKmfgSm0RlYJNZN5xVvmKtSw/13iFz/YYou5BR3l36eITGIkw5c8Yg+2P39ARMkc6GV+HBROisIVLZ+r6oc4UbbswBzp6cPauQgMvUg2Icea4SCsWvExsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741997785; c=relaxed/simple;
-	bh=Vu1QPwy12fhx3g7FowbsOY4q1TiQL9aT+Z6El6ge7xk=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=kp2uY8E2DC9WsiLoSnYEdCJSDk9/WNrZ9GbMZIuIKc9Wfj9joB8R9LsQdjU2gBLCsCYbDmkv3m0RQLt0TVQKBJt5AAaQSxwWsr8442f25t0YT0vN62gbC1P5e6ivtMggC/i1mEH+b+FEyXXczo2CpcM4whpI14srBRjFtWYnMmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zytor.com; spf=pass smtp.mailfrom=zytor.com; dkim=pass (2048-bit key) header.d=zytor.com header.i=@zytor.com header.b=Tx4ZYo9f; arc=none smtp.client-ip=198.137.202.136
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zytor.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zytor.com
+	s=arc-20240116; t=1742742997; c=relaxed/simple;
+	bh=z1iry3Q+ZuonlJJ0TwlMVAFT0se2HxhIpoPnsRsnLsc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QsC9avdn5V7N5OgzT8CTEP6aiIhHlKTSSf/2JUctaWs3+FJtTqrvuiNBRgTBVzgLWdUtCnZy/SbQ1MNAuzeFPudle/friGxj8oeC0KLJ1LlIjw6l3hz3pFV5xgEDyr+FzaU/BfW6zzbJewI6htLS7IxszzoSrxgdjxrBV76Jh88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AD7sfHBK; arc=none smtp.client-ip=209.85.214.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zytor.com header.i=@zytor.com header.b="Tx4ZYo9f"
-Received: from [127.0.0.1] ([76.133.66.138])
-	(authenticated bits=0)
-	by mail.zytor.com (8.18.1/8.17.1) with ESMTPSA id 52F0EnBX3633411
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NO);
-	Fri, 14 Mar 2025 17:14:49 -0700
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.zytor.com 52F0EnBX3633411
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zytor.com;
-	s=2025021701; t=1741997698;
-	bh=p1RiZcB4vxNShw8WemiNGPP7YkRsysNV0zKEEix3DOc=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:From;
-	b=Tx4ZYo9fiuY+wDg4a68kI5cIuARdVD68JoQLpMesIGNwSOczhbBzbTQfcwfNxfdUD
-	 47XsN8wLRZvhKBjF2r+4045rg3oCcRJXoucMdOJNL1OMZbLn4bX9oZ+i6W8e9sW4/v
-	 gt8eVi3UxwK4JnA3/PA4TiFwuLM+Otv/LqOfFQaMUHaNp3e6BrpYdyQ0VwZeoSpqWr
-	 T/LWMwFrcdksOlkEzMrMEH8Z+9ya9BolDRz2oHPpWkApezrBJmDX+I34duXBeeFwZs
-	 kW+562xssDMBNp3juXplJf3P9JcHcQ4Wpbms/nUI43DenD4X+97Pqxmi4dScjrfmYn
-	 BdMqAkWnIyUzQ==
-Date: Fri, 14 Mar 2025 17:14:46 -0700
-From: "H. Peter Anvin" <hpa@zytor.com>
-To: David Laight <david.laight.linux@gmail.com>,
-        Jacob Keller <jacob.e.keller@intel.com>
-CC: Yury Norov <yury.norov@gmail.com>, Jiri Slaby <jirislaby@kernel.org>,
-        Ingo Molnar <mingo@kernel.org>, Kuan-Wei Chiu <visitorckw@gmail.com>,
-        tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
-        dave.hansen@linux.intel.com, x86@kernel.org, jk@ozlabs.org,
-        joel@jms.id.au, eajames@linux.ibm.com, andrzej.hajda@intel.com,
-        neil.armstrong@linaro.org, rfoss@kernel.org,
-        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-        tzimmermann@suse.de, airlied@gmail.com, simona@ffwll.ch,
-        dmitry.torokhov@gmail.com, mchehab@kernel.org, awalls@md.metrocast.net,
-        hverkuil@xs4all.nl, miquel.raynal@bootlin.com, richard@nod.at,
-        vigneshr@ti.com, louis.peens@corigine.com, andrew+netdev@lunn.ch,
-        davem@davemloft.net, edumazet@google.com, pabeni@redhat.com,
-        parthiban.veerasooran@microchip.com, arend.vanspriel@broadcom.com,
-        johannes@sipsolutions.net, gregkh@linuxfoundation.org,
-        akpm@linux-foundation.org, alistair@popple.id.au,
-        linux@rasmusvillemoes.dk, Laurent.pinchart@ideasonboard.com,
-        jonas@kwiboo.se, jernej.skrabec@gmail.com, kuba@kernel.org,
-        linux-kernel@vger.kernel.org, linux-fsi@lists.ozlabs.org,
-        dri-devel@lists.freedesktop.org, linux-input@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-mtd@lists.infradead.org,
-        oss-drivers@corigine.com, netdev@vger.kernel.org,
-        linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
-        brcm80211-dev-list.pdl@broadcom.com, linux-serial@vger.kernel.org,
-        bpf@vger.kernel.org, jserv@ccns.ncku.edu.tw,
-        Yu-Chun Lin <eleanor15x@gmail.com>
-Subject: Re: [PATCH v3 01/16] bitops: Change parity8() return type to bool
-User-Agent: K-9 Mail for Android
-In-Reply-To: <20250314190604.53470966@pumpkin>
-References: <20250306162541.2633025-1-visitorckw@gmail.com> <20250306162541.2633025-2-visitorckw@gmail.com> <9d4b77da-18c5-4551-ae94-a2b9fe78489a@kernel.org> <Z8ra0s9uRoS35brb@gmail.com> <a4040c78-8765-425e-a44e-c374dfc02a9c@kernel.org> <20250307193643.28065d2d@pumpkin> <cbb26a91-807b-4227-be81-8114e9ea72cb@intel.com> <0F794C6F-32A9-4F34-9516-CEE24EA4BC49@zytor.com> <Z9MGxknjluvbX19w@thinkpad> <795281B1-9B8A-477F-8012-DECD14CB53E5@zytor.com> <b2b632cc-ca69-497f-9cf9-782bd02cac79@intel.com> <20250314190604.53470966@pumpkin>
-Message-ID: <F3723528-8978-43A9-804F-06FDFE55BDC0@zytor.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AD7sfHBK"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-227a8cdd241so11922675ad.3
+        for <brcm80211@lists.linux.dev>; Sun, 23 Mar 2025 08:16:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1742742995; x=1743347795; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=8HAFSGGoHUlB/P//y8CRGPMxIiz2cZBE9oAiPUoftnU=;
+        b=AD7sfHBKZgsQ19vSRi4L8+Rgdf785FbMm/XWi4is/tR0A+aofukBDXcYDsSlxy2AqO
+         noNZCtzpBHomUGPn0ocSbP/HriQTI3W8iJgVpCR65UC346NinxBMuO5MBDOpVuvdtp+2
+         O3vm+CVpkdHjobpHIr4+MXTW49kQm64qL+NIDOxHrii4dwr9Cmz2Ks6GtH4H3jFNFFmv
+         2kb/XxGoFXbs1I1PisC3gbOFKswpblEZEJu6jdgKiyQXIr8q08Sd+UZXoQOjPAJ8GKxi
+         ahDWeyBLFhXXDo3NtJ7tMW7J90+bFDpJc0PtcjykaVwiZl9rFJnHP33c08OpAb/T/qb4
+         izEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742742995; x=1743347795;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=8HAFSGGoHUlB/P//y8CRGPMxIiz2cZBE9oAiPUoftnU=;
+        b=ZjQboIiKXmPdIwLSeZbKpdN7FfpDxADTs+ONHDzcX8YhnCSZFfU3c5L+BZb5Mwr+KS
+         Xqu6Ejh4AHHlAT7vzvZhImK/YGq559p6frY37HMMVuNiMQdJF70HBU/IUmrZUMjh/kay
+         q9gZ5T7pfVz1BFEKz5sl9Rf0eyTtgvfTX9EyIlAj9Yc0Fp8aLJe1yzZAEIA2zNgdjMHd
+         io/KjrYevJMI6PguXeEskslS8t+DhMSbc+t3Hf/3eScMb67ppDc3WoiIyj9Gm9Or7nHG
+         ba4JjUvKthh7AWDPKQNOz7AGhZh+NVUTvLRhcltoYpwlJRomBGz2gS6Q6knDmtNL3096
+         O3Bw==
+X-Forwarded-Encrypted: i=1; AJvYcCUbLr30RDE/zE+PDZyuLooGiWJNQeJt3EH9bqHheFA8w3eeTK4H1cM5TfgsE9JZZ3VhtZTpx5cWSoo=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyvPh2/s+8nEqizp1eQOWuwTLsJ2NBZY6AbhQEE97C8JgF6kdNk
+	GALtIxIdBi85EhhzC52wGP0pipstjcpCep158lsynwI2nKE1/AfC
+X-Gm-Gg: ASbGnctUkLONiMSCj0U+8/P8KewoQIQb+UcP2cE1IENh9SmsE+lUNfps5yCp9InfGm8
+	q+nRKx6VcAnMD3pdmqHKB49bQcNJPCvJwUiZXMiZ6gxbYOORKinAZEOqsDGQrIf88NgkMA4DE8w
+	JBU27jSt56zT/D3lSXPrdxzvYcCieZVuim0xxClNzR9LSwuSOrBrz8W/nucRJV/Vv6PbqlxQhpq
+	BjUuHfVB/HWCxlJ5fllEZ4r18xmIYDXHuZlCyh/rTHA082SnNd2bhqgM/ju2Nskb1ARfZId3ibD
+	pqhapaZltEQ98fl3w1+SmVlrQoshtrAu/TUF0okJF4S29WYgGMAzCLr+PJUY2e4M99cn6nnJ
+X-Google-Smtp-Source: AGHT+IFu7aSko21Sw2wxa8CSJ3BoLCLGU4XDLggoCqJDcaLIBubWzqHl2YbchxgGWLxoXzaA2oGt1A==
+X-Received: by 2002:a17:902:db12:b0:216:3d72:1712 with SMTP id d9443c01a7336-22780e1a30emr184600615ad.48.1742742994925;
+        Sun, 23 Mar 2025 08:16:34 -0700 (PDT)
+Received: from visitorckw-System-Product-Name ([140.113.216.168])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22781207f3csm52440875ad.247.2025.03.23.08.16.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 23 Mar 2025 08:16:34 -0700 (PDT)
+Date: Sun, 23 Mar 2025 23:16:24 +0800
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
+To: Yury Norov <yury.norov@gmail.com>
+Cc: "H. Peter Anvin" <hpa@zytor.com>,
+	David Laight <david.laight.linux@gmail.com>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	Laurent.pinchart@ideasonboard.com, airlied@gmail.com,
+	akpm@linux-foundation.org, alistair@popple.id.au,
+	andrew+netdev@lunn.ch, andrzej.hajda@intel.com,
+	arend.vanspriel@broadcom.com, awalls@md.metrocast.net, bp@alien8.de,
+	bpf@vger.kernel.org, brcm80211-dev-list.pdl@broadcom.com,
+	brcm80211@lists.linux.dev, dave.hansen@linux.intel.com,
+	davem@davemloft.net, dmitry.torokhov@gmail.com,
+	dri-devel@lists.freedesktop.org, eajames@linux.ibm.com,
+	edumazet@google.com, eleanor15x@gmail.com,
+	gregkh@linuxfoundation.org, hverkuil@xs4all.nl,
+	jernej.skrabec@gmail.com, jirislaby@kernel.org, jk@ozlabs.org,
+	joel@jms.id.au, johannes@sipsolutions.net, jonas@kwiboo.se,
+	jserv@ccns.ncku.edu.tw, kuba@kernel.org, linux-fsi@lists.ozlabs.org,
+	linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-media@vger.kernel.org, linux-mtd@lists.infradead.org,
+	linux-serial@vger.kernel.org, linux-wireless@vger.kernel.org,
+	linux@rasmusvillemoes.dk, louis.peens@corigine.com,
+	maarten.lankhorst@linux.intel.com, mchehab@kernel.org,
+	mingo@redhat.com, miquel.raynal@bootlin.com, mripard@kernel.org,
+	neil.armstrong@linaro.org, netdev@vger.kernel.org,
+	oss-drivers@corigine.com, pabeni@redhat.com,
+	parthiban.veerasooran@microchip.com, rfoss@kernel.org,
+	richard@nod.at, simona@ffwll.ch, tglx@linutronix.de,
+	tzimmermann@suse.de, vigneshr@ti.com, x86@kernel.org
+Subject: Re: [PATCH v3 00/16] Introduce and use generic parity16/32/64 helper
+Message-ID: <Z+AlyB461xwMxMtG@visitorckw-System-Product-Name>
+References: <efc2ee9d-5382-457f-b471-f3c44b81a190@citrix.com>
+ <5A790652-1B22-4D13-AAC5-5D9931E90903@zytor.com>
+ <20250307195310.58abff8c@pumpkin>
+ <EB85C3C1-8A0D-4CB9-B501-BFEABDF3E977@zytor.com>
+ <Z824SgB9Dt5zdWYc@visitorckw-System-Product-Name>
+ <Z9CyuowYsZyez36c@thinkpad>
+ <80771542-476C-493E-858A-D2AF6A355CC1@zytor.com>
+ <Z9GtcNJie8TRKywZ@thinkpad>
+ <Z9G2Tyypb3iLoBjn@visitorckw-System-Product-Name>
+ <Z9KMKwnZXA2mkD2s@visitorckw-System-Product-Name>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Z9KMKwnZXA2mkD2s@visitorckw-System-Product-Name>
 
-On March 14, 2025 12:06:04 PM PDT, David Laight <david=2Elaight=2Elinux@gma=
-il=2Ecom> wrote:
->On Thu, 13 Mar 2025 14:09:24 -0700
->Jacob Keller <jacob=2Ee=2Ekeller@intel=2Ecom> wrote:
->
->> On 3/13/2025 9:36 AM, H=2E Peter Anvin wrote:
->> > On March 13, 2025 9:24:38 AM PDT, Yury Norov <yury=2Enorov@gmail=2Eco=
-m> wrote: =20
->> >> On Wed, Mar 12, 2025 at 05:09:16PM -0700, H=2E Peter Anvin wrote: =
-=20
->> >>> On March 12, 2025 4:56:31 PM PDT, Jacob Keller <jacob=2Ee=2Ekeller@=
-intel=2Ecom> wrote: =20
->> >>
->> >> [=2E=2E=2E]
->> >> =20
->> >>>> This is really a question of whether you expect odd or even parity=
- as
->> >>>> the "true" value=2E I think that would depend on context, and we m=
-ay not
->> >>>> reach a good consensus=2E
->> >>>>
->> >>>> I do agree that my brain would jump to "true is even, false is odd=
-"=2E
->> >>>> However, I also agree returning the value as 0 for even and 1 for =
-odd
->> >>>> kind of made sense before, and updating this to be a bool and then
->> >>>> requiring to switch all the callers is a bit obnoxious=2E=2E=2E =
-=20
->> >>>
->> >>> Odd =3D 1 =3D true is the only same definition=2E It is a bitwise X=
-OR, or sum mod 1=2E =20
->> >>
->> >> The x86 implementation will be "popcnt(val) & 1", right? So if we
->> >> choose to go with odd =3D=3D false, we'll have to add an extra negat=
-ion=2E
->> >> So because it's a purely conventional thing, let's just pick a simpl=
-er
->> >> one?
->> >>
->> >> Compiler's builtin parity() returns 1 for odd=2E
->> >>
->> >> Thanks,
->> >> Yury =20
->> >=20
->> > The x86 implementation, no, but there will be plenty of others having=
- that exact definition=2E =20
->>=20
->> Makes sense to stick with that existing convention then=2E Enough to
->> convince me=2E
->
->There is the possibility that the compiler will treat the builtin as havi=
-ng
->an 'int' result without the constraint of it being zero or one=2E
->In which case the conversion to bool will be a compare=2E
->This doesn't happen on x86-64 (gcc or clang) - but who knows elsewhere=2E
->
->For x86 popcnt(val) & 1 is best (except for parity8) but requires a non-a=
-rchaic cpu=2E
->(Probably Nehelem or K10 or later - includes Sandy bridge and all the 'ea=
-rth movers'=2E)
->Since performance isn't critical the generic C code is actually ok=2E
->(The 'parity' flag bit is only set on the low 8 bits=2E)
->
->	David
->
->
+On Thu, Mar 13, 2025 at 03:41:49PM +0800, Kuan-Wei Chiu wrote:
+> On Thu, Mar 13, 2025 at 12:29:13AM +0800, Kuan-Wei Chiu wrote:
+> > On Wed, Mar 12, 2025 at 11:51:12AM -0400, Yury Norov wrote:
+> > > On Tue, Mar 11, 2025 at 03:24:14PM -0700, H. Peter Anvin wrote:
+> > > > On March 11, 2025 3:01:30 PM PDT, Yury Norov <yury.norov@gmail.com> wrote:
+> > > > >On Sun, Mar 09, 2025 at 11:48:26PM +0800, Kuan-Wei Chiu wrote:
+> > > > >> On Fri, Mar 07, 2025 at 12:07:02PM -0800, H. Peter Anvin wrote:
+> > > > >> > On March 7, 2025 11:53:10 AM PST, David Laight <david.laight.linux@gmail.com> wrote:
+> > > > >> > >On Fri, 07 Mar 2025 11:30:35 -0800
+> > > > >> > >"H. Peter Anvin" <hpa@zytor.com> wrote:
+> > > > >> > >
+> > > > >> > >> On March 7, 2025 10:49:56 AM PST, Andrew Cooper <andrew.cooper3@citrix.com> wrote:
+> > > > >> > >> >> (int)true most definitely is guaranteed to be 1.  
+> > > > >> > >> >
+> > > > >> > >> >That's not technically correct any more.
+> > > > >> > >> >
+> > > > >> > >> >GCC has introduced hardened bools that intentionally have bit patterns
+> > > > >> > >> >other than 0 and 1.
+> > > > >> > >> >
+> > > > >> > >> >https://gcc.gnu.org/gcc-14/changes.html
+> > > > >> > >> >
+> > > > >> > >> >~Andrew  
+> > > > >> > >> 
+> > > > >> > >> Bit patterns in memory maybe (not that I can see the Linux kernel using them) but
+> > > > >> > >> for compiler-generated conversations that's still a given, or the manager isn't C
+> > > > >> > >> or anything even remotely like it.
+> > > > >> > >> 
+> > > > >> > >
+> > > > >> > >The whole idea of 'bool' is pretty much broken by design.
+> > > > >> > >The underlying problem is that values other than 'true' and 'false' can
+> > > > >> > >always get into 'bool' variables.
+> > > > >> > >
+> > > > >> > >Once that has happened it is all fubar.
+> > > > >> > >
+> > > > >> > >Trying to sanitise a value with (say):
+> > > > >> > >int f(bool v)
+> > > > >> > >{
+> > > > >> > >	return (int)v & 1;
+> > > > >> > >}    
+> > > > >> > >just doesn't work (see https://www.godbolt.org/z/MEndP3q9j)
+> > > > >> > >
+> > > > >> > >I really don't see how using (say) 0xaa and 0x55 helps.
+> > > > >> > >What happens if the value is wrong? a trap or exception?, good luck recovering
+> > > > >> > >from that.
+> > > > >> > >
+> > > > >> > >	David
+> > > > >> > 
+> > > > >> > Did you just discover GIGO?
+> > > > >> 
+> > > > >> Thanks for all the suggestions.
+> > > > >> 
+> > > > >> I don't have a strong opinion on the naming or return type. I'm still a
+> > > > >> bit confused about whether I can assume that casting bool to int always
+> > > > >> results in 0 or 1.
+> > > > >> 
+> > > > >> If that's the case, since most people prefer bool over int as the
+> > > > >> return type and some are against introducing u1, my current plan is to
+> > > > >> use the following in the next version:
+> > > > >> 
+> > > > >> bool parity_odd(u64 val);
+> > > > >> 
+> > > > >> This keeps the bool return type, renames the function for better
+> > > > >> clarity, and avoids extra maintenance burden by having just one
+> > > > >> function.
+> > > > >> 
+> > > > >> If I can't assume that casting bool to int always results in 0 or 1,
+> > > > >> would it be acceptable to keep the return type as int?
+> > > > >> 
+> > > > >> Would this work for everyone?
+> > > > >
+> > > > >Alright, it's clearly a split opinion. So what I would do myself in
+> > > > >such case is to look at existing code and see what people who really
+> > > > >need parity invent in their drivers:
+> > > > >
+> > > > >                                     bool      parity_odd
+> > > > >static inline int parity8(u8 val)       -               -
+> > > > >static u8 calc_parity(u8 val)           -               -
+> > > > >static int odd_parity(u8 c)             -               +
+> > > > >static int saa711x_odd_parity           -               +
+> > > > >static int max3100_do_parity            -               -
+> > > > >static inline int parity(unsigned x)    -               -
+> > > > >static int bit_parity(u32 pkt)          -               -
+> > > > >static int oa_tc6_get_parity(u32 p)     -               -
+> > > > >static u32 parity32(__le32 data)        -               -
+> > > > >static u32 parity(u32 sample)           -               -
+> > > > >static int get_parity(int number,       -               -
+> > > > >                      int size)
+> > > > >static bool i2cr_check_parity32(u32 v,  +               -
+> > > > >                        bool parity)
+> > > > >static bool i2cr_check_parity64(u64 v)  +               -
+> > > > >static int sw_parity(__u64 t)           -               -
+> > > > >static bool parity(u64 value)           +               -
+> > > > >
+> > > > >Now you can refer to that table say that int parity(uXX) is what
+> > > > >people want to see in their drivers.
+> > > > >
+> > > > >Whichever interface you choose, please discuss it's pros and cons.
+> > > > >What bloat-o-meter says for each option? What's maintenance burden?
+> > > > >Perf test? Look at generated code?
+> > > > >
+> > > > >I personally for a macro returning boolean, something like I
+> > > > >proposed at the very beginning.
+> > > > >
+> > > > >Thanks,
+> > > > >Yury
+> > > > 
+> > > > Also, please at least provide a way for an arch to opt in to using the builtins, which seem to produce as good results or better at least on some architectures like x86 and probably with CPU options that imply fast popcnt is available.
+> > > 
+> > > Yeah. And because linux/bitops.h already includes asm/bitops.h
+> > > the simplest way would be wrapping generic implementation with
+> > > the #ifndef parity, similarly to how we handle find_next_bit case.
+> > > 
+> > > So:
+> > > 1. Kuan-Wei, please don't invent something like ARCH_HAS_PARITY;
+> > > 2. This may, and probably should, be a separate follow-up series,
+> > >    likely created by corresponding arch experts.
+> > > 
+> > I saw discussions in the previous email thread about both
+> > __builtin_parity and x86-specific implementations. However, from the
+> > discussion, I learned that before considering any optimization, we
+> > should first ask: which driver or subsystem actually cares about parity
+> > efficiency? If someone does, I can help with a micro-benchmark to
+> > provide performance numbers, but I don't have enough domain knowledge
+> > to identify hot paths where parity efficiency matters.
+> > 
+> IMHO,
+> 
+> If parity is never used in any hot path and we don't care about parity:
+> 
+> Then benchmarking its performance seems meaningless. In this case, a
+> function with a u64 argument would suffice, and we might not even need
+> a macro to optimize for different types—especially since the macro
+> requires special hacks to avoid compiler warnings. Also, I don't think
+> code size matters here. If it does, we should first consider making
+> parity a non-inline function in a .c file rather than an inline
+> function/macro in a header.
+> 
+> If parity is used in a hot path:
+> 
+> We need different handling for different type sizes. As previously
+> discussed, x86 assembly might use different instructions for u8 and
+> u16. This may sound stubborn, but I want to ask again: should we
+> consider using parity8/16/32/64 interfaces? Like in the i3c driver
+> example, if we only have a single parity macro that selects an
+> implementation based on type size, users must explicitly cast types.
+> If future users also need parity in a hot path, they might not be aware
+> of this requirement and end up generating suboptimal code. Since we
+> care about efficiency and generated code, why not follow hweight() and
+> provide separate implementations for different sizes?
+> 
+It seems no one will reply to my two emails. So, I have summarized
+different interface approaches. If there is a next version, I will send
+it after the merge window closes.
 
-You seem confused=2E We have already established that the built-in didn't =
-currently produce good code on some cpus, but it does on others, with very =
-little in between, so it would make sense to use the builtins on an opt-in =
-basis=2E
+Interface 1: Single Function
+Description: bool parity_odd(u64)
+Pros: Minimal maintenance cost
+Cons: Difficult to integrate with architecture-specific implementations
+      due to the inability to optimize for different argument sizes
+Opinions: Jiri supports this approach
 
-On x86 8- or 16-bit parity is best don't with test or xor respectively; 32=
-- or 64-bit parity may use popcnt; test or by reducing down to a parity16 x=
-or=2E
+Interface 2: Single Macro
+Description: parity_odd() macro
+Pros: Allows type-specific implementation
+Cons: Requires hacks to avoid warnings; users may need explicit
+      casting; potential sub-optimal code on 32-bit x86
+Opinions: Yury supports this approach
+
+Interface 3: Multiple Functions
+Description: bool parity_odd8/16/32/64()
+Pros: No need for explicit casting; easy to integrate
+      architecture-specific optimizations; except for parity8(), all
+      functions are one-liners with no significant code duplication
+Cons: More functions may increase maintenance burden
+Opinions: Only I support this approach
+
+Regards,
+Kuan-Wei
