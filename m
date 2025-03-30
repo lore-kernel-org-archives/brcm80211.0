@@ -1,113 +1,103 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 878212AEED
-	for <brcm80211@lists.linux.dev>; Sun, 30 Mar 2025 10:34:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4760E13A3ED
+	for <brcm80211@lists.linux.dev>; Sun, 30 Mar 2025 11:33:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743330900; cv=none; b=LeIjDyc6t7shQi3cIW7AEtX19f2qFwiG8XswOQgiJq2HrKlp8Xg20AtVEJRCgSLB/CvggPsPnPfO8mt2BN1CBb+rae46XLsxMPgUyPuK6qvpvMZQ+BUwdC1KmAvVO6xkv3hL4jbYfUwjwXoUqlvZnlsr6eEn7CmZ7UY9FnbNVA4=
+	t=1743334405; cv=none; b=hs7Fpy7433hDz2nBw0JMAUaO80N0L5jb74MeiKLSe+T/QumlYLTfE+l4i13zs6RK3y+x9fqusqKJhSNJQ4Ww1kIZ0g90f2NW1jEOYcRK70iQNF+kw5KnsWNtHbaQl2wQld2nJYf68QbLkKWfbyHZVeemMEOYPRJOzzNQGeL5k0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743330900; c=relaxed/simple;
-	bh=CTFnlW/udSDv88n+9dJ8nEXvEm2pfyeAT4QAhA1DEyA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=LIipwlWnLCRaQL15PmXRWAFBVoFNu/ayfk1B+8EeMB5822HkmiA21f0Vz+BcS3717l85Dh3kvw1WIx1WZXEtwDr31CdwkcGfM8Nr0aSIwZXLF4B380G7MoE7+YN3XxiYmrz2w5K7kdtEgyFtjDEjNgByXMV0f+6VxQZwJQKd30Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jFvIXFI4; arc=none smtp.client-ip=209.85.214.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1743334405; c=relaxed/simple;
+	bh=W4lWQYV1Nx1jpqIrn93+1vEwXgKDUXh7Sltms/g+zf0=;
+	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
+	 In-Reply-To:Content-Type; b=Ug/ZivjmHwJ0qmFI1jMkU38T4fSld1kNyREf2fWeQrBiroAcsMVrAOxBEKEySsVpflMemTRlX2j9YA2MAfdZ0KIb7/VwZdRHj2BYigccRPkzAj2XULod9WiHa7QF7XwlUPuXDMNrkGAuPhcQV6e4tR2mPIyilHCKZitSFkvdp70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=IoAYtVH5; arc=none smtp.client-ip=212.227.17.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jFvIXFI4"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-22622ddcc35so39987795ad.2
-        for <brcm80211@lists.linux.dev>; Sun, 30 Mar 2025 03:34:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743330898; x=1743935698; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=n6ILafFdAuS6ZwMjkWQd4TNYrYxem7zRVOv+WyE0Dgc=;
-        b=jFvIXFI4uxgHPpkw9MSV5VV+NO7zjIxuoXMeOUSjDc5FOr4uYw+Ft3yJUjMZcaIACS
-         kVbF3/SOvEelmk5C5UTXeJd+akQlchUBS83Uwqi7bISKSyDYn14bg8R16UiL9t1DIAI8
-         VX9S/y6ERYdg5SrQOqGE4DMMsCT56wvGtiEPtjhQ0grv+UHvKuE6gE+JGYDiOc28bBev
-         lYS1nqTPhIx6mSnMsT/cjMp0gNXC48GAUPceYFU2gLLUmbHQeAwVI3cooFCt3BCF3f5M
-         3iyEoFOOxczzk6kgae4IbndauAsL7gvCGlhKnnqgmnswMNH9ZyxKmqMRmpzKnoxkGl6j
-         Hpag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743330898; x=1743935698;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=n6ILafFdAuS6ZwMjkWQd4TNYrYxem7zRVOv+WyE0Dgc=;
-        b=h77cQ9hrIqNVR4h2tdHYUfuxC8ihcgOA0qSLqv3p1cbJeJ5jyol/1N74p4tqoCvrhb
-         FR6B+SAy7L2Zwvd9zo5/u8lJcYeEuOH/0h0ybTXIKrV9+aOiuyAti0DGMpmXSuxCXUqt
-         Pij1X/3fnCOrx8DO3bqojQ/R0FwmHiaLbwCAadTR5v44zCjWKrcEVK25vpn+asUYRyvs
-         /dGncF47O2BA1IH6YjK/Nf7PDEia8rmnKECpZru0FPY4ZAHgIJUeJM433F+m6e9qGokQ
-         LXVI33FbFRh9/9oewRv8yRoxS33VbT8tVGeG6jqsOJVvbu7Z5jY4hjlCqKfvbAGChRNM
-         gAcQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUJ24dkfjnE05rw7fhDaWmrYeY4YUnYbK8DftNYVEu7ySLI9dvpnMxv8oPPS8dp9kd/y8imqfIS8Gs=@lists.linux.dev
-X-Gm-Message-State: AOJu0YysQrUDPkvkeunSd5AKDpVgAEqsUGAF66ZhrAeLOXwAdfiRi/y0
-	nwho4DEjX5zNiRNSHf/R/qu8eSz7P5hXvQQcLSe5wbCX/+uNfT0G
-X-Gm-Gg: ASbGncs6BVCcJDezEWRJsSLz+YcQO+i92JZ4du2OVdvQoBMEauTGNoh7CuXLx+oTl+I
-	NXosMJwHei7w/Ac2Z2kpUiYBwwl8v71obJoYx0azbURT0Ai7pekYAB4s2ind1f/wYOdIlfE6Bgn
-	dxd355Qy5SI4+bmalnmtl1XOYYfFJ2wZifmStSsiHLyXmef5A7KR2HKGpQ/YhwN9E+7yDBBQcvI
-	3jm7jwMZ9b2CLgTkioI5SngwOBzO9DXeThjO80hJv81OZhkuym28J/DCGou0GmtSFWYbh82YaPV
-	vqA1YHrZDHVUY1txKXqgSYM/dRcM+6wbwdIbPcwOtV3KgziSRPiY9tUXAcD+
-X-Google-Smtp-Source: AGHT+IH8jyiJdNbL2Tnz5sqZEPmHYfQeGIc5jmN+yL9P7wGGppF5FQlkFCFXB02xpCFhvQ80wcUgUA==
-X-Received: by 2002:a05:6a21:3408:b0:1f5:79c4:5da6 with SMTP id adf61e73a8af0-2009f5bcdfemr8257677637.5.1743330897784;
-        Sun, 30 Mar 2025 03:34:57 -0700 (PDT)
-Received: from localhost.localdomain ([49.37.217.226])
-        by smtp.googlemail.com with ESMTPSA id 41be03b00d2f7-af93b67f3f8sm4617113a12.7.2025.03.30.03.34.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 30 Mar 2025 03:34:57 -0700 (PDT)
-From: Abdun Nihaal <abdun.nihaal@gmail.com>
-To: arend.vanspriel@broadcom.com
-Cc: kvalo@kernel.org,
-	u.kleine-koenig@baylibre.com,
-	jeff.johnson@oss.qualcomm.com,
-	toke@toke.dk,
-	abdun.nihaal@gmail.com,
-	jacobe.zang@wesion.com,
-	megi@xff.cz,
-	sebastian.reichel@collabora.com,
-	linux-wireless@vger.kernel.org,
-	brcm80211@lists.linux.dev,
-	brcm80211-dev-list.pdl@broadcom.com,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v2] wifi: brcmfmac: fix memory leak in brcmf_get_module_param
-Date: Sun, 30 Mar 2025 16:04:24 +0530
-Message-ID: <20250330103425.44197-1-abdun.nihaal@gmail.com>
-X-Mailer: git-send-email 2.47.2
+	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="IoAYtVH5"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1743334397; x=1743939197; i=markus.elfring@web.de;
+	bh=WjfpMDebyAxl+8+7FiZ92vWYLwsOPaQRFwBcgNho/1Y=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
+	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=IoAYtVH5LaM1mLKcGnetcnOfovTlMDDrvFlZgMu5tGrVDDulsyU8CYYrc8i4MoyG
+	 /07H/yXtayftnXQrZJ+lQ8jwXfeL6yCCpRrTZdPKGiAJP6kvs0SC5VIuDtVfV+txS
+	 SPskuFfnbGr8/47CEEYSi/A1T/loY5r1QbxVoySMyg5ZGO5Idu24bGZhe7WNnfuDV
+	 Kf8rQrICsMdSzovgjUU9mhf9nMH7b7PoWB8aN5xbVlQXOzl9mHvYRk2UqnNq8+Dyk
+	 f9w3tQdOBav5ciKHjIPiWZG7tN+k/QlsgHNQSgI5fY258yJx8GQj2j1aACm0S2EmN
+	 oqHVLLIqw+Ea0QI0Cw==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([94.31.93.13]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1N7QQB-1t2Soq1WZB-017Vkk; Sun, 30
+ Mar 2025 13:33:17 +0200
+Message-ID: <a7e5afa0-6f80-4685-b901-86112fca61c5@web.de>
+Date: Sun, 30 Mar 2025 13:33:13 +0200
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+To: Abdun Nihaal <abdun.nihaal@gmail.com>,
+ brcm80211-dev-list.pdl@broadcom.com, brcm80211@lists.linux.dev,
+ linux-wireless@vger.kernel.org,
+ Arend van Spriel <arend.vanspriel@broadcom.com>
+Cc: LKML <linux-kernel@vger.kernel.org>, Jacobe Zang
+ <jacobe.zang@wesion.com>, Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+ Kalle Valo <kvalo@kernel.org>, =?UTF-8?Q?Ond=C5=99ej_Jirman?= <megi@xff.cz>,
+ Sai Krishna <saikrishnag@marvell.com>,
+ Sebastian Reichel <sebastian.reichel@collabora.com>,
+ =?UTF-8?Q?Toke_H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+ =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+References: <20250330093505.22370-1-abdun.nihaal@gmail.com>
+Subject: Re: [PATCH] Fix memory leak in brcmf_get_module_param
+Content-Language: en-GB
+From: Markus Elfring <Markus.Elfring@web.de>
+In-Reply-To: <20250330093505.22370-1-abdun.nihaal@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K1:A9YI4cvStLbW9DNbPUKkPtiLzIWEX+zwdwhlQfW369PgyboEdHI
+ fJYQZvDM1qLTUTc4hY2ypynCM91wkoodWkpOfHs/u2oVQxVesU1Xzb7hPVvYRqsOuV38WmG
+ EwRg3J2A8VOBveG/dDYkEM5vpXuBGwDmAFspc805DIrFB/blAnjhScVLPNNjz2SgZcUifhc
+ wFVzyhG++PWWKqevs6wGw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:IJ1jQ9MhSAU=;GFpVcOh+Iehhjx7G0SCZnXXgfPq
+ KvZ2WA8dlL9/z1yQdAN/vvjV7oj5iPA/NusJ1k9aUq6y8LED3hMDh2RWLv+0WfaVj7bgBwIeI
+ fBIs9JcvMxwMU5kW9OJjkDvAeoqCF/Cu4+l97x77Pb9H3F/awz48MVr1utQxEAN/pXn4zbNzV
+ DmYjwRwiR/cdKgieTOTaFZxYkmjWWuHzcC87mWKRy54NYbfoPL3rdulaPfYQa6FcP7VB5rnRJ
+ cH0BdvWL2zfOFO4pkizp3NNqZ013WiMh1RcqeFXGTALJidEl/ccHEeHXOEs+qCZ/LYyJn0g2Z
+ b7y0a5+tZ+6cipeoWC09JZm83JJUESLpOceM7RxQiWzFsmJf0aOcPP+Solvm89aGGyp0QOO7R
+ PdKLebrTPG2mTT1PLm30EJi7mJMmFXZ2wa+PgU/ZPV1J3dcduBpAuFX9GqQwXn+mRbkusGQ5T
+ NiRhXpgUugqQv/V0SmFVby1tPXFkUaW6h/aIjRvqtuUMb5uQkL7HGx+Ky4XhTbDc4TbdRKo7/
+ x9ssbQ9Ygt9jgHOq5B8Jns2ehkGTn/Awb9/Ee0xKytdR7eunmdjrNLBLJoMAu0ePKizFxgi5F
+ 4s8Fu6G3ucsHBTRmFMh22hYXAlyB7Xfwy43ligBcJEu0mCcsTnxnGm9jhM7s3q03gVNhRIBVb
+ zxA7F+Jkw5wC5iQGFDQ5gskFasLyUbQj1ffs0L+U7Ubervrf0C5UKz9cmCR82JgkYhtmQR2et
+ 5Mv/qndoxJAyZcv/kyA+RHnsiOSXWDIPNcap4pdUHqTKpVoDJDbkyRxGv9uwVwSuJ2rUI8e9Q
+ VwiwUpdp7Ed3VPYBgCIUz1NAt++2IVUsze8OUTP/ueSDscT6JZcyZBp6JYs1jnlvMm1S+7HAt
+ L3ECNzyfePx3uOUN6fKsT6Ikss00bVsNgQQNUEH4oBgaFJxYteBl7YisjPKSw9DWPoaIobQ7c
+ yGZKAunwDiMjT1Xi98DTJOL6jSbSk607Aoxb95Iwvu7r2P2L5T5Xoy0HJLFjJxRk3ta+ViG3a
+ RhSu8Xhg6Oa81MoS26WKmvAP6DuC5Q27yXubXg73BD2yPT0MagUWBVRhwK5YpCvY38CDsnHO/
+ ZL0KpOmpKTenrHmgaA+hJacrgQeGiBEbjfXaKYomeZhN2UIVgJ2QXsRjHSHDDkTFMpH3pPE2g
+ 6JtBx3ohSgL0wJqrw+YxW6jOjxhBiasObw/nGcCfAmA3PadJODmkHheNd68cEtCtEobQzPJjP
+ LBeXHfv6fP1HXLBoZiFkqau6mGJifu2idjiByj+3oxaLrwfX53tpTuYLey1TlxJl6vhBIc7Wy
+ fb8f84RVORZiqL5/UxbtoMQlVl4rLwUe1E0EOi9qz31IJilLtvt5n2H+0Uv4CXPGqZ5oSt+lf
+ pxgNItJhSD6YCPQfokN7h1SDz1yVlkUONAJLmV9ITjMKYvZ0gUvxXDfXbH/GSYQ2vPJUJPmrM
+ 4XgKujSUCzR7ykwPBPxVZhoj5daHwPnDDYfa3r2kfrWm5pTwx
 
-The memory allocated for settings is not freed when brcmf_of_probe
-fails. Fix that by freeing settings before returning in error path.
+> The memory allocated for settings is not freed when brcmf_of_probe
+> fails. Fix that by freeing settings before returning in error path.
 
-Fixes: 0ff0843310b7 ("wifi: brcmfmac: Add optional lpo clock enable support")
-Signed-off-by: Abdun Nihaal <abdun.nihaal@gmail.com>
----
-V1 -> V2 : Add subsystem name in commit header as suggested by Arend
+  failed?
 
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+* Would you like to append parentheses to any function names?
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
-index cfcf01eb0daa..f26e4679e4ff 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
-@@ -561,8 +561,10 @@ struct brcmf_mp_device *brcmf_get_module_param(struct device *dev,
- 	if (!found) {
- 		/* No platform data for this device, try OF and DMI data */
- 		brcmf_dmi_probe(settings, chip, chiprev);
--		if (brcmf_of_probe(dev, bus_type, settings) == -EPROBE_DEFER)
-+		if (brcmf_of_probe(dev, bus_type, settings) == -EPROBE_DEFER) {
-+			kfree(settings);
- 			return ERR_PTR(-EPROBE_DEFER);
-+		}
- 		brcmf_acpi_probe(dev, bus_type, settings);
- 	}
- 	return settings;
--- 
-2.47.2
+* See also:
+  https://web.git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/process/submitting-patches.rst?h=v6.14#n631
 
+
+Regards,
+Markus
