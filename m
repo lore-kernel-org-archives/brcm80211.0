@@ -1,40 +1,40 @@
 Received: from mout.web.de (mout.web.de [212.227.17.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4760E13A3ED
-	for <brcm80211@lists.linux.dev>; Sun, 30 Mar 2025 11:33:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCF762A1D1
+	for <brcm80211@lists.linux.dev>; Sun, 30 Mar 2025 12:10:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743334405; cv=none; b=hs7Fpy7433hDz2nBw0JMAUaO80N0L5jb74MeiKLSe+T/QumlYLTfE+l4i13zs6RK3y+x9fqusqKJhSNJQ4Ww1kIZ0g90f2NW1jEOYcRK70iQNF+kw5KnsWNtHbaQl2wQld2nJYf68QbLkKWfbyHZVeemMEOYPRJOzzNQGeL5k0c=
+	t=1743336629; cv=none; b=a3pNCRGjxn7t212SaIfb2RmbWoZCjFLpvQ3A24VOWgb1N/7+fMP4Lsh9OLcxPi0E8621OR9OjG9x9/TZcoFZBJ2QraLhc/MsXP1NYjwZqt7q5YO1rhyqyYSQVPdThD2zE5GQvqACkfNkD3zdymq3jsbtMjJTwPZtu3L3lfE3Abk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743334405; c=relaxed/simple;
-	bh=W4lWQYV1Nx1jpqIrn93+1vEwXgKDUXh7Sltms/g+zf0=;
+	s=arc-20240116; t=1743336629; c=relaxed/simple;
+	bh=H5WQibwXZqiogSzK5haHT4eEMOwu0pDnlWcAreVVsIQ=;
 	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
-	 In-Reply-To:Content-Type; b=Ug/ZivjmHwJ0qmFI1jMkU38T4fSld1kNyREf2fWeQrBiroAcsMVrAOxBEKEySsVpflMemTRlX2j9YA2MAfdZ0KIb7/VwZdRHj2BYigccRPkzAj2XULod9WiHa7QF7XwlUPuXDMNrkGAuPhcQV6e4tR2mPIyilHCKZitSFkvdp70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=IoAYtVH5; arc=none smtp.client-ip=212.227.17.12
+	 In-Reply-To:Content-Type; b=MSagfiBosGxQykGIiH+Kn7T/tRJBQupRl7qfr9T70Rv/xHEnng7PiwCWsR7qIj3dOuX6pZmGDfK3caht+N/l59q4StHh9UZabMZj3Rwx4gGM1gAvhMU0+9rtH9m5bpt3SJdIH2MVQMBksWd5X9bbp/oF3UKTfUm8ou2OiFWd12g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=p62biwOq; arc=none smtp.client-ip=212.227.17.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="IoAYtVH5"
+	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="p62biwOq"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1743334397; x=1743939197; i=markus.elfring@web.de;
-	bh=WjfpMDebyAxl+8+7FiZ92vWYLwsOPaQRFwBcgNho/1Y=;
+	s=s29768273; t=1743336618; x=1743941418; i=markus.elfring@web.de;
+	bh=PJw7Yfgh23Z1MKf/flQ4K1MK58f+fwjuTvUFKJ4f+/Y=;
 	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
 	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
 	 cc:content-transfer-encoding:content-type:date:from:message-id:
 	 mime-version:reply-to:subject:to;
-	b=IoAYtVH5LaM1mLKcGnetcnOfovTlMDDrvFlZgMu5tGrVDDulsyU8CYYrc8i4MoyG
-	 /07H/yXtayftnXQrZJ+lQ8jwXfeL6yCCpRrTZdPKGiAJP6kvs0SC5VIuDtVfV+txS
-	 SPskuFfnbGr8/47CEEYSi/A1T/loY5r1QbxVoySMyg5ZGO5Idu24bGZhe7WNnfuDV
-	 Kf8rQrICsMdSzovgjUU9mhf9nMH7b7PoWB8aN5xbVlQXOzl9mHvYRk2UqnNq8+Dyk
-	 f9w3tQdOBav5ciKHjIPiWZG7tN+k/QlsgHNQSgI5fY258yJx8GQj2j1aACm0S2EmN
-	 oqHVLLIqw+Ea0QI0Cw==
+	b=p62biwOq+yoA1zO8PSmXwwE+lKvPrMqM2rGOHWu2mUUztbA769wPSp/U1r++AqrJ
+	 78VoxSLNwcFDZrZDLfKQDRgsJ5r3hTNJq1L6vhIzixSq2mDJ8ggvdpXFdNZUkD4SY
+	 JuCBwnGJMYWypI5G/xpPZO6v5OyQDJbRrdwCnqrJ5XApZ1cSegVuHfsNnHpLkX3v+
+	 PpHIR1r0F0yIIxQdKzEBfAm16mgHYjMWxR5xM7YrrUhdrOuhcTM9q7F+NqCkm9xwR
+	 7NIM+3w4Pdez7XtFM0smvp/NodhnvpmtqdAnHvz83kOulgitdfFAseS6XDchw1hiI
+	 SG/LgdrfSxlM/sZO1g==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from [192.168.178.29] ([94.31.93.13]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1N7QQB-1t2Soq1WZB-017Vkk; Sun, 30
- Mar 2025 13:33:17 +0200
-Message-ID: <a7e5afa0-6f80-4685-b901-86112fca61c5@web.de>
-Date: Sun, 30 Mar 2025 13:33:13 +0200
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MgibW-1tT5Vt3mzk-00hLzE; Sun, 30
+ Mar 2025 14:10:17 +0200
+Message-ID: <0ca9b435-7e5f-4208-a707-c9bf08f815bf@web.de>
+Date: Sun, 30 Mar 2025 14:10:15 +0200
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -53,51 +53,48 @@ Cc: LKML <linux-kernel@vger.kernel.org>, Jacobe Zang
  Sebastian Reichel <sebastian.reichel@collabora.com>,
  =?UTF-8?Q?Toke_H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
  =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-References: <20250330093505.22370-1-abdun.nihaal@gmail.com>
-Subject: Re: [PATCH] Fix memory leak in brcmf_get_module_param
+References: <20250330103425.44197-1-abdun.nihaal@gmail.com>
+Subject: Re: [PATCH v2] wifi: brcmfmac: fix memory leak in
+ brcmf_get_module_param
 Content-Language: en-GB
 From: Markus Elfring <Markus.Elfring@web.de>
-In-Reply-To: <20250330093505.22370-1-abdun.nihaal@gmail.com>
+In-Reply-To: <20250330103425.44197-1-abdun.nihaal@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:A9YI4cvStLbW9DNbPUKkPtiLzIWEX+zwdwhlQfW369PgyboEdHI
- fJYQZvDM1qLTUTc4hY2ypynCM91wkoodWkpOfHs/u2oVQxVesU1Xzb7hPVvYRqsOuV38WmG
- EwRg3J2A8VOBveG/dDYkEM5vpXuBGwDmAFspc805DIrFB/blAnjhScVLPNNjz2SgZcUifhc
- wFVzyhG++PWWKqevs6wGw==
+X-Provags-ID: V03:K1:7bVlY+MQQmXGYH/E73zZJhdPu/2yM5hleg4DlKxuS+sTmJzzetK
+ LIApvH/qx34almhmQOq7W85FQCSqIKOTt3VcLUW6ZpNDXFqSsQWykPSELzJjmQ/AXYZGsCG
+ tzNSCrv2L+YxXb8SqKoMjjBsS4NSi5wRNanLtHjJUoyxeWk+j3jJlPIntgP9VD8Ud1mmrh0
+ tupKMZPkXBGWcjptAyRhA==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:IJ1jQ9MhSAU=;GFpVcOh+Iehhjx7G0SCZnXXgfPq
- KvZ2WA8dlL9/z1yQdAN/vvjV7oj5iPA/NusJ1k9aUq6y8LED3hMDh2RWLv+0WfaVj7bgBwIeI
- fBIs9JcvMxwMU5kW9OJjkDvAeoqCF/Cu4+l97x77Pb9H3F/awz48MVr1utQxEAN/pXn4zbNzV
- DmYjwRwiR/cdKgieTOTaFZxYkmjWWuHzcC87mWKRy54NYbfoPL3rdulaPfYQa6FcP7VB5rnRJ
- cH0BdvWL2zfOFO4pkizp3NNqZ013WiMh1RcqeFXGTALJidEl/ccHEeHXOEs+qCZ/LYyJn0g2Z
- b7y0a5+tZ+6cipeoWC09JZm83JJUESLpOceM7RxQiWzFsmJf0aOcPP+Solvm89aGGyp0QOO7R
- PdKLebrTPG2mTT1PLm30EJi7mJMmFXZ2wa+PgU/ZPV1J3dcduBpAuFX9GqQwXn+mRbkusGQ5T
- NiRhXpgUugqQv/V0SmFVby1tPXFkUaW6h/aIjRvqtuUMb5uQkL7HGx+Ky4XhTbDc4TbdRKo7/
- x9ssbQ9Ygt9jgHOq5B8Jns2ehkGTn/Awb9/Ee0xKytdR7eunmdjrNLBLJoMAu0ePKizFxgi5F
- 4s8Fu6G3ucsHBTRmFMh22hYXAlyB7Xfwy43ligBcJEu0mCcsTnxnGm9jhM7s3q03gVNhRIBVb
- zxA7F+Jkw5wC5iQGFDQ5gskFasLyUbQj1ffs0L+U7Ubervrf0C5UKz9cmCR82JgkYhtmQR2et
- 5Mv/qndoxJAyZcv/kyA+RHnsiOSXWDIPNcap4pdUHqTKpVoDJDbkyRxGv9uwVwSuJ2rUI8e9Q
- VwiwUpdp7Ed3VPYBgCIUz1NAt++2IVUsze8OUTP/ueSDscT6JZcyZBp6JYs1jnlvMm1S+7HAt
- L3ECNzyfePx3uOUN6fKsT6Ikss00bVsNgQQNUEH4oBgaFJxYteBl7YisjPKSw9DWPoaIobQ7c
- yGZKAunwDiMjT1Xi98DTJOL6jSbSk607Aoxb95Iwvu7r2P2L5T5Xoy0HJLFjJxRk3ta+ViG3a
- RhSu8Xhg6Oa81MoS26WKmvAP6DuC5Q27yXubXg73BD2yPT0MagUWBVRhwK5YpCvY38CDsnHO/
- ZL0KpOmpKTenrHmgaA+hJacrgQeGiBEbjfXaKYomeZhN2UIVgJ2QXsRjHSHDDkTFMpH3pPE2g
- 6JtBx3ohSgL0wJqrw+YxW6jOjxhBiasObw/nGcCfAmA3PadJODmkHheNd68cEtCtEobQzPJjP
- LBeXHfv6fP1HXLBoZiFkqau6mGJifu2idjiByj+3oxaLrwfX53tpTuYLey1TlxJl6vhBIc7Wy
- fb8f84RVORZiqL5/UxbtoMQlVl4rLwUe1E0EOi9qz31IJilLtvt5n2H+0Uv4CXPGqZ5oSt+lf
- pxgNItJhSD6YCPQfokN7h1SDz1yVlkUONAJLmV9ITjMKYvZ0gUvxXDfXbH/GSYQ2vPJUJPmrM
- 4XgKujSUCzR7ykwPBPxVZhoj5daHwPnDDYfa3r2kfrWm5pTwx
+UI-OutboundReport: notjunk:1;M01:P0:jKyH6NX2U7U=;XsArFErJzd0Kl51Sf6JWKx4u3rz
+ uBcinJ85KfmypRpjqGqnQ6VQME1V9LluPkxhIm71dzoG9TDTzmJexlpc36Ku0S+Tl2Sj9vD4l
+ p5Vyk86swNcF0WzZ/RZpGb/fc3k1ORN3Bb25Kb6cOzOI4arXF/vx3a5ryIlNGLebJOp85yWBO
+ 287Q8HKqfWFJWDIuGq5JeU7ygCkZwdlaWSkUMKrn0Tj8n0CFBvRN3TA1al3fdMSip8HjYCxWP
+ QHwi0bfQj175sCVmtCNNRnozGjXNMuz+5iL2ak+pnaa7IA2OOv6UK5w3HKLFmD7JorJTElknN
+ Oz6CNfUbwHw9TFw3TTdpf4hx1uOJYVsilB5ltYba5btT15IzWDRaXf8lc1WnDrsM4VP0krlOt
+ YvyiRCW0L/FlKtdhs9EFxoN8HC9ukg0l0LpCF3VhjjFSwXU4hWk62I7xXWY5ll26lW91kbuVY
+ uk5PSlf9TZQLjPnbc9OEiANdhaTRekQ4Oo0Ob+B4Gccxr9uo/o08oOzgts/Fb7z0MbcQBqEkj
+ 7zBtBxfnk3psJqzOldev9OBztnEbtYUcvBZCzNmb2n+ed/WrObMb+rviVahhIcNT1eDOOjxhu
+ fZbX+tJRplSlHp761wrlNVqXltH8VKb0B8/8C6U2KptBJahvDs3qd1dGjS/COf1kRL/u+0AW2
+ kSBqUyibC469JYXaylUrq99ibwleLYd9kRIv3XBwmuWxqyhzpDf4yaiUV5Z4TKPt2GiOUBgrD
+ Ff2J2XTAo5wzVYATNVyFWKkX3UDrUcjy4/Mms3qbiRPaSxyB79poAQvWzWpqF6WxFC1gt5vt3
+ Q/2hcn97RsmOhLARicHLa8g0bLERzwNxOzHKQ1f2bz037Dl5JrsA3ulgEw+yKJ7k02nzCrOBr
+ dncIwb7Xhh7EtolSv0l2TcknXWt1i+lieVEy2bUEdtKOqv+4HLN7B/ORPmX37pFA/9SYdCopd
+ cTRwWFZmdctvSmm2frfE5RP9VvMohrBfMOakbrvHVXnlGftqtPsRxjBuKC4BKnCu6anXZnVxS
+ aPIeN72C+HH93Z9rXsqT6NQDggW+9HlzAT1SfjxLMru/ISGp2zFVorv08GXWuRFSzANV9WzT7
+ 6AXiWX0M0g6P3p8dQbi4IcOxYMdj5zgfFz5O6h4K62lLwVBo+j+DP8cjIJ4MUTCpn9clzKZmE
+ vEktLQx3LtC0jBfDfNA220xHaWx1kzs51h0gGZ/K8eoxFGYfUut9sAiqUoARV4g77/EaMTooF
+ NcBDk9bcBcnXLh2zAWFpgX0BzyMCw6YfYWP2G2mBKDJ4zG8RM3WecSwj9p2BY5Ghg6hMqdMzD
+ v9HwXUETpuZ9D8UuWt7jBEkzz2LXT8YK8jaeip4O7K/ZNNQZWkYPUCoId/LceGRNK+zxjoENM
+ /39alYEvT11fNTGnivcyok6MVbD0ctgJSfe3Y05gtK46Y4oZZdcPJZr3jrS2svq2bmiMEt3EY
+ fiwlrZbzTgz2E6UdvWqcR7+tJJwrQQVYwGDAzCy4nt2VrRSCL
 
 > The memory allocated for settings is not freed when brcmf_of_probe
 > fails. Fix that by freeing settings before returning in error path.
 
   failed?
 
-* Would you like to append parentheses to any function names?
-
-* See also:
-  https://web.git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/process/submitting-patches.rst?h=v6.14#n631
-
+Would you like to append parentheses to any function names?
 
 Regards,
 Markus
