@@ -1,100 +1,104 @@
-Received: from mout.web.de (mout.web.de [212.227.17.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f196.google.com (mail-pl1-f196.google.com [209.85.214.196])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCF762A1D1
-	for <brcm80211@lists.linux.dev>; Sun, 30 Mar 2025 12:10:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A829C2046B4
+	for <brcm80211@lists.linux.dev>; Tue,  1 Apr 2025 14:09:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.196
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743336629; cv=none; b=a3pNCRGjxn7t212SaIfb2RmbWoZCjFLpvQ3A24VOWgb1N/7+fMP4Lsh9OLcxPi0E8621OR9OjG9x9/TZcoFZBJ2QraLhc/MsXP1NYjwZqt7q5YO1rhyqyYSQVPdThD2zE5GQvqACkfNkD3zdymq3jsbtMjJTwPZtu3L3lfE3Abk=
+	t=1743516578; cv=none; b=a5fPS3z+IZbAPDawNCUjW7G5c6kYcJ8/qqDxKFozEA7cXyPrhbsx51HBXqN6B+PfPXHRNLLSuHTH+/mPogDoYIeqNmsnBY0jH65uh4DGAvfUbSPKJtNWkq+k/Ll1Um3cobziIKmpWOFvGD6NQ96gMt4Qph3IFs0rbkqBr+Chlaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743336629; c=relaxed/simple;
-	bh=H5WQibwXZqiogSzK5haHT4eEMOwu0pDnlWcAreVVsIQ=;
-	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
-	 In-Reply-To:Content-Type; b=MSagfiBosGxQykGIiH+Kn7T/tRJBQupRl7qfr9T70Rv/xHEnng7PiwCWsR7qIj3dOuX6pZmGDfK3caht+N/l59q4StHh9UZabMZj3Rwx4gGM1gAvhMU0+9rtH9m5bpt3SJdIH2MVQMBksWd5X9bbp/oF3UKTfUm8ou2OiFWd12g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=p62biwOq; arc=none smtp.client-ip=212.227.17.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1743516578; c=relaxed/simple;
+	bh=My+IhUJPDIGC/U42rriDITzfwFXpKC6Yxi6GLAVN7H0=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=sGz0MMmjNaCpRcHu3Z4MRIB/yOrNXLHSda5DtRSHCr/SYvfUqDx3EgI+O49Kos4lWFatbOUCJFByWfJJhq46ApIdclVXWq3xpE32t2uasvv2tVFJY9ib0ytUsJyCV0XcBFpinpsiaxg7j+B+D6BMuV3rQ15fOTnXZoSoAtVnpDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ey6x+ktL; arc=none smtp.client-ip=209.85.214.196
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="p62biwOq"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1743336618; x=1743941418; i=markus.elfring@web.de;
-	bh=PJw7Yfgh23Z1MKf/flQ4K1MK58f+fwjuTvUFKJ4f+/Y=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
-	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=p62biwOq+yoA1zO8PSmXwwE+lKvPrMqM2rGOHWu2mUUztbA769wPSp/U1r++AqrJ
-	 78VoxSLNwcFDZrZDLfKQDRgsJ5r3hTNJq1L6vhIzixSq2mDJ8ggvdpXFdNZUkD4SY
-	 JuCBwnGJMYWypI5G/xpPZO6v5OyQDJbRrdwCnqrJ5XApZ1cSegVuHfsNnHpLkX3v+
-	 PpHIR1r0F0yIIxQdKzEBfAm16mgHYjMWxR5xM7YrrUhdrOuhcTM9q7F+NqCkm9xwR
-	 7NIM+3w4Pdez7XtFM0smvp/NodhnvpmtqdAnHvz83kOulgitdfFAseS6XDchw1hiI
-	 SG/LgdrfSxlM/sZO1g==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([94.31.93.13]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MgibW-1tT5Vt3mzk-00hLzE; Sun, 30
- Mar 2025 14:10:17 +0200
-Message-ID: <0ca9b435-7e5f-4208-a707-c9bf08f815bf@web.de>
-Date: Sun, 30 Mar 2025 14:10:15 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ey6x+ktL"
+Received: by mail-pl1-f196.google.com with SMTP id d9443c01a7336-22928d629faso69146025ad.3
+        for <brcm80211@lists.linux.dev>; Tue, 01 Apr 2025 07:09:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1743516576; x=1744121376; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=a9GlRWIrROmsrWYyZDpS+4LIE3y91EaJxNh6RKPsNwg=;
+        b=ey6x+ktLkc9RW4tGFpwk1ThGaKpHvxO3bftDM6nwXfMcHSiiPmUHYzd2oZR+7IHNqh
+         SMz5KpEzQtmzZ9tWXOK1OhAXybke9yIe2LWCDcmqIHAzQa0XqEJfap3N6lxY0NMZHyX2
+         URC7I8sFBzux+4pMdzi8EslRwHvqBhS4VIAsDE2sfTBiVEl2YZCWD17c8n/AnMGR4IHZ
+         bOaqWgsY8QdO68r0psDb0k+6E5k7L9+dbLQS2cGcIPzV8R1fBJ9uwNBpRfS49u+HPO0i
+         tc/sRCFjzlfbLkrvMDavftbHW4uM42wzGj+ibLbmdUXkspCqVXFrdpm1mRliYmjGq4yK
+         YOWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743516576; x=1744121376;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=a9GlRWIrROmsrWYyZDpS+4LIE3y91EaJxNh6RKPsNwg=;
+        b=K5LSWUjKDcj0FzZpWl0Lflv7SAR9UxYaYDYvcIwAfx8M8oa1BEcVsrdRKmSc01RQTF
+         azQhCmpDqnV1A23F1lqDqzkuuM+Na8E9yI1spJtwi5uUY3HXhBLkGQhDdK5uL/X1h6lH
+         9hfXmHJN6XcToRb9VA4s5DOpLcgFG18G389y77d780+OCr41upu1xpvk71/gLQ9VpVVD
+         Ezpys0AUoMRttrfnnJz2+5jd16oWnoYdbwp0l0i8F4zcYxl9Rv8G+Wa/4M5oY8C31RhT
+         Ia9hGVwVPs96rq1+UCdR13N+8/QqoUk6pwlmDxmSBbt0trZ/XAjEiGxPTyPblxSvke2A
+         URRg==
+X-Forwarded-Encrypted: i=1; AJvYcCVR8bQrntEClJvOSM/UkyfOy0BRzHYxX3cSif0TFY6dmFEZnuH73w4TFg4ttNQTHjg71phqjj2+nzc=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyryOc//OCHZ7FEF1RAZ81vikLRj82D4V1wGADBHu3aY44gpH6I
+	nBaLeTtOqXAKNUjhLXqwXLqO8/zRHQ4E8URerPEIH6yHe0AKv0RY
+X-Gm-Gg: ASbGncszphEckLGuZHVMt/1VhsseRip2cSUg7YkzRA2bPR8PacwCmliptuLX/745d4y
+	h0obGqURVUnhHioKrO6cX8Z+QIqKMS2wZ4nxMBWFTE6qLuWK9mBa5P4XAHI4fibHNfXzAaT8m40
+	70u9/WiI2rwLPPUvb5DrvZns0olpkXlWZgxzeqWVZelqrrG05W0pxk3wASciwfledClR32Lpn6J
+	hzr7L0TnvJ32H0XcNMsccw8zTYKy0hzqYwA5diFwP6784jXPICX7OmMPu+Igs/+bTyEyCaO5CBU
+	j3AzpqdRgVAgC2J4eI/Hm/eBCtjXEOZx8kkQBpmJEv6l7zhs3NDjwIy4Am+zZJ3NJBpMoFQ=
+X-Google-Smtp-Source: AGHT+IFgauv64PUqSz27wL93wQDQRU2fSOWY7nWrgsuD8SQDOPwlyH8YGEfCl2nmEhWzzN5QGC28OQ==
+X-Received: by 2002:a05:6a20:3953:b0:1f6:6539:e026 with SMTP id adf61e73a8af0-2009f5fe141mr19082242637.15.1743516575790;
+        Tue, 01 Apr 2025 07:09:35 -0700 (PDT)
+Received: from henry.localdomain ([111.202.148.167])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-af93b6d82f2sm8082168a12.40.2025.04.01.07.09.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Apr 2025 07:09:35 -0700 (PDT)
+From: Henry Martin <bsdhenrymartin@gmail.com>
+To: arend.vanspriel@broadcom.com
+Cc: linux-wireless@vger.kernel.org,
+	brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com,
+	linux-kernel@vger.kernel.org,
+	Henry Martin <bsdhenrymartin@gmail.com>
+Subject: [PATCH v1] wifi: brcmfmac: acpi: Add NULL check in brcmf_acpi_probe()
+Date: Tue,  1 Apr 2025 22:09:24 +0800
+Message-Id: <20250401140924.29168-1-bsdhenrymartin@gmail.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Abdun Nihaal <abdun.nihaal@gmail.com>,
- brcm80211-dev-list.pdl@broadcom.com, brcm80211@lists.linux.dev,
- linux-wireless@vger.kernel.org,
- Arend van Spriel <arend.vanspriel@broadcom.com>
-Cc: LKML <linux-kernel@vger.kernel.org>, Jacobe Zang
- <jacobe.zang@wesion.com>, Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
- Kalle Valo <kvalo@kernel.org>, =?UTF-8?Q?Ond=C5=99ej_Jirman?= <megi@xff.cz>,
- Sai Krishna <saikrishnag@marvell.com>,
- Sebastian Reichel <sebastian.reichel@collabora.com>,
- =?UTF-8?Q?Toke_H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
- =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-References: <20250330103425.44197-1-abdun.nihaal@gmail.com>
-Subject: Re: [PATCH v2] wifi: brcmfmac: fix memory leak in
- brcmf_get_module_param
-Content-Language: en-GB
-From: Markus Elfring <Markus.Elfring@web.de>
-In-Reply-To: <20250330103425.44197-1-abdun.nihaal@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:7bVlY+MQQmXGYH/E73zZJhdPu/2yM5hleg4DlKxuS+sTmJzzetK
- LIApvH/qx34almhmQOq7W85FQCSqIKOTt3VcLUW6ZpNDXFqSsQWykPSELzJjmQ/AXYZGsCG
- tzNSCrv2L+YxXb8SqKoMjjBsS4NSi5wRNanLtHjJUoyxeWk+j3jJlPIntgP9VD8Ud1mmrh0
- tupKMZPkXBGWcjptAyRhA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:jKyH6NX2U7U=;XsArFErJzd0Kl51Sf6JWKx4u3rz
- uBcinJ85KfmypRpjqGqnQ6VQME1V9LluPkxhIm71dzoG9TDTzmJexlpc36Ku0S+Tl2Sj9vD4l
- p5Vyk86swNcF0WzZ/RZpGb/fc3k1ORN3Bb25Kb6cOzOI4arXF/vx3a5ryIlNGLebJOp85yWBO
- 287Q8HKqfWFJWDIuGq5JeU7ygCkZwdlaWSkUMKrn0Tj8n0CFBvRN3TA1al3fdMSip8HjYCxWP
- QHwi0bfQj175sCVmtCNNRnozGjXNMuz+5iL2ak+pnaa7IA2OOv6UK5w3HKLFmD7JorJTElknN
- Oz6CNfUbwHw9TFw3TTdpf4hx1uOJYVsilB5ltYba5btT15IzWDRaXf8lc1WnDrsM4VP0krlOt
- YvyiRCW0L/FlKtdhs9EFxoN8HC9ukg0l0LpCF3VhjjFSwXU4hWk62I7xXWY5ll26lW91kbuVY
- uk5PSlf9TZQLjPnbc9OEiANdhaTRekQ4Oo0Ob+B4Gccxr9uo/o08oOzgts/Fb7z0MbcQBqEkj
- 7zBtBxfnk3psJqzOldev9OBztnEbtYUcvBZCzNmb2n+ed/WrObMb+rviVahhIcNT1eDOOjxhu
- fZbX+tJRplSlHp761wrlNVqXltH8VKb0B8/8C6U2KptBJahvDs3qd1dGjS/COf1kRL/u+0AW2
- kSBqUyibC469JYXaylUrq99ibwleLYd9kRIv3XBwmuWxqyhzpDf4yaiUV5Z4TKPt2GiOUBgrD
- Ff2J2XTAo5wzVYATNVyFWKkX3UDrUcjy4/Mms3qbiRPaSxyB79poAQvWzWpqF6WxFC1gt5vt3
- Q/2hcn97RsmOhLARicHLa8g0bLERzwNxOzHKQ1f2bz037Dl5JrsA3ulgEw+yKJ7k02nzCrOBr
- dncIwb7Xhh7EtolSv0l2TcknXWt1i+lieVEy2bUEdtKOqv+4HLN7B/ORPmX37pFA/9SYdCopd
- cTRwWFZmdctvSmm2frfE5RP9VvMohrBfMOakbrvHVXnlGftqtPsRxjBuKC4BKnCu6anXZnVxS
- aPIeN72C+HH93Z9rXsqT6NQDggW+9HlzAT1SfjxLMru/ISGp2zFVorv08GXWuRFSzANV9WzT7
- 6AXiWX0M0g6P3p8dQbi4IcOxYMdj5zgfFz5O6h4K62lLwVBo+j+DP8cjIJ4MUTCpn9clzKZmE
- vEktLQx3LtC0jBfDfNA220xHaWx1kzs51h0gGZ/K8eoxFGYfUut9sAiqUoARV4g77/EaMTooF
- NcBDk9bcBcnXLh2zAWFpgX0BzyMCw6YfYWP2G2mBKDJ4zG8RM3WecSwj9p2BY5Ghg6hMqdMzD
- v9HwXUETpuZ9D8UuWt7jBEkzz2LXT8YK8jaeip4O7K/ZNNQZWkYPUCoId/LceGRNK+zxjoENM
- /39alYEvT11fNTGnivcyok6MVbD0ctgJSfe3Y05gtK46Y4oZZdcPJZr3jrS2svq2bmiMEt3EY
- fiwlrZbzTgz2E6UdvWqcR7+tJJwrQQVYwGDAzCy4nt2VrRSCL
+Content-Transfer-Encoding: 8bit
 
-> The memory allocated for settings is not freed when brcmf_of_probe
-> fails. Fix that by freeing settings before returning in error path.
+devm_kasprintf() returns NULL when memory allocation fails. Currently,
+brcmf_acpi_probe() does not check for this case, which results in a NULL
+pointer dereference.
 
-  failed?
+Add NULL check after devm_kasprintf() to prevent this issue.
 
-Would you like to append parentheses to any function names?
+Fixes: 0f485805d008 ("wifi: brcmfmac: acpi: Add support for fetching Apple ACPI properties")
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+---
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/acpi.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Regards,
-Markus
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/acpi.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/acpi.c
+index c4a54861bfb4..4885d5d0a0af 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/acpi.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/acpi.c
+@@ -25,6 +25,8 @@ void brcmf_acpi_probe(struct device *dev, enum brcmf_bus_type bus_type,
+ 		settings->board_type = devm_kasprintf(dev, GFP_KERNEL,
+ 						      "apple,%s",
+ 						      o->string.pointer);
++		if (!settings->board_type)
++			return -ENOMEM;
+ 	} else {
+ 		brcmf_dbg(INFO, "No ACPI module-instance\n");
+ 		return;
+-- 
+2.34.1
+
