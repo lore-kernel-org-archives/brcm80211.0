@@ -1,250 +1,110 @@
-Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E6681A5B87
-	for <brcm80211@lists.linux.dev>; Fri,  4 Apr 2025 08:48:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 343CD1A2547
+	for <brcm80211@lists.linux.dev>; Fri,  4 Apr 2025 09:01:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=150.107.74.76
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743756493; cv=none; b=FC0fCOD4d90+OfISZiLhxKLKBQM49b13k2AlSLMUDDfic3sRh/UuEZotNFrH87sCXBnvqy2owD8RhBfFoHHfNT4MqvDOTz+phf8ZS6BOkMBpnxfw9maFvqZRg2217ECQ4T6LEkm9pu0nY5Jqd2ahQc/xeQ40I57IT1R0xM6+1dw=
+	t=1743757286; cv=none; b=CQ67sDc3A3WqOgRaf78tRRu3S46FzpV63kLfoNtcKbI56Mi3AYPJ+XLmyJZNN1ZX+bPZgmb0RoGcxW1Xna9H98tLfPu16uThvWgqsXQ9Gra+zNchFuHyMJUT/Y7fb8Cgm5QaP0b54YTBO18G+PG/cg+gVqTcfB0l5i7vAfelvAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743756493; c=relaxed/simple;
-	bh=ZQOEb8u3RDoF68oLgxFL7DOVXtidnbHC/aIeLuWknxs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uMSnQMk0zrXr+bytEBHeKtEfK7ELSzH4I6/WAyqD6CFKkbV5bUZy7JoicCum7Vds5o2ecAjNVf70Oo+iuAo88Dhq1r57LMrPEOdt+eqxXwMWpHbl62KoxAlGJqEwrfuTVvF83YGwNc9QoKMLWuoO18gyKs0gSKzVvEwfrHiRCMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FapKaoiQ; arc=none smtp.client-ip=209.85.215.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1743757286; c=relaxed/simple;
+	bh=rh/0DiLc06njMesCXvy0xrm4fBBepKP0I72Ww69sE8A=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=c7zj8Tzv6W3kT64PB41oQEmYA0BhTFjpGBorE6NQsuP8Y6HBqsejVw90dg9gE+Z83AU1x780CEebl91iMP0ofz7lU0LeQJ36+FFChuPxpKD4GlMi3mWtNI9LDNomtl/PGaE09Hi8sQAr5WWPWMNg6esv8F+bY4DQrVf62i3k1wM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ozlabs.org; spf=pass smtp.mailfrom=ozlabs.org; dkim=pass (2048-bit key) header.d=ozlabs.org header.i=@ozlabs.org header.b=POc5E/b+; arc=none smtp.client-ip=150.107.74.76
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ozlabs.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ozlabs.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FapKaoiQ"
-Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-af579e46b5dso1184235a12.3
-        for <brcm80211@lists.linux.dev>; Fri, 04 Apr 2025 01:48:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743756489; x=1744361289; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=GKYFZl2hMBVvq/tGTvaEyWP0BJSuPsnZGbFqpvTq3m8=;
-        b=FapKaoiQ/TwoxT9Q+g4ZrAqnka3FEYdMXqBUFFcseG/vb08tQydXft9iFnTSW0y3Tc
-         t+kSdkgS9+4ahOluEfwJR4Adj8lUioOKzkRA2jRSUYiushd5zhFQJJJ6diiArrrJ+dwu
-         Tzts91yYLk4uDwQFMSEPdUBNoToTyKyQdDp7Un6Bs80CBlbCx3zUrtRVd2VARhAx8pi3
-         vaBumcbLPfrlueMkm3vbnkUV1/Tr4AhYVRskCDC9H2Zf71zeKGvdnNQPUszKwCC6mgO7
-         nz4LVnGqc1AHzwmtzBh0YG0W15IY+3zccf66bogvRQXtKz+4GaZTsx/xPUUjQIUjZUKF
-         p2Cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743756489; x=1744361289;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GKYFZl2hMBVvq/tGTvaEyWP0BJSuPsnZGbFqpvTq3m8=;
-        b=WAY1yQjwLaXjqyZU3OkCe0pl102bqj9oTsHH44gwRUxWVHHlkWEQ6YIpdkHBH7JZAB
-         2cFxvrLGTA0CzLFHg0O3Vy3dEvsFCkuemXcAFZJ1OQ1Z+d81LNPXvhQu54sfm+6AjKhL
-         6W5FqJciwMpQ4QCm7kKXZN5v89+OhT+6GLSskqZAJ7Z6AwqllWwam/7polT8VKyAY7Kc
-         q1uPmWR2RLcaenPkEygSs2wCdpeg7n2LfvseRSzON33mJ7H/3XJJ/84yX1SN38wX8PKX
-         aYqc8XkIPUMuOEXjc8t0m9RhFXsIbi69epd3yl94ZdavzKxMNO8JHgaAVjzTXzELUpHP
-         L7XA==
-X-Forwarded-Encrypted: i=1; AJvYcCXjU2AI12QXJpnXOh9JfrRe1J4rcKsAvtv0IZ9M20WDNb3SmxtIfKKU4X41K6q8dJFeaGHQkZdWB64=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwcOUmJPUBHr0ryzKF6WtA+GLMJ0OFzmYtuu2IqEQMdk7rj8ZWy
-	BAcUqcqEolP5UIEbDRhrOtjEr08e+IW9f5R7wtziMG97B+LxJkYd
-X-Gm-Gg: ASbGncsKu51/xdBCcr0QU1b3w+obzLgxW1JxUnt4t00MS73HaCQW5v1/rBgECkJgQW2
-	q+cpRDYQfc5O5Zppv3VYMaMnh2FqavbnRVQrgn4m6Jzteu+7H5p2TnAQxQq8TTyICBPsUaF5NHM
-	PTScmSRMdvdzYtaVnx25AhXjDoNq6XB9+Gpn1vWDCSS2F2h2/oTJQAkWiVipgK604dk8j65Lqru
-	LlHscpAjYBkNjk/CdXD5+ASLdMAz4zEItP5RbDKfQRs5nEj+H4AcbL141B4zYD2Bwn2JVj0sqUh
-	JgN9yWX3/5/qnv7UatbujGpp3DXKtQWZLAyDPQD/6+B7zLMMukq97UFCNHiou5uGxBL4MqZr
-X-Google-Smtp-Source: AGHT+IHQy54LZ/NyiSvEoks7UryUue+uQARWbnhEUMyhIJqZeMH+xfpWnZ/jGnglOqtjlSonVKNhIw==
-X-Received: by 2002:a05:6a21:999d:b0:1f5:8748:76cc with SMTP id adf61e73a8af0-20108188cdemr3659983637.31.1743756488698;
-        Fri, 04 Apr 2025 01:48:08 -0700 (PDT)
-Received: from visitorckw-System-Product-Name ([140.113.216.168])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-af9bc32c999sm2377463a12.19.2025.04.04.01.47.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Apr 2025 01:48:07 -0700 (PDT)
-Date: Fri, 4 Apr 2025 16:47:58 +0800
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
-To: Yury Norov <yury.norov@gmail.com>
-Cc: "H. Peter Anvin" <hpa@zytor.com>,
-	David Laight <david.laight.linux@gmail.com>,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	Laurent.pinchart@ideasonboard.com, airlied@gmail.com,
-	akpm@linux-foundation.org, alistair@popple.id.au,
-	andrew+netdev@lunn.ch, andrzej.hajda@intel.com,
-	arend.vanspriel@broadcom.com, awalls@md.metrocast.net, bp@alien8.de,
-	bpf@vger.kernel.org, brcm80211-dev-list.pdl@broadcom.com,
-	brcm80211@lists.linux.dev, dave.hansen@linux.intel.com,
-	davem@davemloft.net, dmitry.torokhov@gmail.com,
-	dri-devel@lists.freedesktop.org, eajames@linux.ibm.com,
-	edumazet@google.com, eleanor15x@gmail.com,
-	gregkh@linuxfoundation.org, hverkuil@xs4all.nl,
-	jernej.skrabec@gmail.com, jirislaby@kernel.org, jk@ozlabs.org,
-	joel@jms.id.au, johannes@sipsolutions.net, jonas@kwiboo.se,
-	jserv@ccns.ncku.edu.tw, kuba@kernel.org, linux-fsi@lists.ozlabs.org,
-	linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-media@vger.kernel.org, linux-mtd@lists.infradead.org,
-	linux-serial@vger.kernel.org, linux-wireless@vger.kernel.org,
-	linux@rasmusvillemoes.dk, louis.peens@corigine.com,
-	maarten.lankhorst@linux.intel.com, mchehab@kernel.org,
-	mingo@redhat.com, miquel.raynal@bootlin.com, mripard@kernel.org,
-	neil.armstrong@linaro.org, netdev@vger.kernel.org,
-	oss-drivers@corigine.com, pabeni@redhat.com,
-	parthiban.veerasooran@microchip.com, rfoss@kernel.org,
-	richard@nod.at, simona@ffwll.ch, tglx@linutronix.de,
-	tzimmermann@suse.de, vigneshr@ti.com, x86@kernel.org
+	dkim=pass (2048-bit key) header.d=ozlabs.org header.i=@ozlabs.org header.b="POc5E/b+"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ozlabs.org;
+	s=201707; t=1743757280;
+	bh=rh/0DiLc06njMesCXvy0xrm4fBBepKP0I72Ww69sE8A=;
+	h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
+	b=POc5E/b+AglzAkY37sDRa/BDBtwIOb5JtEf38ItfllacsvyAoJ6qEG+ptCBMH85cU
+	 exN1qESJmMuVAaqeYVEx0Zx+5FSea+pTuEuHFAAVrNYXpzibQhqLh1DsPBGvSciGjA
+	 RyKNNchWJOxVOiut7+Pkir7mGi+N2faVLqorOR0+4ELgC3jA8tGF2M2MziFNRNXmyN
+	 7p3NKStjr+0nrOSMqn2yWu7rZpEK4jSVxfwhLron6DRu5V5j+4YTYwoVWzQOSqBL9D
+	 MmV81L2OARI4NP/P9sMvY1YvHear7fw9ve2Cg4VgwbPsXHfQlRY1dULsVO5Igk2Q+p
+	 Pbd3oPliPLCzw==
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(Client did not present a certificate)
+	by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZTXdf2VVvz4x8w;
+	Fri,  4 Apr 2025 20:01:10 +1100 (AEDT)
+Message-ID: <811962e9c4964dd06eddb2fffab284946878df4e.camel@ozlabs.org>
 Subject: Re: [PATCH v3 00/16] Introduce and use generic parity16/32/64 helper
-Message-ID: <Z++cvrLOz2VAaUkO@visitorckw-System-Product-Name>
-References: <Z824SgB9Dt5zdWYc@visitorckw-System-Product-Name>
- <Z9CyuowYsZyez36c@thinkpad>
- <80771542-476C-493E-858A-D2AF6A355CC1@zytor.com>
- <Z9GtcNJie8TRKywZ@thinkpad>
- <Z9G2Tyypb3iLoBjn@visitorckw-System-Product-Name>
- <Z9KMKwnZXA2mkD2s@visitorckw-System-Product-Name>
- <Z+AlyB461xwMxMtG@visitorckw-System-Product-Name>
- <eec0dfd7-5e4f-4a08-928c-b7714dbc4a17@zytor.com>
- <Z+6dh1ZVIKWWOKaP@visitorckw-System-Product-Name>
- <Z-6zzP2O-Q7zvTLt@thinkpad>
+From: Jeremy Kerr <jk@ozlabs.org>
+To: Kuan-Wei Chiu <visitorckw@gmail.com>
+Cc: Yury Norov <yury.norov@gmail.com>, "H. Peter Anvin" <hpa@zytor.com>, 
+ David Laight <david.laight.linux@gmail.com>, Andrew Cooper
+ <andrew.cooper3@citrix.com>,  Laurent.pinchart@ideasonboard.com,
+ airlied@gmail.com, akpm@linux-foundation.org,  alistair@popple.id.au,
+ andrew+netdev@lunn.ch, andrzej.hajda@intel.com, 
+ arend.vanspriel@broadcom.com, awalls@md.metrocast.net, bp@alien8.de, 
+ bpf@vger.kernel.org, brcm80211-dev-list.pdl@broadcom.com, 
+ brcm80211@lists.linux.dev, dave.hansen@linux.intel.com,
+ davem@davemloft.net,  dmitry.torokhov@gmail.com,
+ dri-devel@lists.freedesktop.org,  eajames@linux.ibm.com,
+ edumazet@google.com, eleanor15x@gmail.com,  gregkh@linuxfoundation.org,
+ hverkuil@xs4all.nl, jernej.skrabec@gmail.com,  jirislaby@kernel.org,
+ joel@jms.id.au, johannes@sipsolutions.net, jonas@kwiboo.se, 
+ jserv@ccns.ncku.edu.tw, kuba@kernel.org, linux-fsi@lists.ozlabs.org, 
+ linux-input@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-media@vger.kernel.org, linux-mtd@lists.infradead.org, 
+ linux-serial@vger.kernel.org, linux-wireless@vger.kernel.org, 
+ linux@rasmusvillemoes.dk, louis.peens@corigine.com, 
+ maarten.lankhorst@linux.intel.com, mchehab@kernel.org, mingo@redhat.com, 
+ miquel.raynal@bootlin.com, mripard@kernel.org, neil.armstrong@linaro.org, 
+ netdev@vger.kernel.org, oss-drivers@corigine.com, pabeni@redhat.com, 
+ parthiban.veerasooran@microchip.com, rfoss@kernel.org, richard@nod.at, 
+ simona@ffwll.ch, tglx@linutronix.de, tzimmermann@suse.de, vigneshr@ti.com, 
+ x86@kernel.org
+Date: Fri, 04 Apr 2025 17:01:09 +0800
+In-Reply-To: <Z++cbTTp8leOJ5O+@visitorckw-System-Product-Name>
+References: <Z9CyuowYsZyez36c@thinkpad>
+	 <80771542-476C-493E-858A-D2AF6A355CC1@zytor.com>
+	 <Z9GtcNJie8TRKywZ@thinkpad>
+	 <Z9G2Tyypb3iLoBjn@visitorckw-System-Product-Name>
+	 <Z9KMKwnZXA2mkD2s@visitorckw-System-Product-Name>
+	 <Z+AlyB461xwMxMtG@visitorckw-System-Product-Name>
+	 <eec0dfd7-5e4f-4a08-928c-b7714dbc4a17@zytor.com>
+	 <Z+6dh1ZVIKWWOKaP@visitorckw-System-Product-Name>
+	 <Z-6zzP2O-Q7zvTLt@thinkpad>
+	 <3ebd280e6697790da55f88a5e9e87b4cab407253.camel@ozlabs.org>
+	 <Z++cbTTp8leOJ5O+@visitorckw-System-Product-Name>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-2 
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Z-6zzP2O-Q7zvTLt@thinkpad>
 
-On Thu, Apr 03, 2025 at 12:14:04PM -0400, Yury Norov wrote:
-> On Thu, Apr 03, 2025 at 10:39:03PM +0800, Kuan-Wei Chiu wrote:
-> > On Tue, Mar 25, 2025 at 12:43:25PM -0700, H. Peter Anvin wrote:
-> > > On 3/23/25 08:16, Kuan-Wei Chiu wrote:
-> > > > 
-> > > > Interface 3: Multiple Functions
-> > > > Description: bool parity_odd8/16/32/64()
-> > > > Pros: No need for explicit casting; easy to integrate
-> > > >        architecture-specific optimizations; except for parity8(), all
-> > > >        functions are one-liners with no significant code duplication
-> > > > Cons: More functions may increase maintenance burden
-> > > > Opinions: Only I support this approach
-> > > > 
-> > > 
-> > > OK, so I responded to this but I can't find my reply or any of the
-> > > followups, so let me go again:
-> > > 
-> > > I prefer this option, because:
-> > > 
-> > > a. Virtually all uses of parity is done in contexts where the sizes of the
-> > > items for which parity is to be taken are well-defined, but it is *really*
-> > > easy for integer promotion to cause a value to be extended to 32 bits
-> > > unnecessarily (sign or zero extend, although for parity it doesn't make any
-> > > difference -- if the compiler realizes it.)
-> > > 
-> > > b. It makes it easier to add arch-specific implementations, notably using
-> > > __builtin_parity on architectures where that is known to generate good code.
-> > > 
-> > > c. For architectures where only *some* parity implementations are
-> > > fast/practical, the generic fallbacks will either naturally synthesize them
-> > > from components via shift-xor, or they can be defined to use a larger
-> > > version; the function prototype acts like a cast.
-> > > 
-> > > d. If there is a reason in the future to add a generic version, it is really
-> > > easy to do using the size-specific functions as components; this is
-> > > something we do literally all over the place, using a pattern so common that
-> > > it, itself, probably should be macroized:
-> > > 
-> > > #define parity(x) 				\
-> > > ({						\
-> > > 	typeof(x) __x = (x);			\
-> > > 	bool __y;				\
-> > > 	switch (sizeof(__x)) {			\
-> > > 		case 1:				\
-> > > 			__y = parity8(__x);	\
-> > > 			break;			\
-> > > 		case 2:				\
-> > > 			__y = parity16(__x);	\
-> > > 			break;			\
-> > > 		case 4:				\
-> > > 			__y = parity32(__x);	\
-> > > 			break;			\
-> > > 		case 8:				\
-> > > 			__y = parity64(__x);	\
-> > > 			break;			\
-> > > 		default:			\
-> > > 			BUILD_BUG();		\
-> > > 			break;			\
-> > > 	}					\
-> > > 	__y;					\
-> > > })
-> > >
-> > Thank you for your detailed response and for explaining the rationale
-> > behind your preference. The points you outlined in (a)–(d) all seem
-> > quite reasonable to me.
-> > 
-> > Yury,
-> > do you have any feedback on this?
-> > Thank you.
-> 
-> My feedback to you:
-> 
-> I asked you to share any numbers about each approach. Asm listings,
-> performance tests, bloat-o-meter. But you did nothing or very little
-> in that department. You move this series, and it means you should be
-> very well aware of alternative solutions, their pros and cons.
-> 
-It seems the concern is that I didn't provide assembly results and
-performance numbers. While I believe that listing these numbers alone
-cannot prove which users really care about parity efficiency, I have
-included the assembly results and my initial observations below. Some
-differences, like mov vs movzh, are likely difficult to measure.
+Hi Kuan-Wei,
 
-Compilation on x86-64 using GCC 14.2 with O2 Optimization:
+> Thanks for your feedback.
 
-Link to Godbolt: https://godbolt.org/z/EsqPMz8cq
+No problem!
 
-For u8 Input:
-- #2 and #3 generate exactly the same assembly code, while #1 replaces
-  one `mov` instruction with `movzh`, which may slightly slow down the
-  performance due to zero extension.
-- Efficiency: #2 = #3 > #1
+> IIUC, from the fsi-i2c perspective, parity efficiency isn't a major
+> concern,
 
-For u16 Input:
-- As with u8 input, #1 performs an unnecessary zero extension, while #3
-  replaces one of the `shr` instructions in #2 with a `mov`, making it
-  slightly faster.
-- Efficiency: #3 > #2 > #1
+Yes
 
-For u32 Input:
-- #1 has an additional `mov` instruction compared to #2, and #2 has an
-  extra `shr` instruction compared to #3.
-- Efficiency: #3 > #2 > #1
+> but you still prefer optimizing with methods like __builtin_parity().
 
-For u64 Input:
-- #1 and #2 generate the same code, but #3 has one less `shr`
-  instruction compared to the others.
-- Efficiency: #3 > #1 = #2
+No, it's not really about optimisation. In the case of this driver, my
+preference would be more directed to using common code (either in the
+form of these changes, or __builtin_parity) rather than any performance
+considerations.
 
----
+The implementation details I gave was more a note about the platforms
+that are applicable for the driver.
 
-Adding -m32 Flag to View Assembly for 32-bit Machine:
+Cheers,
 
-Link to Godbolt: https://godbolt.org/z/GrPa86Eq5
 
-For u8 Input:
-- #2 and #3 generate identical assembly code, whereas #1 has additional
-  `mov`, `shr`, and `push/pop` instructions.
-- Efficiency: #2 = #3 > #1
-
-For u16 Input:
-- #1 uses a lot of `xmm` register operations, making it slower than #2
-  and #3. Additionally, #2 has an extra `shr` instruction compared to #3.
-- Efficiency: #3 > #2 > #1
-
-For u32 Input:
-- #1 again uses a lot of `xmm` register operations, so it is slower
-  than #2 and #3, and #2 has an additional `shr` instruction compared to #3.
-- Efficiency: #3 > #2 > #1
-
-For u64 Input:
-- Both #1 and #2 use `xmm` register operations, but #1 has a few extra
-  `movdqa` instructions. #3 is more concise, using a few `shr`, `xor`,
-  and `mov` instructions to complete the operation.
-- Efficiency: #3 > #2 > #1
-
-Regards,
-Kuan-Wei
+Jeremy
