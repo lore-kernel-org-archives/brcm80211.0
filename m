@@ -1,65 +1,66 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 350A21A0728
-	for <brcm80211@lists.linux.dev>; Fri,  4 Apr 2025 08:46:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E6681A5B87
+	for <brcm80211@lists.linux.dev>; Fri,  4 Apr 2025 08:48:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743756409; cv=none; b=KoFae4IGOv7G2iQ7llDGp16GmtpsEiyzYyWAzPdpvXMqYf+72yn7ShfUYif/e+TmaQL0c6sY+6NspotR/BMUfBGZjH5fPJbap09ZX8JVVH0pEGE12sOCRr7xOfrPzhfQLqG+ar9OIz53R9DeLYjzNr9ooe1eUx3E1Qi2RC0Dcew=
+	t=1743756493; cv=none; b=FC0fCOD4d90+OfISZiLhxKLKBQM49b13k2AlSLMUDDfic3sRh/UuEZotNFrH87sCXBnvqy2owD8RhBfFoHHfNT4MqvDOTz+phf8ZS6BOkMBpnxfw9maFvqZRg2217ECQ4T6LEkm9pu0nY5Jqd2ahQc/xeQ40I57IT1R0xM6+1dw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743756409; c=relaxed/simple;
-	bh=E2lc2A+7vFvspOZs4wP9g6ue5EEm94LtW39cVKvUsXc=;
+	s=arc-20240116; t=1743756493; c=relaxed/simple;
+	bh=ZQOEb8u3RDoF68oLgxFL7DOVXtidnbHC/aIeLuWknxs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MFWN7V1EuPFEO+BYSSg6xxG2mQ1fjP0rukA5l2pEM8ya2htr+mBWNAViW/E/ikE0rFDq9glU9LU7YW81OtjwDAmvbpJZI3dV20mq78XnAWVwL4YbVoltdx3hS2iFamH3U5LydbDiGfqbOIZ3tUHOhAvLzHVmN63x/qyEmdrXedM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Aoy//EmR; arc=none smtp.client-ip=209.85.210.180
+	 Content-Type:Content-Disposition:In-Reply-To; b=uMSnQMk0zrXr+bytEBHeKtEfK7ELSzH4I6/WAyqD6CFKkbV5bUZy7JoicCum7Vds5o2ecAjNVf70Oo+iuAo88Dhq1r57LMrPEOdt+eqxXwMWpHbl62KoxAlGJqEwrfuTVvF83YGwNc9QoKMLWuoO18gyKs0gSKzVvEwfrHiRCMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FapKaoiQ; arc=none smtp.client-ip=209.85.215.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Aoy//EmR"
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-736b34a71a1so2193330b3a.0
-        for <brcm80211@lists.linux.dev>; Fri, 04 Apr 2025 01:46:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FapKaoiQ"
+Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-af579e46b5dso1184235a12.3
+        for <brcm80211@lists.linux.dev>; Fri, 04 Apr 2025 01:48:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743756407; x=1744361207; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=XEr/lesTAhWcQcf7iA9OshZymqi1lesrw8RKfhNHVDw=;
-        b=Aoy//EmRm8XJveeJXBG/NU23mftG8mDWm3SeaYAx9l7J/mkAc8K+eF529Ws2lW+8KD
-         fUaak/+ywoOPj8ZuCvjimeSgYQ9CYiUrbx2appZKofPqNic6yiig/ZD7vvJL2uyySVRW
-         /m1drW0ZUPyBKv5ThP8aOAFHjE1exTjJeHqd7kQrYmB6dqokngtnDlzPVzL3ZRn0gWsl
-         CBYQwSGLNznSgSSkeXf6uCw6f3hPbN5BrTLBRy2BZ994N7ifQqAZqNRt9SjyFtRVEQrP
-         Y4P9i3CQ8cjBdCshAbGrbZPBVY/i1fg4gKbGWn6e4cggY5t15HnqPvMwnFqlQFIakxcO
-         hEvQ==
+        d=gmail.com; s=20230601; t=1743756489; x=1744361289; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=GKYFZl2hMBVvq/tGTvaEyWP0BJSuPsnZGbFqpvTq3m8=;
+        b=FapKaoiQ/TwoxT9Q+g4ZrAqnka3FEYdMXqBUFFcseG/vb08tQydXft9iFnTSW0y3Tc
+         t+kSdkgS9+4ahOluEfwJR4Adj8lUioOKzkRA2jRSUYiushd5zhFQJJJ6diiArrrJ+dwu
+         Tzts91yYLk4uDwQFMSEPdUBNoToTyKyQdDp7Un6Bs80CBlbCx3zUrtRVd2VARhAx8pi3
+         vaBumcbLPfrlueMkm3vbnkUV1/Tr4AhYVRskCDC9H2Zf71zeKGvdnNQPUszKwCC6mgO7
+         nz4LVnGqc1AHzwmtzBh0YG0W15IY+3zccf66bogvRQXtKz+4GaZTsx/xPUUjQIUjZUKF
+         p2Cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743756407; x=1744361207;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XEr/lesTAhWcQcf7iA9OshZymqi1lesrw8RKfhNHVDw=;
-        b=m9wUupKcQ4ZTMpNGw5HXFSahYBtUEmAPYyMDSod2G7O+Y5IQxZWGua7CVaRxDWIN9M
-         YRxYho3KMMOIeIMbBvKjLF8Q1BiLbP+1f7qwJFFsrFmf8rE1HwLDPLyX5EVS5HDXN9mh
-         2nRLCDqIsJthFWWbMy5k06E8Uu0E5HXp64OmfxbkXNml7OQ+Ia1IzFD+puMHD+noB0Hb
-         ZtwfjSirpYwBmMO+TuwAXMN0979S0vEH3vLaAqnpSMpMTV+XaN46kFH45CU4Dqx+rm66
-         O3CEnfdcyfRORZmKVSUt+aW+JxJZWUu6e40QXIPtfSL4YpI3XN14GODz0Ji9GEgbmX7G
-         AN9w==
-X-Forwarded-Encrypted: i=1; AJvYcCV6aLXMC4vHKoiF9nsRTpF/yw46wEUkE0I6zNf8Ru5KaufJbylAoOD3l5uXRhtPO+13JZlPlCX7MWI=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxH6EKxq1GeS+dK7zKRqIiJf7tRXBvJHHSEBEtPLA6FdoqZMyQ3
-	F+ToAOaYR25YG5X/7ymMEBsuP2PDY/6JlwwOZazSnPqlYTx41pip
-X-Gm-Gg: ASbGncsYQ7lraI86hV5hicWqnxMfJ9iXOxzk3diphtHaUXPH/clTKy4EJgTROug/6dT
-	XnSAXQDI28/3dUmI/wNdatH5p3+04KAbCqfT6AUpiMc0rr1kS9a8bRobNb06QEQYtwZ97jzNcX/
-	YvcI/8TGqrd6HLJyIh06oCmcSCMZu0IOrDV8CCncRL+PuvIVGo26NVpO9WkXqW3aF8rzxnw5TY0
-	K6lb1JUACibneafQHCELXTop1AgdFWqWK09uyjgedDfDNt5HsoMSBsARLsG5c6oJee/JYWPQIh3
-	3cXviDxbCsUs1LE8jU9/Rky0N1fq9E1xYktAN/2YEekORUMW7uEWVjI7pDckraDysNsRY1r1
-X-Google-Smtp-Source: AGHT+IGnBuGwhOqlkhsoqT0zhJln64liGpkRA7l3PCCq0BqnYRQF3lpkwuYz5g4xSoDa+vLjvXq3Yw==
-X-Received: by 2002:a05:6a21:483:b0:1fe:61a4:71d8 with SMTP id adf61e73a8af0-20104666844mr3980332637.22.1743756407334;
-        Fri, 04 Apr 2025 01:46:47 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1743756489; x=1744361289;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=GKYFZl2hMBVvq/tGTvaEyWP0BJSuPsnZGbFqpvTq3m8=;
+        b=WAY1yQjwLaXjqyZU3OkCe0pl102bqj9oTsHH44gwRUxWVHHlkWEQ6YIpdkHBH7JZAB
+         2cFxvrLGTA0CzLFHg0O3Vy3dEvsFCkuemXcAFZJ1OQ1Z+d81LNPXvhQu54sfm+6AjKhL
+         6W5FqJciwMpQ4QCm7kKXZN5v89+OhT+6GLSskqZAJ7Z6AwqllWwam/7polT8VKyAY7Kc
+         q1uPmWR2RLcaenPkEygSs2wCdpeg7n2LfvseRSzON33mJ7H/3XJJ/84yX1SN38wX8PKX
+         aYqc8XkIPUMuOEXjc8t0m9RhFXsIbi69epd3yl94ZdavzKxMNO8JHgaAVjzTXzELUpHP
+         L7XA==
+X-Forwarded-Encrypted: i=1; AJvYcCXjU2AI12QXJpnXOh9JfrRe1J4rcKsAvtv0IZ9M20WDNb3SmxtIfKKU4X41K6q8dJFeaGHQkZdWB64=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwcOUmJPUBHr0ryzKF6WtA+GLMJ0OFzmYtuu2IqEQMdk7rj8ZWy
+	BAcUqcqEolP5UIEbDRhrOtjEr08e+IW9f5R7wtziMG97B+LxJkYd
+X-Gm-Gg: ASbGncsKu51/xdBCcr0QU1b3w+obzLgxW1JxUnt4t00MS73HaCQW5v1/rBgECkJgQW2
+	q+cpRDYQfc5O5Zppv3VYMaMnh2FqavbnRVQrgn4m6Jzteu+7H5p2TnAQxQq8TTyICBPsUaF5NHM
+	PTScmSRMdvdzYtaVnx25AhXjDoNq6XB9+Gpn1vWDCSS2F2h2/oTJQAkWiVipgK604dk8j65Lqru
+	LlHscpAjYBkNjk/CdXD5+ASLdMAz4zEItP5RbDKfQRs5nEj+H4AcbL141B4zYD2Bwn2JVj0sqUh
+	JgN9yWX3/5/qnv7UatbujGpp3DXKtQWZLAyDPQD/6+B7zLMMukq97UFCNHiou5uGxBL4MqZr
+X-Google-Smtp-Source: AGHT+IHQy54LZ/NyiSvEoks7UryUue+uQARWbnhEUMyhIJqZeMH+xfpWnZ/jGnglOqtjlSonVKNhIw==
+X-Received: by 2002:a05:6a21:999d:b0:1f5:8748:76cc with SMTP id adf61e73a8af0-20108188cdemr3659983637.31.1743756488698;
+        Fri, 04 Apr 2025 01:48:08 -0700 (PDT)
 Received: from visitorckw-System-Product-Name ([140.113.216.168])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-af9bc34ec32sm2448099a12.35.2025.04.04.01.46.38
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-af9bc32c999sm2377463a12.19.2025.04.04.01.47.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Apr 2025 01:46:46 -0700 (PDT)
-Date: Fri, 4 Apr 2025 16:46:37 +0800
+        Fri, 04 Apr 2025 01:48:07 -0700 (PDT)
+Date: Fri, 4 Apr 2025 16:47:58 +0800
 From: Kuan-Wei Chiu <visitorckw@gmail.com>
-To: Jeremy Kerr <jk@ozlabs.org>
-Cc: Yury Norov <yury.norov@gmail.com>, "H. Peter Anvin" <hpa@zytor.com>,
+To: Yury Norov <yury.norov@gmail.com>
+Cc: "H. Peter Anvin" <hpa@zytor.com>,
 	David Laight <david.laight.linux@gmail.com>,
 	Andrew Cooper <andrew.cooper3@citrix.com>,
 	Laurent.pinchart@ideasonboard.com, airlied@gmail.com,
@@ -72,9 +73,9 @@ Cc: Yury Norov <yury.norov@gmail.com>, "H. Peter Anvin" <hpa@zytor.com>,
 	dri-devel@lists.freedesktop.org, eajames@linux.ibm.com,
 	edumazet@google.com, eleanor15x@gmail.com,
 	gregkh@linuxfoundation.org, hverkuil@xs4all.nl,
-	jernej.skrabec@gmail.com, jirislaby@kernel.org, joel@jms.id.au,
-	johannes@sipsolutions.net, jonas@kwiboo.se, jserv@ccns.ncku.edu.tw,
-	kuba@kernel.org, linux-fsi@lists.ozlabs.org,
+	jernej.skrabec@gmail.com, jirislaby@kernel.org, jk@ozlabs.org,
+	joel@jms.id.au, johannes@sipsolutions.net, jonas@kwiboo.se,
+	jserv@ccns.ncku.edu.tw, kuba@kernel.org, linux-fsi@lists.ozlabs.org,
 	linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
 	linux-media@vger.kernel.org, linux-mtd@lists.infradead.org,
 	linux-serial@vger.kernel.org, linux-wireless@vger.kernel.org,
@@ -87,8 +88,9 @@ Cc: Yury Norov <yury.norov@gmail.com>, "H. Peter Anvin" <hpa@zytor.com>,
 	richard@nod.at, simona@ffwll.ch, tglx@linutronix.de,
 	tzimmermann@suse.de, vigneshr@ti.com, x86@kernel.org
 Subject: Re: [PATCH v3 00/16] Introduce and use generic parity16/32/64 helper
-Message-ID: <Z++cbTTp8leOJ5O+@visitorckw-System-Product-Name>
-References: <Z9CyuowYsZyez36c@thinkpad>
+Message-ID: <Z++cvrLOz2VAaUkO@visitorckw-System-Product-Name>
+References: <Z824SgB9Dt5zdWYc@visitorckw-System-Product-Name>
+ <Z9CyuowYsZyez36c@thinkpad>
  <80771542-476C-493E-858A-D2AF6A355CC1@zytor.com>
  <Z9GtcNJie8TRKywZ@thinkpad>
  <Z9G2Tyypb3iLoBjn@visitorckw-System-Product-Name>
@@ -97,43 +99,152 @@ References: <Z9CyuowYsZyez36c@thinkpad>
  <eec0dfd7-5e4f-4a08-928c-b7714dbc4a17@zytor.com>
  <Z+6dh1ZVIKWWOKaP@visitorckw-System-Product-Name>
  <Z-6zzP2O-Q7zvTLt@thinkpad>
- <3ebd280e6697790da55f88a5e9e87b4cab407253.camel@ozlabs.org>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <3ebd280e6697790da55f88a5e9e87b4cab407253.camel@ozlabs.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Z-6zzP2O-Q7zvTLt@thinkpad>
 
-Hi Jeremy,
+On Thu, Apr 03, 2025 at 12:14:04PM -0400, Yury Norov wrote:
+> On Thu, Apr 03, 2025 at 10:39:03PM +0800, Kuan-Wei Chiu wrote:
+> > On Tue, Mar 25, 2025 at 12:43:25PM -0700, H. Peter Anvin wrote:
+> > > On 3/23/25 08:16, Kuan-Wei Chiu wrote:
+> > > > 
+> > > > Interface 3: Multiple Functions
+> > > > Description: bool parity_odd8/16/32/64()
+> > > > Pros: No need for explicit casting; easy to integrate
+> > > >        architecture-specific optimizations; except for parity8(), all
+> > > >        functions are one-liners with no significant code duplication
+> > > > Cons: More functions may increase maintenance burden
+> > > > Opinions: Only I support this approach
+> > > > 
+> > > 
+> > > OK, so I responded to this but I can't find my reply or any of the
+> > > followups, so let me go again:
+> > > 
+> > > I prefer this option, because:
+> > > 
+> > > a. Virtually all uses of parity is done in contexts where the sizes of the
+> > > items for which parity is to be taken are well-defined, but it is *really*
+> > > easy for integer promotion to cause a value to be extended to 32 bits
+> > > unnecessarily (sign or zero extend, although for parity it doesn't make any
+> > > difference -- if the compiler realizes it.)
+> > > 
+> > > b. It makes it easier to add arch-specific implementations, notably using
+> > > __builtin_parity on architectures where that is known to generate good code.
+> > > 
+> > > c. For architectures where only *some* parity implementations are
+> > > fast/practical, the generic fallbacks will either naturally synthesize them
+> > > from components via shift-xor, or they can be defined to use a larger
+> > > version; the function prototype acts like a cast.
+> > > 
+> > > d. If there is a reason in the future to add a generic version, it is really
+> > > easy to do using the size-specific functions as components; this is
+> > > something we do literally all over the place, using a pattern so common that
+> > > it, itself, probably should be macroized:
+> > > 
+> > > #define parity(x) 				\
+> > > ({						\
+> > > 	typeof(x) __x = (x);			\
+> > > 	bool __y;				\
+> > > 	switch (sizeof(__x)) {			\
+> > > 		case 1:				\
+> > > 			__y = parity8(__x);	\
+> > > 			break;			\
+> > > 		case 2:				\
+> > > 			__y = parity16(__x);	\
+> > > 			break;			\
+> > > 		case 4:				\
+> > > 			__y = parity32(__x);	\
+> > > 			break;			\
+> > > 		case 8:				\
+> > > 			__y = parity64(__x);	\
+> > > 			break;			\
+> > > 		default:			\
+> > > 			BUILD_BUG();		\
+> > > 			break;			\
+> > > 	}					\
+> > > 	__y;					\
+> > > })
+> > >
+> > Thank you for your detailed response and for explaining the rationale
+> > behind your preference. The points you outlined in (a)–(d) all seem
+> > quite reasonable to me.
+> > 
+> > Yury,
+> > do you have any feedback on this?
+> > Thank you.
+> 
+> My feedback to you:
+> 
+> I asked you to share any numbers about each approach. Asm listings,
+> performance tests, bloat-o-meter. But you did nothing or very little
+> in that department. You move this series, and it means you should be
+> very well aware of alternative solutions, their pros and cons.
+> 
+It seems the concern is that I didn't provide assembly results and
+performance numbers. While I believe that listing these numbers alone
+cannot prove which users really care about parity efficiency, I have
+included the assembly results and my initial observations below. Some
+differences, like mov vs movzh, are likely difficult to measure.
 
-On Fri, Apr 04, 2025 at 10:51:55AM +0800, Jeremy Kerr wrote:
-> Hi Yuri & Kuan-Wei:
-> 
-> > Thank you for sharing your opinion on this fixed parity(). Your
-> > arguments may or may not be important, depending on what existing
-> > users actually need. Unfortunately, Kuan-Wei didn't collect
-> > performance numbers and opinions from those proposed users.
-> 
-> For the fsi-i2c side: this isn't a performance-critical path, and any
-> reasonable common approach would likely perform better that the current
-> per-bit implementation.
-> 
-> Our common targets for this driver would be arm and powerpc64le. In case
-> it's useful as a reference, using the kernel compilers I have to hand, a
-> __builtin_parity() is a library call on the former, and a two-instruction
-> sequence for the latter.
-> 
-Thanks for your feedback.
+Compilation on x86-64 using GCC 14.2 with O2 Optimization:
 
-IIUC, from the fsi-i2c perspective, parity efficiency isn't a major
-concern, but you still prefer optimizing with methods like
-__builtin_parity(). I'm just unsure if this aligns with Yury's point
-about needing "evidence that performance and/or code generation is
-important here."
+Link to Godbolt: https://godbolt.org/z/EsqPMz8cq
+
+For u8 Input:
+- #2 and #3 generate exactly the same assembly code, while #1 replaces
+  one `mov` instruction with `movzh`, which may slightly slow down the
+  performance due to zero extension.
+- Efficiency: #2 = #3 > #1
+
+For u16 Input:
+- As with u8 input, #1 performs an unnecessary zero extension, while #3
+  replaces one of the `shr` instructions in #2 with a `mov`, making it
+  slightly faster.
+- Efficiency: #3 > #2 > #1
+
+For u32 Input:
+- #1 has an additional `mov` instruction compared to #2, and #2 has an
+  extra `shr` instruction compared to #3.
+- Efficiency: #3 > #2 > #1
+
+For u64 Input:
+- #1 and #2 generate the same code, but #3 has one less `shr`
+  instruction compared to the others.
+- Efficiency: #3 > #1 = #2
+
+---
+
+Adding -m32 Flag to View Assembly for 32-bit Machine:
+
+Link to Godbolt: https://godbolt.org/z/GrPa86Eq5
+
+For u8 Input:
+- #2 and #3 generate identical assembly code, whereas #1 has additional
+  `mov`, `shr`, and `push/pop` instructions.
+- Efficiency: #2 = #3 > #1
+
+For u16 Input:
+- #1 uses a lot of `xmm` register operations, making it slower than #2
+  and #3. Additionally, #2 has an extra `shr` instruction compared to #3.
+- Efficiency: #3 > #2 > #1
+
+For u32 Input:
+- #1 again uses a lot of `xmm` register operations, so it is slower
+  than #2 and #3, and #2 has an additional `shr` instruction compared to #3.
+- Efficiency: #3 > #2 > #1
+
+For u64 Input:
+- Both #1 and #2 use `xmm` register operations, but #1 has a few extra
+  `movdqa` instructions. #3 is more concise, using a few `shr`, `xor`,
+  and `mov` instructions to complete the operation.
+- Efficiency: #3 > #2 > #1
 
 Regards,
-Kuna-Wei
+Kuan-Wei
