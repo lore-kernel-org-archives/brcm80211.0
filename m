@@ -1,87 +1,118 @@
-Received: from cstnet.cn (smtp84.cstnet.cn [159.226.251.84])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from mout.web.de (mout.web.de [212.227.15.14])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE5D1335C0
-	for <brcm80211@lists.linux.dev>; Mon,  7 Apr 2025 04:20:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A74117A2E7
+	for <brcm80211@lists.linux.dev>; Wed,  9 Apr 2025 08:17:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743999658; cv=none; b=HtCbnMkl1Wrp7QhAGRxLwRkaoiYVmlrjkM7o+G4RvC1lV9Z27Xmn3FA5L8LuXUqXXTOS7q/ymdF0w1GaIjBa0NkPXyl96EejfIyaBSzKbDzPDsVX3ARof/pehVR/3WCWl8nMbMBmxnQZ6wfQ0cjkRQZaWZWOs3I7a7OV1jzOeYU=
+	t=1744186646; cv=none; b=THKhGIt+iO7POY1fvFc0Q/hWWJpLPl7u5qEKF7fk/zh28SdVzjm+EhSIVSQ1qIGCIf+B8EcAfOfXw+NTtx9BL0wcsx9cseeeccIUBzAD6utVGIi3R+phhakkVYTlYJdXzpw0DYHciT7I8hYTqWiM8mQinbHnr3PFTW1LR1nwR3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743999658; c=relaxed/simple;
-	bh=QAa+J/meRHMtog91cSwrp/o8jck/81Pbje00Mrsvge8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=QSnOlnQzlRs5zHUuXKhXsoqhSaKzi0EW5oNMLZQ6YnGrNa+OGjZVP9KO0ZeT7FEgsLQOxJ6Jf0h093FmEl/sscepJjIEp7PNmgS1P8xKOTHJ6R1UvB97Gp/rWmF6MkzRwIYFc1dm9rCQ6i5yfJQlE3PYXZcJpgvmnhTLszP6JQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from localhost.localdomain (unknown [124.16.141.245])
-	by APP-05 (Coremail) with SMTP id zQCowAAXUwudUvNn2GrLBg--.10356S2;
-	Mon, 07 Apr 2025 12:20:46 +0800 (CST)
-From: Wentao Liang <vulab@iscas.ac.cn>
-To: arend.vanspriel@broadcom.com,
-	kvalo@kernel.org
-Cc: sebastian.reichel@collabora.com,
-	erick.archer@outlook.com,
-	megi@xff.cz,
-	linux-wireless@vger.kernel.org,
-	brcm80211@lists.linux.dev,
-	brcm80211-dev-list.pdl@broadcom.com,
-	linux-kernel@vger.kernel.org,
-	Wentao Liang <vulab@iscas.ac.cn>
-Subject: [PATCH] brcmfmac: Add an error log for brcmf_sdiod_ramrw()
-Date: Mon,  7 Apr 2025 12:20:28 +0800
-Message-ID: <20250407042028.1481-1-vulab@iscas.ac.cn>
-X-Mailer: git-send-email 2.42.0.windows.2
+	s=arc-20240116; t=1744186646; c=relaxed/simple;
+	bh=h6CgCYyKE/mzMr9eg+tCZEt2jzGIbosM23RT+DB8mr8=;
+	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
+	 In-Reply-To:Content-Type; b=pT8uR8IE975Y3SVkIUSu2W5rXwU8l/jkoQ+nZnmS+b9eMZNXB/trAgpAX5CZjbtb5/hLktG6E6coVW5q4fLyzLx/OOaPQ6ALTR50/m1BJqvAgdKsJcdEQhT6TOUK5rITqtLpv2zF+HHbboDn4LTq12+nhxQFzKC+4U9jfzxZsgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=uuzKgUkG; arc=none smtp.client-ip=212.227.15.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="uuzKgUkG"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1744186612; x=1744791412; i=markus.elfring@web.de;
+	bh=1YJHp6epgREJ9ryf8kdlCCnU4DSI6UznrnADAXME3CU=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
+	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=uuzKgUkGQVyPs66fE+1IhkN2AQ5w40Jz30r1M00YWgg4PR/3gKeg2+fsvH/M5jp2
+	 6jbQubNyoyjOgQHq0PZYKLrcSEEHNPHjd8XmHgMVDVEYPa05CWIvz3dj7/1oiA62f
+	 ganqsHhwsIgPtN5zJNlgGnWNA8If9rMMIV/VmCo8ZOVRlGHwBXb7T5BHYKVGNi4tl
+	 jbNctl8B8XSdp+Utqk38mxTkKdMQZEFEJEL9lSvNTex86KTz8+KvKE6BawO6iNip6
+	 xpqVXkqF8oJNbRwLL9RFi9dk4WyZYsgY0/mdMUTWyjlbTUpqF0lK1V7psu3mchRje
+	 YTr2EPWIXByz4uK4ww==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([94.31.70.27]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1M7Nmq-1tz8I41iQe-00F7Sz; Wed, 09
+ Apr 2025 10:16:52 +0200
+Message-ID: <8cf4d7d5-e9f8-4c10-810b-5c7da72db1c8@web.de>
+Date: Wed, 9 Apr 2025 10:16:34 +0200
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:zQCowAAXUwudUvNn2GrLBg--.10356S2
-X-Coremail-Antispam: 1UD129KBjvdXoW7Gw4xur47KF4fGFyxWw43Awb_yoWkZFbEqF
-	savrnxX34Sg34kuryDAFW2vrWvk34qqw1vgr1ayayfKr1IgFW3KrZ7ZFn5Jw17WF4IqFnx
-	Cwn8AFyUG3Z7ujkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-	9fnUUIcSsGvfJTRUUUb3kFF20E14v26r4j6ryUM7CY07I20VC2zVCF04k26cxKx2IYs7xG
-	6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
-	A2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr0_
-	Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AKxVW0oV
-	Cq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
-	I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r1j6r
-	4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwACI402YVCY1x02628v
-	n2kIc2xKxwCY1x0262kKe7AKxVWUtVW8ZwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7x
-	kEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E
-	67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCw
-	CI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1x
-	MIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIda
-	VFxhVjvjDU0xZFpf9x0JUqeHgUUUUU=
-X-CM-SenderInfo: pyxotu46lvutnvoduhdfq/1tbiDAUFA2fzOrdHTAABsc
+User-Agent: Mozilla Thunderbird
+To: vulab@iscas.ac.cn, brcm80211-dev-list.pdl@broadcom.com,
+ brcm80211@lists.linux.dev, linux-wireless@vger.kernel.org
+Cc: stable@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>,
+ Arend van Spriel <arend.vanspriel@broadcom.com>,
+ Christophe Jaillet <christophe.jaillet@wanadoo.fr>,
+ Kalle Valo <kvalo@kernel.org>, =?UTF-8?Q?Ond=C5=99ej_Jirman?= <megi@xff.cz>,
+ Sai Krishna <saikrishnag@marvell.com>
+References: <20250406081930.2909-1-vulab@iscas.ac.cn>
+Subject: Re: [PATCH] brcm80211: fmac: Add error check for brcmf_usb_dlneeded()
+Content-Language: en-GB
+From: Markus Elfring <Markus.Elfring@web.de>
+In-Reply-To: <20250406081930.2909-1-vulab@iscas.ac.cn>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:yMPQ9G5ZsbpKYU067fpj1wYqk1uW/OnPvh6SXiN2B7pwB5kHnXT
+ AOlBTXLf8JMQFbiIZoCU26LjvgCIJ32cd0eamP9twA/+MLzo8hwcCYVp31RtCAJrsnwF7uZ
+ M7A2Imz2lYbajLG5/I66n+mV1HhgESfzqL+x8EFY1TMI6awlgMAowjYzl4YbPknKssAwOHs
+ SB9NjgRm1PC6YSDxpEs8A==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:/QrlraN5r0k=;iZ33Kw0PCBy1LINLZzn/xnbJ0Zh
+ g5xcTMqUz3kS9YQZtAQ507pA4VC5YiS5dExWcU5I9bkUBZRTZ+zshPEDYaPKMdtfJm/xbvFpt
+ Iv8mP2lX+g/oIGhziOldg/kLwq67h9xq7zhB34AyyL0vBQ+8QOABmUtf7u+XJLbsIyzm9kroY
+ XbwERg6HrHJKelvPaPl5LdbxrUS7DMsp7fn/68Rkiha16WZa3Tzbd3qfemYWswrX5UEzLQew+
+ qX+GmtzuJmiq+rBl8E0BQw4X8v/i1kjqS0JJxhTaIfJC+O0Aisr1z8hiyAKYpGovFcs39Z/GC
+ aO/1RC40/TtsJEVJceVzBPN1pl90EyS73k3EsLd8rfg9r2W2IfqSK0qOlKhhmYVAD+Y3KfvA6
+ YmqACZddDF4/bIfGNcKg2qBrDHNzPpxmYNDw18ftwqeGZoZ4LHyxj78Nm+E4RH3WxuM0dAlZl
+ 4d+UKEoXX2U6aipayfwchW5FhNIVViUdgzLJZJr3M9jMnnn7YbSNTRdClQcL4I+BGEllfDniA
+ VTqrgdKaxGP49TjTbCffUygQPG9CQoX8eFRiX7qV9MH20XwLrwpaIJS9YAHVORnWnsmyjZBb2
+ rjTQdmAC9mASZ0JR669n6jORj6nyXdouydsfdYd5HrMBGzv/hBGyHvULGMxLSGs9sDQHnzkyO
+ wmhjPqT9ezbaqF4IV/YEWJZX4CtGyHKli3mM+wqadxnboV80Whc+i2rnXArvuOstM3W53Drdl
+ 1mJNJm2kxLMaVTF8fEkMYVj2Is5WZETgo4Drc1xXr+1iI4dCpPFptNOrhVbTPmjM3lI2IO07p
+ xxUt1FYCO5WtbO8a+0U2P74UZ5k2+5nq0z8/CHZuv/LS3Fu0zZA2ckRrMDxcHFnxUkJTJVU6x
+ Lc8ZbUW/1N+QldL9YKyL7BB4SUTAYMUl8Dh/WfLJ3OM54+VHrf7xXs3lh7qHT0a4WLA2yJY0s
+ wsZ3rap9uHXX9tfhmqgJpfmsVj+hx9TcpWgXqm7cGR+O2Em5vt9FAhnukpOiWmx6qJbtPQ6mC
+ XMbk/HpBAiY/9XzVZX9vbzLiOWoQW/vCFEvo0sZ4TRoCEP1PAx1Nx7Lgau80QAXu61Vayi7sM
+ 4RJ19dLBA0ZBuaOLk+U4hrblL6Wm47Xg2MqbxMF2lYTs4ezolE2uclZ4F5A3DudZYlHmoaU8m
+ 3VCkO3oZx/cMV2zuvHC1l1/bBiDguU2VW5cgshJGdBlvkpfx2xNcTeMR/yIKJ46VNelYz4mLK
+ u/UaCJhgNuRNjvzZtbvdDSgML3Fwlp686ioFPTtdLWzwJvkhjCQyfXsCkaMsku+kzP/3NkiMd
+ 6diezPdeUdJ/y7ZGa0ThIaFC2aVdzVuow9T1aRao8BsishaXOBZiqcUzur9l+zxEEK4GxHu4f
+ 17nPPQ5zIsZ+KCmEkAWOOP2PFwX01Mq6bs9ekJ5GtDtq04gMvGwceH8kw3CWatI7hUjXUupMi
+ bvIKx4PCiejdhulZTY8Nj8JJvOQEneeF+c3eTnUoonS8t/f52Kbs6rMqZOD1q0oHdP+ukCg==
 
-The function brcmf_sdio_buscore_activate() calls the function
-brcmf_sdiod_ramrw(), but does not check its return value. Log
-the error message to prevent silent failure if the function fails.
+=E2=80=A6
+> Add error handling for brcmf_usb_dl_cmd() to return the function if the
+> 'id.chiprev' is uninitialized.
 
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
----
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+* Please reconsider the offered conclusion once more.
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-index b1727f35217b..dd683c2582fb 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-@@ -3898,8 +3898,9 @@ static void brcmf_sdio_buscore_activate(void *ctx, struct brcmf_chip *chip,
- 
- 	if (rstvec)
- 		/* Write reset vector to address 0 */
--		brcmf_sdiod_ramrw(sdiodev, true, 0, (void *)&rstvec,
--				  sizeof(rstvec));
-+		if (brcmf_sdiod_ramrw(sdiodev, true, 0, (void *)&rstvec,
-+				      sizeof(rstvec)) < 0)
-+			brcmf_err("Fail to reset vector\n");
- }
- 
- static u32 brcmf_sdio_buscore_read32(void *ctx, u32 addr)
--- 
-2.42.0.windows.2
+* I propose to replace the word =E2=80=9Cfor=E2=80=9D by =E2=80=9Cin=E2=80=
+=9D (before function names)
+  in some summary phrases.
 
+
+=E2=80=A6
+> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
+=E2=80=A6
+> @@ -798,7 +799,11 @@ brcmf_usb_dlneeded(struct brcmf_usbdev_info *devinf=
+o)
+>
+>  	/* Check if firmware downloaded already by querying runtime ID */
+>  	id.chip =3D cpu_to_le32(0xDEAD);
+> -	brcmf_usb_dl_cmd(devinfo, DL_GETVER, &id, sizeof(id));
+> +	err =3D brcmf_usb_dl_cmd(devinfo, DL_GETVER, &id, sizeof(id));
+> +	if (err) {
+> +		brcmf_err("DL_GETID Failed\n");
+> +		return false;
+> +	}
+=E2=80=A6
+
+Would an error hint like =E2=80=9CDL_GETVER failed\n=E2=80=9D be more appr=
+opriate here?
+
+Regards,
+Markus
