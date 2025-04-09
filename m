@@ -1,183 +1,180 @@
-Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E12277016
-	for <brcm80211@lists.linux.dev>; Wed,  9 Apr 2025 18:43:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6BFE15624B
+	for <brcm80211@lists.linux.dev>; Wed,  9 Apr 2025 18:56:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744224212; cv=none; b=EYV2mFtQsn0CkbXBvNTy5TqWdW9OSO+T8PFcCrgP3JpRb+qEnX9naev7D1WHh4XOvVBMNMUIpK+jJtQOqZ3NlvQjfBxFQuA7iAk55mBVf+FtNP/AoT1HiKuxa2mwO16FFYcSp2r3lKawe1NSfSHs+cERSFMKUEu59qjEbQfEA1M=
+	t=1744225014; cv=none; b=d1kCYJ5ZuAgUqfeWMTZ4e4jAeZWRw3n9rQwRCnVksUhwjqQGObkQ4+43qkdrhOHuAJGrj2keVZY2PUP2SeWxcO9FkjHN0l79atuhbUONQ5xyi9596CVAIZRzfTkLSDhuPjeNIxxlyEOih941UVd8vjb2y2+YxwWXKbB23ZSEyOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744224212; c=relaxed/simple;
-	bh=39vz9Jz4SIUGg6Pb+C8ys6F0B1ja7AbNj2X6gnj3wFU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mScXI5DpR1YSrzwn0FJclS0DuE3zBku+zM2P7TPc9K81iSHNMEtf2g7fQSyNB5sPBXwAtG0thvYEF5tACPd7B0ASg7SvjdvdaPFZoS/VHbj9I9cE2pl6nKaZv3RXtoOf/Xy8r+OkY74meYGRcervCYIpx1NB86HkPwcDK7UiRWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=DRYbeuo2; arc=none smtp.client-ip=209.85.210.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+	s=arc-20240116; t=1744225014; c=relaxed/simple;
+	bh=xV0/chfmEtO9SuTIudGBT6j2Ld+A4bRf6t+AlvQT5mg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=J4/gfOs88pVMbVrW+Auwzj8dDB+jL48Y1mh52l2lW45bgTBijhz1wI69//jkoPzg9lgawwF2b6ySdJ3wQEMcywfzbHrSs6+zpNtcGwKnqs0piaOn53ZN4jti+MqySzLB36EwcdTTlJBJcMxLtLPwZ+CA4dzpT6u6ri6qnG1QQEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F2HQy9fA; arc=none smtp.client-ip=209.85.216.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="DRYbeuo2"
-Received: by mail-ot1-f53.google.com with SMTP id 46e09a7af769-727388e8f6cso19889a34.0
-        for <brcm80211@lists.linux.dev>; Wed, 09 Apr 2025 11:43:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F2HQy9fA"
+Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-3031354f134so5558412a91.3
+        for <brcm80211@lists.linux.dev>; Wed, 09 Apr 2025 11:56:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1744224208; x=1744829008; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=yUFP4lEaxI/UXTQ8hF09KRKSpAvq6LdwMQOtlQ6n0zQ=;
-        b=DRYbeuo239/agbl+hIHrTHBbG+NYm80bJ0mdKdkqKNxAjNTaeYAe2tcams+5NlxQNS
-         Ymyze3b7SdP+POTBHQ683ak10X9z+UIxgH/himae3yTqBr2cRVnQi7j/PYWxRkLRhXfm
-         g+V5AKOLDcdre28GpV0v1xmS/Io8zJ+IR1dIY=
+        d=gmail.com; s=20230601; t=1744225012; x=1744829812; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=H44gXeIcAME6+J3Fln1VrlgyA4FgneecNdZbE5MtilQ=;
+        b=F2HQy9fAdpL3ky/AFKXWRd0i8brAlzjXF67vKJ+v41f5ZfFWqAMevYuOqeUV2SEBoY
+         Ed//XpHCeOvwdTDTnOqEaeNOttKn2yKGuVaevUiY8RTA7pt9F94UFnQhlbR7vkFx9CGE
+         QiSkLwlG3sLb4gp910JZZ4vpo1AIFrHc3OdwHp238XDXnXs6zFVtwId6jHMdRUgzC/qF
+         7d+UOOHYelW2j2TGsbup7KoxsrTU73Nz2kQ/0pNpksG8EbztcunxvPfa8BIiellkyFrI
+         D/YM07+ieuuc7Nz7DrD2/S0OB8d5uCmVfDg2+Q5sucJjqEnc/0rOn2BMS4dcYdgr8HCt
+         76ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744224208; x=1744829008;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20230601; t=1744225012; x=1744829812;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=yUFP4lEaxI/UXTQ8hF09KRKSpAvq6LdwMQOtlQ6n0zQ=;
-        b=HTD2AebqK+Im5BoZo9i396AKRHwNsy5ECn/C7+4ak7bHJNn2ioUigKH4tCHStJQzHV
-         XPy+WsW/3thbsFY25NoTU1Wgi0iavf+3SlWwaMwrCaU4a+9fID9gCcj2u7TovrI0r/z0
-         tkDcuyiqCNUple5uMUMmFAsnPiwe9Z1SuWbsKh+zxBXdvC5uc+0uBQ4ZY0oKoqvtqd7H
-         KKHbztlhW1GpzIk3Gl28Hpcw84ucongZNB0ibeAOpvDEM4SHfGdxaxBkgwvdwl35Li8C
-         GzZ/RClxsHzGQqd6+nlfEkFA9JaXkaCPZ3ycM6bZZPCxqCPu1MNVADXlgb4t328JGcYr
-         VFkg==
-X-Forwarded-Encrypted: i=1; AJvYcCWmo58gDLHZYJDKOcCm7l6p3Nhfz7Xq7lXTJhf2m9gD6CjVTQRpfeFsh6lHKD99Iuty6yPEzyqkqpU=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyT5GwGrSFTRpTQSfRDDTyWreczRRa8dD398FNtl9TalCJqxJsO
-	3FNy2W3irwUPEdR/VL0215qiAuqgUJTYAaNOUFKTm81QGEZZ4vzhHSm5CVSYmw==
-X-Gm-Gg: ASbGncvQC1AXS1rvfzhTG7JRNgGI0Gf3apI6+ZUVbV9yMn9GjHTLCcPvhalTEf50N1f
-	PDYGBf8H1Y36FTUyAIDkRFWFEr53Kruk3wIVbRL3rZSBzfscnUwgDL+INxSfPd+MQ+Pi58UF4lQ
-	kQiN+JXHoXrS/eiqhMWZ14j+gFgD857e1os4W1A1cBGajGC8FN6e14fdB0sSFfVfUDKxieOBKZv
-	fzclie1+OboYwDzzWPkJEwpyMJ/zymEkmWVBgsOXCmxrh23K3kgVK+33008KIT/ldZRKDedOKjI
-	MmSFnGXq9ozTQ+/1JIG/WoITuoL3APXaxEpu0Ai1+8aIgkZUUFFtV2O8ckuP4y4TxgvQPvqrjyJ
-	3nG7S3mSWPfxfL8Y9
-X-Google-Smtp-Source: AGHT+IF+btWX9Vo26E5xa94gpnRIcQR2MzTl8AHguTxH8TEW16aEw9TQysoZkDfa3NYurrnfcDnCXQ==
-X-Received: by 2002:a05:6830:6019:b0:72b:87bd:ad47 with SMTP id 46e09a7af769-72e7baae198mr27677a34.3.1744224208126;
-        Wed, 09 Apr 2025 11:43:28 -0700 (PDT)
-Received: from [192.168.178.137] (f215227.upc-f.chello.nl. [80.56.215.227])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-2d096cd3764sm325488fac.31.2025.04.09.11.43.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Apr 2025 11:43:27 -0700 (PDT)
-Message-ID: <25b7888d-f704-493b-a2d7-c5e8fff9cfb4@broadcom.com>
-Date: Wed, 9 Apr 2025 20:43:09 +0200
+        bh=H44gXeIcAME6+J3Fln1VrlgyA4FgneecNdZbE5MtilQ=;
+        b=FMizFlHrEaUKwZ9cNcIneRk4j7yP9U7xYfDd4CP2dU26J0MBY/a/Sqa+EkPJvYbbsI
+         j23KzhpAj4Rj6DLAi1ameP1wwSWs3Vu0nbXxfIkWzh847gMpbP1z9SdreWKNcOV6jeAE
+         M4iAGP0/S1gNy+c9r+urF+iN8q8i97DNQIptl9Tx84yO7bsiM3aEaFGfplav9EB/P+A6
+         6zcVJy9mb7N5ltBrntNRx+x9ddGESyX9M/K/A6LyxScnMukIBXnnbLkblSRn20VdV4Am
+         yW7q9L6cYkcIC9Fwqo5fbXdk0COGec9p9u0vaNtJn66Lh+opRYPbBsKvsUmD0XXX6Nbm
+         Kj8A==
+X-Forwarded-Encrypted: i=1; AJvYcCWgyd3bF8eOteuGMBV1zrBn2gBH5HjEwVMCDtZUJaJJI+hOYFPe6wHodPsmJzpxZQnVqSHZqB/Lr3M=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzvH5bvgzS04G/qDj4RfcenIwq85G+7HWEbls3xaiu1bN3SQTZl
+	8oGP8xj8w+anhxi8jRUdzaQSjEE5/W8qmq9rB8qZEl4BFp9L+0JT
+X-Gm-Gg: ASbGncsu/18XuEkMLo8FPSzOyQaY+RhJNSUsh5rFYwBmRxywmn5m/FDPqbTcVm+cjXH
+	lYSD1ggJP3DS1yfJvu9079Ri7KrLgAjbEo56kpGVFtXFvBU0yO74KAN0ULTQchanwaAq5Ej/8C4
+	jw0Okq1ZSRnZwl97b/+LbPGBAXpaH/22EzE6kTqvCkEN0N6vnVUH5DukkrHxcDQCIOeX6gvKeLv
+	Y85vLKSe74xZZGKPSgRpwCGt/dloXyJDHyuz62fRUPtpWsBZnFCgimU8VVREDN8La4aiHhjxuqM
+	0sG4tskV2anhqePp8nMdNJft6PMm/Ueb90Deud9kdlTVoqJEpIdc1jghU3te4fUXtsoJDi2V3h6
+	37tI=
+X-Google-Smtp-Source: AGHT+IEU+9HbHaJYQfODCw2wi9ncyjloO96dCdgihc1EFdOo4Cq2cGK7FSRZJO7xATXKowJYXeayuQ==
+X-Received: by 2002:a17:90b:53c8:b0:2ee:cded:9ac7 with SMTP id 98e67ed59e1d1-30718b83034mr84933a91.20.1744225011817;
+        Wed, 09 Apr 2025 11:56:51 -0700 (PDT)
+Received: from visitorckw-System-Product-Name ([140.113.216.168])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-306dd12b4d5sm2218595a91.25.2025.04.09.11.56.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Apr 2025 11:56:51 -0700 (PDT)
+Date: Thu, 10 Apr 2025 02:56:41 +0800
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
+To: Yury Norov <yury.norov@gmail.com>
+Cc: tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
+	dave.hansen@linux.intel.com, x86@kernel.org, jk@ozlabs.org,
+	joel@jms.id.au, eajames@linux.ibm.com, andrzej.hajda@intel.com,
+	neil.armstrong@linaro.org, rfoss@kernel.org,
+	maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+	tzimmermann@suse.de, airlied@gmail.com, simona@ffwll.ch,
+	dmitry.torokhov@gmail.com, mchehab@kernel.org,
+	awalls@md.metrocast.net, hverkuil@xs4all.nl,
+	miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
+	louis.peens@corigine.com, andrew+netdev@lunn.ch,
+	davem@davemloft.net, edumazet@google.com, pabeni@redhat.com,
+	parthiban.veerasooran@microchip.com, arend.vanspriel@broadcom.com,
+	johannes@sipsolutions.net, gregkh@linuxfoundation.org,
+	jirislaby@kernel.org, akpm@linux-foundation.org, jdelvare@suse.com,
+	linux@roeck-us.net, alexandre.belloni@bootlin.com, pgaj@cadence.com,
+	hpa@zytor.com, alistair@popple.id.au, linux@rasmusvillemoes.dk,
+	Laurent.pinchart@ideasonboard.com, jonas@kwiboo.se,
+	jernej.skrabec@gmail.com, kuba@kernel.org,
+	linux-kernel@vger.kernel.org, linux-fsi@lists.ozlabs.org,
+	dri-devel@lists.freedesktop.org, linux-input@vger.kernel.org,
+	linux-media@vger.kernel.org, linux-mtd@lists.infradead.org,
+	oss-drivers@corigine.com, netdev@vger.kernel.org,
+	linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com, linux-serial@vger.kernel.org,
+	bpf@vger.kernel.org, jserv@ccns.ncku.edu.tw, Frank.Li@nxp.com,
+	linux-hwmon@vger.kernel.org, linux-i3c@lists.infradead.org,
+	david.laight.linux@gmail.com, andrew.cooper3@citrix.com,
+	Yu-Chun Lin <eleanor15x@gmail.com>
+Subject: Re: [PATCH v4 02/13] media: media/test_drivers: Replace open-coded
+ parity calculation with parity_odd()
+Message-ID: <Z/bC6cygo0hem5IO@visitorckw-System-Product-Name>
+References: <20250409154356.423512-1-visitorckw@gmail.com>
+ <20250409154356.423512-3-visitorckw@gmail.com>
+ <Z_aobrK3t7zdwZRK@yury>
+ <Z/a7DecDljuLtKeS@visitorckw-System-Product-Name>
+ <Z_a_PzmNnvC2z7se@yury>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 03/13] media: pci: cx18-av-vbi: Replace open-coded
- parity calculation with parity_odd()
-To: Kuan-Wei Chiu <visitorckw@gmail.com>, tglx@linutronix.de,
- mingo@redhat.com, bp@alien8.de, dave.hansen@linux.intel.com, x86@kernel.org,
- jk@ozlabs.org, joel@jms.id.au, eajames@linux.ibm.com,
- andrzej.hajda@intel.com, neil.armstrong@linaro.org, rfoss@kernel.org,
- maarten.lankhorst@linux.intel.com, mripard@kernel.org, tzimmermann@suse.de,
- airlied@gmail.com, simona@ffwll.ch, dmitry.torokhov@gmail.com,
- mchehab@kernel.org, awalls@md.metrocast.net, hverkuil@xs4all.nl,
- miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
- louis.peens@corigine.com, andrew+netdev@lunn.ch, davem@davemloft.net,
- edumazet@google.com, pabeni@redhat.com, parthiban.veerasooran@microchip.com,
- johannes@sipsolutions.net, gregkh@linuxfoundation.org, jirislaby@kernel.org,
- yury.norov@gmail.com, akpm@linux-foundation.org, jdelvare@suse.com,
- linux@roeck-us.net, alexandre.belloni@bootlin.com, pgaj@cadence.com
-Cc: hpa@zytor.com, alistair@popple.id.au, linux@rasmusvillemoes.dk,
- Laurent.pinchart@ideasonboard.com, jonas@kwiboo.se,
- jernej.skrabec@gmail.com, kuba@kernel.org, linux-kernel@vger.kernel.org,
- linux-fsi@lists.ozlabs.org, dri-devel@lists.freedesktop.org,
- linux-input@vger.kernel.org, linux-media@vger.kernel.org,
- linux-mtd@lists.infradead.org, oss-drivers@corigine.com,
- netdev@vger.kernel.org, linux-wireless@vger.kernel.org,
- brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com,
- linux-serial@vger.kernel.org, bpf@vger.kernel.org, jserv@ccns.ncku.edu.tw,
- Frank.Li@nxp.com, linux-hwmon@vger.kernel.org,
- linux-i3c@lists.infradead.org, david.laight.linux@gmail.com,
- andrew.cooper3@citrix.com, Yu-Chun Lin <eleanor15x@gmail.com>
-References: <20250409154356.423512-1-visitorckw@gmail.com>
- <20250409154356.423512-4-visitorckw@gmail.com>
-Content-Language: en-US
-From: Arend van Spriel <arend.vanspriel@broadcom.com>
-Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
- 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
-In-Reply-To: <20250409154356.423512-4-visitorckw@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z_a_PzmNnvC2z7se@yury>
 
-On 4/9/2025 5:43 PM, Kuan-Wei Chiu wrote:
-> Refactor parity calculations to use the standard parity_odd() helper.
-> This change eliminates redundant implementations.
+On Wed, Apr 09, 2025 at 02:41:03PM -0400, Yury Norov wrote:
+> On Thu, Apr 10, 2025 at 02:23:09AM +0800, Kuan-Wei Chiu wrote:
+> > On Wed, Apr 09, 2025 at 01:03:42PM -0400, Yury Norov wrote:
+> > > On Wed, Apr 09, 2025 at 11:43:45PM +0800, Kuan-Wei Chiu wrote:
+> > > > Refactor parity calculations to use the standard parity_odd() helper.
+> > > > This change eliminates redundant implementations.
+> > > > 
+> > > > Co-developed-by: Yu-Chun Lin <eleanor15x@gmail.com>
+> > > > Signed-off-by: Yu-Chun Lin <eleanor15x@gmail.com>
+> > > > Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+> > > > ---
+> > > >  drivers/media/test-drivers/vivid/vivid-vbi-gen.c | 8 ++------
+> > > >  1 file changed, 2 insertions(+), 6 deletions(-)
+> > > > 
+> > > > diff --git a/drivers/media/test-drivers/vivid/vivid-vbi-gen.c b/drivers/media/test-drivers/vivid/vivid-vbi-gen.c
+> > > > index 70a4024d461e..5e1b7b1742e4 100644
+> > > > --- a/drivers/media/test-drivers/vivid/vivid-vbi-gen.c
+> > > > +++ b/drivers/media/test-drivers/vivid/vivid-vbi-gen.c
+> > > > @@ -5,6 +5,7 @@
+> > > >   * Copyright 2014 Cisco Systems, Inc. and/or its affiliates. All rights reserved.
+> > > >   */
+> > > >  
+> > > > +#include <linux/bitops.h>
+> > > >  #include <linux/errno.h>
+> > > >  #include <linux/kernel.h>
+> > > >  #include <linux/ktime.h>
+> > > > @@ -165,12 +166,7 @@ static const u8 vivid_cc_sequence2[30] = {
+> > > >  
+> > > >  static u8 calc_parity(u8 val)
+> > > >  {
+> > > > -	unsigned i;
+> > > > -	unsigned tot = 0;
+> > > > -
+> > > > -	for (i = 0; i < 7; i++)
+> > > > -		tot += (val & (1 << i)) ? 1 : 0;
+> > > > -	return val | ((tot & 1) ? 0 : 0x80);
+> > > > +	return val | (parity_odd(val) ? 0 : 0x80);
+> > > 
+> > > So, if val == 0 than parity_odd(val) is also 0, and this can be
+> > > simplified just to:
+> > >         return parity(val) ? 0 : 0x80;
+> > > Or I miss something?
+> > >
+> > If val == 0x01, the return value of calc_parity() will remain 0x01.
+> > If changed to return parity_odd(val) ? 0 : 0x80;, the return value will
+> > be changed to 0x00.
 > 
-> Co-developed-by: Yu-Chun Lin <eleanor15x@gmail.com>
-> Signed-off-by: Yu-Chun Lin <eleanor15x@gmail.com>
-> Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-> ---
->   drivers/media/pci/cx18/cx18-av-vbi.c | 12 ++----------
->   1 file changed, 2 insertions(+), 10 deletions(-)
+> Sorry, I meant
+>         return val ? 0 : 0x80;
 > 
-> diff --git a/drivers/media/pci/cx18/cx18-av-vbi.c b/drivers/media/pci/cx18/cx18-av-vbi.c
-> index 65281d40c681..15b515b95956 100644
-> --- a/drivers/media/pci/cx18/cx18-av-vbi.c
-> +++ b/drivers/media/pci/cx18/cx18-av-vbi.c
+> This 'val | (parity_odd(val)' is only false when val == 0, right?
+> When val != 0, compiler will return true immediately, not even calling
+> parity().
+>
+I'm still confused.
 
-[...]
+Maybe you're interpreting the code as:
 
-> @@ -278,7 +270,7 @@ int cx18_av_decode_vbi_line(struct v4l2_subdev *sd,
->   		break;
->   	case 6:
->   		sdid = V4L2_SLICED_CAPTION_525;
-> -		err = !odd_parity(p[0]) || !odd_parity(p[1]);
-> +		err = !parity_odd(p[0]) || !parity_odd(p[1]);
+	(val | parity(val)) ? 0 : 0x80
 
-No need to call parity_odd() twice here. Instead you could do:
+But what we're trying to do is:
 
-		err = !parity_odd(p[0] ^ p[1]);
+	val | (parity(val) ? 0 : 0x80)
 
-This is orthogonal to the change to parity_odd() though. More specific 
-to the new parity_odd() you can now do following as parity_odd() 
-argument is u64:
-
-		err = !parity_odd(*(u16 *)p);
+So, for example, if val == 0x06, the return value will be 0x86.
+Only returning 0 or 0x80 seems wrong to me.
+Or did I misunderstand something?
 
 Regards,
-Arend
+Kuan-Wei
 
+> I think we need a comment from authors.
