@@ -1,62 +1,62 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BEA9269CF7
-	for <brcm80211@lists.linux.dev>; Wed,  9 Apr 2025 15:45:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E822C269B1E
+	for <brcm80211@lists.linux.dev>; Wed,  9 Apr 2025 15:46:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744213557; cv=none; b=IupYvnnm7I9H8tGb32V5s2fCgx78AgaNUShawEYQqfaYfxsJIqdDSsbP+GOJeCbJQuYW9vinVj3GnrjIg7l4AglogeYIz20nAT0Cx6zvxBxr9DdT/5pvebV1UPwzFNDwdYmJuPNexzf4W+Kz72tTJepWt9jnoKuR8fRAs95MHcM=
+	t=1744213568; cv=none; b=ME95G2PTtYllY0KWtWEvD/i1dmG4OAWy5T4QS0Z8Nl/FKNCkN0GZfNb2VdKUqs/wvm+lp3JCp7Wkyyrwa97VqypMe97S3TgM66/J7vhKsN8nBMd0r1wEX39B1I5YGCvznDSkpRrTxVbXGisxntXWgjm+E0ti4AzyIE2qVuxM4Kk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744213557; c=relaxed/simple;
-	bh=ZVFZHQQQk+HI/N3knvHhmroiCBacVnQihS2YvtGWow4=;
+	s=arc-20240116; t=1744213568; c=relaxed/simple;
+	bh=D6aTyRfVYrEdl/DsEoiOfCh6E66jdqjJl29yHOL9VgI=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=CPwwz7UsMRwQDmOk8bdQdWpFD9+V2jlDBolVuP7l6tNkFeOsz5lmIFkRGVgWgTLQneI5z9rnlw8zBqTZ7t+BJEusfqlBzmBQkK6nKnQV+LxE7Bz/wSAjzssNjs0H50YXh0jzWOuD1ib0fbJ9EP1hxoyOw0smNglIE1WYX9Uc/PY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CIGn46GS; arc=none smtp.client-ip=209.85.216.46
+	 MIME-Version; b=UdrU3JUuEx+jHe+Xh3Y4sxvWTPbEFPAvyFSQBInkWUJE6O3x/tmthAhFTEUzvYYs4cLJWKavAMKCf1zZMKUw17mZ/0BnLAGKA5FOusUVYE43a4LUpQGzRvHcKPZCx5CYZAvN8u7WP9VWku03KMxErGW4+njeOkJWq6lX8xMth2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T8MQmwwd; arc=none smtp.client-ip=209.85.216.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CIGn46GS"
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-306b6ae4fb2so3627875a91.3
-        for <brcm80211@lists.linux.dev>; Wed, 09 Apr 2025 08:45:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T8MQmwwd"
+Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-3011737dda0so5300658a91.1
+        for <brcm80211@lists.linux.dev>; Wed, 09 Apr 2025 08:46:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744213555; x=1744818355; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1744213566; x=1744818366; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=3GTX40p8Eu+tWq8rarx+bIs4dwN06BcTyPGidfavgSc=;
-        b=CIGn46GSKxJQoGEIUgcU9VTTummgIlOSiQPzbdHghrTuDMthxhzxlOY431hZFB0WJ5
-         y+rVktHI9H9AKzoI+tju4kXn1UxLiEtSHJUw3q1dWot0aeCD9VeBemLMrlws+riHO8ZR
-         5ylngcyGGZePn3OKKJu4tjx3S+bpqKZJdZZ8oTHzb0a5XF9VmXZ1CI9J3QtfrpSskP2r
-         ENFjYcrZi6GOhGA7PxGnWy8ExQ9wxJBNxCXsoXNXbzaGP+mZq1nCqw9ErhfkXHxhLvbq
-         /sSsyxqKDtywSgDXej289zdfwg9bU+aHbNsdV35EkgQvTAxRCxEXHLeUooyKtnm41tYg
-         VSMQ==
+        bh=dXLi2SRJHleL6i4thZNOgy64MnVVDpLvymelzP4O5VU=;
+        b=T8MQmwwd25jtQKDrVhKPmuoPUeYnEaMJK1Irz6Aj8YfQkblycN+opjEAkQkAWm+sFe
+         +qGyMOoUQ3TVj7ZRLfgJbPgVthJGR1bfTjPXJKcNf3KqaLU1hde3YLMayMBBdGQxSpgt
+         ZTKp4i2Cfn1JJAlJP8c97c6wWd4p1D1SEE7Yz4r9utJKPuv/Nkset7CDVkGx43l2K2ep
+         crYS6kwmVX9bzln8UX0yDlA0sG5lHpvTUcyGPKorDUhifdmGMl/eZR2lySpgbzsqpmE1
+         EPXr7lUu5rz+ufqXX4ryTbgHnCtHvk+0SflH8la+BBOemB1ST1imtFtSCgVxEbfQ/Xi0
+         oP6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744213555; x=1744818355;
+        d=1e100.net; s=20230601; t=1744213566; x=1744818366;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=3GTX40p8Eu+tWq8rarx+bIs4dwN06BcTyPGidfavgSc=;
-        b=OO+Zf912TsUuYOaHrml75brzeTbjOJ02V1pq9Xikw1/zw4n5HiX6HLRTgtEwR1aCD0
-         +8SmB9oRndVQDmXpuH24TwUR7Xh3jSN4Kk55GKl21dV7JSAGCZe97ed9IYBQG7eEEB3A
-         MmMP8x9NPkGEPj5Lth+vJgiOhHRO+EBwInum2pnmcQuDj080sOsEHV5o9Kxcxg7B8o7J
-         8UOU4qs7xtLjS8Nwoo8rgo8RPfTFf95DY34kLJsqjHg7ogfH0934giGVS5g0DUVGgzUW
-         DWH7agZqM4A5L5z8h1rarosIeILnHRAhtBxF7t8paNpXr70H/Ppxk2PouMneUKggUg50
-         +2Rg==
-X-Forwarded-Encrypted: i=1; AJvYcCXfLfdgGM98D2KohLXCZxnLpn5n127Z1uiMr4740fCnovXAfgbPOFIxTlDOI5gKzhw4XW9ib4Ve3c8=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxziZTjmYwpKrEl6UDDQTthmxqNeuuaSeayJMeDJ38ykVzeKsqz
-	vr1E8UBRads9FUZ4arvHNAWbZxNlfRlalcNlYiBCSZCEUxNVF1RD
-X-Gm-Gg: ASbGncvmACb3Fh74RnV9bp8f6+jViIaamv8SW2Sz4xNHGIaY18lnpCEMDvnbYnsdwbU
-	/oR9w6O8GnWh8cxMHBWnJ2enCw6vdErgoXt0Gm/C5ZCanH7E9cTCHU0LKF/0U+V+cY/gTUU1O6O
-	bUHqDjAF7Iose1JyLC3xSVsacJEjBocL0sveYM4MOJ9D299CEs2YaL9QEnryiOVMsbsuHqXCAwR
-	e0yli2LXSyoyYfO0YwdSn796nIAEIn2XhkPAXmzj1giulPxtNgc0VgsYgx4PTQHtRwV7yPnSZf+
-	TZjvoKp5izjEnoCLUuPDvJ/fwy7j9OyNkBfhWzvXE4sm7MymhZdqJNCo4hy8N8wkHPXV6QM=
-X-Google-Smtp-Source: AGHT+IG+nlKBY0fzC5EpfikKx++hN068mStMCGrKOPeFQ0KT+ZFhaeW1hEnEku5KKvT2BN4jgM2ClA==
-X-Received: by 2002:a17:90b:2dca:b0:305:2d28:e435 with SMTP id 98e67ed59e1d1-306dbb8e7d2mr5088169a91.7.1744213555184;
-        Wed, 09 Apr 2025 08:45:55 -0700 (PDT)
+        bh=dXLi2SRJHleL6i4thZNOgy64MnVVDpLvymelzP4O5VU=;
+        b=lCGq1QnR6JO8iNtFjxaPfixyl7TXVszjkRmAYm6Es6AKtbZHC+ifc2fZ6PfvSbFpQo
+         Byali/3SS4bOLt7saC+h4QHd9MZ5/oiRjD1YdTqaTCFDpU3qnBIeuSYh2FdC7M+JrbTU
+         SyzdqssFycufT2Ocj4XjSxkkH+YxvkzM48OdeixgBvvB1IAoG6BnfzVCy3AC+inZaOm+
+         3e7TmUUmIj3ky9DPpnAeBkUQPjVzdRKlZwrTl7DYO40xOQCaZJD2ICgJJ03Dm8QADArK
+         yISdVungdElwROhm4Tjpn0RUavv3aLQEnOX6HENNXuX3fFC6l2KTnRUtBHQV0YBKNHGh
+         0I5w==
+X-Forwarded-Encrypted: i=1; AJvYcCVVWjiBZojddT4AsE2h4suZDHMt5xGyvjt6cbY/BbB0RH67zEMLLyW4/bIhvJmdPGNLFQP+ShS1has=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzVzKsM9owwr7ulBbzub+sDjdmCE6nm+02pZql2UQ6BFKHe4VDH
+	giKbv57Utqi2189e3cg2HEpNRP8DpbpGMgy+U0dWJY55VpfSpIcm
+X-Gm-Gg: ASbGncv/DxllWstOilLVzS0e7LmU2fIwegQ97wBubuKUBbBhGjRAb9zrglA+tuW7PGn
+	/npkCIPqeLheHGFhNbK78WXgj0EB/nzhYMTbEaXY1wMZAEAHeHE6JCpEmBl2Z3FPkiuZO7Zq8wc
+	RAdiXSlPuR/BnCfIGM+HqyzL/FoDsflz8ysSjNzxwLfK5rQdwJ9q2ZBEUAAFrTCgQd28Kaymom2
+	NRyV4XVAaxUhS599avetChrDSOI9CHpFYqtyq7/R+EpT21BWM51YqioNtEw4VagTkJkYuUUSsTy
+	uA4V5EsBt78NqD0btBr4UIk2+KGczpcLmDpp1v9jTG4DPZEtW5k1Dyxr8CbvcnIJpjO/o5o=
+X-Google-Smtp-Source: AGHT+IGweN+KZRMZ3CYcrqcq5iC29qaxOJUe/Q8yFuoByE0YY1D6tXNucvOC/QvWbivmYcNL8OhrUw==
+X-Received: by 2002:a17:90b:584b:b0:2f4:4500:bb4d with SMTP id 98e67ed59e1d1-306dd52eaadmr4119633a91.20.1744213565972;
+        Wed, 09 Apr 2025 08:46:05 -0700 (PDT)
 Received: from visitorckw-System-Product-Name.. ([140.113.216.168])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-306dd171991sm1952304a91.37.2025.04.09.08.45.45
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-306dd171991sm1952304a91.37.2025.04.09.08.45.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Apr 2025 08:45:54 -0700 (PDT)
+        Wed, 09 Apr 2025 08:46:05 -0700 (PDT)
 From: Kuan-Wei Chiu <visitorckw@gmail.com>
 To: tglx@linutronix.de,
 	mingo@redhat.com,
@@ -125,9 +125,9 @@ Cc: hpa@zytor.com,
 	andrew.cooper3@citrix.com,
 	Kuan-Wei Chiu <visitorckw@gmail.com>,
 	Yu-Chun Lin <eleanor15x@gmail.com>
-Subject: [PATCH v4 07/13] Input: joystick - Replace open-coded parity calculation with parity_odd()
-Date: Wed,  9 Apr 2025 23:43:50 +0800
-Message-Id: <20250409154356.423512-8-visitorckw@gmail.com>
+Subject: [PATCH v4 08/13] net: ethernet: oa_tc6: Replace open-coded parity calculation with parity_odd()
+Date: Wed,  9 Apr 2025 23:43:51 +0800
+Message-Id: <20250409154356.423512-9-visitorckw@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250409154356.423512-1-visitorckw@gmail.com>
 References: <20250409154356.423512-1-visitorckw@gmail.com>
@@ -146,123 +146,60 @@ Co-developed-by: Yu-Chun Lin <eleanor15x@gmail.com>
 Signed-off-by: Yu-Chun Lin <eleanor15x@gmail.com>
 Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
 ---
- drivers/input/joystick/grip_mp.c    | 17 ++---------------
- drivers/input/joystick/sidewinder.c | 25 +++++--------------------
- 2 files changed, 7 insertions(+), 35 deletions(-)
+ drivers/net/ethernet/oa_tc6.c | 19 +++----------------
+ 1 file changed, 3 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/input/joystick/grip_mp.c b/drivers/input/joystick/grip_mp.c
-index 5eadb5a3ca37..e7f60a83a89b 100644
---- a/drivers/input/joystick/grip_mp.c
-+++ b/drivers/input/joystick/grip_mp.c
-@@ -18,6 +18,7 @@
- #include <linux/delay.h>
- #include <linux/proc_fs.h>
- #include <linux/jiffies.h>
-+#include <linux/bitops.h>
- 
- #define DRIVER_DESC	"Gravis Grip Multiport driver"
- 
-@@ -112,20 +113,6 @@ static const int axis_map[] = { 5, 9, 1, 5, 6, 10, 2, 6, 4, 8, 0, 4, 5, 9, 1, 5
- 
- static int register_slot(int i, struct grip_mp *grip);
- 
--/*
-- * Returns whether an odd or even number of bits are on in pkt.
-- */
--
--static int bit_parity(u32 pkt)
--{
--	int x = pkt ^ (pkt >> 16);
--	x ^= x >> 8;
--	x ^= x >> 4;
--	x ^= x >> 2;
--	x ^= x >> 1;
--	return x & 1;
--}
--
- /*
-  * Poll gameport; return true if all bits set in 'onbits' are on and
-  * all bits set in 'offbits' are off.
-@@ -236,7 +223,7 @@ static int mp_io(struct gameport* gameport, int sendflags, int sendcode, u32 *pa
- 		pkt = (pkt >> 2) | 0xf0000000;
- 	}
- 
--	if (bit_parity(pkt) == 1)
-+	if (parity_odd(pkt))
- 		return IO_RESET;
- 
- 	/* Acknowledge packet receipt */
-diff --git a/drivers/input/joystick/sidewinder.c b/drivers/input/joystick/sidewinder.c
-index 3a5873e5fcb3..fb6f7004a485 100644
---- a/drivers/input/joystick/sidewinder.c
-+++ b/drivers/input/joystick/sidewinder.c
-@@ -7,6 +7,7 @@
-  * Microsoft SideWinder joystick family driver for Linux
+diff --git a/drivers/net/ethernet/oa_tc6.c b/drivers/net/ethernet/oa_tc6.c
+index db200e4ec284..6734b49357e7 100644
+--- a/drivers/net/ethernet/oa_tc6.c
++++ b/drivers/net/ethernet/oa_tc6.c
+@@ -6,6 +6,7 @@
   */
  
+ #include <linux/bitfield.h>
 +#include <linux/bitops.h>
- #include <linux/delay.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
-@@ -240,22 +241,6 @@ static void sw_init_digital(struct gameport *gameport)
- 	local_irq_restore(flags);
+ #include <linux/iopoll.h>
+ #include <linux/mdio.h>
+ #include <linux/phy.h>
+@@ -177,19 +178,6 @@ static int oa_tc6_spi_transfer(struct oa_tc6 *tc6,
+ 	return spi_sync(tc6->spi, &msg);
  }
  
--/*
-- * sw_parity() computes parity of __u64
-- */
--
--static int sw_parity(__u64 t)
+-static int oa_tc6_get_parity(u32 p)
 -{
--	int x = t ^ (t >> 32);
+-	/* Public domain code snippet, lifted from
+-	 * http://www-graphics.stanford.edu/~seander/bithacks.html
+-	 */
+-	p ^= p >> 1;
+-	p ^= p >> 2;
+-	p = (p & 0x11111111U) * 0x11111111U;
 -
--	x ^= x >> 16;
--	x ^= x >> 8;
--	x ^= x >> 4;
--	x ^= x >> 2;
--	x ^= x >> 1;
--	return x & 1;
+-	/* Odd parity is used here */
+-	return !((p >> 28) & 1);
 -}
 -
- /*
-  * sw_ccheck() checks synchronization bits and computes checksum of nibbles.
-  */
-@@ -316,7 +301,7 @@ static int sw_parse(unsigned char *buf, struct sw *sw)
+ static __be32 oa_tc6_prepare_ctrl_header(u32 addr, u8 length,
+ 					 enum oa_tc6_register_op reg_op)
+ {
+@@ -202,7 +190,7 @@ static __be32 oa_tc6_prepare_ctrl_header(u32 addr, u8 length,
+ 		 FIELD_PREP(OA_TC6_CTRL_HEADER_ADDR, addr) |
+ 		 FIELD_PREP(OA_TC6_CTRL_HEADER_LENGTH, length - 1);
+ 	header |= FIELD_PREP(OA_TC6_CTRL_HEADER_PARITY,
+-			     oa_tc6_get_parity(header));
++			     !parity_odd(header));
  
- 			for (i = 0; i < sw->number; i ++) {
+ 	return cpu_to_be32(header);
+ }
+@@ -940,8 +928,7 @@ static __be32 oa_tc6_prepare_data_header(bool data_valid, bool start_valid,
+ 		     FIELD_PREP(OA_TC6_DATA_HEADER_END_BYTE_OFFSET,
+ 				end_byte_offset);
  
--				if (sw_parity(GB(i*15,15)))
-+				if (parity_odd(GB(i*15,15)))
- 					return -1;
+-	header |= FIELD_PREP(OA_TC6_DATA_HEADER_PARITY,
+-			     oa_tc6_get_parity(header));
++	header |= FIELD_PREP(OA_TC6_DATA_HEADER_PARITY, !parity_odd(header));
  
- 				input_report_abs(sw->dev[i], ABS_X, GB(i*15+3,1) - GB(i*15+2,1));
-@@ -333,7 +318,7 @@ static int sw_parse(unsigned char *buf, struct sw *sw)
- 		case SW_ID_PP:
- 		case SW_ID_FFP:
- 
--			if (!sw_parity(GB(0,48)) || (hat = GB(42,4)) > 8)
-+			if (!parity_odd(GB(0,48)) || (hat = GB(42,4)) > 8)
- 				return -1;
- 
- 			dev = sw->dev[0];
-@@ -354,7 +339,7 @@ static int sw_parse(unsigned char *buf, struct sw *sw)
- 
- 		case SW_ID_FSP:
- 
--			if (!sw_parity(GB(0,43)) || (hat = GB(28,4)) > 8)
-+			if (!parity_odd(GB(0,43)) || (hat = GB(28,4)) > 8)
- 				return -1;
- 
- 			dev = sw->dev[0];
-@@ -379,7 +364,7 @@ static int sw_parse(unsigned char *buf, struct sw *sw)
- 
- 		case SW_ID_FFW:
- 
--			if (!sw_parity(GB(0,33)))
-+			if (!parity_odd(GB(0,33)))
- 				return -1;
- 
- 			dev = sw->dev[0];
+ 	return cpu_to_be32(header);
+ }
 -- 
 2.34.1
 
