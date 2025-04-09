@@ -1,62 +1,62 @@
-Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6AE7269826
-	for <brcm80211@lists.linux.dev>; Wed,  9 Apr 2025 15:45:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BEA9269CF7
+	for <brcm80211@lists.linux.dev>; Wed,  9 Apr 2025 15:45:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744213546; cv=none; b=udWe/Wdr8ckmcdgIefzNQvY7HPLGbvcsGJODIXFOS6nCggkCvMY16Z19LfUbySgJ/xxCYFXBKIjMNISeOEW7nc+Pi0bUvc0mxgRCdcggEuGNgH02N3eH+YW9LRsGJfODfNahZ43DZ0ciYkzgd5OTCNWT8cy5JEMiiZN03Z2vUqI=
+	t=1744213557; cv=none; b=IupYvnnm7I9H8tGb32V5s2fCgx78AgaNUShawEYQqfaYfxsJIqdDSsbP+GOJeCbJQuYW9vinVj3GnrjIg7l4AglogeYIz20nAT0Cx6zvxBxr9DdT/5pvebV1UPwzFNDwdYmJuPNexzf4W+Kz72tTJepWt9jnoKuR8fRAs95MHcM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744213546; c=relaxed/simple;
-	bh=yUb8DFUy4I0Hz+Ls1dIGoJuPKJueQIprpNYXIuIwr9k=;
+	s=arc-20240116; t=1744213557; c=relaxed/simple;
+	bh=ZVFZHQQQk+HI/N3knvHhmroiCBacVnQihS2YvtGWow4=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=U7lrZPC7RN/GSfEGC755Xusnlelj4UzZB3PByXfAVwXUswFdcZWsnp+X7DQ1Xjh2AFwVy6lIkGfR1Ldkob7fh1M8UCWBH1C5Vv+FEAevXOOIbZ1f+jhQuq7CfLbNLSl3zwWokFGZLtD/VK9sgby8q2E68cCCZWND5LDPGBaCx0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xr/h6qnU; arc=none smtp.client-ip=209.85.215.182
+	 MIME-Version; b=CPwwz7UsMRwQDmOk8bdQdWpFD9+V2jlDBolVuP7l6tNkFeOsz5lmIFkRGVgWgTLQneI5z9rnlw8zBqTZ7t+BJEusfqlBzmBQkK6nKnQV+LxE7Bz/wSAjzssNjs0H50YXh0jzWOuD1ib0fbJ9EP1hxoyOw0smNglIE1WYX9Uc/PY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CIGn46GS; arc=none smtp.client-ip=209.85.216.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xr/h6qnU"
-Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-ad51f427054so4792315a12.1
-        for <brcm80211@lists.linux.dev>; Wed, 09 Apr 2025 08:45:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CIGn46GS"
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-306b6ae4fb2so3627875a91.3
+        for <brcm80211@lists.linux.dev>; Wed, 09 Apr 2025 08:45:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744213544; x=1744818344; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1744213555; x=1744818355; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=sTd+jcAteb5XQtuvZoTF72DclP9q3bsZAYfMztua9WA=;
-        b=Xr/h6qnUWOj1UWUjYM6aAU0Cz8cb3jQQa382VlGn4z+2VPFq+w/7Lk4TF1PwTZh5OO
-         /SG0rzhAuxKlfuowP36iJZePnF1cg4GvaplvajavIprY/WlYdFgvgmzCK2t310w/CoLR
-         qhQOwprKxfXBiCujyPTWB97zcb4TV2XHCw4zCWS/pYzhNrgtAH3bPxgLFHLWPMs21Rem
-         JAF094jhGgIHi6l5y4NjhO4t8hfqpaL5MbYsOgf3a8qhaDJRFgTRHy5xLeg4waEwhWEN
-         3qUdk6vHUZD1nWvHdPPZrk8CGPPGuxPP5jaE71btqlgPdVx75JY5Bw4AjmW88YQPysav
-         rHTA==
+        bh=3GTX40p8Eu+tWq8rarx+bIs4dwN06BcTyPGidfavgSc=;
+        b=CIGn46GSKxJQoGEIUgcU9VTTummgIlOSiQPzbdHghrTuDMthxhzxlOY431hZFB0WJ5
+         y+rVktHI9H9AKzoI+tju4kXn1UxLiEtSHJUw3q1dWot0aeCD9VeBemLMrlws+riHO8ZR
+         5ylngcyGGZePn3OKKJu4tjx3S+bpqKZJdZZ8oTHzb0a5XF9VmXZ1CI9J3QtfrpSskP2r
+         ENFjYcrZi6GOhGA7PxGnWy8ExQ9wxJBNxCXsoXNXbzaGP+mZq1nCqw9ErhfkXHxhLvbq
+         /sSsyxqKDtywSgDXej289zdfwg9bU+aHbNsdV35EkgQvTAxRCxEXHLeUooyKtnm41tYg
+         VSMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744213544; x=1744818344;
+        d=1e100.net; s=20230601; t=1744213555; x=1744818355;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=sTd+jcAteb5XQtuvZoTF72DclP9q3bsZAYfMztua9WA=;
-        b=eH9/+XxBBqBUVAUixL3ld4S1LmRltbZq+Fx4uLCtiGKZLPKEAuoEyEvZh1avJ1OMjJ
-         2giNU+Z39HjGDo4PN/Onkihl237/IveED0dW3WBSGkrK1STWH5DCaNZL/wlJYn/BDSS2
-         wJ5XmfXn2X9rgciYhKbJHvfsOWaxZEIRrPKvche7g9jhOBhERrBt24vAhKa3RTKqduyL
-         1qIWeMDnCqNdBrTCrO9l/rBG62Lg+knkFiMwsayRX4XS2W8Ad1Hl1TXgMN1ZjoyZj3h+
-         vhIq80NOOoztQprEXLOL6P0lXRB5Pxbp/H2ERvQXz52fsCbLnmn12ulhhmacR3YCgCWQ
-         UzaQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUNCKRLbO7e3qW48GVLNaMS1yRo5JXgst/2DFdSJre0NTZGQO0WyWb5PQjjhN3Fx3UB2lZQ1gmTbhU=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwO+tli+8LvxfcNjcJev6xcz/mbj7Eo96sjIsh35Or4UzSQGOWR
-	7KK8uKXcqVZ1EpKRLzqQbX9oLi6qGfUxHYV5DzgRk7mVz0q7gLP4
-X-Gm-Gg: ASbGncsKgLgcT1F9Lcq85wYCUoud1HkLH8x87vWWpHeWVDhb+5o/uJ1OejkTZLKzH81
-	1528lnoLmoDXXU4zfzQlbZJPt/JBHwCweHqVzO2c/VNMojQozwIwcr9h90pD/leWuv4qfMSUgMC
-	HGjtirFa5sZeb/cK2LnyoGjSBVuTbMWGBATm6gazI/xUeavkIqLUUcuEqJhWRrVqE26Kx2ttbjJ
-	cDjYh0Ei7Y5oVV0WnERdi0h1vyj2DgXbdGFscT3NyaH6XFMzIAiXfPjiNTBLMcDwh+mjTuJ7mNj
-	96Tj53dYh8DSbH/q8gimMdfBeyF7AQF5S/DeY2FlU8fpRmUa2RAAlIFw0rIcJHHcPFUhN0I=
-X-Google-Smtp-Source: AGHT+IEJ7Jl6M7/jx+b0QfG2QtnETYXioK/EteWOwSUQmw7SIb5H5CEFmuEhS1eLp2rAJpsPWE7AMg==
-X-Received: by 2002:a17:90b:3d09:b0:2ff:6fc3:79c4 with SMTP id 98e67ed59e1d1-306dd56b507mr3990247a91.27.1744213544132;
-        Wed, 09 Apr 2025 08:45:44 -0700 (PDT)
+        bh=3GTX40p8Eu+tWq8rarx+bIs4dwN06BcTyPGidfavgSc=;
+        b=OO+Zf912TsUuYOaHrml75brzeTbjOJ02V1pq9Xikw1/zw4n5HiX6HLRTgtEwR1aCD0
+         +8SmB9oRndVQDmXpuH24TwUR7Xh3jSN4Kk55GKl21dV7JSAGCZe97ed9IYBQG7eEEB3A
+         MmMP8x9NPkGEPj5Lth+vJgiOhHRO+EBwInum2pnmcQuDj080sOsEHV5o9Kxcxg7B8o7J
+         8UOU4qs7xtLjS8Nwoo8rgo8RPfTFf95DY34kLJsqjHg7ogfH0934giGVS5g0DUVGgzUW
+         DWH7agZqM4A5L5z8h1rarosIeILnHRAhtBxF7t8paNpXr70H/Ppxk2PouMneUKggUg50
+         +2Rg==
+X-Forwarded-Encrypted: i=1; AJvYcCXfLfdgGM98D2KohLXCZxnLpn5n127Z1uiMr4740fCnovXAfgbPOFIxTlDOI5gKzhw4XW9ib4Ve3c8=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxziZTjmYwpKrEl6UDDQTthmxqNeuuaSeayJMeDJ38ykVzeKsqz
+	vr1E8UBRads9FUZ4arvHNAWbZxNlfRlalcNlYiBCSZCEUxNVF1RD
+X-Gm-Gg: ASbGncvmACb3Fh74RnV9bp8f6+jViIaamv8SW2Sz4xNHGIaY18lnpCEMDvnbYnsdwbU
+	/oR9w6O8GnWh8cxMHBWnJ2enCw6vdErgoXt0Gm/C5ZCanH7E9cTCHU0LKF/0U+V+cY/gTUU1O6O
+	bUHqDjAF7Iose1JyLC3xSVsacJEjBocL0sveYM4MOJ9D299CEs2YaL9QEnryiOVMsbsuHqXCAwR
+	e0yli2LXSyoyYfO0YwdSn796nIAEIn2XhkPAXmzj1giulPxtNgc0VgsYgx4PTQHtRwV7yPnSZf+
+	TZjvoKp5izjEnoCLUuPDvJ/fwy7j9OyNkBfhWzvXE4sm7MymhZdqJNCo4hy8N8wkHPXV6QM=
+X-Google-Smtp-Source: AGHT+IG+nlKBY0fzC5EpfikKx++hN068mStMCGrKOPeFQ0KT+ZFhaeW1hEnEku5KKvT2BN4jgM2ClA==
+X-Received: by 2002:a17:90b:2dca:b0:305:2d28:e435 with SMTP id 98e67ed59e1d1-306dbb8e7d2mr5088169a91.7.1744213555184;
+        Wed, 09 Apr 2025 08:45:55 -0700 (PDT)
 Received: from visitorckw-System-Product-Name.. ([140.113.216.168])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-306dd171991sm1952304a91.37.2025.04.09.08.45.34
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-306dd171991sm1952304a91.37.2025.04.09.08.45.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Apr 2025 08:45:43 -0700 (PDT)
+        Wed, 09 Apr 2025 08:45:54 -0700 (PDT)
 From: Kuan-Wei Chiu <visitorckw@gmail.com>
 To: tglx@linutronix.de,
 	mingo@redhat.com,
@@ -125,9 +125,9 @@ Cc: hpa@zytor.com,
 	andrew.cooper3@citrix.com,
 	Kuan-Wei Chiu <visitorckw@gmail.com>,
 	Yu-Chun Lin <eleanor15x@gmail.com>
-Subject: [PATCH v4 06/13] lib/bch: Replace open-coded parity calculation with parity_odd()
-Date: Wed,  9 Apr 2025 23:43:49 +0800
-Message-Id: <20250409154356.423512-7-visitorckw@gmail.com>
+Subject: [PATCH v4 07/13] Input: joystick - Replace open-coded parity calculation with parity_odd()
+Date: Wed,  9 Apr 2025 23:43:50 +0800
+Message-Id: <20250409154356.423512-8-visitorckw@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250409154356.423512-1-visitorckw@gmail.com>
 References: <20250409154356.423512-1-visitorckw@gmail.com>
@@ -146,41 +146,123 @@ Co-developed-by: Yu-Chun Lin <eleanor15x@gmail.com>
 Signed-off-by: Yu-Chun Lin <eleanor15x@gmail.com>
 Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
 ---
- lib/bch.c | 14 +-------------
- 1 file changed, 1 insertion(+), 13 deletions(-)
+ drivers/input/joystick/grip_mp.c    | 17 ++---------------
+ drivers/input/joystick/sidewinder.c | 25 +++++--------------------
+ 2 files changed, 7 insertions(+), 35 deletions(-)
 
-diff --git a/lib/bch.c b/lib/bch.c
-index 1c0cb07cdfeb..3f14d69f373e 100644
---- a/lib/bch.c
-+++ b/lib/bch.c
-@@ -311,18 +311,6 @@ static inline int deg(unsigned int poly)
- 	return fls(poly)-1;
- }
+diff --git a/drivers/input/joystick/grip_mp.c b/drivers/input/joystick/grip_mp.c
+index 5eadb5a3ca37..e7f60a83a89b 100644
+--- a/drivers/input/joystick/grip_mp.c
++++ b/drivers/input/joystick/grip_mp.c
+@@ -18,6 +18,7 @@
+ #include <linux/delay.h>
+ #include <linux/proc_fs.h>
+ #include <linux/jiffies.h>
++#include <linux/bitops.h>
  
--static inline int parity(unsigned int x)
+ #define DRIVER_DESC	"Gravis Grip Multiport driver"
+ 
+@@ -112,20 +113,6 @@ static const int axis_map[] = { 5, 9, 1, 5, 6, 10, 2, 6, 4, 8, 0, 4, 5, 9, 1, 5
+ 
+ static int register_slot(int i, struct grip_mp *grip);
+ 
+-/*
+- * Returns whether an odd or even number of bits are on in pkt.
+- */
+-
+-static int bit_parity(u32 pkt)
 -{
--	/*
--	 * public domain code snippet, lifted from
--	 * http://www-graphics.stanford.edu/~seander/bithacks.html
--	 */
--	x ^= x >> 1;
+-	int x = pkt ^ (pkt >> 16);
+-	x ^= x >> 8;
+-	x ^= x >> 4;
 -	x ^= x >> 2;
--	x = (x & 0x11111111U) * 0x11111111U;
--	return (x >> 28) & 1;
+-	x ^= x >> 1;
+-	return x & 1;
 -}
 -
- /* Galois field basic operations: multiply, divide, inverse, etc. */
- 
- static inline unsigned int gf_mul(struct bch_control *bch, unsigned int a,
-@@ -524,7 +512,7 @@ static int solve_linear_system(struct bch_control *bch, unsigned int *rows,
- 		tmp = 0;
- 		for (r = m-1; r >= 0; r--) {
- 			mask = rows[r] & (tmp|1);
--			tmp |= parity(mask) << (m-r);
-+			tmp |= parity_odd(mask) << (m-r);
- 		}
- 		sol[p] = tmp >> 1;
+ /*
+  * Poll gameport; return true if all bits set in 'onbits' are on and
+  * all bits set in 'offbits' are off.
+@@ -236,7 +223,7 @@ static int mp_io(struct gameport* gameport, int sendflags, int sendcode, u32 *pa
+ 		pkt = (pkt >> 2) | 0xf0000000;
  	}
+ 
+-	if (bit_parity(pkt) == 1)
++	if (parity_odd(pkt))
+ 		return IO_RESET;
+ 
+ 	/* Acknowledge packet receipt */
+diff --git a/drivers/input/joystick/sidewinder.c b/drivers/input/joystick/sidewinder.c
+index 3a5873e5fcb3..fb6f7004a485 100644
+--- a/drivers/input/joystick/sidewinder.c
++++ b/drivers/input/joystick/sidewinder.c
+@@ -7,6 +7,7 @@
+  * Microsoft SideWinder joystick family driver for Linux
+  */
+ 
++#include <linux/bitops.h>
+ #include <linux/delay.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+@@ -240,22 +241,6 @@ static void sw_init_digital(struct gameport *gameport)
+ 	local_irq_restore(flags);
+ }
+ 
+-/*
+- * sw_parity() computes parity of __u64
+- */
+-
+-static int sw_parity(__u64 t)
+-{
+-	int x = t ^ (t >> 32);
+-
+-	x ^= x >> 16;
+-	x ^= x >> 8;
+-	x ^= x >> 4;
+-	x ^= x >> 2;
+-	x ^= x >> 1;
+-	return x & 1;
+-}
+-
+ /*
+  * sw_ccheck() checks synchronization bits and computes checksum of nibbles.
+  */
+@@ -316,7 +301,7 @@ static int sw_parse(unsigned char *buf, struct sw *sw)
+ 
+ 			for (i = 0; i < sw->number; i ++) {
+ 
+-				if (sw_parity(GB(i*15,15)))
++				if (parity_odd(GB(i*15,15)))
+ 					return -1;
+ 
+ 				input_report_abs(sw->dev[i], ABS_X, GB(i*15+3,1) - GB(i*15+2,1));
+@@ -333,7 +318,7 @@ static int sw_parse(unsigned char *buf, struct sw *sw)
+ 		case SW_ID_PP:
+ 		case SW_ID_FFP:
+ 
+-			if (!sw_parity(GB(0,48)) || (hat = GB(42,4)) > 8)
++			if (!parity_odd(GB(0,48)) || (hat = GB(42,4)) > 8)
+ 				return -1;
+ 
+ 			dev = sw->dev[0];
+@@ -354,7 +339,7 @@ static int sw_parse(unsigned char *buf, struct sw *sw)
+ 
+ 		case SW_ID_FSP:
+ 
+-			if (!sw_parity(GB(0,43)) || (hat = GB(28,4)) > 8)
++			if (!parity_odd(GB(0,43)) || (hat = GB(28,4)) > 8)
+ 				return -1;
+ 
+ 			dev = sw->dev[0];
+@@ -379,7 +364,7 @@ static int sw_parse(unsigned char *buf, struct sw *sw)
+ 
+ 		case SW_ID_FFW:
+ 
+-			if (!sw_parity(GB(0,33)))
++			if (!parity_odd(GB(0,33)))
+ 				return -1;
+ 
+ 			dev = sw->dev[0];
 -- 
 2.34.1
 
