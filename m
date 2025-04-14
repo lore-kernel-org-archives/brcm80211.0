@@ -1,32 +1,37 @@
 Received: from cstnet.cn (smtp84.cstnet.cn [159.226.251.84])
 	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5916FDDD2
-	for <brcm80211@lists.linux.dev>; Mon, 14 Apr 2025 02:29:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EA0E158520
+	for <brcm80211@lists.linux.dev>; Mon, 14 Apr 2025 07:21:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744597767; cv=none; b=rx+it8HqWVaduRrQAPSX2Ps+kYCyuJ1amwWNXcms01duQzuV4smZqskz9flbeMC4CUGC3hi9//d0tWC0iwh2xniLBMn6jTEwRBiQrwgNJBpnxxOWSo5qa7HacxeDGJurIzPCLz+KOS6qMxDBOjJJheGYJpUcIstFlT4nTbs7fLc=
+	t=1744615295; cv=none; b=a0lTpfF3UJwr9mkL9xSZAPbEyeUkJyo3Xr8QNM7QHnVdSJ4XoJ5nDQ3zquxK9OWYHM1ODhkOgACmpZY9q4VJl0OBMcwKjiAEDoH9q1sxsjavzRtK4umozuT3xhNHjjBBryq+vSEMPwK88/9CC4BGglPRqUklM9+h00tK5mE0bXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744597767; c=relaxed/simple;
-	bh=8e43JfZtGPIrrAReIU0/vZ4SrcKs4H6mn59ZlV59EOc=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=OlVCbiH/I4fBmBxgG3bJEY98ija+DOwYzmOA8/Mwry6TQ9A0ET3fbd9aCsEKkPyy/uRq3YVipgj+bxGGWYWbnzouBx1vwDgn/O4GVLB8B/xRQe4yjxZ4MMxHQ2rLmL7yT+4kTSebgzx0UCc5yo2Zz+dEVlkHeWWn+5sE+o+MuE8=
+	s=arc-20240116; t=1744615295; c=relaxed/simple;
+	bh=LlzX1kcRFPEFmjGFFhIYoLpgsX3j0aUAkFJIpyNT7Jg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=tEGQA6LKwsPbi3jDQMCCVCdNOpR7ZA3F01BJ4Slsz2AJnuv3sjHNq6IJ9L9lGIsv3gV/a7wkj+w13E9FJND9sRnD1da3qwp1Eb+/du3NrWDgTpWpcrW4JNaYa8ZZm5O6Vk8DgtoKRo807gjWoAwRf77K23PSLIYySWMvTtV4X1o=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
 Received: from localhost.localdomain (unknown [124.16.141.245])
-	by APP-05 (Coremail) with SMTP id zQCowAAXUwv2cvxneIncCA--.64253S2;
-	Mon, 14 Apr 2025 10:29:15 +0800 (CST)
+	by APP-05 (Coremail) with SMTP id zQCowACHxQ10t_xndifnCA--.16716S2;
+	Mon, 14 Apr 2025 15:21:25 +0800 (CST)
 From: Wentao Liang <vulab@iscas.ac.cn>
 To: arend.vanspriel@broadcom.com,
 	kvalo@kernel.org
-Cc: linux-wireless@vger.kernel.org,
+Cc: jacobe.zang@wesion.com,
+	sebastian.reichel@collabora.com,
+	christophe.jaillet@wanadoo.fr,
+	erick.archer@outlook.com,
+	linux-wireless@vger.kernel.org,
 	brcm80211@lists.linux.dev,
 	brcm80211-dev-list.pdl@broadcom.com,
 	linux-kernel@vger.kernel.org,
-	Wentao Liang <vulab@iscas.ac.cn>
-Subject: [PATCH v2] brcm80211: fmac: Add error check for brcmf_usb_dlneeded()
-Date: Mon, 14 Apr 2025 10:28:53 +0800
-Message-ID: <20250414022853.1795-1-vulab@iscas.ac.cn>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	stable@vger.kernel.org
+Subject: [PATCH RESEND] brcm80211: fmac: Add error handling for brcmf_usb_dl_writeimage()
+Date: Mon, 14 Apr 2025 15:20:58 +0800
+Message-ID: <20250414072058.2222-1-vulab@iscas.ac.cn>
 X-Mailer: git-send-email 2.42.0.windows.2
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
@@ -35,62 +40,57 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:zQCowAAXUwv2cvxneIncCA--.64253S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7Cr4kAF43WrWUXr13Ww15Jwb_yoW8XF43pw
-	4xXFyUZr1kXr4rKw45JrZ3AFy5tan5ta1kCa10v3Z3WF4kCw10kr4YgFyI9r1DCF4Ikay7
-	XF45t3s8Jrs7WFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUvm14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+X-CM-TRANSID:zQCowACHxQ10t_xndifnCA--.16716S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxJrykZr13Kw4UuFW5uryUZFb_yoW8XFyfp3
+	Z7XasrurykW3yaka17tFs7AFykK3WrJa4vkFW8Zwn3XF4kCw10krs0gFyFkw4DCrWfAa47
+	JF4DAry7Jrs8KFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUBj14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
 	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
-	1l84ACjcxK6xIIjxv20xvE14v26ryj6F1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
-	6F4UM28EF7xvwVC2z280aVAFwI0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Cr
-	1j6rxdM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj
-	6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr
-	0_Gr1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7MxkF7I0En4kS14v2
-	6r126r1DMxkIecxEwVAFwVW8JwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJV
-	W8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF
-	1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6x
-	IIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvE
-	x4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnU
-	UI43ZEXa7VUbvzutUUUUU==
-X-CM-SenderInfo: pyxotu46lvutnvoduhdfq/1tbiCREMA2f8Wy5sYQAAs0
+	1l84ACjcxK6xIIjxv20xvE14v26r4j6ryUM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4U
+	JVWxJr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v26r
+	xl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj
+	6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr
+	0_Gr1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF7I0E
+	8cxan2IY04v7MxkF7I0En4kS14v26r1q6r43MxkIecxEwVAFwVW8CwCF04k20xvY0x0EwI
+	xGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480
+	Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7
+	IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k2
+	6cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxV
+	AFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x0JUvNtsUUUUU=
+X-CM-SenderInfo: pyxotu46lvutnvoduhdfq/1tbiCRAMA2f8nMBWvwABs5
 
-The function brcmf_usb_dlneeded() calls the function brcmf_usb_dl_cmd()
-but dose not check its return value. Though there is an error log in the
-brcmf_usb_dl_cmd(), it is not clear enough to describe the error state.
+The function brcmf_usb_dl_writeimage() calls the function
+brcmf_usb_dl_cmd() but dose not check its return value. The
+'state.state' and the 'state.bytes' are uninitialized if the
+function brcmf_usb_dl_cmd() fails. It is dangerous to use
+uninitialized variables in the conditions.
 
-Add error handling in brcmf_usb_dlneeded() to log the error message if
-the brcmf_usb_dl_cmd() fails.
+Add error handling for brcmf_usb_dl_cmd() to jump to error
+handling path if the brcmf_usb_dl_cmd() fails and the
+'state.state' and the 'state.bytes' are uninitialized.
 
+Fixes: 71bb244ba2fd ("brcm80211: fmac: add USB support for bcm43235/6/8 chipsets")
+Cc: stable@vger.kernel.org # v3.4+
 Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
 ---
-v2: Remove redundant bailing out code.
-
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
-index 2821c27f317e..8e2b41cfe5cf 100644
+index 50dddac8a2ab..1c97cd777225 100644
 --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
 +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
-@@ -790,6 +790,7 @@ brcmf_usb_dlneeded(struct brcmf_usbdev_info *devinfo)
- {
- 	struct bootrom_id_le id;
- 	u32 chipid, chiprev;
-+	int err;
+@@ -901,7 +901,9 @@ brcmf_usb_dl_writeimage(struct brcmf_usbdev_info *devinfo, u8 *fw, int fwlen)
+ 	}
  
- 	brcmf_dbg(USB, "Enter\n");
- 
-@@ -798,7 +799,9 @@ brcmf_usb_dlneeded(struct brcmf_usbdev_info *devinfo)
- 
- 	/* Check if firmware downloaded already by querying runtime ID */
- 	id.chip = cpu_to_le32(0xDEAD);
--	brcmf_usb_dl_cmd(devinfo, DL_GETVER, &id, sizeof(id));
-+	err = brcmf_usb_dl_cmd(devinfo, DL_GETVER, &id, sizeof(id));
+ 	/* 1) Prepare USB boot loader for runtime image */
+-	brcmf_usb_dl_cmd(devinfo, DL_START, &state, sizeof(state));
++	err = brcmf_usb_dl_cmd(devinfo, DL_START, &state, sizeof(state));
 +	if (err)
-+		brcmf_err("DL_GETVER failed: err=%d\n", err);
++		goto fail;
  
- 	chipid = le32_to_cpu(id.chip);
- 	chiprev = le32_to_cpu(id.chiprev);
+ 	rdlstate = le32_to_cpu(state.state);
+ 	rdlbytes = le32_to_cpu(state.bytes);
 -- 
 2.42.0.windows.2
 
