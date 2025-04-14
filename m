@@ -1,37 +1,35 @@
 Received: from cstnet.cn (smtp84.cstnet.cn [159.226.251.84])
 	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EA0E158520
-	for <brcm80211@lists.linux.dev>; Mon, 14 Apr 2025 07:21:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B0E1F3FD1
+	for <brcm80211@lists.linux.dev>; Mon, 14 Apr 2025 07:43:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744615295; cv=none; b=a0lTpfF3UJwr9mkL9xSZAPbEyeUkJyo3Xr8QNM7QHnVdSJ4XoJ5nDQ3zquxK9OWYHM1ODhkOgACmpZY9q4VJl0OBMcwKjiAEDoH9q1sxsjavzRtK4umozuT3xhNHjjBBryq+vSEMPwK88/9CC4BGglPRqUklM9+h00tK5mE0bXE=
+	t=1744616595; cv=none; b=BS/nTTMOn8ZgWLVcANOeRiZZtaQL9cR58rHWGRhxC6tr/xEIaztFYsnFUnI5Up/dIHauDOWQFzn+ZGuRSgWpc1nKhp+UVglp8oHrKIuR89RfKguMsqWkPtjBeeI/+HSobqM/PlorvGjgcdZm72TwbzNjZvbhV5ckkBY5r8jGbqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744615295; c=relaxed/simple;
-	bh=LlzX1kcRFPEFmjGFFhIYoLpgsX3j0aUAkFJIpyNT7Jg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=tEGQA6LKwsPbi3jDQMCCVCdNOpR7ZA3F01BJ4Slsz2AJnuv3sjHNq6IJ9L9lGIsv3gV/a7wkj+w13E9FJND9sRnD1da3qwp1Eb+/du3NrWDgTpWpcrW4JNaYa8ZZm5O6Vk8DgtoKRo807gjWoAwRf77K23PSLIYySWMvTtV4X1o=
+	s=arc-20240116; t=1744616595; c=relaxed/simple;
+	bh=QAa+J/meRHMtog91cSwrp/o8jck/81Pbje00Mrsvge8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=C3y82M4kNmtiHgp1NY0Z7PuX2YRe1FJfLZrs+TkIaEPjtcqS8YXEZiYpInWxH6G0e00ovqPOzW+ZZQumzH32DAvHA9dQe78jV+OHTbUCbIBFWqhIuGGLAks+HBV4ULalpf33VsRigXYbcXtabKKMfWyypql0NlvZgMY+s1po1ig=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
 Received: from localhost.localdomain (unknown [124.16.141.245])
-	by APP-05 (Coremail) with SMTP id zQCowACHxQ10t_xndifnCA--.16716S2;
-	Mon, 14 Apr 2025 15:21:25 +0800 (CST)
+	by APP-05 (Coremail) with SMTP id zQCowADnGwSIvPxnXNrnCA--.16539S2;
+	Mon, 14 Apr 2025 15:43:05 +0800 (CST)
 From: Wentao Liang <vulab@iscas.ac.cn>
-To: arend.vanspriel@broadcom.com,
-	kvalo@kernel.org
-Cc: jacobe.zang@wesion.com,
+To: arend.vanspriel@broadcom.com
+Cc: kvalo@kernel.org,
 	sebastian.reichel@collabora.com,
-	christophe.jaillet@wanadoo.fr,
 	erick.archer@outlook.com,
+	megi@xff.cz,
 	linux-wireless@vger.kernel.org,
 	brcm80211@lists.linux.dev,
 	brcm80211-dev-list.pdl@broadcom.com,
 	linux-kernel@vger.kernel.org,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	stable@vger.kernel.org
-Subject: [PATCH RESEND] brcm80211: fmac: Add error handling for brcmf_usb_dl_writeimage()
-Date: Mon, 14 Apr 2025 15:20:58 +0800
-Message-ID: <20250414072058.2222-1-vulab@iscas.ac.cn>
+	Wentao Liang <vulab@iscas.ac.cn>
+Subject: [PATCH RESEND] brcmfmac: Add an error log for brcmf_sdiod_ramrw()
+Date: Mon, 14 Apr 2025 15:42:32 +0800
+Message-ID: <20250414074232.2342-1-vulab@iscas.ac.cn>
 X-Mailer: git-send-email 2.42.0.windows.2
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
@@ -40,57 +38,50 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:zQCowACHxQ10t_xndifnCA--.16716S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxJrykZr13Kw4UuFW5uryUZFb_yoW8XFyfp3
-	Z7XasrurykW3yaka17tFs7AFykK3WrJa4vkFW8Zwn3XF4kCw10krs0gFyFkw4DCrWfAa47
-	JF4DAry7Jrs8KFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUBj14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
-	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
-	1l84ACjcxK6xIIjxv20xvE14v26r4j6ryUM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4U
-	JVWxJr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v26r
-	xl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj
-	6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr
-	0_Gr1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF7I0E
-	8cxan2IY04v7MxkF7I0En4kS14v26r1q6r43MxkIecxEwVAFwVW8CwCF04k20xvY0x0EwI
-	xGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480
-	Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7
-	IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k2
-	6cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxV
-	AFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x0JUvNtsUUUUU=
-X-CM-SenderInfo: pyxotu46lvutnvoduhdfq/1tbiCRAMA2f8nMBWvwABs5
+X-CM-TRANSID:zQCowADnGwSIvPxnXNrnCA--.16539S2
+X-Coremail-Antispam: 1UD129KBjvdXoW7Gw4xur47KF4fGFyxWw43Awb_yoWkZFbEqF
+	savrnxX34Sg34kuryDAFW2vrWvk34qqw1vgr1ayayfKr1IgFW3KrZ7ZFn5Jw17WF4IqFnx
+	Cwn8AFyUG3Z7ujkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+	9fnUUIcSsGvfJTRUUUbf8FF20E14v26r4j6ryUM7CY07I20VC2zVCF04k26cxKx2IYs7xG
+	6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
+	A2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr1j
+	6F4UJwA2z4x0Y4vEx4A2jsIE14v26F4UJVW0owA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Gc
+	CE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E
+	2Ix0cI8IcVAFwI0_Jrv_JF1lYx0Ex4A2jsIE14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJV
+	W8JwACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lFIxGxcIEc7CjxVA2
+	Y2ka0xkIwI1lc7CjxVAaw2AFwI0_Jw0_GFylc2xSY4AK67AK6r4xMxAIw28IcxkI7VAKI4
+	8JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xv
+	wVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjx
+	v20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20E
+	Y4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Gr0_Cr1lIxAIcVC2z280aVCY1x0267
+	AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7VUj_b15UUUUU==
+X-CM-SenderInfo: pyxotu46lvutnvoduhdfq/1tbiBwoMA2f8nOl0JgAAs+
 
-The function brcmf_usb_dl_writeimage() calls the function
-brcmf_usb_dl_cmd() but dose not check its return value. The
-'state.state' and the 'state.bytes' are uninitialized if the
-function brcmf_usb_dl_cmd() fails. It is dangerous to use
-uninitialized variables in the conditions.
+The function brcmf_sdio_buscore_activate() calls the function
+brcmf_sdiod_ramrw(), but does not check its return value. Log
+the error message to prevent silent failure if the function fails.
 
-Add error handling for brcmf_usb_dl_cmd() to jump to error
-handling path if the brcmf_usb_dl_cmd() fails and the
-'state.state' and the 'state.bytes' are uninitialized.
-
-Fixes: 71bb244ba2fd ("brcm80211: fmac: add USB support for bcm43235/6/8 chipsets")
-Cc: stable@vger.kernel.org # v3.4+
 Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
-index 50dddac8a2ab..1c97cd777225 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
-@@ -901,7 +901,9 @@ brcmf_usb_dl_writeimage(struct brcmf_usbdev_info *devinfo, u8 *fw, int fwlen)
- 	}
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
+index b1727f35217b..dd683c2582fb 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
+@@ -3898,8 +3898,9 @@ static void brcmf_sdio_buscore_activate(void *ctx, struct brcmf_chip *chip,
  
- 	/* 1) Prepare USB boot loader for runtime image */
--	brcmf_usb_dl_cmd(devinfo, DL_START, &state, sizeof(state));
-+	err = brcmf_usb_dl_cmd(devinfo, DL_START, &state, sizeof(state));
-+	if (err)
-+		goto fail;
+ 	if (rstvec)
+ 		/* Write reset vector to address 0 */
+-		brcmf_sdiod_ramrw(sdiodev, true, 0, (void *)&rstvec,
+-				  sizeof(rstvec));
++		if (brcmf_sdiod_ramrw(sdiodev, true, 0, (void *)&rstvec,
++				      sizeof(rstvec)) < 0)
++			brcmf_err("Fail to reset vector\n");
+ }
  
- 	rdlstate = le32_to_cpu(state.state);
- 	rdlbytes = le32_to_cpu(state.bytes);
+ static u32 brcmf_sdio_buscore_read32(void *ctx, u32 addr)
 -- 
 2.42.0.windows.2
 
