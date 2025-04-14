@@ -1,63 +1,62 @@
-Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
+Received: from mail-oo1-f54.google.com (mail-oo1-f54.google.com [209.85.161.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D457425A62C
-	for <brcm80211@lists.linux.dev>; Mon, 14 Apr 2025 09:33:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1089925DB19
+	for <brcm80211@lists.linux.dev>; Mon, 14 Apr 2025 09:44:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744623232; cv=none; b=Awx33cx4ioWQpzVTLBSNzUce/sDJtrDkj5MKBU/OC1/F3LmCxh15Cm+ig7TWgjzF3PmjsU2cTIBmBPfJPaCwVZQSEkjMqb84MFVAJcYv4npkHR6ojH96xS6OxWBncIy7bzmncsQILZD51Ea1bGx9fNzAIiA1SpJxM4RUw6OudKE=
+	t=1744623861; cv=none; b=kZY2y5U45bf7uzGBtQy3k2yiYDZKjtkeFUWL7SclqImWVoaPXqsMLR9gkMLfeYi+HMcjZa/fSwq/jwcTL7ns+kAFf9CKEQAt+4Bg1GovEM6Gavc3fVkKnlekvQXIzmuzQ/6JcJpY7WoelscgMJ9dPwBPpwHGdmvGYnPGMBgGFu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744623232; c=relaxed/simple;
-	bh=hSfiJO2SBbJcsGG+JV5wThJUsV2C6aLqJFuOykcCQL0=;
+	s=arc-20240116; t=1744623861; c=relaxed/simple;
+	bh=NXvUhNlB1aPee7uCd9a9odVHLo/yRPdk/MtLRPcDwqg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=j7FejcAQ4GHv2jVa0nyjYbpmiAYuzlVkaxBP+xhr8yWYiJWG3q+FJJ09fFX99j4t5RJ/9ro7gPawjtqzWYn/Hq/W1LqDseaGbIMbrHJC2ERRp0KRbfa7tLZXtCC7cR9W7Q7GXq3dQaR+DIWC9+QzqKW3ICjsCC9rM+CLHtccjlw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=hLyTGhcb; arc=none smtp.client-ip=209.85.210.43
+	 In-Reply-To:Content-Type; b=u0thrS8YI7ppjtqQxQIZn2dkka7mGIOA8nAPfCGL9j9fBo+l6Rxe7pHXsVXqK/sRuM2pGwPQZG1ainFr0yyAG4Bure4gwooNsPnLFQTKr8iy8NeUIVZAaIgYwdHoRl0T1xF8Ep/55xANqOL8BmPjeoac/L0J1ew7VTY4s6f2USQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=COauw5wC; arc=none smtp.client-ip=209.85.161.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="hLyTGhcb"
-Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-72bb97260ceso1294049a34.1
-        for <brcm80211@lists.linux.dev>; Mon, 14 Apr 2025 02:33:50 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="COauw5wC"
+Received: by mail-oo1-f54.google.com with SMTP id 006d021491bc7-60208b7a6d6so1062912eaf.1
+        for <brcm80211@lists.linux.dev>; Mon, 14 Apr 2025 02:44:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1744623230; x=1745228030; darn=lists.linux.dev;
+        d=broadcom.com; s=google; t=1744623859; x=1745228659; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=6uB/gkWnDoGv7cmF5SStQjgivtiDOmfottp0OLL+PDc=;
-        b=hLyTGhcb1NBW/GtKXCyuGjIvrcVty93f/6NnlgaFlTY4dlUfQzGlZHhI2skexnGjQy
-         h/USU5rXCkn8n53wSgnN1ZAkz4fp6B4Q9bKWFMfutYQSDB4flMQzrpnX0z+UTGc9Ombr
-         J/AoQQaWY+eXUEwD8f1DJUu1jXf0Ww7o30vsY=
+        bh=CbM+1WmBZ2Io1n+rSXRsp0Md07GTpvrvG0bVbAmVeMs=;
+        b=COauw5wCjUtj9wr5zHHveZYFCgMbchtKf7YipEn3/6bBAegc9soyCL0L/tsTjWFVAT
+         w2XsU929WJE3VkuGkaqDex4tOGxVoFcABuhTIpM96SUO+OzynHKz6XFDfn1sSXAnH2qG
+         9Yj4Cb62nOfWP//uqTSL+T/w423z5N5siIjfo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744623230; x=1745228030;
+        d=1e100.net; s=20230601; t=1744623859; x=1745228659;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=6uB/gkWnDoGv7cmF5SStQjgivtiDOmfottp0OLL+PDc=;
-        b=TaXs6AuWT/3kgkwptrs8fa+Rk6+rVO56hYJHhYlA3/Ct7LpuNlYtri7yo74C4oAlfi
-         rpu97sl9m3buSNcyQJdR8rJWPZa0ffmj/h/bkaXqwg6F17g6Ig1Tm5uiBHAvE/wtvwi0
-         M7ZYFZPAy3XvpS94xPs3JbHQaV3hPE5+N3ZDwDAaUJvdYLNlSf/0p9b4f/PYcNjNHxGR
-         E/wHqVs/oASUjy1wepR0uV6Siz1V66kgZ23UFbeFCgnnMbuBKB1gFtHIr08plJXuoF/F
-         TEAAMSWNtFBl/RdjeNE9dUSDCs84QVWrRw5yeFRbcbgFXu8qWetX6wu/dxFKDhcq0BWW
-         Qa+Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXu9xQZM7q4Kv2AimwUvWhVd7jmHjpOcJzUtY7xAzkO5G6R8lBXqgWAFcXhkq2gzXWAHBUuxD+mKbo=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzMdfnPHfS6fJLSjgOLnvSkauGhQAqyQwif1SxWRQv9fO+jOWQw
-	F0rnaBaNEHvKryTTFLWY1ZnG+DpSWs0PidrvrUPpcHDxX2vRHgTttQRoOnhINw==
-X-Gm-Gg: ASbGncsm9hWojCwqp90ZHlxQG3ye1vG3KrjdjC23qAjtpiHRGl+vNFDXPpGOj78Ovgv
-	DDCjufbcU3p5CsVOK57MXXv2jNYMJfHKqXprzF+PkskwGmK1cvDkoDRL5B346Z0HmRM5nzfJBWu
-	WgWzFqszSRDk0cPv2sfzA4NSm/yBy1xQK1/+j692ROZ2zlcSqKwmosOIqmdSACCS7o2UJyRvcpe
-	f/K/ildwMc62uJfnQYh3b40LyA01tPYrNwB8Tznw7ytd5zuHKrkJRawsS++0fsgB4XJn3XFq0g+
-	Sk/f+jTG6BFcRssqt0KAaWogZxI8BeH9K/Uw6M0WJqg4kujh4lO6ro2KLnvUNjMt88rzdWtytnu
-	G7Q==
-X-Google-Smtp-Source: AGHT+IGTbz8KVN8+3RpkEJt9eIMdTHZyKpOaL4Gz3mnJCmMnQY9u2JUEzMQsicf20hIjl2mwvGwYBA==
-X-Received: by 2002:a05:6808:1528:b0:3f4:1c2:874a with SMTP id 5614622812f47-400850d59f7mr5665726b6e.24.1744623229743;
-        Mon, 14 Apr 2025 02:33:49 -0700 (PDT)
+        bh=CbM+1WmBZ2Io1n+rSXRsp0Md07GTpvrvG0bVbAmVeMs=;
+        b=Y59fQvWyQvfJ7VS5Tpuh55xqtghePYhlemDwyLJQJ6/xhF9mtV9C6jGoitEmAjM/0o
+         wkPOLJuURR3bwxJvfhhr655nqREg5DGt386RwLTf/KhEeNKii4NA1ANN2N7IfdYdWT10
+         F+NAM4ns+Ox1Z1Pknqf0eBfQ8ibriVwdMT7Ai68EMLqN9wtY/QAA9OlrMv+9ZyvJStr0
+         Fxo9sMAQX47DGcc42wXgDGnFhqVHhpBwemCByx5DFMVZz3OoooMbRQQKdyBmCuGHNB2i
+         H4GCL85FIC6nzUhNY2LBFkWZu2kxojW9A5KsL2+eL3GBvxDl36exCtZ+f+Za96IfADhK
+         S60w==
+X-Forwarded-Encrypted: i=1; AJvYcCWYhQfBXypa8LxPySVjjy7sta13oPvnC/SN5lUH5aHdJz3zDlwqvhL0o1BGxZuKH/uadvMjBkxop/U=@lists.linux.dev
+X-Gm-Message-State: AOJu0YysQd24GsSkFabEk0ZbUc+LtbI35V49hUuihrKp4p4nLIPYiI8U
+	FwaQl4tlSWIEPNWfBYBnWldcVTbwURMEnD8HOJ73+kl7BHvR2cQ9xLnz4LMA5w==
+X-Gm-Gg: ASbGncu9iehZj8Y/x2KA3feiOqO6avLdu08bVX94X1si+KN01vy/5mzurAF0XmV3Lhc
+	SLhIeHMrIZeFQmRbJ+p/31d8FnVsH+ZJc8G7A86uVKpcB/meJh8F118JcpcgnLdFh38DgfCBlNv
+	CVUfWFPlwisF6cQp7YJpCoY8xYd6SbwYXpCiZFhKEvOlu3wMO7mQX9zgES+ZLfTC5IhtWIYWcBA
+	Y9MYPPNW7pYsr//WIQdeCHgDtrudv6e9rrMdTDtxzSZAlEDecl1wlajraySXeBgnX/14nnqeXRu
+	llBhEhD701OcJsiEl6+o146ztdCLzykqRsfMxdUaD/QuWBB2ZkjTmZNjZ9fkkbm99c8=
+X-Google-Smtp-Source: AGHT+IHoa/4/GaqO5TrPYoiHTitCv7q3FYMa5EoLzYEXRejGfSZ58lhxAhVipcuemkWz6IEsfTI5Ig==
+X-Received: by 2002:a05:6870:1587:b0:2cb:c780:ac52 with SMTP id 586e51a60fabf-2d0d5d9e35cmr5396992fac.23.1744623858829;
+        Mon, 14 Apr 2025 02:44:18 -0700 (PDT)
 Received: from [10.176.68.80] ([192.19.176.227])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-40076282c6fsm1821345b6e.1.2025.04.14.02.33.46
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-2d096cd262asm2314652fac.35.2025.04.14.02.44.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Apr 2025 02:33:48 -0700 (PDT)
-Message-ID: <c7d7dd56-0aec-4808-a814-76995ea90916@broadcom.com>
-Date: Mon, 14 Apr 2025 11:33:43 +0200
+        Mon, 14 Apr 2025 02:44:17 -0700 (PDT)
+Message-ID: <282afdd9-bb71-40f8-bfa9-bc7e57e1957d@broadcom.com>
+Date: Mon, 14 Apr 2025 11:44:12 +0200
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -65,12 +64,15 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] brcm80211: fmac: Add error check for
- brcmf_usb_dlneeded()
+Subject: Re: [PATCH RESEND] brcm80211: fmac: Add error handling for
+ brcmf_usb_dl_writeimage()
 To: Wentao Liang <vulab@iscas.ac.cn>, kvalo@kernel.org
-Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
- brcm80211-dev-list.pdl@broadcom.com, linux-kernel@vger.kernel.org
-References: <20250414022853.1795-1-vulab@iscas.ac.cn>
+Cc: jacobe.zang@wesion.com, sebastian.reichel@collabora.com,
+ christophe.jaillet@wanadoo.fr, erick.archer@outlook.com,
+ linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
+ brcm80211-dev-list.pdl@broadcom.com, linux-kernel@vger.kernel.org,
+ stable@vger.kernel.org
+References: <20250414072058.2222-1-vulab@iscas.ac.cn>
 Content-Language: en-US
 From: Arend van Spriel <arend.vanspriel@broadcom.com>
 Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
@@ -116,49 +118,41 @@ Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
  NKowQLrlMBGXT4NnRNV0+yHmusXPOPIqQCKEtbWSx9s2slQxmXukPYvLnuRJqkPkvrTgjn5d
  eSE0Dkhni4292/Nn/TnZf5mxCNWH1p3dz/vrT6EIYk2GSJgCLoTkCcqaM6+5E4IwgYOq3UYu
  AAgeEbPV1QeTVAPrntrLb0t0U5vdwG7Xl40baV9OydTv7ghjYZU349w1d5mdxg==
-In-Reply-To: <20250414022853.1795-1-vulab@iscas.ac.cn>
+In-Reply-To: <20250414072058.2222-1-vulab@iscas.ac.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 4/14/2025 4:28 AM, Wentao Liang wrote:
-> The function brcmf_usb_dlneeded() calls the function brcmf_usb_dl_cmd()
-> but dose not check its return value. Though there is an error log in the
-> brcmf_usb_dl_cmd(), it is not clear enough to describe the error state.
+On 4/14/2025 9:20 AM, Wentao Liang wrote:
+> The function brcmf_usb_dl_writeimage() calls the function
+> brcmf_usb_dl_cmd() but dose not check its return value. The
+> 'state.state' and the 'state.bytes' are uninitialized if the
+> function brcmf_usb_dl_cmd() fails. It is dangerous to use
+> uninitialized variables in the conditions.
 > 
-> Add error handling in brcmf_usb_dlneeded() to log the error message if
-> the brcmf_usb_dl_cmd() fails.
-> 
-> Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-> ---
-> v2: Remove redundant bailing out code.
-> 
->   drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c | 5 ++++-
->   1 file changed, 4 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
-> index 2821c27f317e..8e2b41cfe5cf 100644
-> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
-> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
-> @@ -790,6 +790,7 @@ brcmf_usb_dlneeded(struct brcmf_usbdev_info *devinfo)
->   {
->   	struct bootrom_id_le id;
->   	u32 chipid, chiprev;
-> +	int err;
->   
->   	brcmf_dbg(USB, "Enter\n");
->   
-> @@ -798,7 +799,9 @@ brcmf_usb_dlneeded(struct brcmf_usbdev_info *devinfo)
->   
->   	/* Check if firmware downloaded already by querying runtime ID */
->   	id.chip = cpu_to_le32(0xDEAD);
-> -	brcmf_usb_dl_cmd(devinfo, DL_GETVER, &id, sizeof(id));
-> +	err = brcmf_usb_dl_cmd(devinfo, DL_GETVER, &id, sizeof(id));
-> +	if (err)
-> +		brcmf_err("DL_GETVER failed: err=%d\n", err);
+> Add error handling for brcmf_usb_dl_cmd() to jump to error
+> handling path if the brcmf_usb_dl_cmd() fails and the
+> 'state.state' and the 'state.bytes' are uninitialized.
 
-Please move printing the error message inside brcmf_usb_dl_cmd() as I 
-mentioned before. That way we also get an error message for all DL_* 
-commands like DL_START (which came up in another patch).
+Agree. Have one request though...
+
+Just below the code you touched the USB bootloader state is checked:
+
+	/* 2) Check we are in the Waiting state */
+	if (rdlstate != DL_WAITING) {
+-		brcmf_err("Failed to DL_START\n");
++		brcmf_err("Invalid DL state: %u\n", rdlstate);
+		err = -EINVAL;
+		goto fail;
+	}
+
+Can you improve the error message as suggested.
 
 Regards,
 Arend
+
+> Fixes: 71bb244ba2fd ("brcm80211: fmac: add USB support for bcm43235/6/8 chipsets")
+> Cc: stable@vger.kernel.org # v3.4+
+> Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+> ---
+>   drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
