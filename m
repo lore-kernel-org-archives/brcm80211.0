@@ -1,37 +1,32 @@
-Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
+Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
 	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9560C27A104
-	for <brcm80211@lists.linux.dev>; Tue, 15 Apr 2025 07:21:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A7321AF0AE
+	for <brcm80211@lists.linux.dev>; Tue, 15 Apr 2025 08:43:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744701697; cv=none; b=Iyf2hRvBPqeb5yoCXuFdOc3pruNxIQ0wb/J8RyMJ2l/6Yu1MwX2l39lZIhc0JD5KmvQA1vvvIwOeZrrCXq07AFNpyyazSl1uqzzoKqu2vThRd3aUrfNwmKdXF/WInSnCQhcrKyXnXly4QaLDuEHpUGN0OtSH67LPr+nVEHdCIok=
+	t=1744706601; cv=none; b=Spasu8o2UsetelF7NOIK/Jl5402i22fv6DibUWJ+khjmut4xB5xxufDlHEnyIC76X5wY4SYaqCnckrW6CnfZk5rTA19ufuTjOnqFlT+6jjBDcJmhSdBpZlmITJUdyLJWTJGKsJ/x0uIEAN4DjjgvkRiBmVGguLR0m+m4P7KjgEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744701697; c=relaxed/simple;
-	bh=2o6j5omeEkA4JCWhDM9N80NVkPESG6qQso4cQHUzBdk=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=YTAZYKNWrEUe6Kwyw6s+7uHO6uVc/L0jZBa4BGxnO3WQU7QLOqHHQpHGHk/fmcnZMI+HPgCB8DrT6iSLEkSNwW/Ap+4MlvDiChYVE0Nk8CRqa2+Ri2mOrWytxBUmwWfpm++y0sWFXiKCpjGj3//FgUbwggOyLNeoeJ0GaFzC2z8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
+	s=arc-20240116; t=1744706601; c=relaxed/simple;
+	bh=HtsOkMq+WLgJHrBJNsrJTc1wbQ/EcZYFGAgOXBZbQrM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ANgjS46733oLqp4do06143dR61VwhbH903fn60aKm+SytmLdYGnR41rOKRP8CCgMhbAhbCjWXpOGChO0Y5xXJku55s/eJRUYfYsUb1tX7uDjEefIl9Wr9GolltEG+SqX/bKyqzMxFnz5uMX/Z+H07fBeLfUpBKTvwyF/kNuHfRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
 Received: from localhost.localdomain (unknown [124.16.141.245])
-	by APP-01 (Coremail) with SMTP id qwCowAAn0gLoCP5nVCb1CA--.103S2;
-	Tue, 15 Apr 2025 15:21:18 +0800 (CST)
+	by APP-03 (Coremail) with SMTP id rQCowACXOTYgHP5nYXz5CA--.18019S2;
+	Tue, 15 Apr 2025 16:43:13 +0800 (CST)
 From: Wentao Liang <vulab@iscas.ac.cn>
 To: arend.vanspriel@broadcom.com,
 	kvalo@kernel.org
-Cc: jacobe.zang@wesion.com,
-	sebastian.reichel@collabora.com,
-	christophe.jaillet@wanadoo.fr,
-	erick.archer@outlook.com,
-	linux-wireless@vger.kernel.org,
+Cc: linux-wireless@vger.kernel.org,
 	brcm80211@lists.linux.dev,
 	brcm80211-dev-list.pdl@broadcom.com,
 	linux-kernel@vger.kernel.org,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	stable@vger.kernel.org
-Subject: [PATCH v2] brcm80211: fmac: Add error handling forbrcmf_usb_dl_writeimage()
-Date: Tue, 15 Apr 2025 15:20:48 +0800
-Message-ID: <20250415072048.2629-1-vulab@iscas.ac.cn>
+	Wentao Liang <vulab@iscas.ac.cn>
+Subject: [PATCH v3] brcm80211: fmac: Add error log in brcmf_usb_dl_cmd()
+Date: Tue, 15 Apr 2025 16:42:39 +0800
+Message-ID: <20250415084239.2906-1-vulab@iscas.ac.cn>
 X-Mailer: git-send-email 2.42.0.windows.2
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
@@ -40,68 +35,78 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:qwCowAAn0gLoCP5nVCb1CA--.103S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxJryfCw43Aw4DWw43uF18Grg_yoW8Aw1fp3
-	Z7XasrurykW3yakw47JFs7AFykKa4rta4kCFW8ZwnxXF4kCw1vkrs8KFyFkw4DCFWxAa47
-	JFs8Ary7Jrs8KFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUBj14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+X-CM-TRANSID:rQCowACXOTYgHP5nYXz5CA--.18019S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7tr4kuFWkAFWrWF4Dtr4fXwb_yoW8AF1fpr
+	4xXayqyFy8Xr1Sgan3trZxG3W5K3WkJayvkay29wn7ur4kCw10gr4rKFy09r1kCrWxA347
+	ZFWUtF1DXr17GFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUvG14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
 	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
-	1l84ACjcxK6xIIjxv20xvE14v26r4j6ryUM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
-	6F4UM28EF7xvwVC2z280aVAFwI0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Cr
-	1j6rxdM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj
-	6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr
-	0_Gr1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF7I0E
-	8cxan2IY04v7MxkF7I0En4kS14v26r1q6r43MxkIecxEwVAFwVW8CwCF04k20xvY0x0EwI
-	xGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480
-	Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7
-	IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k2
-	6cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxV
-	AFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x0JUGFAJUUUUU=
-X-CM-SenderInfo: pyxotu46lvutnvoduhdfq/1tbiCQ4NA2f95GqL6QAAs-
+	1l84ACjcxK6xIIjxv20xvE14v26r4j6ryUM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4U
+	JVWxJr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AKxV
+	W0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv
+	7VC0I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAFwI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r
+	1j6r4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwCY1x0262kKe7AK
+	xVWUAVWUtwCY02Avz4vE14v_GFyl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr
+	0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY
+	17CE14v26r126r1DMIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcV
+	C0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY
+	6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa
+	73UjIFyTuYvjfU0_MaDUUUU
+X-CM-SenderInfo: pyxotu46lvutnvoduhdfq/1tbiDAgNA2f95Gzj0wAAso
 
-The function brcmf_usb_dl_writeimage() calls the function
-brcmf_usb_dl_cmd() but dose not check its return value. The
-'state.state' and the 'state.bytes' are uninitialized if the
-function brcmf_usb_dl_cmd() fails. It is dangerous to use
-uninitialized variables in the conditions.
+In brcmf_usb_dl_cmd(), the error logging is not enough to describe
+the error state. And some caller of the brcmf_usb_dl_cmd() does not
+haddel its error. An error log in brcmf_usb_dl_cmd is needed to
+prevent silent failure.
 
-Add error handling for brcmf_usb_dl_cmd() to jump to error
-handling path if the brcmf_usb_dl_cmd() fails and the
-'state.state' and the 'state.bytes' are uninitialized.
+Add error handling in brcmf_usb_dl_cmd() to log the command id and
+error code in the brcmf_usb_dl_cmd() fails. In this way, every
+invocation of the function logs a message upon failure.
 
-Improve the error message to report more detailed error
-information.
-
-Fixes: 71bb244ba2fd ("brcm80211: fmac: add USB support for bcm43235/6/8 chipsets")
-Cc: stable@vger.kernel.org # v3.4+
 Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+v3: Change patch name and comment. Move error log into brcmf_usb_dl_cmd().
+v2: Remove redundant bailing out code.
+
+ .../wireless/broadcom/brcm80211/brcmfmac/usb.c   | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
-index 2821c27f317e..d06c724f63d9 100644
+index d06c724f63d9..a11a6d9f3c2b 100644
 --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
 +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
-@@ -896,14 +896,16 @@ brcmf_usb_dl_writeimage(struct brcmf_usbdev_info *devinfo, u8 *fw, int fwlen)
- 	}
+@@ -744,12 +744,16 @@ static int brcmf_usb_dl_cmd(struct brcmf_usbdev_info *devinfo, u8 cmd,
+ 	char *tmpbuf;
+ 	u16 size;
  
- 	/* 1) Prepare USB boot loader for runtime image */
--	brcmf_usb_dl_cmd(devinfo, DL_START, &state, sizeof(state));
-+	err = brcmf_usb_dl_cmd(devinfo, DL_START, &state, sizeof(state));
-+	if (err)
-+		goto fail;
+-	if ((!devinfo) || (devinfo->ctl_urb == NULL))
+-		return -EINVAL;
++	if (!devinfo || !devinfo->ctl_urb) {
++		ret = -EINVAL;
++		goto err;
++	}
  
- 	rdlstate = le32_to_cpu(state.state);
- 	rdlbytes = le32_to_cpu(state.bytes);
+ 	tmpbuf = kmalloc(buflen, GFP_ATOMIC);
+-	if (!tmpbuf)
+-		return -ENOMEM;
++	if (!tmpbuf) {
++		ret = -ENOMEM;
++		goto err;
++	}
  
- 	/* 2) Check we are in the Waiting state */
- 	if (rdlstate != DL_WAITING) {
--		brcmf_err("Failed to DL_START\n");
-+		brcmf_err("Invalid DL state: %u\n", rdlstate);
- 		err = -EINVAL;
- 		goto fail;
- 	}
+ 	size = buflen;
+ 	devinfo->ctl_urb->transfer_buffer_length = size;
+@@ -783,6 +787,10 @@ static int brcmf_usb_dl_cmd(struct brcmf_usbdev_info *devinfo, u8 cmd,
+ finalize:
+ 	kfree(tmpbuf);
+ 	return ret;
++
++err:
++	brcmf_err("dl cmd %u failed: err=%d\n", cmd, ret);
++	return ret;
+ }
+ 
+ static bool
 -- 
 2.42.0.windows.2
 
