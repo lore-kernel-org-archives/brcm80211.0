@@ -1,112 +1,99 @@
-Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from mout.web.de (mout.web.de [212.227.15.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A7321AF0AE
-	for <brcm80211@lists.linux.dev>; Tue, 15 Apr 2025 08:43:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19CDA29A3DC
+	for <brcm80211@lists.linux.dev>; Tue, 15 Apr 2025 11:21:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744706601; cv=none; b=Spasu8o2UsetelF7NOIK/Jl5402i22fv6DibUWJ+khjmut4xB5xxufDlHEnyIC76X5wY4SYaqCnckrW6CnfZk5rTA19ufuTjOnqFlT+6jjBDcJmhSdBpZlmITJUdyLJWTJGKsJ/x0uIEAN4DjjgvkRiBmVGguLR0m+m4P7KjgEM=
+	t=1744716113; cv=none; b=nEdtrW13JRo4sZ0J6oeQPtfJg8NUvZ3Qn62BL0IbmCcm7cklAMnO55MxLyJ77ZwOTBPuBiYnlOwxyb9WMuBvOB+NWkdv2Q1jk23HP8hVVLDctRfI2MEtZA/yJbonuBdCQLOCp7YVDkWULRBN7S2mo7jvRrl10ckJtvow9a8ztPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744706601; c=relaxed/simple;
-	bh=HtsOkMq+WLgJHrBJNsrJTc1wbQ/EcZYFGAgOXBZbQrM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ANgjS46733oLqp4do06143dR61VwhbH903fn60aKm+SytmLdYGnR41rOKRP8CCgMhbAhbCjWXpOGChO0Y5xXJku55s/eJRUYfYsUb1tX7uDjEefIl9Wr9GolltEG+SqX/bKyqzMxFnz5uMX/Z+H07fBeLfUpBKTvwyF/kNuHfRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from localhost.localdomain (unknown [124.16.141.245])
-	by APP-03 (Coremail) with SMTP id rQCowACXOTYgHP5nYXz5CA--.18019S2;
-	Tue, 15 Apr 2025 16:43:13 +0800 (CST)
-From: Wentao Liang <vulab@iscas.ac.cn>
-To: arend.vanspriel@broadcom.com,
-	kvalo@kernel.org
-Cc: linux-wireless@vger.kernel.org,
-	brcm80211@lists.linux.dev,
-	brcm80211-dev-list.pdl@broadcom.com,
-	linux-kernel@vger.kernel.org,
-	Wentao Liang <vulab@iscas.ac.cn>
-Subject: [PATCH v3] brcm80211: fmac: Add error log in brcmf_usb_dl_cmd()
-Date: Tue, 15 Apr 2025 16:42:39 +0800
-Message-ID: <20250415084239.2906-1-vulab@iscas.ac.cn>
-X-Mailer: git-send-email 2.42.0.windows.2
+	s=arc-20240116; t=1744716113; c=relaxed/simple;
+	bh=swlEp5ONWnOjBUXTr3HxuyUXycsO0Zbkbf91UmbdTJo=;
+	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
+	 In-Reply-To:Content-Type; b=MRKKxu0cK0/eU78Qc6jAAMgRbc/izPkEqUj4SvND04UhWmZeHgfzgZ/X1OXRSJueShf1e2lcoxE2rOCDzDGN4MdTPEqzjIHAMTSE9tpddmVrDwfbzbvPDhETnMWHZrKBpr0P96CxD5FmMwMl7hFjjT+iwAMSyauOCn5ZEmZTlWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=Vv4PXsdL; arc=none smtp.client-ip=212.227.15.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="Vv4PXsdL"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1744716085; x=1745320885; i=markus.elfring@web.de;
+	bh=swlEp5ONWnOjBUXTr3HxuyUXycsO0Zbkbf91UmbdTJo=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
+	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=Vv4PXsdLsO2S1Lxta+qqtrwGNUYct4sGg1j00001ylcTg6DNlmi8TwSdOumaP2Bw
+	 jjg6DO3ZDHU2EkLAmdNrFrY4fBBro+5VJ9bAf2Xb9X8cPdwUC4aRc2XPsyuzDjdHg
+	 +w7CndTRBv5lokAS3x3tBqVrXH50GqJm/sod2B1+HaRoCKqcYbFNypO/lTAqLmzoH
+	 3m93xZTYNi/Ztg6UZKDUxNPBD8wMwblmlqntJcXD2fhTS0hEhsAQpmwMH5YSK6Hf3
+	 MSGsO939wjn0Nnb5+c7bBk611LmvzVcMbOy9UlrFGy/kG5Sm379sQav1KpAF7FLQw
+	 DsC8N/XUeZ0IlR0eag==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([94.31.70.24]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MTfon-1tbCjR3zEj-00PNiJ; Tue, 15
+ Apr 2025 13:21:25 +0200
+Message-ID: <af72dff7-8ad1-476f-81f2-6f7d76761b12@web.de>
+Date: Tue, 15 Apr 2025 13:21:23 +0200
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:rQCowACXOTYgHP5nYXz5CA--.18019S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7tr4kuFWkAFWrWF4Dtr4fXwb_yoW8AF1fpr
-	4xXayqyFy8Xr1Sgan3trZxG3W5K3WkJayvkay29wn7ur4kCw10gr4rKFy09r1kCrWxA347
-	ZFWUtF1DXr17GFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUvG14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
-	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
-	1l84ACjcxK6xIIjxv20xvE14v26r4j6ryUM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4U
-	JVWxJr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AKxV
-	W0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv
-	7VC0I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAFwI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r
-	1j6r4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwCY1x0262kKe7AK
-	xVWUAVWUtwCY02Avz4vE14v_GFyl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr
-	0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY
-	17CE14v26r126r1DMIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcV
-	C0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY
-	6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa
-	73UjIFyTuYvjfU0_MaDUUUU
-X-CM-SenderInfo: pyxotu46lvutnvoduhdfq/1tbiDAgNA2f95Gzj0wAAso
+User-Agent: Mozilla Thunderbird
+To: vulab@iscas.ac.cn, brcm80211-dev-list.pdl@broadcom.com,
+ brcm80211@lists.linux.dev, linux-wireless@vger.kernel.org
+Cc: stable@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>,
+ Arend van Spriel <arend.vanspriel@broadcom.com>,
+ Christophe Jaillet <christophe.jaillet@wanadoo.fr>,
+ Erick Archer <erick.archer@outlook.com>, Jacobe Zang
+ <jacobe.zang@wesion.com>, Kalle Valo <kvalo@kernel.org>,
+ Sebastian Reichel <sebastian.reichel@collabora.com>
+References: <20250415072048.2629-1-vulab@iscas.ac.cn>
+Subject: Re: [PATCH v2] brcm80211: fmac: Add error handling
+ forbrcmf_usb_dl_writeimage()
+Content-Language: en-GB
+From: Markus Elfring <Markus.Elfring@web.de>
+In-Reply-To: <20250415072048.2629-1-vulab@iscas.ac.cn>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:Dhz2nwlJ5aVsbY/GDkK3rbaI8ZhD37Qt48RXdwBTSD9VIDEvvgZ
+ osoYzVB1fp7HFEopYGEezs2tavB91d23PZ0nnZTCO12lhBPpkwHYJaVkEJqWJ8i1hn8Z2IR
+ GOiDlVP61W/+/rHppIelVe3Mgjj+fkCAYXLayyXsn3b0GyjNXNBpXJsKQrXzXPk4t6xgyLN
+ M7hzES+Y9WaUAiNPPTujg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:CAYibJvv6NM=;SqoCF8okJXN5n36Sry04u1pUXkf
+ GfQH/HLyOkq4Y0lczLsGu/bO85zjjesl1uiMGLnV/cq2J1tX2pRkpxH28C0PdRLvrr7kaCy3m
+ k5znkezQYYKufXTYHaJnyqyfQmY+4wbifDcH6wflPirtxFDg9QObKH+/anZ3G078x4Lb+ON8H
+ RBf+4Ia0MdofphvDx1aG6qzD7enjaqOByu7MVQg+1Mzm8aFcfY9jn+IgIyeKqs4M7VX1EWOHx
+ AVEPiym/FbzTNXGc8wp7ajwmNSz1br4ss/7VZGZKG2DyScKHPUKYKZhLKNaYYAKLfikTHm76J
+ a2G8xqZ5/ojG8b+ZSJI4bmcPrrAZlNMsCMcRAydmTNNo+ZhNLc2a25K0U/CGh2MpILMAQmfsb
+ bjolYOBGBb0Zz8+FbAdwDccyhwup7k8XItjH610zz9ZPir5Lp3KA6SG/o2vMhUwGKTtrXTMAO
+ EtZgRRc5AKPHkjKJLDPaCsBMjJSvNpYtb/p8ITVh3xMmRe9nXSngEgUm3FoZYX4VWOv42po4v
+ GbBEjmNPhPeJbh9esc/3fxEXep1+kl75sXkHpWhUusK9TKZp9ine9SRXxBVPEO0IkEmQtqMrN
+ 63FOQX++0gq/MpWkhRkpaDVwPJitBBaI0cpt0G8wR3PLrlJVCsba03spVFgpzZnWshzcEqE/o
+ M5r/jMqmDKj9CQdc14NAAjSyKV38wMtPm/KfnYyrF1tQ3Of8WCGv2MYaao5h1WehVZ4dkpvKr
+ ZCodSewaBu/RMOBpy08QORn9VsyiEInishTFFKywJjwHJnTDDhDypUFbQRqISyuBU/mjEyKtk
+ udUK14SQzRC1dVuMRjiRunHKDkdnWPEGIAirgVvLZu6URMem/xNpdedooA8k1Mvs/KipOYHv9
+ +jvlkIxTMqzDdu9K8QDnhzp32p89/bWjpopIosgqALhn/f2+bBTRcVMst5kWfUt8J8KfUhEHY
+ iFyGNLa7cZugPsNhGOG9BO1Yo5eMFBoqAxuOTxBeLJaS/niHaL4EznVygjtdiPDtw1RYsnCgg
+ BTCP35RmH8+T+l+NfNYiaqz93Bswp3Z5ljZoY9isnLxM5reFFcWQEwaRZbQxEKYvF2OQ8ctMy
+ DOPzSTLUEWZZ+nHwOMZOOLr0QWLd6JIiBBuNmyelhPW7w4KlTg4g0ZU19A2hSD2WCTI4+Dbam
+ edw6FFwuPX5Ibh9m7Oz0kPWphxmX4kp+RxV2hPT87QlNJrPTcNFTXliIDKiNe7/sCnJHJ3DZz
+ NXaP/UJa12j9xU5rjkt5kf8WIYqOTExxiOI9U+FkD3QxsUXd1Ab6oqu6mi2dJSFmXFAy7GgRy
+ 8UTWr+OzYFXHnt4B1Oq4zOZsxdPT4FHhjBzc27Sg7uav2YYVsoUvkxISnzw7UQC5nsCnAezoB
+ OXfwEEP8TmWjTIAiS3kjY1vEoVwwgKaOmeW9q8brasz5iHk/Z0L302v288GhWSjKCx8DXliol
+ T19XdeX/AiF3xu7qchhQf23fIa/94HCTp5AcbM5RkEmtb9ni1glVObu8Ltf7t+wjbcDU+fA==
 
-In brcmf_usb_dl_cmd(), the error logging is not enough to describe
-the error state. And some caller of the brcmf_usb_dl_cmd() does not
-haddel its error. An error log in brcmf_usb_dl_cmd is needed to
-prevent silent failure.
+=E2=80=A6
+> brcmf_usb_dl_cmd() but dose not check its return value. The
+> 'state.state' and the 'state.bytes' are uninitialized if the
+=E2=80=A6
 
-Add error handling in brcmf_usb_dl_cmd() to log the command id and
-error code in the brcmf_usb_dl_cmd() fails. In this way, every
-invocation of the function logs a message upon failure.
+Would you ever like to benefit any more from change descriptions
+which may contain text lines that would occasionally be longer
+than 60 characters?
 
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
----
-v3: Change patch name and comment. Move error log into brcmf_usb_dl_cmd().
-v2: Remove redundant bailing out code.
-
- .../wireless/broadcom/brcm80211/brcmfmac/usb.c   | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
-index d06c724f63d9..a11a6d9f3c2b 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
-@@ -744,12 +744,16 @@ static int brcmf_usb_dl_cmd(struct brcmf_usbdev_info *devinfo, u8 cmd,
- 	char *tmpbuf;
- 	u16 size;
- 
--	if ((!devinfo) || (devinfo->ctl_urb == NULL))
--		return -EINVAL;
-+	if (!devinfo || !devinfo->ctl_urb) {
-+		ret = -EINVAL;
-+		goto err;
-+	}
- 
- 	tmpbuf = kmalloc(buflen, GFP_ATOMIC);
--	if (!tmpbuf)
--		return -ENOMEM;
-+	if (!tmpbuf) {
-+		ret = -ENOMEM;
-+		goto err;
-+	}
- 
- 	size = buflen;
- 	devinfo->ctl_urb->transfer_buffer_length = size;
-@@ -783,6 +787,10 @@ static int brcmf_usb_dl_cmd(struct brcmf_usbdev_info *devinfo, u8 cmd,
- finalize:
- 	kfree(tmpbuf);
- 	return ret;
-+
-+err:
-+	brcmf_err("dl cmd %u failed: err=%d\n", cmd, ret);
-+	return ret;
- }
- 
- static bool
--- 
-2.42.0.windows.2
-
+Regards,
+Markus
