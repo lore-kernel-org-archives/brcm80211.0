@@ -1,113 +1,228 @@
-Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2908728A1DE
-	for <brcm80211@lists.linux.dev>; Tue, 15 Apr 2025 12:21:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B8DF1E47B0;
+	Tue, 15 Apr 2025 16:06:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744719670; cv=none; b=JQPIg3Xu65NQHGD8UzdNcHBZacMnzreuFRWnYH7TH0WXqdAgz/wb8E6eHZ/Pw/VrcFEeRUAzFmaujCej3uqIuXOcKJObRNeO3MYej/SiLQiTxWfqm30svr0FfpinLI3Un9l7aSnAHdG6NAuL9xolswEYblGZm1qEy8iN+lORER4=
+	t=1744733200; cv=none; b=VooEuC5LqNJXfs/buDge/7xRiX4rXk6lNjZSk5beptHr3pjJaIdX0yrWeJi3jga19nsZl+L6QicTHOL6Z6A8LHJb8Ua+JiqZf/etPTAWGgg72+QM2P3/ErPwdgg0AWRcCQNyiHE33+0XOGORjnMM1F4tu6YnWImHfPHpMgAsH38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744719670; c=relaxed/simple;
-	bh=SarEd5mR20idHoJNvSbnPeVnnEjWVIZIGYfMWjf11Fw=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Tq1ak1l6tj8gWlmC8S9/D9Vqe1yL4J/kf3sp5S5mGzIXWTik8nSMhQ16fc593bKvdlb6BiBmY3kQ/9SNzLG9W98kDPOTq7Fn76g1aYgPwtgT1qnpL8tve/OQHWVr2TrEOWyL4pwGW8WqZVSrIIRI7ckD4sA6ZLXNJNcfqkHmFJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from localhost.localdomain (unknown [124.16.141.245])
-	by APP-03 (Coremail) with SMTP id rQCowAD3oD0vT_5n_OEBCQ--.19632S2;
-	Tue, 15 Apr 2025 20:21:04 +0800 (CST)
-From: Wentao Liang <vulab@iscas.ac.cn>
-To: arend.vanspriel@broadcom.com,
-	kvalo@kernel.org
-Cc: linux-wireless@vger.kernel.org,
-	brcm80211@lists.linux.dev,
-	brcm80211-dev-list.pdl@broadcom.com,
-	linux-kernel@vger.kernel.org,
-	Wentao Liang <vulab@iscas.ac.cn>
-Subject: [PATCH v4] brcm80211: fmac: Add error log in brcmf_usb_dl_cmd()
-Date: Tue, 15 Apr 2025 20:20:01 +0800
-Message-ID: <20250415122001.3325-1-vulab@iscas.ac.cn>
-X-Mailer: git-send-email 2.42.0.windows.2
+	s=arc-20240116; t=1744733200; c=relaxed/simple;
+	bh=DL+aIKoAnPQVQHmnFovgdIMvA3Y5jYrsjJ70RR8dZXA=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=b+yOux6zZVeMV2zXsfjMqIfBpnqpxi8OzRaXJH3aVCpQoQ0DkRwOKqI+uCPnmc+4uv2wTIAmwTZrPtC6bXKlerWr/SxrX1HH0W4YHHE+qzaWw8bcPVxj9z+BR8ri2HfHXr7Y/XHqYrHsBdrSVNTKRAw+VBqMKsbpR9wYwkAkQB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LXUGqz5m; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LXUGqz5m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84B94C4CEEB;
+	Tue, 15 Apr 2025 16:06:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1744733200;
+	bh=DL+aIKoAnPQVQHmnFovgdIMvA3Y5jYrsjJ70RR8dZXA=;
+	h=From:Date:Subject:To:Cc:From;
+	b=LXUGqz5mUxnvMBG6PBYmkxTDN7+HJarJzj/QWuID/R4InrcdX4UVNlKZ4QBMAwqSu
+	 +fSDA4N4GV5fHZ1MOdbCQVK8Ml2bXFsHn+hS3rixSybKhjuyNJvWQGiphJfmcbFk6b
+	 uF532ejxOgjfTNYzprHOTnlUhJwB3LKZRoZQh/ZgYAdF3BEJcwTWuoOSYb33acrKb9
+	 87vRRFEgtB1ruIH4hJuAxzs8QPTbtfhMNPt8UJ6RjJkqKsxLdATJ94Y4OUQnlBLGeT
+	 mXUp1ES35yUzppKUKdc0ySOrD24H8ECw883kRWjWMz12IZ/UWF5xqZ/uuCL4NOrYOj
+	 91TBJWtzIwZUw==
+From: Simon Horman <horms@kernel.org>
+Date: Tue, 15 Apr 2025 17:06:34 +0100
+Subject: [PATCH] wifi: brcmsmac: Spelling corrections
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:rQCowAD3oD0vT_5n_OEBCQ--.19632S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7tr4kuFWkAw1UCFWrJryUGFg_yoW8AFW8pr
-	4xXa90yFy8Wr1SganayrZxG3Z8K3Wktayvkay293s7ur4kCw10gr4rKFy09r4kCrWxC347
-	XFWUtF1DXr17GFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUvv14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
-	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
-	1l84ACjcxK6xIIjxv20xvE14v26r1j6r1xM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r1j
-	6r4UM28EF7xvwVC2z280aVAFwI0_Cr1j6rxdM28EF7xvwVC2z280aVCY1x0267AKxVW0oV
-	Cq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
-	I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAFwI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r1j6r
-	4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwCY1x0262kKe7AKxVWU
-	AVWUtwCY02Avz4vE14v_Xr1l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr
-	1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE
-	14v26r126r1DMIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7
-	IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E
-	87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73Uj
-	IFyTuYvjfUnhL0DUUUU
-X-CM-SenderInfo: pyxotu46lvutnvoduhdfq/1tbiCRANA2f+IlKYJQACsB
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250415-brcmsmac-spell-v1-1-3e1375586883@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAAmE/mcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDE0NT3aSi5Nzi3MRk3eKC1Jwc3TRjY+PElFQjM7NECyWgpoKi1LTMCrC
+ B0bG1tQAw7jXPYAAAAA==
+To: Arend van Spriel <arend.vanspriel@broadcom.com>
+Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev, 
+ brcm80211-dev-list.pdl@broadcom.com
+X-Mailer: b4 0.14.0
 
-In brcmf_usb_dl_cmd(), the error logging is not enough to describe
-the error state. And some caller of the brcmf_usb_dl_cmd() does not
-handle its error. An error log in brcmf_usb_dl_cmd() is needed to
-prevent silent failure.
+Various spelling corrections as flagged by codespell.
 
-Add error handling in brcmf_usb_dl_cmd() to log the command id and
-error code in the brcmf_usb_dl_cmd() fails. In this way, every
-invocation of the function logs a message upon failure.
-
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Simon Horman <horms@kernel.org>
 ---
-v4: Fix spelling problem.
-v3: Change patch name and comment. Move error log into brcmf_usb_dl_cmd().
-v2: Remove redundant bailing out code.
+ drivers/net/wireless/broadcom/brcm80211/brcmsmac/aiutils.c     | 6 +++---
+ drivers/net/wireless/broadcom/brcm80211/brcmsmac/aiutils.h     | 2 +-
+ drivers/net/wireless/broadcom/brcm80211/brcmsmac/ampdu.c       | 4 ++--
+ drivers/net/wireless/broadcom/brcm80211/brcmsmac/channel.c     | 4 ++--
+ drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.c         | 2 +-
+ drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c | 4 ++--
+ drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.c        | 4 ++--
+ drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.h        | 2 +-
+ drivers/net/wireless/broadcom/brcm80211/brcmsmac/pmu.c         | 2 +-
+ 9 files changed, 15 insertions(+), 15 deletions(-)
 
- .../wireless/broadcom/brcm80211/brcmfmac/usb.c   | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
-index d06c724f63d9..a11a6d9f3c2b 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
-@@ -744,12 +744,16 @@ static int brcmf_usb_dl_cmd(struct brcmf_usbdev_info *devinfo, u8 cmd,
- 	char *tmpbuf;
- 	u16 size;
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/aiutils.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/aiutils.c
+index 50d817485cf9..0cb64fc56783 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/aiutils.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/aiutils.c
+@@ -198,7 +198,7 @@
+ #define	CST4313_SPROM_OTP_SEL_SHIFT		0
  
--	if ((!devinfo) || (devinfo->ctl_urb == NULL))
--		return -EINVAL;
-+	if (!devinfo || !devinfo->ctl_urb) {
-+		ret = -EINVAL;
-+		goto err;
-+	}
+ /* 4313 Chip specific ChipControl register bits */
+- /* 12 mA drive strengh for later 4313 */
++ /* 12 mA drive strength for later 4313 */
+ #define CCTRL_4313_12MA_LED_DRIVE    0x00000007
  
- 	tmpbuf = kmalloc(buflen, GFP_ATOMIC);
--	if (!tmpbuf)
--		return -ENOMEM;
-+	if (!tmpbuf) {
-+		ret = -ENOMEM;
-+		goto err;
-+	}
+ /* Manufacturer Ids */
+@@ -453,7 +453,7 @@ ai_buscore_setup(struct si_info *sii, struct bcma_device *cc)
+ 	/* get chipcommon chipstatus */
+ 	sii->chipst = bcma_read32(cc, CHIPCREGOFFS(chipstatus));
  
- 	size = buflen;
- 	devinfo->ctl_urb->transfer_buffer_length = size;
-@@ -783,6 +787,10 @@ static int brcmf_usb_dl_cmd(struct brcmf_usbdev_info *devinfo, u8 cmd,
- finalize:
- 	kfree(tmpbuf);
- 	return ret;
-+
-+err:
-+	brcmf_err("dl cmd %u failed: err=%d\n", cmd, ret);
-+	return ret;
+-	/* get chipcommon capabilites */
++	/* get chipcommon capabilities */
+ 	sii->pub.cccaps = bcma_read32(cc, CHIPCREGOFFS(capabilities));
+ 
+ 	/* get pmu rev and caps */
+@@ -657,7 +657,7 @@ u16 ai_clkctl_fast_pwrup_delay(struct si_pub *sih)
  }
  
- static bool
--- 
-2.42.0.windows.2
+ /*
+- *  clock control policy function throught chipcommon
++ *  clock control policy function through chipcommon
+  *
+  *    set dynamic clk control mode (forceslow, forcefast, dynamic)
+  *    returns true if we are forcing fast clock
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/aiutils.h b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/aiutils.h
+index 90b6e3982d2c..e791dd07ca78 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/aiutils.h
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/aiutils.h
+@@ -76,7 +76,7 @@
+  * conventions for the use the flash space:
+  */
+ 
+-/* Minumum amount of flash we support */
++/* Minimum amount of flash we support */
+ #define FLASH_MIN		0x00020000	/* Minimum flash size */
+ 
+ #define	CC_SROM_OTP		0x800	/* SROM/OTP address space */
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/ampdu.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/ampdu.c
+index a767cbb79185..e1d707a7c964 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/ampdu.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/ampdu.c
+@@ -479,7 +479,7 @@ void brcms_c_ampdu_reset_session(struct brcms_ampdu_session *session,
+ 
+ /*
+  * Preps the given packet for AMPDU based on the session data. If the
+- * frame cannot be accomodated in the current session, -ENOSPC is
++ * frame cannot be accommodated in the current session, -ENOSPC is
+  * returned.
+  */
+ int brcms_c_ampdu_add_frame(struct brcms_ampdu_session *session,
+@@ -529,7 +529,7 @@ int brcms_c_ampdu_add_frame(struct brcms_ampdu_session *session,
+ 	}
+ 
+ 	/*
+-	 * Now that we're sure this frame can be accomodated, update the
++	 * Now that we're sure this frame can be accommodated, update the
+ 	 * session information.
+ 	 */
+ 	session->ampdu_len += len;
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/channel.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/channel.c
+index d1b9a18d0374..3878c4124e25 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/channel.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/channel.c
+@@ -445,7 +445,7 @@ brcms_c_channel_reg_limits(struct brcms_cm_info *wlc_cm, u16 chanspec,
+ 
+ 		/*
+ 		 * OFDM 40 MHz SISO has the same power as the corresponding
+-		 * MCS0-7 rate unless overriden by the locale specific code.
++		 * MCS0-7 rate unless overridden by the locale specific code.
+ 		 * We set this value to 0 as a flag (presumably 0 dBm isn't
+ 		 * a possibility) and then copy the MCS0-7 value to the 40 MHz
+ 		 * value if it wasn't explicitly set.
+@@ -479,7 +479,7 @@ brcms_c_channel_reg_limits(struct brcms_cm_info *wlc_cm, u16 chanspec,
+ 
+ 		/*
+ 		 * 20 MHz has the same power as the corresponding OFDM rate
+-		 * unless overriden by the locale specific code.
++		 * unless overridden by the locale specific code.
+ 		 */
+ 		txpwr->mcs_20_siso[i] = txpwr->ofdm[i];
+ 		txpwr->mcs_40_siso[i] = 0;
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.c
+index 80c35027787a..c739bf7463b3 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.c
+@@ -1348,7 +1348,7 @@ static void prep_ampdu_frame(struct dma_info *di, struct sk_buff *p)
+ 	ret = brcms_c_ampdu_add_frame(session, p);
+ 	if (ret == -ENOSPC) {
+ 		/*
+-		 * AMPDU cannot accomodate this frame. Close out the in-
++		 * AMPDU cannot accommodate this frame. Close out the in-
+ 		 * progress AMPDU session and start a new one.
+ 		 */
+ 		ampdu_finalize(di);
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
+index 5b1d35601bbd..1c3d29dca424 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
+@@ -48,9 +48,9 @@
+ 	FIF_BCN_PRBRESP_PROMISC | \
+ 	FIF_PSPOLL)
+ 
+-#define CHAN2GHZ(channel, freqency, chflags)  { \
++#define CHAN2GHZ(channel, frequency, chflags)  { \
+ 	.band = NL80211_BAND_2GHZ, \
+-	.center_freq = (freqency), \
++	.center_freq = (frequency), \
+ 	.hw_value = (channel), \
+ 	.flags = chflags, \
+ 	.max_antenna_gain = 0, \
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.c
+index 2738d4d6c60a..c1a9c1e442ee 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.c
+@@ -921,7 +921,7 @@ brcms_c_dotxstatus(struct brcms_c_info *wlc, struct tx_status *txs)
+ 		 * The "fallback limit" is the number of tx attempts a given
+ 		 * MPDU is sent at the "primary" rate. Tx attempts beyond that
+ 		 * limit are sent at the "secondary" rate.
+-		 * A 'short frame' does not exceed RTS treshold.
++		 * A 'short frame' does not exceed RTS threshold.
+ 		 */
+ 		u16 sfbl,	/* Short Frame Rate Fallback Limit */
+ 		    lfbl,	/* Long Frame Rate Fallback Limit */
+@@ -6259,7 +6259,7 @@ brcms_c_d11hdrs_mac80211(struct brcms_c_info *wlc, struct ieee80211_hw *hw,
+ 		}
+ 
+ 		/*
+-		 * Currently only support same setting for primay and
++		 * Currently only support same setting for primary and
+ 		 * fallback rates. Unify flags for each rate into a
+ 		 * single value for the frame
+ 		 */
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.h b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.h
+index 9f76b880814e..b7ca0d9891c4 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.h
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.h
+@@ -603,7 +603,7 @@ enum brcms_bss_type {
+  * cur_etheraddr: h/w address
+  * flags: BSSCFG flags; see below
+  *
+- * current_bss: BSS parms in ASSOCIATED state
++ * current_bss: BSS parameters in ASSOCIATED state
+  *
+  *
+  * ID: 'unique' ID of this bsscfg, assigned at bsscfg allocation
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/pmu.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/pmu.c
+index 71b80381f3ad..c9a29e626daa 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/pmu.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/pmu.c
+@@ -31,7 +31,7 @@
+ #define EXT_ILP_HZ 32768
+ 
+ /*
+- * Duration for ILP clock frequency measurment in milliseconds
++ * Duration for ILP clock frequency measurement in milliseconds
+  *
+  * remark: 1000 must be an integer multiple of this duration
+  */
 
