@@ -1,128 +1,98 @@
-Received: from smtp11.infineon.com (smtp11.infineon.com [217.10.52.105])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABDAB17BBF
-	for <brcm80211@lists.linux.dev>; Wed, 16 Apr 2025 06:03:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.10.52.105
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3808213E77
+	for <brcm80211@lists.linux.dev>; Fri, 18 Apr 2025 17:20:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744783391; cv=none; b=J3LXVsbdJFPaT6WDAQ7gRYSr2Eypos1+eHNw1MdVGCcIOMz1hxb38XTvWiG/sCNHonha5IIQJOALPR3yHVo5CseAb0kIeiUryhy3CwMiWhH0AugSO97IOFsPxtUB+BbkPyNmGj7gmLFHME6TuMX0ITmH5Dy6skoroINdET7Z5rk=
+	t=1744996819; cv=none; b=ptJUZuIloaX/j0GGiXiqXAyEPjmGuLmAOeD8d/HhECMTe+3s7bN3yT0b0oLGWjg67myYfZVonL/s2YR/FDyBCvwN40i3i3YVtz4cz7E85kY9/ToGkbpaoAoQo7DuukpdU1ZkN5i1ARFTzsI6koA+ZEAUqPNZWJeCNV5zpKdeRcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744783391; c=relaxed/simple;
-	bh=Rk7+Pmp4qndCR168t2P2c3WNYJ1mBepOyk9M3NQmSmQ=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=EFL9KBZ3V8EgDyp4iF3ZM+Ou9gChoQDtsDyctcVk+mxZT/DFSYj8hit46SJjC9PIYvrVHa/cPLHeW94ZvvM5m39zfqjEeIx6rOBBIeJ3MvUZit7bPkkeI7qMOsX7H3ylvc12/5zu6Q+dq/dEgTKg8sRN3+aZA1u4TT31371tmBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infineon.com; spf=pass smtp.mailfrom=infineon.com; dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b=EE50cqCA; arc=none smtp.client-ip=217.10.52.105
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infineon.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infineon.com
+	s=arc-20240116; t=1744996819; c=relaxed/simple;
+	bh=gdt/NV9Glf7Fy9xwm9CRlRigMSp/rqvVs7EFkYy2f7c=;
+	h=From:To:CC:Date:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type; b=dnmNiAzD1p5GdYNKCPpbB7ANiNYTjnnoePjgO9j0kK9WSkY/AP+P23NSxAVuNqYIa575SyhPd345gAPHxwmM7qB5rBynX6dY6Wj6bdtXl7i54pTyn+s+yGy5ncZXV1CLpWQKMpE9no+CyMhi59CIsVFJaadwbBhXS6/o8CAaNRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=En7FpmvO; arc=none smtp.client-ip=209.85.218.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b="EE50cqCA"
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=infineon.com; i=@infineon.com; q=dns/txt; s=IFXMAIL;
-  t=1744783388; x=1776319388;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=Rk7+Pmp4qndCR168t2P2c3WNYJ1mBepOyk9M3NQmSmQ=;
-  b=EE50cqCAD0pTa8s1aHr3s0AeMMZyQwxfPjd/U1q50ysA5v1ZL3taavQF
-   ebRnxSutUFtJTowWNFCgrqwL8KsJ9vTc2ePxecZOAa/SLkJ5oiwpG33fv
-   pdeg2cQZ6vYzWNgmjASb5UCogxWafwI+ur/HVN5wuDJYVZlznMsfNnIXi
-   4=;
-X-CSE-ConnectionGUID: vbvkFHKrTeWI7P6o07Ybqg==
-X-CSE-MsgGUID: MoiFTA1PT06UOJASZdvOBw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11404"; a="92108791"
-X-IronPort-AV: E=Sophos;i="6.15,215,1739833200"; 
-   d="scan'208";a="92108791"
-Received: from unknown (HELO MUCSE803.infineon.com) ([172.23.29.29])
-  by smtp11.infineon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Apr 2025 08:01:57 +0200
-Received: from MUCSE827.infineon.com (172.23.29.20) by MUCSE803.infineon.com
- (172.23.29.29) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Wed, 16 Apr
- 2025 08:01:57 +0200
-Received: from ISCN5CG14747PP.blr.infineon.com (10.161.6.196) by
- MUCSE827.infineon.com (172.23.29.20) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.4; Wed, 16 Apr 2025 08:01:55 +0200
-From: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
-To: Arend van Spriel <arend.vanspriel@broadcom.com>
-CC: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>,
-	<linux-wireless@vger.kernel.org>, <brcm80211@lists.linux.dev>,
-	<wlan-kernel-dev-list@infineon.com>
-Subject: [PATCH] brcmfmac: fix compilation error seen while building only brcmfmac sub-directory
-Date: Wed, 16 Apr 2025 11:30:27 +0530
-Message-ID: <20250416060128.15703-1-gokulkumar.sivakumar@infineon.com>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="En7FpmvO"
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-ac41514a734so311298166b.2
+        for <brcm80211@lists.linux.dev>; Fri, 18 Apr 2025 10:20:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google; t=1744996816; x=1745601616; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:subject:user-agent
+         :references:in-reply-to:message-id:date:cc:to:from:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=aae0yNU6qEtMnT9iszupHMKlGwdOca1yf9jTD5h0zYo=;
+        b=En7FpmvOinihdd5Z8jBj67AU97wMHoHzscmMiFz/VsbJSXF0n6FL0B5CFzgxg/mmfj
+         w20+mhMR60NV9Ca4VSvmtJWv3+dpCyasktJyIopvn8ae0Wv8R4WtQELTxmaI8iM+CmkV
+         6djdzwXbhuZwknsYWaS4IN0RNZEivRTrN2rvU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744996816; x=1745601616;
+        h=content-transfer-encoding:mime-version:subject:user-agent
+         :references:in-reply-to:message-id:date:cc:to:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=aae0yNU6qEtMnT9iszupHMKlGwdOca1yf9jTD5h0zYo=;
+        b=Z82Zl9dGuUcmGeKFBkjmpSN3RJdpqVkepzW1BHXbZ4oRVQjg3vTVDX/Y6W/kjellKY
+         4z2AXKzUassYcU7zdSLj3YP3vWRzntD42mQtmdJgVXaqJiaKg1JSM9zzYw6veBmjkOeQ
+         S0bk5raQTkcWLJOhbD16c/mQdbZB5KvxviXFmcUtFflIPeQPAQaWarNcVod7k//XyMRP
+         5TV0+kpmzcPfMkUimkdfnPVbq5buC7/OqP46qffa43oCDsmpPtvTiWBIv74CP4J4FEpJ
+         F9vP3LhjH09g/1QgFruCio/rtPr6P8FAj0b/T/NCjXg9TjWk81aFeGGn1U8FRXGmVIYQ
+         FoVQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU14P07HlbivuDCDBaQ0ptg5VcWiMyjxeOgl2U420NFG2KnfARBtKcJrZLg9PSpXvh3mYb6XrM3ewM=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwTaGhjvT4JyI1l3PUawFtfLY0aGXoXEHaX5gjKe8ku+Zm92+f9
+	rc1528nSSfTyUd8lKKlZXAXr4hhmXVlhQHK8htgBz6UJWNxPDAtjHlQIIfk2MWBMcstiJUrve8z
+	6RQ==
+X-Gm-Gg: ASbGncv765Wfsvm8ncuLo8FSCRjLYcDuNGR0TGpSpctFeNOc2SdObsmL/Pi78y6GXJw
+	wRpA/pBScn3ufS67f2NMXyYI/46X6pPsVMxaiY3AaCRm33Es7glnaXzARP+SkcsF5HODtkCea4f
+	61cqer7mcVaK7XCMuO6FsSYeIs6qN+KogH1P+gOiMs5Q2gPV+Hp3EQeMO7z72PJRn/1FolereGC
+	exr9+fTgcxNrT9aOcJlIcaI0MbqVZZ5QwnktCEk2icTigzvTtqLId+Qnrb9T21TAdaUvIYOi9Jb
+	SEN9tphvieunPIfeO3DJgPa5oKhTPP/ZDri/y1aXexVraJM8r3Idm7R2iAxmfVWO9nmP3K/wXPO
+	P4c8=
+X-Google-Smtp-Source: AGHT+IGmpeW9BuVDPsEIwdhBrrIRV6HcZFEw9qtB3nQkxc4APEStoRLK1oRuRA+PdwXu+7SAr+cdgw==
+X-Received: by 2002:a17:907:f80f:b0:acb:88ac:e30f with SMTP id a640c23a62f3a-acb88ace3b6mr42279466b.20.1744996815959;
+        Fri, 18 Apr 2025 10:20:15 -0700 (PDT)
+Received: from [192.168.178.39] (f215227.upc-f.chello.nl. [80.56.215.227])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-acb6ec0bfd9sm143393466b.29.2025.04.18.10.20.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 18 Apr 2025 10:20:15 -0700 (PDT)
+From: Arend Van Spriel <arend.vanspriel@broadcom.com>
+To: Simon Horman <horms@kernel.org>
+CC: <linux-wireless@vger.kernel.org>, <brcm80211@lists.linux.dev>, <brcm80211-dev-list.pdl@broadcom.com>
+Date: Fri, 18 Apr 2025 19:20:14 +0200
+Message-ID: <19649ea4cb0.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
+In-Reply-To: <20250415-brcmsmac-spell-v1-1-3e1375586883@kernel.org>
+References: <20250415-brcmsmac-spell-v1-1-3e1375586883@kernel.org>
+User-Agent: AquaMail/1.54.1 (build: 105401536)
+Subject: Re: [PATCH] wifi: brcmsmac: Spelling corrections
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; format=flowed; charset="us-ascii"
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: MUCSE808.infineon.com (172.23.29.34) To
- MUCSE827.infineon.com (172.23.29.20)
 
-The function prototypes of brcmf_debug_create_memdump(), brcmf_debugfs_get_devdir()
-and brcmf_debugfs_add_entry() are protected by the "DEBUG" config MACRO in debug.h,
-while the corresponding function definitions remains unprotected in debug.c, so add
-the missing MACRO definition check.
+On April 15, 2025 6:06:41 PM Simon Horman <horms@kernel.org> wrote:
 
-Compilation error seen while building brcmfmac sub-directory with CONFIG_BRCMDBG=y
-is captured below.
+> Various spelling corrections as flagged by codespell.
 
-$ make M=drivers/net/wireless/broadcom/brcm80211/brcmfmac
+Have to admit I merely scanned through this patch. So for what it's worth 
+it look okay to me so...
 
-make[1]: Entering directory '/root/wireless-next/drivers/net/wireless/broadcom/brcm80211/brcmfmac'
-  CC [M]  debug.o
-debug.c:17:5: error: redefinition of ‘brcmf_debug_create_memdump’
-   17 | int brcmf_debug_create_memdump(struct brcmf_bus *bus, const void *data,
-      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~
-In file included from bus.h:12,
-                 from debug.c:13:
-debug.h:136:5: note: previous definition of ‘brcmf_debug_create_memdump’ with type
-‘int(struct brcmf_bus *, const void *, size_t)’ {aka ‘int(struct brcmf_bus *, const void *, long unsigned int)’}
-  136 | int brcmf_debug_create_memdump(struct brcmf_bus *bus, const void *data,
-      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~
-debug.c:45:16: error: redefinition of ‘brcmf_debugfs_get_devdir’
-   45 | struct dentry *brcmf_debugfs_get_devdir(struct brcmf_pub *drvr)
-      |                ^~~~~~~~~~~~~~~~~~~~~~~~
-debug.h:127:30: note: previous definition of ‘brcmf_debugfs_get_devdir’ with type
-‘struct dentry *(struct brcmf_pub *)’
-  127 | static inline struct dentry *brcmf_debugfs_get_devdir(struct brcmf_pub *drvr)
-      |                              ^~~~~~~~~~~~~~~~~~~~~~~~
-debug.c:50:6: error: redefinition of ‘brcmf_debugfs_add_entry’
-   50 | void brcmf_debugfs_add_entry(struct brcmf_pub *drvr, const char *fn,
-      |      ^~~~~~~~~~~~~~~~~~~~~~~
-debug.h:132:6: note: previous definition of ‘brcmf_debugfs_add_entry’ with type
-‘void(struct brcmf_pub *, const char *, int (*)(struct seq_file *, void *))’
-  132 | void brcmf_debugfs_add_entry(struct brcmf_pub *drvr, const char *fn,
-      |      ^~~~~~~~~~~~~~~~~~~~~~~
-make[3]: *** [/root/wireless-next/scripts/Makefile.build:203: debug.o] Error 1
-make[2]: *** [/root/wireless/wireless-next/Makefile:2006: .] Error 2
-make[1]: *** [/root/wireless/wireless-next/Makefile:248: __sub-make] Error 2
-make[1]: Leaving directory '/root/wireless-next/drivers/net/wireless/broadcom/brcm80211/brcmfmac'
-make: *** [Makefile:248: __sub-make] Error 2
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+> Signed-off-by: Simon Horman <horms@kernel.org>
+> ---
+> drivers/net/wireless/broadcom/brcm80211/brcmsmac/aiutils.c     | 6 +++---
+> drivers/net/wireless/broadcom/brcm80211/brcmsmac/aiutils.h     | 2 +-
+> drivers/net/wireless/broadcom/brcm80211/brcmsmac/ampdu.c       | 4 ++--
+> drivers/net/wireless/broadcom/brcm80211/brcmsmac/channel.c     | 4 ++--
+> drivers/net/wireless/broadcom/brcm80211/brcmsmac/dma.c         | 2 +-
+> drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c | 4 ++--
+> drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.c        | 4 ++--
+> drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.h        | 2 +-
+> drivers/net/wireless/broadcom/brcm80211/brcmsmac/pmu.c         | 2 +-
+> 9 files changed, 15 insertions(+), 15 deletions(-)
 
-Signed-off-by: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
----
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/debug.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/debug.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/debug.c
-index eecf8a38d94a..3cb50140eb2f 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/debug.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/debug.c
-@@ -14,6 +14,7 @@
- #include "fweh.h"
- #include "debug.h"
- 
-+#ifdef DEBUG
- int brcmf_debug_create_memdump(struct brcmf_bus *bus, const void *data,
- 			       size_t len)
- {
-@@ -54,3 +55,4 @@ void brcmf_debugfs_add_entry(struct brcmf_pub *drvr, const char *fn,
- 	debugfs_create_devm_seqfile(drvr->bus_if->dev, fn,
- 				    drvr->wiphy->debugfsdir, read_fn);
- }
-+#endif
--- 
-2.47.0
 
