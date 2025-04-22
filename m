@@ -1,142 +1,186 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6617A27BF73
-	for <brcm80211@lists.linux.dev>; Tue, 22 Apr 2025 11:39:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC2B32900AB
+	for <brcm80211@lists.linux.dev>; Tue, 22 Apr 2025 16:52:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745321974; cv=none; b=eAtfkwtbUTdlBoMqlS18QhCJHLbt02rkQq1tEA6+dJkWCfxehiRlIyrYrc3vbZSuVpauCspdvNSQ4XKlOIEad/1gySMpWPSzNU5avrMuw64IloetMiPVPhNuNSi/XxaaMf9rfZsR8uEuKcrb5mczO/7v2+KWVw1cO91HgkRZ8BI=
+	t=1745340753; cv=none; b=mUrR2AavwVCcbds24clgqQmoDpiDD5YIFZn4UsW0z3GTtC7nTdwXqEy7435jC6ipenAYLvzDtxM5bWpfCBusxp1bSbmPXnf/ClMLqkBInCRR+vEgk+J5gCDCx0cbQ0c0UpsFXDtdIuiNaZ5Kkad1OVJFOJBOU8cfIY8/5Oxy13A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745321974; c=relaxed/simple;
-	bh=gE+ihbtz5g3vP0Vibg5Xj0k7tkkJTIZuoEK+y6CIP1k=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=q9BLG0Lm6wHQ+reoloRjPEQ0Y73H0wA+sMv+Os5hYeXi85XbpPU8967X6Mjpvwn5E9ANRcSmmXSTMc7HuKUU+c7GfARYwbov5gkVma4NO70vdEEgbABFqFX84IytO7A6hIJMS/4/9tXz9pu9jje8CTUx9PN/v9C20Yy52rwTRto=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=Sz2zJdQI; arc=none smtp.client-ip=209.85.214.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+	s=arc-20240116; t=1745340753; c=relaxed/simple;
+	bh=aqfuT4KhozvPqTeyoEUgXQSOVYReVqP3zZDAZuJdN+Y=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=SRviz/grbkvESPU7RDevvmu2FXridX9P6tk6ts/HnDlREYaVYs5V5OsapOBUY+6fvKVlsb0lkq5leO0P1vFgeZjNCRwWaC8N4vRkS0OATqgBUdQoarWilNFSEyQSPkyvrdG2yiE+bZDk5XFwf22C27zaK+D9fxFJQFrLM5o7tGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ClYYKALK; arc=none smtp.client-ip=209.85.218.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="Sz2zJdQI"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-22c33677183so56843825ad.2
-        for <brcm80211@lists.linux.dev>; Tue, 22 Apr 2025 04:39:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ClYYKALK"
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-ac2902f7c2aso827343966b.1
+        for <brcm80211@lists.linux.dev>; Tue, 22 Apr 2025 09:52:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1745321972; x=1745926772; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=aEq6bOVOJtLkZttL9T4pxEaQVgSJPvJbn2Yk/YAOwz0=;
-        b=Sz2zJdQIy0LpBBSshdUVL7zEKf7bkh9QJTF0cy5ecbHf6Pxkc8suVWu8uyt1G4x++z
-         sWlMaCwpWCSvvvqG7g0RbVV6jWqDP7rqHAr2RuH1Dqh/gWXSkIPkk1Q037Uel5hQ0L/I
-         Nlos7M0iUYeMR5cIc9q4GPaKhRNH9KzAPqMww=
+        d=gmail.com; s=20230601; t=1745340750; x=1745945550; darn=lists.linux.dev;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=+oAuAoMz4sDO/AVlpJFxLDfgAHNfCGXQoimCA6wbDjw=;
+        b=ClYYKALKak9rVtLxjSGO3xGPdtXDkxwZLuTDq8NFO5zYaBmA493Z51MHD0Z3i8Qesh
+         muQyEUKlgPIR1DNm59KzYo7fW2t/TooDrhLyHUEjsun4DuLQHQ7we88mV4j5V4sElOYl
+         54fdAAkF4UDJIZgL76sQxHikS5DenHNzHerxwP+zpROZWVILsXcISpx9oqGA0DfYwGks
+         vfgWA/Si0bHOKb9WvAOenZq+mINIUWcccebFCb4fmstZOWml7EuY4OXNKoTUo7XxW4nL
+         1aJrrLFCkjaJAvWaHBwuj4K3WZgWMD1lxND2c3UgSgi3RVAS7drqOBajsLvrNtHv/V6h
+         NFmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745321972; x=1745926772;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aEq6bOVOJtLkZttL9T4pxEaQVgSJPvJbn2Yk/YAOwz0=;
-        b=azdwbZ43D+FCIMpTiG8NM46rd5QF3L6KpGY/sRyMsA/fv9P9awQEkP/zOMAhgl9Rg3
-         BTrzZ6g5JmZGrVALQp2/If8arub+hQEoo4QzpDPWE/e1etfpQ5gimDXDIgMrtq8d1ATj
-         HI06zaLHfJnTkMeDc2U7tq9vbqe2EJmLpPx/KzjCg8Y0Tn4rGsg5K13GtZcUoMKHZ8yK
-         LNPftVNsBViZHExVLfU7CwqD4vNVj6ceLYqAzpRfya3o+7x3HDmyJp9OGUOpSMtTcVoV
-         ivl/36AU7Ty5/d6x+cNKTOTPV5cQ2znVP9xty6NeRHBSVzHomILQkFoGVUbKac0aahZi
-         4zqA==
-X-Forwarded-Encrypted: i=1; AJvYcCWuCTFLHnMYXUVDf2PZoDvCrOGXNDJMcWbBJnu+LNfzA8KanEaTr023ySAT1Sg152/WP5cA7DRIGi8=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yyn4Hfwp7NRyP8vXCyIwCLLMHVCvts/afy+qDQL91xBwt+hy653
-	eNSW7p2Q2L0h1j7lm7d+lETphoZfxfL++qNDCNmGflKouLLYL7S9m5FxaJDGBQ==
-X-Gm-Gg: ASbGncuzR2uLevixhGKOrNvuaHqyGU9O5a7hZ2EB945BJLOERElg2BW1Auxd7oKOU+m
-	KCaoYrfICuXPYPYVuQEZh+XYBIIbIHV3939HBOhgPrPZLTUBg9G06QQanTVzSPDOq5MQeHJzdBj
-	jVXrsE+gKc6M/It6md+4pDLKmgT19gNG2qfTITHW0GjTOmxNHdHHIK0SJQmXm7tgmES4y1KYlY7
-	zgnJXSG9t/NvIVi1ZWH+Sj9G6beXMFVw8+RufGilEgRoav8vnw/A1TecJI/5rRyWOWkp2QSxeuD
-	aR0/+7IMG7Krq1jb/Rxza4zSUp5QKBNm+qgz59IPdKu5a3YsvP5cXzJ/EK3cHbl+t2GF
-X-Google-Smtp-Source: AGHT+IFKojdUh0sNb4Ebb1JmWK12MQdXSOdAiqRFGDE22Idk5RsvtjW5M/GTepe3dep46IbCS2UQwg==
-X-Received: by 2002:a17:903:22d0:b0:223:66bc:f1de with SMTP id d9443c01a7336-22c5359e919mr226215295ad.21.1745321972509;
-        Tue, 22 Apr 2025 04:39:32 -0700 (PDT)
-Received: from [10.176.68.112] ([192.19.176.227])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22c50bf3391sm82639865ad.60.2025.04.22.04.39.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Apr 2025 04:39:32 -0700 (PDT)
-Message-ID: <15f43f65-2f2f-4fc6-8210-60afdd9be004@broadcom.com>
-Date: Tue, 22 Apr 2025 13:39:27 +0200
+        d=1e100.net; s=20230601; t=1745340750; x=1745945550;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=+oAuAoMz4sDO/AVlpJFxLDfgAHNfCGXQoimCA6wbDjw=;
+        b=wCE4jyRPnU0LGTsg6UxqnLo7UdbmPyhIlnYAlQx5/8jDuJvAeXrBfkkPw2TyX8BrhE
+         +z0AyXhaOWks728T4oFJLVfANgEjXdru/1tsu0VKhNv3gdMmynrs1V1W1qdIhpkfEWw7
+         82oL0Z2qBG9W/k6LNaNuMfLll0FPrwBMZQUjDLcEaUYG+ayqaaY6qzC4NaWA+BiV3a3D
+         cqC8SmghN8wdaF9JXH1il8Hx1S//qwbpl1a9pbSTemFqt7huvsAaLAjvJgDJVNTwGnbU
+         Eeo0u5zvTItXgfWz2JkKwPyqpuijrF6piBFgTA1mAT8RjAhmTxo3asc9cfWFEKvjCmgo
+         ZhgQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVY5Z5jUKcH2o4NgL3EQI7i4ZBuk+zKuFOybuNyD8JgJsSKxEmnMNxsB+40SwmwNpFRUK3KHZysLks=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzpy7v3yBDbj+KDPj6AHDt+0Y5TZjrQTQiNLNUVnAzUrmYV2bo6
+	teOOXFF0Z/zbyGaAXxowtEv5a2gNkAnMJJQg3vXILLWr8PuWzZ/ZjyTIWDpuYZhWqmVutKv63n/
+	MU3MOQQXJZNgSxVQVkVk50NWOjfA=
+X-Gm-Gg: ASbGncuZTR44GZo2m5StfrcHiKHK9/qPzeS3HBqqaNxmyW4cnAlBGPAC3yLrCidJtki
+	YYAv7tX2M7TYQQpqtrOby5bOHNk+8Pf1+aGwb2KuihnLCvqvWdi7x10rdjgFGsBd44ZRyi4j7nZ
+	A0RVJtt0dqB5yc3ixwrOk6HVPBb0rjsywBbei/
+X-Google-Smtp-Source: AGHT+IGjK87FTeUvbxRDMJp3Phzmv+Ss5LEopx3yEtdaEfC6V7gvoX6F8QTxmfGb1oXdbUgI8ofjONrBu5KXE4pRWQs=
+X-Received: by 2002:a17:907:1c07:b0:ac6:e20f:fa48 with SMTP id
+ a640c23a62f3a-acb74bdcde0mr1397216866b.33.1745340750026; Tue, 22 Apr 2025
+ 09:52:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5] brcm80211: fmac: Add error log in brcmf_usb_dl_cmd()
-To: Wentao Liang <vulab@iscas.ac.cn>, kvalo@kernel.org
-Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
- brcm80211-dev-list.pdl@broadcom.com, linux-kernel@vger.kernel.org
-References: <20250422065938.2345-1-vulab@iscas.ac.cn>
-Content-Language: en-US
-From: Arend van Spriel <arend.vanspriel@broadcom.com>
-Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
- 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
-In-Reply-To: <20250422065938.2345-1-vulab@iscas.ac.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From: Hank Barta <hbarta@gmail.com>
+Date: Tue, 22 Apr 2025 11:52:17 -0500
+X-Gm-Features: ATxdqUEbJ4WG8mLzFBhg00fim0dvh4GtG-PzrR4F4r3oVhZOFqzj7wc8YjZ8lRg
+Message-ID: <CABTDG886JyTFu0dUWgZAT89Dmxjm78VNk0TXcgf=1yABBRN5XQ@mail.gmail.com>
+Subject: Stack dump, Pi 4B, Debian Bookworm (not RpiOS)
+To: arend.vanspriel@broadcom.com, linux-wireless@vger.kernel.org, 
+	brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
+Good morning, I encountered the following while attempting to connect
+to a WiFi AP using iwd. Another user on the Raspberry Pi IRC
+(ukleinek) suggested I forward that to this group.
 
+hbarta@olive:~/MkDocs/my-notes/docs/hosts/Raspberry-Pi/4/allegan$ cat
+iwd.crash.txt
+[565142.844103] NET: Registered PF_ALG protocol family
+[565142.895121] alg: No test for hmac(md4) (hmac(md4-generic))
+[565255.271588] ------------[ cut here ]------------
+[565255.278557] memcpy: detected field-spanning write (size 72) of
+single field "&mgmt_frame->u" at
+drivers/net/wireless/broadcom/brcm80211/brcmfm
+ac/p2p.c:1469 (size 26)
+[565255.295948] WARNING: CPU: 1 PID: 1135280 at
+drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c:1469
+brcmf_p2p_notify_action_frame_rx+0x30c
+/0x440 [brcmfmac]
+[565255.312770] Modules linked in: ghash_generic ghash_ce gf128mul gcm
+ccm algif_aead des_generic libdes ecb algif_skcipher md4 algif_hash
+af_alg
+nf_conntrack_netlink xt_nat veth xt_conntrack bridge stp llc xt_set
+ip_set xt_addrtype xfrm_user xfrm_algo overlay xt_MASQUERADE xt_tcpudp
+xt_mark
+nft_compat nft_chain_nat nf_nat nf_conntrack nf_defrag_ipv6
+nf_defrag_ipv4 tun qrtr binfmt_misc hid_logitech_hidpp joydev hci_uart
+btqca btrtl bt
+bcm btintel btsdio bluetooth jitterentropy_rng sha512_generic evdev
+bcm2835_v4l2(C) hid_logitech_dj sha512_arm64 bcm2835_mmal_vchiq(C)
+videobuf2_v
+malloc videobuf2_memops videobuf2_v4l2 cpufreq_dt videobuf2_common
+videodev aes_neon_bs snd_bcm2835(C) mc aes_neon_blk vc4 zfs(POE)
+snd_soc_hdmi_c
+odec snd_soc_core raspberrypi_cpufreq drbg snd_pcm_dmaengine
+ansi_cprng snd_pcm brcmfmac snd_timer zunicode(POE) brcmutil
+ecdh_generic pwm_bcm2835
+snd zzstd(OE) ecc nls_ascii zlua(OE) iproc_rng200 soundcore nls_cp437
+cec bcm2835_wdt vfat fat rc_core bcm2711_thermal vchiq(C)
+[565255.313189]  drm_display_helper v3d zcommon(POE) znvpair(POE)
+hid_generic gpu_sched drm_dma_helper zavl(POE) drm_shmem_helper
+drm_kms_helper i
+cp(POE) leds_gpio spl(OE) sg cfg80211 rfkill nf_tables libcrc32c
+nfnetlink loop fuse drm efi_pstore dm_mod dax configfs ip_tables
+x_tables autofs4
+usbhid hid ext4 crc16 mbcache jbd2 crc32c_generic sd_mod t10_pi
+crc64_rocksoft crc64 crc_t10dif crct10dif_generic uas usb_storage
+scsi_mod scsi_c
+ommon xhci_pci dwc2 xhci_hcd broadcom udc_core bcm_phy_ptp bcm_phy_lib
+reset_raspberrypi roles i2c_bcm2835 usbcore genet sdhci_iproc
+mdio_bcm_unim
+ac of_mdio usb_common fixed_phy fwnode_mdio crct10dif_ce
+crct10dif_common sdhci_pltfm libphy fixed sdhci gpio_regulator
+phy_generic
+[565255.489912] CPU: 1 PID: 1135280 Comm: kworker/1:3 Tainted: P
+  C OE      6.1.0-33-arm64 #1  Debian 6.1.133-1
+[565255.489934] Hardware name: Raspberry Pi 4 Model B Rev 1.5 (DT)
+[565255.489941] Workqueue: events brcmf_fweh_event_worker [brcmfmac]
+[565255.490001] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[565255.490013] pc : brcmf_p2p_notify_action_frame_rx+0x30c/0x440 [brcmfmac]
+[565255.490058] lr : brcmf_p2p_notify_action_frame_rx+0x30c/0x440 [brcmfmac]
+[565255.490100] sp : ffff80000c8d3c20
+[565255.490105] x29: ffff80000c8d3c20 x28: ffff145a4bc40810 x27:
+0000000000000048
+[565255.490123] x26: ffff145a7c9ed560 x25: 0000000000000048 x24:
+ffff145a49cd8900
+[565255.490139] x23: ffff145a07b6aa98 x22: 0000000000000058 x21:
+ffff145a07b6aa80
+[565255.490154] x20: ffff80000c8d3d78 x19: ffff145a48e139c0 x18:
+0000000000000006
+[565255.490169] x17: 010300080103060e x16: 0000000000000010 x15:
+0000000000000001
+[565255.490184] x14: 0000000020000000 x13: 0000000000000002 x12:
+0000000000000000
+[565255.490199] x11: 00000000ffffefff x10: ffffd291cf1109c8 x9 :
+ffffd291cd61d33c
+[565255.490214] x8 : 0000000000017fe8 x7 : c0000000ffffefff x6 :
+0000000000000001
+[565255.490229] x5 : ffff145a7fb74ad0 x4 : ffff145a7fb74ad0 x3 :
+ffff145a7fb80c70
+[565255.490243] x2 : 0000000000000000 x1 : 0000000000000000 x0 :
+ffff145a46768000
+[565255.490258] Call trace:
+[565255.490264]  brcmf_p2p_notify_action_frame_rx+0x30c/0x440 [brcmfmac]
+[565255.490309]  brcmf_fweh_call_event_handler+0x44/0xc0 [brcmfmac]
+[565255.490352]  brcmf_fweh_event_worker+0x190/0x490 [brcmfmac]
+[565255.490395]  process_one_work+0x1f4/0x460
+[565255.490416]  worker_thread+0x188/0x4e0
+[565255.490429]  kthread+0xe0/0xe4
+[565255.490441]  ret_from_fork+0x10/0x20
+[565255.490455] ---[ end trace 0000000000000000 ]---
+[565658.710117] ieee80211 phy0: brcmf_p2p_send_action_frame: Unknown
+Frame: category 0x5, action 0x4
+[565658.721227] IPv6: ADDRCONF(NETDEV_CHANGE): wlan0: link becomes ready
+[565704.491659] ieee80211 phy0: brcmf_p2p_send_action_frame: Unknown
+Frame: category 0x5, action 0x1
+root@cheshire:/home/hbarta#
 
-On 4/22/2025 8:59 AM, Wentao Liang wrote:
-> In brcmf_usb_dl_cmd(), the error logging is not enough to describe
-> the error state. And some caller of the brcmf_usb_dl_cmd() does not
-> handle its error. An error log in brcmf_usb_dl_cmd() is needed to
-> prevent silent failure.
-> 
-> Add error handling in brcmf_usb_dl_cmd() to log the command id and
-> error code in the brcmf_usb_dl_cmd() fails. In this way, every
-> invocation of the function logs a message upon failure.
+This was captured from dmesg output after I connected an Ethernet
+cable because I experienced it while using the console.
 
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-> Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-> ---
-> v5: Remove finalize label.
-> v4: Fix spelling problem.
-> v3: Change patch name and comment. Move error log into brcmf_usb_dl_cmd().
-> v2: Remove redundant bailing out code.
-> 
->   .../broadcom/brcm80211/brcmfmac/usb.c         | 23 +++++++++++++------
->   1 file changed, 16 insertions(+), 7 deletions(-)
+I was running iwctl interactively and had entered (to the best of my
+recollection) commands to scan (nothing reported) and list (reported
+list of visible APs which seemed incomplete) and connect [AP Name].
+The last command prompted for the pass phrasxe and when I entered it
+and hit return, the stack dump appeared.
+
+(Stack dumpo also at https://pastebin.com/CtEMNFxf for 6 months.)
+
+The back story on this is that NetworkManager + wpa_supplicant is not
+reliably maintaining a consistent connection so I am exploring other
+configurations hoping to improve that.
+
+best
+
+Edit: I just enabled iwd (systemctl start iwd) and got another stack
+dump on the console. I've added it to the pastebin.
+
+-- 
+Beautiful Sunny Winfield
