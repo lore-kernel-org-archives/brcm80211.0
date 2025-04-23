@@ -1,126 +1,89 @@
-Received: from smtp9.infineon.com (smtp9.infineon.com [217.10.52.204])
+Received: from sipsolutions.net (s3.sipsolutions.net [168.119.38.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D92F28CF79
-	for <brcm80211@lists.linux.dev>; Wed, 23 Apr 2025 17:52:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.10.52.204
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 047E42701AF;
+	Wed, 23 Apr 2025 22:15:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=168.119.38.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745430775; cv=none; b=EMsbicFd5+VSOSFaEAgSJtuTJbj1KN6CFeUadOgRDnMqkDGttNtd7PW5SgkNtuSzG4UZK8fq3huYO/6VMCpvcCOZrDXC5kBIYWJuDtPxJYZuBIeUmedYKJtZNgd1l/wrKzST0afYWw6FPlXrWoVV+nS52jQDG7kVUMqzB77ZvjE=
+	t=1745446531; cv=none; b=E2A8TMT9eaAfBIbkca7kQLr9ae3QtTrXOjGhOp0VOXKNPFoJUnWkVfEdhPhA71cwqdh6RrDIkqcU0IruuTZgiA7ZM0b/HOxXqVxPWDcZgOV1iOHBg7YwdSgoiIdxaQZB5ZDA3XFuDBRdSpSAw0LfKKMS0sOco/r8wXKspFxF39I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745430775; c=relaxed/simple;
-	bh=OrDEqIilOMy2w+hOXFiB72lAvYn/C545uiwG2bIRd/A=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=svrMQVRmIV4ZWnb//W5Ifpp7qay+d906OdpYrPULI24ImakAqOCPRFiqVdRFdHQwLIbbiE5bnNa+dVyz5jjlxAprsAk/NvmJ1J51+NJr9bPYTF18NPFVasqvGUWYAAOBuCrK7/gFiXtA0ZGKBYfa7PyI98lKDxR3/MXPNjNLbWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infineon.com; spf=pass smtp.mailfrom=infineon.com; dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b=XVqivPNZ; arc=none smtp.client-ip=217.10.52.204
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infineon.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infineon.com
+	s=arc-20240116; t=1745446531; c=relaxed/simple;
+	bh=4DE49/DCg6Osb/XUYJ9DnwvTKDvpyl+gXUa/AHHMsdE=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=fY5O6hn1CU1T+xLYUcSMFRjGvSU09cIN1Yx7B3G4Pet4StgbloG4dcjVI+6H8wdKU6mKLzmsAgDsJcowJJKdVwpuZ2DxoJO8Oh+5eFViHelE/1yB9orzK2pfA4dqFn4AMIijnD5hepIA2QN+kVvR2pbQg5LzIVx7CGFm0ZfswcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sipsolutions.net; spf=pass smtp.mailfrom=sipsolutions.net; dkim=pass (2048-bit key) header.d=sipsolutions.net header.i=@sipsolutions.net header.b=x9lmJCcD; arc=none smtp.client-ip=168.119.38.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sipsolutions.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sipsolutions.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b="XVqivPNZ"
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=infineon.com; i=@infineon.com; q=dns/txt; s=IFXMAIL;
-  t=1745430773; x=1776966773;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=OrDEqIilOMy2w+hOXFiB72lAvYn/C545uiwG2bIRd/A=;
-  b=XVqivPNZ7Z5qqYdS1SKLx/O7iY2qgfuvSOo2hhtNz8iem/e4TA2ZI1sb
-   5Da/GPeecNduw3MiA/L9vFW7Lt0/BHfgwRp+bcLr0irhIhJrU7kiEC0lj
-   RpDXFMC1abhlIAMKl9RiHVqlH8aVCnbMS5+ZjbKy4o7Mb0KsYZJ/tt9yJ
-   Q=;
-X-CSE-ConnectionGUID: oRqkN82sT/KAcjIRULvIaQ==
-X-CSE-MsgGUID: A3vpMq03T9iM7k3Mnnsq2A==
-X-IronPort-AV: E=McAfee;i="6700,10204,11412"; a="49679325"
-X-IronPort-AV: E=Sophos;i="6.15,233,1739833200"; 
-   d="scan'208";a="49679325"
-Received: from unknown (HELO MUCSE814.infineon.com) ([172.23.29.40])
-  by smtp9.infineon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Apr 2025 19:51:43 +0200
-Received: from MUCSE827.infineon.com (172.23.29.20) by MUCSE814.infineon.com
- (172.23.29.40) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Wed, 23 Apr
- 2025 19:51:42 +0200
-Received: from ISCN5CG14747PP.blr.infineon.com (10.161.6.196) by
- MUCSE827.infineon.com (172.23.29.20) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.4; Wed, 23 Apr 2025 19:51:41 +0200
-From: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
-To: Arend van Spriel <arend.vanspriel@broadcom.com>
-CC: <linux-wireless@vger.kernel.org>, <brcm80211@lists.linux.dev>,
-	<wlan-kernel-dev-list@infineon.com>, Gokul Sivakumar
-	<gokulkumar.sivakumar@infineon.com>
-Subject: [PATCH] brcmfmac: support AP isolation to restrict reachability between stations
-Date: Wed, 23 Apr 2025 23:21:22 +0530
-Message-ID: <20250423175125.7233-1-gokulkumar.sivakumar@infineon.com>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (2048-bit key) header.d=sipsolutions.net header.i=@sipsolutions.net header.b="x9lmJCcD"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=sipsolutions.net; s=mail; h=MIME-Version:Content-Transfer-Encoding:
+	Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-To:
+	Resent-Cc:Resent-Message-ID; bh=nmeggAjgOIdw5h9gwCoQYZdsE1xYtq2spynuYzN88BU=;
+	t=1745446530; x=1746656130; b=x9lmJCcDdN/VrsURwfpGu7r7v01nnf+zdp9RxpqOBcWEHc1
+	Vs9i/z2qH55Vrdn87lN3NvAuI5JKD6fp1aorYLzABkMx1ltn1MzDT3czNwjrjjIT53gvkE/QbrcCw
+	6ARmsS5CE4Po75oKcSJSGgJDyMw0eTTNHFTK8EqAQCoBaoH2mz3qP5nKAKbnbMv6xSwtZMZZcyh1U
+	agahN8GC5xwbuTxPp7dM+ihJoWoIkuUzPNde0GbOfrq7n1CWVfFvzh9opq0m4GiGynCfVV6CXAfu9
+	fXTACLXLTnYUbf0D/IJqz1uLSCX7amHQvucFJPsRQmcEAwh2NHaCslD1ClkeO2ng==;
+Received: by sipsolutions.net with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+	(Exim 4.98.1)
+	(envelope-from <johannes@sipsolutions.net>)
+	id 1u7iND-0000000FV91-1k6F;
+	Thu, 24 Apr 2025 00:15:22 +0200
+Message-ID: <b6a11804b93df6052d61a7069d7ed0bd74a972ad.camel@sipsolutions.net>
+Subject: Re: [PATCH] brcmfmac: support AP isolation to restrict reachability
+ between stations
+From: Johannes Berg <johannes@sipsolutions.net>
+To: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>, Arend van Spriel
+	 <arend.vanspriel@broadcom.com>
+Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev, 
+	wlan-kernel-dev-list@infineon.com
+Date: Thu, 24 Apr 2025 00:15:17 +0200
+In-Reply-To: <20250423175125.7233-1-gokulkumar.sivakumar@infineon.com>
+References: <20250423175125.7233-1-gokulkumar.sivakumar@infineon.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.54.3 (3.54.3-1.fc41) 
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: MUCSE823.infineon.com (172.23.29.54) To
- MUCSE827.infineon.com (172.23.29.20)
+X-malware-bazaar: not-scanned
 
-From: Wright Feng <wright.feng@cypress.com>
+On Wed, 2025-04-23 at 23:21 +0530, Gokul Sivakumar wrote:
+>=20
+> +static int brcmf_cfg80211_change_bss(struct wiphy *wiphy, struct net_dev=
+ice *dev,
+> +				     struct bss_parameters *params)
+> +{
+> +	struct brcmf_if *ifp =3D netdev_priv(dev);
+> +	int ret =3D 0;
+> +
+> +	/* In AP mode, the "ap_isolate" value represents
+> +	 *  0 =3D allow low-level bridging of frames between associated station=
+s
+> +	 *  1 =3D restrict low-level bridging of frames to isolate associated s=
+tations
+> +	 * -1 =3D do not change existing setting
+> +	 */
+> +	if (params->ap_isolate >=3D 0) {
+> +		ret =3D brcmf_fil_iovar_int_set(ifp, "ap_isolate", params->ap_isolate)=
+;
+> +		if (ret < 0)
+> +			brcmf_err("ap_isolate iovar failed: ret=3D%d\n", ret);
+> +	}
+> +
+> +	return ret;
+> +}
 
-hostapd & wpa_supplicant userspace daemons exposes an AP mode specific
-config file parameter "ap_isolate" to the user, which is used to control
-low-level bridging of frames between the stations associated in the BSS.
+Seems like a terrible idea to accept any other changes silently without
+doing anything at all.
 
-In driver, handle this user setting in the newly defined cfg80211_ops
-function brcmf_cfg80211_change_bss() by enabling "ap_isolate" IOVAR in
-the firmware.
+Also, please pay attention to the linux-wireless list. Like, at all. We
+started using tree tags months ago, we started using a different subject
+prefix _years_ ago.
 
-In AP mode, the "ap_isolate" value from the cfg80211 layer represents,
- 0 = allow low-level bridging of frames between associated stations
- 1 = restrict low-level bridging of frames to isolate associated stations
--1 = do not change existing setting
-
-Signed-off-by: Wright Feng <wright.feng@cypress.com>
-Signed-off-by: Chi-hsien Lin <chi-hsien.lin@cypress.com>
-Signed-off-by: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
----
- .../broadcom/brcm80211/brcmfmac/cfg80211.c    | 21 +++++++++++++++++++
- 1 file changed, 21 insertions(+)
-
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-index 4b70845e1a26..bd72d8df2a22 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-@@ -5931,6 +5931,26 @@ static int brcmf_cfg80211_del_pmk(struct wiphy *wiphy, struct net_device *dev,
- 	return brcmf_set_pmk(ifp, NULL, 0);
- }
- 
-+static int brcmf_cfg80211_change_bss(struct wiphy *wiphy, struct net_device *dev,
-+				     struct bss_parameters *params)
-+{
-+	struct brcmf_if *ifp = netdev_priv(dev);
-+	int ret = 0;
-+
-+	/* In AP mode, the "ap_isolate" value represents
-+	 *  0 = allow low-level bridging of frames between associated stations
-+	 *  1 = restrict low-level bridging of frames to isolate associated stations
-+	 * -1 = do not change existing setting
-+	 */
-+	if (params->ap_isolate >= 0) {
-+		ret = brcmf_fil_iovar_int_set(ifp, "ap_isolate", params->ap_isolate);
-+		if (ret < 0)
-+			brcmf_err("ap_isolate iovar failed: ret=%d\n", ret);
-+	}
-+
-+	return ret;
-+}
-+
- static struct cfg80211_ops brcmf_cfg80211_ops = {
- 	.add_virtual_intf = brcmf_cfg80211_add_iface,
- 	.del_virtual_intf = brcmf_cfg80211_del_iface,
-@@ -5978,6 +5998,7 @@ static struct cfg80211_ops brcmf_cfg80211_ops = {
- 	.update_connect_params = brcmf_cfg80211_update_conn_params,
- 	.set_pmk = brcmf_cfg80211_set_pmk,
- 	.del_pmk = brcmf_cfg80211_del_pmk,
-+	.change_bss = brcmf_cfg80211_change_bss,
- };
- 
- struct cfg80211_ops *brcmf_cfg80211_get_ops(struct brcmf_mp_device *settings)
--- 
-2.47.0
-
+johannes
