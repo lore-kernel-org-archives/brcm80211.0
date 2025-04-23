@@ -1,223 +1,126 @@
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp9.infineon.com (smtp9.infineon.com [217.10.52.204])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E258229346C
-	for <brcm80211@lists.linux.dev>; Tue, 22 Apr 2025 17:02:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D92F28CF79
+	for <brcm80211@lists.linux.dev>; Wed, 23 Apr 2025 17:52:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.10.52.204
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745341324; cv=none; b=mSM7l9YA0fJwn+51fwmcVoaRxeCNleiTUMZoo73QCSVaFHb0OVnUfCMO2+fgVgMwSnCPpPAWeqdpTyrg56pvcjYRJoJTIml2L7Y+cIJst7bHbgvpDmZSz3FyGTFA2viC/bdkhkkRfaVYQr+kY/zrIEe52aNfPOyGqG60vuviFc0=
+	t=1745430775; cv=none; b=EMsbicFd5+VSOSFaEAgSJtuTJbj1KN6CFeUadOgRDnMqkDGttNtd7PW5SgkNtuSzG4UZK8fq3huYO/6VMCpvcCOZrDXC5kBIYWJuDtPxJYZuBIeUmedYKJtZNgd1l/wrKzST0afYWw6FPlXrWoVV+nS52jQDG7kVUMqzB77ZvjE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745341324; c=relaxed/simple;
-	bh=tz697PeimqwwKDXfJs0BPD/016iKLpVR0s6NEmZvSyk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=pLjoQEF7DH1F//noj5R9TtOCvLiS52aj67S9cY6tWLbToP8VtJZ7jwvTANCaeZbH4f+DqNrvKuM3c5BcqPOkV5oWd0vrx/2XobKWrVYQOttwE+Q1TwnTvgbv6RkzLGhygblrs6HfxoZyBBnO0nntVdfmnT822aPoLboLPM1Ruvc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IK75MYvw; arc=none smtp.client-ip=209.85.218.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1745430775; c=relaxed/simple;
+	bh=OrDEqIilOMy2w+hOXFiB72lAvYn/C545uiwG2bIRd/A=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=svrMQVRmIV4ZWnb//W5Ifpp7qay+d906OdpYrPULI24ImakAqOCPRFiqVdRFdHQwLIbbiE5bnNa+dVyz5jjlxAprsAk/NvmJ1J51+NJr9bPYTF18NPFVasqvGUWYAAOBuCrK7/gFiXtA0ZGKBYfa7PyI98lKDxR3/MXPNjNLbWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infineon.com; spf=pass smtp.mailfrom=infineon.com; dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b=XVqivPNZ; arc=none smtp.client-ip=217.10.52.204
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infineon.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infineon.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IK75MYvw"
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-acb39c45b4eso795584366b.1
-        for <brcm80211@lists.linux.dev>; Tue, 22 Apr 2025 10:02:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745341321; x=1745946121; darn=lists.linux.dev;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xmsdnMqf5xlO7k6+QnwIpLTJU73C+ck4BW6kSugTHUQ=;
-        b=IK75MYvwGfdCohaSNGbZhu3s/O0Ym1AroejEAz7OtnyPv+gLRTv44MhzicKMcdAaRZ
-         TnJt8WiESltovsVUbPaDB6ORnCO6BL0Vh8yPSC57TL3GfaZTX/9bB21kBdTSOnUPKla1
-         QNouK/GJuJ1X9SQ6bQo3kyiO3nz8D+vz16WqQ5kAUACzI0+3m1yJUAHN4ymXfucq3+5z
-         qUTaf5Nn0UCV7oEDzB9GmoeAwuUMmG8W2HfJB5wjOl9pkYx/OsbQqotqAvSYQqd/d957
-         IbTi6m8FNGWjyiOWUWt+b8IO8rrx774n5mF1N46Aw3VSef10B2fVVRkYCLIb9lJ9y1MM
-         1wkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745341321; x=1745946121;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xmsdnMqf5xlO7k6+QnwIpLTJU73C+ck4BW6kSugTHUQ=;
-        b=w3ZomLJ5EBJV361fGFKuswaXpSkqyqFberhNw5QBM/6qvxwR8MxYvqcfwWqQsWG7z8
-         gomRngDU2LEEZ9R2K2C/ZAKB/4LD6Q0lw8AVvHTCgMMguOUic206k0tDIDJch3iF6lKx
-         f1FtOlfLaHVP98bhBEm2aFLXKiTbmYxciopCtvZMw1NQX9OxFr0juLWZBKz5v8oLt9Rd
-         1636hKTzInSml8461+bR53bhCWQN/RDcisyHrmTvcwM0Lh+xlDjgMVafEA0B4HSeeeDv
-         7Vygy4Jl+qsFvNeCAGEpReRVEUlFcAkSj4UA7hpJAap9c4cMB8HFouyOZe7LKBFOwKkl
-         PWSg==
-X-Forwarded-Encrypted: i=1; AJvYcCXt9w5KrS2f3S8RVwhm/jb1NLQXG/ThPskML+M7mRL2DTZqpz1rvbzh9d0ysjSrDgWvQ7AVdJjr/BY=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy8ifjfxw336OCUUfjBLkn5eukV9jwcLEYfnAFbg3zRmd67pOdd
-	Xs60irnYttFv1COrNnWdKNl3ONEW5W8NXqGTn9U5HuAs5Ov20WjcNYtZugBFTzDmnijcvVEjz68
-	QyDFobrAPA4lz9Yfb1k5iXZwoCCUpeBIv
-X-Gm-Gg: ASbGncva4wLEcyOLi5I8NpniCZrKMJvk+IubCMIUzHJxRhlT4CwbYoN3n+tUCnxQ7M+
-	tOkBWqkJrVV74TLqhLX13364bwUjPGAbYmfbF6/zSBogTaeqO1cmTGwhQyLs7DQhMASQIFMD9ZL
-	6cXZ3pV9DToJr2woYpwIjTNsINnmFHjvGoH6QS
-X-Google-Smtp-Source: AGHT+IHd2N9D1ZrJXInnFHsaJpiRrGdvZOEoz2WndD7gmxPUbmQCpZ/3gUmK1m/ge8Qp9ZnPcHOvzzMo3WOgXfkexnE=
-X-Received: by 2002:a17:906:dc90:b0:ac6:e33e:9ef8 with SMTP id
- a640c23a62f3a-acb74ad97bamr1143411466b.2.1745341320895; Tue, 22 Apr 2025
- 10:02:00 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b="XVqivPNZ"
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=infineon.com; i=@infineon.com; q=dns/txt; s=IFXMAIL;
+  t=1745430773; x=1776966773;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=OrDEqIilOMy2w+hOXFiB72lAvYn/C545uiwG2bIRd/A=;
+  b=XVqivPNZ7Z5qqYdS1SKLx/O7iY2qgfuvSOo2hhtNz8iem/e4TA2ZI1sb
+   5Da/GPeecNduw3MiA/L9vFW7Lt0/BHfgwRp+bcLr0irhIhJrU7kiEC0lj
+   RpDXFMC1abhlIAMKl9RiHVqlH8aVCnbMS5+ZjbKy4o7Mb0KsYZJ/tt9yJ
+   Q=;
+X-CSE-ConnectionGUID: oRqkN82sT/KAcjIRULvIaQ==
+X-CSE-MsgGUID: A3vpMq03T9iM7k3Mnnsq2A==
+X-IronPort-AV: E=McAfee;i="6700,10204,11412"; a="49679325"
+X-IronPort-AV: E=Sophos;i="6.15,233,1739833200"; 
+   d="scan'208";a="49679325"
+Received: from unknown (HELO MUCSE814.infineon.com) ([172.23.29.40])
+  by smtp9.infineon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Apr 2025 19:51:43 +0200
+Received: from MUCSE827.infineon.com (172.23.29.20) by MUCSE814.infineon.com
+ (172.23.29.40) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Wed, 23 Apr
+ 2025 19:51:42 +0200
+Received: from ISCN5CG14747PP.blr.infineon.com (10.161.6.196) by
+ MUCSE827.infineon.com (172.23.29.20) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.4; Wed, 23 Apr 2025 19:51:41 +0200
+From: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
+To: Arend van Spriel <arend.vanspriel@broadcom.com>
+CC: <linux-wireless@vger.kernel.org>, <brcm80211@lists.linux.dev>,
+	<wlan-kernel-dev-list@infineon.com>, Gokul Sivakumar
+	<gokulkumar.sivakumar@infineon.com>
+Subject: [PATCH] brcmfmac: support AP isolation to restrict reachability between stations
+Date: Wed, 23 Apr 2025 23:21:22 +0530
+Message-ID: <20250423175125.7233-1-gokulkumar.sivakumar@infineon.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <CABTDG886JyTFu0dUWgZAT89Dmxjm78VNk0TXcgf=1yABBRN5XQ@mail.gmail.com>
-In-Reply-To: <CABTDG886JyTFu0dUWgZAT89Dmxjm78VNk0TXcgf=1yABBRN5XQ@mail.gmail.com>
-From: Hank Barta <hbarta@gmail.com>
-Date: Tue, 22 Apr 2025 12:01:49 -0500
-X-Gm-Features: ATxdqUHnhdxkjiue3m4U7BvSmKftALxNk06SRc-rmx9Be7QM4KMDNVlJDk1pDLs
-Message-ID: <CABTDG8-A7A7WJUSHio85vVPCKM02nuwcYPhbYju6bQacbteQUg@mail.gmail.com>
-Subject: Re: Stack dump, Pi 4B, Debian Bookworm (not RpiOS)
-To: arend.vanspriel@broadcom.com, linux-wireless@vger.kernel.org, 
-	brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: MUCSE823.infineon.com (172.23.29.54) To
+ MUCSE827.infineon.com (172.23.29.20)
 
-I should have mentioned that I'm also running Tailscale and Docker on
-this host so there's a lot of "networking" going on. Following a
-reboot, I see what I think is the same stack dump. In addition there
-are a lot of messages on the console like
+From: Wright Feng <wright.feng@cypress.com>
 
-[  242.666852] ieee80211 phy0: brcmf_p2p_send_action_frame: Unknown
-Frame: category 0x5, action 0x1
-[  251.665022] ieee80211 phy0: brcmf_p2p_send_action_frame: Unknown
-Frame: category 0x5, action 0x1
-[  260.716149] ieee80211 phy0: brcmf_p2p_send_action_frame: Unknown
-Frame: category 0x5, action 0x1
-[  269.670253] ieee80211 phy0: brcmf_p2p_send_action_frame: Unknown
-Frame: category 0x5, action 0x1
-[  278.673598] ieee80211 phy0: brcmf_p2p_send_action_frame: Unknown
-Frame: category 0x5, action 0x1
+hostapd & wpa_supplicant userspace daemons exposes an AP mode specific
+config file parameter "ap_isolate" to the user, which is used to control
+low-level bridging of frames between the stations associated in the BSS.
 
-In spite of that, WiFi and Ethernet seem to be working.
+In driver, handle this user setting in the newly defined cfg80211_ops
+function brcmf_cfg80211_change_bss() by enabling "ap_isolate" IOVAR in
+the firmware.
 
-best,
+In AP mode, the "ap_isolate" value from the cfg80211 layer represents,
+ 0 = allow low-level bridging of frames between associated stations
+ 1 = restrict low-level bridging of frames to isolate associated stations
+-1 = do not change existing setting
 
-On Tue, Apr 22, 2025 at 11:52=E2=80=AFAM Hank Barta <hbarta@gmail.com> wrot=
-e:
->
-> Good morning, I encountered the following while attempting to connect
-> to a WiFi AP using iwd. Another user on the Raspberry Pi IRC
-> (ukleinek) suggested I forward that to this group.
->
-> hbarta@olive:~/MkDocs/my-notes/docs/hosts/Raspberry-Pi/4/allegan$ cat
-> iwd.crash.txt
-> [565142.844103] NET: Registered PF_ALG protocol family
-> [565142.895121] alg: No test for hmac(md4) (hmac(md4-generic))
-> [565255.271588] ------------[ cut here ]------------
-> [565255.278557] memcpy: detected field-spanning write (size 72) of
-> single field "&mgmt_frame->u" at
-> drivers/net/wireless/broadcom/brcm80211/brcmfm
-> ac/p2p.c:1469 (size 26)
-> [565255.295948] WARNING: CPU: 1 PID: 1135280 at
-> drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c:1469
-> brcmf_p2p_notify_action_frame_rx+0x30c
-> /0x440 [brcmfmac]
-> [565255.312770] Modules linked in: ghash_generic ghash_ce gf128mul gcm
-> ccm algif_aead des_generic libdes ecb algif_skcipher md4 algif_hash
-> af_alg
-> nf_conntrack_netlink xt_nat veth xt_conntrack bridge stp llc xt_set
-> ip_set xt_addrtype xfrm_user xfrm_algo overlay xt_MASQUERADE xt_tcpudp
-> xt_mark
-> nft_compat nft_chain_nat nf_nat nf_conntrack nf_defrag_ipv6
-> nf_defrag_ipv4 tun qrtr binfmt_misc hid_logitech_hidpp joydev hci_uart
-> btqca btrtl bt
-> bcm btintel btsdio bluetooth jitterentropy_rng sha512_generic evdev
-> bcm2835_v4l2(C) hid_logitech_dj sha512_arm64 bcm2835_mmal_vchiq(C)
-> videobuf2_v
-> malloc videobuf2_memops videobuf2_v4l2 cpufreq_dt videobuf2_common
-> videodev aes_neon_bs snd_bcm2835(C) mc aes_neon_blk vc4 zfs(POE)
-> snd_soc_hdmi_c
-> odec snd_soc_core raspberrypi_cpufreq drbg snd_pcm_dmaengine
-> ansi_cprng snd_pcm brcmfmac snd_timer zunicode(POE) brcmutil
-> ecdh_generic pwm_bcm2835
-> snd zzstd(OE) ecc nls_ascii zlua(OE) iproc_rng200 soundcore nls_cp437
-> cec bcm2835_wdt vfat fat rc_core bcm2711_thermal vchiq(C)
-> [565255.313189]  drm_display_helper v3d zcommon(POE) znvpair(POE)
-> hid_generic gpu_sched drm_dma_helper zavl(POE) drm_shmem_helper
-> drm_kms_helper i
-> cp(POE) leds_gpio spl(OE) sg cfg80211 rfkill nf_tables libcrc32c
-> nfnetlink loop fuse drm efi_pstore dm_mod dax configfs ip_tables
-> x_tables autofs4
-> usbhid hid ext4 crc16 mbcache jbd2 crc32c_generic sd_mod t10_pi
-> crc64_rocksoft crc64 crc_t10dif crct10dif_generic uas usb_storage
-> scsi_mod scsi_c
-> ommon xhci_pci dwc2 xhci_hcd broadcom udc_core bcm_phy_ptp bcm_phy_lib
-> reset_raspberrypi roles i2c_bcm2835 usbcore genet sdhci_iproc
-> mdio_bcm_unim
-> ac of_mdio usb_common fixed_phy fwnode_mdio crct10dif_ce
-> crct10dif_common sdhci_pltfm libphy fixed sdhci gpio_regulator
-> phy_generic
-> [565255.489912] CPU: 1 PID: 1135280 Comm: kworker/1:3 Tainted: P
->   C OE      6.1.0-33-arm64 #1  Debian 6.1.133-1
-> [565255.489934] Hardware name: Raspberry Pi 4 Model B Rev 1.5 (DT)
-> [565255.489941] Workqueue: events brcmf_fweh_event_worker [brcmfmac]
-> [565255.490001] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTY=
-PE=3D--)
-> [565255.490013] pc : brcmf_p2p_notify_action_frame_rx+0x30c/0x440 [brcmfm=
-ac]
-> [565255.490058] lr : brcmf_p2p_notify_action_frame_rx+0x30c/0x440 [brcmfm=
-ac]
-> [565255.490100] sp : ffff80000c8d3c20
-> [565255.490105] x29: ffff80000c8d3c20 x28: ffff145a4bc40810 x27:
-> 0000000000000048
-> [565255.490123] x26: ffff145a7c9ed560 x25: 0000000000000048 x24:
-> ffff145a49cd8900
-> [565255.490139] x23: ffff145a07b6aa98 x22: 0000000000000058 x21:
-> ffff145a07b6aa80
-> [565255.490154] x20: ffff80000c8d3d78 x19: ffff145a48e139c0 x18:
-> 0000000000000006
-> [565255.490169] x17: 010300080103060e x16: 0000000000000010 x15:
-> 0000000000000001
-> [565255.490184] x14: 0000000020000000 x13: 0000000000000002 x12:
-> 0000000000000000
-> [565255.490199] x11: 00000000ffffefff x10: ffffd291cf1109c8 x9 :
-> ffffd291cd61d33c
-> [565255.490214] x8 : 0000000000017fe8 x7 : c0000000ffffefff x6 :
-> 0000000000000001
-> [565255.490229] x5 : ffff145a7fb74ad0 x4 : ffff145a7fb74ad0 x3 :
-> ffff145a7fb80c70
-> [565255.490243] x2 : 0000000000000000 x1 : 0000000000000000 x0 :
-> ffff145a46768000
-> [565255.490258] Call trace:
-> [565255.490264]  brcmf_p2p_notify_action_frame_rx+0x30c/0x440 [brcmfmac]
-> [565255.490309]  brcmf_fweh_call_event_handler+0x44/0xc0 [brcmfmac]
-> [565255.490352]  brcmf_fweh_event_worker+0x190/0x490 [brcmfmac]
-> [565255.490395]  process_one_work+0x1f4/0x460
-> [565255.490416]  worker_thread+0x188/0x4e0
-> [565255.490429]  kthread+0xe0/0xe4
-> [565255.490441]  ret_from_fork+0x10/0x20
-> [565255.490455] ---[ end trace 0000000000000000 ]---
-> [565658.710117] ieee80211 phy0: brcmf_p2p_send_action_frame: Unknown
-> Frame: category 0x5, action 0x4
-> [565658.721227] IPv6: ADDRCONF(NETDEV_CHANGE): wlan0: link becomes ready
-> [565704.491659] ieee80211 phy0: brcmf_p2p_send_action_frame: Unknown
-> Frame: category 0x5, action 0x1
-> root@cheshire:/home/hbarta#
->
-> This was captured from dmesg output after I connected an Ethernet
-> cable because I experienced it while using the console.
->
-> I was running iwctl interactively and had entered (to the best of my
-> recollection) commands to scan (nothing reported) and list (reported
-> list of visible APs which seemed incomplete) and connect [AP Name].
-> The last command prompted for the pass phrasxe and when I entered it
-> and hit return, the stack dump appeared.
->
-> (Stack dumpo also at https://pastebin.com/CtEMNFxf for 6 months.)
->
-> The back story on this is that NetworkManager + wpa_supplicant is not
-> reliably maintaining a consistent connection so I am exploring other
-> configurations hoping to improve that.
->
-> best
->
-> Edit: I just enabled iwd (systemctl start iwd) and got another stack
-> dump on the console. I've added it to the pastebin.
->
-> --
-> Beautiful Sunny Winfield
+Signed-off-by: Wright Feng <wright.feng@cypress.com>
+Signed-off-by: Chi-hsien Lin <chi-hsien.lin@cypress.com>
+Signed-off-by: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
+---
+ .../broadcom/brcm80211/brcmfmac/cfg80211.c    | 21 +++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+index 4b70845e1a26..bd72d8df2a22 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -5931,6 +5931,26 @@ static int brcmf_cfg80211_del_pmk(struct wiphy *wiphy, struct net_device *dev,
+ 	return brcmf_set_pmk(ifp, NULL, 0);
+ }
+ 
++static int brcmf_cfg80211_change_bss(struct wiphy *wiphy, struct net_device *dev,
++				     struct bss_parameters *params)
++{
++	struct brcmf_if *ifp = netdev_priv(dev);
++	int ret = 0;
++
++	/* In AP mode, the "ap_isolate" value represents
++	 *  0 = allow low-level bridging of frames between associated stations
++	 *  1 = restrict low-level bridging of frames to isolate associated stations
++	 * -1 = do not change existing setting
++	 */
++	if (params->ap_isolate >= 0) {
++		ret = brcmf_fil_iovar_int_set(ifp, "ap_isolate", params->ap_isolate);
++		if (ret < 0)
++			brcmf_err("ap_isolate iovar failed: ret=%d\n", ret);
++	}
++
++	return ret;
++}
++
+ static struct cfg80211_ops brcmf_cfg80211_ops = {
+ 	.add_virtual_intf = brcmf_cfg80211_add_iface,
+ 	.del_virtual_intf = brcmf_cfg80211_del_iface,
+@@ -5978,6 +5998,7 @@ static struct cfg80211_ops brcmf_cfg80211_ops = {
+ 	.update_connect_params = brcmf_cfg80211_update_conn_params,
+ 	.set_pmk = brcmf_cfg80211_set_pmk,
+ 	.del_pmk = brcmf_cfg80211_del_pmk,
++	.change_bss = brcmf_cfg80211_change_bss,
+ };
+ 
+ struct cfg80211_ops *brcmf_cfg80211_get_ops(struct brcmf_mp_device *settings)
+-- 
+2.47.0
 
-
---=20
-Beautiful Sunny Winfield
