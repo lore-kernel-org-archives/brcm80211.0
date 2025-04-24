@@ -1,69 +1,70 @@
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AC9527FD56
-	for <brcm80211@lists.linux.dev>; Thu, 24 Apr 2025 19:43:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54BF42918E5
+	for <brcm80211@lists.linux.dev>; Thu, 24 Apr 2025 19:43:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745523801; cv=none; b=LgDAQaJL6S8H/NS0Jlcdk6u9Up+gKG/USjjlW9og8PqDJ48/9vwjYMf1hhKQ+30WWmikodcO4Q7uHZVSqVH/kFTs5hQjXxSwC+Kdces8RJ3wcjLNVTAWezVaIkiShfuFJf+D841BJ0q3TgtjBcrNsGWELrMviy45PmWeDJQzCxU=
+	t=1745523803; cv=none; b=KP9+lnhvBOsMuCmf0R4e9rKxR6u2vyw/6ZSt8R9HRYuqnWZEksLIJaVLpBHKqnFhZWkOxs0OsrFHOWWDZFFrwLFyX4uZfEJkpP4SK6b1BrtBLRsT1DE44cgB+IyaJqEdt0FfpQmgFkL30+i0l3uWrFGxcPKlbmyNhcm6jdKhl7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745523801; c=relaxed/simple;
-	bh=vkd8l+2uE115IwCc/KwGXmw2c17V2nEb0eAxDlqMROQ=;
+	s=arc-20240116; t=1745523803; c=relaxed/simple;
+	bh=5p1ghz030t0rLxOmI8c5IYOtY817sRraSfxllpncENI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ATjHI6VgPGPREsmpNhZs+9fBA60NylH3rxEFuKh6JuLEn5j7eKHv7KZdmaIPERlR3PC0pBMrGfBmwflFcccjj0GhAwABu2Fy6RVhI6Dqqn8Gds4cQO+5FaasiamRqfsgZNHcdkDV6Kxh2mBU8XbVGtz+wwu3XY7xj2XNTOyFIZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=dG6R5bHf; arc=none smtp.client-ip=209.85.210.171
+	 MIME-Version; b=RxvUqKVa65Y+4J6EaaIJzc4h4S1Kdwa+C3CrdcV4c0Aup4F3pjU65A54LGWdhdIKMsuW4fZIH4jP/MXt4tkkw1sThDuJT5VykDwmvAlvWvOL2pmudWxi2Z5cvkDjfjpo8jNUlUrvOzlUqZVwGARpSeljr2fYbdy2S1hrEFKypJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=OBTSglkW; arc=none smtp.client-ip=209.85.210.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="dG6R5bHf"
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-736b34a71a1so1669016b3a.0
-        for <brcm80211@lists.linux.dev>; Thu, 24 Apr 2025 12:43:19 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="OBTSglkW"
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-736b34a71a1so1669063b3a.0
+        for <brcm80211@lists.linux.dev>; Thu, 24 Apr 2025 12:43:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1745523799; x=1746128599; darn=lists.linux.dev;
+        d=broadcom.com; s=google; t=1745523801; x=1746128601; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=kfBR4TI6BpBz8qAAbyBqgBwhlsVjxxg/yHIslp5Eg5M=;
-        b=dG6R5bHfkHnK2MdLuFXIeWmxwH08OtGd5Deucx+jOwKh5ZjLgrpVWAbMOt5z4sFxR9
-         gWI1il6Rsfc06nlWhdLbOR/+mG7WnI3EbCH33TkNn2fFOQn2+79JMXTEQw7NV9NFeZwd
-         LoV/+CC9eueo1A/72EbfXnfLC1pnohNKPuC8U=
+        bh=2UZxtW3kPc6nJSgpcHu4czu11dbH1HDpqjV9mIbR79E=;
+        b=OBTSglkWAShvI/B0Ao9tiXmy0e5a4PFz5s1OmLesYaBlIfuBL360iCxhbgFHqNVGT6
+         2bOh3yrWO2sssdYee9NWoKCv1LiDEybU0yoRMpUyIfgcdGnGtNfEI+FXRSKAyu+1Xh+c
+         mE3YGbm4soqll440YMfmMK8BFuB697tG/Xao0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745523799; x=1746128599;
+        d=1e100.net; s=20230601; t=1745523801; x=1746128601;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=kfBR4TI6BpBz8qAAbyBqgBwhlsVjxxg/yHIslp5Eg5M=;
-        b=udktFVGq62PKJoP1dU/l27fA6yttrHgpCvIhATqzmOFWY2cMJ0ybPz/7mIP1r3UVYg
-         RYtThf8QuXgdTiMfESa+uqTjdtavwZa4c/vWX5q+eSnt1IOR5nC6zDT/3Y7vZtwnRIa7
-         ROiIyKO/K1HTibykgvwS6oYQRQ7BSMhmsjruINDHAvBx0XPROKal+8MtFbtumsQtrFkO
-         czA2O8cRhDdRuNGzkvRS0s8nEHi9WfjBjvEOFWq2Czx1ayHcjbcZg1/j0119PFwOBtT7
-         Q0zalnL+RxzoA0dHgcl9abNkMBi/YBjJLH1jkmRQzI/lp8/a0GCTymLyReBSDqcICEd6
-         NhVA==
-X-Forwarded-Encrypted: i=1; AJvYcCXBH7Htpw52l4dmdiEoOc7vhLMJSa2KPxKdTIkdXy8fIs0bLmJ3bfy3g8FN1oe1IWyKuJeC68+ZmN4=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx3//jhyZcNgkKouZ6/zWye7ugXkTid5AaoeKa2nA41zm7sYuzl
-	h+Mpc8x7ExAHIUONrFsykqIuJsnVwiT9HcJ1oyv4rq/EdLqFQYY2ciTVhFcyHg==
-X-Gm-Gg: ASbGncvMAntli+2WmIohPwMq3AzSgmIcjBJXfZlb+5HCxZOYuCkyCCyl3iCyq7gDPQF
-	Ia85Vzn1t3hMEdPK9w8oSJWp181TQODSZsN3S3LX9fO40kuIEn2/s1Cue1570RJ/Agsbm77eX6K
-	xo9slwzmfqQqzkQOMgWRwFSAyRELkXC7CKrb//tb6HEcyKYEzVuzg+dfwJQxajdtWQOomMc9Srl
-	uKLjCrqt2bvsbmTUNs4GwcAWxkLMYmqk2q1zFwij3ndnlxlQTx4QDdnvAyWGTh7YPkNpLRZnCKr
-	npQ8gd5y1lzIN4fB3r4+ej5YYrRkLa9C7XWENVC+msO9UI1zAyA268b5JkoXIOA8hwGdB5h3OBC
-	LMtR6QJgQJgHVggJBeFPO
-X-Google-Smtp-Source: AGHT+IHf1URmnj+ogEKZh3KWhFjfdeK5j/vlfYgwtH8PYl9kyKmsNnlj9JqWbIf2h0l6+CzxIjFpiw==
-X-Received: by 2002:a05:6a00:3a16:b0:736:2a73:6756 with SMTP id d2e1a72fcca58-73e33106f0dmr1100522b3a.21.1745523798926;
-        Thu, 24 Apr 2025 12:43:18 -0700 (PDT)
+        bh=2UZxtW3kPc6nJSgpcHu4czu11dbH1HDpqjV9mIbR79E=;
+        b=tBwhPPLPIJNs3UrmQKKPqYmyMbTshgiaL1KtzykOk4UrfLHQff5wTXOPqejSSyL6n9
+         g7F5wDfGJrH0bx+s6EHlSRoGjx98h42r/3BeiPx7mwL5W2dbvAGlVoGGSw0dtDEgIE70
+         vCMAIjykv/Rs034UR3o5nRR81tkVKPqmwHbKw6LVuu6bx2LCUH0XrddWWFpfyeFbQWlI
+         AXEhYq+pB6uW0K+kyaDjTF5qWlHyRe3eGFo2HKMJvruZKUyAPHUipPgHlXJybBTlieQu
+         uXDeVX0F0WVtwb4v6ADIb+Zi7Dy1B+lLRe8BHXwlPx1fbguviEizUUyThjdiodEH2Fzh
+         xw1A==
+X-Forwarded-Encrypted: i=1; AJvYcCXoxdwnwwwgLww+xRbAIZWHN7eEynVN8ekzoXR4iHAMDWtol3Yy7nNGeWRSTLuoM1IPycWxc2M2W7g=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx0pwML5HXNPF5oh2kLWzSZpgueLOFNbZSt6fExVVkkWli0BVxv
+	c8LnA4qDmpTXqQpCXC5Bnmm7txQkRJaCLy516cf9rD9S3X81yULF0tXTbQFrBt/dYPCQCyiNfO6
+	99A==
+X-Gm-Gg: ASbGncvvoOB4Yrvfwnp2RGlXb04W27ucDA6ppHNcL1iQmMuRFMc3oeycmOfkviV41ON
+	LfMIrET5Vz6yRMj9M+uVLrXr5Bp5hCwKgMF16qI2LwVgE7Co1lYXdYnJbcNZ/T95OEA3OqA7376
+	vR6r9KkGvntoVI3qbERDFqL2/py+Vl8iMuhfYtOzyX9hxcQ8WfkpbNhZYcIhVSEkaeyPAqETp/G
+	CDWwRPWey2CFXeuKq+k2+C3Kd1RsStYGUkFWD3JldECA2c/B2/LdofMe+k5q1AKWFA89+Gkr/zz
+	1Vut4ctmjSc4gkxQj5CjZ1QJ6C4WcDb6XPLhbfnDaDRrWaISb6axhYNk4fmVzbkwSPhmNbzLtGn
+	62D1mx22l+021NzWd2/HR
+X-Google-Smtp-Source: AGHT+IHj4pkMXkAmfOw0WGb+TKWLQzOHMU9HfinAmJwV6gaK6xC7xQI23oPWVFzELRh4N7q5scq8oQ==
+X-Received: by 2002:a05:6a21:8cc6:b0:1f5:7873:304b with SMTP id adf61e73a8af0-20456715904mr698677637.26.1745523801549;
+        Thu, 24 Apr 2025 12:43:21 -0700 (PDT)
 Received: from bld-bun-02.bun.broadcom.net ([192.19.176.227])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73e25a6aa52sm1863494b3a.94.2025.04.24.12.43.16
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73e25a6aa52sm1863494b3a.94.2025.04.24.12.43.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Apr 2025 12:43:18 -0700 (PDT)
+        Thu, 24 Apr 2025 12:43:20 -0700 (PDT)
 From: Arend van Spriel <arend.vanspriel@broadcom.com>
 To: Johannes Berg <johannes@sipsolutions.net>
 Cc: linux-wireless@vger.kernel.org,
 	brcm80211@lists.linux.dev,
 	Arend van Spriel <arend.vanspriel@broadcom.com>,
 	James Prestwood <prestwoj@gmail.com>
-Subject: [PATCH wireless-next 1/4] wifi: brcmfmac: support per-vendor cfg80211 callbacks and firmware events
-Date: Thu, 24 Apr 2025 21:42:36 +0200
-Message-ID: <20250424194239.2825830-2-arend.vanspriel@broadcom.com>
+Subject: [PATCH wireless-next 2/4] wifi: brcmfmac: make per-vendor event map const
+Date: Thu, 24 Apr 2025 21:42:37 +0200
+Message-ID: <20250424194239.2825830-3-arend.vanspriel@broadcom.com>
 X-Mailer: git-send-email 2.43.4
 In-Reply-To: <20250424194239.2825830-1-arend.vanspriel@broadcom.com>
 References: <20250424194239.2825830-1-arend.vanspriel@broadcom.com>
@@ -75,115 +76,27 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Adding two vendor operations that can be used to provide per-vendor
-cfg80211 callbacks and per-vendor handlers for firmware events. These
-two are often related to handling interactions from user-space through
-nl80211. Exporting brcmf_fweh_register() for registering the per-vendor
-event handler callbacks. Some other exports for get event name string
-and allowing use of brcmf_dbg() in per-vendor module.
+The event map is not intended to change so make it const.
 
 Tested-by: James Prestwood <prestwoj@gmail.com>
 Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
 ---
- .../broadcom/brcm80211/brcmfmac/cfg80211.c     |  2 ++
- .../broadcom/brcm80211/brcmfmac/common.c       |  1 +
- .../broadcom/brcm80211/brcmfmac/core.c         |  2 ++
- .../broadcom/brcm80211/brcmfmac/fweh.c         |  2 ++
- .../broadcom/brcm80211/brcmfmac/fwvid.h        | 18 ++++++++++++++++++
- 5 files changed, 25 insertions(+)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-index 4b70845e1a26..b9381154d124 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-@@ -6760,6 +6760,8 @@ static void brcmf_register_event_handlers(struct brcmf_cfg80211_info *cfg)
- 	brcmf_fweh_register(cfg->pub, BRCMF_E_PSK_SUP,
- 			    brcmf_notify_connect_status);
- 	brcmf_fweh_register(cfg->pub, BRCMF_E_RSSI, brcmf_notify_rssi);
-+
-+	brcmf_fwvid_register_event_handlers(cfg->pub);
- }
-
- static void brcmf_deinit_priv_mem(struct brcmf_cfg80211_info *cfg)
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
-index f26e4679e4ff..75f101622db1 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
-@@ -491,6 +491,7 @@ void __brcmf_dbg(u32 level, const char *func, const char *fmt, ...)
- 	trace_brcmf_dbg(level, func, &vaf);
- 	va_end(args);
- }
-+BRCMF_EXPORT_SYMBOL_GPL(__brcmf_dbg);
- #endif
-
- static void brcmf_mp_attach(void)
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
-index 3d63010ae079..04f41c09deca 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
-@@ -1363,6 +1363,8 @@ int brcmf_attach(struct device *dev)
- 	brcmf_fweh_register(drvr, BRCMF_E_PSM_WATCHDOG,
- 			    brcmf_psm_watchdog_notify);
-
-+	brcmf_fwvid_get_cfg80211_ops(drvr);
-+
- 	ret = brcmf_bus_started(drvr, drvr->ops);
- 	if (ret != 0) {
- 		bphy_err(drvr, "dongle is not responding: err=%d\n", ret);
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c
-index f0b6a7607f16..4f76e812a860 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c
-@@ -75,6 +75,7 @@ const char *brcmf_fweh_event_name(enum brcmf_fweh_event_code code)
- 	return "nodebug";
- }
- #endif
-+BRCMF_EXPORT_SYMBOL_GPL(brcmf_fweh_event_name);
-
- /**
-  * brcmf_fweh_queue_event() - create and queue event.
-@@ -405,6 +406,7 @@ int brcmf_fweh_register(struct brcmf_pub *drvr, enum brcmf_fweh_event_code code,
- 		  brcmf_fweh_event_name(code));
- 	return 0;
- }
-+BRCMF_EXPORT_SYMBOL_GPL(brcmf_fweh_register);
-
- /**
-  * brcmf_fweh_unregister() - remove handler for given code.
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h
-index e6ac9fc341bc..7fe78d41f291 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h
-@@ -15,6 +15,8 @@ struct brcmf_fwvid_ops {
- 	void (*feat_attach)(struct brcmf_if *ifp);
- 	int (*set_sae_password)(struct brcmf_if *ifp, struct cfg80211_crypto_settings *crypto);
- 	int (*alloc_fweh_info)(struct brcmf_pub *drvr);
-+	void (*get_cfg80211_ops)(struct brcmf_pub *drvr);
-+	void (*register_event_handlers)(struct brcmf_pub *drvr);
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.h
+index eed439b84010..38a9138f1fd3 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.h
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.h
+@@ -337,7 +337,7 @@ struct brcmf_fweh_info {
+ 	struct list_head event_q;
+ 	uint event_mask_len;
+ 	u8 *event_mask;
+-	struct brcmf_fweh_event_map *event_map;
++	const struct brcmf_fweh_event_map *event_map;
+ 	uint num_event_codes;
+ 	brcmf_fweh_handler_t evt_handler[] __counted_by(num_event_codes);
  };
-
- /* exported functions */
-@@ -56,4 +58,20 @@ static inline int brcmf_fwvid_alloc_fweh_info(struct brcmf_pub *drvr)
- 	return drvr->vops->alloc_fweh_info(drvr);
- }
-
-+static inline void brcmf_fwvid_get_cfg80211_ops(struct brcmf_pub *drvr)
-+{
-+	if (!drvr->vops || !drvr->vops->get_cfg80211_ops)
-+		return;
-+
-+	drvr->vops->get_cfg80211_ops(drvr);
-+}
-+
-+static inline void brcmf_fwvid_register_event_handlers(struct brcmf_pub *drvr)
-+{
-+	if (!drvr->vops || !drvr->vops->register_event_handlers)
-+		return;
-+
-+	drvr->vops->register_event_handlers(drvr);
-+}
-+
- #endif /* FWVID_H_ */
 --
 2.43.5
 
