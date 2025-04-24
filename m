@@ -1,202 +1,113 @@
-Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E5221FE45D
-	for <brcm80211@lists.linux.dev>; Thu, 24 Apr 2025 12:16:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5233F27FD56
+	for <brcm80211@lists.linux.dev>; Thu, 24 Apr 2025 19:43:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745496990; cv=none; b=GP1G2V4wyzLOkNOe/kSqKExREWGNqF5Xd2aMqZHrLnSKNxl/5OqkujRn7i5zMh7htsldewxKnWAT+d7pMHXl2fPRoWcVD7fRXoDyTJ1/fVWo2gSnwIB+0G9RggakS5YsylHtShbtIjhTn9RzCbgT4Rq+iapujiUKY2ksAs8sgtU=
+	t=1745523798; cv=none; b=TNacPcFzj+ipfGTSPkwkDqu+FIGNyIfiV4dCWAYkwGsLCEJM9k4KjDDS00XcVD0X09YOH20/J5z5z3ctE4eRMRVnFdZv0kIZMKpYv3IZWHOGnISn0T4qc1sqVeosdNmLQxQfsjhfTpzfGPHfs+upBqgV3S5rXXMNXffaxCPR5/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745496990; c=relaxed/simple;
-	bh=RH4cxXtt7fI3mEpjHRbYYW1oLOn4FaBe3NxCiHWwyvo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Gj0oaJEYPNwbzqlL3FMU6dZSL42qKrOeiHHaIr9mJhNfh84pe2htQ1X8HmHu0rjDAI43RRE3PpsJtOz2Ed5Z/5vinrhn9OZcjLaLs1DK/ET9krmqTFHqr/TIUj8zQ6SNIoP+ODT7ZvG/1EIBf1w7jV7TcO86nnYpx/mjOIFriF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=faXx2YQ+; arc=none smtp.client-ip=209.85.210.45
+	s=arc-20240116; t=1745523798; c=relaxed/simple;
+	bh=ErYSPwOz6O1h3Xq7EONqPMLC/tP5M2SYPzNTnwZrGZ8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=YloDUoOIdeWf7F1IFvsAH8ciNk9QXYbH7O7hrgDPr7p8/6UxA+jWnZflvTJs3rxLdtCJwLPb3fHYirpfu2HCe4lHVXn1HEhi7ULuq4PS1r0QxjZFebuCYMp+5X2zkv4zJGawg7ZjcrjU1nNgUWxWUxfcEVxLmr0jajmrvlE+o/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=ELzjTtXk; arc=none smtp.client-ip=209.85.210.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="faXx2YQ+"
-Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-7304efb4b3bso383695a34.0
-        for <brcm80211@lists.linux.dev>; Thu, 24 Apr 2025 05:16:27 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="ELzjTtXk"
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-739be717eddso1089086b3a.2
+        for <brcm80211@lists.linux.dev>; Thu, 24 Apr 2025 12:43:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1745496987; x=1746101787; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=sNVMnodmIyeZPeLyfxnfC/latgBCcr61ac08k4+PpQ8=;
-        b=faXx2YQ+T10KcK4DL4NvkBQyJTlYjg1JOb4TeRwTMdS+TnnWa6FoGqcLZGHNk28IhC
-         TCDeI2ABKAmNyo1MC9CtUwwEWGzGfmRw2OgQKClPfyZocPhdGPanhn+23GJc5+93K4G2
-         uNnEnu/MGQevJD5aUWWmfj+c8fQ/5JK1PlnF4=
+        d=broadcom.com; s=google; t=1745523796; x=1746128596; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=09Nc3tIrHFo1lVvdAoNoDKUuFY4GjCcbKUCXS9iSSak=;
+        b=ELzjTtXkmjQ/bIoXMK4rf31KY2V7CBar9rfCGCkZeIxzAQrqJ3NbEtj5WI1ZnVqxBl
+         MtzXa+CvAMr0jybQelcvT2eIWiQJjSHp0dRUN1cQkUsoeGTArb4/p80v/NQIvuoRQ4Zv
+         K+CPQfrdpZ3ybXyMTd9tUo7xHDdVSBO5f4rPQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745496987; x=1746101787;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sNVMnodmIyeZPeLyfxnfC/latgBCcr61ac08k4+PpQ8=;
-        b=vB1iSiiV9WNiUac59JqyYVSKiuehmAb8zPHA+JD+S5GxAH1k+gi+ThCrdVym7XmL6/
-         JAF4HJXGXwjV3O6+KmAAeERHsF6B2AzCC2eqJ/roktWub4HBnyqx5ehMZp7tLj6Fc4iT
-         ee61oA2EbQv4Zve8LChfdq+FGNwR42UCphdf9bVP7zSZbafjtjoAMCeoxeEBdMJ6ZnVp
-         v8rmmco9Xuj6Yz/yHSSCkkgL+tVIHOvEc+WEIhWpkQ++Hq2Zj2D1JKSDAebsOKIn9v+P
-         Uti3pseGHcY544Cu7moT4yAgjou+L6DqFn0f5e7uPvXODSdEcxYpnwjaJs8tlYthClxB
-         juHg==
-X-Forwarded-Encrypted: i=1; AJvYcCUc2ND/4cGrUjpvHg+8Ii+ia8OnrWW0LmUyRMiryCTi5VHe034qDE+/rjjeETqOiujJfQC+i59Ysok=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzOCLfaMIHbz9F8smgZxzZuV7bNXqD3HYHlXtq8x3zCFgY+ul1C
-	kc7MFNr4siDsoZkT5WV7rH9c0twMu/cmIALcIzkKeD4Ba/ze5QlgGIxWEk/ghw==
-X-Gm-Gg: ASbGncvLC6AOLPINlPqCT5TAbA9mqiP4qOH5qfN/ASXtctgxTGx74XLepYUHuEv6pg4
-	sOcRd4D1ZlXE6Y3quyhiBy4CKxZYin6bpUdd+7grDKqfPqgtGcgxwhAia/ZBdQr1XGPzIlxQUcl
-	iGq9LoWIqPPGD3aELtIJkaQ7hY9UH12f0CVhiiZ8MUZBbCNoXJPYAjITGoO1n847RvZFPx+BueK
-	5WR8VTKynDYyZBwfe9iwPy/Fw2uJjWXO8YuLrI2jaA5W3Oz8AlF6xXtSmeXUC5hCbYIb7aiW6ov
-	ivZ7VIvFtLAR4lZiVrRA82vSdz4WoueL2t5qi/KiPGaacg/W/OMSGHclKMxUz1KrIPTA
-X-Google-Smtp-Source: AGHT+IHb2bB8QsP/OdEicmEEmA8u7IxMunRI8XtykHg9ervlxSioq3AHmPs5HwYVY2Pl893o8/RlMA==
-X-Received: by 2002:a05:6830:61c5:b0:72b:a465:d93c with SMTP id 46e09a7af769-7304dbad04bmr1653952a34.20.1745496987191;
-        Thu, 24 Apr 2025 05:16:27 -0700 (PDT)
-Received: from [10.176.68.112] ([192.19.176.227])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7304f1a408fsm215566a34.27.2025.04.24.05.16.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 24 Apr 2025 05:16:25 -0700 (PDT)
-Message-ID: <c4b1d809-59fc-4d65-a840-d35598e8dfe5@broadcom.com>
-Date: Thu, 24 Apr 2025 14:16:20 +0200
+        d=1e100.net; s=20230601; t=1745523796; x=1746128596;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=09Nc3tIrHFo1lVvdAoNoDKUuFY4GjCcbKUCXS9iSSak=;
+        b=XESmJbl9NPLZe4P5nSCCzMvbjEfjcn822lX9f7eum6oOvziipw84eyZX74Fj9JhiZf
+         nHrTyK5T3wEaX4kA4aJU0OtIvQ0JLTAAyWTa5jVNTBmrhiYBg0sspoU3nWQm51pvJxme
+         j4GRdqhQgAZDqvlANZtdDT3zQZc0x1VZx4B1Vua0UxoCrSPIfv3sCO237SUOXFma0WE5
+         zu98bo0INLobiswSMC2pK62TMLQkjY7RgA+vT7/o2v+Ir1wRztkB0F+WrGRRW6eTg1sd
+         tTH2XB5TJNuRQtr7WH+T15IJAGPln5i7JW55tu0I4hklJuZ/23vdtsu53YdvDnlzqezV
+         qEdg==
+X-Forwarded-Encrypted: i=1; AJvYcCUL/xI07/nPfj/9sqO9/g9C+YfRuZH3OxAfR6SjVsnk/GOowlHwlcg8I//QR0hPJl7LT21kZhJEyTg=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yy9SlD+jyNZrVsiiIpsowqBzBCK1wAL6YWnBjgtZkB4CpRzD2O8
+	pc1lS3Y1DXgoRMHvS2agRM8GrXFxbcpxrVE5nYj/poetOAI1C/1wb2LfuRXYkA==
+X-Gm-Gg: ASbGncuMcbgueoX/tdWdRbIw4JQXVkiLrX4XKGqANPYKezasLF0D11o4Oz2iObHlVcA
+	RqpIfF72gK5v1TeXdsY2zcSzbWRFKECZzMpdWoSiMsmhIMViQC3hvBdib5ye3VJnHD3J0zQNs/Y
+	TAntttMIgJTPOAvp/7HEZUOQLSpskBBpDPcya/z1fzBM00cogHpDPXjIptMd8H3NkhNZHVkUh2f
+	E8OA/hDnoauFmIsWjfgBF3xctDbjdYiH8HHClsmU/fo99h+VIM2gw8iyDJzFJujZwN8OUySsPjU
+	6Ihfxw1olhrIeQLZyY/RFvQLNR342W0AJCYj+fW574cpIpUav4fXVOZ+qxXOJmi7K0pP59Ia6QJ
+	g05VSzcI6FrLmOh5Vv8xU
+X-Google-Smtp-Source: AGHT+IFZ1fuNTtCsgLtZ8ahNt7OEXZnO7lMzp+NeH6ehKDBIiSJeErS3Cujn6shcO9NGgPkP+iuxIg==
+X-Received: by 2002:a05:6a00:8087:b0:736:a540:c9ad with SMTP id d2e1a72fcca58-73e24afd361mr5470215b3a.20.1745523796474;
+        Thu, 24 Apr 2025 12:43:16 -0700 (PDT)
+Received: from bld-bun-02.bun.broadcom.net ([192.19.176.227])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73e25a6aa52sm1863494b3a.94.2025.04.24.12.43.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Apr 2025 12:43:15 -0700 (PDT)
+From: Arend van Spriel <arend.vanspriel@broadcom.com>
+To: Johannes Berg <johannes@sipsolutions.net>
+Cc: linux-wireless@vger.kernel.org,
+	brcm80211@lists.linux.dev,
+	Arend van Spriel <arend.vanspriel@broadcom.com>
+Subject: [PATCH wireless-next 0/4] wifi: brcmfmac: external auth support for Infineon devices
+Date: Thu, 24 Apr 2025 21:42:35 +0200
+Message-ID: <20250424194239.2825830-1-arend.vanspriel@broadcom.com>
+X-Mailer: git-send-email 2.43.4
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] brcmfmac: support AP isolation to restrict reachability
- between stations
-To: Johannes Berg <johannes@sipsolutions.net>,
- Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
-Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
- wlan-kernel-dev-list@infineon.com
-References: <20250423175125.7233-1-gokulkumar.sivakumar@infineon.com>
- <b6a11804b93df6052d61a7069d7ed0bd74a972ad.camel@sipsolutions.net>
- <4a9c8323-5598-4783-90b2-ace84db22088@broadcom.com>
- <9e6febe76a55053972049b13b254474a82b26571.camel@sipsolutions.net>
- <2a6f7d20-2901-46d6-a16a-b977ff0a3724@broadcom.com>
- <29fa5ea7f4cc177bed823ec3489d610e1d69a08f.camel@sipsolutions.net>
-Content-Language: en-US
-From: Arend van Spriel <arend.vanspriel@broadcom.com>
-Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
- 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
-In-Reply-To: <29fa5ea7f4cc177bed823ec3489d610e1d69a08f.camel@sipsolutions.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+
+The Infineon chips support external authentication in station mode when
+firmware advertises it. The feature that must be present in firmware is
+sae_ext. This has been ported from Infineon repository and makes use of
+the per-vendor framework. It showcases how things can be organized per
+vendor to provide the functionality.
+
+Unfortunately, I have no Infineon device and firmware that makes use of
+external auth. This series was submitted earlier as RFT and it was tested
+successfully by James Prestwood with iwd after adding a fourth patch to
+the series. I would not mind if more testing is done with this series
+like using wpa_supplicant instead of iwd.
+
+Arend van Spriel (3):
+  wifi: brcmfmac: support per-vendor cfg80211 callbacks and firmware
+    events
+  wifi: brcmfmac: make per-vendor event map const
+  wifi: brcmfmac: cyw: support external SAE authentication in station
+    mode
+
+Ting-Ying Li (1):
+  wifi: brcmfmac: Fix structure size for WPA3 external SAE
+
+ .../broadcom/brcm80211/brcmfmac/cfg80211.c    |  44 ++-
+ .../broadcom/brcm80211/brcmfmac/cfg80211.h    |  25 ++
+ .../broadcom/brcm80211/brcmfmac/common.c      |   1 +
+ .../broadcom/brcm80211/brcmfmac/core.c        |   2 +
+ .../broadcom/brcm80211/brcmfmac/cyw/core.c    | 308 ++++++++++++++++++
+ .../brcm80211/brcmfmac/cyw/fwil_types.h       |  85 +++++
+ .../broadcom/brcm80211/brcmfmac/feature.c     |   3 +-
+ .../broadcom/brcm80211/brcmfmac/feature.h     |   4 +-
+ .../broadcom/brcm80211/brcmfmac/fweh.c        |   7 +-
+ .../broadcom/brcm80211/brcmfmac/fweh.h        |   8 +-
+ .../broadcom/brcm80211/brcmfmac/fwvid.h       |  29 ++
+ 11 files changed, 493 insertions(+), 23 deletions(-)
+ create mode 100644 drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/fwil_types.h
 
 
+base-commit: f600832794c91d7021d7337104734246b02a2b86
+--
+2.43.5
 
-On 4/24/2025 1:46 PM, Johannes Berg wrote:
-> On Thu, 2025-04-24 at 13:36 +0200, Arend van Spriel wrote:
->> On 4/24/2025 12:22 PM, Johannes Berg wrote:
->>> On Thu, 2025-04-24 at 11:50 +0200, Arend van Spriel wrote:
->>>>
->>>> Looked at other drivers implementing this callback and here are the results:
->>>>
->>>> [wil6210] wil_cfg80211_change_bss(): does exactly the same thing.
->>>> [wilc1000] change_bss(): worse! it accepts everything and does nothing.
->>>> [rtl8723bs] cfg80211_rtw_change_bss(): same. just an empty callback.
->>>
->>> OK, though I guess other drivers being bad doesn't mean this one should
->>> be :)
->>
->> Sure. I am on your team in this. Can you recommend a plan of attack
->> here? Should we add a mechanism to expose what BSS parameter changes the
->> driver can handle similar to what is used for struct
->> station_info::bss_params?
-> 
-> I don't even know off the top of my head what's there and what isn't,
-> just thought the code looked odd. I guess mac80211 just mostly supports
-> all of them anyway.
-> 
-> Today the change is simply rejected by cfg80211 with -EOPNOTSUPP:
-> 
-> static int nl80211_set_bss(struct sk_buff *skb, struct genl_info *info)
-> {
-> ...
->          if (!rdev->ops->change_bss)
->                  return -EOPNOTSUPP;
-> 
-> 
-> why not keep doing that for everything but ap_isolate?
-> 
-> Oh, I see what you mean, there's no way to keep that updated since you'd
-> have to check each value for being changed and reject that ...
-> 
-> Hmm, yeah, that's not great. I guess ideally then we'd have a bitmap of
-> what changed, and what the driver can support?
-> 
-> enum {
-> 	CFG80211_BSS_PARAM_CHANGE_CTS_PROT	= BIT(0),
-> 	CFG80211_BSS_PARAM_CHANGE_SHORT_PRE	= BIT(1),
-> 	CFG80211_BSS_PARAM_CHANGE_SHORT_SLOT	= BIT(2),
-> ...
-> 	CFG80211_BSS_PARAM_CHANGE_AP_ISOLATE	= BIT(N),
-> ...
-> };
-> 
-> and
-> 
-> struct bss_parameters {
-> 	int link_id;
-> 	u32 changed;
-> 	...
-> }
-> 
-> and then this driver can just do
-> 
-> 	if (params->changed & ~CFG80211_BSS_PARAM_CHANGE_AP_ISOLATE)
-> 		return -EOPNOTSUPP;
-> 
-> or so?
-> 
-> 
-> Not sure how that'd be related to station_info::bss_param, that's just
-> output from the driver.
-
-It kinda looked similar. At least there is a bitmap in place for it that 
-is a subset of the enum you listed above. I was wondering if we should 
-convey the bitmask to usesr-space beforehand in struct wiphy.
-
-Gr. AvS
