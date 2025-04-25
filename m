@@ -1,116 +1,114 @@
-Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.zytor.com (terminus.zytor.com [198.137.202.136])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7914623BD01
-	for <brcm80211@lists.linux.dev>; Fri, 25 Apr 2025 08:55:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58FF617C21C
+	for <brcm80211@lists.linux.dev>; Fri, 25 Apr 2025 19:35:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.136
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745571340; cv=none; b=JEzz8WHB+o3dWB8J+SCEM/ZARywXl/BxhtsNjWCOyEQmN8wgIuJIGJe7pfcDPT//AlyYDk+g5gZm/kKFf5NRttkqsWXOda0xvau+eysmYPbaIDOtahl7DAySvdFJdQWKnCWd2pvJuuI2ADZxaNpX/18pr3Y6xX5rzq/aqhjJMZY=
+	t=1745609720; cv=none; b=OiAdHXAnVVxahKdBwhmktorX0E/JJj7tRq3LFspWBA9uM3avx5nghhylKguhlnFg+PSSZpXJLEdt6a6ludyUDc9Kbz4ZTPhF9xbqyH6CwkRd/zzqVnn71LRIT92Ioy0Hl5JghxmlluIlov5EbI0RE+bruJqPtE/0zo0DQrKC2Og=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745571340; c=relaxed/simple;
-	bh=yO1N7q1nXmdEytuVzH/H9GOfUp8zohzbYVr7ticuj1M=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s5UUk4wWqjtBoSAvRGln6kZ9vcmca4vJBA1xdZeUFRZrcmurr1CbmL6mZ6XVFe7QdAip+rA8hwxWnIlFBJS86BGPtYDFsDWmjpNsrxKxX+DZFeQrGy8kXLgTbnybRcDy4N20waL9lTRyz+8A/JDEFHrZQGn1VYUZiXFyYK/pj2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=Bi+xE+KC; arc=none smtp.client-ip=209.85.215.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+	s=arc-20240116; t=1745609720; c=relaxed/simple;
+	bh=wjYY8hD1aR6U/hYht1xTDSyyUul+5U2cO03JezuRPjo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=FMlxiJEvOpsk34s4096R5EpnGAPG98aNj5rLV707wbQjT1oFc8hBeTsWGYfWMdjO45j777Q38cX372Y1+V8E6vza5OQsUg1VgZKJMBF0fBfJAl6jqlZcta9Q469OUk+hLmwSBnCTAuFtNv3DC7MUUG+9ulm+NoTsc6qsEYiHlB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zytor.com; spf=pass smtp.mailfrom=zytor.com; dkim=pass (2048-bit key) header.d=zytor.com header.i=@zytor.com header.b=C+Rdr/oo; arc=none smtp.client-ip=198.137.202.136
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zytor.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zytor.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="Bi+xE+KC"
-Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-b061a06f127so1291377a12.2
-        for <brcm80211@lists.linux.dev>; Fri, 25 Apr 2025 01:55:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1745571338; x=1746176138; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OExy8sLSrgvVCUmAwXcFuSjWTxfcCVAuIO4FJVxyYMQ=;
-        b=Bi+xE+KC3x3EFM2Kc7vHIScXkCgglddj54M6855gpD+Mkzu7csKMU2ZTbkSPgOzB4M
-         aFd7IhLn1A9zrgNwP/MYEIP3vAwyeQQtmgcCv4wNEQHshTbsKh4sjuKd1h8gdgk0r8bR
-         9t4KzJANg7GWIzJsz65aTw2YI0bQu/spnCRW4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745571338; x=1746176138;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=OExy8sLSrgvVCUmAwXcFuSjWTxfcCVAuIO4FJVxyYMQ=;
-        b=Wf4/MVbxum416HXLRfw47o9pbZFmcQ0t0KeziN4zZ4sMcD8VgdCyeYlSLIp1VqthNC
-         pxZwEJ6eEZ/3UpmLJ78X+ZTcq+gLQeVKIh0hx/3FwvpDIX3+AM4r/do4GbcW3qn3TbKE
-         aL0liJVBO8Owq3+G23V1grAaAzHXqhfY2qJyBMuWSUf8ExPlQv2tMZnmfVdIEP90D84o
-         jY1gSeZvCnmY4ArDzatA/90cYuw/GoC0IzGpS3NXgPJ06+iabI+ojnWK17QYRV0Qlqpp
-         55sv91RaGn4L8lgDcuJhmLySw70nUdur6D3EYv3A4biz1oaongu3Fyx/qopLE6b2tfrb
-         m+fA==
-X-Forwarded-Encrypted: i=1; AJvYcCXcqhrmGNSrdHYj3UxmFnhxw2xLZrs10o6uCYkwxakF9OdY+q68vVD8YI/rmK9A4kN0aLnx3bwHDLQ=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyBe4lYlH6EsIqCNa2vOtZ3f+pT1jwISX732tFbTYWc9krvAp8G
-	7M4vqTHLTF1GMsAIHUie+aH8TGrnORJuFYwTEiNctJ02ayOfkb7igfe40BQC0A==
-X-Gm-Gg: ASbGncuZtZNWC3x+SGGUUQqN4NbvzBb14GrihS1yvttkc9n4A0TuLyJF5/SfxT8g5ho
-	/t+8nrKcuitahRd5X7cEdxkVDATYxBGHefvKizAMP9lifU2/y53sdn8KMTBGjyBPnx2NXcZtwZc
-	HwMg5fhL9gtvLIAMd/rL/JmSXPHVfajzFzNOh6E35b8iDjaTn1g4gLpIwGGdZ9ZoVrY68+RBWiE
-	6VqxflOVlNV9oVCdsoXHlv3DUsxt453I6tNnacD2JwytjRn+q20VG/uPfOnszwPVkEbhMABvOI/
-	EXExpHLEfHg6p789h/6fKZSf7D/2NcTxiBkcKVph3LUt5yfN/OkpVVaC6JOXe0MVL+ng6pSDiKe
-	km8FOvboYdf0kb2Y4OAQFd2Gd/TEOcA8=
-X-Google-Smtp-Source: AGHT+IGy9424wFQXc6q76hRX5u3bEVHS+OQ7YL5gz6P4GiK8kBGxJsLEf/ZcJDGl3WryIX9/E6QsUQ==
-X-Received: by 2002:a17:90b:394d:b0:2ff:5ed8:83d0 with SMTP id 98e67ed59e1d1-309f7ddd554mr2845768a91.16.1745571337774;
-        Fri, 25 Apr 2025 01:55:37 -0700 (PDT)
-Received: from bld-bun-02.bun.broadcom.net ([192.19.176.227])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22db5221943sm26988875ad.249.2025.04.25.01.55.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Apr 2025 01:55:37 -0700 (PDT)
-From: Arend van Spriel <arend.vanspriel@broadcom.com>
-To: Johannes Berg <johannes@sipsolutions.net>
-Cc: linux-wireless@vger.kernel.org,
-	brcm80211@lists.linux.dev,
-	Ting-Ying Li <tingying.li@cypress.com>,
-	Ting-Ying Li <tingying.li@infineon.com>,
-	James Prestwood <prestwoj@gmail.com>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>
-Subject: [PATCH wireless-next v3 4/4] wifi: brcmfmac: Fix structure size for WPA3 external SAE
-Date: Fri, 25 Apr 2025 10:55:19 +0200
-Message-ID: <20250425085519.492267-5-arend.vanspriel@broadcom.com>
-X-Mailer: git-send-email 2.43.4
-In-Reply-To: <20250425085519.492267-1-arend.vanspriel@broadcom.com>
-References: <20250425085519.492267-1-arend.vanspriel@broadcom.com>
+	dkim=pass (2048-bit key) header.d=zytor.com header.i=@zytor.com header.b="C+Rdr/oo"
+Received: from [IPV6:2601:646:8081:1f93:3f9b:137e:d2cb:73f7] ([IPv6:2601:646:8081:1f93:3f9b:137e:d2cb:73f7])
+	(authenticated bits=0)
+	by mail.zytor.com (8.18.1/8.17.1) with ESMTPSA id 53PJXQqR3199422
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NO);
+	Fri, 25 Apr 2025 12:33:27 -0700
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.zytor.com 53PJXQqR3199422
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zytor.com;
+	s=2025042001; t=1745609615;
+	bh=OLByDl2k8QS7+vMeXGAQllfp+4VYlTCCje7Ox6Pfa4g=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=C+Rdr/oohHcjiYl3k1s0a/jc7dixN5R0Mv5Px2j8kDdwJbPFLv4mJw8by+4Oto+F1
+	 tveW9WpgN8ttlpQLpdXcxTyaag9b/7TVjdH+TFVTrbHGQKwFJgak240662L863NwH8
+	 vgd5rhQsraf4buOHAZcbX5elWx80ZG9egeLnGj+ScCeWi6QGr1XXyAHAVnHwSmGqjn
+	 GkUO/NnNKAj8Q2mW/Ez/Vn8NVAPQB+fwhPjMvNjg1RQgr6hZA7HmxZl5MiRxUlxIY9
+	 uDj0XpVrhXq3zSB+OYJgYqNwOTX2giqyzWvO0pM/qCL4rFHYBzL4YJWj3wXsa2EaH3
+	 7hq16GNhLhdyg==
+Message-ID: <8571fd6f-4e71-4a6d-b2e8-16d9d72fa56e@zytor.com>
+Date: Fri, 25 Apr 2025 12:33:21 -0700
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 00/13] Introduce parity_odd() and refactor redundant
+ parity code
+To: Kuan-Wei Chiu <visitorckw@gmail.com>
+Cc: Yury Norov <yury.norov@gmail.com>, tglx@linutronix.de, mingo@redhat.com,
+        bp@alien8.de, dave.hansen@linux.intel.com, x86@kernel.org,
+        jk@ozlabs.org, joel@jms.id.au, eajames@linux.ibm.com,
+        andrzej.hajda@intel.com, neil.armstrong@linaro.org, rfoss@kernel.org,
+        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        tzimmermann@suse.de, airlied@gmail.com, simona@ffwll.ch,
+        dmitry.torokhov@gmail.com, mchehab@kernel.org, awalls@md.metrocast.net,
+        hverkuil@xs4all.nl, miquel.raynal@bootlin.com, richard@nod.at,
+        vigneshr@ti.com, louis.peens@corigine.com, andrew+netdev@lunn.ch,
+        davem@davemloft.net, edumazet@google.com, pabeni@redhat.com,
+        parthiban.veerasooran@microchip.com, arend.vanspriel@broadcom.com,
+        johannes@sipsolutions.net, gregkh@linuxfoundation.org,
+        jirislaby@kernel.org, akpm@linux-foundation.org, jdelvare@suse.com,
+        linux@roeck-us.net, alexandre.belloni@bootlin.com, pgaj@cadence.com,
+        alistair@popple.id.au, linux@rasmusvillemoes.dk,
+        Laurent.pinchart@ideasonboard.com, jonas@kwiboo.se,
+        jernej.skrabec@gmail.com, kuba@kernel.org,
+        linux-kernel@vger.kernel.org, linux-fsi@lists.ozlabs.org,
+        dri-devel@lists.freedesktop.org, linux-input@vger.kernel.org,
+        linux-media@vger.kernel.org, linux-mtd@lists.infradead.org,
+        oss-drivers@corigine.com, netdev@vger.kernel.org,
+        linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
+        brcm80211-dev-list.pdl@broadcom.com, linux-serial@vger.kernel.org,
+        bpf@vger.kernel.org, jserv@ccns.ncku.edu.tw, Frank.Li@nxp.com,
+        linux-hwmon@vger.kernel.org, linux-i3c@lists.infradead.org,
+        david.laight.linux@gmail.com, andrew.cooper3@citrix.com,
+        Yu-Chun Lin <eleanor15x@gmail.com>
+References: <20250409154356.423512-1-visitorckw@gmail.com>
+ <Z_amQp3gK5Dm8Qz3@yury> <Z/a5Qh/OeLT8JBS4@visitorckw-System-Product-Name>
+ <Z_a9YpE46Xf8581l@yury> <e97a83a2-dabd-4dc3-b69a-840ca17d70b5@zytor.com>
+ <Z/lEkDwefWvw4ZA3@visitorckw-System-Product-Name>
+Content-Language: en-US
+From: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <Z/lEkDwefWvw4ZA3@visitorckw-System-Product-Name>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Ting-Ying Li <tingying.li@cypress.com>
+On 4/11/25 09:34, Kuan-Wei Chiu wrote:
+>>
+>> In either case, instead of packing the cascade into one function, make good
+>> use of it.
+>>
+>> In the latter case, __builtin_constant_p() isn't necessary as it puts the
+>> onus on the architecture to separate out const and non-const cases, if it
+>> matters -- which it doesn't if the architecture simply wants to use
+>> __builtin_parity:
+>>
+>> #define parity8(x)  ((bool) __builtin_parity((u8)(x)))
+>> #define parity16(x) ((bool) __builtin_parity((u16)(x)))
+>> #define parity32(x) ((bool) __builtin_parity((u32)(x)))
+>> #define parity64(x) ((bool) __builtin_parityll((u64)(x)))
+>>
+>> As stated before, I don't really see that the parity function itself would
+>> be very suitable for a generic helper, but if it were to, then using the
+>> "standard" macro construct for it would seem to be the better option.
+>>
+>> (And I would be very much in favor of not open-coding the helper everywhere
+>> but to macroize it; effectively creating a C++ template equivalent. It is
+>> out of scope for this project, though.)
+>>
+> IIUC, you prefer using the parity8/16/32/64() interface with
+> __builtin_parity(), regardless of whether there are users on the hot
+> path?
 
-Add pmkid parameter in "brcmf_auth_req_status_le" structure to
-align the buffer size defined in firmware "wl_auth_req_status"
-structure.
+As a per-architecture opt-in, yes.
 
-Signed-off-by: Ting-Ying Li <tingying.li@infineon.com>
-[arend: adapted path to apply to per-vendor variant]
-[arend: added kerneldoc for new struct field]
-Tested-by: James Prestwood <prestwoj@gmail.com>
-Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
----
- .../net/wireless/broadcom/brcm80211/brcmfmac/cyw/fwil_types.h   | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/fwil_types.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/fwil_types.h
-index a3243b940f10..08c69142495a 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/fwil_types.h
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/fwil_types.h
-@@ -48,12 +48,14 @@ struct brcmf_eventmsgs_ext {
-  * @peer_mac: peer MAC address
-  * @ssid_len: length of ssid
-  * @ssid: ssid characters
-+ * @pmkid: PMKSA identifier
-  */
- struct brcmf_auth_req_status_le {
- 	__le16 flags;
- 	u8 peer_mac[ETH_ALEN];
- 	__le32 ssid_len;
- 	u8 ssid[IEEE80211_MAX_SSID_LEN];
-+	u8 pmkid[WLAN_PMKID_LEN];
- };
- 
- /**
--- 
-2.43.5
+	-hpa
 
