@@ -1,86 +1,113 @@
-Received: from sipsolutions.net (s3.sipsolutions.net [168.119.38.16])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D67F235348;
-	Fri, 25 Apr 2025 08:40:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=168.119.38.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A31961FE46D
+	for <brcm80211@lists.linux.dev>; Fri, 25 Apr 2025 08:45:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745570440; cv=none; b=sHaanb/xzklUPOfNpbPRTX+xjUjARvcwoil18Bg/0TGUzZmQdAnm7+u6ZwIDiieJpODiV6r5jxWMHI9paX7ED01uKvuHRCfcltQnDIhK8iFARoOk79zF/h0GmTsxklFw+hkvYQQsfe0GHE1xExBx3E04f9jbLruVYLIb9bUus38=
+	t=1745570721; cv=none; b=lmk12+lqjOxeh9IzSVMbMhWYAtFQmz6UQVBofeznCN8VyithuxqL2/VkUfeYir7NS9mYfjY7xxeUw+7j768PbnFWHbhz2JpOTDHUC0zkKCx+zhh32i+9WorYqBlH3dPN52nJ2CMUgb8gmDIGwh+AK5YIjFY8/i+wIzOpXQeDNL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745570440; c=relaxed/simple;
-	bh=x7suQfU8+JQR5c33reO5qChGwL2ucUnxvh4Mk9tBdUg=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=iaXXNjeFf76nHD42E8Va7j5Rpk+RHLyR3SpzcexjXP2aI0GVtxYQJmHRMci7FHz8xW2dwQ98zdj1gBjyBYrkUSXFBb9BGAbNBz1wGQwPl4Vnwe2uLyCC1gAKTqsBw7yS/VEyDXyos4WtRTkZSjChIib7MRZR93Anj+32L54K0zE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sipsolutions.net; spf=pass smtp.mailfrom=sipsolutions.net; dkim=pass (2048-bit key) header.d=sipsolutions.net header.i=@sipsolutions.net header.b=lLWbeXS/; arc=none smtp.client-ip=168.119.38.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sipsolutions.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sipsolutions.net
+	s=arc-20240116; t=1745570721; c=relaxed/simple;
+	bh=CZqj5BJ+F9nGfuUzehgz/29o8eO2JwnSjCkRPFzqBFU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=JATirzKyoVtWhXRYxW9GgI55ksosxttNYXOin6PdH2R/wdXOD5/YPKIGdhihNaZ0EQjB8vtqv5jYDC/vnKnqsxrOheXX7ccZe/1wW6KvA1sqe5sq5h7nJjIDZ5jjmhtqdOSukNb4vh493TyS+K8dVMnWjUELB+S+TTCIDd4IAV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=ck/dWddY; arc=none smtp.client-ip=209.85.214.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sipsolutions.net header.i=@sipsolutions.net header.b="lLWbeXS/"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=sipsolutions.net; s=mail; h=MIME-Version:Content-Transfer-Encoding:
-	Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-To:
-	Resent-Cc:Resent-Message-ID; bh=/VUSIghyqrguqoDHIl9mme3Sw4KuqhQY8/xEAAaYuPg=;
-	t=1745570438; x=1746780038; b=lLWbeXS/vHcZAqHSf2pBLZn/rC7toCfvc+TPgkl9a2lNsLU
-	y9Xzi76gjmH3X6eIyIE/E/sc1l9ylRYWLKS6S2DTv6yT23hykEZ9vrCwRxQNRjMBGulsPUFClKdsD
-	+3vvwrZTEE0eBbYo1x1otPpU7f9FOneGbCJxlK8e6kjX/3z+lCov2SfOSCvfGYTJxltW9KChR7WHv
-	dGrCiKgc4uB/wpZGzeS7AgOs1cCrpLunPOAVQPQmTd233AoAT89LoHV9eMdEHFyIphoycqaNH6vW3
-	+0KqBE1VT0WaDhNE1Gix43ArLKUIj3YS12ohdLmPNIg+PQMZ2VzYJAxEzRYoM2hg==;
-Received: by sipsolutions.net with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-	(Exim 4.98.1)
-	(envelope-from <johannes@sipsolutions.net>)
-	id 1u8Ebr-000000019XY-1DJM;
-	Fri, 25 Apr 2025 10:40:35 +0200
-Message-ID: <44916ff608ee53238d79e57ee31fcbf86dfb672d.camel@sipsolutions.net>
-Subject: Re: [PATCH wireless-next 4/4] wifi: brcmfmac: Fix structure size
- for WPA3 external SAE
-From: Johannes Berg <johannes@sipsolutions.net>
-To: Arend van Spriel <arend.vanspriel@broadcom.com>
-Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev, Ting-Ying Li
-	 <tingying.li@cypress.com>, Ting-Ying Li <tingying.li@infineon.com>, James
- Prestwood <prestwoj@gmail.com>
-Date: Fri, 25 Apr 2025 10:40:34 +0200
-In-Reply-To: <850b42ab-a637-4dd9-af18-e12523983ded@broadcom.com>
-References: <20250424194239.2825830-1-arend.vanspriel@broadcom.com>
-	 <20250424194239.2825830-5-arend.vanspriel@broadcom.com>
-	 <850b42ab-a637-4dd9-af18-e12523983ded@broadcom.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.54.3 (3.54.3-1.fc41) 
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="ck/dWddY"
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-22c33ac23edso18876295ad.0
+        for <brcm80211@lists.linux.dev>; Fri, 25 Apr 2025 01:45:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google; t=1745570719; x=1746175519; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=PLk1imrVTtrpJbWqDoaFAq9AHbfHxqAvYTRp4hVRDXA=;
+        b=ck/dWddY4/S4Uz1+/xyjPk9/RZBpWDLhLjQw/uQIUlHR9PzAKRnHT29Y50sNAxuyt5
+         4MdLP2o798sPupNh4moMxcCwdEyzlh3BdZpmnExv/TQ/DIYNmyPDhbqQuUc/61ZaUQmr
+         WcXEYa4n7johY/J9KGLERiHetSSPPQLz+dT9M=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745570719; x=1746175519;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PLk1imrVTtrpJbWqDoaFAq9AHbfHxqAvYTRp4hVRDXA=;
+        b=uvNP5NjuQa+rCjEPnW95ZObxm4diePqRf3m7AM0zux8aRXAEHqYyJ6evyXhUo7bDmv
+         5kW2Bc3tFi59S8WR6tqxo+eLP9G1C1IK9ULMwuAGzNkYiwECiUb17uVmQYkGOJOMAEIO
+         cCdGg7D/C0yQB3PgvPKs67MZj3jX3r0IlnXp86FaY+/Vm5TpU641Pimz2/MLL2WS1RgV
+         30y/kftULRojTVFzGGF/3bkBzaDuSKbK16lRvMelK99iTvnKQGALdmMBWjGIkG7eaqSl
+         NdnK17GEMjVfRxKRu4imMc0hENwPrklpMWTQ1V95VaFmAuWJiUZv9esL9fBfm7HWAjQz
+         rdrQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVdxUy1VyslNAleXoU+MXTUIzczA8O865OmAFXvVrHyB29fET6djTOn81RD7BDqB39qse+1DI7p1h8=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwRZhZ1ICSPZdZveMSac8f+2ZG+QepZKY2eNu7qpld63RgQQBvw
+	hEb4QBxB6OjdjkB0Tspk0PAzjdrh61OxFW43WP1Gvg+NaR6ibN3kao77LLrYRA==
+X-Gm-Gg: ASbGncv3WksuJDIlnUXDZOW9UuCXhVTZyS3+pxabT/7R48QQKqBAU2hU4sSIUH7PaN7
+	KsO9NQPv/Yb4FQy6LAaAnlg+bxiPHJfl2VVYmM1Hhe4wa+7GMJLwAPGDJ8Syh6lYprqnJ/xMzm3
+	PUdJyxhQjAiNarFfLkJMFG7ogYZ58XU81rb3ofn1z2PJ0XBet0pHxRuhLPVekhy+2nhbgtM+6Wc
+	sdfb6NWZxOugqQkWBtE6P2BXzVVCgDQVITu/bQ3FUGclvgJ+goF1fUQUELe1s5vXCkNxClTSRWC
+	L4DwMx2G5Aew9DWY8Gg86yzaQ/sM+7YblPGEhrwzX78zqb3zO7TWrFA2Ukhb4dhITPhR76p98/t
+	ILYSGc/Nn29+/Qok4/WJI
+X-Google-Smtp-Source: AGHT+IHwtmtjweaqahg73jVCjpaBc/fqgd26dbxeV6NuU5ixsA45gOD/ynPh07Q3+NtHtBMv76H8gw==
+X-Received: by 2002:a17:903:1aaf:b0:223:4bd6:3863 with SMTP id d9443c01a7336-22dbf4d51aamr24579845ad.10.1745570718748;
+        Fri, 25 Apr 2025 01:45:18 -0700 (PDT)
+Received: from bld-bun-02.bun.broadcom.net ([192.19.176.227])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22db5102ddcsm26883665ad.190.2025.04.25.01.45.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Apr 2025 01:45:18 -0700 (PDT)
+From: Arend van Spriel <arend.vanspriel@broadcom.com>
+To: Johannes Berg <johannes@sipsolutions.net>
+Cc: linux-wireless@vger.kernel.org,
+	brcm80211@lists.linux.dev,
+	Arend van Spriel <arend.vanspriel@broadcom.com>
+Subject: [PATCH wireless-next v2 0/4] wifi: brcmfmac: external auth support for Infineon devices
+Date: Fri, 25 Apr 2025 10:45:01 +0200
+Message-ID: <20250425084505.491631-1-arend.vanspriel@broadcom.com>
+X-Mailer: git-send-email 2.43.4
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-malware-bazaar: not-scanned
+Content-Transfer-Encoding: 8bit
 
-On Fri, 2025-04-25 at 09:57 +0200, Arend van Spriel wrote:
-> On 4/24/2025 9:42 PM, Arend van Spriel wrote:
-> > From: Ting-Ying Li <tingying.li@cypress.com>
-> >=20
-> > Add pmkid parameter in "brcmf_auth_req_status_le" structure to
-> > align the buffer size defined in firmware "wl_auth_req_status"
-> > structure.
-> >=20
-> > Signed-off-by: Ting-Ying Li <tingying.li@infineon.com>
->=20
-> Hi Johannes,
->=20
-> checkpatch issued a warning about From: and SoB: difference, but how to=
-=20
-> resolve it. Both emails are stale so it does not matter, but I lean=20
-> towards using the infineon email address as that is likely the most=20
-> recent identity used given the company history. Please advice.
+The Infineon chips support external authentication in station mode when
+firmware advertises it. The feature that must be present in firmware is
+sae_ext. This has been ported from Infineon repository and makes use of
+the per-vendor framework. It showcases how things can be organized per
+vendor to provide the functionality.
 
-I think you should probably keep whatever they used when they posted it.
+Unfortunately, I have no Infineon device and firmware that makes use of
+external auth. This series was submitted earlier as RFT and it was tested
+successfully by James Prestwood with iwd after adding a fourth patch to
+the series. I would not mind if more testing is done with this series
+like using wpa_supplicant instead of iwd.
 
-> > +	u8 pmkid[WLAN_PMKID_LEN];
->=20
-> Sure like the wifibot checks. Do run checkpatch and compile test for=20
-> every patch before sending it out, but no kerneldoc. Will need to add=20
-> kerneldoc for this struct field.
+Arend van Spriel (3):
+  wifi: brcmfmac: support per-vendor cfg80211 callbacks and firmware
+    events
+  wifi: brcmfmac: make per-vendor event map const
+  wifi: brcmfmac: cyw: support external SAE authentication in station
+    mode
 
-Thanks :)
+Ting-Ying Li (1):
+  wifi: brcmfmac: Fix structure size for WPA3 external SAE
 
-johannes
+ .../broadcom/brcm80211/brcmfmac/cfg80211.c    |  44 ++-
+ .../broadcom/brcm80211/brcmfmac/cfg80211.h    |  25 ++
+ .../broadcom/brcm80211/brcmfmac/common.c      |   1 +
+ .../broadcom/brcm80211/brcmfmac/core.c        |   2 +
+ .../broadcom/brcm80211/brcmfmac/cyw/core.c    | 308 ++++++++++++++++++
+ .../brcm80211/brcmfmac/cyw/fwil_types.h       |  87 +++++
+ .../broadcom/brcm80211/brcmfmac/feature.c     |   3 +-
+ .../broadcom/brcm80211/brcmfmac/feature.h     |   4 +-
+ .../broadcom/brcm80211/brcmfmac/fweh.c        |   7 +-
+ .../broadcom/brcm80211/brcmfmac/fweh.h        |   8 +-
+ .../broadcom/brcm80211/brcmfmac/fwvid.h       |  29 ++
+ 11 files changed, 495 insertions(+), 23 deletions(-)
+ create mode 100644 drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/fwil_types.h
+
+
+base-commit: f600832794c91d7021d7337104734246b02a2b86
+-- 
+2.43.5
+
