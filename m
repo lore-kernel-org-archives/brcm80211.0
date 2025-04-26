@@ -1,114 +1,206 @@
-Received: from mail.zytor.com (terminus.zytor.com [198.137.202.136])
+Received: from smtp11.infineon.com (smtp11.infineon.com [217.10.52.105])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58FF617C21C
-	for <brcm80211@lists.linux.dev>; Fri, 25 Apr 2025 19:35:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.136
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B472D2253B0
+	for <brcm80211@lists.linux.dev>; Sat, 26 Apr 2025 07:53:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.10.52.105
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745609720; cv=none; b=OiAdHXAnVVxahKdBwhmktorX0E/JJj7tRq3LFspWBA9uM3avx5nghhylKguhlnFg+PSSZpXJLEdt6a6ludyUDc9Kbz4ZTPhF9xbqyH6CwkRd/zzqVnn71LRIT92Ioy0Hl5JghxmlluIlov5EbI0RE+bruJqPtE/0zo0DQrKC2Og=
+	t=1745653997; cv=none; b=tf7nhlTJnLd7jqdBDHFlZEtHmHkiNofq/w4xqlpWqkxqX1G6yYS1Vtck0ie/bET/P6MRO0+ZBYj5hIXI+PVIRoLXberBPqeiwX5F2hNtGjvv8UalR/Brrmixd/syviS8ou3KmRemXgVpVkeEFllORpGWTRlzLLS5tWoqAam1E0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745609720; c=relaxed/simple;
-	bh=wjYY8hD1aR6U/hYht1xTDSyyUul+5U2cO03JezuRPjo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FMlxiJEvOpsk34s4096R5EpnGAPG98aNj5rLV707wbQjT1oFc8hBeTsWGYfWMdjO45j777Q38cX372Y1+V8E6vza5OQsUg1VgZKJMBF0fBfJAl6jqlZcta9Q469OUk+hLmwSBnCTAuFtNv3DC7MUUG+9ulm+NoTsc6qsEYiHlB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zytor.com; spf=pass smtp.mailfrom=zytor.com; dkim=pass (2048-bit key) header.d=zytor.com header.i=@zytor.com header.b=C+Rdr/oo; arc=none smtp.client-ip=198.137.202.136
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zytor.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zytor.com
+	s=arc-20240116; t=1745653997; c=relaxed/simple;
+	bh=sV8hgg4kXMgsfFNYcf/JrTGuFAAxfaYLCRjp/wi1IpQ=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=M7DL+EXf+LkOHCcdJN7OZvVPW/BFTQqMHTo/zUVy2R7s9QdaTKfEVsbfzm5G+cVzBp/mowOUWRLzW9uzGAa9kupqGZ6mSDjLsSwpFuCQVHIZofNx4teoW9PHKufXCizPyi44GvJR/4SvJt1liPiAcZhwfcdQLzLtOTszHAbqric=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infineon.com; spf=pass smtp.mailfrom=infineon.com; dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b=THN9/s+p; arc=none smtp.client-ip=217.10.52.105
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infineon.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infineon.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zytor.com header.i=@zytor.com header.b="C+Rdr/oo"
-Received: from [IPV6:2601:646:8081:1f93:3f9b:137e:d2cb:73f7] ([IPv6:2601:646:8081:1f93:3f9b:137e:d2cb:73f7])
-	(authenticated bits=0)
-	by mail.zytor.com (8.18.1/8.17.1) with ESMTPSA id 53PJXQqR3199422
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NO);
-	Fri, 25 Apr 2025 12:33:27 -0700
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.zytor.com 53PJXQqR3199422
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zytor.com;
-	s=2025042001; t=1745609615;
-	bh=OLByDl2k8QS7+vMeXGAQllfp+4VYlTCCje7Ox6Pfa4g=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=C+Rdr/oohHcjiYl3k1s0a/jc7dixN5R0Mv5Px2j8kDdwJbPFLv4mJw8by+4Oto+F1
-	 tveW9WpgN8ttlpQLpdXcxTyaag9b/7TVjdH+TFVTrbHGQKwFJgak240662L863NwH8
-	 vgd5rhQsraf4buOHAZcbX5elWx80ZG9egeLnGj+ScCeWi6QGr1XXyAHAVnHwSmGqjn
-	 GkUO/NnNKAj8Q2mW/Ez/Vn8NVAPQB+fwhPjMvNjg1RQgr6hZA7HmxZl5MiRxUlxIY9
-	 uDj0XpVrhXq3zSB+OYJgYqNwOTX2giqyzWvO0pM/qCL4rFHYBzL4YJWj3wXsa2EaH3
-	 7hq16GNhLhdyg==
-Message-ID: <8571fd6f-4e71-4a6d-b2e8-16d9d72fa56e@zytor.com>
-Date: Fri, 25 Apr 2025 12:33:21 -0700
+	dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b="THN9/s+p"
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=infineon.com; i=@infineon.com; q=dns/txt; s=IFXMAIL;
+  t=1745653996; x=1777189996;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=sV8hgg4kXMgsfFNYcf/JrTGuFAAxfaYLCRjp/wi1IpQ=;
+  b=THN9/s+pglg7fQq5c/JF5HWY1tUBMRCb2O5edjGhZ1T/JJLQU29p9pjG
+   pWB3jN88Kx7ty6hW22oFYhTMnlpkbXock3/uxcmk7GJTCTjQW99h0L4CF
+   7yTdSneTs9yG2GEBCM6SS4jKOJzmlQVfuA6s+rMEcRCnIlDiCj4Jerqdu
+   s=;
+X-CSE-ConnectionGUID: +dAVXthrRqqZTaGMf5MhPw==
+X-CSE-MsgGUID: ReBPwKqAQDKmbP1uy1jVpA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11414"; a="93240621"
+X-IronPort-AV: E=Sophos;i="6.15,241,1739833200"; 
+   d="scan'208";a="93240621"
+Received: from unknown (HELO MUCSE819.infineon.com) ([172.23.29.45])
+  by smtp11.infineon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Apr 2025 09:52:04 +0200
+Received: from MUCSE827.infineon.com (172.23.29.20) by MUCSE819.infineon.com
+ (172.23.29.45) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Sat, 26 Apr
+ 2025 09:52:04 +0200
+Received: from ISCN5CG14747PP.infineon.com (10.161.6.196) by
+ MUCSE827.infineon.com (172.23.29.20) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.4; Sat, 26 Apr 2025 09:52:02 +0200
+Date: Sat, 26 Apr 2025 13:21:53 +0530
+From: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
+To: Arend van Spriel <arend.vanspriel@broadcom.com>, Johannes Berg
+	<johannes@sipsolutions.net>
+CC: <linux-wireless@vger.kernel.org>, <brcm80211@lists.linux.dev>,
+	<wlan-kernel-dev-list@infineon.com>, Gokul Sivakumar
+	<gokulkumar.sivakumar@infineon.com>
+Subject: Re: [PATCH] brcmfmac: support AP isolation to restrict reachability
+ between stations
+Message-ID: <aAyQma_qLrH_7S2a@ISCN5CG14747PP.infineon.com>
+References: <20250423175125.7233-1-gokulkumar.sivakumar@infineon.com>
+ <b6a11804b93df6052d61a7069d7ed0bd74a972ad.camel@sipsolutions.net>
+ <4a9c8323-5598-4783-90b2-ace84db22088@broadcom.com>
+ <9e6febe76a55053972049b13b254474a82b26571.camel@sipsolutions.net>
+ <2a6f7d20-2901-46d6-a16a-b977ff0a3724@broadcom.com>
+ <29fa5ea7f4cc177bed823ec3489d610e1d69a08f.camel@sipsolutions.net>
+ <c4b1d809-59fc-4d65-a840-d35598e8dfe5@broadcom.com>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 00/13] Introduce parity_odd() and refactor redundant
- parity code
-To: Kuan-Wei Chiu <visitorckw@gmail.com>
-Cc: Yury Norov <yury.norov@gmail.com>, tglx@linutronix.de, mingo@redhat.com,
-        bp@alien8.de, dave.hansen@linux.intel.com, x86@kernel.org,
-        jk@ozlabs.org, joel@jms.id.au, eajames@linux.ibm.com,
-        andrzej.hajda@intel.com, neil.armstrong@linaro.org, rfoss@kernel.org,
-        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-        tzimmermann@suse.de, airlied@gmail.com, simona@ffwll.ch,
-        dmitry.torokhov@gmail.com, mchehab@kernel.org, awalls@md.metrocast.net,
-        hverkuil@xs4all.nl, miquel.raynal@bootlin.com, richard@nod.at,
-        vigneshr@ti.com, louis.peens@corigine.com, andrew+netdev@lunn.ch,
-        davem@davemloft.net, edumazet@google.com, pabeni@redhat.com,
-        parthiban.veerasooran@microchip.com, arend.vanspriel@broadcom.com,
-        johannes@sipsolutions.net, gregkh@linuxfoundation.org,
-        jirislaby@kernel.org, akpm@linux-foundation.org, jdelvare@suse.com,
-        linux@roeck-us.net, alexandre.belloni@bootlin.com, pgaj@cadence.com,
-        alistair@popple.id.au, linux@rasmusvillemoes.dk,
-        Laurent.pinchart@ideasonboard.com, jonas@kwiboo.se,
-        jernej.skrabec@gmail.com, kuba@kernel.org,
-        linux-kernel@vger.kernel.org, linux-fsi@lists.ozlabs.org,
-        dri-devel@lists.freedesktop.org, linux-input@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-mtd@lists.infradead.org,
-        oss-drivers@corigine.com, netdev@vger.kernel.org,
-        linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
-        brcm80211-dev-list.pdl@broadcom.com, linux-serial@vger.kernel.org,
-        bpf@vger.kernel.org, jserv@ccns.ncku.edu.tw, Frank.Li@nxp.com,
-        linux-hwmon@vger.kernel.org, linux-i3c@lists.infradead.org,
-        david.laight.linux@gmail.com, andrew.cooper3@citrix.com,
-        Yu-Chun Lin <eleanor15x@gmail.com>
-References: <20250409154356.423512-1-visitorckw@gmail.com>
- <Z_amQp3gK5Dm8Qz3@yury> <Z/a5Qh/OeLT8JBS4@visitorckw-System-Product-Name>
- <Z_a9YpE46Xf8581l@yury> <e97a83a2-dabd-4dc3-b69a-840ca17d70b5@zytor.com>
- <Z/lEkDwefWvw4ZA3@visitorckw-System-Product-Name>
-Content-Language: en-US
-From: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <Z/lEkDwefWvw4ZA3@visitorckw-System-Product-Name>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <c4b1d809-59fc-4d65-a840-d35598e8dfe5@broadcom.com>
+X-ClientProxiedBy: MUCSE808.infineon.com (172.23.29.34) To
+ MUCSE827.infineon.com (172.23.29.20)
 
-On 4/11/25 09:34, Kuan-Wei Chiu wrote:
->>
->> In either case, instead of packing the cascade into one function, make good
->> use of it.
->>
->> In the latter case, __builtin_constant_p() isn't necessary as it puts the
->> onus on the architecture to separate out const and non-const cases, if it
->> matters -- which it doesn't if the architecture simply wants to use
->> __builtin_parity:
->>
->> #define parity8(x)  ((bool) __builtin_parity((u8)(x)))
->> #define parity16(x) ((bool) __builtin_parity((u16)(x)))
->> #define parity32(x) ((bool) __builtin_parity((u32)(x)))
->> #define parity64(x) ((bool) __builtin_parityll((u64)(x)))
->>
->> As stated before, I don't really see that the parity function itself would
->> be very suitable for a generic helper, but if it were to, then using the
->> "standard" macro construct for it would seem to be the better option.
->>
->> (And I would be very much in favor of not open-coding the helper everywhere
->> but to macroize it; effectively creating a C++ template equivalent. It is
->> out of scope for this project, though.)
->>
-> IIUC, you prefer using the parity8/16/32/64() interface with
-> __builtin_parity(), regardless of whether there are users on the hot
-> path?
+On 04/24, Arend van Spriel wrote:
+> On 4/24/2025 1:46 PM, Johannes Berg wrote:
+> > On Thu, 2025-04-24 at 13:36 +0200, Arend van Spriel wrote:
+> > > On 4/24/2025 12:22 PM, Johannes Berg wrote:
+> > > > On Thu, 2025-04-24 at 11:50 +0200, Arend van Spriel wrote:
+> > > > > 
+> > > > > Looked at other drivers implementing this callback and here are the results:
+> > > > > 
+> > > > > [wil6210] wil_cfg80211_change_bss(): does exactly the same thing.
+> > > > > [wilc1000] change_bss(): worse! it accepts everything and does nothing.
+> > > > > [rtl8723bs] cfg80211_rtw_change_bss(): same. just an empty callback.
+> > > > 
+> > > > OK, though I guess other drivers being bad doesn't mean this one should
+> > > > be :)
+> > > 
+> > > Sure. I am on your team in this. Can you recommend a plan of attack
+> > > here? Should we add a mechanism to expose what BSS parameter changes the
+> > > driver can handle similar to what is used for struct
+> > > station_info::bss_params?
+> > 
+> > I don't even know off the top of my head what's there and what isn't,
+> > just thought the code looked odd. I guess mac80211 just mostly supports
+> > all of them anyway.
+> > 
+> > Today the change is simply rejected by cfg80211 with -EOPNOTSUPP:
+> > 
+> > static int nl80211_set_bss(struct sk_buff *skb, struct genl_info *info)
+> > {
+> > ...
+> >          if (!rdev->ops->change_bss)
+> >                  return -EOPNOTSUPP;
+> > 
+> > 
+> > why not keep doing that for everything but ap_isolate?
+> > 
+> > Oh, I see what you mean, there's no way to keep that updated since you'd
+> > have to check each value for being changed and reject that ...
+> > 
+> > Hmm, yeah, that's not great. I guess ideally then we'd have a bitmap of
+> > what changed, and what the driver can support?
+> > 
+> > enum {
+> >       CFG80211_BSS_PARAM_CHANGE_CTS_PROT      = BIT(0),
+> >       CFG80211_BSS_PARAM_CHANGE_SHORT_PRE     = BIT(1),
+> >       CFG80211_BSS_PARAM_CHANGE_SHORT_SLOT    = BIT(2),
+> > ...
+> >       CFG80211_BSS_PARAM_CHANGE_AP_ISOLATE    = BIT(N),
+> > ...
+> > };
+> > 
+> > and
+> > 
+> > struct bss_parameters {
+> >       int link_id;
+> >       u32 changed;
+> >       ...
+> > }
+> > 
+> > and then this driver can just do
+> > 
+> >       if (params->changed & ~CFG80211_BSS_PARAM_CHANGE_AP_ISOLATE)
+> >               return -EOPNOTSUPP;
+> > 
+> > or so?
 
-As a per-architecture opt-in, yes.
+IMHO, In CFG80211, if we introduce a bitmap to track which BSS Parameter
+is changed by the userspace in the SET_BSS operation and then used this
+bitmap while handling the request, then the WLAN Driver would reject the
+operation with "EOPTNOTSUPP", instead of doing AP Isolation, because it
+does not support setting the other BSS params in the request.
 
-	-hpa
+For Example, considering hostapd (iwd doesn't support SET BSS operation)
+if the user only enabled the config file param "ap_isolate", but didn't
+explicitly set "preamble", hostapd would implicitly set default value
+(0 - LONG_PREAMBLE) in the preamble param while sending the SET_BSS
+operation request to CFG80211.
 
+CFG80211 would then mark the bit corresponding to the SHORT_PREAMBLE BSS
+param as "changed" in the bitmap. WLAN Driver on receiving this SET_BSS
+request, would then have to reject the entire operation without enabling
+the user requested "ap_isolation" param, because of the preamble param
+that is not even explicitly requested by the user.
+
+In a way, we can consider this as an implementation specific behaviour
+of the userspace application. But what i'm trying to convey is that the
+userspace currently does not have a mechanism to know which subset of
+BSS parameters are supported by the WLAN Drivers, so it is enabling
+all the params while doing the SET_BSS operation. This increases the
+chances for the entire SET_BSS operation getting rejected,
+ 
+> > Not sure how that'd be related to station_info::bss_param, that's just
+> > output from the driver.
+> 
+> It kinda looked similar. At least there is a bitmap in place for it that
+> is a subset of the enum you listed above.
+
+I guess, you are referring to the enum bss_param_flags. Since it is
+currently being used by drivers to set the fields specific to STA BSS
+while returning the STATION info to cfg80211, we may not be able to
+extended this enum with the new AP specific BSS params like ap_isolate.
+
+enum bss_param_flags {
+        BSS_PARAM_FLAGS_CTS_PROT        = BIT(0),
+        BSS_PARAM_FLAGS_SHORT_PREAMBLE  = BIT(1),
+        BSS_PARAM_FLAGS_SHORT_SLOT_TIME = BIT(2)
+};
+
+Ideally renaming this from "bss_param_flags" -> "sta_bss_param_flags"
+would be more appropriate, because these flags are only being used by
+the struct member "station_info::bss::flags".
+
+> I was wondering if we should convey the bitmask to usesr-space
+> beforehand in struct wiphy.
+
+Yes, if the WLAN driver is able to advertise the list of AP BSS params
+that can be set bv userpace, then userspace can attempt to configure
+only the BSS params that the driver can support, increasing the chances
+for the SET_BSS operation to become successful.
+
+And I can see the following two NL80211 feature flags already existing
+which corresponds to the members in the AP/P2P-GO BSS Parameter struct.
+
+@NL80211_FEATURE_P2P_GO_CTWIN: P2P GO implementation supports
+	CT Window setting                                                                
+@NL80211_FEATURE_P2P_GO_OPPPS: P2P GO implementation supports
+	opportunistic powersave                                                              
+
+However, for other AP BSS Parammeters, we don't have the corresponding
+NL80211 feature flags.
+
+Will wait for Johannes's opinion on this.
+
+Regards,
+Gokul
