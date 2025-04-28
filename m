@@ -1,144 +1,147 @@
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D3DD1D54EE
-	for <brcm80211@lists.linux.dev>; Sat, 26 Apr 2025 09:14:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E8BF262FEC
+	for <brcm80211@lists.linux.dev>; Mon, 28 Apr 2025 14:52:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745658883; cv=none; b=b5fgm7AkpbyZ8hY32DKxRqXco+UlO8nVXQDstdSZf2FxQyN65C4qZrOsbWqC9hP6vP+zR4rgTajvCFzfIrJPQSe2Rpzp2bwxvcEHsvksCX2HkLbdSSEdmgsP83+kybyzp2PBNpQFzQmNNgDGfGofPPh8MOg/lJ4KC3Fvp+JRZPM=
+	t=1745851971; cv=none; b=j7faLqSgrfjY0wXxwTJdR+2p6AVTSjfZ8mUk2PJOmD9v41JdIAdJetxfwYv239mSoNItr0H6gn1EkIWOO9qnRMlUrAbB8T7HZ2typtdAV7SIEdpM7cwIWGpTZ6OYjigtImhvaxlBp1hBCvZ09mfN6EFJyCvowIB454DtNTm0GW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745658883; c=relaxed/simple;
-	bh=ajA2/KThvOLmdGQMQlMZ8JSc3s7TdqFCTO4mxSXZP2s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bWfBx05yVWw5DGWEceUyIj9Qe29A1yxv6ETxf+Z7Uc1qFsceOCmAoJDxEx0gM8CDt0P6HSY0izNe6/+xe5DE1jo88XmbRJNuhNAZjM8FU0vnlPDWLm31+TGbvtkpD68jO6FkyTlt5pjsw/9K0ygqu+O837fR94kJHoa5gaX2GFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S8jHzfqW; arc=none smtp.client-ip=209.85.210.179
+	s=arc-20240116; t=1745851971; c=relaxed/simple;
+	bh=SSxhuHltF1pU7A3iqAs3fGaU/D/oeSWAOQoAO7lB1wU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=SjEjrqGlLY5gJE3Fc6Cvciz0plvaUyuh/mznq6Yu9NQuUHG0SjIKDXSwa3pL1B5usidun6Weu43Fd9DFC0U3inHP6SHnQgcBi+eONHBScS9DqKfYdw90HNSVtvZLp2gcoFYhff8mM1z7sSpuOmp8zWNW1p9pLorIB+lHoG7AXOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hxaxVxt8; arc=none smtp.client-ip=209.85.208.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S8jHzfqW"
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-7376e311086so4234338b3a.3
-        for <brcm80211@lists.linux.dev>; Sat, 26 Apr 2025 02:14:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hxaxVxt8"
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-5e8be1bdb7bso7736866a12.0
+        for <brcm80211@lists.linux.dev>; Mon, 28 Apr 2025 07:52:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745658881; x=1746263681; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Dpw6EJump0TSOrBYBam8lLy7cnOl6Tzi7s2IdyQv1Eo=;
-        b=S8jHzfqWPG0qfVMjj7rQjtUGcgBek3Ob8z4lbK5RUy3t8rd2ItZsZrQjvg15A2SWNz
-         jrPabzVxOzdsIDR0lyyHnDZd3XbAaLlFiolOIGx0/8qNqLD+u6BF37sQ2a5XWe6UWwzP
-         AEBUenT0JMFCLRyhBtRtPOi8Kx4bRX61aDBlEGf+jicNetQMafc82edWVNrpaBEIHBaY
-         6TckQjdDfXPaxqT0k9jwmrJ1TYcha8w1l9udh0T+XdlsIN5YDQGWx44MrZcO5xEeG/Wv
-         Djf2YY9mpA16vvFs0qkOIkwMwLs3ORty8JjLsA1hxekH2RhqGyJT9o/nWNtqaDFOn+N3
-         W3YQ==
+        d=gmail.com; s=20230601; t=1745851968; x=1746456768; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=pkHHzpz+JAc4YPElLbHC8bnOpH0t0OW33hqQ3rGDKGQ=;
+        b=hxaxVxt81Ze8ggvi+12odhgcMfXHS+kRLqTirwI5CybQmjORtqFRzILKcz5j7gGQQe
+         BDtb6WPcDHkWQU6xmiyA0T7i7dlgnOrEjch4WKnRQvj6gL1zuolwTLKcrgbT5E1HzEBT
+         aCXXviXrgwznJ5Kk1wJWQigzv9S7J0DSk+8/U4fq+DR0fJ44D0tXw6eKb22nHY2tt/QE
+         MMhuGdX7Ur9amk1GGvvZdRTjKsH2fb9A5pC+Scn0N3GTggrq7NPausZmoXOwePntNkwh
+         yFpG0y6OsxcsIHAIYe8MHE4Tp25ja5MPPioP2z2ZSmOQdBOcC4hHZEgBDiuIJx4pMqJz
+         cvMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745658881; x=1746263681;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Dpw6EJump0TSOrBYBam8lLy7cnOl6Tzi7s2IdyQv1Eo=;
-        b=DM3zkGx7ufdXYPTUMLDW8aGp1HCdtdN3Y9T9NOEvOSljcAwWlWt5YWlUqNTVxHI2rl
-         5Wl5PcyJ68a3j2M1fuklRdt77MEfza4oWozPFMFM1MQIU3DdtaYzOCGQjhHGlS630Njs
-         28Jndhbi5QNNQxn6gR7uLNGHRw2xrY1SFhDOEQp4xP2d8nJomhjXHp+IxJKE8TMMHvmN
-         9jHYsD64TGcfbUkGvD96bGDztS9vo+/RiDHSj+VtGO58h3w+FnoY51x/iMWUoBNGOFJn
-         ASlYfBJEEPbf7Dqnqcp3KxHYd396rAGt8mk+Mo5WPruXaX7hy8rLLLBoDzOfKvIJi7SK
-         pbmg==
-X-Forwarded-Encrypted: i=1; AJvYcCXTmdA4VlEQyvr8B3DN9xY2skLI+dzb7ET57b9IyVvBtXH5Z2+QfzbD/fQS92iqeofjmCx3R5gHR8U=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx3De+8ItKQDPPQnBEUaDpVOZmKRH2nA4FZk1cByX3kCjlmWaeM
-	Kh54jqJM4IaBxB7ze5UR9csgANmkQVGhbM6F2HK4ykO7ebQRmu75
-X-Gm-Gg: ASbGncvZLiV8aZ+eV6aU45no4qzC55g0z0BQqffCTjWsyDvCSe6PgU4pulrOWJzTfQJ
-	uBgK4jwH/y+eVHYK9IHZdAQK2B91UBqIysmQeI7M02fLhpyX3aDWWpXM+mV+S2u+K8tctehIUpR
-	RgnzzvOpJmooTDXbkpZUYFs1mK0QXonkL62Hi0zVNuKdsk8voAetyfAsgY7lDtEUD4kZ+fWH82u
-	QMxu+y2M8izVfCp58kmdx9vdFCreS9moZjkwDHCIIplhAyAV3NJgh2fuWGGwr8cFF5K9/7SZ5zC
-	omXeaxpFJoZXZSVtvTbIEkLmDsWmoSy5i8l6SiWJsp+U1XfZji41slAkYP8npSoWJiPq
-X-Google-Smtp-Source: AGHT+IFgnshRXYAm4vLgOrmgYGZWM8t1SObZHkSRdPxsGHvAJ5uKKQ60xC74a/vGxL92untQtleJTA==
-X-Received: by 2002:a05:6a00:1306:b0:736:73ad:365b with SMTP id d2e1a72fcca58-73fd74c23c4mr7475320b3a.14.1745658881199;
-        Sat, 26 Apr 2025 02:14:41 -0700 (PDT)
-Received: from visitorckw-System-Product-Name ([140.113.216.168])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73e259412b2sm4594535b3a.66.2025.04.26.02.14.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 26 Apr 2025 02:14:40 -0700 (PDT)
-Date: Sat, 26 Apr 2025 17:14:29 +0800
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
-To: "H. Peter Anvin" <hpa@zytor.com>, Yury Norov <yury.norov@gmail.com>
-Cc: Yury Norov <yury.norov@gmail.com>, tglx@linutronix.de, mingo@redhat.com,
-	bp@alien8.de, dave.hansen@linux.intel.com, x86@kernel.org,
-	jk@ozlabs.org, joel@jms.id.au, eajames@linux.ibm.com,
-	andrzej.hajda@intel.com, neil.armstrong@linaro.org,
-	rfoss@kernel.org, maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org, tzimmermann@suse.de, airlied@gmail.com,
-	simona@ffwll.ch, dmitry.torokhov@gmail.com, mchehab@kernel.org,
-	awalls@md.metrocast.net, hverkuil@xs4all.nl,
-	miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
-	louis.peens@corigine.com, andrew+netdev@lunn.ch,
-	davem@davemloft.net, edumazet@google.com, pabeni@redhat.com,
-	parthiban.veerasooran@microchip.com, arend.vanspriel@broadcom.com,
-	johannes@sipsolutions.net, gregkh@linuxfoundation.org,
-	jirislaby@kernel.org, akpm@linux-foundation.org, jdelvare@suse.com,
-	linux@roeck-us.net, alexandre.belloni@bootlin.com, pgaj@cadence.com,
-	alistair@popple.id.au, linux@rasmusvillemoes.dk,
-	Laurent.pinchart@ideasonboard.com, jonas@kwiboo.se,
-	jernej.skrabec@gmail.com, kuba@kernel.org,
-	linux-kernel@vger.kernel.org, linux-fsi@lists.ozlabs.org,
-	dri-devel@lists.freedesktop.org, linux-input@vger.kernel.org,
-	linux-media@vger.kernel.org, linux-mtd@lists.infradead.org,
-	oss-drivers@corigine.com, netdev@vger.kernel.org,
-	linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
-	brcm80211-dev-list.pdl@broadcom.com, linux-serial@vger.kernel.org,
-	bpf@vger.kernel.org, jserv@ccns.ncku.edu.tw, Frank.Li@nxp.com,
-	linux-hwmon@vger.kernel.org, linux-i3c@lists.infradead.org,
-	david.laight.linux@gmail.com, andrew.cooper3@citrix.com,
-	Yu-Chun Lin <eleanor15x@gmail.com>
-Subject: Re: [PATCH v4 00/13] Introduce parity_odd() and refactor redundant
- parity code
-Message-ID: <aAyj9SMvYrN9tXZC@visitorckw-System-Product-Name>
-References: <20250409154356.423512-1-visitorckw@gmail.com>
- <Z_amQp3gK5Dm8Qz3@yury>
- <Z/a5Qh/OeLT8JBS4@visitorckw-System-Product-Name>
- <Z_a9YpE46Xf8581l@yury>
- <e97a83a2-dabd-4dc3-b69a-840ca17d70b5@zytor.com>
- <Z/lEkDwefWvw4ZA3@visitorckw-System-Product-Name>
- <8571fd6f-4e71-4a6d-b2e8-16d9d72fa56e@zytor.com>
+        d=1e100.net; s=20230601; t=1745851968; x=1746456768;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pkHHzpz+JAc4YPElLbHC8bnOpH0t0OW33hqQ3rGDKGQ=;
+        b=HrXPteEa6U/vc5kkCJjZQqh7uRJiRgyRTaySkUxiJazI7KvdEjmSDNEWyi1kqn9u0W
+         4SFN6kK5bvuOn/LvBdK4AzHEkx3TxmVj6WhAXxMiLG4gDOHkkKzfMngxEd0qVkWiyqOt
+         lZop0osldm68LUEwIqtlDxLj92mSQ3jDu2f9PyiXUkFQLlO7ioQBUZlc5ldkA6lSUyIG
+         U4EsHUjGtd3w5ajoGD9MRZMPvYgy3QBnkxpZVIAUv6s+1fceFPcso9yNxZEWyZ3WGEsu
+         TPZCvtbFOCXG+zPF1blhxPRfzWapeoE7v3WcjrShoIC/b2ZqsOTFDAg6qYNZEHL89jaE
+         rp2g==
+X-Forwarded-Encrypted: i=1; AJvYcCUYlIV9iSSgBUHMy77SxfU2qEsESLdH6oiVZulBWUU8b+JJzpkvZiICp+fnAwgmtjR/aJg9DxaNQXQ=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyzlrwRV2eNGopAFhEMDgQ+KUFW2/OxiSX4tYtzHriAn0z6UOuR
+	ZrYGVg99RqGG5EOUMkEVUwkwzIDKc0thOt7Lbv6Wm2FVCWqZq0xOze+2NQTbpmp4P1xithXPqqu
+	zixUbg9kYcXRDPohph6VFvZXqQ8g=
+X-Gm-Gg: ASbGncu2EbNDOB5xF7KUfojp93iE8bUhuGeB3QRMKER3ZE2IywX2fkLU0r5ZudCkTge
+	HrGl5jlaJwq3F7WVR+n0N1DlY2Q/gaVi4aDd8Wt4ElKy69vWqllsALnN/8ruR587GlTv64JIF+D
+	KoS0gjI8LsEBSXpN5Jpx0+cMyawaHllA8HUmMnXWvL07DiRBIPPueUCUs=
+X-Google-Smtp-Source: AGHT+IGZYr6SLrDNZTnVkaKiHVg1djGU6UdZB0HvXscQWZncCyseLSvIQ5XSgQlJmYpRAlxi2qyCXkTFjHFKldSaM2Q=
+X-Received: by 2002:a05:6402:4405:b0:5f6:59e5:5c8b with SMTP id
+ 4fb4d7f45d1cf-5f72257a516mr10495084a12.5.1745851967494; Mon, 28 Apr 2025
+ 07:52:47 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8571fd6f-4e71-4a6d-b2e8-16d9d72fa56e@zytor.com>
+References: <20250425085519.492267-1-arend.vanspriel@broadcom.com>
+In-Reply-To: <20250425085519.492267-1-arend.vanspriel@broadcom.com>
+From: Peter Robinson <pbrobinson@gmail.com>
+Date: Mon, 28 Apr 2025 15:52:36 +0100
+X-Gm-Features: ATxdqUHI3MOlw_BJrxxnx-Uytq9oMoMg32RWU3eW0KBBY4Lf4w_NpTCU-1BpNPo
+Message-ID: <CALeDE9MGXiSN=8E+T_ZGOLHsk8DB4iL=hV7ircqqb9=q1xTUYw@mail.gmail.com>
+Subject: Re: [PATCH wireless-next v3 0/4] wifi: brcmfmac: external auth
+ support for Infineon devices
+To: Arend van Spriel <arend.vanspriel@broadcom.com>
+Cc: Johannes Berg <johannes@sipsolutions.net>, linux-wireless@vger.kernel.org, 
+	brcm80211@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Apr 25, 2025 at 12:33:21PM -0700, H. Peter Anvin wrote:
-> On 4/11/25 09:34, Kuan-Wei Chiu wrote:
-> > > 
-> > > In either case, instead of packing the cascade into one function, make good
-> > > use of it.
-> > > 
-> > > In the latter case, __builtin_constant_p() isn't necessary as it puts the
-> > > onus on the architecture to separate out const and non-const cases, if it
-> > > matters -- which it doesn't if the architecture simply wants to use
-> > > __builtin_parity:
-> > > 
-> > > #define parity8(x)  ((bool) __builtin_parity((u8)(x)))
-> > > #define parity16(x) ((bool) __builtin_parity((u16)(x)))
-> > > #define parity32(x) ((bool) __builtin_parity((u32)(x)))
-> > > #define parity64(x) ((bool) __builtin_parityll((u64)(x)))
-> > > 
-> > > As stated before, I don't really see that the parity function itself would
-> > > be very suitable for a generic helper, but if it were to, then using the
-> > > "standard" macro construct for it would seem to be the better option.
-> > > 
-> > > (And I would be very much in favor of not open-coding the helper everywhere
-> > > but to macroize it; effectively creating a C++ template equivalent. It is
-> > > out of scope for this project, though.)
-> > > 
-> > IIUC, you prefer using the parity8/16/32/64() interface with
-> > __builtin_parity(), regardless of whether there are users on the hot
-> > path?
-> 
-> As a per-architecture opt-in, yes.
-> 
-I'd prefer to see Yury agree first, otherwise there's a high risk of a
-maintainer NAK after the next submission.
+Hi Arend,
 
-Regards,
-Kuan-Wei
+> The Infineon chips support external authentication in station mode when
+> firmware advertises it. The feature that must be present in firmware is
+> sae_ext. This has been ported from Infineon repository and makes use of
+> the per-vendor framework. It showcases how things can be organized per
+> vendor to provide the functionality.
+>
+> Unfortunately, I have no Infineon device and firmware that makes use of
+> external auth. This series was submitted earlier as RFT and it was tested
+> successfully by James Prestwood with iwd after adding a fourth patch to
+> the series. I would not mind if more testing is done with this series
+> like using wpa_supplicant instead of iwd.
+
+So I tried testing this on a RPi4 with the upstream linux-firmware
+repo, both on Fedora 42 using NetworkManager on top of iwd or
+wpa_supplicant.
+
+Now I think this has  the right firmware but TBH I am not 100% sure
+but I get the following listed in the "Supported extended features"
+section when I run 'iw phy phy0 info':
+* [ SAE_OFFLOAD ]: SAE offload support
+* [ SAE_OFFLOAD_AP ]: AP mode SAE authentication offload support
+
+For reference the firmware version is:
+brcmfmac: brcmf_c_preinit_dcmds: Firmware: BCM4345/6 wl0: Apr 15 2021
+03:03:20 version 7.45.234 (4ca95bb CY) FWID 01-996384e2
+
+When I was testing with iwd 3.6 it was actually not repporting WPA3 as
+an option against my SSIDs, just WPA2 where with wpa_supplicant 2.11
+it reports both.
+
+With NM+iwd in use I get an error and nothing happens, if I set sae
+for NM+wpa_supplicant I get a lot of the following in the kernel log
+and the connection fails:
+[ 1141.846900] brcmfmac: brcmf_set_channel: set chanspec 0xd022 fail, reason -52
+[ 1141.962815] brcmfmac: brcmf_set_channel: set chanspec 0xd026 fail, reason -52
+[ 1142.074828] brcmfmac: brcmf_set_channel: set chanspec 0xd02a fail, reason -52
+
+I will try and find a couple of other devices with an appropriate
+cypress/infineon.
+
+Peter
+
+> Arend van Spriel (3):
+>   wifi: brcmfmac: support per-vendor cfg80211 callbacks and firmware
+>     events
+>   wifi: brcmfmac: make per-vendor event map const
+>   wifi: brcmfmac: cyw: support external SAE authentication in station
+>    de
+>
+> Ting-Ying Li (1):
+>   wifi: brcmfmac: Fix structure size for WPA3 external SAE
+>
+>  .../broadcom/brcm80211/brcmfmac/cfg80211.c    |  44 ++-
+>  .../broadcom/brcm80211/brcmfmac/cfg80211.h    |  25 ++
+>  .../broadcom/brcm80211/brcmfmac/common.c      |   1 +
+>  .../broadcom/brcm80211/brcmfmac/core.c        |   2 +
+>  .../broadcom/brcm80211/brcmfmac/cyw/core.c    | 308 ++++++++++++++++++
+>  .../brcm80211/brcmfmac/cyw/fwil_types.h       |  87 +++++
+>  .../broadcom/brcm80211/brcmfmac/feature.c     |   3 +-
+>  .../broadcom/brcm80211/brcmfmac/feature.h     |   4 +-
+>  .../broadcom/brcm80211/brcmfmac/fweh.c        |   7 +-
+>  .../broadcom/brcm80211/brcmfmac/fweh.h        |   8 +-
+>  .../broadcom/brcm80211/brcmfmac/fwvid.h       |  29 ++
+>  11 files changed, 495 insertions(+), 23 deletions(-)
+>  create mode 100644 drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/fwil_types.h
+>
+>
+> base-commit: f600832794c91d7021d7337104734246b02a2b86
+> --
+> 2.43.5
+>
+>
