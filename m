@@ -1,93 +1,294 @@
-Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
+Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D422481C4
-	for <brcm80211@lists.linux.dev>; Fri, 16 May 2025 05:27:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84BFA280CFC
+	for <brcm80211@lists.linux.dev>; Fri, 16 May 2025 23:39:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747373274; cv=none; b=AqRpbMXZpdIpIvBK5BD1vFYTtyymxVxR6eLLn1ms3qO5f61zFYLUMsvqm2hQx+oz6arg2P58JIe3SW+alepq41Gu41Jx9sXdeZnqLqvbzk38RCKNld8XgJf1TJSUYiPgX9ppMKhGwjSkcUSfdLiwi89LXZqHOqH2Tptt7g3NtcE=
+	t=1747438750; cv=none; b=DkyEhrd89EvcqjHqaib+tDWVgcD8V+xVB9SSTu05EOiX4Nonlpdp9EuM2AA2BveOqVGpAkkNIIH74LJWlr47MxQ5GAzlR8yt6O5uf6O9qGZ+mN0fijHVIxbGXtUBwTb69YirDS0jsNQs2wt7ezZH9Hc4qxV2ERnVSwI5uUzIl9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747373274; c=relaxed/simple;
-	bh=1oSZB6Mh1Am7IMLdTq+rGuRVJdFYyBZOmT8eJB3H1zI=;
-	h=From:To:CC:Date:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type; b=oAsg2MgrqHJVe+0p7CWNFMXQn5PeV5ORfcQEPUfaGgS8Rst1ubnfn++f5a6yB359/vJ+wS+shB3wXQV/bbfUOELVUUvZzrqDKfEBmi+waKpwfMEB55l79lnbqHRQ6yjOEkvYkXdZADXZKmufk9omVRWm0PJ5SfltrOqYttg3ggA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=JnApr/vD; arc=none smtp.client-ip=209.85.215.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+	s=arc-20240116; t=1747438750; c=relaxed/simple;
+	bh=LTYe/ZSDHU4DZt7ofKqilAyTNLchDCTwLUVspwR2fok=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Bpt3y/hz2LzvtGo2t57F8+gSyZy2j6UodNJv7akJ4X8CI1OovnyZKrWdNcfWIEOucu8rqLb6A9hgRTCcYvk//SBzTUYbhEFwTd6cQcjLKrPpcK8jU3z6BoGHDU1m0uzA25O9uQv22gV2DmK7DMdBTk3L7hlyMBvrDOlSUGHPSqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gateworks.com; spf=pass smtp.mailfrom=gateworks.com; dkim=pass (2048-bit key) header.d=gateworks.com header.i=@gateworks.com header.b=RdwL6ELV; arc=none smtp.client-ip=209.85.219.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gateworks.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gateworks.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="JnApr/vD"
-Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-af908bb32fdso1390744a12.1
-        for <brcm80211@lists.linux.dev>; Thu, 15 May 2025 22:27:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gateworks.com header.i=@gateworks.com header.b="RdwL6ELV"
+Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-e7adcaea616so2734308276.0
+        for <brcm80211@lists.linux.dev>; Fri, 16 May 2025 16:39:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1747373272; x=1747978072; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:subject:user-agent
-         :references:in-reply-to:message-id:date:cc:to:from:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bZBuwCPrPwQtjwCCR2X3I/7gHQ/hXUDgt194Kz7I8QY=;
-        b=JnApr/vDLvPTbSyCR/X9J0M7RlmdKrQKJ2xs2BkGmcvf7pAEB0h+ZnxgJqx5XxIB53
-         PoFRfa+oQfpdOa5Nyuvbi31ii1OVXtfY3XzD4sDgOMcRftcABpXbtL1slz/ogetkays3
-         4aGrMgwN6YkKgPr2WT+Xwr8eqPWGBkKmadKPY=
+        d=gateworks.com; s=google; t=1747438747; x=1748043547; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GE1RmF3if0Pd7/kv7JLiWl66kE/AlzxMQi62GGhnu80=;
+        b=RdwL6ELVaiNQ+tFIQ+CZzxKvz1zTmDwMrJGidRYCH828vG2a9CjAg05q4/euALGQmm
+         5qW99zbycwul77cVMgWrkbutrfkHDVONlCR/btXF7ma+ZgISxSRYoTYtMqtWfjhXIc6X
+         htfEXW6wBGT/fWVZLaoAg62d6dKTnP+bHJRfMWY6/jFPKBZvXrpssncDUBDeqpkUqhpS
+         KvTKil0WTMh3tiSrYj8Ua9ruIjmfjaZUtWuTGGbnhPcCx/sKnfzTRO1olTLTQABc0zVl
+         1gFl3yEWeDuDoWFgPyds94YnRTkAhq38AL/D2GjNSN1Fj4Qe1IjOK7gvIJfeaa3cQvNO
+         mcyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747373272; x=1747978072;
-        h=content-transfer-encoding:mime-version:subject:user-agent
-         :references:in-reply-to:message-id:date:cc:to:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bZBuwCPrPwQtjwCCR2X3I/7gHQ/hXUDgt194Kz7I8QY=;
-        b=pHv3ME0iTpm0evMxpsqwOvyUY4MrQduEqPvidwhM55gzMXPKdw7R5bB0a3omPHbD7u
-         WfDiZHmuE4I2RX95jGTRhzfZDJw5CKU/OO+tveArAoqLKZSdq3HcMxPT1WXzJShLSdBV
-         oXe60482vIiTJtJy4yMI57NBs4IfIgmlPFCmQwZ8/a0vLb62MVyFPBOMgsvoxiqOSFNx
-         q1esohhVODQBp0pSHTTZ2dyalPIfSgN/+2iWJI5BeOrUfLpQvD9oInWfHnelTkj9dfnp
-         ef33KjLDTjTdg1oXrPm+2p/yQIOYe6Qgj+AlUrRzTBK3Us7MEhtJOSUzrL5Trp31OKAU
-         Ew/Q==
-X-Gm-Message-State: AOJu0YwHIptMRKowWsDIz97jwrhgev21grSgdsTu1W8JeUAAn4sEJkn9
-	3NQZRcF/1MSaI6zsBwYnzl+eZ3uH4+EbH48ZonU4H6UrGrs8pkk+tHcEcf0QGPpgFw==
-X-Gm-Gg: ASbGnct63zWq993GgyoEThOY3WdvrMtAPM4gY74BJwjWh1TVKf7/2QxmYsSOVPdir14
-	k+m6XUXfd20vf6Kt5dWVgQp1NSUpudbvy6VD/Wjciv4Jxd+nPowagpFyIN3VcZiSthiXWlJWD3O
-	E+gM7gR41dvyYfQS41CNi+RXU2qfHUuyA9UwKwYn5R/fOtl1S3zrTYb+fHPEM4VWvN/HhIEPPfY
-	yRAGuzNaXmiHQDOIL9T5kBuOITkuSpOSPGQtWCWjy+TSnKur4TjwZxPSv6saffudLcaQwIIqD4D
-	EiPvzShsDTNGtvwwWYImAwHSFwuK6gLIMGYo948SJQ52qp3IqquaU66sGZP/g2Jd2LkBaE+4tG+
-	Ads/10yYUz7Yo7Q==
-X-Google-Smtp-Source: AGHT+IHzdRkavZNG2fH2v8Z0BOuTPgetkh5gljeFa8VxHHd/7/RqRh+tQvkq/QvGyYWTH/y9hSthyg==
-X-Received: by 2002:a17:902:da91:b0:215:a303:24e9 with SMTP id d9443c01a7336-231d4ae1de4mr23968985ad.3.1747373271695;
-        Thu, 15 May 2025 22:27:51 -0700 (PDT)
-Received: from [192.168.178.39] (f215227.upc-f.chello.nl. [80.56.215.227])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-231e76b4d5bsm1643655ad.111.2025.05.15.22.27.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 May 2025 22:27:51 -0700 (PDT)
-From: Arend Van Spriel <arend.vanspriel@broadcom.com>
-To: Tim Harvey <tharvey@gateworks.com>
-CC: <brcm80211@lists.linux.dev>, Johannes Berg <johannes@sipsolutions.net>, "linux-wireless" <linux-wireless@vger.kernel.org>
-Date: Fri, 16 May 2025 07:27:45 +0200
-Message-ID: <196d7901068.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
-In-Reply-To: <CAJ+vNU2pLJd696Fc_98arrzs8QK70HfstPrZv6zVJm3G13REHQ@mail.gmail.com>
-References: <CAJ+vNU2pLJd696Fc_98arrzs8QK70HfstPrZv6zVJm3G13REHQ@mail.gmail.com>
-User-Agent: AquaMail/1.55.0 (build: 105500550)
-Subject: Re: [PATCH wireless-next v3 0/4] wifi: brcmfmac: external auth support for Infineon devices
+        d=1e100.net; s=20230601; t=1747438747; x=1748043547;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=GE1RmF3if0Pd7/kv7JLiWl66kE/AlzxMQi62GGhnu80=;
+        b=ekcxTOwS8m8jxdsvSKhPcKaNN0CerzPEqc4zB7ye80zboZIGG2pkGNEpYScPVhVLcT
+         2PDjd1iKNCQRncop5GYbD1M/6/x7PhZC0lu11PWoYuFa1RCu5dDqW8dXH+IoeamgPjym
+         Rp4AEgFuywFvDrXXh1aK6l5XaWuS7EHQXhFb6zSRwocYQuE8iodE86e9FjteOKGFSLy/
+         1Sert+ekLwCrfBqGQwYeHH/3OOK/DsLamNbrRZ72y5D8H6v9fQL/qmqHOhY64FhNjzGe
+         Zis3Y1olI/q6EZPMZMKgXhiYoAeTDDhFNdpyH4x1tHiV7qvfaM/yRcM8Swjt82PIANfq
+         /5QQ==
+X-Gm-Message-State: AOJu0YwEEtMJZ3Vh8LLUegld6gqftl1w45WvdP3fN+JLkBXSJ7zShXwG
+	gkByVf5SzdAXfglcttxoa6G+n2EU05MkCWad4UFPqYsOpFIeBzcB2JtHDZsbUJRX2ZBk4DXnzmT
+	xUm2c0cWh0QcNJ02v+CtkjpLPIzLyoFLZILBQQiBLRw==
+X-Gm-Gg: ASbGncsbiK0n6cwLJFmnWp3RnsUE5y//h1dYvQbx/skxl5ENLA00M4G1RgBQpV9/J4d
+	hTD+mSAxNwnAe3c+4nt+OaFLnM6haIC3+wJMDvDphqmowbLoIhBygIC4+nqisW6c6uyObE2NWkt
+	uPIRifvRNwqCONJMCZ9//HQ4W8I0eq6UVK
+X-Google-Smtp-Source: AGHT+IE2X/KGTaPxX0kVt6eTeS/I4ofSnG5RLL1NQJEru7TN9NXQV/INj33JuM3DvFZDkHqXpGL8XmXd4VHsQNx+QeY=
+X-Received: by 2002:a05:6902:704:b0:e6d:f287:bf9 with SMTP id
+ 3f1490d57ef6-e7b6d42c564mr6066153276.22.1747438747386; Fri, 16 May 2025
+ 16:39:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset="us-ascii"
-Content-Transfer-Encoding: 8bit
+References: <CAJ+vNU2pLJd696Fc_98arrzs8QK70HfstPrZv6zVJm3G13REHQ@mail.gmail.com>
+ <196d7901068.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
+In-Reply-To: <196d7901068.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
+From: Tim Harvey <tharvey@gateworks.com>
+Date: Fri, 16 May 2025 16:38:56 -0700
+X-Gm-Features: AX0GCFtwI7-G2zWQEk86l0HuzrZyI5ATg81jB89fmxDwM0riVEM6dPN3e5XrR00
+Message-ID: <CAJ+vNU009QSwYopCFzZtwDNXDBppx7L4v_ZKtmNZ=5ep7trOSA@mail.gmail.com>
+Subject: Re: [PATCH wireless-next v3 0/4] wifi: brcmfmac: external auth
+ support for Infineon devices
+To: Arend Van Spriel <arend.vanspriel@broadcom.com>
+Cc: brcm80211@lists.linux.dev, Johannes Berg <johannes@sipsolutions.net>, 
+	linux-wireless <linux-wireless@vger.kernel.org>, hostap@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On May 16, 2025 2:38:51 AM Tim Harvey <tharvey@gateworks.com> wrote:
-
-> Hi Arend,
+On Thu, May 15, 2025 at 10:27=E2=80=AFPM Arend Van Spriel
+<arend.vanspriel@broadcom.com> wrote:
 >
-> Thanks for this series! This allows WPA3 Personal in STA mode on a
-> CYW4373E based module we use on our boards however AP mode with WPA3
-> Personal does not appear to work. Do you know what is needed to allow
-> WPA3 Personal in a CYW4373E AP?
+> On May 16, 2025 2:38:51 AM Tim Harvey <tharvey@gateworks.com> wrote:
+>
+> > Hi Arend,
+> >
+> > Thanks for this series! This allows WPA3 Personal in STA mode on a
+> > CYW4373E based module we use on our boards however AP mode with WPA3
+> > Personal does not appear to work. Do you know what is needed to allow
+> > WPA3 Personal in a CYW4373E AP?
+>
+> Hi Tim,
+>
+> I did not look into AP mode (yet). Are you using hostapd as authenticator=
+.
+> Can you provide the conf file?
+>
 
-Hi Tim,
+Hi Arend,
 
-I did not look into AP mode (yet). Are you using hostapd as authenticator. 
-Can you provide the conf file?
+Yes, I'm using hostapd for AP and wpa_supplicant for STA and now I'm
+thinking this is likely an issue with one of them and not the brcmfmac
+driver although there are always relationships between hostap and the
+drivers so it's hard to say. With more testing I've found that the
+issue does not occur all the time... in fact it was difficult to make
+it occur again.
 
-Regards,
-Arend
+Here is some more context:
+- board: imx8mm-venice-gw73xx
+- device: Ezurio Sterling LWB5+ (SDIO single-antenna using CYW4373E)
 
+- testing using latest linux-wireless:
+# uname -r
+6.15.0-rc5-01256-g68b44b05f4c8
+# ls -l /sys/class/net/wlan*
+lrwxrwxrwx 1 root root 0 May 16 19:54 /sys/class/net/wlan0 ->
+../../devices/platform/soc@0/30800000.bus/30b40000.mm
+c/mmc_host/mmc0/mmc0:0001/mmc0:0001:1/net/wlan0
+# dmesg | grep brcmfmac
+[    1.345277] brcmfmac: brcmf_fw_alloc_request: using
+brcm/brcmfmac4373-sdio for chip BCM4373/0
+[    3.976263] brcmfmac mmc0:0001:1: Direct firmware load for
+brcm/brcmfmac4373-sdio.gw,imx8mm-gw73xx-0x.bin failed
+ with error -2
+[    4.146166] brcmfmac: brcmf_c_process_txcap_blob: no txcap_blob
+available (err=3D-2)
+[    4.146642] brcmfmac: brcmf_c_preinit_dcmds: Firmware: BCM4373/0
+wl0: Apr 18 2024 00:20:43 version 13.10.246.343
+ (72478a2 CY) FWID 01-bd87f673
+# iw phy | grep SAE
+        Device supports SAE with AUTHENTICATE command
 
+- on STA:
+# iw reg set US
+# wpa_supplicant -v
+wpa_supplicant v2.11
+Copyright (c) 2003-2024, Jouni Malinen <j@w1.fi> and contributors
+# cat wpa_supplicant.conf
+network=3D{
+        ssid=3D"wpa3test"
+        key_mgmt=3DSAE
+        sae_password=3D"012345678"
+        ieee80211w=3D2
+}
+# wpa_supplicant -t -i wlan0 -c wpa_supplicant.conf
+1747433610.388391: Successfully initialized wpa_supplicant
+1747433621.394128: wlan0: Trying to associate with SSID 'wpa3test'
+1747433626.465446: wlan0: PMKSA-CACHE-ADDED c0:ee:40:da:39:d6 0
+1747433626.481277: wlan0: Associated with c0:ee:40:da:39:d6
+1747433626.481786: wlan0: CTRL-EVENT-SUBNET-STATUS-UPDATE status=3D0
+1747433626.487603: wlan0: WPA: RSNXE mismatch between Beacon/ProbeResp
+and EAPOL-Key msg 3/4
+1747433626.487627: RSNXE in Beacon/ProbeResp - hexdump(len=3D3): f4 01 20
+1747433626.487647: RSNXE in EAPOL-Key msg 3/4 - hexdump(len=3D0): [NULL]
+1747433626.488175: nl80211: send_event_marker failed: Source based
+routing not supported
+1747433626.488215: wlan0: CTRL-EVENT-DISCONNECTED
+bssid=3Dc0:ee:40:da:39:d6 reason=3D17 locally_generated=3D1
+1747433626.488261: wlan0: Added BSSID c0:ee:40:da:39:d6 into ignore
+list, ignoring for 10 seconds
+1747433626.488349: wlan0: CTRL-EVENT-DSCP-POLICY clear_all
+1747433626.488397: wlan0: CTRL-EVENT-DSCP-POLICY clear_all
+1747433626.490356: wlan0: CTRL-EVENT-REGDOM-CHANGE init=3DCORE type=3DWORLD
+^^^ this is the point where I will see the 'associated' message from
+hostapd, but then with a couple of seconds hostapd prints a series of
+'disassociated' messaged in quick succession
+1747433629.491254: wlan0: Removed BSSID c0:ee:40:da:39:d6 from ignore
+list (clear)
+1747433629.491551: wlan0: Trying to associate with SSID 'wpa3test'
+1747433629.656365: wlan0: Associated with c0:ee:40:da:39:d6
+1747433629.656455: wlan0: CTRL-EVENT-SUBNET-STATUS-UPDATE status=3D0
+1747433631.711703: wlan0: CTRL-EVENT-DISCONNECTED
+bssid=3Dc0:ee:40:da:39:d6 reason=3D6
+1747433631.711812: wlan0: Added BSSID c0:ee:40:da:39:d6 into ignore
+list, ignoring for 10 seconds
+1747433631.713066: wlan0: CTRL-EVENT-REGDOM-CHANGE init=3DCORE type=3DWORLD
+1747433634.715053: wlan0: Removed BSSID c0:ee:40:da:39:d6 from ignore
+list (clear)
+...
+at this point I need to restart wpa_supplicant in order to see any
+hostapd messages
 
+- on AP:
+# iw reg set US
+# hostapd -v
+hostapd v2.11
+User space daemon for IEEE 802.11 AP management,
+IEEE 802.1X/WPA/WPA2/EAP/RADIUS Authenticator
+Copyright (c) 2002-2024, Jouni Malinen <j@w1.fi> and contributors
+# cat hostapd.conf
+interface=3Dwlan0
+driver=3Dnl80211
+ssid=3Dwpa3test
+hw_mode=3Dg
+channel=3D6
+country_code=3DUS
+ieee80211n=3D1
+wmm_enabled=3D1
+auth_algs=3D1
+wpa=3D2
+wpa_key_mgmt=3DSAE
+wpa_pairwise=3DCCMP
+rsn_pairwise=3DCCMP
+sae_password=3D012345678
+ieee80211w=3D2
+# -t hostapd -i wlan0 hostapd.conf &
+1747433608.079907: wlan0: interface state UNINITIALIZED->COUNTRY_UPDATE
+1747433613.321142: wlan0: interface state COUNTRY_UPDATE->ENABLED
+1747433613.321229: wlan0: AP-ENABLED
+1747433627.270790: 1747433627.270796: wlan0: STA c0:ee:40:83:06:2a
+IEEE 802.11: associated
+1747433631.306003: 1747433631.306008: wlan0: STA c0:ee:40:83:06:2a
+IEEE 802.11: disassociated
+1747433631.307505: 1747433631.307509: wlan0: STA c0:ee:40:83:06:2a
+IEEE 802.11: disassociated
+1747433631.508982: 1747433631.508985: wlan0: STA c0:ee:40:83:06:2a
+IEEE 802.11: disassociated
+1747433631.708937: 1747433631.708939: wlan0: STA c0:ee:40:83:06:2a
+IEEE 802.11: disassociated
+1747433631.908929: 1747433631.908931: wlan0: STA c0:ee:40:83:06:2a
+IEEE 802.11: disassociated
+1747433632.108885: 1747433632.108887: wlan0: STA c0:ee:40:83:06:2a
+IEEE 802.11: disassociated
+1747433632.308912: 1747433632.308914: wlan0: STA c0:ee:40:83:06:2a
+IEEE 802.11: disassociated
+1747433632.508999: 1747433632.509001: wlan0: STA c0:ee:40:83:06:2a
+IEEE 802.11: disassociated
+1747433634.488061: 1747433634.488066: wlan0: STA c0:ee:40:83:06:2a
+IEEE 802.11: disassociated
+
+you can see from the hostapd timestamps that the disassociated
+messages are in quick succession which is odd. When this occurs
+wpa_supplicant appears to keep trying yet I no longer see any messages
+from hostapd unless I restart wpa_supplicant. Additionally when this
+occurs it will never stay associated unless I restart hostapd.
+
+I've found the same behavior using hostapd/wpa_supplicant v2.10 as
+well as 2.11. Any ideas what's going on here? The
+'CTRL-EVENT-DISCONNECTED' with reason=3D6 I'm finding is usually due to
+a client sending data before authentication is complete and is usually
+chalked up to a driver bug.
+
+Incidentally, while looking at this I noticed if you enable
+CONFIG_FORTIFY_SOURCE you'll get a splat from the memcpy in function
+you added in your patch:
+[  161.608607] ------------[ cut here ]------------
+[  161.608646] memcpy: detected field-spanning write (size 104) of
+single field "&mgmt_frame->u" at drivers/net/wir
+eless/broadcom/brcm80211/brcmfmac/cyw/core.c:307 (size 26)
+[  161.608712] WARNING: CPU: 1 PID: 64 at
+drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c:307
+brcmf_not
+ify_auth_frame_rx+0x1f4/0x210
+[  161.647854] CPU: 1 UID: 0 PID: 64 Comm: kworker/1:2 Not tainted
+6.15.0-rc5-01256-g68b44b05f4c8 #153 PREEMPT
+[  161.657699] Hardware name: Gateworks Venice GW73xx-0x i.MX8MM
+Development Kit (DT)
+[  161.665279] Workqueue: events brcmf_fweh_event_worker
+[  161.670348] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=
+=3D--)
+[  161.677322] pc : brcmf_notify_auth_frame_rx+0x1f4/0x210
+[  161.682557] lr : brcmf_notify_auth_frame_rx+0x1f4/0x210
+[  161.687789] sp : ffff80008065bc30
+[  161.691107] x29: ffff80008065bc30 x28: ffffabb0a8e7d270 x27: ffff1f01c0b=
+0c8c0
+[  161.698269] x26: dead000000000100 x25: dead000000000122 x24: ffff8000806=
+5bd58
+[  161.705426] x23: ffff1f01c03bc008 x22: ffff1f01c114b750 x21: 00000000000=
+00080
+[  161.712587] x20: 0000000000000068 x19: ffff1f01c02c7f80 x18: 00000000000=
+00030
+[  161.719744] x17: 0000000000000000 x16: 0000000000000000 x15: 00000000fff=
+fffff
+[  161.726903] x14: 000000000000000d x13: 7720676e696e6e61 x12: 00000000fff=
+fffea
+[  161.734062] x11: ffff80008065b9f8 x10: ffffabb0a93242c0 x9 : 00000000000=
+00001
+[  161.741220] x8 : 0000000000000001 x7 : c0000000ffffefff x6 : 00000000000=
+17fe8
+[  161.748376] x5 : ffff1f01ff775808 x4 : 0000000000000000 x3 : 00000000000=
+00027
+[  161.755536] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff1f01c02=
+8a080
+[  161.762696] Call trace:
+[  161.765151]  brcmf_notify_auth_frame_rx+0x1f4/0x210 (P)
+[  161.770391]  brcmf_fweh_call_event_handler+0x40/0xc0
+[  161.775368]  brcmf_fweh_event_worker+0x158/0x3b8
+[  161.779999]  process_one_work+0x16c/0x2bc
+[  161.784024]  worker_thread+0x2dc/0x3dc
+[  161.787784]  kthread+0x130/0x200
+[  161.791028]  ret_from_fork+0x10/0x20
+[  161.794618] ---[ end trace 0000000000000000 ]---
+
+Maybe you can submit a patch for that.
+
+Best regards,
+
+Tim
