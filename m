@@ -1,62 +1,62 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4471D1CAB3
-	for <brcm80211@lists.linux.dev>; Sun, 25 May 2025 09:46:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE1E8539A
+	for <brcm80211@lists.linux.dev>; Sun, 25 May 2025 09:47:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748166377; cv=none; b=UCl/wQ4t7pjfglCQUdQYI1wtJc5HMtwB+LX1G9Mu74dBHsOcESvA79zayjJQGjzoxLq87M9H7ZTCrOP06ipK5v7s1FhKr5TulOeyYwfcFwn5vjfzDNO2Cy/msXFNGeAJCw+o9QPuOBHIA5Tne5JAp+/pOnoaiiRlMYG4TVlXrwo=
+	t=1748166441; cv=none; b=Xj2q8LbsGnJ0eafGQweFBXJa4+3cVEXGZ12on8XXXMWIG0P7DEKni3KWuK7XIQO7PnAUt0iVODtPa2uOPuyARWAms2itSiHSYq8FFdGH8NG+HAd/qUL54nobsM5C8Kle3SS4NRAlY5//SJEwqW1gKI8bYQwG+qUh/L/NDZqC2O8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748166377; c=relaxed/simple;
-	bh=0wBEbtMo/dEu6nPciUlVjZNzC2evI6460OinFgAKdw4=;
+	s=arc-20240116; t=1748166441; c=relaxed/simple;
+	bh=NvwkMpDTSSCCjACAVuBLVrKrReHzj6vOsXj3K+wA/VA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=oED5rp+3lIXfujetw5XEhpaey+Apf8QFlafRsyCk9W/yQ1ZYafAWOQ7mmTIjkiLoCMV11qMuffWVfw0ni1QCLRNI4HfbQzGT15ebieShCK0VsNb9GNLt0GQr9d68/6QCP2vwa7UIfIYDZwMzv42RXtd3iad+elZjYdx8qtnzsPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=UuXXqCDE; arc=none smtp.client-ip=209.85.214.175
+	 In-Reply-To:Content-Type; b=dmLUPIuZhhK62r27bC/wjR8xOlOdRJLPoKWNFV9nDQ116wwoualzbwq39E+BN6diObZQtunot2PjRXKud49eQavdxO0d3rSWwPIjc8U+Lp0M5LE27eN09aivR/1Asd/iy4eB6H9GFxSMj+U501/psUwsHyRYW1RTc1suvZqv/W4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=eg+NeTuH; arc=none smtp.client-ip=209.85.210.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="UuXXqCDE"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-22c33677183so7504275ad.2
-        for <brcm80211@lists.linux.dev>; Sun, 25 May 2025 02:46:14 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="eg+NeTuH"
+Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-73972a54919so934915b3a.3
+        for <brcm80211@lists.linux.dev>; Sun, 25 May 2025 02:47:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1748166374; x=1748771174; darn=lists.linux.dev;
+        d=broadcom.com; s=google; t=1748166439; x=1748771239; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZkhLq12mNLSL/Sq/6LO2cG6p6ELKgDsmz2OzqCO1eug=;
-        b=UuXXqCDEhe8Lc2ipFf9gMBmT8uo2RRVzQaCjk7wlQnAT1slG336ArQGlRiHfMAR0SZ
-         yYm49HGSwbuYY/CVYgkw88VL3kEaYlokznjQRT8Nig5QaTQq2IFyDzDWMsA4Dn1kJqd4
-         0S24l0zkaPDtAc1PG41kMwiPaDgR6emSttg4U=
+        bh=gRRRpp2ysa9AW28bJqBQ4AWPZKN7HVsqHtVlIIKXx2g=;
+        b=eg+NeTuHjdx47qwYe/L6qlPAGRlItvoZ99o+/0WdfI+eejc1CI9BpFfNxzeO6We/bA
+         Mthl953skAZRlxLa0LsBzepLmOlMnhhz9aSh6y5aWM/TA98zHZwdfkXgebVzQsy8UvKd
+         YIM0AJMzcSdRMa7trMr3YkjRcQZf2DF4VmlG4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748166374; x=1748771174;
+        d=1e100.net; s=20230601; t=1748166439; x=1748771239;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ZkhLq12mNLSL/Sq/6LO2cG6p6ELKgDsmz2OzqCO1eug=;
-        b=GgAe+GLh2gDZ/EYvOEfD78Dud4IVPndwJxDzYeLFjoO2GUr5RTVnc6r0OM3XH3sQKK
-         2mSBE/PbiHUmfq22NpSotNP7WPMxUH/XlhlydsYHYpvUqTkuMG4VaApseR6C3im3qboR
-         C3i7y33fIXU7zy4Is/TnGhZyJsQs7nzv4mBAsQrDTeMhisHmzCadJM2cB0P9HO8YwEuN
-         J5pNmnTaFQTHh4W3GDR8NH+fk3uONCS9IAJ9L37wHKiHl/KgBwTCiaZl4Nu3ACHumk7r
-         1C5GxWJE4ogMHN5L0RNAEmUShFQDCdI6pijadvqrSZjDd4c3YLJ0Py7IRNXKxZ3aMI0F
-         aGUg==
-X-Gm-Message-State: AOJu0YxX+6lhpoAVbechy24EC1rrBvb2VTO745WdbrEOYA7ZqTuNS/pw
-	6dLxH4wq1jlx4iMUjsUBtcJ1r0/J4+OhRgzy4x+3TAoh3TdHgRQrwLTSnmUr2rKnrg==
-X-Gm-Gg: ASbGnct+mDwsgiq7kiN7bkxgA67mUfstPC4cDFCTqBeD4kD2DYyI7ku6NNLHtIUej81
-	Sy2x9tsJsOnI/qrMtYJSxDgVuzUhbIAcTPZnqyF9fxduq1i2nfbfvArI6LLNpPzJorT96y1Ed8z
-	9orvopfmAcbHMwR9i0GYgpZNDnXhNQEt8LwPnn0csbrUArgPujIRYijoZg7/fIqWnnXjlxdTNft
-	vi2tfgGOCy1UNYKQtPduP8KBHCOm7zaAwF/DSCwz86nLsE/JUIRDMc7Ql77VWpzGNuX1D9arBNJ
-	vKwX9NdUzzNeM3c5dEXbfh/tDaeF1Q6oU5Do5er5n7iH3Fcgv8A8DWXYPsSiv7C7U2CHoE3YS3y
-	4hOkte9c2emvffJCael5fA+MYHVc=
-X-Google-Smtp-Source: AGHT+IE3q12SpAvKuhj56MU4kYk8HQwHIwtih366RTgP5l+dGpIGx36fkbIQBu9uzwUgmvexa9pscQ==
-X-Received: by 2002:a17:902:e544:b0:22f:a4aa:b82b with SMTP id d9443c01a7336-23414f62af9mr94275775ad.21.1748166374404;
-        Sun, 25 May 2025 02:46:14 -0700 (PDT)
+        bh=gRRRpp2ysa9AW28bJqBQ4AWPZKN7HVsqHtVlIIKXx2g=;
+        b=unLs1p1HIOKhWd10KTbp8eg0/8yzGEJO/M0dTFgOU4SPeNtY3XGCzbWTowhMOH9Igc
+         gv95Le1s0zrC7slJ9Rcu3S2jNHY5KKQd1RVXvu229mJKdtZZMHSelgo1oYj75o+HQBDP
+         qud8D/8nTdBG+VlgFAtSCdkr78+YUS+wVDVUosE1CUI2XioSK1cRHyGsKvoxGdqKb99M
+         5kkI5hCNGkcscfKv+D8tIyDx3l37UbUINmAQse8bqOCZla8jVLxuD4GZViLUG19udyCm
+         vldN5GY08yZZcOiV3wuj18d7USjAeL22xF7sk+eOAi92d//0gYurhVWdH5wFzsE5Ksbv
+         y6Mw==
+X-Gm-Message-State: AOJu0YzsQgTbcwrn8zgYGpJNxVUCRqR8AoEUnJZrbdVw8ZrSIf0YAXDA
+	BNdNmHuvQrlkmUd/F0ZA9u3uV9A2fMVl0AXOiCy0mPblARKZc28WVMyA8xhKU+qSOQ==
+X-Gm-Gg: ASbGncuNcumZuN4hvebLYxqtaCLVi3S6+SX9Zry4BKv8p8a/CDNjFNCITejfIhP9Bym
+	WPCoVjC15fJqy4NEFdBXCmdrbVdzrgVacf+xN6QldUv4iIf3mjUXeZz0Ynm7mtnEXjSQX4TAQzq
+	+gBWSTStDVklTfRz15ySOTY/2SdM8teuCie2RZXpy/MpVoKHL2loZJjI8Y6JpYyOUAW5Cif7UIt
+	oSQ4cJWCX+ciKOo4k5xGG6ebkhSWvU7k3tqT8KRSxLja/tA/aJyfaB+OmwdI7lprHNYzihCI456
+	NZa63RhM87EYxiIHICwDRmrURDH2FBsJSpGCMvWqU7xdlUFDefXhC7R+f2MthVYam+jmPc5j6X5
+	hoAiFwWOtU0dXedjZY8QSBADm4Og=
+X-Google-Smtp-Source: AGHT+IE1sghhsAHkwYzud4pm/yEYXzjyb9pXG7gNvdJUqu4gaZ2i2rXbJOjlOYcVOvOJTYWwi71ptQ==
+X-Received: by 2002:a05:6a00:2287:b0:73f:f623:55f8 with SMTP id d2e1a72fcca58-745fde779e7mr7506224b3a.5.1748166438922;
+        Sun, 25 May 2025 02:47:18 -0700 (PDT)
 Received: from [192.168.178.137] (f215227.upc-f.chello.nl. [80.56.215.227])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23429f0c98esm16039725ad.47.2025.05.25.02.46.12
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-742a98770c2sm15324250b3a.150.2025.05.25.02.47.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 25 May 2025 02:46:13 -0700 (PDT)
-Message-ID: <70444507-ff51-437f-baaf-d2d5377adaef@broadcom.com>
-Date: Sun, 25 May 2025 11:46:08 +0200
+        Sun, 25 May 2025 02:47:18 -0700 (PDT)
+Message-ID: <c3ed7fd4-f4ac-4d23-bed1-78d5bd615ec5@broadcom.com>
+Date: Sun, 25 May 2025 11:47:13 +0200
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -122,19 +122,51 @@ Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 5/17/2025 1:38 AM, Tim Harvey wrote:
-> Yes, I'm using hostapd for AP and wpa_supplicant for STA and now I'm
-> thinking this is likely an issue with one of them and not the brcmfmac
-> driver although there are always relationships between hostap and the
-> drivers so it's hard to say. With more testing I've found that the
-> issue does not occur all the time... in fact it was difficult to make
-> it occur again.
+> Incidentally, while looking at this I noticed if you enable
+> CONFIG_FORTIFY_SOURCE you'll get a splat from the memcpy in function
+> you added in your patch:
+> [  161.608607] ------------[ cut here ]------------
+> [  161.608646] memcpy: detected field-spanning write (size 104) of
+> single field "&mgmt_frame->u" at drivers/net/wir
+> eless/broadcom/brcm80211/brcmfmac/cyw/core.c:307 (size 26)
+> [  161.608712] WARNING: CPU: 1 PID: 64 at
+> drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c:307
+> brcmf_not
+> ify_auth_frame_rx+0x1f4/0x210
+> [  161.647854] CPU: 1 UID: 0 PID: 64 Comm: kworker/1:2 Not tainted
+> 6.15.0-rc5-01256-g68b44b05f4c8 #153 PREEMPT
+> [  161.657699] Hardware name: Gateworks Venice GW73xx-0x i.MX8MM
+> Development Kit (DT)
+> [  161.665279] Workqueue: events brcmf_fweh_event_worker
+> [  161.670348] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+> [  161.677322] pc : brcmf_notify_auth_frame_rx+0x1f4/0x210
+> [  161.682557] lr : brcmf_notify_auth_frame_rx+0x1f4/0x210
+> [  161.687789] sp : ffff80008065bc30
+> [  161.691107] x29: ffff80008065bc30 x28: ffffabb0a8e7d270 x27: ffff1f01c0b0c8c0
+> [  161.698269] x26: dead000000000100 x25: dead000000000122 x24: ffff80008065bd58
+> [  161.705426] x23: ffff1f01c03bc008 x22: ffff1f01c114b750 x21: 0000000000000080
+> [  161.712587] x20: 0000000000000068 x19: ffff1f01c02c7f80 x18: 0000000000000030
+> [  161.719744] x17: 0000000000000000 x16: 0000000000000000 x15: 00000000ffffffff
+> [  161.726903] x14: 000000000000000d x13: 7720676e696e6e61 x12: 00000000ffffffea
+> [  161.734062] x11: ffff80008065b9f8 x10: ffffabb0a93242c0 x9 : 0000000000000001
+> [  161.741220] x8 : 0000000000000001 x7 : c0000000ffffefff x6 : 0000000000017fe8
+> [  161.748376] x5 : ffff1f01ff775808 x4 : 0000000000000000 x3 : 0000000000000027
+> [  161.755536] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff1f01c028a080
+> [  161.762696] Call trace:
+> [  161.765151]  brcmf_notify_auth_frame_rx+0x1f4/0x210 (P)
+> [  161.770391]  brcmf_fweh_call_event_handler+0x40/0xc0
+> [  161.775368]  brcmf_fweh_event_worker+0x158/0x3b8
+> [  161.779999]  process_one_work+0x16c/0x2bc
+> [  161.784024]  worker_thread+0x2dc/0x3dc
+> [  161.787784]  kthread+0x130/0x200
+> [  161.791028]  ret_from_fork+0x10/0x20
+> [  161.794618] ---[ end trace 0000000000000000 ]---
 > 
-> Here is some more context:
-> - board: imx8mm-venice-gw73xx
-> - device: Ezurio Sterling LWB5+ (SDIO single-antenna using CYW4373E)
+> Maybe you can submit a patch for that.
 
-So you have two identical device running with brcmfmac driver and one is 
-playing the role of AP and the other STA. Is that correct?
+Okay. I do not run with that Kconfig option. Will have to look into how 
+to fix this. Probably need some kind of annotation. If you know what is 
+needed feel free to post a patch for it.
 
-Regards,
+Thanks,
 Arend
