@@ -1,294 +1,140 @@
-Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84BFA280CFC
-	for <brcm80211@lists.linux.dev>; Fri, 16 May 2025 23:39:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4471D1CAB3
+	for <brcm80211@lists.linux.dev>; Sun, 25 May 2025 09:46:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747438750; cv=none; b=DkyEhrd89EvcqjHqaib+tDWVgcD8V+xVB9SSTu05EOiX4Nonlpdp9EuM2AA2BveOqVGpAkkNIIH74LJWlr47MxQ5GAzlR8yt6O5uf6O9qGZ+mN0fijHVIxbGXtUBwTb69YirDS0jsNQs2wt7ezZH9Hc4qxV2ERnVSwI5uUzIl9M=
+	t=1748166377; cv=none; b=UCl/wQ4t7pjfglCQUdQYI1wtJc5HMtwB+LX1G9Mu74dBHsOcESvA79zayjJQGjzoxLq87M9H7ZTCrOP06ipK5v7s1FhKr5TulOeyYwfcFwn5vjfzDNO2Cy/msXFNGeAJCw+o9QPuOBHIA5Tne5JAp+/pOnoaiiRlMYG4TVlXrwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747438750; c=relaxed/simple;
-	bh=LTYe/ZSDHU4DZt7ofKqilAyTNLchDCTwLUVspwR2fok=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Bpt3y/hz2LzvtGo2t57F8+gSyZy2j6UodNJv7akJ4X8CI1OovnyZKrWdNcfWIEOucu8rqLb6A9hgRTCcYvk//SBzTUYbhEFwTd6cQcjLKrPpcK8jU3z6BoGHDU1m0uzA25O9uQv22gV2DmK7DMdBTk3L7hlyMBvrDOlSUGHPSqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gateworks.com; spf=pass smtp.mailfrom=gateworks.com; dkim=pass (2048-bit key) header.d=gateworks.com header.i=@gateworks.com header.b=RdwL6ELV; arc=none smtp.client-ip=209.85.219.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gateworks.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gateworks.com
+	s=arc-20240116; t=1748166377; c=relaxed/simple;
+	bh=0wBEbtMo/dEu6nPciUlVjZNzC2evI6460OinFgAKdw4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=oED5rp+3lIXfujetw5XEhpaey+Apf8QFlafRsyCk9W/yQ1ZYafAWOQ7mmTIjkiLoCMV11qMuffWVfw0ni1QCLRNI4HfbQzGT15ebieShCK0VsNb9GNLt0GQr9d68/6QCP2vwa7UIfIYDZwMzv42RXtd3iad+elZjYdx8qtnzsPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=UuXXqCDE; arc=none smtp.client-ip=209.85.214.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gateworks.com header.i=@gateworks.com header.b="RdwL6ELV"
-Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-e7adcaea616so2734308276.0
-        for <brcm80211@lists.linux.dev>; Fri, 16 May 2025 16:39:08 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="UuXXqCDE"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-22c33677183so7504275ad.2
+        for <brcm80211@lists.linux.dev>; Sun, 25 May 2025 02:46:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gateworks.com; s=google; t=1747438747; x=1748043547; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GE1RmF3if0Pd7/kv7JLiWl66kE/AlzxMQi62GGhnu80=;
-        b=RdwL6ELVaiNQ+tFIQ+CZzxKvz1zTmDwMrJGidRYCH828vG2a9CjAg05q4/euALGQmm
-         5qW99zbycwul77cVMgWrkbutrfkHDVONlCR/btXF7ma+ZgISxSRYoTYtMqtWfjhXIc6X
-         htfEXW6wBGT/fWVZLaoAg62d6dKTnP+bHJRfMWY6/jFPKBZvXrpssncDUBDeqpkUqhpS
-         KvTKil0WTMh3tiSrYj8Ua9ruIjmfjaZUtWuTGGbnhPcCx/sKnfzTRO1olTLTQABc0zVl
-         1gFl3yEWeDuDoWFgPyds94YnRTkAhq38AL/D2GjNSN1Fj4Qe1IjOK7gvIJfeaa3cQvNO
-         mcyw==
+        d=broadcom.com; s=google; t=1748166374; x=1748771174; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZkhLq12mNLSL/Sq/6LO2cG6p6ELKgDsmz2OzqCO1eug=;
+        b=UuXXqCDEhe8Lc2ipFf9gMBmT8uo2RRVzQaCjk7wlQnAT1slG336ArQGlRiHfMAR0SZ
+         yYm49HGSwbuYY/CVYgkw88VL3kEaYlokznjQRT8Nig5QaTQq2IFyDzDWMsA4Dn1kJqd4
+         0S24l0zkaPDtAc1PG41kMwiPaDgR6emSttg4U=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747438747; x=1748043547;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=GE1RmF3if0Pd7/kv7JLiWl66kE/AlzxMQi62GGhnu80=;
-        b=ekcxTOwS8m8jxdsvSKhPcKaNN0CerzPEqc4zB7ye80zboZIGG2pkGNEpYScPVhVLcT
-         2PDjd1iKNCQRncop5GYbD1M/6/x7PhZC0lu11PWoYuFa1RCu5dDqW8dXH+IoeamgPjym
-         Rp4AEgFuywFvDrXXh1aK6l5XaWuS7EHQXhFb6zSRwocYQuE8iodE86e9FjteOKGFSLy/
-         1Sert+ekLwCrfBqGQwYeHH/3OOK/DsLamNbrRZ72y5D8H6v9fQL/qmqHOhY64FhNjzGe
-         Zis3Y1olI/q6EZPMZMKgXhiYoAeTDDhFNdpyH4x1tHiV7qvfaM/yRcM8Swjt82PIANfq
-         /5QQ==
-X-Gm-Message-State: AOJu0YwEEtMJZ3Vh8LLUegld6gqftl1w45WvdP3fN+JLkBXSJ7zShXwG
-	gkByVf5SzdAXfglcttxoa6G+n2EU05MkCWad4UFPqYsOpFIeBzcB2JtHDZsbUJRX2ZBk4DXnzmT
-	xUm2c0cWh0QcNJ02v+CtkjpLPIzLyoFLZILBQQiBLRw==
-X-Gm-Gg: ASbGncsbiK0n6cwLJFmnWp3RnsUE5y//h1dYvQbx/skxl5ENLA00M4G1RgBQpV9/J4d
-	hTD+mSAxNwnAe3c+4nt+OaFLnM6haIC3+wJMDvDphqmowbLoIhBygIC4+nqisW6c6uyObE2NWkt
-	uPIRifvRNwqCONJMCZ9//HQ4W8I0eq6UVK
-X-Google-Smtp-Source: AGHT+IE2X/KGTaPxX0kVt6eTeS/I4ofSnG5RLL1NQJEru7TN9NXQV/INj33JuM3DvFZDkHqXpGL8XmXd4VHsQNx+QeY=
-X-Received: by 2002:a05:6902:704:b0:e6d:f287:bf9 with SMTP id
- 3f1490d57ef6-e7b6d42c564mr6066153276.22.1747438747386; Fri, 16 May 2025
- 16:39:07 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1748166374; x=1748771174;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZkhLq12mNLSL/Sq/6LO2cG6p6ELKgDsmz2OzqCO1eug=;
+        b=GgAe+GLh2gDZ/EYvOEfD78Dud4IVPndwJxDzYeLFjoO2GUr5RTVnc6r0OM3XH3sQKK
+         2mSBE/PbiHUmfq22NpSotNP7WPMxUH/XlhlydsYHYpvUqTkuMG4VaApseR6C3im3qboR
+         C3i7y33fIXU7zy4Is/TnGhZyJsQs7nzv4mBAsQrDTeMhisHmzCadJM2cB0P9HO8YwEuN
+         J5pNmnTaFQTHh4W3GDR8NH+fk3uONCS9IAJ9L37wHKiHl/KgBwTCiaZl4Nu3ACHumk7r
+         1C5GxWJE4ogMHN5L0RNAEmUShFQDCdI6pijadvqrSZjDd4c3YLJ0Py7IRNXKxZ3aMI0F
+         aGUg==
+X-Gm-Message-State: AOJu0YxX+6lhpoAVbechy24EC1rrBvb2VTO745WdbrEOYA7ZqTuNS/pw
+	6dLxH4wq1jlx4iMUjsUBtcJ1r0/J4+OhRgzy4x+3TAoh3TdHgRQrwLTSnmUr2rKnrg==
+X-Gm-Gg: ASbGnct+mDwsgiq7kiN7bkxgA67mUfstPC4cDFCTqBeD4kD2DYyI7ku6NNLHtIUej81
+	Sy2x9tsJsOnI/qrMtYJSxDgVuzUhbIAcTPZnqyF9fxduq1i2nfbfvArI6LLNpPzJorT96y1Ed8z
+	9orvopfmAcbHMwR9i0GYgpZNDnXhNQEt8LwPnn0csbrUArgPujIRYijoZg7/fIqWnnXjlxdTNft
+	vi2tfgGOCy1UNYKQtPduP8KBHCOm7zaAwF/DSCwz86nLsE/JUIRDMc7Ql77VWpzGNuX1D9arBNJ
+	vKwX9NdUzzNeM3c5dEXbfh/tDaeF1Q6oU5Do5er5n7iH3Fcgv8A8DWXYPsSiv7C7U2CHoE3YS3y
+	4hOkte9c2emvffJCael5fA+MYHVc=
+X-Google-Smtp-Source: AGHT+IE3q12SpAvKuhj56MU4kYk8HQwHIwtih366RTgP5l+dGpIGx36fkbIQBu9uzwUgmvexa9pscQ==
+X-Received: by 2002:a17:902:e544:b0:22f:a4aa:b82b with SMTP id d9443c01a7336-23414f62af9mr94275775ad.21.1748166374404;
+        Sun, 25 May 2025 02:46:14 -0700 (PDT)
+Received: from [192.168.178.137] (f215227.upc-f.chello.nl. [80.56.215.227])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23429f0c98esm16039725ad.47.2025.05.25.02.46.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 25 May 2025 02:46:13 -0700 (PDT)
+Message-ID: <70444507-ff51-437f-baaf-d2d5377adaef@broadcom.com>
+Date: Sun, 25 May 2025 11:46:08 +0200
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <CAJ+vNU2pLJd696Fc_98arrzs8QK70HfstPrZv6zVJm3G13REHQ@mail.gmail.com>
- <196d7901068.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
-In-Reply-To: <196d7901068.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
-From: Tim Harvey <tharvey@gateworks.com>
-Date: Fri, 16 May 2025 16:38:56 -0700
-X-Gm-Features: AX0GCFtwI7-G2zWQEk86l0HuzrZyI5ATg81jB89fmxDwM0riVEM6dPN3e5XrR00
-Message-ID: <CAJ+vNU009QSwYopCFzZtwDNXDBppx7L4v_ZKtmNZ=5ep7trOSA@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH wireless-next v3 0/4] wifi: brcmfmac: external auth
  support for Infineon devices
-To: Arend Van Spriel <arend.vanspriel@broadcom.com>
-Cc: brcm80211@lists.linux.dev, Johannes Berg <johannes@sipsolutions.net>, 
-	linux-wireless <linux-wireless@vger.kernel.org>, hostap@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: Tim Harvey <tharvey@gateworks.com>
+Cc: brcm80211@lists.linux.dev, Johannes Berg <johannes@sipsolutions.net>,
+ linux-wireless <linux-wireless@vger.kernel.org>, hostap@lists.infradead.org
+References: <CAJ+vNU2pLJd696Fc_98arrzs8QK70HfstPrZv6zVJm3G13REHQ@mail.gmail.com>
+ <196d7901068.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
+ <CAJ+vNU009QSwYopCFzZtwDNXDBppx7L4v_ZKtmNZ=5ep7trOSA@mail.gmail.com>
+Content-Language: en-US
+From: Arend van Spriel <arend.vanspriel@broadcom.com>
+Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
+ 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
+In-Reply-To: <CAJ+vNU009QSwYopCFzZtwDNXDBppx7L4v_ZKtmNZ=5ep7trOSA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, May 15, 2025 at 10:27=E2=80=AFPM Arend Van Spriel
-<arend.vanspriel@broadcom.com> wrote:
->
-> On May 16, 2025 2:38:51 AM Tim Harvey <tharvey@gateworks.com> wrote:
->
-> > Hi Arend,
-> >
-> > Thanks for this series! This allows WPA3 Personal in STA mode on a
-> > CYW4373E based module we use on our boards however AP mode with WPA3
-> > Personal does not appear to work. Do you know what is needed to allow
-> > WPA3 Personal in a CYW4373E AP?
->
-> Hi Tim,
->
-> I did not look into AP mode (yet). Are you using hostapd as authenticator=
-.
-> Can you provide the conf file?
->
+On 5/17/2025 1:38 AM, Tim Harvey wrote:
+> Yes, I'm using hostapd for AP and wpa_supplicant for STA and now I'm
+> thinking this is likely an issue with one of them and not the brcmfmac
+> driver although there are always relationships between hostap and the
+> drivers so it's hard to say. With more testing I've found that the
+> issue does not occur all the time... in fact it was difficult to make
+> it occur again.
+> 
+> Here is some more context:
+> - board: imx8mm-venice-gw73xx
+> - device: Ezurio Sterling LWB5+ (SDIO single-antenna using CYW4373E)
 
-Hi Arend,
+So you have two identical device running with brcmfmac driver and one is 
+playing the role of AP and the other STA. Is that correct?
 
-Yes, I'm using hostapd for AP and wpa_supplicant for STA and now I'm
-thinking this is likely an issue with one of them and not the brcmfmac
-driver although there are always relationships between hostap and the
-drivers so it's hard to say. With more testing I've found that the
-issue does not occur all the time... in fact it was difficult to make
-it occur again.
-
-Here is some more context:
-- board: imx8mm-venice-gw73xx
-- device: Ezurio Sterling LWB5+ (SDIO single-antenna using CYW4373E)
-
-- testing using latest linux-wireless:
-# uname -r
-6.15.0-rc5-01256-g68b44b05f4c8
-# ls -l /sys/class/net/wlan*
-lrwxrwxrwx 1 root root 0 May 16 19:54 /sys/class/net/wlan0 ->
-../../devices/platform/soc@0/30800000.bus/30b40000.mm
-c/mmc_host/mmc0/mmc0:0001/mmc0:0001:1/net/wlan0
-# dmesg | grep brcmfmac
-[    1.345277] brcmfmac: brcmf_fw_alloc_request: using
-brcm/brcmfmac4373-sdio for chip BCM4373/0
-[    3.976263] brcmfmac mmc0:0001:1: Direct firmware load for
-brcm/brcmfmac4373-sdio.gw,imx8mm-gw73xx-0x.bin failed
- with error -2
-[    4.146166] brcmfmac: brcmf_c_process_txcap_blob: no txcap_blob
-available (err=3D-2)
-[    4.146642] brcmfmac: brcmf_c_preinit_dcmds: Firmware: BCM4373/0
-wl0: Apr 18 2024 00:20:43 version 13.10.246.343
- (72478a2 CY) FWID 01-bd87f673
-# iw phy | grep SAE
-        Device supports SAE with AUTHENTICATE command
-
-- on STA:
-# iw reg set US
-# wpa_supplicant -v
-wpa_supplicant v2.11
-Copyright (c) 2003-2024, Jouni Malinen <j@w1.fi> and contributors
-# cat wpa_supplicant.conf
-network=3D{
-        ssid=3D"wpa3test"
-        key_mgmt=3DSAE
-        sae_password=3D"012345678"
-        ieee80211w=3D2
-}
-# wpa_supplicant -t -i wlan0 -c wpa_supplicant.conf
-1747433610.388391: Successfully initialized wpa_supplicant
-1747433621.394128: wlan0: Trying to associate with SSID 'wpa3test'
-1747433626.465446: wlan0: PMKSA-CACHE-ADDED c0:ee:40:da:39:d6 0
-1747433626.481277: wlan0: Associated with c0:ee:40:da:39:d6
-1747433626.481786: wlan0: CTRL-EVENT-SUBNET-STATUS-UPDATE status=3D0
-1747433626.487603: wlan0: WPA: RSNXE mismatch between Beacon/ProbeResp
-and EAPOL-Key msg 3/4
-1747433626.487627: RSNXE in Beacon/ProbeResp - hexdump(len=3D3): f4 01 20
-1747433626.487647: RSNXE in EAPOL-Key msg 3/4 - hexdump(len=3D0): [NULL]
-1747433626.488175: nl80211: send_event_marker failed: Source based
-routing not supported
-1747433626.488215: wlan0: CTRL-EVENT-DISCONNECTED
-bssid=3Dc0:ee:40:da:39:d6 reason=3D17 locally_generated=3D1
-1747433626.488261: wlan0: Added BSSID c0:ee:40:da:39:d6 into ignore
-list, ignoring for 10 seconds
-1747433626.488349: wlan0: CTRL-EVENT-DSCP-POLICY clear_all
-1747433626.488397: wlan0: CTRL-EVENT-DSCP-POLICY clear_all
-1747433626.490356: wlan0: CTRL-EVENT-REGDOM-CHANGE init=3DCORE type=3DWORLD
-^^^ this is the point where I will see the 'associated' message from
-hostapd, but then with a couple of seconds hostapd prints a series of
-'disassociated' messaged in quick succession
-1747433629.491254: wlan0: Removed BSSID c0:ee:40:da:39:d6 from ignore
-list (clear)
-1747433629.491551: wlan0: Trying to associate with SSID 'wpa3test'
-1747433629.656365: wlan0: Associated with c0:ee:40:da:39:d6
-1747433629.656455: wlan0: CTRL-EVENT-SUBNET-STATUS-UPDATE status=3D0
-1747433631.711703: wlan0: CTRL-EVENT-DISCONNECTED
-bssid=3Dc0:ee:40:da:39:d6 reason=3D6
-1747433631.711812: wlan0: Added BSSID c0:ee:40:da:39:d6 into ignore
-list, ignoring for 10 seconds
-1747433631.713066: wlan0: CTRL-EVENT-REGDOM-CHANGE init=3DCORE type=3DWORLD
-1747433634.715053: wlan0: Removed BSSID c0:ee:40:da:39:d6 from ignore
-list (clear)
-...
-at this point I need to restart wpa_supplicant in order to see any
-hostapd messages
-
-- on AP:
-# iw reg set US
-# hostapd -v
-hostapd v2.11
-User space daemon for IEEE 802.11 AP management,
-IEEE 802.1X/WPA/WPA2/EAP/RADIUS Authenticator
-Copyright (c) 2002-2024, Jouni Malinen <j@w1.fi> and contributors
-# cat hostapd.conf
-interface=3Dwlan0
-driver=3Dnl80211
-ssid=3Dwpa3test
-hw_mode=3Dg
-channel=3D6
-country_code=3DUS
-ieee80211n=3D1
-wmm_enabled=3D1
-auth_algs=3D1
-wpa=3D2
-wpa_key_mgmt=3DSAE
-wpa_pairwise=3DCCMP
-rsn_pairwise=3DCCMP
-sae_password=3D012345678
-ieee80211w=3D2
-# -t hostapd -i wlan0 hostapd.conf &
-1747433608.079907: wlan0: interface state UNINITIALIZED->COUNTRY_UPDATE
-1747433613.321142: wlan0: interface state COUNTRY_UPDATE->ENABLED
-1747433613.321229: wlan0: AP-ENABLED
-1747433627.270790: 1747433627.270796: wlan0: STA c0:ee:40:83:06:2a
-IEEE 802.11: associated
-1747433631.306003: 1747433631.306008: wlan0: STA c0:ee:40:83:06:2a
-IEEE 802.11: disassociated
-1747433631.307505: 1747433631.307509: wlan0: STA c0:ee:40:83:06:2a
-IEEE 802.11: disassociated
-1747433631.508982: 1747433631.508985: wlan0: STA c0:ee:40:83:06:2a
-IEEE 802.11: disassociated
-1747433631.708937: 1747433631.708939: wlan0: STA c0:ee:40:83:06:2a
-IEEE 802.11: disassociated
-1747433631.908929: 1747433631.908931: wlan0: STA c0:ee:40:83:06:2a
-IEEE 802.11: disassociated
-1747433632.108885: 1747433632.108887: wlan0: STA c0:ee:40:83:06:2a
-IEEE 802.11: disassociated
-1747433632.308912: 1747433632.308914: wlan0: STA c0:ee:40:83:06:2a
-IEEE 802.11: disassociated
-1747433632.508999: 1747433632.509001: wlan0: STA c0:ee:40:83:06:2a
-IEEE 802.11: disassociated
-1747433634.488061: 1747433634.488066: wlan0: STA c0:ee:40:83:06:2a
-IEEE 802.11: disassociated
-
-you can see from the hostapd timestamps that the disassociated
-messages are in quick succession which is odd. When this occurs
-wpa_supplicant appears to keep trying yet I no longer see any messages
-from hostapd unless I restart wpa_supplicant. Additionally when this
-occurs it will never stay associated unless I restart hostapd.
-
-I've found the same behavior using hostapd/wpa_supplicant v2.10 as
-well as 2.11. Any ideas what's going on here? The
-'CTRL-EVENT-DISCONNECTED' with reason=3D6 I'm finding is usually due to
-a client sending data before authentication is complete and is usually
-chalked up to a driver bug.
-
-Incidentally, while looking at this I noticed if you enable
-CONFIG_FORTIFY_SOURCE you'll get a splat from the memcpy in function
-you added in your patch:
-[  161.608607] ------------[ cut here ]------------
-[  161.608646] memcpy: detected field-spanning write (size 104) of
-single field "&mgmt_frame->u" at drivers/net/wir
-eless/broadcom/brcm80211/brcmfmac/cyw/core.c:307 (size 26)
-[  161.608712] WARNING: CPU: 1 PID: 64 at
-drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c:307
-brcmf_not
-ify_auth_frame_rx+0x1f4/0x210
-[  161.647854] CPU: 1 UID: 0 PID: 64 Comm: kworker/1:2 Not tainted
-6.15.0-rc5-01256-g68b44b05f4c8 #153 PREEMPT
-[  161.657699] Hardware name: Gateworks Venice GW73xx-0x i.MX8MM
-Development Kit (DT)
-[  161.665279] Workqueue: events brcmf_fweh_event_worker
-[  161.670348] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=
-=3D--)
-[  161.677322] pc : brcmf_notify_auth_frame_rx+0x1f4/0x210
-[  161.682557] lr : brcmf_notify_auth_frame_rx+0x1f4/0x210
-[  161.687789] sp : ffff80008065bc30
-[  161.691107] x29: ffff80008065bc30 x28: ffffabb0a8e7d270 x27: ffff1f01c0b=
-0c8c0
-[  161.698269] x26: dead000000000100 x25: dead000000000122 x24: ffff8000806=
-5bd58
-[  161.705426] x23: ffff1f01c03bc008 x22: ffff1f01c114b750 x21: 00000000000=
-00080
-[  161.712587] x20: 0000000000000068 x19: ffff1f01c02c7f80 x18: 00000000000=
-00030
-[  161.719744] x17: 0000000000000000 x16: 0000000000000000 x15: 00000000fff=
-fffff
-[  161.726903] x14: 000000000000000d x13: 7720676e696e6e61 x12: 00000000fff=
-fffea
-[  161.734062] x11: ffff80008065b9f8 x10: ffffabb0a93242c0 x9 : 00000000000=
-00001
-[  161.741220] x8 : 0000000000000001 x7 : c0000000ffffefff x6 : 00000000000=
-17fe8
-[  161.748376] x5 : ffff1f01ff775808 x4 : 0000000000000000 x3 : 00000000000=
-00027
-[  161.755536] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff1f01c02=
-8a080
-[  161.762696] Call trace:
-[  161.765151]  brcmf_notify_auth_frame_rx+0x1f4/0x210 (P)
-[  161.770391]  brcmf_fweh_call_event_handler+0x40/0xc0
-[  161.775368]  brcmf_fweh_event_worker+0x158/0x3b8
-[  161.779999]  process_one_work+0x16c/0x2bc
-[  161.784024]  worker_thread+0x2dc/0x3dc
-[  161.787784]  kthread+0x130/0x200
-[  161.791028]  ret_from_fork+0x10/0x20
-[  161.794618] ---[ end trace 0000000000000000 ]---
-
-Maybe you can submit a patch for that.
-
-Best regards,
-
-Tim
+Regards,
+Arend
