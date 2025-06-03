@@ -1,97 +1,90 @@
-Received: from smtp14.infineon.com (smtp14.infineon.com [217.10.52.160])
+Received: from sipsolutions.net (s3.sipsolutions.net [168.119.38.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0CDB214811
-	for <brcm80211@lists.linux.dev>; Tue,  3 Jun 2025 10:35:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.10.52.160
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4746D1D7E4A;
+	Tue,  3 Jun 2025 10:56:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=168.119.38.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748946904; cv=none; b=Dmmqf8L+bHGReBMHiCcCg2hA2cb7xcWfa2ltKrhqdaWz7DhT66hjEJcccCA3ZRdaWraKgzxWo1Aoz0jL5rnueNnoT/I4s8vh4fUXKVxLKg2N0kxYY+F8JLg2wptDmy09Ai+uv3kMJAnfqBu01HOSaCZgnPySpPxaYGhpyCq7Iac=
+	t=1748948193; cv=none; b=n81Ac2+RyLz7whhUoQ9IeVyJzKc+DThpD41jPU3c+lAOXS47Uq5a3VCla/AIgwxRZM1U9ifgIt5uwZE1XjdtgflygnbFLnXNwJQaUveXOthltzxkWhjsg17vUDR86LsEoW+cu9DL3w//qh25H7ZFjGrKS86KnqisaZuelFq52g0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748946904; c=relaxed/simple;
-	bh=OmhfM5l0F6ZhYAzFl+0A6VmNjBv+K1QrKB9WIAp3zMk=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=L5cmx12qzISheqFdp+iQQCaf9HYgLteVCAPyRxO3CxU/ax3FzEhlX+7jCDi9x7XNHGutxpfFlQtkw+OeRgZ1kGquRpELDEhETic7IYIF+KqM/DDutGOtSUs0TIX960vAS9P29oaJV88c+3y24cqnriCl16UX/Ng0gvXLZG0Lkps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infineon.com; spf=pass smtp.mailfrom=infineon.com; dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b=YSM+Yybn; arc=none smtp.client-ip=217.10.52.160
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infineon.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infineon.com
+	s=arc-20240116; t=1748948193; c=relaxed/simple;
+	bh=cN651B07DXiBx3FK23+ouljV2W7aOhhbi+ZIbNVs/sk=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=ULJTMtdLHM8KwHcQI99aVs9Gq6vCNRH4K0MqdXQ6/6FTlqB7jVRXvAzDEkLO+u5J3/6hLaUXYW+SkS1oUmTUXD1fgZXUuWp6OuhzujPC61fqarjHNYYwdhBJ7eB3u1Yfx3HKKgmrlZl4OhXDJwK7aURLeSpIbG5yOB/pTLTHUtc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sipsolutions.net; spf=pass smtp.mailfrom=sipsolutions.net; dkim=pass (2048-bit key) header.d=sipsolutions.net header.i=@sipsolutions.net header.b=RFMd5vt3; arc=none smtp.client-ip=168.119.38.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sipsolutions.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sipsolutions.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b="YSM+Yybn"
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=infineon.com; i=@infineon.com; q=dns/txt; s=IFXMAIL;
-  t=1748946903; x=1780482903;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=OmhfM5l0F6ZhYAzFl+0A6VmNjBv+K1QrKB9WIAp3zMk=;
-  b=YSM+YybnhMab32f1SvVl2dWau0d3Ry2nIGhGuxPdVQRLZ9JemsrDMNo0
-   GGtUgU2KRqLzFXVdO3ji2IkrB2Bqdt3bqTPXknHl1QIeUqJz89wUv6iPM
-   oJ2suiBiaKkyp2g4RLOeYL8uKMGLetpCt5vpPy9jHpWJ9YV7/tCSq5BdQ
-   A=;
-X-CSE-ConnectionGUID: 4o/r49c7TU+Hg2exKOm3xQ==
-X-CSE-MsgGUID: sjq+3EDyR6yrISelyms7aQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11451"; a="87131965"
-X-IronPort-AV: E=Sophos;i="6.16,205,1744063200"; 
-   d="scan'208";a="87131965"
-Received: from unknown (HELO MUCSE819.infineon.com) ([172.23.29.45])
-  by smtp14.infineon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jun 2025 12:33:52 +0200
-Received: from MUCSE827.infineon.com (172.23.29.20) by MUCSE819.infineon.com
- (172.23.29.45) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 3 Jun 2025
- 12:33:51 +0200
-Received: from ISCN5CG14747PP.infineon.com (10.161.6.196) by
- MUCSE827.infineon.com (172.23.29.20) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.4; Tue, 3 Jun 2025 12:33:49 +0200
-From: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
-To: Johannes Berg <johannes@sipsolutions.net>, Arend van Spriel
-	<arend.vanspriel@broadcom.com>, Ajay Singh <ajay.kathat@microchip.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>
-CC: <linux-wireless@vger.kernel.org>, <brcm80211@lists.linux.dev>,
-	<wlan-kernel-dev-list@infineon.com>, <gokulkumar.sivakumar@infineon.com>
-Subject: [PATCH wireless-next v2 3/5] wifi: wil6210: reject SET_BSS if any changed AP BSS param is not supported
-Date: Tue, 3 Jun 2025 16:02:50 +0530
-Message-ID: <20250603103252.18039-4-gokulkumar.sivakumar@infineon.com>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (2048-bit key) header.d=sipsolutions.net header.i=@sipsolutions.net header.b="RFMd5vt3"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=sipsolutions.net; s=mail; h=MIME-Version:Content-Transfer-Encoding:
+	Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-To:
+	Resent-Cc:Resent-Message-ID; bh=TQdZ74RkHcJ0nBbw7U/EMPDBs77v59i09mGTANKzU3Y=;
+	t=1748948192; x=1750157792; b=RFMd5vt3eW508U2V1rOQH6KrBAkCNJy2zf2lQlLVwuaaIrF
+	KCZyA1HdDKvq/3HxLTfz8DDsMibOEgJCSavJqEgh4F1byp+Qo8JGyzORNzJTgfi9goFqg/UauFztF
+	FPdqNgRhyDC6bUGYrtWVbepviGaLhL+j0EytFyLlhlrVGW6popvSNOo7CwFJsor7QWNtsH1hh7oNy
+	MEvd35uE4S3y/Ev6gXpuyVhLYdsszGktcGYRUUWJQxt6i1f7u4MDxSRKlezP3gJnM54dKPF5BliN3
+	ZqZC4ODT7QaN/j33KTOMtK9uFcHhw/CF7sp1MvIwYzCAsqT1+x5ydoIj3zQijEUg==;
+Received: by sipsolutions.net with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+	(Exim 4.98.2)
+	(envelope-from <johannes@sipsolutions.net>)
+	id 1uMPJj-0000000ABJ6-30mm;
+	Tue, 03 Jun 2025 12:56:28 +0200
+Message-ID: <e36c8a9149f85383b4f3e8793381842088853dbe.camel@sipsolutions.net>
+Subject: Re: [PATCH wireless-next v2 0/5] wifi: cfg80211: Add support to
+ indicate changed AP BSS parameters to drivers
+From: Johannes Berg <johannes@sipsolutions.net>
+To: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>, Arend van Spriel
+	 <arend.vanspriel@broadcom.com>, Ajay Singh <ajay.kathat@microchip.com>, 
+ Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev, 
+	wlan-kernel-dev-list@infineon.com
+Date: Tue, 03 Jun 2025 12:56:26 +0200
 In-Reply-To: <20250603103252.18039-1-gokulkumar.sivakumar@infineon.com>
 References: <20250603103252.18039-1-gokulkumar.sivakumar@infineon.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.54.3 (3.54.3-1.fc41) 
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: MUCSE815.infineon.com (172.23.29.41) To
- MUCSE827.infineon.com (172.23.29.20)
+X-malware-bazaar: not-scanned
 
-The userspace can change more than one AP BSS Parameter in the SET_BSS
-operation. Incase if any BSS param other than the currently supported
-"ap_isolate" is passed by userspace, reject the entire SET_BSS operation
-instead of misleading the userspace that the operation is fully successful.
+On Tue, 2025-06-03 at 16:02 +0530, Gokul Sivakumar wrote:
+> In cfg80211, added provision for the drivers which registers the callback=
+=20
+> .change_bss() cfg80211_ops, to find which set of AP BSS params are change=
+d
+> by the userpsace in the SET_BSS operation. With this the drivers can deci=
+de
+> to reject the operation if any of the changed AP BSS param is not support=
+ed
+> for explicit configuration. This helps ensuring that the driver does not
+> partially handle the AP BSS params and avoid misleading the userspace tha=
+t
+> the SET_BSS operation is fully successful.
+>=20
+> Also introduced the "changed" bitmask check in all the drivers that are
+> currently registering to .change_bss() cfg80211_ops. This would make the
+> condition for handling SET_BSS operation equally stirct across all driver=
+s.
+>=20
 
-Signed-off-by: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
----
- drivers/net/wireless/ath/wil6210/cfg80211.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+Oh, nice! I'll have to look at it in more detail later, but one thing I
+saw now is in patch 2 you have this:
 
-diff --git a/drivers/net/wireless/ath/wil6210/cfg80211.c b/drivers/net/wireless/ath/wil6210/cfg80211.c
-index 5473c01cbe66..fbf7e21d91fe 100644
---- a/drivers/net/wireless/ath/wil6210/cfg80211.c
-+++ b/drivers/net/wireless/ath/wil6210/cfg80211.c
-@@ -2416,6 +2416,13 @@ static int wil_cfg80211_change_bss(struct wiphy *wiphy,
- 	struct wil6210_priv *wil = wiphy_to_wil(wiphy);
- 	struct wil6210_vif *vif = ndev_to_vif(dev);
- 
-+	/* Reject the operation if any of the AP BSS params that got changed are not
-+	 * supported by the driver for explicit configuration.
-+	 */
-+	if (params->changed &
-+	    ~(CFG80211_BSS_PARAM_CHANGED_AP_ISOLATE))
-+		return -EOPNOTSUPP;
-+
- 	if (params->ap_isolate >= 0) {
- 		wil_dbg_misc(wil, "change_bss: ap_isolate MID %d, %d => %d\n",
- 			     vif->mid, vif->ap_isolate, params->ap_isolate);
--- 
-2.47.0
+> In AP mode, the "ap_isolate" value from the cfg80211 layer represents,
+>  0 =3D allow low-level bridging of frames between associated stations
+>  1 =3D restrict low-level bridging of frames to isolate associated statio=
+ns
+> -1 =3D do not change existing setting
 
+Is that -1 still true? Seems like now it should just be that
+CFG80211_BSS_PARAM_CHANGED_AP_ISOLATE isn't set and then you don't touch
+it?
+
+johannes
