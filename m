@@ -1,101 +1,95 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtp2.infineon.com (smtp2.infineon.com [217.10.52.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8FD7242D79
-	for <brcm80211@lists.linux.dev>; Tue, 27 May 2025 13:34:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB4D01C7015
+	for <brcm80211@lists.linux.dev>; Tue,  3 Jun 2025 10:34:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.10.52.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748352863; cv=none; b=rD/MdDAAoSfFW/KCzco+ZQXRg6S6hertyc7V34eAdX6m6EtYteoKfmw9w2rQ7FAgH5vS0iQcIke0mRwbuLfGPnVqjxSfB24j08A8ug2uWPWZHTBdpdxfhOxKlg3euocQCeXJJARsm+nfTx5o1lp4J09gy6JYga4Y3w6+oN1tnSQ=
+	t=1748946852; cv=none; b=SPY45iHZNYC8ETwaK45jB0eMHbsn4xDSye0jeCL5m3MxW5wV0LuwHEg2Y3175EJAgbrtCBhlIq9djGwnvs+Mir56SL/4m+Lt5GgHz/r7aiSRiQA3ZPF2LzQLBhnyBbA5euoOU4JmvKiCxxhEuDXz5oWOwbYhJSXjZCXt7OvlHlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748352863; c=relaxed/simple;
-	bh=slUeHAaHejORucO73I8fuosvdKitZLRDYrHi5DvQI4Q=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=d7yXZ3Himn9jN3JRTmvI0C5e4S4Nier2WdE8yfOZPdjXLKG5dhqgAcp5Cb6OctrG6AWidsBz/psuFE6XXe/ylB8iWy7GORTeJ3FsG58nX1r6m9O+ZakgUizF6C+qRrglRCtZP490zzOXASU+lQuewxSMU/LNC+FSAOT2vtCQVv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KgPLlDJJ; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1748946852; c=relaxed/simple;
+	bh=Uowr0sIP+wDxmN8p1DSg+tWmGaoaZ/UnJmKUP1z6qyc=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Z1WdW5pC0khjC8nEIV+9PdoZCao9LSaWTwyOpitfOY56NNWogI+9wzTxvbgFQ0PKGWmy7B8VivJ7L5hB28T5pCRHk77LgzHMGwILpIYUwH6KV9J8q8YFvD8zKI1GDrKMWQvdEDx+Lg5SqDtwZnuhamdo4NTb8h0kupVDo/kJtUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infineon.com; spf=pass smtp.mailfrom=infineon.com; dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b=Y6lniUji; arc=none smtp.client-ip=217.10.52.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infineon.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infineon.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KgPLlDJJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D616C4AF09
-	for <brcm80211@lists.linux.dev>; Tue, 27 May 2025 13:34:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748352862;
-	bh=slUeHAaHejORucO73I8fuosvdKitZLRDYrHi5DvQI4Q=;
-	h=References:In-Reply-To:From:Date:Subject:To:List-Id:Cc:From;
-	b=KgPLlDJJXrw0zNIm4vqBW+SZKIr9IzZl64LkVPKFogGbrtgWx0jWzIgUdmPj8FzBL
-	 1X6rhKh+TYX3Gw/7a1oiFgbi1HXeJAreklfLS3PqrFoqNI2ocCxcC5J+0c/GE2+3Us
-	 JLYELcE6cQUv4d+LomamlpVz2jNEPYzrivffJf0SyZxrAmpP6YD+MFDPqpEfRwiVVm
-	 dHOT5Xw5JF+FxVQcts7px/aBOng3mQm7TUt9b7GJOAyNgi1aHPNjCIqWQ1ABUhuOBn
-	 R1aFbTYUoJkYhqEQ07v/6ujZv/UcOBtXidcNvhvs2BymhCAZu3k3Cx+V/rUnkwept3
-	 +d/V0rVOpL/yQ==
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-70e3980757bso19087647b3.1
-        for <brcm80211@lists.linux.dev>; Tue, 27 May 2025 06:34:22 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCUV1pU4wJLJrHc55FPwnw5lCSEV7nHcSkO+LFFydjgFvl4CTDPlChQkrMtQVEtUFlzeh38E0VPfdvY=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxsklMFc6fQusKabP7TnA2yYkiLW9zW/HW00nuUHBf0hi2gxmCv
-	SCf0LmRnZ+oPt61ItAHqIzFN4HwFbcT4fH+G/D+6QDykmt7Qn6ooa+RdD1o4aFGjiQw+YDdPdeX
-	qJSm21vcGsQB2VXtRPa2CTnhe6QHVXDQ=
-X-Google-Smtp-Source: AGHT+IEdlVYBvyXloh4pXUj4c18L98mDIBr7Dgc5vW4wgV0zWpl3hGM88VdXlDfK/q+WgM2oxPIdT0+xP7NjL7scsww=
-X-Received: by 2002:a05:690c:630e:b0:70e:2173:6f98 with SMTP id
- 00721157ae682-70e8331f747mr9184127b3.6.1748352861566; Tue, 27 May 2025
- 06:34:21 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b="Y6lniUji"
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=infineon.com; i=@infineon.com; q=dns/txt; s=IFXMAIL;
+  t=1748946849; x=1780482849;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=Uowr0sIP+wDxmN8p1DSg+tWmGaoaZ/UnJmKUP1z6qyc=;
+  b=Y6lniUji7HBizwPR9zbNbe24qnB1KFFLW4649avhFklk4gusYn/aExh0
+   ztaaCzg/n4CWucSP3IJPJMct4UYSA05ElSIBs4jz75VhumR2Y5Pnw6vFV
+   fNpH2ADCul4FxGtcZ28yoAr1rQSLvdExZv8sJXBcyn/eh0ThR03NVaz25
+   c=;
+X-CSE-ConnectionGUID: x9VJdPTPTLO7sPlu6pQv8Q==
+X-CSE-MsgGUID: 6F5SPthrSTK0zmoYCShTIg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11451"; a="112926854"
+X-IronPort-AV: E=Sophos;i="6.16,205,1744063200"; 
+   d="scan'208";a="112926854"
+Received: from unknown (HELO MUCSE814.infineon.com) ([172.23.29.40])
+  by smtp2.infineon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jun 2025 12:34:07 +0200
+Received: from MUCSE827.infineon.com (172.23.29.20) by MUCSE814.infineon.com
+ (172.23.29.40) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Tue, 3 Jun
+ 2025 12:34:06 +0200
+Received: from ISCN5CG14747PP.infineon.com (10.161.6.196) by
+ MUCSE827.infineon.com (172.23.29.20) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.4; Tue, 3 Jun 2025 12:34:04 +0200
+From: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
+To: Johannes Berg <johannes@sipsolutions.net>, Arend van Spriel
+	<arend.vanspriel@broadcom.com>, Ajay Singh <ajay.kathat@microchip.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>
+CC: <linux-wireless@vger.kernel.org>, <brcm80211@lists.linux.dev>,
+	<wlan-kernel-dev-list@infineon.com>, <gokulkumar.sivakumar@infineon.com>
+Subject: [PATCH wireless-next v2 4/5] wifi: wilc1000: reject SET_BSS if any changed AP BSS param is not supported
+Date: Tue, 3 Jun 2025 16:02:51 +0530
+Message-ID: <20250603103252.18039-5-gokulkumar.sivakumar@infineon.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250603103252.18039-1-gokulkumar.sivakumar@infineon.com>
+References: <20250603103252.18039-1-gokulkumar.sivakumar@infineon.com>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250525131522.965580-1-martin.blumenstingl@googlemail.com>
-In-Reply-To: <20250525131522.965580-1-martin.blumenstingl@googlemail.com>
-From: Josh Boyer <jwboyer@kernel.org>
-Date: Tue, 27 May 2025 09:34:10 -0400
-X-Gmail-Original-Message-ID: <CA+5PVA6v-fqDBK31yaPkB1FqMTjVHNy2c=g0aQESeO+9_Jr+OQ@mail.gmail.com>
-X-Gm-Features: AX0GCFssQGNkTPet2D-LQrPauahwbn4LzNCHFP4jnBruAt5wXJwSwEdSAPLiBYk
-Message-ID: <CA+5PVA6v-fqDBK31yaPkB1FqMTjVHNy2c=g0aQESeO+9_Jr+OQ@mail.gmail.com>
-Subject: Re: [PATCH] brcm: Add symlinks for Khadas VIM SDIO wifi config to AW-CM256SM.txt
-To: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Cc: linux-firmware@kernel.org, brcm80211@lists.linux.dev, 
-	brcm80211-dev-list.pdl@broadcom.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: MUCSE805.infineon.com (172.23.29.31) To
+ MUCSE827.infineon.com (172.23.29.20)
 
-On Sun, May 25, 2025 at 9:16=E2=80=AFAM Martin Blumenstingl
-<martin.blumenstingl@googlemail.com> wrote:
->
-> Khadas VIM (1 - the original one) uses an Ampak AP6212 SDIO wifi /
-> UART Bluetooth combo module. The SDIO wifi config matches
-> brcmfmac43455-sdio.AW-CM256SM.txt apart from the comments. Add a symlink
-> so the wifi part is supported out-of-the-box, without users having to
-> add symlinks on their own.
->
-> Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Since the driver currently does not support setting any of the AP BSS
+parameters, reject the entire SET_BSS operation instead of misleading the
+userspace that the operation is fully successful.
 
-Merged and pushed out.
+Signed-off-by: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
+---
+ drivers/net/wireless/microchip/wilc1000/cfg80211.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/562
+diff --git a/drivers/net/wireless/microchip/wilc1000/cfg80211.c b/drivers/net/wireless/microchip/wilc1000/cfg80211.c
+index e7aa0f991923..98776ef9195b 100644
+--- a/drivers/net/wireless/microchip/wilc1000/cfg80211.c
++++ b/drivers/net/wireless/microchip/wilc1000/cfg80211.c
+@@ -797,6 +797,12 @@ static int get_station(struct wiphy *wiphy, struct net_device *dev,
+ static int change_bss(struct wiphy *wiphy, struct net_device *dev,
+ 		      struct bss_parameters *params)
+ {
++	/* Reject the operation if any of the AP BSS params that got changed are not
++	 * supported by the driver for explicit configuration.
++	 */
++	if (params->changed)
++		return -EOPNOTSUPP;
++
+ 	return 0;
+ }
+ 
+-- 
+2.47.0
 
-josh
-
-> ---
->  WHENCE | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/WHENCE b/WHENCE
-> index 93f849c..2649c97 100644
-> --- a/WHENCE
-> +++ b/WHENCE
-> @@ -3087,6 +3087,7 @@ Link: brcm/brcmfmac4356-sdio.khadas,vim2.txt -> brc=
-mfmac4356-sdio.AP6356S.txt
->  Link: brcm/brcmfmac4356-sdio.vamrs,rock960.txt -> brcmfmac4356-sdio.AP63=
-56S.txt
->  File: brcm/brcmfmac43455-sdio.AW-CM256SM.txt
->  Link: brcm/brcmfmac43455-sdio.beagle,am5729-beagleboneai.txt -> brcmfmac=
-43455-sdio.AW-CM256SM.txt
-> +Link: brcm/brcmfmac43455-sdio.brcmfmac43455-sdio.khadas,vim.txt -> brcmf=
-mac43455-sdio.AW-CM256SM.txt
->  Link: brcm/brcmfmac43455-sdio.pine64,pinebook-pro.txt -> brcmfmac43455-s=
-dio.AW-CM256SM.txt
->  Link: brcm/brcmfmac43455-sdio.pine64,pinenote-v1.1.txt -> brcmfmac43455-=
-sdio.AW-CM256SM.txt
->  Link: brcm/brcmfmac43455-sdio.pine64,pinenote-v1.2.txt -> brcmfmac43455-=
-sdio.AW-CM256SM.txt
-> --
-> 2.49.0
->
