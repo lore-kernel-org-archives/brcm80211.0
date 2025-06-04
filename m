@@ -1,63 +1,72 @@
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B8CE2153EA
-	for <brcm80211@lists.linux.dev>; Wed,  4 Jun 2025 10:26:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4BAE217F3D
+	for <brcm80211@lists.linux.dev>; Wed,  4 Jun 2025 14:06:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749032766; cv=none; b=arrVO/ldtONUa7+1Z26r0D3Xe+gf/PMO5AEz02/V/zFSwH4kgW5wXf7Xfj4/B5nNLzdejTe4Wm2hlkpVlrZ7djcf4BTXFGGj5Lre6RIXikEwIvZx7DYf5MAk/e5e68jiX9eAl9jQ5bWgAiHHGBmhhjarQWEZ76nhn/brR188ewo=
+	t=1749046013; cv=none; b=N6Wbu21CIjpMYdQMSmLnfdG5KBCXldUCQ8HVx8Wlb2cuFOSoypgvtts2S+yYbyQRaX3Ug/CrQC+V7aCdyeO8Y/1Ja0LiewP17TA079sr3Wiuedogr8SDaMjDSL51pCLGwMgUQv1SlF0/1UgMaHe4z8brsrQMC9xg0diuemXE6nA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749032766; c=relaxed/simple;
-	bh=wgDJdZtOuRzzk5m032hZ5p7H/vYrbO9s+VBX/YQXq6M=;
+	s=arc-20240116; t=1749046013; c=relaxed/simple;
+	bh=LOo9ZQEz2NWZxk7/gOL/t1SfJFqG5AFEJZkaR+Yxe0Q=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MbdYGlQ0IL23xeL9LcitoCymuc2aRDQ98ttSscyJO8h68Az1o+edJOSjnpAKofXBJ2FgJ1o9cqruunAsIAwalz+TZqHWZZNYusGJ7LNOK8C8pFctu6Jo8wL3zmVfHOMuUDHmtNpHFGA8Gz9l79la8ybCPzJuXMRQ1cq1oA5itII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=NWtCd/I1; arc=none smtp.client-ip=209.85.210.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+	 In-Reply-To:Content-Type; b=jfWZ2BMf8o4Zd3hVtfYaF6JAkotoHAIqBn528VoZAs3/wY/idTwqVSHSeXJd2oM+1BtNmQDEC+YfDkHqVI4R+bOATKhGoyqjsqv3ldnt7jT67PFVaquzCUPC0CIiPMICA8hjrenzMZqqqfwY5bEVeEyI8I7ftOqck+aop4LDkm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=mzEdI2Y9; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="NWtCd/I1"
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-747fc7506d4so1640689b3a.0
-        for <brcm80211@lists.linux.dev>; Wed, 04 Jun 2025 03:26:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1749032764; x=1749637564; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=hebA46kmAbzpBHa7BoBZwTkz2sVwPjWT7q4k6utX/To=;
-        b=NWtCd/I1733pZJ/14WL8z3J5Skk3LFzZyWEP15D5oyK5Syxgaciv4do5kHVOrRaK4M
-         E0IryTBGiaNwSI740WO0FbYv4R7FLB/FVfacLF/BoRabEO0kdTQazj1PzEQUrT+qdXRp
-         pHaL+b9bnoWRpFtTJfSEGUyAmp0C4nkGujqsM=
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="mzEdI2Y9"
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 554810L8004261
+	for <brcm80211@lists.linux.dev>; Wed, 4 Jun 2025 14:06:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	5xGJcvc9WybfZJgw/bBO7SWLMjxjlq76pjlmBZ4c3T4=; b=mzEdI2Y9y/GluoPI
+	y0/Rdrp4zurGeFx3oOJTo3QG18y3h2kRt20Or/x+dsYFABzthLpFm55uK3u2RORI
+	j8ApaTVQzvvSX/45MM2o7C5iqVlWqYzQMHwf/OzsZcfNxY+66YxBm2l2RjtBLSMB
+	Ncuviqo5hiVLhpn9m+UOiayvMTbouCNVYtFkb6kYNp8rqdCdPr2iS2xwrXCBDot8
+	eWDQB24BF2jKO3LU5wGxdp7ok7tNqusOnyG+z6E8+uygdfyQkLiH5Ke//qOa5DCD
+	MYB/U71HvjD2EqZ5ZjqPg7VuNc/bahSZMk4eQG8V9qaNJYvNWG7eP7k+Zj2m9IFe
+	IrXPfQ==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 471g8rxacj-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <brcm80211@lists.linux.dev>; Wed, 04 Jun 2025 14:06:50 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-23507382e64so61932955ad.2
+        for <brcm80211@lists.linux.dev>; Wed, 04 Jun 2025 07:06:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749032764; x=1749637564;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hebA46kmAbzpBHa7BoBZwTkz2sVwPjWT7q4k6utX/To=;
-        b=TTWzg98blTaWYARIRwlhPLJxbu9mYYuff1g+Px3Oy31v2Sr8iXTVRxBXtLLIEUZg/0
-         4HhmJh2b++xQSipd10MmEOSqkzTKcgXZwxWFANZ/EfwoyNOLhDmdNsWkGKdy57YPd5E8
-         0L5Fl+qz1/SKdMhBdRmysK4mE6l7uOxt2K+F5HT7rZZyZzefbxfnlroBre55QMftqcxF
-         Obb10iooa3SPiHTcu3YZvqvycgiN9Oaqflahg3UrH/F2Cr2TKHBWHLXzAFCvpLalMmBI
-         1MIEzDh/TLBP9RszoD+CTSMZHVXZMb3OqUQYhLv1s3H2JsygjfYKMh0He/kW5Rkz2EHv
-         tDdg==
-X-Forwarded-Encrypted: i=1; AJvYcCWul927MzjXCghViRJSZ7hoOkh4BUoMrN7FjBlvKvtHiUQWdwOKOay5MgupKoWlhsqVKMmxnSdg2wk=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwVjG1XpJLggUQrmEaUypzxOi1GF72Y2yrYKj/j8z2rp/BlMeAm
-	UPwzXptGlYOoJR4vZJTvMEwX+8lFTQjyTmNX/m/+TbPxInbKH6aCehpgQYDORSmKsg==
-X-Gm-Gg: ASbGncu/CQBhrjTm1sz0pNXZ79LgCpEF1GnwQ2sbyF+N6qipIwSwZv1IkkI/5xUHY9x
-	COs/e2D8n9PTfto0iURUbi5LDhrrJ2Bqx3PiefYTo2ILbaxnajK+5UeI6KeMGFxoKydhwGTeJci
-	u7f60LbAqU1CgbP20j86lGUu02IqEAT3QnWyWDncBIZoPZd46Jx8W6TYqoBPg68AR7WvMJ37K/n
-	XloSU39Bqhs7N8LQVMn19+KDGZNowVqMxqnsGat8KspH/LLRpvevV3H6laxrnFcZV6Yj05KkuY+
-	RuE2wUJ4DnxBc8Fw3sHyoiSc7qX95V9z2wzHiFffHb+21jVDLSSLamfoPFgqOjsnYht3HdgL3in
-	OiEyLsI3G6E+f7CsEL5XyJuzi
-X-Google-Smtp-Source: AGHT+IGrS+tOgY/IKJooK+wvdZcwa9trFxsMHaaj5JdIgpqu7MvgzRVVUemmSl334yGsSJjfQbvQHQ==
-X-Received: by 2002:a05:6a00:b81:b0:739:50c0:b3fe with SMTP id d2e1a72fcca58-7480b23acb1mr3791296b3a.8.1749032764222;
-        Wed, 04 Jun 2025 03:26:04 -0700 (PDT)
-Received: from [10.176.3.8] ([192.19.176.227])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b2eceb9d1dfsm8437134a12.55.2025.06.04.03.26.01
+        d=1e100.net; s=20230601; t=1749046010; x=1749650810;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=5xGJcvc9WybfZJgw/bBO7SWLMjxjlq76pjlmBZ4c3T4=;
+        b=OAITqekMivIGvi6U9SgLuERPRaXMqzzbIVs99MSUBDVOhjK4SJ9B7cywBUj7G/ETAN
+         Vd6rE5wwsRpNKwcbScWHfAzVObKztUexoiiy/1ZwStxJFx4wG5gwyJbJ1/+PggFG1L3F
+         GCH1n5g3D68zrSOTTmheLQpSD9U42iBM8Xuq7AfhG/Vo6bk4jwhcZdEzMMSIxm1uBQ+/
+         +PtI/2X7YhutHmUetklHKCbZgSZMCjeJmzLvFoaVe3AI9nEL7LwpSpFAwlNH6JYSBtml
+         eYrwTaXqo4gz69B0+VRWZ85XeXBuTxiq3xqx4dkUJyfMq0uQOKQtd6d4Pp6ht7CRXfA9
+         W7wA==
+X-Forwarded-Encrypted: i=1; AJvYcCXmJawN9kCISIRkDjBKjUNb042iQ7I2J4Y+EmpAXP2Vtm3W7g0E9N5xyT26msjv4LKRfLDq8eyO1kQ=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyfUrvpQRxFj+TFHyNb/mXP+ODZdbURt7xKAGaiX6U5/davIAde
+	2Ol4qf9cOhK7TKAhjP6GTG2cGQyLv6agoobeM6La4A89BYkUQbH/OBv+uh2VEZH4V2M5e2OtxeM
+	lnSdvnRuQ5TaobGPv8/ZJEx+x/yzBQIvp824Sh0B3X+m6aPOHNlGpE1iIfWAoFiQ=
+X-Gm-Gg: ASbGncsB5btG4Ifjj7eqefCocPOkVCutEVxtykNG2/lCo770//HLNuDFfnuo5sErObX
+	RTeDkzT6ZuutCpwxInp6GIPfUerU66bmoWOubQ14bjg3kad+M61sk6AMPr+6g9UZXs+1dXh3hvV
+	1rFSYdpD+E4xf6u4LDogpwapqUzdS0w7dTVenK9IExW1k2zKXh12Z7QEc6tNL3VTzWS5hgFJ0j7
+	To3OmMjlk1r8bbfuKmBq/cYpZ+DecHKy+H4dhkTO662lo5ViIkj2NxE/eNIYK7aNlW2yB1qOxVh
+	PmanJ7kXYqoSNDGo6oZkErBlTHOiYsUJDKbT8fhoCTKcgO620QQnf6vLFK8iezj9WRc=
+X-Received: by 2002:a17:903:228a:b0:220:df73:b639 with SMTP id d9443c01a7336-235e11e74d0mr47249225ad.36.1749046009711;
+        Wed, 04 Jun 2025 07:06:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGflRO9w76DKHbAxPNGfV+PyKTLHNhK10nzU7kGlFNAVVDrT2kDI9qtGLy2XLTX3EWJ4VEkVQ==
+X-Received: by 2002:a17:903:228a:b0:220:df73:b639 with SMTP id d9443c01a7336-235e11e74d0mr47248775ad.36.1749046009289;
+        Wed, 04 Jun 2025 07:06:49 -0700 (PDT)
+Received: from [10.227.110.203] (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b2ecebb5cf4sm8730238a12.63.2025.06.04.07.06.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 Jun 2025 03:26:03 -0700 (PDT)
-Message-ID: <1b15a15d-d02c-42af-a628-a8543ffdf528@broadcom.com>
-Date: Wed, 4 Jun 2025 12:25:59 +0200
+        Wed, 04 Jun 2025 07:06:48 -0700 (PDT)
+Message-ID: <926c66d7-91a6-4555-9c2e-6557400eb5ba@oss.qualcomm.com>
+Date: Wed, 4 Jun 2025 07:06:47 -0700
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -65,106 +74,96 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH wireless-next 4/4] wifi: brcmfmac: prevent disable
- controller in apmode stop
-To: Ian Lin <ian.lin@infineon.com>, johannes@sipsolutions.net
-Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
- carter.chen@infineon.com, double.lo@infineon.com,
- vinoth.sampath@infineon.com, gokulkumar.sivakumar@infineon.com
-References: <20250604091629.3943-1-ian.lin@infineon.com>
- <20250604091629.3943-5-ian.lin@infineon.com>
+Subject: Re: [RFC 1/4] wifi: nl80211: allow drivers to support subset of
+ NL80211_CMD_SET_BSS
+To: Arend van Spriel <arend.vanspriel@broadcom.com>,
+        Johannes Berg <johannes@sipsolutions.net>
+Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev
+References: <20250604085539.2803896-1-arend.vanspriel@broadcom.com>
+ <20250604085539.2803896-2-arend.vanspriel@broadcom.com>
+From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Content-Language: en-US
-From: Arend van Spriel <arend.vanspriel@broadcom.com>
-Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
- 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
-In-Reply-To: <20250604091629.3943-5-ian.lin@infineon.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <20250604085539.2803896-2-arend.vanspriel@broadcom.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: ShkSEiLOFHpBwsZkePsMDJWA58HalD4Q
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA0MDEwOCBTYWx0ZWRfX6kaHkAo7ofEo
+ oj7XozhGbH7bbLeHdF2+9bLqAavG45AL4h/1aqMMwBGyR3tc2wM69M/k4wAMINiqlH5GxO9+B3w
+ LB9FuiG5XaCEFR+2ChdCqkv896H757XiePPOwhSBZYBSnmunt7pCT5l1EnaCEFnFaeEHahDNmje
+ /eIF7+hIJBnjSEuElBHGDOMwnFHR0/dX9Gg5HJrkszQok7ZqDOw7BNM+PaNs8oYiycJsTMs3IoQ
+ iq72cTvlnjxN7NiFItdAuUrC9Z5dpqx1PYBUHmPC1D26m8RsX5tB7D79SOEkOOSMhxRNreDgKpC
+ 80iJHmOLKAx0SyE/tupC+y7zPL+FI0QoE3ZPjP8BdjUcWm2r3bCPznp8k6ygBzuJSroPL5siER1
+ hrJuD4KSg82j64dmjQMClKXTruXXUydMlD32wG1gOjc91FOkc1T4lCsyuRm17m+QNsuVoX4o
+X-Authority-Analysis: v=2.4 cv=RdWQC0tv c=1 sm=1 tr=0 ts=684052fa cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=ssMj3LTDSvaIlfdxBTsA:9
+ a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
+X-Proofpoint-GUID: ShkSEiLOFHpBwsZkePsMDJWA58HalD4Q
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-04_03,2025-06-03_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 adultscore=0 mlxscore=0 priorityscore=1501 phishscore=0
+ clxscore=1015 lowpriorityscore=0 malwarescore=0 suspectscore=0
+ impostorscore=0 spamscore=0 mlxlogscore=999 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2506040108
 
-On 6/4/2025 11:16 AM, Ian Lin wrote:
-> From: Ian Lin <ian.lin-ee@infineon.com>
-> 
-> Wpa_supplicant will firstly call scan before start apmode.
-> In mbss case, controller will be disabled during stop apmode
-> so next time it reports fail in starting apmpde.
-> Fix by removing the disable operation.
+On 6/4/2025 1:55 AM, Arend van Spriel wrote:
+> @@ -2899,6 +2899,9 @@ enum nl80211_commands {
+>   *	APs Support". Drivers may set additional flags that they support
+>   *	in the kernel or device.
+>   *
+> + * @NL80211_ATTR_BSS_PARAM: nested attribute used with %NL80211_CMD_GET_WIPHY
+> + *	which indicates which BSS parameters can be modified.
+> + *
 
-The function brcmf_cfg80211_stop_ap() is a bit tricky. The flag 
-ifp->vif->mbss is set to true only when there are multiple AP interface 
-and only for subsequent AP interface. For the first AP interface being 
-created the flag is false.
+Ideally this should describe what is contained in the nested attribute
 
-Now looking at the function I suspect there is an assumption that each 
-AP interface will be stopped. So for a subsequent AP interfaces is will 
-do a BRCMF_C_DOWN and for the first interface it will do other stuff 
-below the if statement follwed by BRCMF_C_UP.
+> @@ -2996,6 +2996,40 @@ static int nl80211_send_wiphy(struct cfg80211_registered_device *rdev,
+>  			    rdev->wiphy.ext_features))
+>  			goto nla_put_failure;
+>  
+> +		if (rdev->wiphy.bss_param_support) {
+> +			struct nlattr *nested;
+> +			u32 parsup = rdev->wiphy.bss_param_support;
+> +
+> +			nested = nla_nest_start(msg, NL80211_ATTR_BSS_PARAM);
+> +			if (!nested)
+> +				goto nla_put_failure;
+> +
+> +			if ((parsup & WIPHY_BSS_PARAM_CTS_PROT) &&
+> +			    nla_put_flag(msg, NL80211_ATTR_BSS_CTS_PROT))
+> +				goto nla_put_failure;
+> +			if ((parsup & WIPHY_BSS_PARAM_SHORT_PREAMBLE) &&
+> +			    nla_put_flag(msg, NL80211_ATTR_BSS_SHORT_PREAMBLE))
+> +				goto nla_put_failure;
+> +			if ((parsup & WIPHY_BSS_PARAM_SHORT_SLOT_TIME) &&
+> +			    nla_put_flag(msg, NL80211_ATTR_BSS_SHORT_SLOT_TIME))
+> +				goto nla_put_failure;
+> +			if ((parsup & WIPHY_BSS_PARAM_BASIC_RATES) &&
+> +			    nla_put_flag(msg, NL80211_ATTR_BSS_BASIC_RATES))
+> +				goto nla_put_failure;
+> +			if ((parsup & WIPHY_BSS_PARAM_AP_ISOLATE) &&
+> +			    nla_put_flag(msg, NL80211_ATTR_AP_ISOLATE))
+> +				goto nla_put_failure;
+> +			if ((parsup & WIPHY_BSS_PARAM_HT_OPMODE) &&
+> +			    nla_put_flag(msg, NL80211_ATTR_BSS_HT_OPMODE))
+> +				goto nla_put_failure;
+> +			if ((parsup & WIPHY_BSS_PARAM_P2P_CTWINDOW) &&
+> +			    nla_put_flag(msg, NL80211_ATTR_P2P_CTWINDOW))
+> +				goto nla_put_failure;
+> +			if ((parsup & WIPHY_BSS_PARAM_P2P_OPPPS) &&
+> +			    nla_put_flag(msg, NL80211_ATTR_P2P_OPPPS))
+> +				goto nla_put_failure;
+> +			nla_nest_end(msg, nested);
 
-Clearly you are solving another scenario here so could you elaborate on 
-that?
+I'm personally not a fan of (ab)using attribute ids in this manner. This means
+the receiver would need two different nla_parse policies, one that expects
+these to be NLA_FLAG when parsing the new attribute, along with the existing
+policy (such as the kernel's own nl80211_policy[NUM_NL80211_ATTR]) that is
+currently used when parsing the actual attributes.
 
-Regards,
-Arend
+Does nl80211 have existing examples of using attribute ids like this?
 
-> Signed-off-by: Ian Lin <ian.lin-ee@infineon.com>
-> ---
->   drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 5 -----
->   1 file changed, 5 deletions(-)
-> 
-> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-> index e23cd6fc0f56..b4078e74f135 100644
-> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-> @@ -5392,11 +5392,6 @@ static int brcmf_cfg80211_stop_ap(struct wiphy *wiphy, struct net_device *ndev,
->   			profile->use_fwauth = BIT(BRCMF_PROFILE_FWAUTH_NONE);
->   		}
->   
-> -		if (ifp->vif->mbss) {
-> -			err = brcmf_fil_cmd_int_set(ifp, BRCMF_C_DOWN, 1);
-> -			return err;
-> -		}
-> -
->   		/* First BSS doesn't get a full reset */
->   		if (ifp->bsscfgidx == 0)
->   			brcmf_fil_iovar_int_set(ifp, "closednet", 0);
-
+/jeff
