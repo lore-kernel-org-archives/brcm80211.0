@@ -1,64 +1,63 @@
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7154128D83A
-	for <brcm80211@lists.linux.dev>; Wed,  4 Jun 2025 09:38:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58C7B22539F
+	for <brcm80211@lists.linux.dev>; Wed,  4 Jun 2025 09:54:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749029926; cv=none; b=SloLpGgvvCVw0XG3sH/aaiOvoyqj5EwhhhmSDXlSVTap/qZKSRJpw2hYoSARJ/vYUFZVMz0iXSjlQYR6t3YxWXODxEyXYIAUYyTuzpt5S8NAGq/B7vTPPJDOoVtRuNJTvxoOjoLwCwLjxwunNhk1WNyNY12J4wfEFDVekBgDmHI=
+	t=1749030900; cv=none; b=mwuEnVSI6tMZYOnirBj0nu7sF0FIh8gXdLJ7VLKEm/d2+roaiAzF/b0WaUv7W8q44+s50jL5Rgj0iO+CS2pxcQg9XYTi5mD6wftABq1jRuu/kwj6Lo23igrJA4TtcxPFRWpK9XT5HFBmGrI+ESSkeH9GCdVO0P4zzoYyIcBFH9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749029926; c=relaxed/simple;
-	bh=bTqY3mmXzyFFv9EYPhTXt1gNNUwtUBEVMYKoCDpcjTg=;
+	s=arc-20240116; t=1749030900; c=relaxed/simple;
+	bh=miTFNxdINta7zyIhNKTv1lrUPzISl4z0AuxlHlBztWI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=imcF3s0PmhRVHCgLx53jg24rjrGMjbTNLI6s0AyFyRryQUNyZgOuQIOXx1UPRTFsaTvG2AaB5khd8dwgkjh/CqF1WlkYE2FMH7U77lDFQ5DXIY2baUNGWpyLTpOQtPzA7yZ5CrS+5F/Oclmjo3jQdcRTtD8B3lSiVghTkfo5mV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=HWDCKEEk; arc=none smtp.client-ip=209.85.210.178
+	 In-Reply-To:Content-Type; b=Ab4+9NlHQ4XGH4sCovLJ8CG7K5N+ayPzTcL0nmLcdhrztA1WPCpWhskvPTtW/8ZRitmmF6JqB2w8maN2BglMD5r3wBu8/QTQfZHhipSRursDNds3kgyRqYDL6M3BRTLg6f7ppZq/HLex3HyzoW8rW66CeQi/hlEidE4pqopxX64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=EPWP0F64; arc=none smtp.client-ip=209.85.210.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="HWDCKEEk"
-Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-742c9907967so6513004b3a.1
-        for <brcm80211@lists.linux.dev>; Wed, 04 Jun 2025 02:38:44 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="EPWP0F64"
+Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-742c3d06de3so7135053b3a.0
+        for <brcm80211@lists.linux.dev>; Wed, 04 Jun 2025 02:54:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1749029924; x=1749634724; darn=lists.linux.dev;
+        d=broadcom.com; s=google; t=1749030898; x=1749635698; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=R61rovpELAXLVRfgYuxMxG0BozH+MJff6pqZs/BVTDk=;
-        b=HWDCKEEkMyOLrwDdWGUU8T+IY6oiI/TRnIgBNHDm+RxJ8VA3rIZop+KKx/NHSN/U2Q
-         ClKoJpCK8h8MYxUV2OwSdw+BIBlr+q0vqRpB6AmHbQYnn1pHk/6P+8/xq+6MlOT/pOhs
-         xdiZxA7YMeU0iIl3J4H1X0dTY8EelLbVXqHGs=
+        bh=VmiYvCf6fvZ2kv+WW1AEJh/PFIWU/Fzej214OLQXFGM=;
+        b=EPWP0F64jz4S6MFK/IMS+CkXLI3GtoqW4bq8cmRGWcMvutk9Y8uzc7wcvpPK++q/OW
+         9yS/IYezoLgnWOYVcldIXVgOkgDxui7L0QCXodIRPYR7DhZfu7ru+8kBJBu18K952hhd
+         6FdbmU8iy+3HYhTJRp/cShagD7QxeadgYeRVU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749029924; x=1749634724;
+        d=1e100.net; s=20230601; t=1749030898; x=1749635698;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=R61rovpELAXLVRfgYuxMxG0BozH+MJff6pqZs/BVTDk=;
-        b=H+1hyVLwooTp4VZgchK4yFVRbvrnp7fyY/qQZaP+nGwvZAZONr2ZhPSEa7A5lWus4D
-         UvfDsFLzn+wo5ksGwR2P7jBw+8aRUUrtdJ06JYTM8PClKvnTG0XYO7iv6mCdiV8Uk16J
-         0L0erqbfhnSNf9DxKDrdvmpH3CW4vTlAa9tTb4oduWynAu5U8QYLydiXXjCpudfCzwzT
-         2hJNFPNfpTHIH7t5OFfC3KPQPlEIR6CfwDctw0+3PJYxmmPDC32/u1BIZl6Xw/yS8IOf
-         H63D1XUXm8IrXI5OcUA2iQlqa1zjNgcvkPPc5BabZZJk4w5r0nJ+9n78yOQ+ZkP+rP8l
-         2Wiw==
-X-Forwarded-Encrypted: i=1; AJvYcCXfo0dQS7lryW+vt9l47N9jdKBkGLZpT7AGz1rd5rjyxNj83KJ0+VQp8l591vZpFQa3vHTWAu8yh2w=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzjpPvrfmxiKrr9mVRi+zF/Tmg3IaLIGsqnQnY1djovn/Xq2UGE
-	bEber2EkO5UhNM++dKa1S4OEbvv6xymQ4OmnNs2WIA5wX3XiuhcEpyz1MwrNtD0HUUdnfIfd+7S
-	9qrmxWw==
-X-Gm-Gg: ASbGncsMdnvvFHImj0uzZ/J17cnPllzW8ULluRc+kpQBQHckVM9aa9AHFDMePLft7Nn
-	gb8ZCIcDtQ1R4wfYtkJs2WpfwdsXfhwzr+a1lHNprEMvnikG4t+Wn9fVgTmMpq+GvvVYFFxO92b
-	ubeBLGqrFeTGZ4g9aX/OtuUQwx/Ij4RiQ+bU0OECM6XtIVxHrw9cJavUnV/618Thgph361tqC+Y
-	9hjd5zFmD5HnqYkFwrYk5n3jwaw8k9PZctet2sM0PQBY4Cxn1lkwWD1W20YO8AcVKowpLDdIxpJ
-	B5qgy3EF54sg+rIatF9rGfbWCAWReG5XXaNiFcWFvGoBTGOH8YrUIhg9jbQrhNzypfVASHFP7Pg
-	Rcwu1bo5gwUc/+FsfNpoGZk/m
-X-Google-Smtp-Source: AGHT+IEOoM1fMnixwVmmnzP7M0aPXxsStlj0wscerdIiUBfyKFMZyvnoKZ5z3eILaYW6oMAXEetXNQ==
-X-Received: by 2002:a05:6a00:39a4:b0:730:95a6:3761 with SMTP id d2e1a72fcca58-7480b1f26efmr3900127b3a.3.1749029923603;
-        Wed, 04 Jun 2025 02:38:43 -0700 (PDT)
+        bh=VmiYvCf6fvZ2kv+WW1AEJh/PFIWU/Fzej214OLQXFGM=;
+        b=R0DAk9CeIyYV35XLZHYsH1PddHdOX2VIQiNXLXXU5ICVT/ploKnEY+v4wmkZRYG6WO
+         ujuzeQlytSq83o5n80kbygKhLMnslTUsi2Qcq2NdkWRa7JAnk7HQsQk3Ba1UfsE31qKQ
+         lFj7JS/UUkSvPxrtCQTuxiVN9rXxkSpHMQQBsNFory20G4An9b3Y5SF7ZY2Se9+5qffm
+         8otSfAdw4DJzWlZ+2UGhnTMOAXdZgqMUxTF9EYNUPHAqgYG/96iIgNr++YfsxFP2pL1k
+         6/xK+gHeW/fMSjl8Z3ZEYmE0zRNEe2w8P2v8fdpvQm+Wh8dY8VcxHvViwEo3KeinSkDX
+         eTOQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX71iOMrO9kYovhfrqesO42e52My/NpbTK8wwEOeZ4XzdHax3clwbMOpT2vMKpxJlOEAKe/xcZJObk=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxO7k6sTh90minx91HiLyOSAa8hK13xFsXMHjbLioRjn5NhWJxC
+	iThKzjhlsI8f2+TYVioOdJppa82jhksOfAMRitZ1cEeSXoZeMOqo9KsnHO0RglyHcA==
+X-Gm-Gg: ASbGncvCe7yde5wH6Dv+r4EWQWo+ASSkaJR+l7Lz9aIVB62Q+NPNDn7nabVsVQemolj
+	IUZ0Cb4aWrxmk0XaO7D3bFcP5p1tGdYiMvRJ21SrgZn0WDITYHwtUMl9cptYaWQOzi1gd2gFALs
+	CveMNw0S3eueMKzyRT4t2bP2PMeGWT1znbx5nvePFLeziikm2NfMFuMYZoYO7Qr2lvs9ieaMa0t
+	AiLX/edxyoNuQ8///0SMt+nXCMCC7M/otAOXfihgU6vPh7/5wjx7Lljc2eUv2J575AtAjj9KxAP
+	PT3Dqp9vXuJ15mamKPBteDaHf6ZjHN8ebQF3AgjhIiVk2VWDqSlrDENilwHEFAiL/TbL4s7o6AL
+	vTvWuJ68dRpuv7A==
+X-Google-Smtp-Source: AGHT+IFxr/oRZ9tIHAMChj9t8B3ahv4uHLP1BdXSx6YJaU5NxvFyTZT6b6RfsFkuRPWOxBqHBM+vag==
+X-Received: by 2002:a05:6a20:9190:b0:21a:c058:9b8e with SMTP id adf61e73a8af0-21d22bcd433mr3856024637.34.1749030898622;
+        Wed, 04 Jun 2025 02:54:58 -0700 (PDT)
 Received: from [10.176.3.8] ([192.19.176.227])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-747affaf9e5sm10801847b3a.86.2025.06.04.02.38.41
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b2eceb97068sm7292864a12.61.2025.06.04.02.54.56
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 Jun 2025 02:38:43 -0700 (PDT)
-Message-ID: <c393c4cb-ac13-46c3-973f-e123f603bdd7@broadcom.com>
-Date: Wed, 4 Jun 2025 11:38:37 +0200
+        Wed, 04 Jun 2025 02:54:58 -0700 (PDT)
+Message-ID: <b6d38c35-e410-4ea6-94e0-b9f091976953@broadcom.com>
+Date: Wed, 4 Jun 2025 11:54:53 +0200
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -66,14 +65,14 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH wireless-next 2/4] wifi: brcmfmac: revise SoftAP channel
- setting
+Subject: Re: [PATCH wireless-next 3/4] wifi: brcmfmac: Improve the delay
+ during scan
 To: Ian Lin <ian.lin@infineon.com>, johannes@sipsolutions.net
 Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
  carter.chen@infineon.com, double.lo@infineon.com,
  vinoth.sampath@infineon.com, gokulkumar.sivakumar@infineon.com
 References: <20250604091629.3943-1-ian.lin@infineon.com>
- <20250604091629.3943-3-ian.lin@infineon.com>
+ <20250604091629.3943-4-ian.lin@infineon.com>
 Content-Language: en-US
 From: Arend van Spriel <arend.vanspriel@broadcom.com>
 Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
@@ -119,22 +118,29 @@ Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
  NKowQLrlMBGXT4NnRNV0+yHmusXPOPIqQCKEtbWSx9s2slQxmXukPYvLnuRJqkPkvrTgjn5d
  eSE0Dkhni4292/Nn/TnZf5mxCNWH1p3dz/vrT6EIYk2GSJgCLoTkCcqaM6+5E4IwgYOq3UYu
  AAgeEbPV1QeTVAPrntrLb0t0U5vdwG7Xl40baV9OydTv7ghjYZU349w1d5mdxg==
-In-Reply-To: <20250604091629.3943-3-ian.lin@infineon.com>
+In-Reply-To: <20250604091629.3943-4-ian.lin@infineon.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 6/4/2025 11:16 AM, Ian Lin wrote:
-> From: Ting-Ying Li <tingying.li@cypress.com>
+> From: Kurt Lee <kurt.lee@cypress.com>
 > 
-> Fmac need to update "chanspec" iovar for each SoftAP creation
-> because firmware will update the chanspec to current bsscfg
-> for each bss. If it doesn't update then the wrong chanspec
-> will be shown on the result of 'wl -i [interface] status'
-> command. No need to handle channel resource reusing for mbss
-> mode by the host driver, it should be covered by firmware.
+> wpa_supplicant sends NL80211_CMD_GET_SURVEY command every time after
+> normal scan, which causes brcmfmac surveying each channel again.
+> Currently brcmfmac implments brcmf_cfg80211_dump_survey focusing on AP
+> mode, thus this change will return the request other than AP mode.
 
-Sorry, but the wl utility is irrelevant to upstream driver so that does 
-not count as argument for this change. What does iw show?
+I am not sure if the driver should make this kind of decision. If 
+wpa_supplicant wants to invoke a survey after a scan than we should 
+simply comply and give what wpa_supplicant what it requests for. If you 
+want to avoid the survey make it a configuration option in 
+wpa_supplicant.conf.
 
 Regards,
 Arend
+
+> Signed-off-by: Kurt Lee <kurt.lee@cypress.com>
+> Signed-off-by: Ian Lin <ian.lin@infineon.com>
+> ---
+>   drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 3 +++
+>   1 file changed, 3 insertions(+
