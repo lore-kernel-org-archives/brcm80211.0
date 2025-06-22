@@ -1,156 +1,104 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D8CD7262D;
-	Sun, 22 Jun 2025 03:58:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB3018B0F
+	for <brcm80211@lists.linux.dev>; Sun, 22 Jun 2025 15:48:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750564740; cv=none; b=rNX1ggtfkh8WY5o2VAxrgwPE/Rc5mmdMO2HqGOFqUnbQstJ1aFcYSpnkyq53PTihWG3iFp0EIHVRJwiLVdMzdUX4NFNicLtxngqdoT8YTV5EyiIlN6EF/HQ/IkQd40NtGhP49iwFejtCUbdizjfV2xQQK1stIGxR/BBoNBy8+fs=
+	t=1750607338; cv=none; b=ZulkrTyn22qUzG0U1QttksMBd10UKglgqCKXwrYlZUwUSBhbwN/xX3hPYK/9bR1B+rvQG/fla/oITvjn0izSxQQDgDswLI18gU/hJS7RN/EF5YA/ME0QrjxD6lZkF0+wIa7ijF8wVu8bQaZq4KdQdpwCw9NcGw4gUP1RD2muUF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750564740; c=relaxed/simple;
-	bh=i3Hqyl3yk7xPW9bAXn+Uy8H+vf+lYt7fD+tsFFDmjgc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=icMPEoYTJDV9ptZgidVgYOGKzmFVRdPo55f/nVGjaX6p/PTPR+vj0lYkbQdCSqanbmAlVK3DFSDPaGVbb5UoLOZE472v0BmdcewDkBB6vTk13w9GNLAZ+5/O5f+3x1JlE49rXcX0XnxmMLKCEprT+tAAAQFrOA3vDaizsC1OXuA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=T6JZAeCZ; arc=none smtp.client-ip=192.198.163.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1750607338; c=relaxed/simple;
+	bh=nYAydejRF+851N0iDpYZ69u5XQok+wApYHZ8qDoPyck=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=OaNxpPlPfw6bj9crTa8abc27EKmsfYH/+PHMXE4PCDywkulccAl1/+mvoT4jT7zVHw5cDnGysrRs40IbdghcBjLfk0A4wOgqzmxa6ROY1gZilj0utNJzeAYdBkdPgUPe89FiUW4TYeh2FgIGrurQByR9E734vohgMjIvi0SKrAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=hGMa4qlB; arc=none smtp.client-ip=209.85.218.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="T6JZAeCZ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1750564737; x=1782100737;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=i3Hqyl3yk7xPW9bAXn+Uy8H+vf+lYt7fD+tsFFDmjgc=;
-  b=T6JZAeCZ+PGt7Zr7Cny8FzQ0PU3Nk7wtKMuO48O0OXciUWgo97QTl7jl
-   ixEjWhW7ffqAfIutdUmbHFtCuSZTCIfPVZbXBywiuM+9iosJO/glmJakU
-   IAB447ya1nfTcgMyC7GDJnvGmIPiASMODr0QD1epS8wR4sIL6MB1H6MLz
-   CWlKQIXJEB3tBMWTHrsi3ztcdygLNB2FasOke1qisanHpsf3tjkLAK+D/
-   S/ev2PDtoUwXTHUkhRMg2Jr1vNw+Iw0l6SyUIA1KIBhK8AW/jwfCb7ggZ
-   lWoas0r+fcooWNPqqf7r5FdVZKHADqUzI2FrlhjzFpfKwBXZ6I0l7PUc3
-   Q==;
-X-CSE-ConnectionGUID: CAmFTsX9RGmxpdGJZrzHNA==
-X-CSE-MsgGUID: w5axnfF5QGq5yNzAIt1gLw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11470"; a="52935541"
-X-IronPort-AV: E=Sophos;i="6.16,255,1744095600"; 
-   d="scan'208";a="52935541"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
-  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jun 2025 20:58:57 -0700
-X-CSE-ConnectionGUID: 3ce5oppVTwqvZV4/ascxpQ==
-X-CSE-MsgGUID: DEizkX+sTpyysIWCTN590Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,255,1744095600"; 
-   d="scan'208";a="157067337"
-Received: from lkp-server01.sh.intel.com (HELO e8142ee1dce2) ([10.239.97.150])
-  by orviesa005.jf.intel.com with ESMTP; 21 Jun 2025 20:58:55 -0700
-Received: from kbuild by e8142ee1dce2 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1uTBr2-000N2A-1I;
-	Sun, 22 Jun 2025 03:58:52 +0000
-Date: Sun, 22 Jun 2025 11:58:30 +0800
-From: kernel test robot <lkp@intel.com>
-To: Rouven Czerwinski <rouven@czerwinskis.de>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>
-Cc: oe-kbuild-all@lists.linux.dev, kernel@pengutronix.de,
-	Rouven Czerwinski <rouven@czerwinskis.de>,
-	linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
-	brcm80211-dev-list.pdl@broadcom.com, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] brcmfmac: remove always true variable and code
-Message-ID: <202506221133.9JH31DNw-lkp@intel.com>
-References: <20250621112912.180436-2-rouven@czerwinskis.de>
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="hGMa4qlB"
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-adb2bd27c7bso509367666b.2
+        for <brcm80211@lists.linux.dev>; Sun, 22 Jun 2025 08:48:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20230601; t=1750607335; x=1751212135; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ykytJ19qhLnLNbAMsXtAq9tDXr6uJ5hDujPOGMEyyok=;
+        b=hGMa4qlBsNKlhGQz67frTnK6jLTLsDa10rbsphWKmP85DHpvrjcFPrQCVLSYkyCg/H
+         puuXzsUYgXtv5cJl5GUFdRQHcbHnDjQ+VD5/fTISu9lpeTt+sakecINkzdqinbNhcTdh
+         M4MEFjNOrtQ/zF61Rtd1qcpHxSY9jbKeD/a2evTErtaxg1W94w2PrEjK7SYubG/h5Fqz
+         Zxx5B0n3Szs4CX7h2DWhWBXfshdyHIsS4XoYWfBYg728TXI53N8N0ZHqYzPEk8EkGanM
+         FvhdTHHmKD/c5T0q6ImjsyhMaW9H9gsGGLM+cVUey7hMitUsnwySvGCRSjjFW97XpZZ3
+         b0sg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750607335; x=1751212135;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ykytJ19qhLnLNbAMsXtAq9tDXr6uJ5hDujPOGMEyyok=;
+        b=qmy7+sDYe96nc+Uq0LjHXk0bAmek+XrrusBRPTIsa59ubqSBJSJ85KOoXCuoz1M9qt
+         RY2x1i9gFJWqhle1S18gO6t3ZfTtxKdOtesqY82aT0VioH2hTELjG0/OpnBCO49FYoIt
+         71xh+AgLG9rt/cXG9A8Q/QAgGhgzB5e1szceKKKi1cM2D1Uidlrm++fu7AVkV0pjJmqB
+         uYlAHhokfuoqadb5WfT8A/oR+Lwz8ml+OtTGB/GRCA0jAjM2IXMwd8MJRHrBq7NMcO/H
+         Din7RFocZJW641+294Rx+KgqlsmBz7RKS2Y6eiWJ5BddawpFDAoqu+G/bHsquklr3Cmh
+         i5uA==
+X-Gm-Message-State: AOJu0YyRcC3yCaaxaQHYtsiOW2pcvjvNb8OwxYDm+hFBgn5Z0h4+76DR
+	y+DI0ytqzK+Nveg/KT7IXxAOlwE4IVh/s0AN+XVN8lyxm/E2NpP8wz+R75DLFg==
+X-Gm-Gg: ASbGncsjBLYw7PBa9Wxs8rWbHJMCndZX43di+AKpX0pUcXrmxm6e4tKRjTVGWNra5Ds
+	PrNiEg4qnSVU3jUSDj1r4ht2qrlh6n4R7b80M7Hndda/pUe3JJcezChYcC8PtwPms4mPYKZ9AE5
+	ioxLZ8055Eyjfc8WxnnmU75M7q3IhsA9m7J7RZmGQ2xL9qlj9kA3tzR06llSQdi0+bnrPNWTl4F
+	WV43e+K6VNsuO9OF7fjwuMPDgtalApQzqfkUWI5y26uxG7fW3VFDnKu3S3HraAfDFvHDijQjc1t
+	kA+7/g3OkSk0DRk1hpN0DtLfMZrNTdTmzZON1gew+NoaxybPbpE/Sa1M+e2YY4xv6QedEsQjhRN
+	pvGIMfKv7tW9hM0C8x7ugplJ2953d6EIQ+IRCjSHfvheimehgUC6ZgpGDeadz1KKbRizxWpi9WZ
+	QWkTSVfVnUFWoe
+X-Google-Smtp-Source: AGHT+IHJ9GFpJ7wQiVduVXrIuQj9XRGcrJhLJVSE4rJlPRZny3FaOvEOkIjlhvd9Vu48g9iTkm8zXQ==
+X-Received: by 2002:a17:906:c154:b0:ad8:a935:b8ff with SMTP id a640c23a62f3a-ae057ef75famr1019225866b.31.1750607334317;
+        Sun, 22 Jun 2025 08:48:54 -0700 (PDT)
+Received: from blackbox (dynamic-2a02-3100-b1e8-3900-1e86-0bff-fe2f-57b7.310.pool.telefonica.de. [2a02:3100:b1e8:3900:1e86:bff:fe2f:57b7])
+        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-ae05408301fsm557509466b.96.2025.06.22.08.48.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 22 Jun 2025 08:48:53 -0700 (PDT)
+From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+To: linux-firmware@kernel.org
+Cc: brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Subject: [PATCH] brcm: Fix symlinks for Khadas VIM SDIO wifi config
+Date: Sun, 22 Jun 2025 17:48:36 +0200
+Message-ID: <20250622154836.2231776-1-martin.blumenstingl@googlemail.com>
+X-Mailer: git-send-email 2.50.0
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250621112912.180436-2-rouven@czerwinskis.de>
+Content-Transfer-Encoding: 8bit
 
-Hi Rouven,
+Remove the duplicate "brcmfmac43455-sdio." part from the symlink target.
 
-kernel test robot noticed the following build warnings:
-
-[auto build test WARNING on wireless-next/main]
-[also build test WARNING on wireless/main linus/master v6.16-rc2 next-20250620]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Rouven-Czerwinski/brcmfmac-remove-always-true-variable-and-code/20250621-193706
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/wireless/wireless-next.git main
-patch link:    https://lore.kernel.org/r/20250621112912.180436-2-rouven%40czerwinskis.de
-patch subject: [PATCH 2/2] brcmfmac: remove always true variable and code
-config: arc-allyesconfig (https://download.01.org/0day-ci/archive/20250622/202506221133.9JH31DNw-lkp@intel.com/config)
-compiler: arc-linux-gcc (GCC) 15.1.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250622/202506221133.9JH31DNw-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202506221133.9JH31DNw-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
-   drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c: In function 'brcmf_sdio_sendfromq':
->> drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c:2329:13: warning: variable 'ret' set but not used [-Wunused-but-set-variable]
-    2329 |         int ret = 0, prec_out, i;
-         |             ^~~
+Fixes: c629575aa5ce ("brcm: Add symlinks for Khadas VIM SDIO wifi config to AW-CM256SM.txt")
+Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+---
+I tested it with the correct symlink locally was wondering why the
+latest linux-firmware package (from the Arch Linux) repos did not
+give me wifi functionality. It turns out I failed at copy & paste...
 
 
-vim +/ret +2329 drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
+ WHENCE | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-5b435de0d78686 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Arend van Spriel 2011-10-05  2324  
-82d7f3c10cf41c drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Arend van Spriel 2013-12-12  2325  static uint brcmf_sdio_sendfromq(struct brcmf_sdio *bus, uint maxframes)
-5b435de0d78686 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Arend van Spriel 2011-10-05  2326  {
-5b435de0d78686 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Arend van Spriel 2011-10-05  2327  	struct sk_buff *pkt;
-8da9d2c8688825 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Franky Lin       2013-11-29  2328  	struct sk_buff_head pktq;
-8da9d2c8688825 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Franky Lin       2013-11-29 @2329  	int ret = 0, prec_out, i;
-5b435de0d78686 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Arend van Spriel 2011-10-05  2330  	uint cnt = 0;
-8da9d2c8688825 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Franky Lin       2013-11-29  2331  	u8 tx_prec_map, pkt_num;
-5b435de0d78686 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Arend van Spriel 2011-10-05  2332  
-5b435de0d78686 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Arend van Spriel 2011-10-05  2333  	brcmf_dbg(TRACE, "Enter\n");
-5b435de0d78686 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Arend van Spriel 2011-10-05  2334  
-5b435de0d78686 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Arend van Spriel 2011-10-05  2335  	tx_prec_map = ~bus->flowcontrol;
-5b435de0d78686 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Arend van Spriel 2011-10-05  2336  
-5b435de0d78686 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Arend van Spriel 2011-10-05  2337  	/* Send frames until the limit or some other event */
-8da9d2c8688825 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Franky Lin       2013-11-29  2338  	for (cnt = 0; (cnt < maxframes) && data_ok(bus);) {
-8da9d2c8688825 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Franky Lin       2013-11-29  2339  		pkt_num = 1;
-8da9d2c8688825 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Franky Lin       2013-11-29  2340  		if (bus->txglom)
-8da9d2c8688825 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Franky Lin       2013-11-29  2341  			pkt_num = min_t(u8, bus->tx_max - bus->tx_seq,
-af1fa210f4fc6e drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Arend van Spriel 2014-02-27  2342  					bus->sdiodev->txglomsz);
-8da9d2c8688825 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Franky Lin       2013-11-29  2343  		pkt_num = min_t(u32, pkt_num,
-8da9d2c8688825 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Franky Lin       2013-11-29  2344  				brcmu_pktq_mlen(&bus->txq, ~bus->flowcontrol));
-fed7ec44e7ef64 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Hante Meuleman   2014-03-15  2345  		__skb_queue_head_init(&pktq);
-fed7ec44e7ef64 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Hante Meuleman   2014-03-15  2346  		spin_lock_bh(&bus->txq_lock);
-8da9d2c8688825 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Franky Lin       2013-11-29  2347  		for (i = 0; i < pkt_num; i++) {
-8da9d2c8688825 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Franky Lin       2013-11-29  2348  			pkt = brcmu_pktq_mdeq(&bus->txq, tx_prec_map,
-8da9d2c8688825 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Franky Lin       2013-11-29  2349  					      &prec_out);
-8da9d2c8688825 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Franky Lin       2013-11-29  2350  			if (pkt == NULL)
-5b435de0d78686 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Arend van Spriel 2011-10-05  2351  				break;
-8da9d2c8688825 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Franky Lin       2013-11-29  2352  			__skb_queue_tail(&pktq, pkt);
-5b435de0d78686 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Arend van Spriel 2011-10-05  2353  		}
-fed7ec44e7ef64 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Hante Meuleman   2014-03-15  2354  		spin_unlock_bh(&bus->txq_lock);
-4dd8b26a40acf8 drivers/net/wireless/brcm80211/brcmfmac/sdio.c          Hante Meuleman   2015-01-25  2355  		if (i == 0)
-8da9d2c8688825 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Franky Lin       2013-11-29  2356  			break;
-5b435de0d78686 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Arend van Spriel 2011-10-05  2357  
-82d7f3c10cf41c drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Arend van Spriel 2013-12-12  2358  		ret = brcmf_sdio_txpkt(bus, &pktq, SDPCM_DATA_CHANNEL);
-fed7ec44e7ef64 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Hante Meuleman   2014-03-15  2359  
-8da9d2c8688825 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Franky Lin       2013-11-29  2360  		cnt += i;
-5b435de0d78686 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Arend van Spriel 2011-10-05  2361  	}
-5b435de0d78686 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Arend van Spriel 2011-10-05  2362  
-5b435de0d78686 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Arend van Spriel 2011-10-05  2363  	/* Deflow-control stack if needed */
-a1ce7a0d6a4f1e drivers/net/wireless/brcm80211/brcmfmac/sdio.c          Arend van Spriel 2015-02-06  2364  	if ((bus->sdiodev->state == BRCMF_SDIOD_DATA) &&
-c8bf34849f92c5 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Franky Lin       2011-12-16  2365  	    bus->txoff && (pktq_len(&bus->txq) < TXLOW)) {
-90d03ff71b52ba drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Hante Meuleman   2012-09-11  2366  		bus->txoff = false;
-20ec4f57498f87 drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c Franky Lin       2017-03-10  2367  		brcmf_proto_bcdc_txflowblock(bus->sdiodev->dev, false);
-c8bf34849f92c5 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Franky Lin       2011-12-16  2368  	}
-5b435de0d78686 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Arend van Spriel 2011-10-05  2369  
-5b435de0d78686 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Arend van Spriel 2011-10-05  2370  	return cnt;
-5b435de0d78686 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Arend van Spriel 2011-10-05  2371  }
-5b435de0d78686 drivers/net/wireless/brcm80211/brcmfmac/dhd_sdio.c      Arend van Spriel 2011-10-05  2372  
-
+diff --git a/WHENCE b/WHENCE
+index b43d6ef7..3b69b759 100644
+--- a/WHENCE
++++ b/WHENCE
+@@ -3117,7 +3117,7 @@ Link: brcm/brcmfmac4356-sdio.khadas,vim2.txt -> brcmfmac4356-sdio.AP6356S.txt
+ Link: brcm/brcmfmac4356-sdio.vamrs,rock960.txt -> brcmfmac4356-sdio.AP6356S.txt
+ File: brcm/brcmfmac43455-sdio.AW-CM256SM.txt
+ Link: brcm/brcmfmac43455-sdio.beagle,am5729-beagleboneai.txt -> brcmfmac43455-sdio.AW-CM256SM.txt
+-Link: brcm/brcmfmac43455-sdio.brcmfmac43455-sdio.khadas,vim.txt -> brcmfmac43455-sdio.AW-CM256SM.txt
++Link: brcm/brcmfmac43455-sdio.khadas,vim.txt -> brcmfmac43455-sdio.AW-CM256SM.txt
+ Link: brcm/brcmfmac43455-sdio.pine64,pinebook-pro.txt -> brcmfmac43455-sdio.AW-CM256SM.txt
+ Link: brcm/brcmfmac43455-sdio.pine64,pinenote-v1.1.txt -> brcmfmac43455-sdio.AW-CM256SM.txt
+ Link: brcm/brcmfmac43455-sdio.pine64,pinenote-v1.2.txt -> brcmfmac43455-sdio.AW-CM256SM.txt
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+2.50.0
+
