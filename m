@@ -1,55 +1,55 @@
-Received: from smtp9.infineon.com (smtp9.infineon.com [217.10.52.204])
+Received: from smtp11.infineon.com (smtp11.infineon.com [217.10.52.105])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4B8E27A93A
-	for <brcm80211@lists.linux.dev>; Tue, 24 Jun 2025 09:36:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.10.52.204
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80DEA1A5BB7
+	for <brcm80211@lists.linux.dev>; Thu, 26 Jun 2025 04:58:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.10.52.105
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750757793; cv=none; b=WzseJVoPqHsPHoOI8SHsZMVIdEfWG5jjYQeAoDFATHiqQXSm4JwXIziVyOn3cH8HMnHuE75Zc00x3gLhG5MFQqVWduQFZ98ibQcIrKXAfL5xUyuxqpu66wljocBHZjfPeJ5O/a6ezMOxSg20fHmx5W8k1o3i6qZLYajaQdJ6Jfg=
+	t=1750913916; cv=none; b=N+mL1vR44mvZXQ6Kf+hOdmynHih22ffV4lqcCgJSD+wV3hieU42As3d/6Vlx/XfDL1Hx1QsNQE8ZNSeo00YW+HBECjqyVBr4XCvIXY5tlzD8Z6tbqaeIstfsdgvn/by6ZPvi0H/z+73cARnZ6xsj5AWVoNw77Z5E5uKRP51H99U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750757793; c=relaxed/simple;
-	bh=sySRy8KlLGNFIBaDG6aOtQTMR8ZEGj4kTv7tb2uxqic=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=i6qY5WZl1VmQdE//G63qmlnAOtor8LclVSKiRBvGPz3IqztpHbTatFNEfrVg9lZoW/sp7VWJhjXaxNfdtwbMYJnJ2qo45OAt6OxS02jm731ZhTNKUAG/Tj6UTyatNe2oVwjyI8KqAmHp82yuED98v+++R4cz+btOv0MXhEDBc7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infineon.com; spf=pass smtp.mailfrom=infineon.com; dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b=kaeSgwkd; arc=none smtp.client-ip=217.10.52.204
+	s=arc-20240116; t=1750913916; c=relaxed/simple;
+	bh=AKzivFgfGZhK3wNXIzhi9adSJDcnzcuv1iu4Tm7CEEA=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=qQj8akkEbalIswttgyagy3Pmi/mKQNTaOeLx6IqLD5Jfh5XTO5MYa5aCNFyGZvcuhLr/cEbi4pmJgojiJ0btEnfSiQQtKEnppktOAl2yQ2jp5v+v41fty7HZ+O5tCfOxITM+4Yo5OF5eoK2wWPRaGYVpi3Jd6t4JgvaHeEcU8JE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infineon.com; spf=pass smtp.mailfrom=infineon.com; dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b=TF2DmRD3; arc=none smtp.client-ip=217.10.52.105
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infineon.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infineon.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b="kaeSgwkd"
+	dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b="TF2DmRD3"
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
   d=infineon.com; i=@infineon.com; q=dns/txt; s=IFXMAIL;
-  t=1750757791; x=1782293791;
+  t=1750913914; x=1782449914;
   h=from:to:cc:subject:date:message-id:mime-version:
    content-transfer-encoding;
-  bh=sySRy8KlLGNFIBaDG6aOtQTMR8ZEGj4kTv7tb2uxqic=;
-  b=kaeSgwkdoYvtZlv+i5MVFHKNkBLwqp1sdX0DHLP9MVKa4FKN9lT4wWvc
-   yZHRiUu88RL3iWe6K1mcmDzXunwvt8TEgenNROAMyfeoRlJU/Vm9/T7RJ
-   H7HSoNE+SBxVDRIO4iqWKqdgiU4X4XStFz45Hnv6Ruu0D1wHOScjFlk6o
-   0=;
-X-CSE-ConnectionGUID: k73T5ljwRAGa6mBkFrKyOw==
-X-CSE-MsgGUID: SMVbOx4bRfaAZeyQw+S8Ig==
-X-IronPort-AV: E=McAfee;i="6800,10657,11473"; a="55587175"
-X-IronPort-AV: E=Sophos;i="6.16,261,1744063200"; 
-   d="scan'208";a="55587175"
+  bh=AKzivFgfGZhK3wNXIzhi9adSJDcnzcuv1iu4Tm7CEEA=;
+  b=TF2DmRD3iLPuCegw1ufdAoN/wqRNnqVP33kLv3o3+S2dQJH74cbrp01e
+   h23CL/QzLRVarrqDLk6EKJqgqEMW+qeHsO7C8StZ3boN31k0ZCiQjnGo2
+   g9I3T5z0MkioyPHthUAxbt/IDfMhTsfHeALElsq76HL3wnrPiXWsf8uAA
+   w=;
+X-CSE-ConnectionGUID: K5j2phKUTJezRWT4zFKpCQ==
+X-CSE-MsgGUID: jl/EDIXNRh20ITGVD0tdqQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11475"; a="100357279"
+X-IronPort-AV: E=Sophos;i="6.16,266,1744063200"; 
+   d="scan'208";a="100357279"
 Received: from unknown (HELO MUCSE812.infineon.com) ([172.23.29.38])
-  by smtp9.infineon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jun 2025 11:35:19 +0200
-Received: from MUCSE835.infineon.com (172.23.7.107) by MUCSE812.infineon.com
+  by smtp11.infineon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jun 2025 06:57:22 +0200
+Received: from MUCSE827.infineon.com (172.23.29.20) by MUCSE812.infineon.com
  (172.23.29.38) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Tue, 24 Jun
- 2025 11:35:18 +0200
-Received: from iot-wlan-dev-u03.aus.cypress.com (10.161.6.196) by
- MUCSE835.infineon.com (172.23.7.107) with Microsoft SMTP Server
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Thu, 26 Jun
+ 2025 06:57:22 +0200
+Received: from ISCN5CG14747PP.infineon.com (10.161.6.196) by
+ MUCSE827.infineon.com (172.23.29.20) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.4; Tue, 24 Jun 2025 11:35:16 +0200
-From: Ian Lin <ian.lin@infineon.com>
-To: <johannes@sipsolutions.net>, <arend.vanspriel@broadcom.com>
-CC: <linux-wireless@vger.kernel.org>, <brcm80211@lists.linux.dev>,
-	<carter.chen@infineon.com>, <double.lo@infineon.com>,
-	<vinoth.sampath@infineon.com>, <gokulkumar.sivakumar@infineon.com>,
-	<ian.lin@infineon.com>
-Subject: [PATCH wireless-next] wifi: brcmfmac: support CYW54591 PCIE device
-Date: Tue, 24 Jun 2025 04:34:53 -0500
-Message-ID: <20250624093453.7264-1-ian.lin@infineon.com>
-X-Mailer: git-send-email 2.25.0
+ 15.2.1544.4; Thu, 26 Jun 2025 06:57:20 +0200
+From: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
+To: Arend van Spriel <arend.vanspriel@broadcom.com>, Johannes Berg
+	<johannes.berg@intel.com>
+CC: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>,
+	<linux-kernel@vger.kernel.org>, <brcm80211@lists.linux.dev>,
+	<wlan-kernel-dev-list@infineon.com>
+Subject: [PATCH wireless-next] wifi: brcmfmac: fix P2P discovery failure in P2P peer due to missing P2P IE
+Date: Thu, 26 Jun 2025 10:21:50 +0530
+Message-ID: <20250626045529.6884-1-gokulkumar.sivakumar@infineon.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -58,89 +58,57 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: MUCSE821.infineon.com (172.23.29.47) To
- MUCSE835.infineon.com (172.23.7.107)
+X-ClientProxiedBy: MUCSE804.infineon.com (172.23.29.30) To
+ MUCSE827.infineon.com (172.23.29.20)
 
-From: Double Lo <double.lo@cypress.com>
+After commit bd99a3013bdc ("brcmfmac: move configuration of probe request
+IEs"), the probe request MGMT IE addition operation brcmf_vif_set_mgmt_ie()
+got moved from the brcmf_p2p_scan_prep() to the brcmf_cfg80211_scan().
 
-CYW54591 is a variant of BCM4355 silicon with the same chipid. In the
-chipid-fwname mapping table, apply chiprev 13 to identify CYW54591.
-Skip reading OTP process for CYW chip since it contains vendor specific
-information which is not common for cypress.
+Because of this, as part of the scan request handler for the P2P Discovery,
+vif struct used for adding the Probe Request P2P IE in firmware got changed
+from the P2PAPI_BSSCFG_DEVICE vif to P2PAPI_BSSCFG_PRIMARY vif incorrectly.
+So the firmware stopped adding P2P IE to the outgoing P2P Discovery probe
+requests frames and the other P2P peers were unable to discover this device
+causing a regression on the P2P feature.
 
-Signed-off-by: Double Lo <double.lo@cypress.com>
-Signed-off-by: Chi-hsien Lin <chi-hsien.lin@cypress.com>
-Signed-off-by: Ian Lin <ian.lin@infineon.com>
+To fix this, while setting the P2P IE in firmware, properly use the vif of
+the P2P discovery wdev on which the driver received the P2P scan request.
+This is done by not changing the vif pointer, until brcmf_vif_set_mgmt_ie()
+is completed.
+
+Fixes: bd99a3013bdc ("brcmfmac: move configuration of probe request IEs")
+Signed-off-by: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
 ---
- .../broadcom/brcm80211/brcmfmac/pcie.c        | 21 ++++++++++++++-----
- .../broadcom/brcm80211/include/brcm_hw_ids.h  |  1 +
- 2 files changed, 17 insertions(+), 5 deletions(-)
+ .../net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c   | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-index 9747928a3650..6327f4eca500 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-@@ -71,6 +71,7 @@ BRCMF_FW_CLM_DEF(4377B3, "brcmfmac4377b3-pcie");
- BRCMF_FW_CLM_DEF(4378B1, "brcmfmac4378b1-pcie");
- BRCMF_FW_CLM_DEF(4378B3, "brcmfmac4378b3-pcie");
- BRCMF_FW_CLM_DEF(4387C2, "brcmfmac4387c2-pcie");
-+BRCMF_FW_CLM_DEF(54591, "brcmfmac54591-pcie");
- 
- /* firmware config files */
- MODULE_FIRMWARE(BRCMF_FW_DEFAULT_PATH "brcmfmac*-pcie.txt");
-@@ -88,6 +89,7 @@ static const struct brcmf_firmware_mapping brcmf_pcie_fwnames[] = {
- 	BRCMF_FW_ENTRY(BRCM_CC_4350_CHIP_ID, 0xFFFFFF00, 4350),
- 	BRCMF_FW_ENTRY(BRCM_CC_43525_CHIP_ID, 0xFFFFFFF0, 4365C),
- 	BRCMF_FW_ENTRY(BRCM_CC_4355_CHIP_ID, 0x000007FF, 4355),
-+	BRCMF_FW_ENTRY(BRCM_CC_4355_CHIP_ID, 0x00002000, 54591),
- 	BRCMF_FW_ENTRY(BRCM_CC_4355_CHIP_ID, 0xFFFFF800, 4355C1), /* rev ID 12/C2 seen */
- 	BRCMF_FW_ENTRY(BRCM_CC_4356_CHIP_ID, 0xFFFFFFFF, 4356),
- 	BRCMF_FW_ENTRY(BRCM_CC_43567_CHIP_ID, 0xFFFFFFFF, 43570),
-@@ -2522,10 +2524,19 @@ brcmf_pcie_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	if (ret)
- 		goto fail_bus;
- 
--	ret = brcmf_pcie_read_otp(devinfo);
--	if (ret) {
--		brcmf_err(bus, "failed to parse OTP\n");
--		goto fail_brcmf;
-+	/* otp read operation */
-+	switch (bus->fwvid) {
-+	case BRCMF_FWVENDOR_WCC:
-+	case BRCMF_FWVENDOR_BCA:
-+		ret = brcmf_pcie_read_otp(devinfo);
-+		if (ret) {
-+			brcmf_err(bus, "failed to parse OTP\n");
-+			goto fail_brcmf;
-+		}
-+		break;
-+	case BRCMF_FWVENDOR_CYW:
-+	default:
-+		break;
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+index 4b70845e1a26..075b99478e65 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -1545,10 +1545,6 @@ brcmf_cfg80211_scan(struct wiphy *wiphy, struct cfg80211_scan_request *request)
+ 		return -EAGAIN;
  	}
  
- #ifdef DEBUG
-@@ -2740,7 +2751,7 @@ static const struct pci_device_id brcmf_pcie_devid_table[] = {
- 	BRCMF_PCIE_DEVICE(BRCM_PCIE_4378_DEVICE_ID, WCC_SEED),
- 	BRCMF_PCIE_DEVICE(BRCM_PCIE_4387_DEVICE_ID, WCC_SEED),
- 	BRCMF_PCIE_DEVICE(BRCM_PCIE_43752_DEVICE_ID, WCC_SEED),
+-	/* If scan req comes for p2p0, send it over primary I/F */
+-	if (vif == cfg->p2p.bss_idx[P2PAPI_BSSCFG_DEVICE].vif)
+-		vif = cfg->p2p.bss_idx[P2PAPI_BSSCFG_PRIMARY].vif;
 -
-+	BRCMF_PCIE_DEVICE(CY_PCIE_54591_DEVICE_ID, CYW),
- 	{ /* end: all zeroes */ }
- };
+ 	brcmf_dbg(SCAN, "START ESCAN\n");
  
-diff --git a/drivers/net/wireless/broadcom/brcm80211/include/brcm_hw_ids.h b/drivers/net/wireless/broadcom/brcm80211/include/brcm_hw_ids.h
-index c1e22c589d85..5195c6c1a5b5 100644
---- a/drivers/net/wireless/broadcom/brcm80211/include/brcm_hw_ids.h
-+++ b/drivers/net/wireless/broadcom/brcm80211/include/brcm_hw_ids.h
-@@ -99,6 +99,7 @@
- #define BRCM_PCIE_4377_DEVICE_ID	0x4488
- #define BRCM_PCIE_4378_DEVICE_ID	0x4425
- #define BRCM_PCIE_4387_DEVICE_ID	0x4433
-+#define CY_PCIE_54591_DEVICE_ID		0x4417
+ 	cfg->scan_request = request;
+@@ -1564,6 +1560,10 @@ brcmf_cfg80211_scan(struct wiphy *wiphy, struct cfg80211_scan_request *request)
+ 	if (err)
+ 		goto scan_out;
  
- /* brcmsmac IDs */
- #define BCM4313_D11N2G_ID	0x4727	/* 4313 802.11n 2.4G device */
++	/* If scan req comes for p2p0, send it over primary I/F */
++	if (vif == cfg->p2p.bss_idx[P2PAPI_BSSCFG_DEVICE].vif)
++		vif = cfg->p2p.bss_idx[P2PAPI_BSSCFG_PRIMARY].vif;
++
+ 	err = brcmf_do_escan(vif->ifp, request);
+ 	if (err)
+ 		goto scan_out;
 -- 
-2.25.0
+2.43.0
 
