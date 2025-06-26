@@ -1,54 +1,54 @@
 Received: from smtp11.infineon.com (smtp11.infineon.com [217.10.52.105])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80DEA1A5BB7
-	for <brcm80211@lists.linux.dev>; Thu, 26 Jun 2025 04:58:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A5571B6CE0
+	for <brcm80211@lists.linux.dev>; Thu, 26 Jun 2025 05:07:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.10.52.105
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750913916; cv=none; b=N+mL1vR44mvZXQ6Kf+hOdmynHih22ffV4lqcCgJSD+wV3hieU42As3d/6Vlx/XfDL1Hx1QsNQE8ZNSeo00YW+HBECjqyVBr4XCvIXY5tlzD8Z6tbqaeIstfsdgvn/by6ZPvi0H/z+73cARnZ6xsj5AWVoNw77Z5E5uKRP51H99U=
+	t=1750914446; cv=none; b=o7hXAX/XqXomlPOjbJekdIz08xiK9rzsr37TeMTY5WhFdetYWLz94WBpGWkdYwA1TYtcgKyeEVgn3un/+w2QRNqMoqVOBDPL8nzjPWaBmbN+J4Xl4n9GeBqqh4uHz5dc3PNacJR1zX03F7ZGoTxrybLEWGDSXY1oWM0D9HguGvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750913916; c=relaxed/simple;
+	s=arc-20240116; t=1750914446; c=relaxed/simple;
 	bh=AKzivFgfGZhK3wNXIzhi9adSJDcnzcuv1iu4Tm7CEEA=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=qQj8akkEbalIswttgyagy3Pmi/mKQNTaOeLx6IqLD5Jfh5XTO5MYa5aCNFyGZvcuhLr/cEbi4pmJgojiJ0btEnfSiQQtKEnppktOAl2yQ2jp5v+v41fty7HZ+O5tCfOxITM+4Yo5OF5eoK2wWPRaGYVpi3Jd6t4JgvaHeEcU8JE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infineon.com; spf=pass smtp.mailfrom=infineon.com; dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b=TF2DmRD3; arc=none smtp.client-ip=217.10.52.105
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=tIpLieRvElMmW/G4pkZn9Ub0wcatEtQAFnmuV5sSKoBEX1Xg0nkRliLnrznQXh22ejj4mdAFavUslDApPE4OICEyxGd714mG/5ffOLvCwI2bqql7Z/HXqcRqTRP0RCqbUsFbeySbNhobNb7STuBq41AeOrVtEp9Jl7asEUv33Tk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infineon.com; spf=pass smtp.mailfrom=infineon.com; dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b=HG95pDcG; arc=none smtp.client-ip=217.10.52.105
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infineon.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infineon.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b="TF2DmRD3"
+	dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b="HG95pDcG"
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
   d=infineon.com; i=@infineon.com; q=dns/txt; s=IFXMAIL;
-  t=1750913914; x=1782449914;
+  t=1750914445; x=1782450445;
   h=from:to:cc:subject:date:message-id:mime-version:
    content-transfer-encoding;
   bh=AKzivFgfGZhK3wNXIzhi9adSJDcnzcuv1iu4Tm7CEEA=;
-  b=TF2DmRD3iLPuCegw1ufdAoN/wqRNnqVP33kLv3o3+S2dQJH74cbrp01e
-   h23CL/QzLRVarrqDLk6EKJqgqEMW+qeHsO7C8StZ3boN31k0ZCiQjnGo2
-   g9I3T5z0MkioyPHthUAxbt/IDfMhTsfHeALElsq76HL3wnrPiXWsf8uAA
-   w=;
-X-CSE-ConnectionGUID: K5j2phKUTJezRWT4zFKpCQ==
-X-CSE-MsgGUID: jl/EDIXNRh20ITGVD0tdqQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11475"; a="100357279"
+  b=HG95pDcGBnKKYtyuFeJcBRX8OSWsJfuTSYeKHtr353VChQuJoQVGOMsn
+   CALZE9UFztS0aKn28n8hZepSB1fvbBX06b/heVbSxFrh87vQZMncIkr2V
+   n/+UXlc6mSEqnJsfFcv7wGT3iRHPpPoTlgJe9yE2DYgHKz59Vi6G0TEec
+   k=;
+X-CSE-ConnectionGUID: vyOfOD71QpGY40oDNjpARg==
+X-CSE-MsgGUID: HhGv3IpLR3a5jVKNVkZdWg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11475"; a="100358752"
 X-IronPort-AV: E=Sophos;i="6.16,266,1744063200"; 
-   d="scan'208";a="100357279"
-Received: from unknown (HELO MUCSE812.infineon.com) ([172.23.29.38])
-  by smtp11.infineon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jun 2025 06:57:22 +0200
-Received: from MUCSE827.infineon.com (172.23.29.20) by MUCSE812.infineon.com
- (172.23.29.38) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Thu, 26 Jun
- 2025 06:57:22 +0200
+   d="scan'208";a="100358752"
+Received: from unknown (HELO MUCSE819.infineon.com) ([172.23.29.45])
+  by smtp11.infineon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jun 2025 07:07:23 +0200
+Received: from MUCSE827.infineon.com (172.23.29.20) by MUCSE819.infineon.com
+ (172.23.29.45) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Thu, 26 Jun
+ 2025 07:07:22 +0200
 Received: from ISCN5CG14747PP.infineon.com (10.161.6.196) by
  MUCSE827.infineon.com (172.23.29.20) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.4; Thu, 26 Jun 2025 06:57:20 +0200
+ 15.2.1544.4; Thu, 26 Jun 2025 07:07:20 +0200
 From: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
 To: Arend van Spriel <arend.vanspriel@broadcom.com>, Johannes Berg
 	<johannes.berg@intel.com>
 CC: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>,
-	<linux-kernel@vger.kernel.org>, <brcm80211@lists.linux.dev>,
+	<linux-wireless@vger.kernel.org>, <brcm80211@lists.linux.dev>,
 	<wlan-kernel-dev-list@infineon.com>
-Subject: [PATCH wireless-next] wifi: brcmfmac: fix P2P discovery failure in P2P peer due to missing P2P IE
-Date: Thu, 26 Jun 2025 10:21:50 +0530
-Message-ID: <20250626045529.6884-1-gokulkumar.sivakumar@infineon.com>
+Subject: [PATCH wireless-next RESEND] wifi: brcmfmac: fix P2P discovery failure in P2P peer due to missing P2P IE
+Date: Thu, 26 Jun 2025 10:37:02 +0530
+Message-ID: <20250626050706.7271-1-gokulkumar.sivakumar@infineon.com>
 X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
@@ -58,7 +58,7 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: MUCSE804.infineon.com (172.23.29.30) To
+X-ClientProxiedBy: MUCSE819.infineon.com (172.23.29.45) To
  MUCSE827.infineon.com (172.23.29.20)
 
 After commit bd99a3013bdc ("brcmfmac: move configuration of probe request
