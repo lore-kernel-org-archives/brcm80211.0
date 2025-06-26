@@ -1,55 +1,45 @@
-Received: from smtp11.infineon.com (smtp11.infineon.com [217.10.52.105])
+Received: from mx.treblig.org (mx.treblig.org [46.235.229.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A5571B6CE0
-	for <brcm80211@lists.linux.dev>; Thu, 26 Jun 2025 05:07:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.10.52.105
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF221C1F05;
+	Thu, 26 Jun 2025 14:08:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.229.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750914446; cv=none; b=o7hXAX/XqXomlPOjbJekdIz08xiK9rzsr37TeMTY5WhFdetYWLz94WBpGWkdYwA1TYtcgKyeEVgn3un/+w2QRNqMoqVOBDPL8nzjPWaBmbN+J4Xl4n9GeBqqh4uHz5dc3PNacJR1zX03F7ZGoTxrybLEWGDSXY1oWM0D9HguGvQ=
+	t=1750946903; cv=none; b=AQiP02npzP/LJKYJJRmAaFIOOlauj2lMsqDvjVJbJ1UKXdW/dAnf+qfCp3yeSj95V8W+yYIEho84M6AeYniLsXm2nzK/sEkE8fpW6kb459IXauBmU62IngTS2/M7wtdYwlWiWPi2NEvVDxQc9TjL1oOURRF6iBotuv4/X6Rpi7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750914446; c=relaxed/simple;
-	bh=AKzivFgfGZhK3wNXIzhi9adSJDcnzcuv1iu4Tm7CEEA=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=tIpLieRvElMmW/G4pkZn9Ub0wcatEtQAFnmuV5sSKoBEX1Xg0nkRliLnrznQXh22ejj4mdAFavUslDApPE4OICEyxGd714mG/5ffOLvCwI2bqql7Z/HXqcRqTRP0RCqbUsFbeySbNhobNb7STuBq41AeOrVtEp9Jl7asEUv33Tk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infineon.com; spf=pass smtp.mailfrom=infineon.com; dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b=HG95pDcG; arc=none smtp.client-ip=217.10.52.105
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infineon.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infineon.com
+	s=arc-20240116; t=1750946903; c=relaxed/simple;
+	bh=yV/TOvlNS7DY7ek8fYzdAH/wndArW7CrW/l+Vyix1Lg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=HLe44apRlbApT+LEhFLwuas6clNDfAxmAwovx9Hz1Deo9NIA3ec/KNga/g7uarcEpvj3/+y13gMuWdAyVUadKpNR+x4qqu0r6YkWnoq0tRklkIVa5UHdWIKnp/LBZwg/wwpc4SQRNQVqQo5GDiGKBeUOTabJd1vjl4xh8WB9H1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=treblig.org; spf=pass smtp.mailfrom=treblig.org; dkim=pass (2048-bit key) header.d=treblig.org header.i=@treblig.org header.b=plsKIXrH; arc=none smtp.client-ip=46.235.229.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=treblig.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=treblig.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b="HG95pDcG"
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=infineon.com; i=@infineon.com; q=dns/txt; s=IFXMAIL;
-  t=1750914445; x=1782450445;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=AKzivFgfGZhK3wNXIzhi9adSJDcnzcuv1iu4Tm7CEEA=;
-  b=HG95pDcGBnKKYtyuFeJcBRX8OSWsJfuTSYeKHtr353VChQuJoQVGOMsn
-   CALZE9UFztS0aKn28n8hZepSB1fvbBX06b/heVbSxFrh87vQZMncIkr2V
-   n/+UXlc6mSEqnJsfFcv7wGT3iRHPpPoTlgJe9yE2DYgHKz59Vi6G0TEec
-   k=;
-X-CSE-ConnectionGUID: vyOfOD71QpGY40oDNjpARg==
-X-CSE-MsgGUID: HhGv3IpLR3a5jVKNVkZdWg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11475"; a="100358752"
-X-IronPort-AV: E=Sophos;i="6.16,266,1744063200"; 
-   d="scan'208";a="100358752"
-Received: from unknown (HELO MUCSE819.infineon.com) ([172.23.29.45])
-  by smtp11.infineon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jun 2025 07:07:23 +0200
-Received: from MUCSE827.infineon.com (172.23.29.20) by MUCSE819.infineon.com
- (172.23.29.45) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Thu, 26 Jun
- 2025 07:07:22 +0200
-Received: from ISCN5CG14747PP.infineon.com (10.161.6.196) by
- MUCSE827.infineon.com (172.23.29.20) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.4; Thu, 26 Jun 2025 07:07:20 +0200
-From: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
-To: Arend van Spriel <arend.vanspriel@broadcom.com>, Johannes Berg
-	<johannes.berg@intel.com>
-CC: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>,
-	<linux-wireless@vger.kernel.org>, <brcm80211@lists.linux.dev>,
-	<wlan-kernel-dev-list@infineon.com>
-Subject: [PATCH wireless-next RESEND] wifi: brcmfmac: fix P2P discovery failure in P2P peer due to missing P2P IE
-Date: Thu, 26 Jun 2025 10:37:02 +0530
-Message-ID: <20250626050706.7271-1-gokulkumar.sivakumar@infineon.com>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (2048-bit key) header.d=treblig.org header.i=@treblig.org header.b="plsKIXrH"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+	; s=bytemarkmx; h=MIME-Version:Message-ID:Date:Subject:From:Content-Type:From
+	:Subject; bh=Y9Y517Y9AnZbSEb+d4KuZ68RhNAioutYm3amMPrGnAI=; b=plsKIXrHf1C+PF+y
+	pfBEUho7Jq2QyWs/XAYvpPugQBnDjh0b/zPsgIFQr87LwRxwAWlVXpPH/aVlnBcQeQP5OfO6+ob0Q
+	TDM4OUH27a5FOm2Dq7DgXoAgz+UpZrQWUySoul30IF1B2Y3V03zjlqiPy2cXYVXorWkd0FWY3u+Ts
+	bpBW0+z71s2nNzlhe8DQyjtqj8NdyLJWa6kQ8nhOI79o3SClVW0tLnx6P0vTmUlW5+MpD+4Fu5DQv
+	CBSO8lKAfbdHS7jaXu7V69maEN4+Pe40exdGaeQGqa+N9+dzWBbVP2QP0DUlMq8tuqwbwRYHQH7i2
+	6bAvqd/KVbnwTzBrJQ==;
+Received: from localhost ([127.0.0.1] helo=dalek.home.treblig.org)
+	by mx.treblig.org with esmtp (Exim 4.96)
+	(envelope-from <linux@treblig.org>)
+	id 1uUnGv-00CF9J-0y;
+	Thu, 26 Jun 2025 14:08:13 +0000
+From: linux@treblig.org
+To: arend.vanspriel@broadcom.com,
+	kvalo@kernel.org,
+	linux-wireless@vger.kernel.org
+Cc: brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com,
+	linux-kernel@vger.kernel.org,
+	"Dr. David Alan Gilbert" <linux@treblig.org>
+Subject: [PATCH 0/3] wifi: brcm80211: Deadcoding around phy_cmn
+Date: Thu, 26 Jun 2025 15:08:09 +0100
+Message-ID: <20250626140812.56700-1-linux@treblig.org>
+X-Mailer: git-send-email 2.50.0
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -57,58 +47,38 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: MUCSE819.infineon.com (172.23.29.45) To
- MUCSE827.infineon.com (172.23.29.20)
 
-After commit bd99a3013bdc ("brcmfmac: move configuration of probe request
-IEs"), the probe request MGMT IE addition operation brcmf_vif_set_mgmt_ie()
-got moved from the brcmf_p2p_scan_prep() to the brcmf_cfg80211_scan().
+From: "Dr. David Alan Gilbert" <linux@treblig.org>
 
-Because of this, as part of the scan request handler for the P2P Discovery,
-vif struct used for adding the Probe Request P2P IE in firmware got changed
-from the P2PAPI_BSSCFG_DEVICE vif to P2PAPI_BSSCFG_PRIMARY vif incorrectly.
-So the firmware stopped adding P2P IE to the outgoing P2P Discovery probe
-requests frames and the other P2P peers were unable to discover this device
-causing a regression on the P2P feature.
+Hi,
+  This set removes a bunch of unused functions in phy_cmn.c;
+I've checked the history of most of them, and they look like they've
+been unused since all the way back to 2010 when they were added
+to staging.
 
-To fix this, while setting the P2P IE in firmware, properly use the vif of
-the P2P discovery wdev on which the driver received the P2P scan request.
-This is done by not changing the vif pointer, until brcmf_vif_set_mgmt_ie()
-is completed.
+There are a lot of them, so I've arbitrarily split it up into
+convenient size chunks of about 10 functions each.
 
-Fixes: bd99a3013bdc ("brcmfmac: move configuration of probe request IEs")
-Signed-off-by: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
----
- .../net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c   | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+I see back in 2014, Rickard Strandqvist also tried to clean some
+of this up, but I don't see any reply to that thread.
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-index 4b70845e1a26..075b99478e65 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-@@ -1545,10 +1545,6 @@ brcmf_cfg80211_scan(struct wiphy *wiphy, struct cfg80211_scan_request *request)
- 		return -EAGAIN;
- 	}
- 
--	/* If scan req comes for p2p0, send it over primary I/F */
--	if (vif == cfg->p2p.bss_idx[P2PAPI_BSSCFG_DEVICE].vif)
--		vif = cfg->p2p.bss_idx[P2PAPI_BSSCFG_PRIMARY].vif;
--
- 	brcmf_dbg(SCAN, "START ESCAN\n");
- 
- 	cfg->scan_request = request;
-@@ -1564,6 +1560,10 @@ brcmf_cfg80211_scan(struct wiphy *wiphy, struct cfg80211_scan_request *request)
- 	if (err)
- 		goto scan_out;
- 
-+	/* If scan req comes for p2p0, send it over primary I/F */
-+	if (vif == cfg->p2p.bss_idx[P2PAPI_BSSCFG_DEVICE].vif)
-+		vif = cfg->p2p.bss_idx[P2PAPI_BSSCFG_PRIMARY].vif;
-+
- 	err = brcmf_do_escan(vif->ifp, request);
- 	if (err)
- 		goto scan_out;
+(Build tested only)
+
+Signed-off-by: Dr. David Alan Gilbert <linux@treblig.org>
+
+Dave
+
+Dr. David Alan Gilbert (3):
+  wifi: brcm80211: Remove unused functions
+  wifi: brcm80211: Remove more unused functions
+  wifi: brcm80211: Remove yet more unused functions
+
+ .../broadcom/brcm80211/brcmsmac/phy/phy_cmn.c | 443 ------------------
+ .../broadcom/brcm80211/brcmsmac/phy/phy_hal.h |  27 --
+ .../broadcom/brcm80211/brcmsmac/phy/phy_int.h |  11 -
+ .../broadcom/brcm80211/brcmsmac/phy/phy_n.c   |  19 -
+ 4 files changed, 500 deletions(-)
+
 -- 
-2.43.0
+2.50.0
 
