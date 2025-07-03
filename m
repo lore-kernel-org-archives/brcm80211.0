@@ -1,53 +1,53 @@
 Received: from smtp11.infineon.com (smtp11.infineon.com [217.10.52.105])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F54D2DE713
-	for <brcm80211@lists.linux.dev>; Thu,  3 Jul 2025 11:43:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35674256C71
+	for <brcm80211@lists.linux.dev>; Thu,  3 Jul 2025 11:57:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.10.52.105
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751543014; cv=none; b=pCKqXvrK2R5qevwDlBrKLMLmJduGMvDIErEkzM5uaT4vQ8QNGbS4gJ7cc9oNUX2jEaZJacEzL2RdP8A9vfsFf59eBpIuyPukEN4Mi6QAtUoJJyfxJ7mtkmsLEVIRvJX81jezDlCLDnJjRKxJJ7eR5RZXQzwm0NdTEaFZTUblFmM=
+	t=1751543825; cv=none; b=ozG7yCKj466CJbFQcRLScdwYmx5YCTCKX5yphYoAldTjkWEkA4nTJXqks5ooXCVmmAgruns3dIK0p2k9z7SJ9lGsOTWlakItuZANstqCzGxEcvEXPAMOfsm+YZjNUvaYacoY3j1I9Yz5JVFS+hhg7YfdITtgCtrG+U7pLEeGcTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751543014; c=relaxed/simple;
-	bh=afAQNldEH9D37rnb+6FmjpuPSAP5CJbJLlvdHp4Z0MQ=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=jPUlamBWCwOz5Tdip9ktnhbDlclws6H+vKB/r9Wb9xzufENTVAlogQAWRp4gUtYKvNg/gpV8Y/9g2S05Lme+NYj1K+OVbjTVbWKAjwoeSDE/gaMWmCohav8qj+NyKlNRzz1lreIUolEScwSDb8YeXmJmBGR32VWyI17mVy269vo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infineon.com; spf=pass smtp.mailfrom=infineon.com; dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b=P9FCDqKr; arc=none smtp.client-ip=217.10.52.105
+	s=arc-20240116; t=1751543825; c=relaxed/simple;
+	bh=7RxKmNYiUW/n4kjRSAx0NfAL15iTipOENeStatKI72M=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=sdccQorJUCnnMjAHolUrOfAZRE25kLEpiFwU5xhbt5iBCiOcNIrSqnEJphsUx6YHH7HPslDUyDWQOcrPACgpAzMHEpBZO9oSoAmZgdJTA5T/dT0FD6FrEbjuF7iIhTS5Jc9+wUJJ+yuz8QqrApW/vT0tsIh6MsFHK3Ebn53WSz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infineon.com; spf=pass smtp.mailfrom=infineon.com; dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b=oZ00gvug; arc=none smtp.client-ip=217.10.52.105
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infineon.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infineon.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b="P9FCDqKr"
+	dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b="oZ00gvug"
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
   d=infineon.com; i=@infineon.com; q=dns/txt; s=IFXMAIL;
-  t=1751543011; x=1783079011;
+  t=1751543823; x=1783079823;
   h=from:to:cc:subject:date:message-id:mime-version:
    content-transfer-encoding;
-  bh=afAQNldEH9D37rnb+6FmjpuPSAP5CJbJLlvdHp4Z0MQ=;
-  b=P9FCDqKrRvdUdB5TDepZHSx5DckL2ICC2y6N/dn0X5qaa0F+NSpcBHZ+
-   2TBFkGA4zcwz0wvGYQmN8x5LWVT/Gi2mx7fQeBIDGeIZrpER+eKDQ22Zg
-   mC5LC6x+06eEjnMNh/DmRAlYcpo+f9S7nXz+HZJeUUYkx9VNphmSa7mkV
-   Y=;
-X-CSE-ConnectionGUID: 9M4XyxftRnia6V95VfP1AA==
-X-CSE-MsgGUID: VCmYQoO6QBqx00OCkIYN/g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11482"; a="101291569"
+  bh=7RxKmNYiUW/n4kjRSAx0NfAL15iTipOENeStatKI72M=;
+  b=oZ00gvugZmRxz4D8WK6I0DJGqPkx7FrQk2UQ5Cyk6wJYnpQgbg/RVr+H
+   7635+eNMUnGbxocoQYKAtQbVXLKu9WNyJz1tF98bSRBRB0yz10q249xjo
+   P/UBXOHnvM7pT7Bcg3JJkpUXwuPr485ExLJkVuS7W4aHF+Rpi1mFxws6d
+   Q=;
+X-CSE-ConnectionGUID: mYXfA68IS1KpuwMVzSy0Ew==
+X-CSE-MsgGUID: 1AoLvazJTwuhgotNklQagQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11482"; a="101292931"
 X-IronPort-AV: E=Sophos;i="6.16,284,1744063200"; 
-   d="scan'208";a="101291569"
-Received: from unknown (HELO MUCSE803.infineon.com) ([172.23.29.29])
-  by smtp11.infineon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jul 2025 13:43:16 +0200
-Received: from MUCSE827.infineon.com (172.23.29.20) by MUCSE803.infineon.com
- (172.23.29.29) with Microsoft SMTP Server (version=TLS1_2,
+   d="scan'208";a="101292931"
+Received: from unknown (HELO MUCSE819.infineon.com) ([172.23.29.45])
+  by smtp11.infineon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jul 2025 13:57:01 +0200
+Received: from MUCSE827.infineon.com (172.23.29.20) by MUCSE819.infineon.com
+ (172.23.29.45) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Thu, 3 Jul
- 2025 13:43:15 +0200
+ 2025 13:57:01 +0200
 Received: from ISCN5CG14747PP.infineon.com (10.161.6.196) by
  MUCSE827.infineon.com (172.23.29.20) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.14; Thu, 3 Jul 2025 13:43:13 +0200
+ 15.2.1544.14; Thu, 3 Jul 2025 13:56:59 +0200
 From: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
 To: Johannes Berg <johannes@sipsolutions.net>, Arend van Spriel
 	<arend.vanspriel@broadcom.com>
 CC: <linux-wireless@vger.kernel.org>, <brcm80211@lists.linux.dev>,
 	<wlan-kernel-dev-list@infineon.com>, <gokulkumar.sivakumar@infineon.com>
-Subject: [PATCH] wifi: brcmfmac: fix EXTSAE WPA3 connection failure due to AUTH TX failure
-Date: Thu, 3 Jul 2025 17:12:58 +0530
-Message-ID: <20250703114258.6417-1-gokulkumar.sivakumar@infineon.com>
+Subject: [PATCH wireless-next,RESEND] wifi: brcmfmac: fix EXTSAE WPA3 connection failure due to AUTH TX failure
+Date: Thu, 3 Jul 2025 17:26:13 +0530
+Message-ID: <20250703115614.6652-1-gokulkumar.sivakumar@infineon.com>
 X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
@@ -57,7 +57,7 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: MUCSE803.infineon.com (172.23.29.29) To
+X-ClientProxiedBy: MUCSE810.infineon.com (172.23.29.36) To
  MUCSE827.infineon.com (172.23.29.20)
 
 From: Ting-Ying Li <tingying.li@cypress.com>
@@ -85,6 +85,12 @@ Fixes: 66f909308a7c ("wifi: brcmfmac: cyw: support external SAE authentication i
 Signed-off-by: Ting-Ying Li <tingying.li@cypress.com>
 Signed-off-by: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
 ---
+
+Apologies for submitting the patch multiple times !
+
+Wanted to resend with proper tree tags in subject prefix to
+trigger the automated checks.
+
  .../broadcom/brcm80211/brcmfmac/cfg80211.c    | 21 +++++++++++--------
  .../broadcom/brcm80211/brcmfmac/cyw/core.c    | 19 ++++++++++-------
  2 files changed, 23 insertions(+), 17 deletions(-)
