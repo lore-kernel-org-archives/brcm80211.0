@@ -1,102 +1,186 @@
-Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com [209.85.219.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp14.infineon.com (smtp14.infineon.com [217.10.52.160])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD11C19DF62
-	for <brcm80211@lists.linux.dev>; Wed,  2 Jul 2025 02:52:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C644260575
+	for <brcm80211@lists.linux.dev>; Thu,  3 Jul 2025 11:37:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.10.52.160
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751424742; cv=none; b=Ssmh1Rgchx/XohWefpNa3oaq14azwtQHKmHRpWMUeBJF4c+5Skv4RC0n85B8kuWnjExMKTl1vnRTE9M5D0Ttnz+ymVU8fYd1lECrTHNdEty42Cn5dTijaThY4jcJCrvkO5BgSgMfz2nnwx4U15Sxj9EQM0wvLCYGYOX9IUCXh2k=
+	t=1751542654; cv=none; b=T0ye9gzBoRwHqFQIwNQ6nWrsnR27IiDlMda0T7xJgl0tyhQlGYSzf0Wx1vYT1rYfKIPSWd/w7XiHFsOGNzC25L8kCklDViOs4LomR0KXIFuIYB3xoE8rHN5pTzJf+aeaRVDlOXiS9qhjl1Exdmj/dwVYIPs5l2lj0xmJgUHVfQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751424742; c=relaxed/simple;
-	bh=G4ERL0+D1jaQ17f3/35QJx6RGMr53J8NyLHauQ60aWg=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=Zova2RgDTENWwC3px3Tfi/urS7MfcwnTPtujCC7nBM5Jg61paFQAkixW2gg2c+2kIYqnny0E5h5c2Gav1HMrwG7P/E5Kv0tKa5sEPqIpNqDED67tH9Ru2FMsyI6koA5GO3xbHLvJJL1iN2fW0+qneyMqmD3Dky4BNHBp5vN19J4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IigwHgA+; arc=none smtp.client-ip=209.85.219.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1751542654; c=relaxed/simple;
+	bh=afAQNldEH9D37rnb+6FmjpuPSAP5CJbJLlvdHp4Z0MQ=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=fNCC7gKyzRryS/nQCpMuw7ZuGi/7OPdulyymFgQRXjyMnFxIkV09YMwIQc93lj5vluliqCYSl3ZbODLiCisfG8VvdbiPTmSCQahi9PdsrS4EpOmIbHo17V4wG4iwD0t37aJA45tRuHoXtunDAon4PYl6TdNj/GzlpSn9ZRPcVoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infineon.com; spf=pass smtp.mailfrom=infineon.com; dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b=EpeLuLZF; arc=none smtp.client-ip=217.10.52.160
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infineon.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infineon.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IigwHgA+"
-Received: by mail-yb1-f182.google.com with SMTP id 3f1490d57ef6-e87c86845d9so2377140276.1
-        for <brcm80211@lists.linux.dev>; Tue, 01 Jul 2025 19:52:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751424739; x=1752029539; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=G4ERL0+D1jaQ17f3/35QJx6RGMr53J8NyLHauQ60aWg=;
-        b=IigwHgA+ZQeWLQAYoxJRpfZ4hvTPGHrVJn4iGrTmgzAxJau6Vpfh+HcWutzhwPfEGE
-         2nUJlYep4J1X9Q59E4s2tUcqj3wfOprrKnWpDDJFXpGAsByQsX8P/2MUkNCoZDQGNssE
-         Ii6R/HWowAZaP3+tNu2JsA21ZLRTDKZvU50ZQZaBJ47Y0NMllnKrRuH3ZmM/mkhvtqFW
-         o+c/SspEz9mn2DmxkaVFl7XBT3QyAFK8H6uiCizVwN2lTEBC/dcomFSv/bdYkfaG0oHT
-         dQ1sgczMinVyIj90Wq5GRJZPzjoJm0e7e5Fw/kfBk0Vtr/vrnAKWWmTqFhoG6AzbPyU4
-         ro0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751424739; x=1752029539;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=G4ERL0+D1jaQ17f3/35QJx6RGMr53J8NyLHauQ60aWg=;
-        b=tBHElIi7zH2LneyFnN6+iLsIpg/gdrOkge36Ctg+LFrDUiYLFWtchhiFKn4Hzu8zkm
-         Tx6uQXY+oX+2QszY/2mLu3HaBydD4I/vfV8rp7XRW9eqkpZbpEtojPSaQ/mJS2g44513
-         M6Z8FMOrOSdyNbFVWrksmjBUDhsSKA9dT+fshNqHFgBi96ZCFnMvsJYD0VbRFruH+bsY
-         CR2/K5K/gXIDsAEpHkCkkyZbUH4hsEZfo290SR/XaGPdGKtNS4hvv4GmaWHin3VppdFv
-         kFenoxyEArNhDuU2iR9mI0dYHcV+1qV6X9CK7X1x0snpnTkBEXHkXaPYmQjZM91KmjHe
-         qqUw==
-X-Forwarded-Encrypted: i=1; AJvYcCUaIouwrlCVvP2QddIUL0MiwptoVvia4S9L9smNyZUPArifVZuKfvOLTi3wj5xwAP43cbfx7LaUzX4=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyTeJGmnOd2McBDu++ceFs6s1sb8t+uUShXc2a2JTADYtUQYGF8
-	gQb5tDcc8RE53oIrRQZkxvxtv8t2iJqHOpqSmmVz7IqUDBow3tdpg7FE7eVtE/4pGeWt6aOrtRs
-	aCmNrdVnhtPbgXiXTwJVbjjfs2aBEEUA=
-X-Gm-Gg: ASbGncuKnAiBk6kaaQAsSpIjbrtn+KFTNDLe9TB0pXNfzdmxsKMNR8uJQwDk2x4xaDL
-	TkXh6QB/AydE1zAkwLqlqruTnOFgk/qclYUh8PuKGjtkrSHcOK1lX7heOKltpCq/2cXgR+QWdD9
-	ufUz5YF1NcrQZANmFEYi+Uw5KwvKrBfPWKVwOrlEMti0benpAI9+hChH8=
-X-Google-Smtp-Source: AGHT+IE1CAl9s3T6XYLeg5rNyggiWbmMZPMGrcXq40hSXV+aIlFBMtLs3/SBRNLdtsGcqlQwiRjurFVOErAOVvyCsoM=
-X-Received: by 2002:a05:690c:998d:b0:70e:18c0:dac5 with SMTP id
- 00721157ae682-7164d3f1debmr15093277b3.10.1751424739660; Tue, 01 Jul 2025
- 19:52:19 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b="EpeLuLZF"
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=infineon.com; i=@infineon.com; q=dns/txt; s=IFXMAIL;
+  t=1751542652; x=1783078652;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=afAQNldEH9D37rnb+6FmjpuPSAP5CJbJLlvdHp4Z0MQ=;
+  b=EpeLuLZFdJxAFSSqowTu4MHOlpsts0wxu+L842YrktIDGpUWLdp8IpDA
+   yX3TEs08vi4+tnHttZzQJzte5wpmDCHs3Y4zvepTAZZPt4y1AFskFWj9G
+   cHIhFD8/1s4c9WTqCOqoLtKuPd954hHROevdgCDkofBVSR1zZK8Wvo5AB
+   4=;
+X-CSE-ConnectionGUID: vxXFY7DbQJCnlYJh9FkGcA==
+X-CSE-MsgGUID: Utn8g6mrTvSzm0U8uyfaiQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11482"; a="90407361"
+X-IronPort-AV: E=Sophos;i="6.16,284,1744063200"; 
+   d="scan'208";a="90407361"
+Received: from unknown (HELO MUCSE819.infineon.com) ([172.23.29.45])
+  by smtp14.infineon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jul 2025 13:36:20 +0200
+Received: from MUCSE827.infineon.com (172.23.29.20) by MUCSE819.infineon.com
+ (172.23.29.45) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Thu, 3 Jul
+ 2025 13:36:19 +0200
+Received: from ISCN5CG14747PP.infineon.com (10.161.6.196) by
+ MUCSE827.infineon.com (172.23.29.20) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.14; Thu, 3 Jul 2025 13:36:17 +0200
+From: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
+To: Johannes Berg <johannes@sipsolutions.net>, Arend van Spriel
+	<arend.vanspriel@broadcom.com>
+CC: <linux-wireless@vger.kernel.org>, <brcm80211@lists.linux.dev>,
+	<wlan-kernel-dev-list@infineon.com>, <gokulkumar.sivakumar@infineon.com>
+Subject: [PATCH] wifi: brcmfmac: fix EXTSAE WPA3 connection failure due to AUTH TX failure
+Date: Thu, 3 Jul 2025 17:03:39 +0530
+Message-ID: <20250703113339.6356-1-gokulkumar.sivakumar@infineon.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-From: KeithG <ys3al35l@gmail.com>
-Date: Tue, 1 Jul 2025 21:52:08 -0500
-X-Gm-Features: Ac12FXzcajfW4ToO9YyYZBxRsMyHnjKZ_sFymR_YUAsE8SxJvAcYcJZfAGYeIyE
-Message-ID: <CAG17S_MZsrzhKj5XtT1y3Z61h6uzi99RxkDLB=VPiwYs+c_g=g@mail.gmail.com>
-Subject: wpa_supplicant floods log with scan error when ssid is not present
-To: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev, 
-	brcm80211-dev-list.pdl@broadcom.com
-Cc: Arend Van Spriel <arend.vanspriel@broadcom.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: MUCSE823.infineon.com (172.23.29.54) To
+ MUCSE827.infineon.com (172.23.29.20)
 
-New to wpa_supplicant and wpa_cli and am using systemd-resolved as
-network manager.
+From: Ting-Ying Li <tingying.li@cypress.com>
 
-I have everything working reasonably well, but struggled with one
-thing. I get this
-error flooding the journal log:
+For WPA3-SAE Connection in EXTSAE mode, the userspace daemon is allowed to
+generate the SAE Auth frames. The driver uses the "mgmt_frame" FW IOVAR to
+transmit this MGMT frame.
 
-Jul 01 13:26:10 pi4 wpa_supplicant[420]: wlan0: Failed to initiate sched scan
-Jul 01 13:26:19 pi4 wpa_supplicant[420]: wlan0: Failed to initiate sched scan
-Jul 01 13:26:28 pi4 wpa_supplicant[420]: wlan0: Failed to initiate sched scan
+Before sending the IOVAR, the Driver is incorrectly treating the channel
+number read from the FW as a frequency value and again attempts to convert
+this into a channel number using ieee80211_frequency_to_channel().
 
-This occurs when there is a known ssid in the config, the ssid is
-enabled by wpa_cli, but this ssid is not visible and the wlan is not
-connected to any other ssid.
+This added an invalid channel number as part of the IOVAR request to the FW
+And some FW which strictly expects a valid channel would return BAD_CHAN
+error, while failing to transmit the driver requested SAE Auth MGMT frame.
 
-If I disable the network: 'wpa_cli disable network 0', it stops
-spamming the log. If It stays enabled yet I connect to another ssid,
-it does not spam the log. It is only when it is not connected and
-there is an ssid in the config that it cannot 'see'.
+Fix this in the CYW vendor specific MGMT TX cfg80211 ops handler, by not
+treating the channel number read from the FW as frequency value and skip
+the attempt to convert it again into a channel number.
 
-It appears that when wpa_supplicant is complaining that it 'Failed to
-initiate sched scan' it will immediately connect to that known network
-when it reappears. As long as the ssid is not available, and is in the
-list (in /etc/wpa_supplicant.conf) and 'enabled' by wpa_cli the log
-gets spammed with this. It seems a bit strange that this would be an
-unexpected situation: that wpa_supplicant may not be connected yet
-have an ssid listed that may not be available.
+Also fix this in the generic MGMT TX cfg80211 ops handler.
 
-I am running this on an RPi which is running RPiOS with systemd and
-have tried this with wpa_supplicant.service (dbus version edited to
-specify wlan0 so that it can save the configs) and with
-wpa_supplicant@wlan0 (without dbus).
+Fixes: c2ff8cad6423 ("brcm80211: make mgmt_tx in brcmfmac accept a NULL channel")
+Fixes: 66f909308a7c ("wifi: brcmfmac: cyw: support external SAE authentication in station mode")
+Signed-off-by: Ting-Ying Li <tingying.li@cypress.com>
+Signed-off-by: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
+---
+ .../broadcom/brcm80211/brcmfmac/cfg80211.c    | 21 +++++++++++--------
+ .../broadcom/brcm80211/brcmfmac/cyw/core.c    | 19 ++++++++++-------
+ 2 files changed, 23 insertions(+), 17 deletions(-)
 
-Any help appreciated.
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+index 40a9a8177de6..cecaca194979 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -5545,7 +5545,7 @@ brcmf_cfg80211_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
+ 	struct brcmf_fil_af_params_le *af_params;
+ 	bool ack;
+ 	s32 chan_nr;
+-	u32 freq;
++	u32 hw_channel;
+ 
+ 	brcmf_dbg(TRACE, "Enter\n");
+ 
+@@ -5606,19 +5606,22 @@ brcmf_cfg80211_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
+ 		/* Add the channel. Use the one specified as parameter if any or
+ 		 * the current one (got from the firmware) otherwise
+ 		 */
+-		if (chan)
+-			freq = chan->center_freq;
+-		else
++		if (chan) {
++			chan_nr = ieee80211_frequency_to_channel(chan->center_freq);
++			af_params->channel = cpu_to_le32(chan_nr);
++		} else {
+ 			brcmf_fil_cmd_int_get(vif->ifp, BRCMF_C_GET_CHANNEL,
+-					      &freq);
+-		chan_nr = ieee80211_frequency_to_channel(freq);
+-		af_params->channel = cpu_to_le32(chan_nr);
++					      &hw_channel);
++			af_params->channel = hw_channel;
++		}
++
+ 		af_params->dwell_time = cpu_to_le32(params->wait);
+ 		memcpy(action_frame->data, &buf[DOT11_MGMT_HDR_LEN],
+ 		       le16_to_cpu(action_frame->len));
+ 
+-		brcmf_dbg(TRACE, "Action frame, cookie=%lld, len=%d, freq=%d\n",
+-			  *cookie, le16_to_cpu(action_frame->len), freq);
++		brcmf_dbg(TRACE, "Action frame, cookie=%lld, len=%d, channel=%d\n",
++			  *cookie, le16_to_cpu(action_frame->len),
++			  le32_to_cpu(af_params->channel));
+ 
+ 		ack = brcmf_p2p_send_action_frame(cfg, cfg_to_ndev(cfg),
+ 						  af_params);
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
+index c9537fb597ce..57d7c32e517c 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
+@@ -113,10 +113,10 @@ int brcmf_cyw_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
+ 	s32 err = 0;
+ 	bool ack = false;
+ 	s32 chan_nr;
+-	u32 freq;
+ 	struct brcmf_mf_params_le *mf_params;
+ 	u32 mf_params_len;
+ 	s32 ready;
++	u32 hw_channel;
+ 
+ 	brcmf_dbg(TRACE, "Enter\n");
+ 
+@@ -143,13 +143,15 @@ int brcmf_cyw_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
+ 	mf_params->len = cpu_to_le16(len - DOT11_MGMT_HDR_LEN);
+ 	mf_params->frame_control = mgmt->frame_control;
+ 
+-	if (chan)
+-		freq = chan->center_freq;
+-	else
++	if (chan) {
++		chan_nr = ieee80211_frequency_to_channel(chan->center_freq);
++		mf_params->channel = cpu_to_le32(chan_nr);
++	} else {
+ 		brcmf_fil_cmd_int_get(vif->ifp, BRCMF_C_GET_CHANNEL,
+-				      &freq);
+-	chan_nr = ieee80211_frequency_to_channel(freq);
+-	mf_params->channel = cpu_to_le16(chan_nr);
++				      &hw_channel);
++		mf_params->channel = hw_channel;
++	}
++
+ 	memcpy(&mf_params->da[0], &mgmt->da[0], ETH_ALEN);
+ 	memcpy(&mf_params->bssid[0], &mgmt->bssid[0], ETH_ALEN);
+ 	mf_params->packet_id = cpu_to_le32(*cookie);
+@@ -159,7 +161,8 @@ int brcmf_cyw_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
+ 	brcmf_dbg(TRACE, "Auth frame, cookie=%d, fc=%04x, len=%d, channel=%d\n",
+ 		  le32_to_cpu(mf_params->packet_id),
+ 		  le16_to_cpu(mf_params->frame_control),
+-		  le16_to_cpu(mf_params->len), chan_nr);
++		  le16_to_cpu(mf_params->len),
++		  le32_to_cpu(mf_params->channel));
+ 
+ 	vif->mgmt_tx_id = le32_to_cpu(mf_params->packet_id);
+ 	set_bit(BRCMF_MGMT_TX_SEND_FRAME, &vif->mgmt_tx_status);
+-- 
+2.43.0
+
