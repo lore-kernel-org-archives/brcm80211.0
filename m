@@ -1,226 +1,230 @@
-Received: from smtp9.infineon.com (smtp9.infineon.com [217.10.52.204])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E76128E59C
-	for <brcm80211@lists.linux.dev>; Thu,  3 Jul 2025 13:53:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.10.52.204
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F20FC1714B7;
+	Sun,  6 Jul 2025 15:30:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751550839; cv=none; b=AhnwpPixRCgjIAnlqPC0rLizkwGhmDAQBJREsbEOgGT/746gM65YDJmkp7e42n7ryhwqFhRRnbCdcdCSBD4HhNF7hNSJ/oObIpmydVCEEjidOKVTnRzr9ZoX0SGoTOh6JIXaM5dwzmV+8nNPb55vLYiYQujJBzzGMBc7+51doiw=
+	t=1751815803; cv=none; b=JVeTSrrHB52ziYTvE//eDGtYJmB6bJq8EO8p9Ry2wdenMwhppG+yyL7rNGgQrtTojPoZNJJoG4PcY3Hs5dHRTT+Qx32nvUO/lJkIVdTRcJFWtksDOsVXA7nJWwvj/+tWmugsNga1i+v3yrJw/+Rvu27bbyvT6p1PxBAkHi/Tukw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751550839; c=relaxed/simple;
-	bh=6jRudO0+LIFk9WSrywnOWGs8Lzh1HFDF7jGrPpfbeGA=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=BqdqsnevIioQ3+0uelJs1VeZBLLacuwBqtZvJLXs17sXbdCJu+86Nevrpe2I4sXkVP2SPTr+/RWjOCeqmzBDLCuk76a5ZveIlkS5gKgCm7qJfzvjB7f2RybUKUjTamjobw2Jd9pPdV5MKaXZf5J0QNheKBWIoQKRhASxyAZRgiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infineon.com; spf=pass smtp.mailfrom=infineon.com; dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b=ZUPvJCt2; arc=none smtp.client-ip=217.10.52.204
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infineon.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infineon.com
+	s=arc-20240116; t=1751815803; c=relaxed/simple;
+	bh=hXxpxP3r6USDwbJPV6SqHo7rk/wp740Agncua43aQb0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rs6QgfHdDecqrwxBQaJft6nY5rDkZTRtWaooSzILPNvOrFHQiTmmdmLqbqM2kNAhKku7+OTEF7ivsh5PuXrXvmYpCvRyMPNCVeyVYk6Gs6yMl6eLK/mcDealtecDKr5SPVtVAV1aRmNnxSlZOfXY5MMIyVIv4+t4m4GCc4+vPwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Dfk/LZlw; arc=none smtp.client-ip=192.198.163.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b="ZUPvJCt2"
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=infineon.com; i=@infineon.com; q=dns/txt; s=IFXMAIL;
-  t=1751550836; x=1783086836;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=6jRudO0+LIFk9WSrywnOWGs8Lzh1HFDF7jGrPpfbeGA=;
-  b=ZUPvJCt2y+5hzgI35EnZFFh9jOZYtQaONO6PRvyoW0Ga+HLQCshH7hBW
-   zgkoGGXFbeh2Zht9A8/ILVsYQ2FIEbZQYY3TMxQqBevGdCjO4AP20f6mH
-   TzRe2Kk/lFz1yfsoVcHaEueeld+/agfjKBFE8tkDB+f6wEnuq091FxbhS
-   w=;
-X-CSE-ConnectionGUID: XF5XJ/vlQQ2yDWZxKxcpbA==
-X-CSE-MsgGUID: QGOMRJHcQ5W8WAdkG2n9Wg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11483"; a="56643547"
-X-IronPort-AV: E=Sophos;i="6.16,284,1744063200"; 
-   d="scan'208";a="56643547"
-Received: from unknown (HELO MUCSE822.infineon.com) ([172.23.29.53])
-  by smtp9.infineon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jul 2025 15:53:48 +0200
-Received: from MUCSE827.infineon.com (172.23.29.20) by MUCSE822.infineon.com
- (172.23.29.53) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Thu, 3 Jul
- 2025 15:53:47 +0200
-Received: from ISCN5CG14747PP.infineon.com (10.161.6.196) by
- MUCSE827.infineon.com (172.23.29.20) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.14; Thu, 3 Jul 2025 15:53:45 +0200
-From: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
-To: Johannes Berg <johannes@sipsolutions.net>, Arend van Spriel
-	<arend.vanspriel@broadcom.com>
-CC: <linux-wireless@vger.kernel.org>, <brcm80211@lists.linux.dev>,
-	<wlan-kernel-dev-list@infineon.com>, <gokulkumar.sivakumar@infineon.com>
-Subject: [PATCH wireless-next v2] wifi: brcmfmac: fix EXTSAE WPA3 connection failure due to AUTH TX failure
-Date: Thu, 3 Jul 2025 19:23:07 +0530
-Message-ID: <20250703135307.7433-1-gokulkumar.sivakumar@infineon.com>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Dfk/LZlw"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1751815802; x=1783351802;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=hXxpxP3r6USDwbJPV6SqHo7rk/wp740Agncua43aQb0=;
+  b=Dfk/LZlwbkJjZPSQ8fJ4jKZN55lyxNFW2wHpgB4EtK8YGYryt05dMM6z
+   9Eda4CPZ7qKFkftFBLIeHH/eyxH00FTWyXhWTSbl0syc+3Xxdss371DZX
+   bpSeKpgTgOI6Vs0qIjBi66uEuFUUSiRswe8YgrfmdKWOJfMS5H5lBfojV
+   IjjxrdQkUkV8A3XBUMgIFowAHphmu2ZFqIkX/A4ueooh/RZckR904FTvJ
+   vbeKfY9vhf5v0BaqVD//jPPSyIl/wEdZbMqM1pqa7c1JQt9iSjSEe78mF
+   n52qhyU4MIuxnxPkECZManZ2XoIhIhLCfeHHLXb4hitVzvALNYVFVXEZF
+   w==;
+X-CSE-ConnectionGUID: uiU5EOVvSU2c0ud7RXfdZg==
+X-CSE-MsgGUID: mY8wRUstQ/qG/libZ//ZhA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11486"; a="53175701"
+X-IronPort-AV: E=Sophos;i="6.16,292,1744095600"; 
+   d="scan'208";a="53175701"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jul 2025 08:30:01 -0700
+X-CSE-ConnectionGUID: x1z/klDhSlmx6BOMRHviwA==
+X-CSE-MsgGUID: vuLjyKkDRwGbyRsUrex4mw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,292,1744095600"; 
+   d="scan'208";a="154435374"
+Received: from lkp-server01.sh.intel.com (HELO 0b2900756c14) ([10.239.97.150])
+  by orviesa010.jf.intel.com with ESMTP; 06 Jul 2025 08:29:59 -0700
+Received: from kbuild by 0b2900756c14 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1uYRJV-00057H-0S;
+	Sun, 06 Jul 2025 15:29:57 +0000
+Date: Sun, 6 Jul 2025 23:29:24 +0800
+From: kernel test robot <lkp@intel.com>
+To: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>,
+	Johannes Berg <johannes@sipsolutions.net>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>
+Cc: oe-kbuild-all@lists.linux.dev, linux-wireless@vger.kernel.org,
+	brcm80211@lists.linux.dev, wlan-kernel-dev-list@infineon.com,
+	gokulkumar.sivakumar@infineon.com
+Subject: Re: [PATCH wireless-next v2] wifi: brcmfmac: fix EXTSAE WPA3
+ connection failure due to AUTH TX failure
+Message-ID: <202507062346.dYsnIxdD-lkp@intel.com>
+References: <20250703135307.7433-1-gokulkumar.sivakumar@infineon.com>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: MUCSE814.infineon.com (172.23.29.40) To
- MUCSE827.infineon.com (172.23.29.20)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250703135307.7433-1-gokulkumar.sivakumar@infineon.com>
 
-From: Ting-Ying Li <tingying.li@cypress.com>
+Hi Gokul,
 
-For WPA3-SAE Connection in EXTSAE mode, the userspace daemon is allowed to
-generate the SAE Auth frames. The driver uses the "mgmt_frame" FW IOVAR to
-transmit this MGMT frame.
+kernel test robot noticed the following build warnings:
 
-Before sending the IOVAR, the Driver is incorrectly treating the channel
-number read from the FW as a frequency value and again attempts to convert
-this into a channel number using ieee80211_frequency_to_channel().
+[auto build test WARNING on wireless-next/main]
+[also build test WARNING on wireless/main linus/master v6.16-rc4 next-20250704]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-This added an invalid channel number as part of the IOVAR request to the FW
-And some FW which strictly expects a valid channel would return BAD_CHAN
-error, while failing to transmit the driver requested SAE Auth MGMT frame.
+url:    https://github.com/intel-lab-lkp/linux/commits/Gokul-Sivakumar/wifi-brcmfmac-fix-EXTSAE-WPA3-connection-failure-due-to-AUTH-TX-failure/20250703-215456
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/wireless/wireless-next.git main
+patch link:    https://lore.kernel.org/r/20250703135307.7433-1-gokulkumar.sivakumar%40infineon.com
+patch subject: [PATCH wireless-next v2] wifi: brcmfmac: fix EXTSAE WPA3 connection failure due to AUTH TX failure
+config: sh-randconfig-r121-20250704 (https://download.01.org/0day-ci/archive/20250706/202507062346.dYsnIxdD-lkp@intel.com/config)
+compiler: sh4-linux-gcc (GCC) 15.1.0
+reproduce: (https://download.01.org/0day-ci/archive/20250706/202507062346.dYsnIxdD-lkp@intel.com/reproduce)
 
-Fix this in the CYW vendor specific MGMT TX cfg80211 ops handler, by not
-treating the channel number read from the FW as frequency value and skip
-the attempt to convert it again into a channel number.
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202507062346.dYsnIxdD-lkp@intel.com/
 
-Also fix this in the generic MGMT TX cfg80211 ops handler.
+sparse warnings: (new ones prefixed by >>)
+>> drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c:5620:52: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] channel @@     got signed int [addressable] [usertype] hw_ch @@
+   drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c:5620:52: sparse:     expected restricted __le32 [usertype] channel
+   drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c:5620:52: sparse:     got signed int [addressable] [usertype] hw_ch
+--
+>> drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c:156:44: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le16 [usertype] channel @@     got signed int [addressable] [usertype] hw_ch @@
+   drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c:156:44: sparse:     expected restricted __le16 [usertype] channel
+   drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c:156:44: sparse:     got signed int [addressable] [usertype] hw_ch
 
-Fixes: c2ff8cad6423 ("brcm80211: make mgmt_tx in brcmfmac accept a NULL channel")
-Fixes: 66f909308a7c ("wifi: brcmfmac: cyw: support external SAE authentication in station mode")
-Signed-off-by: Ting-Ying Li <tingying.li@cypress.com>
-Signed-off-by: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
----
+vim +5620 drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
 
-v2:
-  * Fixed wifibot "warning: incorrect type in assignment (different base types)"
-    in cyw/core.c file.
+  5528	
+  5529	
+  5530	int
+  5531	brcmf_cfg80211_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
+  5532			       struct cfg80211_mgmt_tx_params *params, u64 *cookie)
+  5533	{
+  5534		struct brcmf_cfg80211_info *cfg = wiphy_to_cfg(wiphy);
+  5535		struct ieee80211_channel *chan = params->chan;
+  5536		struct brcmf_pub *drvr = cfg->pub;
+  5537		const u8 *buf = params->buf;
+  5538		size_t len = params->len;
+  5539		const struct ieee80211_mgmt *mgmt;
+  5540		struct brcmf_cfg80211_vif *vif;
+  5541		s32 err = 0;
+  5542		s32 ie_offset;
+  5543		s32 ie_len;
+  5544		struct brcmf_fil_action_frame_le *action_frame;
+  5545		struct brcmf_fil_af_params_le *af_params;
+  5546		bool ack;
+  5547		s32 ch, hw_ch;
+  5548	
+  5549		brcmf_dbg(TRACE, "Enter\n");
+  5550	
+  5551		*cookie = 0;
+  5552	
+  5553		mgmt = (const struct ieee80211_mgmt *)buf;
+  5554	
+  5555		if (!ieee80211_is_mgmt(mgmt->frame_control)) {
+  5556			bphy_err(drvr, "Driver only allows MGMT packet type\n");
+  5557			return -EPERM;
+  5558		}
+  5559	
+  5560		vif = container_of(wdev, struct brcmf_cfg80211_vif, wdev);
+  5561	
+  5562		if (ieee80211_is_probe_resp(mgmt->frame_control)) {
+  5563			/* Right now the only reason to get a probe response */
+  5564			/* is for p2p listen response or for p2p GO from     */
+  5565			/* wpa_supplicant. Unfortunately the probe is send   */
+  5566			/* on primary ndev, while dongle wants it on the p2p */
+  5567			/* vif. Since this is only reason for a probe        */
+  5568			/* response to be sent, the vif is taken from cfg.   */
+  5569			/* If ever desired to send proberesp for non p2p     */
+  5570			/* response then data should be checked for          */
+  5571			/* "DIRECT-". Note in future supplicant will take    */
+  5572			/* dedicated p2p wdev to do this and then this 'hack'*/
+  5573			/* is not needed anymore.                            */
+  5574			ie_offset =  DOT11_MGMT_HDR_LEN +
+  5575				     DOT11_BCN_PRB_FIXED_LEN;
+  5576			ie_len = len - ie_offset;
+  5577			if (vif == cfg->p2p.bss_idx[P2PAPI_BSSCFG_PRIMARY].vif)
+  5578				vif = cfg->p2p.bss_idx[P2PAPI_BSSCFG_DEVICE].vif;
+  5579			err = brcmf_vif_set_mgmt_ie(vif,
+  5580						    BRCMF_VNDR_IE_PRBRSP_FLAG,
+  5581						    &buf[ie_offset],
+  5582						    ie_len);
+  5583			cfg80211_mgmt_tx_status(wdev, *cookie, buf, len, true,
+  5584						GFP_KERNEL);
+  5585		} else if (ieee80211_is_action(mgmt->frame_control)) {
+  5586			if (len > BRCMF_FIL_ACTION_FRAME_SIZE + DOT11_MGMT_HDR_LEN) {
+  5587				bphy_err(drvr, "invalid action frame length\n");
+  5588				err = -EINVAL;
+  5589				goto exit;
+  5590			}
+  5591			af_params = kzalloc(sizeof(*af_params), GFP_KERNEL);
+  5592			if (af_params == NULL) {
+  5593				bphy_err(drvr, "unable to allocate frame\n");
+  5594				err = -ENOMEM;
+  5595				goto exit;
+  5596			}
+  5597			action_frame = &af_params->action_frame;
+  5598			/* Add the packet Id */
+  5599			action_frame->packet_id = cpu_to_le32(*cookie);
+  5600			/* Add BSSID */
+  5601			memcpy(&action_frame->da[0], &mgmt->da[0], ETH_ALEN);
+  5602			memcpy(&af_params->bssid[0], &mgmt->bssid[0], ETH_ALEN);
+  5603			/* Add the length exepted for 802.11 header  */
+  5604			action_frame->len = cpu_to_le16(len - DOT11_MGMT_HDR_LEN);
+  5605			/* Add the channel. Use the one specified as parameter if any or
+  5606			 * the current one (got from the firmware) otherwise
+  5607			 */
+  5608			if (chan) {
+  5609				ch = ieee80211_frequency_to_channel(chan->center_freq);
+  5610				af_params->channel = cpu_to_le32(ch);
+  5611			} else {
+  5612				err = brcmf_fil_cmd_int_get(vif->ifp,
+  5613							    BRCMF_C_GET_CHANNEL,
+  5614							    &hw_ch);
+  5615				if (err) {
+  5616					bphy_err(drvr,
+  5617						 "unable to get current hw channel\n");
+  5618					goto free;
+  5619				} else {
+> 5620					af_params->channel = hw_ch;
+  5621				}
+  5622			}
+  5623	
+  5624			af_params->dwell_time = cpu_to_le32(params->wait);
+  5625			memcpy(action_frame->data, &buf[DOT11_MGMT_HDR_LEN],
+  5626			       le16_to_cpu(action_frame->len));
+  5627	
+  5628			brcmf_dbg(TRACE, "Action frame, cookie=%lld, len=%d, channel=%d\n",
+  5629				  *cookie, le16_to_cpu(action_frame->len),
+  5630				  le32_to_cpu(af_params->channel));
+  5631	
+  5632			ack = brcmf_p2p_send_action_frame(cfg, cfg_to_ndev(cfg),
+  5633							  af_params);
+  5634	
+  5635			cfg80211_mgmt_tx_status(wdev, *cookie, buf, len, ack,
+  5636						GFP_KERNEL);
+  5637	free:
+  5638			kfree(af_params);
+  5639		} else {
+  5640			brcmf_dbg(TRACE, "Unhandled, fc=%04x!!\n", mgmt->frame_control);
+  5641			brcmf_dbg_hex_dump(true, buf, len, "payload, len=%zu\n", len);
+  5642		}
+  5643	
+  5644	exit:
+  5645		return err;
+  5646	}
+  5647	BRCMF_EXPORT_SYMBOL_GPL(brcmf_cfg80211_mgmt_tx);
+  5648	
 
-  * Fixed >80 line length checkpatch warning by reducing variable name len
-    in cfg80211.c file.
-
-  * Handled the return value of the BRCMF_C_GET_CHANNEL IOCTL Read operation
-    in cfg80211.c & cyw/core.c files.
-
- .../broadcom/brcm80211/brcmfmac/cfg80211.c    | 32 ++++++++++++-------
- .../broadcom/brcm80211/brcmfmac/cyw/core.c    | 29 +++++++++++------
- 2 files changed, 40 insertions(+), 21 deletions(-)
-
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-index 501820411443..a8eb006b6c1b 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-@@ -5527,8 +5527,7 @@ brcmf_cfg80211_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
- 	struct brcmf_fil_action_frame_le *action_frame;
- 	struct brcmf_fil_af_params_le *af_params;
- 	bool ack;
--	s32 chan_nr;
--	u32 freq;
-+	s32 ch, hw_ch;
- 
- 	brcmf_dbg(TRACE, "Enter\n");
- 
-@@ -5589,25 +5588,36 @@ brcmf_cfg80211_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
- 		/* Add the channel. Use the one specified as parameter if any or
- 		 * the current one (got from the firmware) otherwise
- 		 */
--		if (chan)
--			freq = chan->center_freq;
--		else
--			brcmf_fil_cmd_int_get(vif->ifp, BRCMF_C_GET_CHANNEL,
--					      &freq);
--		chan_nr = ieee80211_frequency_to_channel(freq);
--		af_params->channel = cpu_to_le32(chan_nr);
-+		if (chan) {
-+			ch = ieee80211_frequency_to_channel(chan->center_freq);
-+			af_params->channel = cpu_to_le32(ch);
-+		} else {
-+			err = brcmf_fil_cmd_int_get(vif->ifp,
-+						    BRCMF_C_GET_CHANNEL,
-+						    &hw_ch);
-+			if (err) {
-+				bphy_err(drvr,
-+					 "unable to get current hw channel\n");
-+				goto free;
-+			} else {
-+				af_params->channel = hw_ch;
-+			}
-+		}
-+
- 		af_params->dwell_time = cpu_to_le32(params->wait);
- 		memcpy(action_frame->data, &buf[DOT11_MGMT_HDR_LEN],
- 		       le16_to_cpu(action_frame->len));
- 
--		brcmf_dbg(TRACE, "Action frame, cookie=%lld, len=%d, freq=%d\n",
--			  *cookie, le16_to_cpu(action_frame->len), freq);
-+		brcmf_dbg(TRACE, "Action frame, cookie=%lld, len=%d, channel=%d\n",
-+			  *cookie, le16_to_cpu(action_frame->len),
-+			  le32_to_cpu(af_params->channel));
- 
- 		ack = brcmf_p2p_send_action_frame(cfg, cfg_to_ndev(cfg),
- 						  af_params);
- 
- 		cfg80211_mgmt_tx_status(wdev, *cookie, buf, len, ack,
- 					GFP_KERNEL);
-+free:
- 		kfree(af_params);
- 	} else {
- 		brcmf_dbg(TRACE, "Unhandled, fc=%04x!!\n", mgmt->frame_control);
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
-index c9537fb597ce..28a014ede05f 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
-@@ -112,8 +112,7 @@ int brcmf_cyw_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
- 	struct brcmf_cfg80211_vif *vif;
- 	s32 err = 0;
- 	bool ack = false;
--	s32 chan_nr;
--	u32 freq;
-+	s32 ch, hw_ch;
- 	struct brcmf_mf_params_le *mf_params;
- 	u32 mf_params_len;
- 	s32 ready;
-@@ -143,13 +142,21 @@ int brcmf_cyw_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
- 	mf_params->len = cpu_to_le16(len - DOT11_MGMT_HDR_LEN);
- 	mf_params->frame_control = mgmt->frame_control;
- 
--	if (chan)
--		freq = chan->center_freq;
--	else
--		brcmf_fil_cmd_int_get(vif->ifp, BRCMF_C_GET_CHANNEL,
--				      &freq);
--	chan_nr = ieee80211_frequency_to_channel(freq);
--	mf_params->channel = cpu_to_le16(chan_nr);
-+	if (chan) {
-+		ch = ieee80211_frequency_to_channel(chan->center_freq);
-+		mf_params->channel = cpu_to_le16(ch);
-+	} else {
-+		err = brcmf_fil_cmd_int_get(vif->ifp,
-+					    BRCMF_C_GET_CHANNEL,
-+					    &hw_ch);
-+		if (err) {
-+			bphy_err(drvr, "unable to get current hw channel\n");
-+			goto free;
-+		} else {
-+			mf_params->channel = hw_ch;
-+		}
-+	}
-+
- 	memcpy(&mf_params->da[0], &mgmt->da[0], ETH_ALEN);
- 	memcpy(&mf_params->bssid[0], &mgmt->bssid[0], ETH_ALEN);
- 	mf_params->packet_id = cpu_to_le32(*cookie);
-@@ -159,7 +166,8 @@ int brcmf_cyw_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
- 	brcmf_dbg(TRACE, "Auth frame, cookie=%d, fc=%04x, len=%d, channel=%d\n",
- 		  le32_to_cpu(mf_params->packet_id),
- 		  le16_to_cpu(mf_params->frame_control),
--		  le16_to_cpu(mf_params->len), chan_nr);
-+		  le16_to_cpu(mf_params->len),
-+		  le16_to_cpu(mf_params->channel));
- 
- 	vif->mgmt_tx_id = le32_to_cpu(mf_params->packet_id);
- 	set_bit(BRCMF_MGMT_TX_SEND_FRAME, &vif->mgmt_tx_status);
-@@ -185,6 +193,7 @@ int brcmf_cyw_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
- tx_status:
- 	cfg80211_mgmt_tx_status(wdev, *cookie, buf, len, ack,
- 				GFP_KERNEL);
-+free:
- 	kfree(mf_params);
- 	return err;
- }
 -- 
-2.47.0
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
