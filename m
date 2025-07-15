@@ -1,36 +1,36 @@
-Received: from smtpbgsg2.qq.com (smtpbgsg2.qq.com [54.254.200.128])
+Received: from smtpbguseast1.qq.com (smtpbguseast1.qq.com [54.204.34.129])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 160C52E7BAC
-	for <brcm80211@lists.linux.dev>; Tue, 15 Jul 2025 13:44:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.254.200.128
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B6452ED16E
+	for <brcm80211@lists.linux.dev>; Tue, 15 Jul 2025 13:45:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.204.34.129
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587097; cv=none; b=snVT42e08X8xokSvZ5kcqoy4liLrT6SJawp22ko9HnlZa7Acpob2LaO3muegLV1B3hLbv6G5t10DWRnA1IXv5rOZrd3c0iBQW536vRME9QszQ16wfVbgYWxbzHVXfeTlZ83fDFMneO7+V8gDf759Dqro6X4LEnTnbG6BMbF5Jzw=
+	t=1752587117; cv=none; b=o8bUC27YuArGa8alKGp81c8oRUrwyVc5kY9oH9Pb8kNSWBB1K2tYfQuef3OhwoyHE5dx4aQo+hrfZj1Y4RNdJpWfG5jQHv6XfTL8CVahY7/RO1uRT9PdDQWtNLbM1QhAPXc1VzssO70iR3ePSmmuDosZ/jD+T3IZms1z2cjGeIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587097; c=relaxed/simple;
-	bh=TZJTn2E5BL5VAE49e7YaK4SCRoFGgemXPDOntw9si8U=;
+	s=arc-20240116; t=1752587117; c=relaxed/simple;
+	bh=D2pCaySHFq2pdMF2MaFrTGbBn8HmE7zZtjbdOo8bZ84=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pj1vxCXU6TC265x1AQq4QpJ79goQYA8MrChEVvH+xO7PaD5HGEvt0hL3QN+pt+zayiQzITHG4u9kbFoRuBUpaByNwgbfZ69L/DC6WC5JszkswuxhHqPcTko1dlxeV2y38hKx+0qcHm2pVjcB2h8RWfco6eXfBq5COCrXsZXSv2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com; spf=pass smtp.mailfrom=uniontech.com; dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b=OZuPSAzw; arc=none smtp.client-ip=54.254.200.128
+	 MIME-Version; b=RovUCR/3c7gFNASgNyd8vrSYUgcxpf9T2LNqajmSHXWo+g1ETu3LFOGoK48VuhZZAXvOdq3cOYkpqsLwc2tfWzAvpM33qRw39i5beQ9/JC5fGxrSOTFYAzyrruS8WGYU9+xKt0UgCXaRUNidpsV4gjtAU/h46qupzMPLX/VzogQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com; spf=pass smtp.mailfrom=uniontech.com; dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b=UkkdV/Vg; arc=none smtp.client-ip=54.204.34.129
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uniontech.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b="OZuPSAzw"
+	dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b="UkkdV/Vg"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
-	s=onoh2408; t=1752587073;
-	bh=IjnQY0kPhK20QaffYXVWEq0vHT5rpi7BYCx3cV6Q92A=;
+	s=onoh2408; t=1752587083;
+	bh=qr7vnn7eeOCjc+CY7+06nVMi7mZA3SUUNFXvLriFWI8=;
 	h=From:To:Subject:Date:Message-ID:MIME-Version;
-	b=OZuPSAzw/znlblyI0bHmsoUFw9GT59ynhGDp3kiqGRyqyteMccLtaWi/wwp2jFIR5
-	 m/P4hflxCxhj27DnNbJn7/ubi0zOoS9+uzS78H2Xeq90eLwEXyxKlBYGNU1fkvSXcF
-	 BefoPOtGk8GZLHtZRLOp09AR5FKixg0KyATgNVjY=
-X-QQ-mid: zesmtpip2t1752587060t139a5737
-X-QQ-Originating-IP: /8D94xQN+8JOFpNiEQb4FTVnmmcArlmhUzeqfbRCotE=
+	b=UkkdV/VgT9YKpmv2p5vCzhYaVpPNMkTX8GU0fdtGh183IOIzn9iWaPL4becCONlyR
+	 s43uF9oXmg3YjsPvDlW779xjH/LG+PEAabjEnezN416RkwzZ4pju1PcysZQhGIv5FT
+	 G0kyMpntx5Z3tdclegBhwT/HL+rWuCKp+/xojhh0=
+X-QQ-mid: zesmtpip2t1752587071t6eb91e5d
+X-QQ-Originating-IP: F1q5g6EsDf65gITeUTv/PWZUZ0Adu/pQEt6UQ7FSUXk=
 Received: from avenger-e500 ( [localhost])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Tue, 15 Jul 2025 21:44:14 +0800 (CST)
+	id ; Tue, 15 Jul 2025 21:44:23 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 1
-X-BIZMAIL-ID: 6857427455089537098
+X-BIZMAIL-ID: 5398797519423429951
 EX-QQ-RecipientCnt: 63
 From: WangYuli <wangyuli@uniontech.com>
 To: wangyuli@uniontech.com
@@ -96,9 +96,9 @@ Cc: airlied@gmail.com,
 	xen-devel@lists.xenproject.org,
 	yujiaoliang@vivo.com,
 	zhanjun@uniontech.com
-Subject: [PATCH v2 1/8] KVM: x86: Fix typo "notifer"
-Date: Tue, 15 Jul 2025 21:44:00 +0800
-Message-ID: <2EBE0C87C4CF3E11+20250715134407.540483-1-wangyuli@uniontech.com>
+Subject: [PATCH v2 2/8] cxl: mce: Fix typo "notifer"
+Date: Tue, 15 Jul 2025 21:44:01 +0800
+Message-ID: <65FC7B96ECBDB052+20250715134407.540483-2-wangyuli@uniontech.com>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <BD5C52D2838AEA48+20250715134050.539234-1-wangyuli@uniontech.com>
 References: <BD5C52D2838AEA48+20250715134050.539234-1-wangyuli@uniontech.com>
@@ -111,56 +111,48 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-QQ-SENDSIZE: 520
 Feedback-ID: zesmtpip:uniontech.com:qybglogicsvrgz:qybglogicsvrgz8a-1
-X-QQ-XMAILINFO: MQ7eSrrLHrWC2s4UDD70j435oM5bUePaOrSyAp6ZktLAllIgVOtGvkvz
-	0NUBgC4kVz3nwIMAhMTHd9BpS4hwYZhteO6rSQrMwCsWPZ/lhYzP6VeZSV6ncQe4Pf4PWKI
-	UTKJnVyAjAHBzn27PkHZBfWeP0SbYVfGkENOPB49EtHxopDj3sZJgkdvWqKiErZ6ADyBDVU
-	xdYoAJ5aRApVSHXlu0V34GEm8IrFCfwe2zAxi5GRePjavUXOE2lwtJwjfMv8SGZs76M2fja
-	ywr6MgZdjY67Y1mGwUUHxFqb9kgDxEo7XhnSVv1hptWBuRxU+e8X+AdkxG0b2TmvXIkdytH
-	VDd458eK21AM77AiqtmE2zS+FGVBVeepLOBPM91LQU2Yvkv62Ow5LsqEVVcwbQofsAJrQXT
-	4WFzxAnxbn1SEsP4txa68ZSmQJDyY5x3JnqCYxah0uW+7BhNowrETW/3N5KGoC3RX4yu2mw
-	hB7ZNzoR6OkzLn1dvZ9OvYiatWt3HMExjeMDiW9d9bGEvHxp/t4LzIsIQTNaKPCFiS0ujsh
-	gbxeVEnRkWo+mYEAe2KxHzURhUBNujtpjdjU4R3WOO+x4S5Ozr5jJSXGxtqRDOEvIZcO0Wh
-	ThvGqbIfwqEo4tjk4mmyH0ia4+tdXTCEuA/zjLfzqsj+T3qpbhNs4Tq44hZuTXJ8FKBZ8ac
-	I8GUDf45XpvObmpLkdY2pwJ3UMVQA9aYxpNwsF18oHEkZoxgoiY0y56f5U0+aCSYrpDCtTE
-	ERu8agCmiBYQXJZjWoTrd5VHMccB243de4PmvFu8L9eHkB9mNBJD9rd6Jhalg+tjoh85Pvu
-	Sj96/QOKYMlJ4l/RKLb6azewtgLD/0mfGhDLm4CE8i9bKCfG3Q4ojvesUeWGtdrXk+eOCsU
-	p+OGTTnbs/53jI6X4SUiFHlVsuJ8XVUE9tMOZTm2PYH/TMXe8mTIf/ZZaDsWQl5q6/yP2KM
-	8BBpyPPWC9CISMU76STopYNauTUpKYb4qY9KvCPhyYnyZ9pL2mUBk0vcAXtYlzeWIOQBWcg
-	0IH7XzGWGGFWf6nW/2z61jcx1NIzgl/zQXxw1Rj8vfZDCExyCmMRsz+ie4PiAiOJnj6bK3u
-	Qnqjsp8MrK+
-X-QQ-XMRINFO: MPJ6Tf5t3I/ycC2BItcBVIA=
+X-QQ-XMAILINFO: OFelQXFBryTbt1yse0HJODq3uBQeF6nk9/u9T0cj1UuEPj2IV7pxO7Qb
+	q/wsLq0fxSCuTsyBEp4Q6rXqxL9JztTqOSnf3ziSmBqWpxHkp0sRIdkVeSainfAuz1PIS8v
+	YDpjitouVpjEFQ61od+/TX1CXFWcQE5YCpBctngySLTkrf3vtFVbQ0MZFztvYOEVrudkmOe
+	thmK2PFZ6iOhxXykm80XKCly5z90VGxxU17r1z05ixfECON8ZGfYKGJFQQA4T/0N10lHhCM
+	iQmob38T6qhf7exQjt6r0u3MA0H4oQYuH8E669V+pIIFvjUzYcqvApCeyUnBH7n7v3ZBWk8
+	+RvypDcBTrIV5tZJqaMMXwxF3LrWny01f3AKsRkWLO2qmALNurxVZix1IVD0Ba1osg8u0T9
+	G2QkTn3JzrLLf910qR2s7UNwifiU6qWdCslL+N0xikhZoB0esh+2ecsWSfdMWWoF5RP6GwY
+	5tRzpeICLMM1m0ZiA//g5wz5uMMDeAFTcHO9sXC6yw+YiuzhT8c500wHq6oGqzrs8Zs7w+L
+	Kf2eDyf8GYoU05uk76dbSfb1uvgOaS88mZn8u19dBaIdxJX335En8TgG6y/bOc3Rpg0QMN+
+	Yt8JMrKDCX8aDUJoTJq6qfWD0fc4pM2OQlcEzvQgPbWJzPASyWAc1V565qXw73FIK0UtC9e
+	Pw/x7dIXCwyu+dX8i8JhKn/1l4e2t05GZc8grLBJxp3FzVIzcIs0xMYMhu4PxyMf4hL/tyd
+	c92FKGHe+M81w6z0P99Sy7Q0U1Q1H7DtxQZ43Z+rxbtEPAmF1fN70+bUlXq0YCUMTKBkvai
+	R4GLqsoJ9xz8o7ZawIhu6INevo3ZQaBlAP2EhLc9OhtBSB0UAFKWgZC/jlN9fWLremIXv+s
+	e6EuWoI3KT13sa/MvRjeHI6AU4At4y/JSVQCniypmGMtyC8B8549DRqBTb8pFp1V6cQV87P
+	SuY4AYTvFBPU8PAnugrGVvhWFz5FZaWRJeV+bIweRXxMNvRSMHAcHyFxxDvhJHDuL//jizy
+	z7mpDEfIRfyHkZ3zQMM9oaZ2f1BbEtMiXF1HKo2cwKtqDW4q47GPZdUbQ9MSrT4iog147jr
+	rC+6XZOlBuKMYR9mT8duYgbuWotvp6azS9o8v7/12phqKzakjeWy98=
+X-QQ-XMRINFO: OWPUhxQsoeAVDbp3OJHYyFg=
 X-QQ-RECHKSPAM: 0
 
-There are some spelling mistakes of 'notifer' which should be 'notifier'.
+According to the context, "mce_notifer" should be "mce_notifier".
 
 Link: https://lore.kernel.org/all/B3C019B63C93846F+20250715071245.398846-1-wangyuli@uniontech.com/
+Fixes: 516e5bd0b6bf ("cxl: Add mce notifier to emit aliased address for extended linear cache")
 Signed-off-by: WangYuli <wangyuli@uniontech.com>
 ---
- arch/x86/kvm/i8254.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/cxl/core/mce.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/kvm/i8254.c b/arch/x86/kvm/i8254.c
-index 739aa6c0d0c3..9ff55112900a 100644
---- a/arch/x86/kvm/i8254.c
-+++ b/arch/x86/kvm/i8254.c
-@@ -641,7 +641,7 @@ static void kvm_pit_reset(struct kvm_pit *pit)
- 	kvm_pit_reset_reinject(pit);
- }
+diff --git a/drivers/cxl/core/mce.h b/drivers/cxl/core/mce.h
+index ace73424eeb6..ca272e8db6c7 100644
+--- a/drivers/cxl/core/mce.h
++++ b/drivers/cxl/core/mce.h
+@@ -7,7 +7,7 @@
  
--static void pit_mask_notifer(struct kvm_irq_mask_notifier *kimn, bool mask)
-+static void pit_mask_notifier(struct kvm_irq_mask_notifier *kimn, bool mask)
- {
- 	struct kvm_pit *pit = container_of(kimn, struct kvm_pit, mask_notifier);
- 
-@@ -694,7 +694,7 @@ struct kvm_pit *kvm_create_pit(struct kvm *kvm, u32 flags)
- 
- 	pit_state->irq_ack_notifier.gsi = 0;
- 	pit_state->irq_ack_notifier.irq_acked = kvm_pit_ack_irq;
--	pit->mask_notifier.func = pit_mask_notifer;
-+	pit->mask_notifier.func = pit_mask_notifier;
- 
- 	kvm_pit_reset(pit);
- 
+ #ifdef CONFIG_CXL_MCE
+ int devm_cxl_register_mce_notifier(struct device *dev,
+-				   struct notifier_block *mce_notifer);
++				   struct notifier_block *mce_notifier);
+ #else
+ static inline int
+ devm_cxl_register_mce_notifier(struct device *dev,
 -- 
 2.50.0
 
