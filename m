@@ -1,30 +1,30 @@
 Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BCA72E4993
-	for <brcm80211@lists.linux.dev>; Tue, 15 Jul 2025 13:48:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12FF072628
+	for <brcm80211@lists.linux.dev>; Tue, 15 Jul 2025 13:50:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587311; cv=none; b=PFuEOU166H4fMu9MuNWoCvaE1L9PHQBtalZCoXrPhU/i7FZolSPE3xN93LGwKx6rLVcWxOXKYvUkvb1OAH6WqKwGFlqQ88YaJDbIFVh2gYwDnJvgo4c9npZFB9hhYk+zPw1T1NwMrk1BjfxqASvALyQX+QCjqHcAW7b6uG0uEtw=
+	t=1752587421; cv=none; b=kLem2LqpusPGTE57k73yy7uuo9oUIw7yRkb0alsldShdmrWV817KCS1IYrG15XlcLnS1Dwcp+Sf9DXQ1Mt27KAtZ97Xns8G23l25ILRHePydVIkiSRnc6KKUURarTL9x46nnH3nTAgnkaqcROriH1/fBzazd88yX6nG7ohRMuu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587311; c=relaxed/simple;
-	bh=bxFF8xXnRj/qbdJtG1Sq0YERT3ln8lonNLu9XL31+hY=;
+	s=arc-20240116; t=1752587421; c=relaxed/simple;
+	bh=+0PGXrsSAKe+iUuwlrADb2v3BmRkBV8/GR6xTlwwAMo=;
 	h=Date:From:To:CC:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RroDzcz09GaE4TZSsDurPtRqgFXD7DWsPyZ8Qwj1VV/6iCyELlAh2/CJ7TBDWReZMaOhhw3dmlEu+blpC6jI0qenvbXF27GPBpCtfO0RTWFw9Kl6mluwARFUAVDXyouJvYt49jdenFo3GsJAj739BG/W1S1c/rF91DGy9mgRxDE=
+	 MIME-Version:Content-Type; b=YAQpLywkF2dahnHNMZGTeKfFfbU43s0Rj6yXslaLLsaIK2xBsWqEToZg8k/+UPcZSx/9mMkKcDuYG0sCZ6x7CCJKrHAIHrPUpKjA0V9x9IEZvfli/CXRphwxwvmcvjS2o5fxw10b53ZvWPhNCrs5ZJX3aq2xgEjmASGYE3hxa6k=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=185.176.79.56
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
 Received: from mail.maildlp.com (unknown [172.18.186.231])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bhL8c12BFz6M4Z3;
-	Tue, 15 Jul 2025 21:47:12 +0800 (CST)
+	by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bhLBl3dbyz6M4gG;
+	Tue, 15 Jul 2025 21:49:03 +0800 (CST)
 Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
-	by mail.maildlp.com (Postfix) with ESMTPS id 2579A1402EB;
-	Tue, 15 Jul 2025 21:48:26 +0800 (CST)
+	by mail.maildlp.com (Postfix) with ESMTPS id 7F934140446;
+	Tue, 15 Jul 2025 21:50:17 +0800 (CST)
 Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
  (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 15 Jul
- 2025 15:48:23 +0200
-Date: Tue, 15 Jul 2025 14:48:22 +0100
+ 2025 15:50:15 +0200
+Date: Tue, 15 Jul 2025 14:50:14 +0100
 From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 To: WangYuli <wangyuli@uniontech.com>
 CC: <airlied@gmail.com>, <akpm@linux-foundation.org>,
@@ -52,11 +52,12 @@ CC: <airlied@gmail.com>, <akpm@linux-foundation.org>,
 	<thomas.hellstrom@linux.intel.com>, <vishal.l.verma@intel.com>,
 	<x86@kernel.org>, <xen-devel@lists.xenproject.org>, <yujiaoliang@vivo.com>,
 	<zhanjun@uniontech.com>
-Subject: Re: [PATCH v2 2/8] cxl: mce: Fix typo "notifer"
-Message-ID: <20250715144822.000006b9@huawei.com>
-In-Reply-To: <65FC7B96ECBDB052+20250715134407.540483-2-wangyuli@uniontech.com>
+Subject: Re: [PATCH v2 8/8] scripts/spelling.txt: Add notifer||notifier to
+ spelling.txt
+Message-ID: <20250715145014.000075ec@huawei.com>
+In-Reply-To: <A205796B545C4241+20250715134407.540483-8-wangyuli@uniontech.com>
 References: <BD5C52D2838AEA48+20250715134050.539234-1-wangyuli@uniontech.com>
-	<65FC7B96ECBDB052+20250715134407.540483-2-wangyuli@uniontech.com>
+	<A205796B545C4241+20250715134407.540483-8-wangyuli@uniontech.com>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
@@ -69,31 +70,37 @@ Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: lhrpeml100002.china.huawei.com (7.191.160.241) To
  frapeml500008.china.huawei.com (7.182.85.71)
 
-On Tue, 15 Jul 2025 21:44:01 +0800
+On Tue, 15 Jul 2025 21:44:07 +0800
 WangYuli <wangyuli@uniontech.com> wrote:
 
-> According to the context, "mce_notifer" should be "mce_notifier".
+> This typo was not listed in scripts/spelling.txt, thus it was more
+> difficult to detect. Add it for convenience.
 > 
 > Link: https://lore.kernel.org/all/B3C019B63C93846F+20250715071245.398846-1-wangyuli@uniontech.com/
-> Fixes: 516e5bd0b6bf ("cxl: Add mce notifier to emit aliased address for extended linear cache")
+
+Adding a link tag to your own previous patch doesn't seem particularly
+useful as something to end up in the git log (which depending on
+maintainer preference may gain a link tag to this version).
+
 > Signed-off-by: WangYuli <wangyuli@uniontech.com>
+other than that, LGTM
+
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 
 > ---
->  drivers/cxl/core/mce.h | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  scripts/spelling.txt | 1 +
+>  1 file changed, 1 insertion(+)
 > 
-> diff --git a/drivers/cxl/core/mce.h b/drivers/cxl/core/mce.h
-> index ace73424eeb6..ca272e8db6c7 100644
-> --- a/drivers/cxl/core/mce.h
-> +++ b/drivers/cxl/core/mce.h
-> @@ -7,7 +7,7 @@
->  
->  #ifdef CONFIG_CXL_MCE
->  int devm_cxl_register_mce_notifier(struct device *dev,
-> -				   struct notifier_block *mce_notifer);
-> +				   struct notifier_block *mce_notifier);
->  #else
->  static inline int
->  devm_cxl_register_mce_notifier(struct device *dev,
+> diff --git a/scripts/spelling.txt b/scripts/spelling.txt
+> index c9a6df5be281..d824c4b17390 100644
+> --- a/scripts/spelling.txt
+> +++ b/scripts/spelling.txt
+> @@ -1099,6 +1099,7 @@ notication||notification
+>  notications||notifications
+>  notifcations||notifications
+>  notifed||notified
+> +notifer||notifier
+>  notity||notify
+>  notfify||notify
+>  nubmer||number
 
