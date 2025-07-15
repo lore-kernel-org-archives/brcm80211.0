@@ -1,36 +1,36 @@
-Received: from smtpbg150.qq.com (smtpbg150.qq.com [18.132.163.193])
+Received: from smtpbgeu2.qq.com (smtpbgeu2.qq.com [18.194.254.142])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73F8A2ECE80
-	for <brcm80211@lists.linux.dev>; Tue, 15 Jul 2025 13:46:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.132.163.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B9BF2ECEA8
+	for <brcm80211@lists.linux.dev>; Tue, 15 Jul 2025 13:46:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.194.254.142
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587165; cv=none; b=aAuXHsUnH475D5aqnvqrWKuUftAnaY4d3g5fVKYkatouvWdcQ8/AdIPDmpUcs9SZ8WHBkg1bc1vvIOvLqrrYj/53kB6RdMcJ8eN6GltABfRrb9AgUF+Du4NLMD33EhpAr44Ui0VZNU6KoTtHEYAmnH4zFL6aKovEbx0P+IQItIk=
+	t=1752587183; cv=none; b=pUodVorbg6ZJvkB4yaXzCX3OfWXK3rCho0k4Dsja+6rO/+iCihbNwsWDuhcS3xnT9iRdnLO5uCh5pQ3xNA/LNDycuCEcONJlQCEliPazp4sS58vcCuXwDrkVS2z3Jo4oBlY+WmWIKVYEKRhMjUi8g7Twq6yxUa03O3XKOcihQQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587165; c=relaxed/simple;
-	bh=PESbSQ2riBmWnB3ifW6iRWmYUAMSpluf1ck6gekndAw=;
+	s=arc-20240116; t=1752587183; c=relaxed/simple;
+	bh=NHY04lWbnuGt7TUMVXMBAd99xrE3nzf7tN3dhvAdpFk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dr2XiEeNdUn6XAdZjYcpwbXKBFylewC/kjRA4kSHY55iYFUhjvnM384BzX8m6PYGe+AuvUInI9RcePfwTbqmwJn3seFhxU3C970f3iHibMvV/XR3f3Mmeffe7M1Q90jqVG4XSfbaWudpFsAGVIr8/H/eCeMKUqq4BuhCuqzg7oM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com; spf=pass smtp.mailfrom=uniontech.com; dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b=dt/d39U/; arc=none smtp.client-ip=18.132.163.193
+	 MIME-Version; b=qe3X+8cRw6p5oEHZg07K3VolU6FO2tO30I07LlE+pXV0ssrbpbSCqfbdcWT8KVP7RhZQzOpSGylFaYxCZVJeuSOyIDzfF6IalcUbp5kVuiv1+m8E9uBtW88S/fXdbUypxzf0OGGrcJvwlWtOsbnB4/rWBlUr3ezEaY7CLoyjZu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com; spf=pass smtp.mailfrom=uniontech.com; dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b=L7T2ccFh; arc=none smtp.client-ip=18.194.254.142
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uniontech.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b="dt/d39U/"
+	dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b="L7T2ccFh"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
-	s=onoh2408; t=1752587127;
-	bh=DQOAtGRHzOhokt1byV1hDfgfMVfreeOvNYgUQQUEI+w=;
+	s=onoh2408; t=1752587152;
+	bh=NWDrOIeUTkfMgeyG9DirCptVDnqPmotqOLDK+VZpCcc=;
 	h=From:To:Subject:Date:Message-ID:MIME-Version;
-	b=dt/d39U/JvCGRYvJywjrnl6l+GFiWSoghBEC8LTHxqR9Qje6oIFcAkRizOqLdSzXs
-	 GMHBh5+6oynlPBWuLPdwN8DzoqGlX+xfe8PDbLUefu65zP9IgoIjFczk1dMH/QJHiX
-	 Fa3X5qoKmbn21HWedq5TPEsnWWmhrHTAmkKDcYFU=
-X-QQ-mid: zesmtpip2t1752587114t4242d337
-X-QQ-Originating-IP: bUZPMnhKZ8NU12puD/0nV8FvyCDfWloR8Qvt76r6nV8=
+	b=L7T2ccFhTmKG3T6mh99/NWel04UXnbnWQG6H0UsAuRVoyzg0rSWMDQ6CfsGkWl33k
+	 +qzhfTCd+IfyTEwSQEhSnfW2Nu6TBzcLfzdaXYa89VWv40tRLzf/axMm3ldWw220cL
+	 97y04t2d1nAvgy4g4V5utln46rvikis/m/9sdMs0=
+X-QQ-mid: zesmtpip2t1752587129tb54538eb
+X-QQ-Originating-IP: PsIrTfnu37O5BQpc09CPKOeWtbwmOWY2B4qF0spybKw=
 Received: from avenger-e500 ( [localhost])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Tue, 15 Jul 2025 21:45:09 +0800 (CST)
+	id ; Tue, 15 Jul 2025 21:45:25 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 1
-X-BIZMAIL-ID: 17289734867236313614
+X-BIZMAIL-ID: 9443703254596192763
 EX-QQ-RecipientCnt: 63
 From: WangYuli <wangyuli@uniontech.com>
 To: wangyuli@uniontech.com
@@ -96,9 +96,9 @@ Cc: airlied@gmail.com,
 	xen-devel@lists.xenproject.org,
 	yujiaoliang@vivo.com,
 	zhanjun@uniontech.com
-Subject: [PATCH v2 6/8] serial: 8250_dw: Fix typo "notifer"
-Date: Tue, 15 Jul 2025 21:44:05 +0800
-Message-ID: <2BF1749F02ADE664+20250715134407.540483-6-wangyuli@uniontech.com>
+Subject: [PATCH v2 8/8] scripts/spelling.txt: Add notifer||notifier to spelling.txt
+Date: Tue, 15 Jul 2025 21:44:07 +0800
+Message-ID: <A205796B545C4241+20250715134407.540483-8-wangyuli@uniontech.com>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <BD5C52D2838AEA48+20250715134050.539234-1-wangyuli@uniontech.com>
 References: <BD5C52D2838AEA48+20250715134050.539234-1-wangyuli@uniontech.com>
@@ -111,48 +111,47 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-QQ-SENDSIZE: 520
 Feedback-ID: zesmtpip:uniontech.com:qybglogicsvrgz:qybglogicsvrgz8a-1
-X-QQ-XMAILINFO: NYuZLBhQBuqvZPqTaA6eCRNOw1rsjH/1V0incXI0TTkXhIqjT7OcyVpB
-	U4BwUK7IzVbCUS+z9mPFOXnqeyiiIwmM3D5JHQyd+IBkFoGpDBTfRxU982pmEMODO1iaxKY
-	D48NOO0SiNjVs8fA9CcJ+qADBbnc+Qq6wEfJEREPTT54OKcldJY9fVxNhnH6sFSyZdZr1r+
-	QhZ+SFC4XDjSNOFewsNqmG1gdtoI5qlIjUH3jOpiv7hjFQnZ/rHku2YFBeJUI9wgQu/EZ2g
-	1SHvFKk7b4+awytyd6trjgbB00PeVMLjlfrTxj9kxoHbCtD928FdzMZo2Gtnt+xtZyi9vdd
-	xmxCmPa1+SWXVGMJElU6ck0QgB6Gu96yBRNEfs4KoC12IgmPa8C6kyrhBLpeLsL0BQfh8DW
-	rmvUy+khQwMdaV2duDMxGBqB6u+dGdAcZp2JbS/blmkcJXaAx1f/mmFinZVe6tyqB7GVobX
-	8/pako5aZr+woWT+p9txzW2E5uSmir4xXa1u1zVyTCGk2TtJdeZe5u3JPxrq0Bw5QGG/DUM
-	FZWj5jTkINwLqHc0UrudOSiQ3uABt53gye9gBlFEanwVKt8dCe/RuDHOVnzHob0VTXzeXG1
-	LonRGyEjbzoOkl/Iq8WlEqSv7mm91gapRqeIv9tTSYdljJSr6+I7S0mo5+o1QSDHQiVzktm
-	PA1h8R0OREJoJfygD1WNfmzH1b/KltS8ePC9yAeJXq3WoLJEbO+1dAX0MX1n1JEleDlZpXL
-	YMDRU81uTsLV6Zd9gywX8FGcu9RhBTw6RLR1kK4DXtAOEeECV0iZE2UNGXpWUKoNsKVspzi
-	3bIBCVfcK6GnIX2R45rvjdHh82MP4jIVrPHIOovNuC0R5+uNV1ZAWzCpVGc8iQHEcY/wXAe
-	ymu5iDY28lWKG+hHKuvDrTAzpGr/6cIe7xlq+IQge73r9PjfXPp/qx6bSuF3QnyvKq5C97h
-	1Pa9z/dsdW6qzlVBgSAT6g8T6asn4XPy97OzJbneZfv6yu+3LicvLYJi50aGC0JDgQb3/eB
-	LGINhlHiuRFPDJYACemTkiooy1LjK0y5rkmmrwRe7Gr9CIoLmnfnDjDPtqoRKTAFPa+FnsD
-	6JUUZK/LCruGk7cYsWkCUM=
-X-QQ-XMRINFO: OD9hHCdaPRBwq3WW+NvGbIU=
+X-QQ-XMAILINFO: NfZ1G3mfsVwmGGfmgJkLyMvl+VoDzXXq2IYtJWnKuWo9l1qkey4A26Hv
+	SvTEwKhn6on76DtphpKDmnp2WJC9f2R3CDWC5laPHEPT/iOJA+2/pv/COPzFg6M0QTwvf+D
+	6ttVN9VDRkD8+zvL3VCyoPUHl7z73gjejIf/ZS5VVanhM9+31ucc7w43aOiU6lFiOjLulW7
+	Rr567Y28DdcRkaB6sa9mPRFZZBRu3p+FN/bDbYSIf3gpu3WpwmfkwXpBmhJVdQItsAzAWbb
+	fhbcuJjtFMUUwV0uevVM+8jQTvCqoklXnwQDkGQ3xCW9Rvf3JdqzfjOj8C49Of6ebzL+PGN
+	335BovIcz/ABfWYTwC107g4rwWYNu4r6nOoLFYbYpmYWygKfcoOQBiBibJTbIRw284jwJIg
+	rNJytL+dtSOMFAv3uCsMgDyN6GOuEj9vP8GsAbkTYzl1zM026u6566/OnrXTWhuAQZqQzq4
+	jTbbWRgbgqHZABH0r99LHELaQQQUXu0rYb+WFPCYcj/FpokvDuwS2zkvT/4HhsQWG9eIPLj
+	/d2WHb65dpLtMvqvBime6RBUNRZvpBRrT6GUjfhJO4HceuerfXJ8QUw/bLNECBsBskU0Yp8
+	1Ug3J5ggzGnRCvxFQJWKxdkHDWxb3Jw492fNdsvrdAJWNhv6nO4tuGWgbcWiMiiPdwXkNmn
+	o2cHF5Jj+289BRT3rDSw9hiBrQ7/0RGpqA5G1fMy8iGvQdpvK0aeqwsOSwRb5TKaTgZMZRr
+	G0p81zwr/E1K7Mn/2p2wfPpniCL4LrOrSSLo4Gb3p08WIM69mdvanMKFsHXmd0/fXZfpmUm
+	rgPVOA2r/NwFBE9h8n1ey7xQ0RJk8akgFJXQIMxf8yGwtepIngU3xFtEPC9EQ6jZyu7iwfe
+	xQUP3jG+j7xTUXHl3wogbx23sk7NyZGueojSPbb2CGbqUpnQSvaZG56gBZ7jVWEhppQaZjR
+	PWmBCLtR52wESklVmJo8+EPR7fTjC4ZZwrqfHy6nKCJmW5uKAX4AfUJr969cB1pvvMXf5X3
+	IOXqWGfFbBBbYGXmkAQFEo3C2IgrFRWzNp3h9jUoNNtKIDzj+9KCfRcqMCfWRCzpRMpdMrV
+	PhpUXh8Je5z
+X-QQ-XMRINFO: MPJ6Tf5t3I/ycC2BItcBVIA=
 X-QQ-RECHKSPAM: 0
 
-There is a spelling mistake of 'notifer' in the comment which
-should be 'notifier'.
+This typo was not listed in scripts/spelling.txt, thus it was more
+difficult to detect. Add it for convenience.
 
 Link: https://lore.kernel.org/all/B3C019B63C93846F+20250715071245.398846-1-wangyuli@uniontech.com/
 Signed-off-by: WangYuli <wangyuli@uniontech.com>
 ---
- drivers/tty/serial/8250/8250_dw.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ scripts/spelling.txt | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/tty/serial/8250/8250_dw.c b/drivers/tty/serial/8250/8250_dw.c
-index 1902f29444a1..6d9af6417620 100644
---- a/drivers/tty/serial/8250/8250_dw.c
-+++ b/drivers/tty/serial/8250/8250_dw.c
-@@ -392,7 +392,7 @@ static void dw8250_set_termios(struct uart_port *p, struct ktermios *termios,
- 	rate = clk_round_rate(d->clk, newrate);
- 	if (rate > 0) {
- 		/*
--		 * Note that any clock-notifer worker will block in
-+		 * Note that any clock-notifier worker will block in
- 		 * serial8250_update_uartclk() until we are done.
- 		 */
- 		ret = clk_set_rate(d->clk, newrate);
+diff --git a/scripts/spelling.txt b/scripts/spelling.txt
+index c9a6df5be281..d824c4b17390 100644
+--- a/scripts/spelling.txt
++++ b/scripts/spelling.txt
+@@ -1099,6 +1099,7 @@ notication||notification
+ notications||notifications
+ notifcations||notifications
+ notifed||notified
++notifer||notifier
+ notity||notify
+ notfify||notify
+ nubmer||number
 -- 
 2.50.0
 
