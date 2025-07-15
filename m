@@ -1,93 +1,65 @@
-Received: from TYPPR03CU001.outbound.protection.outlook.com (mail-japaneastazon11012063.outbound.protection.outlook.com [52.101.126.63])
+Received: from TYDPR03CU002.outbound.protection.outlook.com (mail-japaneastazon11013064.outbound.protection.outlook.com [52.101.127.64])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB6DF2CCC5
-	for <brcm80211@lists.linux.dev>; Tue, 15 Jul 2025 12:17:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.126.63
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC9182DEA72
+	for <brcm80211@lists.linux.dev>; Tue, 15 Jul 2025 12:18:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.127.64
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752581862; cv=fail; b=X7laSRV/KyNxSuSbkqi6rjLzRXY6I3XN9LdQCfWjg7BDIkSf9QJsVTy3Wo1EmBzf2klgw19OxY48mkIlONn3aL7daYELCYZf299ISWSwxMU2cUytKcbKjnXFfAXgr/HLvcI1+xmWx+ZHEA2xKyKBwu06DKIkYb9zIkCigJI8mCA=
+	t=1752581885; cv=fail; b=bTsDBYe91m55SZB8iLa09Cg64Io5xIiDnhJHUCu+aDYku/wwdUSrRxEv9cdyn0SUBL1xFz9UmmH4/U3HGiAAIqbsE14k9TIxquy+lH3YZI9nsoUn8QchlCaH9vRzy6v1kyCK2gYXx8PSNCxWKFB0l1ePqYKh6l9kaW3NYfNIp7s=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752581862; c=relaxed/simple;
-	bh=uXbhJiCgoT9EOrH2A1gObQS8BeTdSWh2lVStG/G5ybQ=;
-	h=From:To:Subject:Date:Message-Id:Content-Type:MIME-Version; b=ghAhoK1Vm3zVXn61Qe8S2BOESkhlHJEgupVZjj3bI9AGZDE/01JggO8jW7Y+7FLtheFU89K84F5J0MPczlnuYreG5R8l0rU9gsRY4HX628NNH3swbqaZGOgTE8vysiDvGifaBHb/wDNNqc91DambljA5bELn9UZ83s1qryq542c=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vivo.com; spf=pass smtp.mailfrom=vivo.com; dkim=pass (2048-bit key) header.d=vivo.com header.i=@vivo.com header.b=fl/3CTbZ; arc=fail smtp.client-ip=52.101.126.63
+	s=arc-20240116; t=1752581885; c=relaxed/simple;
+	bh=raIwNgbYEIdhq82OXR5I/F/yVKI5nVOPz/tfU3w0v9w=;
+	h=From:To:Subject:Date:Message-Id:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=CbJMiqmV1PsYcYZU7XajkliknP/k57s/gCrnYjA0ZeXfeGwVhE7S3fVCyggZRJi+6tRzVFTKs1fThaJ6FyyDa+Lh4952IvtEBmGYEtAA7+fPdKUsstVka+afhROegyH5CvE5RdWbksAwJBqpmhsXtx3BCkh8SgfZcVPWO4bM20k=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vivo.com; spf=pass smtp.mailfrom=vivo.com; dkim=pass (2048-bit key) header.d=vivo.com header.i=@vivo.com header.b=KhgtgpEg; arc=fail smtp.client-ip=52.101.127.64
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vivo.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=vivo.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=vivo.com header.i=@vivo.com header.b="fl/3CTbZ"
+	dkim=pass (2048-bit key) header.d=vivo.com header.i=@vivo.com header.b="KhgtgpEg"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=T1IwopWR+pgzIEMwN4hb6kwAq8g0NM35abtA/BU2zTp5mJ1/vblpmBVpJfjRmwqxjCz5f+xjoqOnC0BAXCC/CzBHyPHnjZgjFKY3Mig2Wb5S7XHzY+AKUfgQgw+v1Q+IEOfpb+Hpo1Se6YudufoaPAFP+w7ZtBXtbWFz4lEFXOUria44EXYgztVCxqhQDCpHGah2SBIA03lnpIY9CX/vym2wy52wzkKD8D3//e9CIUHZzkQk9FQIvHP473CmVVicoACGBFKjpH8lTVaEwODtoU4JI0J2j/2BJ8PwnLBEC+xy987anMyJXAAYlqfiri+BsQd3JWLy2maOh+ZYCmFEKA==
+ b=GReKcZgFgKhWCNYp6WsDyae7dahCKIaOWl+uemgUQHeR+neyK6JZwGbKFVqNlkdmSksOmV4WOte7JRSaDZf446gukS70UvOgFKjTL15g+u3jwsFAOelUo9npdSEtqzm6cHfJ1uVhffwcFWnWSNHOo07hKMH9do62/rA8nNsCXPKpRgze28x3HNW4730znj/H/y9nGTuI4IgBu9SBHJwzj2GTCTUQZxTqDXnh7qFv2SZE2ldF8ML4MBqqUN5M4cM7RXXaNpHe4yOPfT7K1Aq4bgnpPrar1S8g8nsDGGG/RmWNzS0I36xqnSIKwqLSrQhIhhLW34fHl0Kt6OnRiepKLQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=H7o+HHoj7SKLSWIretWnXilRuMB4fBonYiKVPq116Pg=;
- b=ZK62ifHrrCQ1JT6IozNhQLb12D5jbSURO+FLGYWsLvCHbDyWI8qvkxeWEf7+aHbZK+kckY1rVMPgUJ9pnDrgsGwqQrdgyS2Yvrl5BU9hDr7EizMKy6fhuWj92xODFno39toBSL0yVU4p8IKgDYHalwfxxvmkWI02vYKwdc7D/D2nmcuxixMKyk54wXG7Sax04LGW23GOg+pngSWbMKalGb/yBYJ+1ATNMfihhLazN90h1t4cZM4Us+IXM3JRddp/8xJNwLKGeArcC5m4is1zLuaFtfISKIWoffLQ1Tke/cX1xM8OpHh641Gi2xG/ISfx5gK4EM7SInJabBLvJiDnng==
+ bh=+WRXHYcRkvycrUedPwI1vhNvo8mk/8agYS8G3Do9Wko=;
+ b=vDkW1yubs0LiexkydzjCe1OR1nLxEDCOD/qlRVbKSs5xaDluqK56yTBUCEwdwfIiIlmIT5/LXxeqzDIcGT+N/IcUaBBpzcJPVCbm8ZE/YnYqOEwuK2NVTr611Uo8FUqbSGaaVkWbwx8BEB7tTwN9LMSMxMqrxC228pZSzAteH/IGPQLOiKVSYCmCW9ZdmRMEJdr5o3254V9W2od5RN2a23YJHgwLy8agf+/tni1kbwOG1EKoK2oTlnblM3qdU+ARUnj6/O0Xegixtp7yC/5rY1F9dGat7afhZFHMavd6Horuvt4i2I+J+gvtJFMV/fpNZ7P8FETHIMsebI8IRNkTsw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=vivo.com; dmarc=pass action=none header.from=vivo.com;
  dkim=pass header.d=vivo.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivo.com; s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=H7o+HHoj7SKLSWIretWnXilRuMB4fBonYiKVPq116Pg=;
- b=fl/3CTbZMgtCrVabwnQUq3sjRFWlJqhvKiaZUhcQL+SK2qqywfYgxfpY7Nl6FrOEc1pjhl2K/7xsT76Tna1A6wkoiK5dwghEwhn+lZIjuRglJUZmh0sPmN38SBdx7qvuIEN2DJ5MxOmZuldKtWbvJUio5aYK2PrNn0zgSZr+1GRifbRa+aN34YvrY83zBk1beKKHNxOV2NsLGaDn0TFRGjf77bNirsFbo6iUZgLIXJ6D1WyCdMdVWci6M2UDSoZ8ikuiQbA6vGEdajm5KzvYl6kSskBbAsajmXnKdJL4B7i+mddc/T2362Z5jlrpQ5rYNI9pvcSx3agHtd4NgjqS6Q==
+ bh=+WRXHYcRkvycrUedPwI1vhNvo8mk/8agYS8G3Do9Wko=;
+ b=KhgtgpEgv4xygtMfFo2x/HiCvZPO7163xU872sNlJ9JRVxlzvf3oP4wMlH1WSWTjn6wPV3k86ubODcmHRDfO+RwPdAHij2yN9G/1OGOkGrEW+cYfmKk5YHbLqUU/rKTp5iX4tCOe8EmD8guXWXOhvW0fEpIhepAnNmmZ4IqywJmjfwvNEa7nPPvw/1AxT2MjLYalv9oQae2+KsEJ1zfb5FnenFQnh2r9e1yT9WGAho2wY504kjSMooNWrg4ST5YPVZhsZw2ZuwYJ8iKKkXl4ccSppVVDf1EmiOSYdLSW4JUSDio6egdRSfLA7kNlJtYdmeDZn0KptnM6pUOKvuRIlw==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=vivo.com;
 Received: from SI2PR06MB5140.apcprd06.prod.outlook.com (2603:1096:4:1af::9) by
  TY0PR06MB5428.apcprd06.prod.outlook.com (2603:1096:400:219::9) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8922.32; Tue, 15 Jul 2025 12:17:36 +0000
+ 15.20.8922.32; Tue, 15 Jul 2025 12:18:00 +0000
 Received: from SI2PR06MB5140.apcprd06.prod.outlook.com
  ([fe80::468a:88be:bec:666]) by SI2PR06MB5140.apcprd06.prod.outlook.com
  ([fe80::468a:88be:bec:666%4]) with mapi id 15.20.8880.024; Tue, 15 Jul 2025
- 12:17:36 +0000
+ 12:18:00 +0000
 From: Qianfeng Rong <rongqianfeng@vivo.com>
-To: Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Nick Kossifidis <mickflemm@gmail.com>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Brian Norris <briannorris@chromium.org>,
-	Francesco Dolcini <francesco@dolcini.it>,
-	Ajay Singh <ajay.kathat@microchip.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Kees Cook <kees@kernel.org>,
-	Lucas Sanchez Sagrado <lucsansag@gmail.com>,
-	Philipp Hahn <phahn-oss@avm.de>,
-	Qianfeng Rong <rongqianfeng@vivo.com>,
-	Aleksander Jan Bajkowski <olek2@wp.pl>,
-	Hayes Wang <hayeswang@realtek.com>,
-	Eric Biggers <ebiggers@google.com>,
+To: Arend van Spriel <arend.vanspriel@broadcom.com>,
 	Wentao Liang <vulab@iscas.ac.cn>,
 	Johannes Berg <johannes.berg@intel.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Sai Krishna <saikrishnag@marvell.com>,
 	Ondrej Jirman <megi@xff.cz>,
 	Jacobe Zang <jacobe.zang@wesion.com>,
+	Qianfeng Rong <rongqianfeng@vivo.com>,
 	Kalle Valo <kvalo@kernel.org>,
 	Dmitry Antipov <dmantipov@yandex.ru>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Aditya Kumar Singh <quic_adisi@quicinc.com>,
-	David Lin <yu-hao.lin@nxp.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Roopni Devanathan <quic_rdevanat@quicinc.com>,
-	=?UTF-8?q?Alexis=20Lothor=C3=A9?= <alexis.lothore@bootlin.com>,
-	Marek Vasut <marex@denx.de>,
-	Arnd Bergmann <arnd@arndb.de>,
-	linux-usb@vger.kernel.org (open list:USB NETWORKING DRIVERS),
-	netdev@vger.kernel.org (open list:NETWORKING DRIVERS),
-	linux-kernel@vger.kernel.org (open list),
-	linux-wireless@vger.kernel.org (open list:ATHEROS ATH5K WIRELESS DRIVER),
+	linux-wireless@vger.kernel.org (open list:BROADCOM BRCM80211 IEEE802.11 WIRELESS DRIVERS),
 	brcm80211@lists.linux.dev (open list:BROADCOM BRCM80211 IEEE802.11 WIRELESS DRIVERS),
-	brcm80211-dev-list.pdl@broadcom.com (open list:BROADCOM BRCM80211 IEEE802.11 WIRELESS DRIVERS)
-Subject: [PATCH v2 0/7] net: Use min()/max()/max_t() to improve code
-Date: Tue, 15 Jul 2025 20:16:46 +0800
-Message-Id: <20250715121721.266713-1-rongqianfeng@vivo.com>
+	brcm80211-dev-list.pdl@broadcom.com (open list:BROADCOM BRCM80211 IEEE802.11 WIRELESS DRIVERS),
+	linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH v2 4/7] wifi: brcm80211: Use min() to improve code
+Date: Tue, 15 Jul 2025 20:16:50 +0800
+Message-Id: <20250715121721.266713-5-rongqianfeng@vivo.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250715121721.266713-1-rongqianfeng@vivo.com>
+References: <20250715121721.266713-1-rongqianfeng@vivo.com>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-ClientProxiedBy: SG2P153CA0013.APCP153.PROD.OUTLOOK.COM (2603:1096::23) To
@@ -100,109 +72,122 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: SI2PR06MB5140:EE_|TY0PR06MB5428:EE_
-X-MS-Office365-Filtering-Correlation-Id: b3cfcdb3-dae7-4c16-0abd-08ddc399956b
+X-MS-Office365-Filtering-Correlation-Id: 570e6c2c-20be-4f30-63b1-08ddc399a3ec
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
 	BCL:0;ARA:13230040|366016|52116014|7416014|376014|1800799024|921020|38350700014;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?nfdU4FZhxxonnCMJ1RcRDKpCbUTtQvoGZOKyB3v0gMEL1WWkjHh3GbpNUvGm?=
- =?us-ascii?Q?ZVcFWjwH9wvAgM/70Y0vsMd87Qjy7pKQtj2qb3sj+yDySBPDV0YRdKT+xOjN?=
- =?us-ascii?Q?HxbC185mgD39VaHViE2FtfqPACB1TGVf6kJmBNJOGV1Dq2BlBCvWOAOJUBTY?=
- =?us-ascii?Q?pPbTbCn9QOmcQ59nnzCMVGLkBGAL/VB6eYZJHbenmUGZmvJXsMfnr2C2m0me?=
- =?us-ascii?Q?CkKPJWoVI0AsHM0Uv4OG/su3BjImbO6DxAwnUY/I4b4Kb6o+/fGUTuRmbsoz?=
- =?us-ascii?Q?1nC2+7a9m4dU3MRZET65Liu+KDggtVTbvhEGW/cu0e7gcRSQgaQyQ/xUkBq6?=
- =?us-ascii?Q?0jZBZYovCUjJcQvKejnfv1hJzoJ2X87o3BK7T8EyhghLU9tPFiTMHu17BZuP?=
- =?us-ascii?Q?zzZ7doo0HE88XJaluTdqKwnMBkT7ffIFxSUq2/tvdER8WWCo+Mkwan09XKqv?=
- =?us-ascii?Q?aMhYFDTc8/OhAGECgRiGsfh3FkS2FIn5S9+coKaDSWYPAytaAyTDPaQTGpSk?=
- =?us-ascii?Q?mSYswwcqgJPVUdV6mVbe3k/GBNRBsgy+pKBbFXeUdmdMSHHL3PiFrnNxrGJ7?=
- =?us-ascii?Q?kzxfCI4m+2lvjKL4eG/02xVOGg8b7FSjA24eOUi+mdNAnc3eH8QWl/k7GWL0?=
- =?us-ascii?Q?jCF3/l1zYm2ZwvlsJpwJbzXnTDre6TQ5hhlMDuEaeD/kimCXQMKHMuKhqNrc?=
- =?us-ascii?Q?ZYeqgGYRz+FHVdBX+IdemkzX0YgzPviIx33Yqdg29oep+hsyZ+s1F3QVN2gA?=
- =?us-ascii?Q?qde3ytraWUq8iyKgUSohSsbRiymJ4mheR6qc/HhPktcHihLm1hmbslbzFewP?=
- =?us-ascii?Q?eBmEoEil8nDsiDKHiFvIg7lC45Aj7HeI0b4UgJinU9HzeR6kKA1Q/0WpRTi2?=
- =?us-ascii?Q?123ZeNEc6BeOtCrRVRqvS9HtQ1zjjwzO6t5M6bDnYg/k0UjQGjca2FVNjWhP?=
- =?us-ascii?Q?ALcyEPVDt/lEVKcNKzsr241GvU9i/OIzkt88q31WLVbeKq6SRWUyDm5oZxT6?=
- =?us-ascii?Q?pTT9FWDUeH35gvLXXJBTk+0caxwXoLClHdMfuzvdrZYgyc9NyG8duwwhgLxr?=
- =?us-ascii?Q?TwYTlkhsW+46xEoZq3iSdB+ZRfh5dc8T6BYuJIXpo5rpL9AlFWQ0j6RS4X4r?=
- =?us-ascii?Q?TGaD8NnambrqYRMtubgVu7ICg83VtpW/tIcZhwmwIQAtcSf1MIXpKCplsnf6?=
- =?us-ascii?Q?zPln5AzWeH+mwN3IISYSHmHrwxPpl6NGK9nrOQVpl1UlXr1p7pz0b0LKDPSf?=
- =?us-ascii?Q?9kn+iekfGpfUv7zLsODrvRDFdpRKcJcTpJvOIFLLescxQhJfDKu71+vmRTeE?=
- =?us-ascii?Q?KNj5vGhpUzHunSN5NTDrUepLE9VBPs/21X1OBblqR+kD0evuBST0Xs39gHZg?=
- =?us-ascii?Q?rhm+hFJqsHZd3SYyTY5q8kNv5EwHLs0fpPUxrh5Qi65yloRqPXyW8OMjzyOP?=
- =?us-ascii?Q?3UEp6TIrgQ66q4S8eqFekZY4v3TeY/zEE1NPmoI2w8OcaTcxGHd990LAHpox?=
- =?us-ascii?Q?wsZUziBgg8UQ/w4=3D?=
+	=?us-ascii?Q?U91t8lyAE11+9ZlGqBWWEUydsGVmxqRoCOIC1RNsjI48VuTp2Odl3ChS6vcV?=
+ =?us-ascii?Q?0ZBgBVJDJmLcDP9V+/reNxgYf1tfdU4HUsT0II4e6UvXt1S6CG9TQ4b0VQyV?=
+ =?us-ascii?Q?CEI6sRXbA7XHbxGrjQlwPbq0cpNIGmRtsotnU4pmoPc6thKPY6pxYpHnVD8L?=
+ =?us-ascii?Q?3FuSaARM8kG1+VmUENsBFnkpDJ6C43LnGmbCzBjyqxR5aiPuABhcw3GEW1c3?=
+ =?us-ascii?Q?9CLonW29Lb0YqOJZ/ksTNq7+0NUU+uC1vqs5dtAT+E699mcx9HdTqcXZ8TUc?=
+ =?us-ascii?Q?HFDe6o6m7YwILfvsIOUaHDnQY+NwM25nrU8g9TZGeX9BrHIPOpIl5rzUideF?=
+ =?us-ascii?Q?LXgoQZOlupnX9ZaF7JPFcbNKBcrJcgI9Xes2oouOI5nCIig5SdAuZxOxv4+R?=
+ =?us-ascii?Q?CfnhZZwPbQXLIn8bwq6vuZnK6s1MTv5WZQznKt5oOeJA/Hzw+YwuNem7wQFC?=
+ =?us-ascii?Q?3bdocQEdQ8WBEshEg3NopUpSI5XeqFgHUcIyf608mMOD98khuOAyP7wkN5+Y?=
+ =?us-ascii?Q?K6hqe3cI6aQ5jchB8wLzUo/y5iXjAlEBc+MtUXtk4SQt1k+R9bApaxIcwKqZ?=
+ =?us-ascii?Q?oBO8nCEndIqphkIebYaFjRs+ZU/SnMhcjkeBiLBF8w0eWHG4wZa94f0NbeAA?=
+ =?us-ascii?Q?AYuWUu6VKGnstN5U0gRulsbXR7sFWH+MOUVambXjoY6fhi+UIZMrM+hPQZBb?=
+ =?us-ascii?Q?SCddV+qzb4XVl7jcIzPhwcl/f6gvDT3kdBZvJIdmvjMWbTWEVwDpOLwYPrpo?=
+ =?us-ascii?Q?iHZ+LXF+R9aab8kVKpqe9si1155urpy+IhtoJnXCWKvxemwd5fQIgwf7qxn0?=
+ =?us-ascii?Q?sWk7wLDgTtR3JYEsQAzazk3ZxOCehy7XRiNeKeUs7kAs4Q3ErL4AHDsLMrpK?=
+ =?us-ascii?Q?ZwBYlFdTD96N3i0I/ynyg+QJCSD7zmUdGkv1hhc73iot+xJA2U2htbGv3ccM?=
+ =?us-ascii?Q?rMa3nAnFiqVonBdn1BDSEZwdmnJ6/Yd2cePDCGUgS+gltZZnbRk3QtE5QZKy?=
+ =?us-ascii?Q?zRMghhflpIDo+juqYU10ZL2mmG+RRl/oBnj1SpeL8hZ7ZGzVyyb0sMkD2gqD?=
+ =?us-ascii?Q?6vGkbSt7J+iLh/NJx2xD5z0ql+XLX9IWzySCR/6XjE95rUEq8pkBM1/GinfG?=
+ =?us-ascii?Q?rTFckKX5JpfC5w+zvkWSTrmdDl0h5riAEBEwX4m99wDXGJFQoY8G9gAQaDG3?=
+ =?us-ascii?Q?y9YmT+EQ8P7T7OljoR/0efRUbTIfUkc2vBksaUSipp/Y6qAaKl7n+ndVRpsd?=
+ =?us-ascii?Q?VqdYM05KrXQLldI9XnhQL/3UbRHAqiiOUGEeUzALf4cEfZtnRzahOF7h5o/q?=
+ =?us-ascii?Q?SFrTNXfNZE9EDIr5z5T57tlf6VWDX0XCV5y3prWhITsQnX/eVQbI3n9hCaOg?=
+ =?us-ascii?Q?TGQPmDJBe03cevyo1SFKajWHKN02C7qwPBOmpMKsqaLwq0Ff1OP2uwHI9XXu?=
+ =?us-ascii?Q?l2VlhXwAImdE6J3EnfPin0tUMDGCh/+RdSByFOS3I3keV486naPIp72Q6gM1?=
+ =?us-ascii?Q?alyqkL+Mq+qCl/Y=3D?=
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SI2PR06MB5140.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(52116014)(7416014)(376014)(1800799024)(921020)(38350700014);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?DFroBM2xmcgebBYxMA4i41n5EFeI0wLBUhqiBaW9P4nUQd9IqUHt4170+jbw?=
- =?us-ascii?Q?E3pMZOBFP8iyqYUKMjBuIpYFruYKYGN624/bUCTU8kZN/ALS9En280VObFOU?=
- =?us-ascii?Q?5OpSM7EQ5MivSEF/jegstljvhMHvH0e2YWdmc545zLBW39/Avs3Xh71vcnvT?=
- =?us-ascii?Q?r1iWu2GYl/hTVtja3aP2znUOys5kiVO60k54RnGSWLobN8caaneU+jozP51G?=
- =?us-ascii?Q?eXvMqnBzII5RmA74D5ahqZWEWIoXe5GoL1rP4miwVFc551V1U6UdicDSmIiz?=
- =?us-ascii?Q?CFxvt0rlARUMQUg7ONKirIKaJKjP7+acSbkt/fv9ep6uodNgxE9bLsTwkj2Q?=
- =?us-ascii?Q?UFQ03DFFN9KYy/ngjUETs91xFhHmHn6QzO5RSxZyZrc31pmkw1ex4XU3/u6X?=
- =?us-ascii?Q?QJWO0uf/K70dPxH/veaIIQLbnhuPXSx5aSFqWi9tkDEXIDTgOs+VVKXV4bne?=
- =?us-ascii?Q?IL98SLNEkJTZCuvn52vfq8mwhM4/+SoFT4M2jXxPZLq2Q7cYfItxDrqw9/Ek?=
- =?us-ascii?Q?ff6DKPy0U4DNVLBdKEG6fg9HbI/nN8A5cWxhWaDIz/8gkS2tAbDZmOOKGSqE?=
- =?us-ascii?Q?SWt1JsAvKloLLtzLcTQvrbDIRAmOC2ZJXtb++ceal/vD+4Zb+ViqMcuVM86t?=
- =?us-ascii?Q?LhOMjwo9TmaHNsgiRjFz/Z6+WB/kFWeo88nKK5mS11te9uJaZguvNu9tuF5M?=
- =?us-ascii?Q?9uc89w1axKJWnBkLMJpo5fqLGiIBu5+URFqsXdrTAA8FWW859pmGF+u+YqXq?=
- =?us-ascii?Q?mcPsstQ2o/4dKgkPy4eYbCRqFiqx3KKhOjSmuJ9OR7uAs7KdrkNlAhEOMQSa?=
- =?us-ascii?Q?mUHoae2H6U+y5j78xW/AwzFr+4STjn+Es/1HziAHEZXhVLrIu2vXsVOZjvg3?=
- =?us-ascii?Q?kH819lrP9Sn/m0VqpGAoLqM1DhLuyslR+fj8aUmdzpS/TeKKz5/NvEknleW/?=
- =?us-ascii?Q?C0jZneXlHI2YEQELTYYAy1nzFof9W0Ui6UALcuRsPlOkyXmilPPNXlqfxf9I?=
- =?us-ascii?Q?hec+1tT1sE3In1L/6XiM6dAS7CEz3MkcvjVQsn3MXIAs2A1dkw///74r1qLy?=
- =?us-ascii?Q?ZVoGXzkAeWynVmjq7w7b2Wtf5O7PvKmybgzDT+8Y0JIf556N/mIz6wz8aZ8S?=
- =?us-ascii?Q?WbwR2yCH4vs1yMtUAnuMdOdZ854/ut5oMrgttdp4AhNYDF6x0z9Wu86cvSrf?=
- =?us-ascii?Q?P5RKVOWCRG2XQy6q9/0XEehafB0P4aj8dAtompWyNZ6wWkzDkPpx482TBQRY?=
- =?us-ascii?Q?CvUExZMcdQhTFHlnvDrto262zNW77mKAKrEwpYUMRB8teIf+VC57Sizsu/AT?=
- =?us-ascii?Q?7bCGFOXJDcgfbOMUsaWEYwixvfPUgtXCCc5I7iodgc55Y3lIaGkBxTBPZbYP?=
- =?us-ascii?Q?9vKh+xcfzRQhex8xKw5E1mXHZCgm/OX4jUneqNhaaFDeMNmJ2pcssgBqiotd?=
- =?us-ascii?Q?b3sRC6gbAj/zvMLPf9PTWTSNWkTTVG6z0JbdO/saflPquB3jujlA1PZXL1TI?=
- =?us-ascii?Q?HwGfwfUOKTebGprhFdWloyf2ex2c5IVshA7rhtFBbgtPoUeiwGh8KjS3YT8J?=
- =?us-ascii?Q?Rrm7LTugGJsE2hDfbqI5g3Zvr3Jst9nn/w1lpck5?=
+	=?us-ascii?Q?VtijZ4DklDkX4/v/DcysBzi6UDtIv3WbvCejIWLZ6wr2oLuR987e5mOoggJs?=
+ =?us-ascii?Q?YKlchXloQo3jW8c1bztAp/UR0FONamdEUCYAyVV0Qs0NwOEP1myp0MDkWHP2?=
+ =?us-ascii?Q?ZAVYGIYaFSYcGvLqtkOAwceLVetnIKOwiBjKO+J6kg+sNOEdrYYNK5ktDWfI?=
+ =?us-ascii?Q?tQm0gpHiKpQGiEDZmznS96h1zSKjet4hIhlLhBB2u2VrKG2mQl0ks8k54GP3?=
+ =?us-ascii?Q?Y9ZeXCTYRHKr7RErnXxnA5pbyMJCs1NM5RWRN/4vOq2o7mDtMn4QgAHRTrbi?=
+ =?us-ascii?Q?2TqbhraNSoM1yPLKuhJU5DcjD8c0QmtuY5Jh0czW5XDt+DQMTWvFWkYvagS6?=
+ =?us-ascii?Q?KRraFefEVcvpu6zCQAFPYtENySLDwSynam7hOQ51o8prbvrWT6Yxoc7tHPWY?=
+ =?us-ascii?Q?uxhcmxnqi5lklDwb0GEBbckfMqcZU094m/yH3XOWSL6OUnSxs06gYsX63eIE?=
+ =?us-ascii?Q?KRVbOFcX95k7fP5ZVpKnNrWKwDaG5gjvIr5J9T5l/mv38QReW5lRjMt7yuPW?=
+ =?us-ascii?Q?Mjx65JgAKDPRgSfuVKMZtIaC2XCqKF12dF6a1s7sU57ro6250fkukiPIBGff?=
+ =?us-ascii?Q?tdAEV7p+/VZ8hxeGUJDHnHNIRZewK6SvghIjaD6gSk8vTIoYC78W+RkkJ7O9?=
+ =?us-ascii?Q?v1zuYYmVRyCqsxHoYN7ga9qZMcZi8Td52p2LpUYhzbBcFFTpW9Ig7SyIr+Gt?=
+ =?us-ascii?Q?RO7SxTEiCGpaegnrSbnJsrSN/7zAmftnW8kIbaIVWhKOBF/f+pOCFEKk0DoO?=
+ =?us-ascii?Q?Mflllfpsfx7vf7prhIA1dcLuUpejfevE+YgyvmjOx9dDSuaHVYFw+Pg6QASC?=
+ =?us-ascii?Q?nnggpAxtd1ODrl7Ni8gSzk59xflfEwGw1V/MIx6qSFFen0GIhGt7au53iya0?=
+ =?us-ascii?Q?RwZm2/G5ug7AvJD+EgzipkkEfATaNNGge+Hv6blM61qYcWmiPNDDA68+GTEN?=
+ =?us-ascii?Q?+r5X1udMEEE6McSTO3RpjPfBWPBwqig9Bqv7zUc+J0VrKAptjYtGAN1aCCRb?=
+ =?us-ascii?Q?cA9yPG8tMDHc4LsrxTFdUxIqsCDD7eMkh33t3+g33z7m58/RTmk0QTk15oBv?=
+ =?us-ascii?Q?ufYM0KvC0zF/PT0MPzSVAo4nYFBzi1zM4tg3NyNLXN0+KjVB040eqXiMtgkj?=
+ =?us-ascii?Q?TXmmbxfMpyIi2Ys6wb9WvsvENA4ac2+TbKWhT9hygvYKM+kEa6H0gbMsTIVY?=
+ =?us-ascii?Q?kMnn6S3gVKQg8X5FtI/FXJSbRS7XQDaTnXQtM+gH9IIaCQWdU3/Z1HNFS+o2?=
+ =?us-ascii?Q?oHdHAw3GLOanJk5y+OetQ/6zlXRsdA6ySo2yiVVOwoiADBkpCnJ5GNtet0Cn?=
+ =?us-ascii?Q?Uaibobv5E/9Sm1jo2lq+EXFfEJYDjhOgsjcZtwJhjCbkdYum0KWMFfmIVRt1?=
+ =?us-ascii?Q?NEyjsFMkjyjY8GXq/kURCjtL5er1/IQYT1wlBh4hnJ08IWSUPuk7HvUHV2Id?=
+ =?us-ascii?Q?DOiBa0ngybhebmfR0/0rGLQ7jmQ0MsC1g5BlkcbuZ7HYMg5E8IYdiPB/SmgA?=
+ =?us-ascii?Q?L6pQYNDYksrhDfZDLv31sLHtYhqLxrdYYbAnh6jaA2iwXtZsTzUqhZ6AymrM?=
+ =?us-ascii?Q?uy3E3LkPVz/C/CfYasYVgLEUhwTSmcaacxPW1WB2?=
 X-OriginatorOrg: vivo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b3cfcdb3-dae7-4c16-0abd-08ddc399956b
+X-MS-Exchange-CrossTenant-Network-Message-Id: 570e6c2c-20be-4f30-63b1-08ddc399a3ec
 X-MS-Exchange-CrossTenant-AuthSource: SI2PR06MB5140.apcprd06.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Jul 2025 12:17:36.2733
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Jul 2025 12:18:00.5619
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 923e42dc-48d5-4cbe-b582-1a797a6412ed
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: guuZnhoP7KECYj8oag6b6HU6FzTmLlush2ksinnXjQmeLezf+RFnKADh15p9Z2kBoPGyJUzBnP5T2Y2WsJ8hOA==
+X-MS-Exchange-CrossTenant-UserPrincipalName: d9lnDMJurnmKE3OLNUMspNXzkyyWjGiGmw8d90XvXewNljJhvyB3onNMbucnvvqO8dVTYCmBP5a6BIKjQiv73A==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY0PR06MB5428
 
-Use min()/max()/max_t() to reduce the code and improve its readability.
+Use min() to reduce the code and improve its readability.
 
-No functional changes.
+Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
+---
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c      | 5 +----
+ .../net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_n.c    | 6 ++----
+ 2 files changed, 3 insertions(+), 8 deletions(-)
 
-Qianfeng Rong (7):
-  net: usb: Use min() to improve code
-  wifi: ath5k: Use max() to improve code
-  wifi: ath9k: Use max() to improve code
-  wifi: brcm80211: Use min() to improve code
-  wifi: mwifiex: Use max_t() to improve code
-  wifi: wilc1000: Use min() to improve code
-  wifi: rtlwifi: Use min()/max() to improve code
-
- drivers/net/usb/r8152.c                       |  5 +----
- drivers/net/wireless/ath/ath5k/phy.c          | 12 +++---------
- drivers/net/wireless/ath/ath9k/dfs.c          |  5 +----
- .../broadcom/brcm80211/brcmfmac/usb.c         |  5 +----
- .../broadcom/brcm80211/brcmsmac/phy/phy_n.c   |  6 ++----
- .../net/wireless/marvell/mwifiex/cfg80211.c   |  7 +++----
- .../net/wireless/microchip/wilc1000/wlan.c    |  5 +----
- .../wireless/realtek/rtlwifi/rtl8192ce/hw.c   | 19 +++----------------
- .../wireless/realtek/rtlwifi/rtl8192cu/hw.c   | 17 +++--------------
- .../wireless/realtek/rtlwifi/rtl8192ee/dm.c   |  5 +----
- .../wireless/realtek/rtlwifi/rtl8723ae/hw.c   | 15 +++------------
- .../wireless/realtek/rtlwifi/rtl8723be/dm.c   |  5 +----
- .../wireless/realtek/rtlwifi/rtl8821ae/dm.c   |  5 +----
- 13 files changed, 24 insertions(+), 87 deletions(-)
-
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
+index b056336d5da6..f0129d10d2b9 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
+@@ -927,10 +927,7 @@ brcmf_usb_dl_writeimage(struct brcmf_usbdev_info *devinfo, u8 *fw, int fwlen)
+ 		/* Wait until the usb device reports it received all
+ 		 * the bytes we sent */
+ 		if ((rdlbytes == sent) && (rdlbytes != dllen)) {
+-			if ((dllen-sent) < TRX_RDL_CHUNK)
+-				sendlen = dllen-sent;
+-			else
+-				sendlen = TRX_RDL_CHUNK;
++			sendlen = min(dllen - sent, TRX_RDL_CHUNK);
+ 
+ 			/* simply avoid having to send a ZLP by ensuring we
+ 			 * never have an even
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_n.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_n.c
+index d362c4337616..b679821c7f99 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_n.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_n.c
+@@ -25825,10 +25825,8 @@ wlc_phy_cal_txiqlo_nphy(struct brcms_phy *pi, struct nphy_txgains target_gain,
+ 
+ 		if (mphase) {
+ 			cal_cnt = pi->mphase_txcal_cmdidx;
+-			if ((cal_cnt + pi->mphase_txcal_numcmds) < max_cal_cmds)
+-				num_cals = cal_cnt + pi->mphase_txcal_numcmds;
+-			else
+-				num_cals = max_cal_cmds;
++			num_cals = min(cal_cnt + pi->mphase_txcal_numcmds,
++				       max_cal_cmds);
+ 		} else {
+ 			cal_cnt = 0;
+ 			num_cals = max_cal_cmds;
 -- 
 2.34.1
 
