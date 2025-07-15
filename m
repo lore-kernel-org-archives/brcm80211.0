@@ -1,125 +1,98 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from magratgarlick.emantor.de (magratgarlick.emantor.de [78.46.208.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74F5E72612
-	for <brcm80211@lists.linux.dev>; Tue, 15 Jul 2025 07:59:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB1B275B07
+	for <brcm80211@lists.linux.dev>; Tue, 15 Jul 2025 08:40:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.46.208.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752566389; cv=none; b=thA419Bw+GTuCz/kSL42wU+VbPwLd1TptaPhhWWKlAWXw5sY48Zmsh66+vvbDAE+/1+himCZxHOy0WLCSZAEj1cnL7fhkXaEjydbzHIh8ajIgM6kW7E7pvcUfHaZ9XuQRDXkjSYZaDwEsk7U1vZ5AFtKJF5okKFUhW9fhOdtKnM=
+	t=1752568807; cv=none; b=QCg62tcHcJ9ftTX/pnoLyP/PDZumOuF0swQeq+UW2fh5/nrXLZSq0kc1e48ouQzMslFe9yTW/ExT31lC/dDegOuY75JDgD8zDAvtUa6QagQe1kw6beOiqki90D3FFhGkbISzHAyptLpSYeu3G0cbLIdcMjb2Ur0758Q/gXBOXsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752566389; c=relaxed/simple;
-	bh=UeR90blzl1UkanLlvwh7Gs4nuz3Jzfvnov9b2Px8QHk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Uajm2Nnnm8XihjnxSygXNqvOWHTxYZsZYKZAcbBO6+pwLCt7qYAWY9h73ZTFZdi9PMiU0TCliXuZcr5bYYlMHvV8F768FSQQn7NCZWiR+pqZsuMZDdjIjFYBr5rOy20mpIoyiVLpivjVuplOzH3atvSAzzJyQ+FV+KL6ZNgfV9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=OXEKOdd0; arc=none smtp.client-ip=198.175.65.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1752568807; c=relaxed/simple;
+	bh=c2ZEHMeZfe6fEzZ6fh4sObpArfyz/YrkzC7XMHsOx5A=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=Z/unxSCZ63rd0+ZcV32UMbNIno7690lGHX4NP970b7Ql9LqLOoxlvA3owW2awDT+5dGQzgmmVaPCQb0+Xn4zyeYEVPhtR5m51chhcrDuObHCl0PAfisyw+65iDtv9qXsbMEEifU8K1BH2qF4HG/eKinQl5p2/N8xLIkdrgWG3xo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=czerwinskis.de; spf=pass smtp.mailfrom=czerwinskis.de; dkim=pass (1024-bit key) header.d=czerwinskis.de header.i=@czerwinskis.de header.b=taQo9BVx; dkim=pass (1024-bit key) header.d=czerwinskis.de header.i=@czerwinskis.de header.b=hUIJ8oau; arc=none smtp.client-ip=78.46.208.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=czerwinskis.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=czerwinskis.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="OXEKOdd0"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1752566388; x=1784102388;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=UeR90blzl1UkanLlvwh7Gs4nuz3Jzfvnov9b2Px8QHk=;
-  b=OXEKOdd0Sxjs15A1de5OkADyNii8INyrNId5xt7j3whzggibr37S6DDI
-   AY9oHsqZZuUtwZqjUUJM0D7u62iifj71MdifpxpN35DlxcqmmyyvBuyky
-   bOG5hFIRqbYdKtL0kTLH/7P26xqckghwrl+NQr/X0hA1ulDQGrDBjDJ9J
-   udjnrrET7gs85DTrzr3U/3Hxbny8y2EcuAgblVLpCUmg+82ov08Qa/qlq
-   SmzEt/geznFP8AHM04l3/w3aeaErEH7rMAsLsv++PddyyAf5JDUcD0avy
-   sqgievRNmhONBp1YW5poYktTfTEjwZlIEBS+gVpGJH2zQcTwBx72cScCf
-   w==;
-X-CSE-ConnectionGUID: x2QjfHNlQIqHcUfIhYB23Q==
-X-CSE-MsgGUID: M8cWPrgtRnmdYcPgoCkfeg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11491"; a="54920730"
-X-IronPort-AV: E=Sophos;i="6.16,313,1744095600"; 
-   d="scan'208";a="54920730"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jul 2025 00:59:47 -0700
-X-CSE-ConnectionGUID: LAglGVJPSx+FTNAdNBYyDw==
-X-CSE-MsgGUID: ZxagDbPCR3a8lGaD4xN+/Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,313,1744095600"; 
-   d="scan'208";a="156565039"
-Received: from smile.fi.intel.com ([10.237.72.52])
-  by orviesa006.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jul 2025 00:59:32 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.98.2)
-	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1ubaZS-0000000Fadw-49Fb;
-	Tue, 15 Jul 2025 10:59:26 +0300
-Date: Tue, 15 Jul 2025 10:59:26 +0300
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: WangYuli <wangyuli@uniontech.com>
-Cc: Greg KH <gregkh@linuxfoundation.org>, seanjc@google.com,
-	pbonzini@redhat.com, tglx@linutronix.de, mingo@redhat.com,
-	bp@alien8.de, dave.hansen@linux.intel.com, x86@kernel.org,
-	hpa@zytor.com, dave@stgolabs.net, jonathan.cameron@huawei.com,
-	dave.jiang@intel.com, alison.schofield@intel.com,
-	vishal.l.verma@intel.com, ira.weiny@intel.com,
-	dan.j.williams@intel.com, lucas.demarchi@intel.com,
-	thomas.hellstrom@linux.intel.com, rodrigo.vivi@intel.com,
-	airlied@gmail.com, simona@ffwll.ch, marcin.s.wojtas@gmail.com,
-	andrew+netdev@lunn.ch, davem@davemloft.net, edumazet@google.com,
-	kuba@kernel.org, pabeni@redhat.com, arend.vanspriel@broadcom.com,
-	ilpo.jarvinen@linux.intel.com, jirislaby@kernel.org,
-	jgross@suse.com, sstabellini@kernel.org,
-	oleksandr_tyshchenko@epam.com, akpm@linux-foundation.org,
-	kvm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	ming.li@zohomail.com, linux-cxl@vger.kernel.org,
-	intel-xe@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-	netdev@vger.kernel.org, kvalo@kernel.org, johannes.berg@intel.com,
-	quic_ramess@quicinc.com, ragazenta@gmail.com,
-	jeff.johnson@oss.qualcomm.com, mingo@kernel.org, j@jannau.net,
-	linux@treblig.org, linux-wireless@vger.kernel.org,
-	brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com,
-	linux-serial@vger.kernel.org, xen-devel@lists.xenproject.org,
-	shenlichuan@vivo.com, yujiaoliang@vivo.com, colin.i.king@gmail.com,
-	cvam0000@gmail.com, zhanjun@uniontech.com, niecheng1@uniontech.com,
-	guanwentao@uniontech.com
-Subject: Re: [PATCH] treewide: Fix typo "notifer"
-Message-ID: <aHYKXgc2k5wDY32c@smile.fi.intel.com>
-References: <B3C019B63C93846F+20250715071245.398846-1-wangyuli@uniontech.com>
- <2025071545-endnote-imprison-2b98@gregkh>
- <5D06C25920559D71+06c9ce34-9867-495c-9842-dcfe9f1d51bb@uniontech.com>
+	dkim=pass (1024-bit key) header.d=czerwinskis.de header.i=@czerwinskis.de header.b="taQo9BVx";
+	dkim=pass (1024-bit key) header.d=czerwinskis.de header.i=@czerwinskis.de header.b="hUIJ8oau"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=czerwinskis.de;
+	s=mail; t=1752568238;
+	bh=c2ZEHMeZfe6fEzZ6fh4sObpArfyz/YrkzC7XMHsOx5A=;
+	h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
+	b=taQo9BVxoyuM803H0JTTxnLID0RKV5apUSbDpBxSoUa1+2NEZjS1xJWawZ7dy45yg
+	 3FwP+cJKZBZFZ2Pse1MpDy93GdGlS3FtKKIUBn/0mZP0RMSvj2HiXa36MPWAaBB6zK
+	 B3AWSwnv114PeHjOWVJ8H9PUNz+Iyk29NoWQUn1E=
+Received: by magratgarlick.emantor.de (Postfix, from userid 114)
+	id 2539D98503; Tue, 15 Jul 2025 10:30:38 +0200 (CEST)
+X-Spam-Level: 
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=czerwinskis.de;
+	s=mail; t=1752568237;
+	bh=c2ZEHMeZfe6fEzZ6fh4sObpArfyz/YrkzC7XMHsOx5A=;
+	h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
+	b=hUIJ8oaupDj/pg8SMu9UEqJffK/2JFQcvFbzSJBsGH/Lrj1nEFpy3woDlm2olZRTM
+	 Sz7CKuu9gppuzzEMQAoxYUJmCVsUFmW7s0Hbw0cktF5OkMGoE+PmXIvHkvM1ookpan
+	 COUh8Tl3YktWvDfGWTdnhQP4RPnEWqACXp0uV3VY=
+Received: from [IPv6:2001:9e8:6964:2e01:36bc:e97d:1177:d80c] (unknown [IPv6:2001:9e8:6964:2e01:36bc:e97d:1177:d80c])
+	by magratgarlick.emantor.de (Postfix) with ESMTPSA id 2EFD5984F8;
+	Tue, 15 Jul 2025 10:30:37 +0200 (CEST)
+Message-ID: <8862907338725d48e4966993e639f680d59156ad.camel@czerwinskis.de>
+Subject: Re: [PATCH 1/2] brcmfmac: remove unreachable poll mode for sdio
+From: Rouven Czerwinski <rouven@czerwinskis.de>
+To: Arend Van Spriel <arend.vanspriel@broadcom.com>
+Cc: kernel@pengutronix.de, linux-wireless@vger.kernel.org, 
+	brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com, 
+	linux-kernel@vger.kernel.org
+Date: Tue, 15 Jul 2025 10:30:36 +0200
+In-Reply-To: <197eae1ad60.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
+References: <20250621112912.180436-1-rouven@czerwinskis.de>
+	 <197eae1ad60.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.1 
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5D06C25920559D71+06c9ce34-9867-495c-9842-dcfe9f1d51bb@uniontech.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs, Bertel Jungin Aukio 5, 02600 Espoo
 
-On Tue, Jul 15, 2025 at 03:53:18PM +0800, WangYuli wrote:
-> On 2025/7/15 15:22, Greg KH wrote:
-> > Please break this up into one-patch-per-subsystem, like is required for
-> > things like this.
+Hi Arend,
 
-> Honestly, I've always been quite unsure how to handle situations like this.
-> 
-> It seems every subsystem maintainer has different preferences.
+On Tue, 2025-07-08 at 18:32 +0200, Arend Van Spriel wrote:
+> On June 21, 2025 1:29:17 PM Rouven Czerwinski <rouven@czerwinskis.de>
+> wrote:
+>=20
+> > The sdio interface implements an unreachable poll mode. Remove it
+> > since
+> > the code can't be reached, if the poll mode needs to be implemented
+> > it
+> > can simply be resurrected using the usual git means.
+>=20
+> Thanks, Rouven
+>=20
+> This functionality has been/can be useful so instead of ripping it
+> out I=20
+> would prefer to have a proper knob for it in debugfs.
 
-True, but at least if you see the specific driver in the MAINTAINERS, split for
-that driver. For instance, 8250_dw in this patch is exactly the case.
+It's probably easier to make this a module parameter instead, I think
+that live switching may be harder to implement.
 
-> I've previously encountered some maintainers who suggested I split such
-> patches by subsystem so each maintainer could merge them into their tree
-> without contention. However, other ones have argued that fixing spelling
-> errors isn't worth multiple commits, claiming it would create chaos.
+That said, I no longer have access to the hardware where this can be
+tested, so I can't continue with this suggestion.
 
-> Since I genuinely discover these spelling errors by chance each time, and to
-> avoid giving the impression I'm "spamming" the kernel tree for some ulterior
-> motive, I've opted to squash them into a single commit.
-> 
-> That said, I personally don't have any strong feelings or preferences on
-> this matter. Since you've requested it, I'll go ahead and split it up and
-> send a v2 patchset.
+Thanks for the input and Regards,
+Rouven
 
--- 
-With Best Regards,
-Andy Shevchenko
-
-
+>=20
+> Regards,
+> Arend
+>=20
+> > Signed-off-by: Rouven Czerwinski <rouven@czerwinskis.de>
+> > ---
+> > .../broadcom/brcm80211/brcmfmac/sdio.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 | 48 +---------------
+> > ---
+> > 1 file changed, 2 insertions(+), 46 deletions(-)
+>=20
