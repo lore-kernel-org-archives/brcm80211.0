@@ -1,115 +1,103 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44EFA1E3DF8
-	for <brcm80211@lists.linux.dev>; Tue, 15 Jul 2025 15:11:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE688B660;
+	Wed, 16 Jul 2025 02:45:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752592301; cv=none; b=YLwVRRx4qMOtEtmH0T44l417SREGwm05sOkvulHbIyw9CDXukjW0xJMIdcCaoKxzyMgC9WFNHAOnBu1cLRPW162/4jXJKnkh/hmv20M750ZG+rnj/Be0GqC0RtYoIAswjqum70NAhctStaMjfSe7dVXOYRaWU04cF9WoCkOoqQY=
+	t=1752633938; cv=none; b=XJhohwGv4afCCZn9oKEeiar0LmvWnKT1eoGHeQgceNKUI9i1T82V6MHC+aOZ5mzYZZNqCu+hAxgxX07tMWvRU7HOu/go2uKXh2FiBbl/pxQ1MIqwR/yeoT4pktUmbMqiOvz6DfnbNMOCM3wdPxMbiL/Oid5Y5sHrgq6Hvtm52vQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752592301; c=relaxed/simple;
-	bh=GT9YCMpmO/oGbAXwtofhY5F7e46WJk2TBT21YGNxioQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ME1Wl0XBljOYpTcEge2oVDXqy6ZwjQHVji1CkjOkJaCixJ0cEDrLLdkJUzDIG6Ub46FZsjV/oJKcqcy28R31QTkfKIUPuk9YkrSAH/LeIfc6sAHZ9J012bQF7w4OgA1xZqkuNAy/I214dD0qyM/0vr1kagq3OvXcDLA3JVOcdwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=er/sPTr/; arc=none smtp.client-ip=192.198.163.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1752633938; c=relaxed/simple;
+	bh=+1u16U4vS2dn7v0o/6oq4Gia80+YfN2DVuNgYAdEeeA=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=j8QG/tLXkF3wYG9spR2wH3dQ7JxCAn3zlDLJJ6xkC9gopUmSsaA+oIfDbizuSyW3JL/RYmKS1wYN3PhncVJ2I8Nw481R+HKEm+Jlv4KiNjvcRjJST5F/zNbMH7/JzCkS0WAINnXbla/77bMtczLzqzkAdtJukhZLncU+5WqfD9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h2JWK47u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="er/sPTr/"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1752592300; x=1784128300;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=GT9YCMpmO/oGbAXwtofhY5F7e46WJk2TBT21YGNxioQ=;
-  b=er/sPTr/YfoP0zu1na+rOUhleYrBQvbC54nH58ZPMxj/8eT+H30YaMDZ
-   L8IEZ3LChG24n3GXcCLsv0neQF/YIVsPIhzpyVce/zN1qaZikQ79NBPIu
-   532hREmAqcD0camruiMnXFZzs538CsU1oTL2MPCQknvgxPuQqfSLkj3hS
-   gjsYGHCU965L+uvPTdAP/FDTl3pwR/nK4JpTpIfDq47AyilglwwmVU/K/
-   CjvfAGbY7ddBAAs/NHk7MiGGyzdVTG7DdfyTJDFKE4pqEA4kziZMcxGq2
-   E2dT5m4VkAHWeKOwHJKcbWkjhbYjrz5bwyX1+BRm78X/u0NWfvvZr/xsm
-   w==;
-X-CSE-ConnectionGUID: M2hzfXa0RCO53yn8bcpVEA==
-X-CSE-MsgGUID: UGZtDehZQNmLeRair5+m/w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11493"; a="54907816"
-X-IronPort-AV: E=Sophos;i="6.16,313,1744095600"; 
-   d="scan'208";a="54907816"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jul 2025 08:09:24 -0700
-X-CSE-ConnectionGUID: kRlxMx3/SPu8BGSVLj+Ezg==
-X-CSE-MsgGUID: VgyJUB25RxeWdk6pmX7cWw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,313,1744095600"; 
-   d="scan'208";a="157354678"
-Received: from tcingleb-desk1.amr.corp.intel.com (HELO [10.125.111.148]) ([10.125.111.148])
-  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jul 2025 08:09:19 -0700
-Message-ID: <841e6d14-e3cc-4c23-9256-96f0c4e2d761@intel.com>
-Date: Tue, 15 Jul 2025 08:09:18 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h2JWK47u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F190FC4CEE3;
+	Wed, 16 Jul 2025 02:45:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752633937;
+	bh=+1u16U4vS2dn7v0o/6oq4Gia80+YfN2DVuNgYAdEeeA=;
+	h=From:Date:Subject:To:Cc:From;
+	b=h2JWK47uhreeBPFGmYAom7RJvXOFQcdFGYGkYLAyaU+n6AL8GFwO4vvyiWfAN4yKm
+	 6u4DDs34IhMYLrdl30zgNdOR6hlLZLFobNXVAuCywq2WjpHiJfKfh/fJ6Cs1av64Jt
+	 8DuVY2VlsLxTBCyvL4BdF4jptwL4gFmV0NvxAu6oFUnoy9EGbiU0gpT4adZ+rHNSHx
+	 Ujc0+z5gn/KcJTtZe4ycPrzV6I0pg/4d4vnSiL8itLZSp1G6ysgqJG5NIPBeL0ZfEp
+	 vaz2BwtlnMnn3iTDmKT99M7ifwhbD3H12ANdFLhvChT0aHeb34poUoKeNPO7e3ZmzT
+	 4FCy+k9+4SQjg==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 15 Jul 2025 19:45:23 -0700
+Subject: [PATCH] wifi: brcmsmac: Remove const from tbl_ptr parameter in
+ wlc_lcnphy_common_read_table()
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/8] cxl: mce: Fix typo "notifer"
-To: WangYuli <wangyuli@uniontech.com>
-Cc: airlied@gmail.com, akpm@linux-foundation.org, alison.schofield@intel.com,
- andrew+netdev@lunn.ch, andriy.shevchenko@linux.intel.com,
- arend.vanspriel@broadcom.com, bp@alien8.de,
- brcm80211-dev-list.pdl@broadcom.com, brcm80211@lists.linux.dev,
- colin.i.king@gmail.com, cvam0000@gmail.com, dan.j.williams@intel.com,
- dave.hansen@linux.intel.com, dave@stgolabs.net, davem@davemloft.net,
- dri-devel@lists.freedesktop.org, edumazet@google.com,
- gregkh@linuxfoundation.org, guanwentao@uniontech.com, hpa@zytor.com,
- ilpo.jarvinen@linux.intel.com, intel-xe@lists.freedesktop.org,
- ira.weiny@intel.com, j@jannau.net, jeff.johnson@oss.qualcomm.com,
- jgross@suse.com, jirislaby@kernel.org, johannes.berg@intel.com,
- jonathan.cameron@huawei.com, kuba@kernel.org, kvalo@kernel.org,
- kvm@vger.kernel.org, linux-cxl@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org,
- linux-wireless@vger.kernel.org, linux@treblig.org, lucas.demarchi@intel.com,
- marcin.s.wojtas@gmail.com, ming.li@zohomail.com, mingo@kernel.org,
- mingo@redhat.com, netdev@vger.kernel.org, niecheng1@uniontech.com,
- oleksandr_tyshchenko@epam.com, pabeni@redhat.com, pbonzini@redhat.com,
- quic_ramess@quicinc.com, ragazenta@gmail.com, rodrigo.vivi@intel.com,
- seanjc@google.com, shenlichuan@vivo.com, simona@ffwll.ch,
- sstabellini@kernel.org, tglx@linutronix.de,
- thomas.hellstrom@linux.intel.com, vishal.l.verma@intel.com, x86@kernel.org,
- xen-devel@lists.xenproject.org, yujiaoliang@vivo.com, zhanjun@uniontech.com
-References: <BD5C52D2838AEA48+20250715134050.539234-1-wangyuli@uniontech.com>
- <65FC7B96ECBDB052+20250715134407.540483-2-wangyuli@uniontech.com>
-Content-Language: en-US
-From: Dave Jiang <dave.jiang@intel.com>
-In-Reply-To: <65FC7B96ECBDB052+20250715134407.540483-2-wangyuli@uniontech.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20250715-brcmsmac-fix-uninit-const-pointer-v1-1-16e6a51a8ef4@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAEISd2gC/x2NQQqDMBAAvyJ77kKixtJ+pXhI49buwY3sRimIf
+ zf0ODDMHGCkTAbP5gClnY2zVPC3BtI3ykzIU2VoXRvc3Qd8a1psiQk//MNNWLhgymIF18xSSHH
+ qgvd9DO7RDVA7q1J1/4/XeJ4XUqdxNHMAAAA=
+X-Change-ID: 20250715-brcmsmac-fix-uninit-const-pointer-d35114a50936
+To: Arend van Spriel <arend.vanspriel@broadcom.com>
+Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev, 
+ brcm80211-dev-list.pdl@broadcom.com, llvm@lists.linux.dev, 
+ patches@lists.linux.dev, stable@vger.kernel.org, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2033; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=+1u16U4vS2dn7v0o/6oq4Gia80+YfN2DVuNgYAdEeeA=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDBnlQv69i7iPCH66tmfp7Gl/HNNXNDqecKng+8HquHBJ1
+ svXhWu6OkpZGMS4GGTFFFmqH6seNzScc5bxxqlJMHNYmUCGMHBxCsBEmioZGSb77nXUNsqYJsPV
+ erD+dknSp+cPfQ/ubjWKbDvSU8Yq58LIMGNm2rVdB7LZZM0ehj8L6W0T/Jh2/RL/ZYtNmw51Szr
+ uYgAA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
+A new warning in clang [1] complains that diq_start in
+wlc_lcnphy_tx_iqlo_cal() is passed uninitialized as a const pointer to
+wlc_lcnphy_common_read_table():
 
+  drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c:2728:13: error: variable 'diq_start' is uninitialized when passed as a const pointer argument here [-Werror,-Wuninitialized-const-pointer]
+   2728 |                                                      &diq_start, 1, 16, 69);
+        |                                                       ^~~~~~~~~
 
-On 7/15/25 6:44 AM, WangYuli wrote:
-> According to the context, "mce_notifer" should be "mce_notifier".
-> 
-> Link: https://lore.kernel.org/all/B3C019B63C93846F+20250715071245.398846-1-wangyuli@uniontech.com/
-> Fixes: 516e5bd0b6bf ("cxl: Add mce notifier to emit aliased address for extended linear cache")
-> Signed-off-by: WangYuli <wangyuli@uniontech.com>
+The table pointer passed to wlc_lcnphy_common_read_table() should not be
+considered constant, as wlc_phy_read_table() is ultimately going to
+update it. Remove the const qualifier from the tbl_ptr to clear up the
+warning.
 
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-> ---
->  drivers/cxl/core/mce.h | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/cxl/core/mce.h b/drivers/cxl/core/mce.h
-> index ace73424eeb6..ca272e8db6c7 100644
-> --- a/drivers/cxl/core/mce.h
-> +++ b/drivers/cxl/core/mce.h
-> @@ -7,7 +7,7 @@
->  
->  #ifdef CONFIG_CXL_MCE
->  int devm_cxl_register_mce_notifier(struct device *dev,
-> -				   struct notifier_block *mce_notifer);
-> +				   struct notifier_block *mce_notifier);
->  #else
->  static inline int
->  devm_cxl_register_mce_notifier(struct device *dev,
+Cc: stable@vger.kernel.org
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2108
+Fixes: 5b435de0d786 ("net: wireless: add brcm80211 drivers")
+Link: https://github.com/llvm/llvm-project/commit/00dacf8c22f065cb52efb14cd091d441f19b319e [1]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c
+index d0faba240561..b4bba67a45ec 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c
+@@ -919,7 +919,7 @@ void wlc_lcnphy_read_table(struct brcms_phy *pi, struct phytbl_info *pti)
+ 
+ static void
+ wlc_lcnphy_common_read_table(struct brcms_phy *pi, u32 tbl_id,
+-			     const u16 *tbl_ptr, u32 tbl_len,
++			     u16 *tbl_ptr, u32 tbl_len,
+ 			     u32 tbl_width, u32 tbl_offset)
+ {
+ 	struct phytbl_info tab;
+
+---
+base-commit: bbc19fef578970158847a41d9b6b6b218034b8c2
+change-id: 20250715-brcmsmac-fix-uninit-const-pointer-d35114a50936
+
+Best regards,
+--  
+Nathan Chancellor <nathan@kernel.org>
 
