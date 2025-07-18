@@ -1,63 +1,63 @@
-Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
+Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43BC72F1983
-	for <brcm80211@lists.linux.dev>; Wed, 16 Jul 2025 09:32:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A709299A96
+	for <brcm80211@lists.linux.dev>; Fri, 18 Jul 2025 10:26:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752658327; cv=none; b=dINQf7CB1LFfzNcSH58z9cvUh8Z891SPgBJC1kzrGUjgKKfn97NPYMcFhCqFdx7lLKdG5gyxm6aOUbHFhiXzJB4zga172cp18AAQ+gOqeYFsbX6LIzRL6gzIqBrFS7wxcO/IPazqOWq9Cs2KHILIyW0/f8F8TeVG4Wx+Ej17+LY=
+	t=1752834418; cv=none; b=PK/sAxYRzhdPRrFTO77eqYlMF6RW3ey7K/0qB1Rh7P6omWkZynos/AzjAfewOosNRnSKndCNreRzFDU+FV7LGcrIR2Pm/KjkDiTVMu1wQ0LqV0sYMep9CU1YA3l+iayiHLxmD8q2E+3HLVzAaSgrd2H+Khzp8Gv7zyi1XV3POak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752658327; c=relaxed/simple;
-	bh=KoC0Gnw4tQwX09Mh2nGi8LKThqV4C12CyHgjb/vzF98=;
+	s=arc-20240116; t=1752834418; c=relaxed/simple;
+	bh=iOuJFTTwJt339tYjnwcMIWFz/RUheBu5DfdHuCk8cH8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lhJtpGScDFH3BbD7YFh1Nr8DlwlWXCFoSLMAerwF3bo7Nc/Ds0WMbGqIU6xz8UhfS9q641QI6aCwuWs9czoeI4vccX9vvGMkr7+MEl49ybRBQc0vmKXPSks4GfujJnsAcBga8Y6DiCaqbd2++EbiCh2Pp8AwKhX1OANCQaaCWjo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=X9KssWxm; arc=none smtp.client-ip=209.85.160.172
+	 In-Reply-To:Content-Type; b=rFzD/ywh0dXL1L8/ymBuGN5NQZzhJDK8MlCA3IJmd2uqtgG6XHM84bZm9g/5lNl1QBfShIuzvXV8gtMF03caa/c4iJCw9YglH1JTEAOpH5NATu1ILzHRcklOaMAk7PkTEsGk1avK2CaPE4X8g14QCEzANt+hfSidc323H5oRuyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=Iv7+YS35; arc=none smtp.client-ip=209.85.222.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="X9KssWxm"
-Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-4a8244e897fso68898151cf.1
-        for <brcm80211@lists.linux.dev>; Wed, 16 Jul 2025 02:32:05 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="Iv7+YS35"
+Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-7e29616cc4fso190046985a.0
+        for <brcm80211@lists.linux.dev>; Fri, 18 Jul 2025 03:26:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1752658324; x=1753263124; darn=lists.linux.dev;
+        d=broadcom.com; s=google; t=1752834415; x=1753439215; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=wYGQ+EFxCY8Kqn3gT5PrXpdAsZ+hUnOgnFL6azab8Q0=;
-        b=X9KssWxmnXJIHDFvh+aPFtA1s7NUhkSvkTOrp5JMpERVQJ88+v9ZMilNTAjJOmLXVZ
-         kInoGdAT70AdT+BGnDMqIS8sRNhARbghtFIe2azfFeJV/0WOJx9iqEkdMMZ0rf93ZZbN
-         Q/RaNK/gI7XgvyhGjH44MxXff78cEtSS6ej8A=
+        bh=Tceb6O3nBrebvy+ZDwLDwrGTRdGaZ8naYMQfV4XKrrU=;
+        b=Iv7+YS35tlNX8IMUiVQiITJtAxB+VsRpg/AScCOXe3RbNdtXdt9O0n30inS3hWj0u5
+         EKjAOnluPDtN0glJSc880geqDO62uEtcoL42meXwJxL0T1rP7WQPRCM0hcKJWvbMEnSL
+         dTbxVyAqNLi7tr7cCXx5EV2wDcuGPAIvf/29M=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752658324; x=1753263124;
+        d=1e100.net; s=20230601; t=1752834415; x=1753439215;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=wYGQ+EFxCY8Kqn3gT5PrXpdAsZ+hUnOgnFL6azab8Q0=;
-        b=UrimJHAzleJ+ImKJL6tOCxkuPwzHSzhmT468rwEFxUaRR+vS9vZIOlxj++VihQJBDs
-         83H0rkEZictW1rfBF5JVY+ocXDQ004AzBYsx9tehxLQj6NhSsFQzmw/FTT22FKOu7n49
-         XtJPNc//ihoV4sECEPeA77fy360+N9AQyechDFQRjoqyr8DSyZKMcGG0wgf3KE/p1aZd
-         9FX3DSiyswThiHKzpY3uuFUcHGCaPN8b5b3FQs43sgj8s5fRxAD7L6j5xXVK6edUgWj0
-         Cku8cs2391Zm8PBJbgIOaVRgHpIlKoNefH83ty6RszCb6JKVWmUnuxSxgW4Zh2c9E49R
-         ACnQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUxW5Mz0eqAhX3XHVfb+nO2bIOQDKtcdLAGZoPTFXiciw+F5gaD5OQ5wvLockK4q20DSE7pqV96SFA=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzWhdU9Dz34pRZ/ZwP1Tz77P8mp66TN0DPUG3lpQaxKuZmm2/Vb
-	zh/K3RN1xmGCy6kA1OMk72U9jfD9x5ei41kr6Pl8ZlccUt4HNP05z+2NHYaSKtHTNA==
-X-Gm-Gg: ASbGncvySFUTlTTZaTN8Nr75QhJGTKN4NS3LKSZznscJlSMjES5S9VtCCEDOGGMRCK+
-	I9suqE7L2c88mfDMDvsJ5Vqs1hQ5V5d3FGbAWofmae3IaChZK5sGGEI39qeDpYErTaeN+soxNbG
-	vTzccumU/P3YJ9syo57SNSzHSTMzjE38fwjmdRCxhultqfQSgrbeKfMWEsNEEVoSYg4fBQBUuEC
-	aT90qbsVUPuutCa+pPlFsvUdSqnIaDEi5fOYlW45n2tStdFWmKD1nLv8cIRvohpUQHXxMz8KCKO
-	hLY7DaOd0kdVW8rToOCCJ7b8VgoGe6tG59fkJNPO2yEishUHe2cfdI0GcKXzl5d1sgqV4z4Mg+s
-	YkPGSt77SvI4ojsld55l+pGEOZmijd5lM6UWJlOVBDzN9BbQRpC8L
-X-Google-Smtp-Source: AGHT+IFp5F4xszFRerdbJYejB3SFipyFazjaIzmM2lu+vwPOe+RMBqGUutuRN/hMwoxSJmKwSFPD7w==
-X-Received: by 2002:a05:622a:4a16:b0:4ab:63b8:32da with SMTP id d75a77b69052e-4ab90c8eb25mr35840481cf.45.1752658323928;
-        Wed, 16 Jul 2025 02:32:03 -0700 (PDT)
-Received: from [10.176.2.178] ([192.19.176.227])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4ab85620d80sm14469101cf.61.2025.07.16.02.32.02
+        bh=Tceb6O3nBrebvy+ZDwLDwrGTRdGaZ8naYMQfV4XKrrU=;
+        b=CosBRfJAj33Q/pK2HccmDOy3zQUB2rGjPWaAqGjAt4iAl6i0lKr4cujc9DYbWvfwFo
+         9PbWA4yTUH4IJJ1a8rtqE7Buaqi/LbXGU8Z9oFAIkCBVsr0Lf9PpdDAQbJFtfOGIe7jW
+         QiZlicgI7nvcal4gUQwVNOXNl7S7Q9lhFQfIVsydt64lxZ3WvysNvmdU8PT79RaU70W6
+         90DtOIvXvbBnTd5LZSnCw7JcSiBZPmRumKb5N6MLSkvk3OJDi5cACfGwrT+BOi8w+5EK
+         E4BcVHKwNqfWcm0MuAYU5dOwhusDJ+J1AdOM4zaF/MMmFCtr+zmLLnj6t8EA4nzDLbnZ
+         ZJZA==
+X-Forwarded-Encrypted: i=1; AJvYcCVL9SWCjegxwPDr6yf6l7aMvoTX/UnuMtLb1nB1IUkoTmCTl6vdSOyz+9tipkd/2F1L7VVOFn4KbUU=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwBLNDM6F8W6AA6tMgtTKBANUvEneg3z7968bEpJ0l8eoiAgFrB
+	xgafh4x/lJbGQeSe+SOI6w3qZUyNzsw4tPsZR/nqQjtWsHLbAQh9uncgI5/AlDknDQ==
+X-Gm-Gg: ASbGncty6k5/Y5qgiC+jtbhh9HBG8DlmEqJcQGn0lBmL9m77saVNUwaYp3m5tahrcjg
+	U40Gy/4AerdRAMyJTfMEuvuPMBZ3NSYu7WFpzn+y9CpuKzz7W4jvZxotSDKiDuVU0SPR8OmSKJL
+	thAbN6a3BfQPRTrht9ZtBhOYyVd1dYWuDGg9tAhOk1jNllF5xMiZPsBv/CJQItelzVSQ1zVnP6F
+	k3vkWPLpii1QBZ3wP/YjtlYOW+BtGkUQh7Ifmnl4oTDVjmZsa5itikYeU8iUwdmp8LglNRttQNp
+	YyD7DzFYAm1UsdrMnynbj0/1IPJgLJkcxBvNBu15jgl6GeiE0z5h1Mj/ovAbAwuRmbCra2JJzv1
+	1fXIbi8zEVoF/xLTExfnmJBbWrg7AlUdkx9kEb/MREgxA5MFTbWI=
+X-Google-Smtp-Source: AGHT+IEqo4UAFanleVPdYl4dXVyU1lZnXf1z6whg+8xWt/p2QDWx5PJ8H+d/5db0hyJyi9WF5q8VPA==
+X-Received: by 2002:a05:620a:19a5:b0:7e3:52f6:66e5 with SMTP id af79cd13be357-7e352f6672amr568859885a.35.1752834415217;
+        Fri, 18 Jul 2025 03:26:55 -0700 (PDT)
+Received: from [10.229.41.1] ([192.19.176.250])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7e356b46814sm68537885a.30.2025.07.18.03.26.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Jul 2025 02:32:03 -0700 (PDT)
-Message-ID: <caaaa276-71fa-403a-9557-b8d3edadeb81@broadcom.com>
-Date: Wed, 16 Jul 2025 11:32:01 +0200
+        Fri, 18 Jul 2025 03:26:54 -0700 (PDT)
+Message-ID: <4445c7ec-a580-4c28-89cf-2df5790de6ac@broadcom.com>
+Date: Fri, 18 Jul 2025 12:26:43 +0200
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -65,13 +65,32 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] wifi: brcmsmac: Remove const from tbl_ptr parameter in
- wlc_lcnphy_common_read_table()
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
- brcm80211-dev-list.pdl@broadcom.com, llvm@lists.linux.dev,
- patches@lists.linux.dev, stable@vger.kernel.org
-References: <20250715-brcmsmac-fix-uninit-const-pointer-v1-1-16e6a51a8ef4@kernel.org>
+Subject: Re: [PATCH v2 5/8] wifi: brcmfmac: Fix typo "notifer"
+To: WangYuli <wangyuli@uniontech.com>
+Cc: airlied@gmail.com, akpm@linux-foundation.org, alison.schofield@intel.com,
+ andrew+netdev@lunn.ch, andriy.shevchenko@linux.intel.com, bp@alien8.de,
+ brcm80211-dev-list.pdl@broadcom.com, brcm80211@lists.linux.dev,
+ colin.i.king@gmail.com, cvam0000@gmail.com, dan.j.williams@intel.com,
+ dave.hansen@linux.intel.com, dave.jiang@intel.com, dave@stgolabs.net,
+ davem@davemloft.net, dri-devel@lists.freedesktop.org, edumazet@google.com,
+ gregkh@linuxfoundation.org, guanwentao@uniontech.com, hpa@zytor.com,
+ ilpo.jarvinen@linux.intel.com, intel-xe@lists.freedesktop.org,
+ ira.weiny@intel.com, j@jannau.net, jeff.johnson@oss.qualcomm.com,
+ jgross@suse.com, jirislaby@kernel.org, johannes.berg@intel.com,
+ jonathan.cameron@huawei.com, kuba@kernel.org, kvalo@kernel.org,
+ kvm@vger.kernel.org, linux-cxl@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org,
+ linux-wireless@vger.kernel.org, linux@treblig.org, lucas.demarchi@intel.com,
+ marcin.s.wojtas@gmail.com, ming.li@zohomail.com, mingo@kernel.org,
+ mingo@redhat.com, netdev@vger.kernel.org, niecheng1@uniontech.com,
+ oleksandr_tyshchenko@epam.com, pabeni@redhat.com, pbonzini@redhat.com,
+ quic_ramess@quicinc.com, ragazenta@gmail.com, rodrigo.vivi@intel.com,
+ seanjc@google.com, shenlichuan@vivo.com, simona@ffwll.ch,
+ sstabellini@kernel.org, tglx@linutronix.de,
+ thomas.hellstrom@linux.intel.com, vishal.l.verma@intel.com, x86@kernel.org,
+ xen-devel@lists.xenproject.org, yujiaoliang@vivo.com, zhanjun@uniontech.com
+References: <BD5C52D2838AEA48+20250715134050.539234-1-wangyuli@uniontech.com>
+ <F92035B0A9123150+20250715134407.540483-5-wangyuli@uniontech.com>
 Content-Language: en-US
 From: Arend van Spriel <arend.vanspriel@broadcom.com>
 Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
@@ -117,31 +136,23 @@ Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
  NKowQLrlMBGXT4NnRNV0+yHmusXPOPIqQCKEtbWSx9s2slQxmXukPYvLnuRJqkPkvrTgjn5d
  eSE0Dkhni4292/Nn/TnZf5mxCNWH1p3dz/vrT6EIYk2GSJgCLoTkCcqaM6+5E4IwgYOq3UYu
  AAgeEbPV1QeTVAPrntrLb0t0U5vdwG7Xl40baV9OydTv7ghjYZU349w1d5mdxg==
-In-Reply-To: <20250715-brcmsmac-fix-uninit-const-pointer-v1-1-16e6a51a8ef4@kernel.org>
+In-Reply-To: <F92035B0A9123150+20250715134407.540483-5-wangyuli@uniontech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 7/16/2025 4:45 AM, Nathan Chancellor wrote:
-> A new warning in clang [1] complains that diq_start in
-> wlc_lcnphy_tx_iqlo_cal() is passed uninitialized as a const pointer to
-> wlc_lcnphy_common_read_table():
+On 7/15/2025 3:44 PM, WangYuli wrote:
+> There is a spelling mistake of 'notifer' in the comment which
+> should be 'notifier'.
 > 
->    drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c:2728:13: error: variable 'diq_start' is uninitialized when passed as a const pointer argument here [-Werror,-Wuninitialized-const-pointer]
->     2728 |                                                      &diq_start, 1, 16, 69);
->          |                                                       ^~~~~~~~~
-> 
-> The table pointer passed to wlc_lcnphy_common_read_table() should not be
-> considered constant, as wlc_phy_read_table() is ultimately going to
-> update it. Remove the const qualifier from the tbl_ptr to clear up the
-> warning.
-> 
-> Cc: stable@vger.kernel.org
-> Closes: https://github.com/ClangBuiltLinux/linux/issues/2108
-> Fixes: 5b435de0d786 ("net: wireless: add brcm80211 drivers")
-> Link: https://github.com/llvm/llvm-project/commit/00dacf8c22f065cb52efb14cd091d441f19b319e [1]
+> Link:https://lore.kernel.org/all/B3C019B63C93846F+20250715071245.398846-1- 
+> wangyuli@uniontech.com/
+
+I think it has been said on other patches but it is not common to link 
+to obsolete version of the patch series. Apart from that:
 
 Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>> 
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: WangYuli<wangyuli@uniontech.com>
 > ---
->   drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c | 2 +-
+>   drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 2 +-
 >   1 file changed, 1 insertion(+), 1 deletion(-)
+
