@@ -1,63 +1,64 @@
-Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A709299A96
-	for <brcm80211@lists.linux.dev>; Fri, 18 Jul 2025 10:26:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31F9429C34E
+	for <brcm80211@lists.linux.dev>; Fri, 18 Jul 2025 10:37:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752834418; cv=none; b=PK/sAxYRzhdPRrFTO77eqYlMF6RW3ey7K/0qB1Rh7P6omWkZynos/AzjAfewOosNRnSKndCNreRzFDU+FV7LGcrIR2Pm/KjkDiTVMu1wQ0LqV0sYMep9CU1YA3l+iayiHLxmD8q2E+3HLVzAaSgrd2H+Khzp8Gv7zyi1XV3POak=
+	t=1752835025; cv=none; b=OSXhQkbh/iIULo+Wh/raNwQ08pGbDCEwKFRaWjfFYtF9WIKXVZ7Hcv7itUvBTks+xA1LhG+87AxzJ0FGYuflfz+ReaivCCz0Q1PSsfoiNYiT6HRd1HFBaiYOTO+N31ZAVdNzow1NO/I0m28hFYR5IG5CDItB9WVbDWIkFIUJLGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752834418; c=relaxed/simple;
-	bh=iOuJFTTwJt339tYjnwcMIWFz/RUheBu5DfdHuCk8cH8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rFzD/ywh0dXL1L8/ymBuGN5NQZzhJDK8MlCA3IJmd2uqtgG6XHM84bZm9g/5lNl1QBfShIuzvXV8gtMF03caa/c4iJCw9YglH1JTEAOpH5NATu1ILzHRcklOaMAk7PkTEsGk1avK2CaPE4X8g14QCEzANt+hfSidc323H5oRuyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=Iv7+YS35; arc=none smtp.client-ip=209.85.222.175
+	s=arc-20240116; t=1752835025; c=relaxed/simple;
+	bh=o7AiU/V34b0UGWXaW0uOVGBXivX7HWYrqo4HOg5hGI8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=a2q24BocEdMEvZCepqQBI5L2cD68Ve/vG0Adyj31t8Xkp/0pryP8V2aqFVxf/M1YY2Y1O7ivVCm8PXixgB93js1xB7qOebaieNLAXtaF8YBRHrdssQOSoG+V/SFe2fLaH8L0rcsHzQLe7CJQ4LQtwrBT+l18y3A0yI2wJDYnLgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=S8CLmniU; arc=none smtp.client-ip=209.85.128.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="Iv7+YS35"
-Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-7e29616cc4fso190046985a.0
-        for <brcm80211@lists.linux.dev>; Fri, 18 Jul 2025 03:26:56 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="S8CLmniU"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-451dbe494d6so20815565e9.1
+        for <brcm80211@lists.linux.dev>; Fri, 18 Jul 2025 03:37:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1752834415; x=1753439215; darn=lists.linux.dev;
+        d=broadcom.com; s=google; t=1752835022; x=1753439822; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Tceb6O3nBrebvy+ZDwLDwrGTRdGaZ8naYMQfV4XKrrU=;
-        b=Iv7+YS35tlNX8IMUiVQiITJtAxB+VsRpg/AScCOXe3RbNdtXdt9O0n30inS3hWj0u5
-         EKjAOnluPDtN0glJSc880geqDO62uEtcoL42meXwJxL0T1rP7WQPRCM0hcKJWvbMEnSL
-         dTbxVyAqNLi7tr7cCXx5EV2wDcuGPAIvf/29M=
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=be2WTQLsa5uvXybUvNfmScdP010rblWY6zgN5KBpjt0=;
+        b=S8CLmniU9+mwCn3IgwY1foU6Pm+ym5fh7D5Dzobg4f91iRozdaUke8tXtGDqtevX18
+         +1eLTe3m7DV22sISBsPh1WXSHXQNF8XqZ23DqYluazr3uKqQ4z+ICwQddi/WpLPUf1D6
+         azXg+EU043chYrikP6wIRVMQxJRcOqcrmrRgY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752834415; x=1753439215;
+        d=1e100.net; s=20230601; t=1752835022; x=1753439822;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Tceb6O3nBrebvy+ZDwLDwrGTRdGaZ8naYMQfV4XKrrU=;
-        b=CosBRfJAj33Q/pK2HccmDOy3zQUB2rGjPWaAqGjAt4iAl6i0lKr4cujc9DYbWvfwFo
-         9PbWA4yTUH4IJJ1a8rtqE7Buaqi/LbXGU8Z9oFAIkCBVsr0Lf9PpdDAQbJFtfOGIe7jW
-         QiZlicgI7nvcal4gUQwVNOXNl7S7Q9lhFQfIVsydt64lxZ3WvysNvmdU8PT79RaU70W6
-         90DtOIvXvbBnTd5LZSnCw7JcSiBZPmRumKb5N6MLSkvk3OJDi5cACfGwrT+BOi8w+5EK
-         E4BcVHKwNqfWcm0MuAYU5dOwhusDJ+J1AdOM4zaF/MMmFCtr+zmLLnj6t8EA4nzDLbnZ
-         ZJZA==
-X-Forwarded-Encrypted: i=1; AJvYcCVL9SWCjegxwPDr6yf6l7aMvoTX/UnuMtLb1nB1IUkoTmCTl6vdSOyz+9tipkd/2F1L7VVOFn4KbUU=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwBLNDM6F8W6AA6tMgtTKBANUvEneg3z7968bEpJ0l8eoiAgFrB
-	xgafh4x/lJbGQeSe+SOI6w3qZUyNzsw4tPsZR/nqQjtWsHLbAQh9uncgI5/AlDknDQ==
-X-Gm-Gg: ASbGncty6k5/Y5qgiC+jtbhh9HBG8DlmEqJcQGn0lBmL9m77saVNUwaYp3m5tahrcjg
-	U40Gy/4AerdRAMyJTfMEuvuPMBZ3NSYu7WFpzn+y9CpuKzz7W4jvZxotSDKiDuVU0SPR8OmSKJL
-	thAbN6a3BfQPRTrht9ZtBhOYyVd1dYWuDGg9tAhOk1jNllF5xMiZPsBv/CJQItelzVSQ1zVnP6F
-	k3vkWPLpii1QBZ3wP/YjtlYOW+BtGkUQh7Ifmnl4oTDVjmZsa5itikYeU8iUwdmp8LglNRttQNp
-	YyD7DzFYAm1UsdrMnynbj0/1IPJgLJkcxBvNBu15jgl6GeiE0z5h1Mj/ovAbAwuRmbCra2JJzv1
-	1fXIbi8zEVoF/xLTExfnmJBbWrg7AlUdkx9kEb/MREgxA5MFTbWI=
-X-Google-Smtp-Source: AGHT+IEqo4UAFanleVPdYl4dXVyU1lZnXf1z6whg+8xWt/p2QDWx5PJ8H+d/5db0hyJyi9WF5q8VPA==
-X-Received: by 2002:a05:620a:19a5:b0:7e3:52f6:66e5 with SMTP id af79cd13be357-7e352f6672amr568859885a.35.1752834415217;
-        Fri, 18 Jul 2025 03:26:55 -0700 (PDT)
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=be2WTQLsa5uvXybUvNfmScdP010rblWY6zgN5KBpjt0=;
+        b=scwrMzyopLq91H6OgJFw211pXy9Lr5DaEF26C+MIncTQZclxYTldODcTponiNuJq6A
+         dE2cuo3bHZ5kSK6HsLNO25KtPAABXzzRLnSbXYc5ApjhRvxzOUehepsLySzJmoF5Txc+
+         DmilNef+7YSJmCVfZhT1tKSXAf0Mcj8f79xm1u7AY0BswBAauAl0VmtEZSferHyBR56S
+         LSdC6VORiggA2YFHwiwtlQhlNFQIFstUzLP45IRe9pxwOftr8dRa0LBWdsnqefIp5/I2
+         8P4gHWl51O58VUD7KiEuJos8dt+pQKg34ahe3r3HXMxJVvQhggA3zkMMoRjQ8LEvRgwW
+         M1nQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX080QbQfS1MxQpkTIvRRFXAafjS/Pb2R+ra7S/WXerFMCk3w85CVoobjl20NV9CEEp2JvQ3fwYVsU=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzqdq/g7VUR1gE+68qhiw41cboMY2WZ3s3HEfoPLWOZDPx3o90Z
+	9z4n85dhfFdF+xSCvl3t1AegpmuIJqVU7dlnQ9Lb/ztiagQ0HjNNyrgLRcZsKu1C9q3cJ1clddX
+	QAy1KHdKSo44=
+X-Gm-Gg: ASbGncuIrKILmBWFkCcvgGjNX4XaU2GOSLQmSryg4HOxe9e+l5i90Z9pMHXh57RFHuN
+	T/JK7PramRF77m2R9VZgF1gu7oyqdYIdPCdCGTRVXTo9HDe3MKOXtjiYv0zOx8c76Hdcth9XbOT
+	j1cKrfJrfaLwkcYm9WTp49cZXIHVXw9JAkkOqWqs81hb/PVSK4k429Nos1bbAgd45/+nlFoeu3Y
+	H5N9tsoaGY/F63vNIToLjroJ99ykOoQ2UIoelJ9xiGcqAfPLO3R31Rl0GXvIMGqqFyvOxsKfqA7
+	0SumCbcJ/612jwqVvXggJQjjN6kkzWwI43/eUwy1bIXzjiQWT9N79rKLzSkvY59VlDBoViFtl+E
+	SvdL2Qd+dpOBNpucwShmm5Vohwqq02LlznflNBc2k8fL5NvdVP0Q=
+X-Google-Smtp-Source: AGHT+IGaw18z6ZbgBi879Fyj3WOC2+vT3XshuuU7f+qrvOz7x5pcOoeAvZ79K/rtNQcSabe8GjOYiA==
+X-Received: by 2002:a05:600c:4688:b0:456:a1b:e906 with SMTP id 5b1f17b1804b1-4562e3cbb03mr85040605e9.33.1752835022389;
+        Fri, 18 Jul 2025 03:37:02 -0700 (PDT)
 Received: from [10.229.41.1] ([192.19.176.250])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7e356b46814sm68537885a.30.2025.07.18.03.26.45
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b61ca2ba0asm1461626f8f.21.2025.07.18.03.37.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Jul 2025 03:26:54 -0700 (PDT)
-Message-ID: <4445c7ec-a580-4c28-89cf-2df5790de6ac@broadcom.com>
-Date: Fri, 18 Jul 2025 12:26:43 +0200
+        Fri, 18 Jul 2025 03:37:01 -0700 (PDT)
+Message-ID: <f58ac73c-4d9d-4382-8bdb-65ac40ee529c@broadcom.com>
+Date: Fri, 18 Jul 2025 12:37:00 +0200
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -65,32 +66,21 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/8] wifi: brcmfmac: Fix typo "notifer"
-To: WangYuli <wangyuli@uniontech.com>
-Cc: airlied@gmail.com, akpm@linux-foundation.org, alison.schofield@intel.com,
- andrew+netdev@lunn.ch, andriy.shevchenko@linux.intel.com, bp@alien8.de,
- brcm80211-dev-list.pdl@broadcom.com, brcm80211@lists.linux.dev,
- colin.i.king@gmail.com, cvam0000@gmail.com, dan.j.williams@intel.com,
- dave.hansen@linux.intel.com, dave.jiang@intel.com, dave@stgolabs.net,
- davem@davemloft.net, dri-devel@lists.freedesktop.org, edumazet@google.com,
- gregkh@linuxfoundation.org, guanwentao@uniontech.com, hpa@zytor.com,
- ilpo.jarvinen@linux.intel.com, intel-xe@lists.freedesktop.org,
- ira.weiny@intel.com, j@jannau.net, jeff.johnson@oss.qualcomm.com,
- jgross@suse.com, jirislaby@kernel.org, johannes.berg@intel.com,
- jonathan.cameron@huawei.com, kuba@kernel.org, kvalo@kernel.org,
- kvm@vger.kernel.org, linux-cxl@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org,
- linux-wireless@vger.kernel.org, linux@treblig.org, lucas.demarchi@intel.com,
- marcin.s.wojtas@gmail.com, ming.li@zohomail.com, mingo@kernel.org,
- mingo@redhat.com, netdev@vger.kernel.org, niecheng1@uniontech.com,
- oleksandr_tyshchenko@epam.com, pabeni@redhat.com, pbonzini@redhat.com,
- quic_ramess@quicinc.com, ragazenta@gmail.com, rodrigo.vivi@intel.com,
- seanjc@google.com, shenlichuan@vivo.com, simona@ffwll.ch,
- sstabellini@kernel.org, tglx@linutronix.de,
- thomas.hellstrom@linux.intel.com, vishal.l.verma@intel.com, x86@kernel.org,
- xen-devel@lists.xenproject.org, yujiaoliang@vivo.com, zhanjun@uniontech.com
-References: <BD5C52D2838AEA48+20250715134050.539234-1-wangyuli@uniontech.com>
- <F92035B0A9123150+20250715134407.540483-5-wangyuli@uniontech.com>
+Subject: Re: [PATCH v2 4/7] wifi: brcm80211: Use min() to improve code
+To: Qianfeng Rong <rongqianfeng@vivo.com>, Wentao Liang <vulab@iscas.ac.cn>,
+ Johannes Berg <johannes.berg@intel.com>,
+ Sai Krishna <saikrishnag@marvell.com>, Ondrej Jirman <megi@xff.cz>,
+ Jacobe Zang <jacobe.zang@wesion.com>, Kalle Valo <kvalo@kernel.org>,
+ Dmitry Antipov <dmantipov@yandex.ru>,
+ "open list:BROADCOM BRCM80211 IEEE802.11 WIRELESS DRIVERS"
+ <linux-wireless@vger.kernel.org>,
+ "open list:BROADCOM BRCM80211 IEEE802.11 WIRELESS DRIVERS"
+ <brcm80211@lists.linux.dev>,
+ "open list:BROADCOM BRCM80211 IEEE802.11 WIRELESS DRIVERS"
+ <brcm80211-dev-list.pdl@broadcom.com>,
+ open list <linux-kernel@vger.kernel.org>
+References: <20250715121721.266713-1-rongqianfeng@vivo.com>
+ <20250715121721.266713-5-rongqianfeng@vivo.com>
 Content-Language: en-US
 From: Arend van Spriel <arend.vanspriel@broadcom.com>
 Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
@@ -136,23 +126,16 @@ Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
  NKowQLrlMBGXT4NnRNV0+yHmusXPOPIqQCKEtbWSx9s2slQxmXukPYvLnuRJqkPkvrTgjn5d
  eSE0Dkhni4292/Nn/TnZf5mxCNWH1p3dz/vrT6EIYk2GSJgCLoTkCcqaM6+5E4IwgYOq3UYu
  AAgeEbPV1QeTVAPrntrLb0t0U5vdwG7Xl40baV9OydTv7ghjYZU349w1d5mdxg==
-In-Reply-To: <F92035B0A9123150+20250715134407.540483-5-wangyuli@uniontech.com>
+In-Reply-To: <20250715121721.266713-5-rongqianfeng@vivo.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 7/15/2025 3:44 PM, WangYuli wrote:
-> There is a spelling mistake of 'notifer' in the comment which
-> should be 'notifier'.
-> 
-> Link:https://lore.kernel.org/all/B3C019B63C93846F+20250715071245.398846-1- 
-> wangyuli@uniontech.com/
-
-I think it has been said on other patches but it is not common to link 
-to obsolete version of the patch series. Apart from that:
+On 7/15/2025 2:16 PM, Qianfeng Rong wrote:
+> Use min() to reduce the code and improve its readability.
 
 Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>> 
-Signed-off-by: WangYuli<wangyuli@uniontech.com>
+Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
 > ---
->   drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-
+>   drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c      | 5 +----
+>   .../net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_n.c    | 6 ++----
+>   2 files changed, 3 insertions(+), 8 deletions(-)
