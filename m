@@ -1,264 +1,136 @@
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF0972630
-	for <brcm80211@lists.linux.dev>; Fri, 18 Jul 2025 13:37:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5E4C7260D
+	for <brcm80211@lists.linux.dev>; Sat, 19 Jul 2025 13:10:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752845826; cv=none; b=cyF1VtoWYBafFWqiYZ4MNohhBdmKuTZqTDknBZ+oE4PBfy4mcf8+zXPm40XjlJuLiLf5dNbtmgcycDNhRAt4K1BxHBaDVYQC+Qb5zhluDL3fyOCcrWcoC87SgwuPCaOlLgyuVJpxENYS7j2WNb1eHZhhmKFDdqVj+9IcRIb5pqY=
+	t=1752930615; cv=none; b=lBTkwQic4fu+q1mhVUjO+RZ+DWCTVvS6BSHusasvt9zQI95fvBf4au0kypZQCqLvFLhl9mt1YmikHUnYUsyeR8lmVtk01dAzXfRB6lQ6GlELbmeIGNIPpA6o9NVLZ6+Ze2IPrf+7oQyYX+z9edBmU6abPrrr1JZ+vP9szJsIuyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752845826; c=relaxed/simple;
-	bh=qxr0lo1TN0HaCQ7Fgn8BLcctimnaTlHOFjPoqfSkCzg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kyP4FQzY1ma4d7c72j2vcgxXvk8GKf2NqmeShRceZ3IwokpA8P5o8vVPwtI/wA1suB7WwYpP11bnb/k+U5LTnd5fzE08kpSlLDWsiPNFJYRsNHwdXqBt7fskpFkJlU4qtE/W2ewp9Dx+L5YKOFNm0KwrTL+rViEBAztL6Xlj/jM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=R9X+lDG2; arc=none smtp.client-ip=209.85.218.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+	s=arc-20240116; t=1752930615; c=relaxed/simple;
+	bh=8SGl7r65wEVgyZ3SjxUwL8eWFzfmZy4H+rf6w0b/N8o=;
+	h=From:To:CC:Date:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type; b=kWQVWiNdIxRC7WU5yHTV1kj0ys6DJ9+xvcB5s83MH7JZ7zWKZ68M1fjTZJjgZJ6/z/aUKE8a5ODqEmM24IucCSmZR7w+dYGT2qzW4mUckpdA2oVBMFvAXqxLk7JKrw4NdV+G8LlgzpbY4Ru+Jp7DV0KWk3uLwbQ7I++9gTEtlkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=F2uDjpk4; arc=none smtp.client-ip=209.85.208.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="R9X+lDG2"
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-ae6fa02d8feso320166766b.0
-        for <brcm80211@lists.linux.dev>; Fri, 18 Jul 2025 06:37:03 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="F2uDjpk4"
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-6088d856c6eso5288416a12.0
+        for <brcm80211@lists.linux.dev>; Sat, 19 Jul 2025 06:10:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1752845822; x=1753450622; darn=lists.linux.dev;
-        h=in-reply-to:autocrypt:from:content-language:references:cc:to
-         :subject:user-agent:mime-version:date:message-id:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=qxr0lo1TN0HaCQ7Fgn8BLcctimnaTlHOFjPoqfSkCzg=;
-        b=R9X+lDG22HlNEq7hx0dE+bV8Vj2I0xyFeNWYE6GV+AM9iAD0q6ZQS8mpONd+c/c7zk
-         9bs0KJUeRC7Cc8T7HFTI5ZOjMq1NCEjye9cv28AokxnxY/jOUy1D6QMOPoTgzj0ueiBc
-         PXoXbESUGPSmEvLGsMTfj/gNImEIJVVqceCIIhLRY1D5mMU8RvRUxi2Vac0cTgxnHZpy
-         cJKP7vWF4TNPtBqH/85i6lr+zjo3Ua2HyUMBxwVvPwzGF+LFx0BV64MYLfQcVy6ZRr6X
-         TdALJ0CKXNe/ppAegwjh+Kp+fIjePHRbNQJhOWI9OOFPW7n9tei0WDxLllAs5GFVUtna
-         RTzQ==
+        d=broadcom.com; s=google; t=1752930612; x=1753535412; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:subject:user-agent
+         :references:in-reply-to:message-id:date:cc:to:from:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=HJDpncAmbJKu1kr3LNcv6DPuOBIpHS6OJlJ+9JXb1xY=;
+        b=F2uDjpk4fHOmL1dnudn/4kVIF5shvV5zbMw/519Ss6am2yRx8oIlaiU8RDGJleyGnG
+         yR1aIStsr9urGTHmdvNDqm2rnCyNMB4EvQmvCj97N14P4g424cGiH8zX6IzTAOTZwNLc
+         /ecrjvi+VkZ/fP8ybWFUFJ9zu47u5s3rszt6Y=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752845822; x=1753450622;
-        h=in-reply-to:autocrypt:from:content-language:references:cc:to
-         :subject:user-agent:mime-version:date:message-id:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=qxr0lo1TN0HaCQ7Fgn8BLcctimnaTlHOFjPoqfSkCzg=;
-        b=Ay/NMCfpQrKBYJIB2R0ujuxD1pu73elsq8RWY9YvmiN9yXykzoQIUK1Wzu1XAUrxkS
-         aFnL7SXOVyV4HS6Fu523uKGaCxucamVBuea8i685aGMUAlrxHl13MoNXQtzs8ublZ6XB
-         1WRIaaXu9MPDId7jdEuWsFvOotj4aSgIeoNd5XtFYMc6gFkTJ6cB7SR/GgRQj67Z462e
-         MCg4rbYaRS5KF++ioUXO48JkD6kLVjfYUJUDufaqM/vwQqDJnSFlUSs1KITFWpVy0Qks
-         8bd0JmWEP74t3by9djk5ZKsNsDCvOW4BdcpKCECZGR05sR3lWMhUeU3pl9zomsEm0gya
-         QJsQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWBfMLciEFXjy22VGyDFVPVI5w80VUqxPF3SsQqm7jZaseHmtVDLU504rtsdPnKRtlALNNJANlg1cM=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzn00HdrY6ab5WM2YU5nhGxWvPlMM3PL03avqPIORTNd2/n2b9Q
-	hdvWW9uVfXFHS/o3RUCSjmcpsrPENi/rdH0mYE+h9L8SJQpSPaXXJAIto4QsjMgLbkQ=
-X-Gm-Gg: ASbGncs+LOv+1V/Cv1/M2H1S5KZGBga675fe9bTr6wqNGCMTPUMRN+gO0nyhCc0qAVL
-	C5PHKVU/sSNDW8RV4DNxMwE8ULb9+1cp43m1Qlw5QWPOE52AYFPPwPpWNL6nT01yEnXIUsr+ZeD
-	zUpSmnyOSGnnUno4kT5cPNqgZEJPLgu88czGiCPW4dTfIlxwmW5/DxBJV2U7u9qP5McOaToh+gH
-	YmmM2LB/Ant90cTj6+/jaVhsocYCfqncP5zPLFJPxRJs6WJ2/s4fV90SyPqnxaBpro0VeKGLyiI
-	V3L4eoQOuLMHGWe1N55i80rhzESrC79HmYPqvfjIw2a90VrUp4YWLFsp8VR8syyCCLui+7a0Gxa
-	f95E5umYSR2lMTuoTLu4xomInt4kJ23vPu2x8C0dRtiS+CHaULPLDK2adPM4r+TzmmxRwtwW/IE
-	Vcw08YbsWZO/udCySo4jopaD7gDiiKm2Xo2/wAZE45FAOw
-X-Google-Smtp-Source: AGHT+IGRXSvT8NrU4jhoTjesWfENh9gKHP5kfnupJ/w3fqPHsnvgkcSRmM63jgcb144OZnu3MTsjnA==
-X-Received: by 2002:a17:907:983:b0:ae0:54b9:dc17 with SMTP id a640c23a62f3a-ae9cdd8605amr976953266b.11.1752845822181;
-        Fri, 18 Jul 2025 06:37:02 -0700 (PDT)
-Received: from ?IPV6:2003:e5:8728:2b00:e047:1b8:d101:cf8e? (p200300e587282b00e04701b8d101cf8e.dip0.t-ipconnect.de. [2003:e5:8728:2b00:e047:1b8:d101:cf8e])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aec6c7d4806sm123151766b.39.2025.07.18.06.37.00
+        d=1e100.net; s=20230601; t=1752930612; x=1753535412;
+        h=content-transfer-encoding:mime-version:subject:user-agent
+         :references:in-reply-to:message-id:date:cc:to:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=HJDpncAmbJKu1kr3LNcv6DPuOBIpHS6OJlJ+9JXb1xY=;
+        b=lGPeMuuT5L2D9lGCQP/ff5n6ECG4jcXUsX+/9KjiNAbI75zLsJ0eF3zVdzSsoUKE9R
+         3NFf8+BnIp4+zjjXMx6m20F5U5x7tUWnQ8SyT78KVqK1dx2+IAboWtnAj1NSKv06p3qm
+         0ABUkzWmsxkwlYyIA1Fcxrbr8+GwDVbhUpsUyUlt6KcKeyK1+JLmyGoYnOD/YX3L1liU
+         Pu+q/pibNoRfV4fojlJniabqGFDFkk82P4UgYtDpM1/7KhXl0fRRUpm9IZAwcWQcineX
+         n0pjMtlWgRfmRajFAiBs7ia6EqujooowGuboE63gjwWYCxdFGpLGDgA8n+1Q7pvusIn8
+         jWgA==
+X-Forwarded-Encrypted: i=1; AJvYcCWBg3OA5xZnnlQi7CUakCr/JOPm8iwubycHJiaTxSgihA9vXa4jsfi703cg6HdKjs1/e2IndgcP3fE=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwNUcBtOA00e6KAXkl1GBdR7sWTMhBsIrkfnzODH+4D4v+hq2gI
+	R+Gu3giGG9HQhhNbuQcftQ/tvxPJK+ImP65drQAcd3pM5EcH/3eUYJyM2ocIOMvD6A==
+X-Gm-Gg: ASbGncuyMO5sArU262xa0gtrvRzBtg3IijgRQTVmhA2xjchvYUR6kAptPytfz1P3CuB
+	KqLz0mRG6JLbsjTMRZtbBTYj7oeyadrcc5MoEF2lWzIbr+j66Del0erAv4V00v2xxjt86tLLZHA
+	AT4sP4494yd3a7fQUPByNE9EW+BD7iW1v/XusU/n8IrsftAyLAGcrnLlM/mub5SDtMWKBGdzuxz
+	yrGaNm5OPx7wmvCuhq0vkwKk3BfcHci6UsXQcVoeVfM9vlFH4eK3im1mW8XRLW0iCF2fYPsc6jW
+	0MZposueiz9p8xVuzF0q60tOmW85uhYIGgnP+9QKzOSvXapr1i3uKCt4dfTPJaexyUjY/2O1LMB
+	cw9H2CDimf4nEQm1MyCmrHrb6WfYmDtGE+fHImdkcg0QdqlaXM6/V+MKUeA/4usa5jJSq6yo=
+X-Google-Smtp-Source: AGHT+IHvTuWbAwAWdDAC+dFHxC6tFVTmU1n2PXejwG8LX6Dyq9sGIapdMJ7mFFZ8/uR6gvPbc9KCyg==
+X-Received: by 2002:a05:6402:520c:b0:608:a7a0:48 with SMTP id 4fb4d7f45d1cf-6128262b18dmr13395215a12.28.1752930611917;
+        Sat, 19 Jul 2025 06:10:11 -0700 (PDT)
+Received: from [192.168.178.39] (f215227.upc-f.chello.nl. [80.56.215.227])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-612c8dea633sm2519414a12.0.2025.07.19.06.10.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Jul 2025 06:37:01 -0700 (PDT)
-Message-ID: <01dae2e9-dad7-465c-94ae-bcfbc2f96337@suse.com>
-Date: Fri, 18 Jul 2025 15:36:59 +0200
+        Sat, 19 Jul 2025 06:10:11 -0700 (PDT)
+From: Arend Van Spriel <arend.vanspriel@broadcom.com>
+To: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>, Johannes Berg <johannes.berg@intel.com>
+CC: <linux-wireless@vger.kernel.org>, <brcm80211@lists.linux.dev>, <wlan-kernel-dev-list@infineon.com>
+Date: Sat, 19 Jul 2025 15:10:09 +0200
+Message-ID: <19822ce6768.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
+In-Reply-To: <20250626050706.7271-1-gokulkumar.sivakumar@infineon.com>
+References: <20250626050706.7271-1-gokulkumar.sivakumar@infineon.com>
+User-Agent: AquaMail/1.55.2 (build: 105502562)
+Subject: Re: [PATCH wireless-next RESEND] wifi: brcmfmac: fix P2P discovery failure in P2P peer due to missing P2P IE
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 7/8] xen/xenbus: Fix typo "notifer"
-To: WangYuli <wangyuli@uniontech.com>
-Cc: airlied@gmail.com, akpm@linux-foundation.org, alison.schofield@intel.com,
- andrew+netdev@lunn.ch, andriy.shevchenko@linux.intel.com,
- arend.vanspriel@broadcom.com, bp@alien8.de,
- brcm80211-dev-list.pdl@broadcom.com, brcm80211@lists.linux.dev,
- colin.i.king@gmail.com, cvam0000@gmail.com, dan.j.williams@intel.com,
- dave.hansen@linux.intel.com, dave.jiang@intel.com, dave@stgolabs.net,
- davem@davemloft.net, dri-devel@lists.freedesktop.org, edumazet@google.com,
- gregkh@linuxfoundation.org, guanwentao@uniontech.com, hpa@zytor.com,
- ilpo.jarvinen@linux.intel.com, intel-xe@lists.freedesktop.org,
- ira.weiny@intel.com, j@jannau.net, jeff.johnson@oss.qualcomm.com,
- jirislaby@kernel.org, johannes.berg@intel.com, jonathan.cameron@huawei.com,
- kuba@kernel.org, kvalo@kernel.org, kvm@vger.kernel.org,
- linux-cxl@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-serial@vger.kernel.org, linux-wireless@vger.kernel.org,
- linux@treblig.org, lucas.demarchi@intel.com, marcin.s.wojtas@gmail.com,
- ming.li@zohomail.com, mingo@kernel.org, mingo@redhat.com,
- netdev@vger.kernel.org, niecheng1@uniontech.com,
- oleksandr_tyshchenko@epam.com, pabeni@redhat.com, pbonzini@redhat.com,
- quic_ramess@quicinc.com, ragazenta@gmail.com, rodrigo.vivi@intel.com,
- seanjc@google.com, shenlichuan@vivo.com, simona@ffwll.ch,
- sstabellini@kernel.org, tglx@linutronix.de,
- thomas.hellstrom@linux.intel.com, vishal.l.verma@intel.com, x86@kernel.org,
- xen-devel@lists.xenproject.org, yujiaoliang@vivo.com, zhanjun@uniontech.com
-References: <BD5C52D2838AEA48+20250715134050.539234-1-wangyuli@uniontech.com>
- <906F22CD3C183048+20250715134407.540483-7-wangyuli@uniontech.com>
-Content-Language: en-US
-From: =?UTF-8?B?SsO8cmdlbiBHcm/Dnw==?= <jgross@suse.com>
-Autocrypt: addr=jgross@suse.com; keydata=
- xsBNBFOMcBYBCACgGjqjoGvbEouQZw/ToiBg9W98AlM2QHV+iNHsEs7kxWhKMjrioyspZKOB
- ycWxw3ie3j9uvg9EOB3aN4xiTv4qbnGiTr3oJhkB1gsb6ToJQZ8uxGq2kaV2KL9650I1SJve
- dYm8Of8Zd621lSmoKOwlNClALZNew72NjJLEzTalU1OdT7/i1TXkH09XSSI8mEQ/ouNcMvIJ
- NwQpd369y9bfIhWUiVXEK7MlRgUG6MvIj6Y3Am/BBLUVbDa4+gmzDC9ezlZkTZG2t14zWPvx
- XP3FAp2pkW0xqG7/377qptDmrk42GlSKN4z76ELnLxussxc7I2hx18NUcbP8+uty4bMxABEB
- AAHNH0p1ZXJnZW4gR3Jvc3MgPGpncm9zc0BzdXNlLmNvbT7CwHkEEwECACMFAlOMcK8CGwMH
- CwkIBwMCAQYVCAIJCgsEFgIDAQIeAQIXgAAKCRCw3p3WKL8TL8eZB/9G0juS/kDY9LhEXseh
- mE9U+iA1VsLhgDqVbsOtZ/S14LRFHczNd/Lqkn7souCSoyWsBs3/wO+OjPvxf7m+Ef+sMtr0
- G5lCWEWa9wa0IXx5HRPW/ScL+e4AVUbL7rurYMfwCzco+7TfjhMEOkC+va5gzi1KrErgNRHH
- kg3PhlnRY0Udyqx++UYkAsN4TQuEhNN32MvN0Np3WlBJOgKcuXpIElmMM5f1BBzJSKBkW0Jc
- Wy3h2Wy912vHKpPV/Xv7ZwVJ27v7KcuZcErtptDevAljxJtE7aJG6WiBzm+v9EswyWxwMCIO
- RoVBYuiocc51872tRGywc03xaQydB+9R7BHPzsBNBFOMcBYBCADLMfoA44MwGOB9YT1V4KCy
- vAfd7E0BTfaAurbG+Olacciz3yd09QOmejFZC6AnoykydyvTFLAWYcSCdISMr88COmmCbJzn
- sHAogjexXiif6ANUUlHpjxlHCCcELmZUzomNDnEOTxZFeWMTFF9Rf2k2F0Tl4E5kmsNGgtSa
- aMO0rNZoOEiD/7UfPP3dfh8JCQ1VtUUsQtT1sxos8Eb/HmriJhnaTZ7Hp3jtgTVkV0ybpgFg
- w6WMaRkrBh17mV0z2ajjmabB7SJxcouSkR0hcpNl4oM74d2/VqoW4BxxxOD1FcNCObCELfIS
- auZx+XT6s+CE7Qi/c44ibBMR7hyjdzWbABEBAAHCwF8EGAECAAkFAlOMcBYCGwwACgkQsN6d
- 1ii/Ey9D+Af/WFr3q+bg/8v5tCknCtn92d5lyYTBNt7xgWzDZX8G6/pngzKyWfedArllp0Pn
- fgIXtMNV+3t8Li1Tg843EXkP7+2+CQ98MB8XvvPLYAfW8nNDV85TyVgWlldNcgdv7nn1Sq8g
- HwB2BHdIAkYce3hEoDQXt/mKlgEGsLpzJcnLKimtPXQQy9TxUaLBe9PInPd+Ohix0XOlY+Uk
- QFEx50Ki3rSDl2Zt2tnkNYKUCvTJq7jvOlaPd6d/W0tZqpyy7KVay+K4aMobDsodB3dvEAs6
- ScCnh03dDAFgIq5nsB11j3KPKdVoPlfucX2c7kGNH+LUMbzqV6beIENfNexkOfxHfw==
-In-Reply-To: <906F22CD3C183048+20250715134407.540483-7-wangyuli@uniontech.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------cT4r0JNOUrsPfSEaUgW0eBEO"
+Content-Type: text/plain; format=flowed; charset="us-ascii"
+Content-Transfer-Encoding: 8bit
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------cT4r0JNOUrsPfSEaUgW0eBEO
-Content-Type: multipart/mixed; boundary="------------oGJ4EHAKnSBOvFH3NUzTflx0";
- protected-headers="v1"
-From: =?UTF-8?B?SsO8cmdlbiBHcm/Dnw==?= <jgross@suse.com>
-To: WangYuli <wangyuli@uniontech.com>
-Cc: airlied@gmail.com, akpm@linux-foundation.org, alison.schofield@intel.com,
- andrew+netdev@lunn.ch, andriy.shevchenko@linux.intel.com,
- arend.vanspriel@broadcom.com, bp@alien8.de,
- brcm80211-dev-list.pdl@broadcom.com, brcm80211@lists.linux.dev,
- colin.i.king@gmail.com, cvam0000@gmail.com, dan.j.williams@intel.com,
- dave.hansen@linux.intel.com, dave.jiang@intel.com, dave@stgolabs.net,
- davem@davemloft.net, dri-devel@lists.freedesktop.org, edumazet@google.com,
- gregkh@linuxfoundation.org, guanwentao@uniontech.com, hpa@zytor.com,
- ilpo.jarvinen@linux.intel.com, intel-xe@lists.freedesktop.org,
- ira.weiny@intel.com, j@jannau.net, jeff.johnson@oss.qualcomm.com,
- jirislaby@kernel.org, johannes.berg@intel.com, jonathan.cameron@huawei.com,
- kuba@kernel.org, kvalo@kernel.org, kvm@vger.kernel.org,
- linux-cxl@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-serial@vger.kernel.org, linux-wireless@vger.kernel.org,
- linux@treblig.org, lucas.demarchi@intel.com, marcin.s.wojtas@gmail.com,
- ming.li@zohomail.com, mingo@kernel.org, mingo@redhat.com,
- netdev@vger.kernel.org, niecheng1@uniontech.com,
- oleksandr_tyshchenko@epam.com, pabeni@redhat.com, pbonzini@redhat.com,
- quic_ramess@quicinc.com, ragazenta@gmail.com, rodrigo.vivi@intel.com,
- seanjc@google.com, shenlichuan@vivo.com, simona@ffwll.ch,
- sstabellini@kernel.org, tglx@linutronix.de,
- thomas.hellstrom@linux.intel.com, vishal.l.verma@intel.com, x86@kernel.org,
- xen-devel@lists.xenproject.org, yujiaoliang@vivo.com, zhanjun@uniontech.com
-Message-ID: <01dae2e9-dad7-465c-94ae-bcfbc2f96337@suse.com>
-Subject: Re: [PATCH v2 7/8] xen/xenbus: Fix typo "notifer"
-References: <BD5C52D2838AEA48+20250715134050.539234-1-wangyuli@uniontech.com>
- <906F22CD3C183048+20250715134407.540483-7-wangyuli@uniontech.com>
-In-Reply-To: <906F22CD3C183048+20250715134407.540483-7-wangyuli@uniontech.com>
+On June 26, 2025 7:07:23 AM Gokul Sivakumar 
+<gokulkumar.sivakumar@infineon.com> wrote:
 
---------------oGJ4EHAKnSBOvFH3NUzTflx0
-Content-Type: multipart/mixed; boundary="------------iEXRbWM0AKXbkOVtyXZqSTc3"
+> After commit bd99a3013bdc ("brcmfmac: move configuration of probe request
+> IEs"), the probe request MGMT IE addition operation brcmf_vif_set_mgmt_ie()
+> got moved from the brcmf_p2p_scan_prep() to the brcmf_cfg80211_scan().
+>
+> Because of this, as part of the scan request handler for the P2P Discovery,
+> vif struct used for adding the Probe Request P2P IE in firmware got changed
+> from the P2PAPI_BSSCFG_DEVICE vif to P2PAPI_BSSCFG_PRIMARY vif incorrectly.
+> So the firmware stopped adding P2P IE to the outgoing P2P Discovery probe
+> requests frames and the other P2P peers were unable to discover this device
+> causing a regression on the P2P feature.
+>
+> To fix this, while setting the P2P IE in firmware, properly use the vif of
+> the P2P discovery wdev on which the driver received the P2P scan request.
+> This is done by not changing the vif pointer, until brcmf_vif_set_mgmt_ie()
+> is completed.
+>
+> Fixes: bd99a3013bdc ("brcmfmac: move configuration of probe request IEs")
 
---------------iEXRbWM0AKXbkOVtyXZqSTc3
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+> Signed-off-by: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
+> ---
+> .../net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c   | 8 ++++----
+> 1 file changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c 
+> b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+> index 4b70845e1a26..075b99478e65 100644
+> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+> @@ -1545,10 +1545,6 @@ brcmf_cfg80211_scan(struct wiphy *wiphy, struct 
+> cfg80211_scan_request *request)
+>  return -EAGAIN;
+>  }
+>
+> - /* If scan req comes for p2p0, send it over primary I/F */
+> - if (vif == cfg->p2p.bss_idx[P2PAPI_BSSCFG_DEVICE].vif)
+> - vif = cfg->p2p.bss_idx[P2PAPI_BSSCFG_PRIMARY].vif;
+> -
+>  brcmf_dbg(SCAN, "START ESCAN\n");
+>
+>  cfg->scan_request = request;
+> @@ -1564,6 +1560,10 @@ brcmf_cfg80211_scan(struct wiphy *wiphy, struct 
+> cfg80211_scan_request *request)
+>  if (err)
+>  goto scan_out;
+>
+> + /* If scan req comes for p2p0, send it over primary I/F */
+> + if (vif == cfg->p2p.bss_idx[P2PAPI_BSSCFG_DEVICE].vif)
+> + vif = cfg->p2p.bss_idx[P2PAPI_BSSCFG_PRIMARY].vif;
+> +
+>  err = brcmf_do_escan(vif->ifp, request);
+>  if (err)
+>  goto scan_out;
+> --
+> 2.43.0
 
-T24gMTUuMDcuMjUgMTU6NDQsIFdhbmdZdWxpIHdyb3RlOg0KPiBUaGVyZSBpcyBhIHNwZWxs
-aW5nIG1pc3Rha2Ugb2YgJ25vdGlmZXInIGluIHRoZSBjb21tZW50IHdoaWNoDQo+IHNob3Vs
-ZCBiZSAnbm90aWZpZXInLg0KPiANCj4gTGluazogaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcv
-YWxsL0IzQzAxOUI2M0M5Mzg0NkYrMjAyNTA3MTUwNzEyNDUuMzk4ODQ2LTEtd2FuZ3l1bGlA
-dW5pb250ZWNoLmNvbS8NCj4gU2lnbmVkLW9mZi1ieTogV2FuZ1l1bGkgPHdhbmd5dWxpQHVu
-aW9udGVjaC5jb20+DQoNClJldmlld2VkLWJ5OiBKdWVyZ2VuIEdyb3NzIDxqZ3Jvc3NAc3Vz
-ZS5jb20+DQoNCg0KSnVlcmdlbg0K
---------------iEXRbWM0AKXbkOVtyXZqSTc3
-Content-Type: application/pgp-keys; name="OpenPGP_0xB0DE9DD628BF132F.asc"
-Content-Disposition: attachment; filename="OpenPGP_0xB0DE9DD628BF132F.asc"
-Content-Description: OpenPGP public key
-Content-Transfer-Encoding: quoted-printable
 
------BEGIN PGP PUBLIC KEY BLOCK-----
 
-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
-kt+z4drzFUyEjLM1vVvIMjkUoJs=3D
-=3DeeAB
------END PGP PUBLIC KEY BLOCK-----
-
---------------iEXRbWM0AKXbkOVtyXZqSTc3--
-
---------------oGJ4EHAKnSBOvFH3NUzTflx0--
-
---------------cT4r0JNOUrsPfSEaUgW0eBEO
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wsB5BAABCAAjFiEEhRJncuj2BJSl0Jf3sN6d1ii/Ey8FAmh6TfsFAwAAAAAACgkQsN6d1ii/Ey8c
-Ygf/U0f6aO6tXuLVLY6fZvfaFWhIB7EB2CVm4zKF7LgVe0t84C2fovOiSsaEQZha5J86f+37KuMH
-ahCur6raARzYTpUM//Os66LLW5nTG8yKd89CnE24MFDJsUdnv5qPqF4jb/wYDtr8xvuKwWEqWZz2
-gWXCJNYry4wnZucm2Y0O4ylQXLJOzaDyc7Q3mnobvAJEuAbqPgoJCuMYaU2M9o7b4X4l2TO9lVAz
-VaKGeVaTbiu8ys+JRy35HTdHyKboyr8Johi1iRtV42/+5rxr1fWIeQfGEBnOEXnzi6URr8HOKFSr
-pdIJDp/rLD79JiOzGRZXBJZ2l8jybh7o7dN5y7z7Kg==
-=9yKc
------END PGP SIGNATURE-----
-
---------------cT4r0JNOUrsPfSEaUgW0eBEO--
