@@ -1,136 +1,134 @@
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5E4C7260D
-	for <brcm80211@lists.linux.dev>; Sat, 19 Jul 2025 13:10:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAF3D3BB48
+	for <brcm80211@lists.linux.dev>; Sat, 19 Jul 2025 20:57:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752930615; cv=none; b=lBTkwQic4fu+q1mhVUjO+RZ+DWCTVvS6BSHusasvt9zQI95fvBf4au0kypZQCqLvFLhl9mt1YmikHUnYUsyeR8lmVtk01dAzXfRB6lQ6GlELbmeIGNIPpA6o9NVLZ6+Ze2IPrf+7oQyYX+z9edBmU6abPrrr1JZ+vP9szJsIuyY=
+	t=1752958649; cv=none; b=ml95kwvK8zqjdssLFjZCrJzSCZDBHjsGZH0bSoyqpsAedFZgFJEeR1VBAyj9hUEZ+WepfprsWqMSMpityvXes/5kwWphlczc7ZRIXgqRY8Kov2BomVFKCI0De6A1s/AHmBD5+8CgfEO3mW56ugBjMEQqXkWeJkzW5dzUG/3MON8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752930615; c=relaxed/simple;
-	bh=8SGl7r65wEVgyZ3SjxUwL8eWFzfmZy4H+rf6w0b/N8o=;
-	h=From:To:CC:Date:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type; b=kWQVWiNdIxRC7WU5yHTV1kj0ys6DJ9+xvcB5s83MH7JZ7zWKZ68M1fjTZJjgZJ6/z/aUKE8a5ODqEmM24IucCSmZR7w+dYGT2qzW4mUckpdA2oVBMFvAXqxLk7JKrw4NdV+G8LlgzpbY4Ru+Jp7DV0KWk3uLwbQ7I++9gTEtlkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=F2uDjpk4; arc=none smtp.client-ip=209.85.208.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+	s=arc-20240116; t=1752958649; c=relaxed/simple;
+	bh=JFEUBLXTOcCv/4N0Mp/tCI4SIosRp/cR4vxQ6pkYVlA=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=S45yHSRTzGTzyrIaJr/zj/EJvo8+/x2IXqj6IpWnH1Lv52hgO1FfGDVgZ9kTGfqD463Cg89+20JWbTVcWbbrKBXIw+b4Y2FuGczGhsDk+NCjJg/gAgEvGMeL4rR7ZSLENhYj+qtWG+yNas6XTyjJja6oJIPk9+CdDOYsFIiOOws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hScbDDD/; arc=none smtp.client-ip=209.85.208.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="F2uDjpk4"
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-6088d856c6eso5288416a12.0
-        for <brcm80211@lists.linux.dev>; Sat, 19 Jul 2025 06:10:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hScbDDD/"
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-60c01f70092so5458201a12.3
+        for <brcm80211@lists.linux.dev>; Sat, 19 Jul 2025 13:57:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1752930612; x=1753535412; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:subject:user-agent
-         :references:in-reply-to:message-id:date:cc:to:from:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=HJDpncAmbJKu1kr3LNcv6DPuOBIpHS6OJlJ+9JXb1xY=;
-        b=F2uDjpk4fHOmL1dnudn/4kVIF5shvV5zbMw/519Ss6am2yRx8oIlaiU8RDGJleyGnG
-         yR1aIStsr9urGTHmdvNDqm2rnCyNMB4EvQmvCj97N14P4g424cGiH8zX6IzTAOTZwNLc
-         /ecrjvi+VkZ/fP8ybWFUFJ9zu47u5s3rszt6Y=
+        d=gmail.com; s=20230601; t=1752958646; x=1753563446; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=1pxSQc8IFFh0/t7y5+pYbGbktW/qqWoII3Ry8ywKIxo=;
+        b=hScbDDD/kdcIJs31qDRY0nnwgNqfuu4NeihEhB7ChHGBz5OAsLXTvagQ7wyCC+ruNE
+         mTWJHhsr2NEYmanUDDIL4d2o3GajbAA8gyhgSxgN1m1Ap34zS7MsmTiwmq6ZJc23wJGe
+         JPHEykcR2y8QO6pgF+gw0r8rBIIIqzZhK7h15ELHN4vUYdYJjSmidmPovPmjQkTaZvVf
+         Yx6qSrzcHO1SV3hN5Nk3hT3EeednZGa5QlZS9CwKuhZd5wdo9DxwM451uwlyErx+fGzz
+         80MSR0aJSEHYiUQo6iAGxVtxwT5PF4V+UBIaUsLuPKvun/TyLPeGmh29IWHuh2gsN19F
+         dqbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752930612; x=1753535412;
-        h=content-transfer-encoding:mime-version:subject:user-agent
-         :references:in-reply-to:message-id:date:cc:to:from
+        d=1e100.net; s=20230601; t=1752958646; x=1753563446;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HJDpncAmbJKu1kr3LNcv6DPuOBIpHS6OJlJ+9JXb1xY=;
-        b=lGPeMuuT5L2D9lGCQP/ff5n6ECG4jcXUsX+/9KjiNAbI75zLsJ0eF3zVdzSsoUKE9R
-         3NFf8+BnIp4+zjjXMx6m20F5U5x7tUWnQ8SyT78KVqK1dx2+IAboWtnAj1NSKv06p3qm
-         0ABUkzWmsxkwlYyIA1Fcxrbr8+GwDVbhUpsUyUlt6KcKeyK1+JLmyGoYnOD/YX3L1liU
-         Pu+q/pibNoRfV4fojlJniabqGFDFkk82P4UgYtDpM1/7KhXl0fRRUpm9IZAwcWQcineX
-         n0pjMtlWgRfmRajFAiBs7ia6EqujooowGuboE63gjwWYCxdFGpLGDgA8n+1Q7pvusIn8
-         jWgA==
-X-Forwarded-Encrypted: i=1; AJvYcCWBg3OA5xZnnlQi7CUakCr/JOPm8iwubycHJiaTxSgihA9vXa4jsfi703cg6HdKjs1/e2IndgcP3fE=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwNUcBtOA00e6KAXkl1GBdR7sWTMhBsIrkfnzODH+4D4v+hq2gI
-	R+Gu3giGG9HQhhNbuQcftQ/tvxPJK+ImP65drQAcd3pM5EcH/3eUYJyM2ocIOMvD6A==
-X-Gm-Gg: ASbGncuyMO5sArU262xa0gtrvRzBtg3IijgRQTVmhA2xjchvYUR6kAptPytfz1P3CuB
-	KqLz0mRG6JLbsjTMRZtbBTYj7oeyadrcc5MoEF2lWzIbr+j66Del0erAv4V00v2xxjt86tLLZHA
-	AT4sP4494yd3a7fQUPByNE9EW+BD7iW1v/XusU/n8IrsftAyLAGcrnLlM/mub5SDtMWKBGdzuxz
-	yrGaNm5OPx7wmvCuhq0vkwKk3BfcHci6UsXQcVoeVfM9vlFH4eK3im1mW8XRLW0iCF2fYPsc6jW
-	0MZposueiz9p8xVuzF0q60tOmW85uhYIGgnP+9QKzOSvXapr1i3uKCt4dfTPJaexyUjY/2O1LMB
-	cw9H2CDimf4nEQm1MyCmrHrb6WfYmDtGE+fHImdkcg0QdqlaXM6/V+MKUeA/4usa5jJSq6yo=
-X-Google-Smtp-Source: AGHT+IHvTuWbAwAWdDAC+dFHxC6tFVTmU1n2PXejwG8LX6Dyq9sGIapdMJ7mFFZ8/uR6gvPbc9KCyg==
-X-Received: by 2002:a05:6402:520c:b0:608:a7a0:48 with SMTP id 4fb4d7f45d1cf-6128262b18dmr13395215a12.28.1752930611917;
-        Sat, 19 Jul 2025 06:10:11 -0700 (PDT)
-Received: from [192.168.178.39] (f215227.upc-f.chello.nl. [80.56.215.227])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-612c8dea633sm2519414a12.0.2025.07.19.06.10.11
+        bh=1pxSQc8IFFh0/t7y5+pYbGbktW/qqWoII3Ry8ywKIxo=;
+        b=vMdurRIepD5ImwCEUMaUgUCR0bfVf4DxGfG717vGaxJFEMhwtXNGkT0vQnfRZ4sP75
+         fASnPgjlECDwt6pO8G/VKJdpbLc8UK3SZHDfxxckZ2PRdkUlqa6wElE8kvtXxpKDGxJi
+         NKbWwL5mw3UwyBefo4PxiV/mFkQOk6qmiGj6W0g26o8Y9pJuV1C92pz0XVf6J98EG8RV
+         55isvhpZkyxPuk9X0OGwP+iHanTh6Q+Y7YesF78g/oM+/WdK2/8ywaOJHMP2U8EPFqRh
+         vQcxjA/wO5O+7VkMKUY6z1zGmKn2K/9we7wKWhiAoSWjfyGibCBBwVquRLP7KY7hDzQV
+         09mg==
+X-Forwarded-Encrypted: i=1; AJvYcCU8izuQdO0HxxwMUvv1S4zcMXh/wn0MNUhaf4ckDlJjNuzoM/Sxzu98JbwF+Nww5h6RtALM90N8IJ0=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwE9pKr0dY0lRD/v3mSrynZ2PX5n/s3snH+ZkRvsNhq1cHzpFu/
+	03yTBsde9UJgBbvU+2vVOObBRKZ7428eQHwG0/AmRvK1z0O+lUyBddp/
+X-Gm-Gg: ASbGncsY6q4iXKEzEMx0l0irGfvBhkMS1+6qPDS48XrOe1gR41yPFWsnLoWi4zW8DC4
+	YS9qlBS+icuve4Ia6QW2aRIHa7mF5TwvIxaaCAaop2ebJl1wlv9qGYjAmmdoY1/ArjwQwLzO8tM
+	0jyTmv4U19ASLDUh64YjA0NFunsNeKtt6QwcfggChc+MbDI2Sq3eOEbC6gR6yR4qAG7VvxNUq0k
+	ALi87yZNd+Bw0FhW1sFT2LDRb4dZX3kuL+/rFwy7dMIK8KWsr1vpQeALXq2ii6vw07ikr6QVgzs
+	6V2L4xRgPyz1uiEirzmNLGfE0PgrxyrkK4SQTIhVZa+6950hNr1USK3qnSwZXQX6kDx5+Y7xHhk
+	O4kyBIQmOsKPRXHyU8pcWseZKNO0bCH9c2kmuMqaZwa2vq8tHXoD6U5vhqfKAph7RzrCAwKbnUS
+	2k7Qfns428QlJE5dds8l/LbeP1lyesHHT8uB0h6gg=
+X-Google-Smtp-Source: AGHT+IHXhGO5KtDinw3HUKi8PDwr0g/iIoKLRi1pDk0QepKJRFGMapsKVykydsSE++8MamKKDvuz0g==
+X-Received: by 2002:a17:906:d7df:b0:ae9:ca8f:9642 with SMTP id a640c23a62f3a-aec4fa95412mr1174178266b.15.1752958645525;
+        Sat, 19 Jul 2025 13:57:25 -0700 (PDT)
+Received: from ?IPV6:2a02:a466:68ed:1:7706:e3e2:69b7:ae8? (2a02-a466-68ed-1-7706-e3e2-69b7-ae8.fixed6.kpn.net. [2a02:a466:68ed:1:7706:e3e2:69b7:ae8])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aec6ca3001esm367235966b.89.2025.07.19.13.57.24
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 19 Jul 2025 06:10:11 -0700 (PDT)
-From: Arend Van Spriel <arend.vanspriel@broadcom.com>
-To: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>, Johannes Berg <johannes.berg@intel.com>
-CC: <linux-wireless@vger.kernel.org>, <brcm80211@lists.linux.dev>, <wlan-kernel-dev-list@infineon.com>
-Date: Sat, 19 Jul 2025 15:10:09 +0200
-Message-ID: <19822ce6768.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
-In-Reply-To: <20250626050706.7271-1-gokulkumar.sivakumar@infineon.com>
-References: <20250626050706.7271-1-gokulkumar.sivakumar@infineon.com>
-User-Agent: AquaMail/1.55.2 (build: 105502562)
-Subject: Re: [PATCH wireless-next RESEND] wifi: brcmfmac: fix P2P discovery failure in P2P peer due to missing P2P IE
+        Sat, 19 Jul 2025 13:57:25 -0700 (PDT)
+Message-ID: <dc05e447-06a1-4865-8252-c4a0710d6da9@gmail.com>
+Date: Sat, 19 Jul 2025 22:57:24 +0200
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset="us-ascii"
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+From: Ferry Toth <fntoth@gmail.com>
+Subject: brcmfmac: Can not completely turn off AP (BCM43340/2)
+To: Arend Van Spriel <arend.vanspriel@broadcom.com>
+Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
+ brcm80211-dev-list.pdl@broadcom.com, linux-kernel@vger.kernel.org
+References: <20250407042028.1481-1-vulab@iscas.ac.cn>
+Content-Language: en-US
+In-Reply-To: <20250407042028.1481-1-vulab@iscas.ac.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On June 26, 2025 7:07:23 AM Gokul Sivakumar 
-<gokulkumar.sivakumar@infineon.com> wrote:
+Hi,
 
-> After commit bd99a3013bdc ("brcmfmac: move configuration of probe request
-> IEs"), the probe request MGMT IE addition operation brcmf_vif_set_mgmt_ie()
-> got moved from the brcmf_p2p_scan_prep() to the brcmf_cfg80211_scan().
->
-> Because of this, as part of the scan request handler for the P2P Discovery,
-> vif struct used for adding the Probe Request P2P IE in firmware got changed
-> from the P2PAPI_BSSCFG_DEVICE vif to P2PAPI_BSSCFG_PRIMARY vif incorrectly.
-> So the firmware stopped adding P2P IE to the outgoing P2P Discovery probe
-> requests frames and the other P2P peers were unable to discover this device
-> causing a regression on the P2P feature.
->
-> To fix this, while setting the P2P IE in firmware, properly use the vif of
-> the P2P discovery wdev on which the driver received the P2P scan request.
-> This is done by not changing the vif pointer, until brcmf_vif_set_mgmt_ie()
-> is completed.
->
-> Fixes: bd99a3013bdc ("brcmfmac: move configuration of probe request IEs")
+I have an Intel Edison board with BCM43340/2.
 
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-> Signed-off-by: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
-> ---
-> .../net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c   | 8 ++++----
-> 1 file changed, 4 insertions(+), 4 deletions(-)
->
-> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c 
-> b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-> index 4b70845e1a26..075b99478e65 100644
-> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-> @@ -1545,10 +1545,6 @@ brcmf_cfg80211_scan(struct wiphy *wiphy, struct 
-> cfg80211_scan_request *request)
->  return -EAGAIN;
->  }
->
-> - /* If scan req comes for p2p0, send it over primary I/F */
-> - if (vif == cfg->p2p.bss_idx[P2PAPI_BSSCFG_DEVICE].vif)
-> - vif = cfg->p2p.bss_idx[P2PAPI_BSSCFG_PRIMARY].vif;
-> -
->  brcmf_dbg(SCAN, "START ESCAN\n");
->
->  cfg->scan_request = request;
-> @@ -1564,6 +1560,10 @@ brcmf_cfg80211_scan(struct wiphy *wiphy, struct 
-> cfg80211_scan_request *request)
->  if (err)
->  goto scan_out;
->
-> + /* If scan req comes for p2p0, send it over primary I/F */
-> + if (vif == cfg->p2p.bss_idx[P2PAPI_BSSCFG_DEVICE].vif)
-> + vif = cfg->p2p.bss_idx[P2PAPI_BSSCFG_PRIMARY].vif;
-> +
->  err = brcmf_do_escan(vif->ifp, request);
->  if (err)
->  goto scan_out;
-> --
-> 2.43.0
+I am currently running 6.12.39-edison-acpi-preempt-rt which is mostly 
+mainline with a Yocto 5.0.11 (scarthgap) user space.
 
+When I turn on tethering (using connman) it seems to be working fine.
 
+But when I turn off tethering, connman seems to be believe it is off, 
+but I can still see the AP with my phone.
 
+After this wifi is dead (can not scan, connect, tether on again, 
+nothing) and connman believes wifi is not supported. The only way to get 
+it working after this is reboot.
+
+While AP is up I do see in the logs:
+
+Jul 19 22:06:34 yuna kernel: brcmfmac: brcmf_fil_cmd_data Firmware 
+error: BCME_UNSUPPORTED (-23)
+Jul 19 22:06:34 yuna kernel: brcmfmac: brcmf_configure_arp_nd_offload 
+failed to configure (0) ND offload err = -52
+
+But maybe more importantly when tearing down I see:
+...
+Jul 19 22:07:23 yuna kernel: brcmfmac mmc2:0001:1 wlan0: left 
+allmulticast mode
+Jul 19 22:07:23 yuna kernel: brcmfmac mmc2:0001:1 wlan0: left 
+promiscuous mode
+...
+Jul 19 22:07:23 yuna kernel: brcmfmac: brcmf_configure_arp_nd_offload 
+successfully configured (1) ARP offload to 0x9
+Jul 19 22:07:23 yuna kernel: brcmfmac: brcmf_fil_iovar_data_set ifidx=0, 
+name=ndoe, len=4
+...
+Jul 19 22:07:23 yuna kernel: brcmfmac: brcmf_fil_cmd_data Firmware 
+error: BCME_UNSUPPORTED (-23)
+Jul 19 22:07:23 yuna kernel: brcmfmac: brcmf_configure_arp_nd_offload 
+failed to configure (1) ND offload err = -52
+...
+
+This has regressed from some older kernels (it used to work fine) , but 
+I don't know exactly when, since I hadn't been testing AP for a while.
+
+Any ideas are welcome to debug this. Or any patches to try, I can build 
+on current kernel (6.16-rc6) easily and capture logs.
+
+Currently I am using:
+echo 0x1006 > /sys/module/brcmfmac/parameters/debug
+journalctl -k | grep -e brcm -e "000000" -e ieee > debug.log
+
+Thanks
+Ferry
