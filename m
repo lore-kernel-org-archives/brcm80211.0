@@ -1,242 +1,202 @@
-Received: from smtp14.infineon.com (smtp14.infineon.com [217.10.52.160])
+Received: from smtpbgsg2.qq.com (smtpbgsg2.qq.com [54.254.200.128])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F16E24414
-	for <brcm80211@lists.linux.dev>; Tue, 22 Jul 2025 04:46:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.10.52.160
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 803782D23AE
+	for <brcm80211@lists.linux.dev>; Tue, 22 Jul 2025 07:24:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.254.200.128
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753159608; cv=none; b=aFmwXIBclosjkmdEmBLMYIugIvtc0Xf4QFmmPFVakimsabMTJwZWi6uK/v194UdrG0Ba+udQI20xBOVxOBCgUM6SIdTHwhEc60fg+T/OWBOYoAZApAxm3Z0Fo1Gyf/DgDvkyp6jggYIm9gNDiy00b7gyYiU292cwxflCyIDveyU=
+	t=1753169045; cv=none; b=bbwGw2fR+/9Z45cu8CeSlcaUsLD+mHjFDkauStUDppvfXBdNOywQpBmbHvLwFpEo9VbPrOYSooCpwEKgDO3/RivygBQ3+8DJ3L1/MSDE5HFDWxp0xfZexsCQjfmdTbMnyDunWbvrarOrIN9kMNred6htRQVdOauDcHk8uB6OK6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753159608; c=relaxed/simple;
-	bh=SYivqxCPm9LQm7dkbIeg3oRDa228+MkB+hQxas6ijuw=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=jUxdxS+MM7aXAqpGo6THg2w121RO+NRSIJN9h38v+13BlnYd/XdzHpwuHgULYOgV75nD/eif+hzfJImhlZE+naZ6CTCcyGOaIpUyMMj/oTta9R9+WxirSMPCjLsS1HfVxfwm5U+GvuVXngWbCn4waCzyQmdnEzBSowZEoNZEBd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infineon.com; spf=pass smtp.mailfrom=infineon.com; dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b=A+syiu4v; arc=none smtp.client-ip=217.10.52.160
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infineon.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infineon.com
+	s=arc-20240116; t=1753169045; c=relaxed/simple;
+	bh=4HhP2iNixfpmY9GA50RldzfymFrP5PRb/ex2XnKjRrQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=e8HleSbTI82gj2ZVOj1NfkbK/H/ZS055r6FQzCBKwZPFVHGloUgvj3XATdF7gXBM2ZGvtkcWywex1pOLyBmQ9UEzEkO6fgnX58rpfeOaYhd/urweUkT/YJExRd3rDDHKhQy7x8HeXiKHGvT9kDdpVekneBdj1pkPBNbq1/S0vQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com; spf=pass smtp.mailfrom=uniontech.com; dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b=mLe5XmGU; arc=none smtp.client-ip=54.254.200.128
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uniontech.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b="A+syiu4v"
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=infineon.com; i=@infineon.com; q=dns/txt; s=IFXMAIL;
-  t=1753159606; x=1784695606;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=SYivqxCPm9LQm7dkbIeg3oRDa228+MkB+hQxas6ijuw=;
-  b=A+syiu4vRLAoOMDTsFzyM8VHmUmUP/Xgg6gQoedRd6fytva7ewSjw9W0
-   V2bJhZioNFVVwepJtJZK6ZGF/HjZLkqPMkTXR5c4R//b/EiMURtLX0VE7
-   OXF0Xjc9CGl4JqrqLcZOuafEKOSme4+WIebm+hGBf23nDzWQ3d80LsP+J
-   Q=;
-X-CSE-ConnectionGUID: Bt3BzFcuTZyoVAPH9Qf0rA==
-X-CSE-MsgGUID: QvG+GlO+QMC167nW9dOLQA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11499"; a="92249881"
-X-IronPort-AV: E=Sophos;i="6.16,330,1744063200"; 
-   d="scan'208";a="92249881"
-Received: from unknown (HELO MUCSE805.infineon.com) ([172.23.29.31])
-  by smtp14.infineon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jul 2025 06:45:34 +0200
-Received: from MUCSE827.infineon.com (172.23.29.20) by MUCSE805.infineon.com
- (172.23.29.31) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Tue, 22 Jul
- 2025 06:45:33 +0200
-Received: from ISCN5CG14747PP.infineon.com (10.161.6.196) by
- MUCSE827.infineon.com (172.23.29.20) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.14; Tue, 22 Jul 2025 06:45:32 +0200
-From: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
-To: Arend van Spriel <arend.vanspriel@broadcom.com>, Johannes Berg
-	<johannes@sipsolutions.net>
-CC: <linux-wireless@vger.kernel.org>, <brcm80211@lists.linux.dev>,
-	<wlan-kernel-dev-list@infineon.com>, Gokul Sivakumar
-	<gokulkumar.sivakumar@infineon.com>
-Subject: [PATCH wireless-next v3 RESEND] wifi: brcmfmac: fix EXTSAE WPA3 connection failure due to AUTH TX failure
-Date: Tue, 22 Jul 2025 10:15:15 +0530
-Message-ID: <20250722044515.2562-1-gokulkumar.sivakumar@infineon.com>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b="mLe5XmGU"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
+	s=onoh2408; t=1753168998;
+	bh=4HhP2iNixfpmY9GA50RldzfymFrP5PRb/ex2XnKjRrQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:From;
+	b=mLe5XmGUOArSYdy/2/xBjJ8ilefcPJfI7C2P1v5h7B6E8O0V9PMg+NtyBhaDSkeR5
+	 AdzNmtpcZtE+7m1/mxUJSQ0fPLb13pFQBo2xwPv4R9v4GVq8YxQC5Ym2YssnmgJYtA
+	 XQ2tuch7o1eHx/9SfyMctramX02mE4k8SKTPjs9A=
+X-QQ-mid: zesmtpip4t1753168943tb2aa8fc1
+X-QQ-Originating-IP: jlkPh//3cQuVzne1YV9Hj8c3k19VYTQ4PPPWu+FTW/A=
+Received: from [IPV6:240e:668:120a::212:232] ( [localhost])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Tue, 22 Jul 2025 15:22:18 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 1
+X-BIZMAIL-ID: 3880468087656715595
+EX-QQ-RecipientCnt: 62
+Message-ID: <634BA467821D37FE+0b2ace38-07d9-4500-8bb7-5a4fa65c4b9f@uniontech.com>
+Date: Tue, 22 Jul 2025 15:22:18 +0800
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: MUCSE812.infineon.com (172.23.29.38) To
- MUCSE827.infineon.com (172.23.29.20)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 6/8] serial: 8250_dw: Fix typo "notifer"
+To: Greg KH <gregkh@linuxfoundation.org>
+Cc: airlied@gmail.com, akpm@linux-foundation.org, alison.schofield@intel.com,
+ andrew+netdev@lunn.ch, andriy.shevchenko@linux.intel.com,
+ arend.vanspriel@broadcom.com, bp@alien8.de,
+ brcm80211-dev-list.pdl@broadcom.com, brcm80211@lists.linux.dev,
+ colin.i.king@gmail.com, cvam0000@gmail.com, dan.j.williams@intel.com,
+ dave.hansen@linux.intel.com, dave.jiang@intel.com, dave@stgolabs.net,
+ davem@davemloft.net, dri-devel@lists.freedesktop.org, edumazet@google.com,
+ guanwentao@uniontech.com, hpa@zytor.com, ilpo.jarvinen@linux.intel.com,
+ intel-xe@lists.freedesktop.org, ira.weiny@intel.com, j@jannau.net,
+ jeff.johnson@oss.qualcomm.com, jgross@suse.com, jirislaby@kernel.org,
+ johannes.berg@intel.com, jonathan.cameron@huawei.com, kuba@kernel.org,
+ kvalo@kernel.org, kvm@vger.kernel.org, linux-cxl@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org,
+ linux-wireless@vger.kernel.org, linux@treblig.org, lucas.demarchi@intel.com,
+ marcin.s.wojtas@gmail.com, ming.li@zohomail.com, mingo@kernel.org,
+ mingo@redhat.com, netdev@vger.kernel.org, niecheng1@uniontech.com,
+ oleksandr_tyshchenko@epam.com, pabeni@redhat.com, pbonzini@redhat.com,
+ quic_ramess@quicinc.com, ragazenta@gmail.com, rodrigo.vivi@intel.com,
+ seanjc@google.com, shenlichuan@vivo.com, simona@ffwll.ch,
+ sstabellini@kernel.org, tglx@linutronix.de,
+ thomas.hellstrom@linux.intel.com, vishal.l.verma@intel.com, x86@kernel.org,
+ xen-devel@lists.xenproject.org, yujiaoliang@vivo.com, zhanjun@uniontech.com
+References: <BD5C52D2838AEA48+20250715134050.539234-1-wangyuli@uniontech.com>
+ <2BF1749F02ADE664+20250715134407.540483-6-wangyuli@uniontech.com>
+ <2025071607-outbid-heat-b0ba@gregkh>
+Content-Language: en-US
+From: WangYuli <wangyuli@uniontech.com>
+Autocrypt: addr=wangyuli@uniontech.com; keydata=
+ xjMEZoEsiBYJKwYBBAHaRw8BAQdAyDPzcbPnchbIhweThfNK1tg1imM+5kgDBJSKP+nX39DN
+ IVdhbmdZdWxpIDx3YW5neXVsaUB1bmlvbnRlY2guY29tPsKJBBMWCAAxFiEEa1GMzYeuKPkg
+ qDuvxdofMEb0C+4FAmaBLIgCGwMECwkIBwUVCAkKCwUWAgMBAAAKCRDF2h8wRvQL7g0UAQCH
+ 3mrGM0HzOaARhBeA/Q3AIVfhS010a0MZmPTRGVfPbwD/SrncJwwPAL4GiLPEC4XssV6FPUAY
+ 0rA68eNNI9cJLArOOARmgSyJEgorBgEEAZdVAQUBAQdA88W4CTLDD9fKwW9PB5yurCNdWNS7
+ VTL0dvPDofBTjFYDAQgHwngEGBYIACAWIQRrUYzNh64o+SCoO6/F2h8wRvQL7gUCZoEsiQIb
+ DAAKCRDF2h8wRvQL7sKvAP4mBvm7Zn1OUjFViwkma8IGRGosXAvMUFyOHVcl1RTgFQEAuJkU
+ o9ERi7qS/hbUdUgtitI89efbY0TVetgDsyeQiwU=
+In-Reply-To: <2025071607-outbid-heat-b0ba@gregkh>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------1TBt0IFfjz321DLdIVEctMps"
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpip:uniontech.com:qybglogicsvrgz:qybglogicsvrgz8a-1
+X-QQ-XMAILINFO: NWMjIPXM0fdCeM5XjcymleHW4s/DHpFX2HkZvUBVTCl3zqT0FD4dah6H
+	pQ/g1hoWBm4enLxEENm9Y2keeUYl8X45TgZySZnH2nb0ZcA9PbHpLZHH+iGJfG3QdKdg5jk
+	OZwh4s1pbZWIHlZ3SF0FM6SQsbU936vMsabF7bGwbwH6blFyhhptoK4I4TheYGrXkPSnsGt
+	7Ftz0e275OcCvrJ5QOipLiV/k3T6ctG4nJlVPqq8KOwtNW2KJGVe1VAq8R3i293a5vPhq8F
+	oY6tiIRKgxomY5mNQkjuXlgaFTSXsnRNYUNmKJwK+FZ6M/0G2KuUh0+GXLtreReMY03eIHI
+	dhbyhC2c50Xn9Mwq5oHiY9AUXru5Rvspn8UAAUUo7zbTuENV2GCd3q1o5FvSjDmKbnY+GOT
+	zptM7e3poPxAvpdzrXv6wk9iSaUmzSmTzWnvXvy9FZodwt7XjsIg33uHMp+pSbt3GQFiQ05
+	70O89tl4cpVD/3aQIh6I2UjOe5D9aOeGEFZ7uDXvkMvluc8pY8rhk7iDHG55wAHZb5Lf05H
+	+y+dOvailfaCvsMi9Qnf4SrQd0qvVkhnhRcJjRy7H/L+DK837JSvubQtm9saBfct4jh4pTw
+	UcvObr5tmd7IQCp7oh0TKaCCbC3fl3qEdN8ncM2gyyXclPDttqGq3+24nS6Bswvx0lmNfdJ
+	wAy04abaLg8osOCiT+idv71dTRCGHAqZ9PTAB45F2ynvwc3NnwTrAUjBGD+eTj+KGDlc22N
+	6p4XyIq+aMUK6loLe2LCiPq+Qt6rjaBiGXFHEMem/reWqE7OwMvJHLtEWGc3G4E7QGgacKY
+	sVRe+oXlMEOcavgQhgA1u45ADef/fIwqkBhmvXDUgYwCJBny0Ca/E2j2Rt13Hu8W4dyR4kM
+	RveRTn22UkW/SW6O9z825WnpQVb3gvPM1pU9PAk6tspgkEkeb0ad3cnoophaMTsjKc+RM/V
+	5F9WW/tEmA2uJreejqLNUpD0kyT3pR0RE5ULmK2kokuymJMs4QhUhHCPuwjacld+ukV7bP/
+	CnzAAKjiiKBD65Dn/EBOipBU+a/+xUBL6SDNP2VtrDjTEpT7J5lw8rjZIHJ0ZsMpWNXUO7J
+	0CpcGgmZA67GxpPBoxN40/64nPsb6yDBXfCHCem6d9/
+X-QQ-XMRINFO: Mp0Kj//9VHAxr69bL5MkOOs=
+X-QQ-RECHKSPAM: 0
 
-From: Ting-Ying Li <tingying.li@cypress.com>
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------1TBt0IFfjz321DLdIVEctMps
+Content-Type: multipart/mixed; boundary="------------7NzxUd2CIcc1X22DyUWciByd";
+ protected-headers="v1"
+From: WangYuli <wangyuli@uniontech.com>
+To: Greg KH <gregkh@linuxfoundation.org>
+Cc: airlied@gmail.com, akpm@linux-foundation.org, alison.schofield@intel.com,
+ andrew+netdev@lunn.ch, andriy.shevchenko@linux.intel.com,
+ arend.vanspriel@broadcom.com, bp@alien8.de,
+ brcm80211-dev-list.pdl@broadcom.com, brcm80211@lists.linux.dev,
+ colin.i.king@gmail.com, cvam0000@gmail.com, dan.j.williams@intel.com,
+ dave.hansen@linux.intel.com, dave.jiang@intel.com, dave@stgolabs.net,
+ davem@davemloft.net, dri-devel@lists.freedesktop.org, edumazet@google.com,
+ guanwentao@uniontech.com, hpa@zytor.com, ilpo.jarvinen@linux.intel.com,
+ intel-xe@lists.freedesktop.org, ira.weiny@intel.com, j@jannau.net,
+ jeff.johnson@oss.qualcomm.com, jgross@suse.com, jirislaby@kernel.org,
+ johannes.berg@intel.com, jonathan.cameron@huawei.com, kuba@kernel.org,
+ kvalo@kernel.org, kvm@vger.kernel.org, linux-cxl@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org,
+ linux-wireless@vger.kernel.org, linux@treblig.org, lucas.demarchi@intel.com,
+ marcin.s.wojtas@gmail.com, ming.li@zohomail.com, mingo@kernel.org,
+ mingo@redhat.com, netdev@vger.kernel.org, niecheng1@uniontech.com,
+ oleksandr_tyshchenko@epam.com, pabeni@redhat.com, pbonzini@redhat.com,
+ quic_ramess@quicinc.com, ragazenta@gmail.com, rodrigo.vivi@intel.com,
+ seanjc@google.com, shenlichuan@vivo.com, simona@ffwll.ch,
+ sstabellini@kernel.org, tglx@linutronix.de,
+ thomas.hellstrom@linux.intel.com, vishal.l.verma@intel.com, x86@kernel.org,
+ xen-devel@lists.xenproject.org, yujiaoliang@vivo.com, zhanjun@uniontech.com
+Message-ID: <0b2ace38-07d9-4500-8bb7-5a4fa65c4b9f@uniontech.com>
+Subject: Re: [PATCH v2 6/8] serial: 8250_dw: Fix typo "notifer"
+References: <BD5C52D2838AEA48+20250715134050.539234-1-wangyuli@uniontech.com>
+ <2BF1749F02ADE664+20250715134407.540483-6-wangyuli@uniontech.com>
+ <2025071607-outbid-heat-b0ba@gregkh>
+In-Reply-To: <2025071607-outbid-heat-b0ba@gregkh>
 
-For WPA3-SAE Connection in EXTSAE mode, the userspace daemon is allowed to
-generate the SAE Auth frames. The driver uses the "mgmt_frame" FW IOVAR to
-transmit this MGMT frame.
+--------------7NzxUd2CIcc1X22DyUWciByd
+Content-Type: multipart/mixed; boundary="------------3ELnNhbpHyc90r6KiSkcbbdY"
 
-Before sending the IOVAR, the Driver is incorrectly treating the channel
-number read from the FW as a frequency value and again attempts to convert
-this into a channel number using ieee80211_frequency_to_channel().
+--------------3ELnNhbpHyc90r6KiSkcbbdY
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-This added an invalid channel number as part of the IOVAR request to the FW
-And some FW which strictly expects a valid channel would return BAD_CHAN
-error, while failing to transmit the driver requested SAE Auth MGMT frame.
+SGkgZ3JlZyBrLWgsDQoNCk9uIDIwMjUvNy8xNiAxNjowOCwgR3JlZyBLSCB3cm90ZToNCj4+
+IFNpZ25lZC1vZmYtYnk6IFdhbmdZdWxpIDx3YW5neXVsaUB1bmlvbnRlY2guY29tPg0KPiBJ
+cyB5b3VyIG5hbWUgYWxsIG9uZSB3b3JkIGxpa2UgdGhhdCwgb3Igc2hvdWxkIHRoZXJlIGJl
+IGEgIiAiIGJldHdlZW4NCj4gdGhlbT8NCg0KSWYgSSB3ZXJlIHRvIGZvbGxvdyBXZXN0ZXJu
+IG5hbWluZyBjb252ZW50aW9ucywgbXkgbmFtZSB3b3VsZCBiZSB3cml0dGVuIA0KYXMgJ1l1
+bGkgV2FuZycuDQoNCkhvd2V2ZXIsIGZyYW5rbHksIEkgZmluZCBpdCB1bm5lY2Vzc2FyeSBh
+bmQgY2FuJ3QgYmUgYm90aGVyZWQgdG8gZm9sbG93IA0KdGhlaXIgY3VzdG9tcywgdW5sZXNz
+IGEgbWFpbnRhaW5lciBzdHJvbmdseSBpbnNpc3RzLiAoRm9yIGV4YW1wbGUsIHlvdSANCmNh
+biBzZWUgdGhhdCBteSBzaWduYXR1cmUgb24gY29tbWl0cyBmb3IgdGhlIExvb25nQXJjaCBz
+dWJzeXN0ZW0gaXMgDQpkaWZmZXJlbnQgZnJvbSBteSBvdGhlciBjb250cmlidXRpb25zKS4N
+Cg0KU2luY2UgQ2hpbmVzZSBuYW1lcyBhcmUgd3JpdHRlbiB3aXRob3V0IGFueSBzcGFjZXMg
+aW4gQ2hpbmVzZSANCmNoYXJhY3RlcnMsIEkgZG9uJ3QgdGhpbmsgaXQgbWF0dGVycy4NCg0K
+PiBBbHNvLCBhcyBvdGhlcnMgc2FpZCwgZG9uJ3QgbGluayB0byB5b3VyIG93biBwYXRjaC4N
+Ck9LLCBJJ2xsIHNlbmQgdGhlIHBhdGNoc2V0IHYzLg0KDQoNClRoYW5rcywNCg0KLS0gDQrn
+jovmmLHlipsNCg==
+--------------3ELnNhbpHyc90r6KiSkcbbdY
+Content-Type: application/pgp-keys; name="OpenPGP_0xC5DA1F3046F40BEE.asc"
+Content-Disposition: attachment; filename="OpenPGP_0xC5DA1F3046F40BEE.asc"
+Content-Description: OpenPGP public key
+Content-Transfer-Encoding: quoted-printable
 
-Fix this in the CYW vendor specific MGMT TX cfg80211 ops handler, by not
-treating the channel number read from the FW as frequency value and skip
-the attempt to convert it again into a channel number.
+-----BEGIN PGP PUBLIC KEY BLOCK-----
 
-Also fix this in the generic MGMT TX cfg80211 ops handler.
+xjMEZoEsiBYJKwYBBAHaRw8BAQdAyDPzcbPnchbIhweThfNK1tg1imM+5kgDBJSK
+P+nX39DNIVdhbmdZdWxpIDx3YW5neXVsaUB1bmlvbnRlY2guY29tPsKJBBMWCAAx
+FiEEa1GMzYeuKPkgqDuvxdofMEb0C+4FAmaBLIgCGwMECwkIBwUVCAkKCwUWAgMB
+AAAKCRDF2h8wRvQL7g0UAQCH3mrGM0HzOaARhBeA/Q3AIVfhS010a0MZmPTRGVfP
+bwD/SrncJwwPAL4GiLPEC4XssV6FPUAY0rA68eNNI9cJLArOOARmgSyJEgorBgEE
+AZdVAQUBAQdA88W4CTLDD9fKwW9PB5yurCNdWNS7VTL0dvPDofBTjFYDAQgHwngE
+GBYIACAWIQRrUYzNh64o+SCoO6/F2h8wRvQL7gUCZoEsiQIbDAAKCRDF2h8wRvQL
+7sKvAP4mBvm7Zn1OUjFViwkma8IGRGosXAvMUFyOHVcl1RTgFQEAuJkUo9ERi7qS
+/hbUdUgtitI89efbY0TVetgDsyeQiwU=3D
+=3DBlkq
+-----END PGP PUBLIC KEY BLOCK-----
 
-Fixes: c2ff8cad6423 ("brcm80211: make mgmt_tx in brcmfmac accept a NULL channel")
-Fixes: 66f909308a7c ("wifi: brcmfmac: cyw: support external SAE authentication in station mode")
-Signed-off-by: Ting-Ying Li <tingying.li@cypress.com>
-Signed-off-by: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
----
+--------------3ELnNhbpHyc90r6KiSkcbbdY--
 
-v3 RESEND:
-  * Resending the same v3 patch for review reminder, after adding additional
-    mailing lists in CC.
+--------------7NzxUd2CIcc1X22DyUWciByd--
 
-v3:
-  * Fixed the "warning: incorrect type in assignment (different base types)"
-    properly now, after kernel test robot reported it again.
+--------------1TBt0IFfjz321DLdIVEctMps
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
 
-  * Used brcmf_fil_cmd_data_get() instead of brcmf_fil_cmd_int_get() util
-    for reading the channel number from the firmware as __le32 / __le16
-    type instead of s32 type.
+-----BEGIN PGP SIGNATURE-----
 
-v2:
-  * Fixed wifibot "warning: incorrect type in assignment (different base types)"
-    in cyw/core.c file.
+wnsEABYIACMWIQRrUYzNh64o+SCoO6/F2h8wRvQL7gUCaH88KgUDAAAAAAAKCRDF2h8wRvQL7pms
+AP9jnuV1Ar3880YbizkuBFljgc3bOdOu/RxLmWu2LJmNBAD/S6F38qLfKIrdjJNkNGO7V3LvW7p0
+ssmAK5aDMMRZzAI=
+=fJ9f
+-----END PGP SIGNATURE-----
 
-  * Fixed >80 line length checkpatch warning by reducing variable name len
-    in cfg80211.c file.
-
-  * Handled the return value of the BRCMF_C_GET_CHANNEL IOCTL Read operation
-    in cfg80211.c & cyw/core.c files.
-
- .../broadcom/brcm80211/brcmfmac/cfg80211.c    | 33 ++++++++++++-------
- .../broadcom/brcm80211/brcmfmac/cyw/core.c    | 29 ++++++++++------
- 2 files changed, 41 insertions(+), 21 deletions(-)
-
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-index 40a9a8177de6..54b1f0c8117e 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-@@ -5544,8 +5544,8 @@ brcmf_cfg80211_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
- 	struct brcmf_fil_action_frame_le *action_frame;
- 	struct brcmf_fil_af_params_le *af_params;
- 	bool ack;
--	s32 chan_nr;
--	u32 freq;
-+	s32 ch;
-+	__le32 hw_ch;
- 
- 	brcmf_dbg(TRACE, "Enter\n");
- 
-@@ -5606,25 +5606,36 @@ brcmf_cfg80211_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
- 		/* Add the channel. Use the one specified as parameter if any or
- 		 * the current one (got from the firmware) otherwise
- 		 */
--		if (chan)
--			freq = chan->center_freq;
--		else
--			brcmf_fil_cmd_int_get(vif->ifp, BRCMF_C_GET_CHANNEL,
--					      &freq);
--		chan_nr = ieee80211_frequency_to_channel(freq);
--		af_params->channel = cpu_to_le32(chan_nr);
-+		if (chan) {
-+			ch = ieee80211_frequency_to_channel(chan->center_freq);
-+			af_params->channel = cpu_to_le32(ch);
-+		} else {
-+			err = brcmf_fil_cmd_data_get(vif->ifp,
-+						     BRCMF_C_GET_CHANNEL,
-+						     &hw_ch, sizeof(hw_ch));
-+			if (err) {
-+				bphy_err(drvr,
-+					 "unable to get current hw channel\n");
-+				goto free;
-+			} else {
-+				af_params->channel = hw_ch;
-+			}
-+		}
-+
- 		af_params->dwell_time = cpu_to_le32(params->wait);
- 		memcpy(action_frame->data, &buf[DOT11_MGMT_HDR_LEN],
- 		       le16_to_cpu(action_frame->len));
- 
--		brcmf_dbg(TRACE, "Action frame, cookie=%lld, len=%d, freq=%d\n",
--			  *cookie, le16_to_cpu(action_frame->len), freq);
-+		brcmf_dbg(TRACE, "Action frame, cookie=%lld, len=%d, channel=%d\n",
-+			  *cookie, le16_to_cpu(action_frame->len),
-+			  le32_to_cpu(af_params->channel));
- 
- 		ack = brcmf_p2p_send_action_frame(cfg, cfg_to_ndev(cfg),
- 						  af_params);
- 
- 		cfg80211_mgmt_tx_status(wdev, *cookie, buf, len, ack,
- 					GFP_KERNEL);
-+free:
- 		kfree(af_params);
- 	} else {
- 		brcmf_dbg(TRACE, "Unhandled, fc=%04x!!\n", mgmt->frame_control);
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
-index c9537fb597ce..2cbb4a809ca7 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
-@@ -112,8 +112,8 @@ int brcmf_cyw_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
- 	struct brcmf_cfg80211_vif *vif;
- 	s32 err = 0;
- 	bool ack = false;
--	s32 chan_nr;
--	u32 freq;
-+	s32 ch;
-+	__le16 hw_ch;
- 	struct brcmf_mf_params_le *mf_params;
- 	u32 mf_params_len;
- 	s32 ready;
-@@ -143,13 +143,20 @@ int brcmf_cyw_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
- 	mf_params->len = cpu_to_le16(len - DOT11_MGMT_HDR_LEN);
- 	mf_params->frame_control = mgmt->frame_control;
- 
--	if (chan)
--		freq = chan->center_freq;
--	else
--		brcmf_fil_cmd_int_get(vif->ifp, BRCMF_C_GET_CHANNEL,
--				      &freq);
--	chan_nr = ieee80211_frequency_to_channel(freq);
--	mf_params->channel = cpu_to_le16(chan_nr);
-+	if (chan) {
-+		ch = ieee80211_frequency_to_channel(chan->center_freq);
-+		mf_params->channel = cpu_to_le16(ch);
-+	} else {
-+		err = brcmf_fil_cmd_data_get(vif->ifp, BRCMF_C_GET_CHANNEL,
-+					     &hw_ch, sizeof(hw_ch));
-+		if (err) {
-+			bphy_err(drvr, "unable to get current hw channel\n");
-+			goto free;
-+		} else {
-+			mf_params->channel = hw_ch;
-+		}
-+	}
-+
- 	memcpy(&mf_params->da[0], &mgmt->da[0], ETH_ALEN);
- 	memcpy(&mf_params->bssid[0], &mgmt->bssid[0], ETH_ALEN);
- 	mf_params->packet_id = cpu_to_le32(*cookie);
-@@ -159,7 +166,8 @@ int brcmf_cyw_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
- 	brcmf_dbg(TRACE, "Auth frame, cookie=%d, fc=%04x, len=%d, channel=%d\n",
- 		  le32_to_cpu(mf_params->packet_id),
- 		  le16_to_cpu(mf_params->frame_control),
--		  le16_to_cpu(mf_params->len), chan_nr);
-+		  le16_to_cpu(mf_params->len),
-+		  le16_to_cpu(mf_params->channel));
- 
- 	vif->mgmt_tx_id = le32_to_cpu(mf_params->packet_id);
- 	set_bit(BRCMF_MGMT_TX_SEND_FRAME, &vif->mgmt_tx_status);
-@@ -185,6 +193,7 @@ int brcmf_cyw_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
- tx_status:
- 	cfg80211_mgmt_tx_status(wdev, *cookie, buf, len, ack,
- 				GFP_KERNEL);
-+free:
- 	kfree(mf_params);
- 	return err;
- }
-
-base-commit: 6b04716cdcac37bdbacde34def08bc6fdb5fc4e2
--- 
-2.43.0
-
+--------------1TBt0IFfjz321DLdIVEctMps--
