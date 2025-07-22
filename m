@@ -1,36 +1,36 @@
-Received: from smtpbgau1.qq.com (smtpbgau1.qq.com [54.206.16.166])
+Received: from smtpbgeu1.qq.com (smtpbgeu1.qq.com [52.59.177.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A50642D9EC7
-	for <brcm80211@lists.linux.dev>; Tue, 22 Jul 2025 07:36:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.206.16.166
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BECC2E3AE4
+	for <brcm80211@lists.linux.dev>; Tue, 22 Jul 2025 07:36:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=52.59.177.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753169807; cv=none; b=LeJ4LoguuzCb0D2ENeBMNFDQtkIFNA7aqeoN1Qew7d8Mcq/eDsdwOOWMiRGObV/o8aYgQgqfqosJR9XS8aY6FeAbeQsm7q+xc3UfmzuGZ9ROW4pbFfr82wGgndxg4elHVOUMzCnJ6hlmwroSoVG4sJE9n9IPnaIGnqQsmsE3O10=
+	t=1753169821; cv=none; b=P3WTJnT+xp72HUFF8WDkEJF8BdadmBv2Pkk0xucYILPNzR8qdKhMgd331vi61Y1+8hAYW1d0xGoQg0L6labk08CyYKJk9ntLSy1LXuZDwsLFkl6Z+x3k5hkT2j9bQ5GGxJWGJlsinuzzuFgvHQZSBj8cpDOtHQH/X1eQQKPtkqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753169807; c=relaxed/simple;
-	bh=jgv3Zak4AXMWc1ecsEANjIXTKKgxnGver+QqUpOB+ck=;
+	s=arc-20240116; t=1753169821; c=relaxed/simple;
+	bh=kbyo0H2bbsDviUujpmI40aEKink0Gsb1aIkKzjjCyK0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q1/V8TrrTdgj/Ji9gSfD7ApDc51ZlcY5++ixcC+lYgPgfJCwK5YmkK63o5fNwXoBfKDBRV33GbH9A1+o2pMzmJ9WAhezQqU0nn+iSemhGZPsbhNNfXEkz6gdecEbmhz31mTzIvVEwG+9gOr5ICv/7xy+rMTSant6dl/fyp+fVfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com; spf=pass smtp.mailfrom=uniontech.com; dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b=CltOyrqt; arc=none smtp.client-ip=54.206.16.166
+	 MIME-Version; b=Y5tHTMs3+EJ2Mk3LvD4/MlKFcmTLE3v7ogubCVeBLYDiWvpf0/HrZO2gsW3Bi4zvipOVaVJivF8gK6olvIP8m8aqtdhBmN/j5O1E2FwbX24ITa8Qv5OVgn4EBa6cjyBNd834prJ5DlyeVr+5KQRXJ+Uo48CQFif7m0QCUKfmojo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com; spf=pass smtp.mailfrom=uniontech.com; dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b=PhtDPLo9; arc=none smtp.client-ip=52.59.177.22
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uniontech.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b="CltOyrqt"
+	dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b="PhtDPLo9"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
-	s=onoh2408; t=1753169762;
-	bh=WQ3Sf4JHhtwa+UH5bDz8kFE4gvdd2eiJ0Z7vB2dcJ7o=;
+	s=onoh2408; t=1753169780;
+	bh=m+UXxlrjT5dODP8ALqZgjPieqq+D0qMqbX8YRGfdS4A=;
 	h=From:To:Subject:Date:Message-ID:MIME-Version;
-	b=CltOyrqts1zb0aah7ceq5QYW1xNlJh93QxsV/iWySLvnnFMliqKZ2B2gorWyore9w
-	 I3Dm9OtPsA2647VmK3rmhzsw6YEob4SZY9zQG6JiItWPdJe5OtPyP2GzoQE5nNPCeL
-	 cENGWPQm4hxS9jQgVCyLlkx00q0cWEEacEigvSLY=
-X-QQ-mid: zesmtpip2t1753169697tffff2e54
-X-QQ-Originating-IP: ESW3/iFALqzPeVYmODy1/u+VMOIzJZ60evAbDZBeNu0=
+	b=PhtDPLo9y6c3GyaY1DjEYaUY76U9ml1O7VRtDndXyrbmN86To21pHgveN2eryVQJg
+	 2c5sOxBKVLeW2Wpy+Lz7eMoTpl4dD2lKHQvsmUo0HFfMTdLBa06pvmm2psvj23btGW
+	 /Ee+AzhWHJVNqNGDDQ/cB+TWNcM52e0rOCN7vnDE=
+X-QQ-mid: zesmtpip2t1753169721t82d79e29
+X-QQ-Originating-IP: VhBpf0Yvw5Lj6PbKLNVVhr1ZGW55NX9MRAkCLXPkiaM=
 Received: from avenger-e500 ( [localhost])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Tue, 22 Jul 2025 15:34:52 +0800 (CST)
+	id ; Tue, 22 Jul 2025 15:35:17 +0800 (CST)
 X-QQ-SSF: 0002000000000000000000000000000
 X-QQ-GoodBg: 1
-X-BIZMAIL-ID: 11624695961033415566
+X-BIZMAIL-ID: 15702502862464076907
 EX-QQ-RecipientCnt: 64
 From: WangYuli <wangyuli@uniontech.com>
 To: wangyuli@uniontech.com
@@ -97,9 +97,9 @@ Cc: airlied@gmail.com,
 	xen-devel@lists.xenproject.org,
 	yujiaoliang@vivo.com,
 	zhanjun@uniontech.com
-Subject: [PATCH v3 3/8] drm/xe: Fix typo "notifer"
-Date: Tue, 22 Jul 2025 15:34:26 +0800
-Message-ID: <94190C5F54A19F3E+20250722073431.21983-3-wangyuli@uniontech.com>
+Subject: [PATCH v3 6/8] serial: 8250_dw: Fix typo "notifer"
+Date: Tue, 22 Jul 2025 15:34:29 +0800
+Message-ID: <BD4804BF4FBA1648+20250722073431.21983-6-wangyuli@uniontech.com>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <576F0D85F6853074+20250722072734.19367-1-wangyuli@uniontech.com>
 References: <576F0D85F6853074+20250722072734.19367-1-wangyuli@uniontech.com>
@@ -112,47 +112,48 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-QQ-SENDSIZE: 520
 Feedback-ID: zesmtpip:uniontech.com:qybglogicsvrgz:qybglogicsvrgz8a-1
-X-QQ-XMAILINFO: NN5tIm2Cw++mUPQ8bcGmKLa1xMgQYZnczWcMIRHRxzkJYiByPervzJg/
-	nMUSaSdrb05pdhNel+4XNDhgrMObfI/S3OG+9SUAYwzx8E4RbCynSnXkq5mRzr/pSFacKsZ
-	hlOGLNx9OHjvgLyqGOCtokAZeoZQrhGTC16ZbWKFHCw+i/1HcXCOO2C2FNlpU3E0VJ7XNcV
-	Q0CeEotLHEFSSg/eKqN+2D8LrhuhZ5z5WanHV1sVSIWy9U2IZt7LX4Jc9wI6P4s/CPOIp2o
-	Dx9/6SsORILW6EUvQmVUtiKbfn6zIhkpZ1q2tGcOZMMz1OlVh1DbK63QlbONmZE3jdW13xC
-	KpuETBxI1xY56ik1vgFCjrTLRuGFvIS+WYIlRy+v/9aQoBL7sbfV34C3pl6b2lhpJvXY5NV
-	smHsc42utvLjtpL8dJBLyYFIcRG9B0n8XIBj8SSSHvymzQI46Dlspe3w2Ypa2qDckQC2HGV
-	dPPw80HeRywP4VZtNFOMHfgvWC2jT3yIWyhwUyH4KUrxcWCVreb+tTwXrh8hS7VXfKgyQ16
-	gxjogsVWuc2PmLXdc0EX+Dn2hZRv7xlzzlc+KDU46xTEMfkY/zXsfnjg71Hdi3gojs8F/Mr
-	GtLfqTQAk/OMFodRWjFlYW42g2IJDR2viAI72etXwLfe9tvo2u/LcjinIM4sZz+ZUN95U68
-	MwkApt0Wj+JTyQ07HbvV5UIH7VsbMClqUtS35tqCTrKeKiOXb440h3bynhc9eW8bQ8DA5NK
-	X9NvT0whqNa3O2sfoJYHKZWC5Rr5Cy6VInJhEfKInncCMSdYXqCLcLFQPaxiTjATBqUEMaB
-	CqQHzaWTxWV9GkVugdHTZCtCUxd+HIfADQpQsyuXi2nE7fpH2G3n/ytJUpPmzlb4b3082Eu
-	tcDveP2aZTHOG737v52aVMcU/1uayveXeg9704diDrAGBVzBUVh+sLdLfN1VmD5fkB656cr
-	o+wf3dbepDEpequEH1xpVMZca8l+dIwU2l2drNvVMKTqea4CawGOBSpPzL9RgiaBvyo1jOS
-	SqgOXINUn/Fg2oRGC5ticZXrft+vHcnOOJ7swdLwi/KpnN+v01WU/7liMLplpQNQ1W3trCo
-	PFrILXSMnhVuZ3zbamNGsQbZSHAFGBAqc7EhGsg6j10
-X-QQ-XMRINFO: MSVp+SPm3vtS1Vd6Y4Mggwc=
+X-QQ-XMAILINFO: NUD6C8ibrP4BlpyOlLDI06chYZekOUCZTlSlcpL8dzVHHwru8SSCc+Yf
+	uclUpL6SNW+PshL7oaMfB38E3p9RutDk/H/p+fLXg6OLwHGseLsqad9viM6TvN1ioul8Lqn
+	EHKSRtFC9/zEmyD4nq7HbiUNr6o20OLXsfPgDde8sPosaCWamUMOsfRsuOQFwiL9iWrgTz9
+	WQnx4W6FMtEhEJa0f7ZHQv9AzWNWWPYBxFf/GxFv0SVCWYfe/LDhs+L1RdjrgNDTwhX4uPW
+	TytUw1RsNAngUBWGQio8cl54YfP1KAb3HfrXoSqc/DOCH9l7xs4tvQ2X51QI8JkypQJ3HE5
+	0zvedK5LvOFBDNm5Bvt8lIRjnCoTcbDa3BCB4paP4LuWpl500TOTEo9zuhprepk8ZVe92Kx
+	bvthcCZ2E/IY8EbbXHev2hzsmG3nV78hEIILHUxmTA2fR5ZIovhaoQV/1sLCTYaF0T9tV1F
+	CNmgWgb0JlTHyGeSHE1yWvRxKqYDIITNpKlY8UFR+k7ebW8ZSkAwdYhYnvy6ib5eq4lPLTK
+	F/ojPixmhoHSSl5G6LzYND27bG13jmukknrO3y9KBgsq1SF4BBC6ROaP1S/FLIoW5oNyyWw
+	OeHslp/jNu9uvp8hIRsCI3+CkcFIfJ4XcZHZuWHmswvLcVOHblZJbZWumhH2t+g2OUZ7IFg
+	34O6dCZ718Qmek0M7D5hCUTYKT+DjbiYQ2QouycFLCAdXZUL5ve36UgaeacvuyntJyy6pDF
+	54RV1rXJ/0/60j7CCwEGtERi1V00Hn+H+artdgVdZlXayfHG8omeUFjeWKjXo2N+TB7+OGO
+	UECNUZ3OkYIfksg34le9OlWzACOk/zuGWg3hnMr9is/MNhlI17hvhi/s9JWGs9jzX7je50C
+	sJYnXkFnWVUe6J7GkMN+GY/89bR159kRRyPj+k9wH9L7HMJyDhB/EbJYpSySUfDEIJGxvi1
+	eM4oF4O0MjcDEUpFJ8xFsAaxzaOeC+RQDgcblV6eVUsjLedMxAHQ4Hw1WOWoX605LTVFauJ
+	T6irZALqHy/Y84jN5k7tWxSSItgaNA2qwqVmc8QG0ff9Mg0UKAt3EQbxluYffUQuPcd4gqT
+	AkT/a0rXK+afAttcWoOrdzUMv/XukhMZy0yxgr56bzdo5x99p9yVJ4=
+X-QQ-XMRINFO: Nq+8W0+stu50PRdwbJxPCL0=
 X-QQ-RECHKSPAM: 0
 
 There is a spelling mistake of 'notifer' in the comment which
 should be 'notifier'.
 
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: WangYuli <wangyuli@uniontech.com>
 ---
- drivers/gpu/drm/xe/xe_vm_types.h | 2 +-
+ drivers/tty/serial/8250/8250_dw.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_vm_types.h b/drivers/gpu/drm/xe/xe_vm_types.h
-index 1979e9bdbdf3..0ca27579fd1f 100644
---- a/drivers/gpu/drm/xe/xe_vm_types.h
-+++ b/drivers/gpu/drm/xe/xe_vm_types.h
-@@ -259,7 +259,7 @@ struct xe_vm {
- 		 * up for revalidation. Protected from access with the
- 		 * @invalidated_lock. Removing items from the list
- 		 * additionally requires @lock in write mode, and adding
--		 * items to the list requires either the @userptr.notifer_lock in
-+		 * items to the list requires either the @userptr.notifier_lock in
- 		 * write mode, OR @lock in write mode.
+diff --git a/drivers/tty/serial/8250/8250_dw.c b/drivers/tty/serial/8250/8250_dw.c
+index 1902f29444a1..6d9af6417620 100644
+--- a/drivers/tty/serial/8250/8250_dw.c
++++ b/drivers/tty/serial/8250/8250_dw.c
+@@ -392,7 +392,7 @@ static void dw8250_set_termios(struct uart_port *p, struct ktermios *termios,
+ 	rate = clk_round_rate(d->clk, newrate);
+ 	if (rate > 0) {
+ 		/*
+-		 * Note that any clock-notifer worker will block in
++		 * Note that any clock-notifier worker will block in
+ 		 * serial8250_update_uartclk() until we are done.
  		 */
- 		struct list_head invalidated;
+ 		ret = clk_set_rate(d->clk, newrate);
 -- 
 2.50.0
 
