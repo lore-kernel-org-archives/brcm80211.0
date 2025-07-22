@@ -1,118 +1,119 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
+Received: from mail.zytor.com (terminus.zytor.com [198.137.202.136])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62DC61D5CD4
-	for <brcm80211@lists.linux.dev>; Tue, 22 Jul 2025 09:24:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB648279DBA
+	for <brcm80211@lists.linux.dev>; Tue, 22 Jul 2025 16:59:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.136
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753176273; cv=none; b=D9j8YjNeTGnkHLu1g/b6s7RJMak/+eIQ6mO4x4BsHGmehuPxhwEZ61Fi4kVPJ3qrT6/KCP5iMFrCB22XnJ5YOFWAruzcqO2476P1g5Y7GHnLj8Wtk028iH+FwGQ94kR3rIIPKrIhuGhwYEwOJU7aaYKaAFaTUA6daY31KD/ZrA4=
+	t=1753203577; cv=none; b=acpNCxdYlSHGtkXO04vVPLAMxy/Ocxt5i9aa4js6oY6oNJ5WDaBSVv2kXQCooabDApgVlo5SH3Y9qpWVPSYFBvqwbbwXatLYw6px1EKnZvJxDsnOLC6XFmQ/ID1UdvjSzTBVHJIVWnJQedMyaiHgEzeBuHHJVpd/fT6vARNcZUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753176273; c=relaxed/simple;
-	bh=Ksr4RcpyiaVxvdAz9Ft+gR94b9IMq2d1CEO85zHMm3o=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=MVjIOsogi1mi+SJHnq80sx4qHpeU2R6KQW8C7TZjVJTv5tUTfxLClOGXqnyR75JbGDHBszjG9uyHHepKVP8JlRMUIo03j+RNGMXZonG9CySa/RXWlB5yfU1ffNmwC4kfKtWgBEZiyIaP+BAtFTwpn3DngWBYgCXqu9N43FuXhjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=MjJRYeJZ; arc=none smtp.client-ip=198.175.65.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1753203577; c=relaxed/simple;
+	bh=FMRnyRhitE21Y1CE7xWJUhAoijIeW5UjFQ+cU+mOOMc=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
+	 MIME-Version:Content-Type; b=XqXjLzZTrXxmGBb9oSk4peeSIeU4IYSlxNd8JE8y0puKmNKKr/MkrINcEQ5Ufa7639Z6yULjOIZGHivQ5g4qNpLnDiX4JcKQokopp9uATMLLDv+S/qQZr4MxKNyusHGpHz7ADdZkgQD2hj/Zm9OLyhDQ/slMY1Hw31kA7A4JEjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zytor.com; spf=pass smtp.mailfrom=zytor.com; dkim=pass (2048-bit key) header.d=zytor.com header.i=@zytor.com header.b=nLYtFGj+; arc=none smtp.client-ip=198.137.202.136
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zytor.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zytor.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="MjJRYeJZ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1753176271; x=1784712271;
-  h=message-id:subject:from:to:cc:date:in-reply-to:
-   references:content-transfer-encoding:mime-version;
-  bh=Ksr4RcpyiaVxvdAz9Ft+gR94b9IMq2d1CEO85zHMm3o=;
-  b=MjJRYeJZpalrlHw+UcPoLhG0hsnDsFWT4Vl198E033SFSD8VB0j88IgK
-   tsdjYlB+nUlOBtv2gmxqzWzz9v+1Vz7qcqmQRLBAvR7KjSNbfuZ3TSzwx
-   6qaTp8+EIIpqjbs7F1OpPp5qYQBh9Dmgn1p5WW0Z46zH98v9JSfFuaIof
-   mP7E3btZygMf7XIArG3cCmTUHgD3AJV5tezE1D566DfnmyOrKeYuvS5xy
-   aEiF4fT4jF51WLsfHPlb0dYBL8C8bnah7e9LuE9zS+DhxKao1yeS5i3uh
-   FKU4YUYIuD8NilU9B5NSz6N2dJHzhdmg7f0JBMvNqHTQ++GDVFQ8Titq4
-   w==;
-X-CSE-ConnectionGUID: CrqID51bRvyv96Jk7XhjxA==
-X-CSE-MsgGUID: T1JONnXlS1eR68pjLvqp0g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11499"; a="55574724"
-X-IronPort-AV: E=Sophos;i="6.16,331,1744095600"; 
-   d="scan'208";a="55574724"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jul 2025 02:24:30 -0700
-X-CSE-ConnectionGUID: cbehGU95QkWPRtX5+LVZGA==
-X-CSE-MsgGUID: 7OhfXV8JRdOAnLadikdZ1w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,331,1744095600"; 
-   d="scan'208";a="163133052"
-Received: from vpanait-mobl.ger.corp.intel.com (HELO [10.245.244.202]) ([10.245.244.202])
-  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jul 2025 02:24:17 -0700
-Message-ID: <ffd58e1a8b51c98cac9be49e85d367f1a3a24c2d.camel@linux.intel.com>
-Subject: Re: [PATCH v3 3/8] drm/xe: Fix typo "notifer"
-From: Thomas =?ISO-8859-1?Q?Hellstr=F6m?= <thomas.hellstrom@linux.intel.com>
-To: WangYuli <wangyuli@uniontech.com>
-Cc: airlied@gmail.com, akpm@linux-foundation.org,
- alison.schofield@intel.com, 	andrew+netdev@lunn.ch,
- andriy.shevchenko@linux.intel.com, 	arend.vanspriel@broadcom.com,
- bp@alien8.de, brcm80211-dev-list.pdl@broadcom.com, 
-	brcm80211@lists.linux.dev, colin.i.king@gmail.com, cvam0000@gmail.com, 
-	dan.j.williams@intel.com, dave.hansen@linux.intel.com,
- dave.jiang@intel.com, 	dave@stgolabs.net, davem@davemloft.net,
- dri-devel@lists.freedesktop.org, 	edumazet@google.com,
- gregkh@linuxfoundation.org, guanwentao@uniontech.com, 	hpa@zytor.com,
- ilpo.jarvinen@linux.intel.com, intel-xe@lists.freedesktop.org, 
-	ira.weiny@intel.com, j@jannau.net, jeff.johnson@oss.qualcomm.com,
- jgross@suse.com, 	jirislaby@kernel.org, johannes.berg@intel.com,
- jonathan.cameron@huawei.com, 	kuba@kernel.org, kvalo@kernel.org,
- kvm@vger.kernel.org, linux-cxl@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org, 
-	linux-wireless@vger.kernel.org, linux@treblig.org,
- lucas.demarchi@intel.com, 	marcin.s.wojtas@gmail.com, ming.li@zohomail.com,
- mingo@kernel.org, 	mingo@redhat.com, netdev@vger.kernel.org,
- niecheng1@uniontech.com, 	oleksandr_tyshchenko@epam.com, pabeni@redhat.com,
- pbonzini@redhat.com, 	quic_ramess@quicinc.com, ragazenta@gmail.com,
- rodrigo.vivi@intel.com, 	seanjc@google.com, shenlichuan@vivo.com,
- simona@ffwll.ch, sstabellini@kernel.org, 	tglx@linutronix.de,
- vishal.l.verma@intel.com, wangyuli@deepin.org, x86@kernel.org, 
-	xen-devel@lists.xenproject.org, yujiaoliang@vivo.com, zhanjun@uniontech.com
-Date: Tue, 22 Jul 2025 11:24:15 +0200
-In-Reply-To: <94190C5F54A19F3E+20250722073431.21983-3-wangyuli@uniontech.com>
-References: <576F0D85F6853074+20250722072734.19367-1-wangyuli@uniontech.com>
-	 <94190C5F54A19F3E+20250722073431.21983-3-wangyuli@uniontech.com>
-Organization: Intel Sweden AB, Registration Number: 556189-6027
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.54.3 (3.54.3-1.fc41) 
+	dkim=pass (2048-bit key) header.d=zytor.com header.i=@zytor.com header.b="nLYtFGj+"
+Received: from [127.0.0.1] (c-76-133-66-138.hsd1.ca.comcast.net [76.133.66.138])
+	(authenticated bits=0)
+	by mail.zytor.com (8.18.1/8.17.1) with ESMTPSA id 56MGwnFd657671
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NO);
+	Tue, 22 Jul 2025 09:58:49 -0700
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.zytor.com 56MGwnFd657671
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zytor.com;
+	s=2025062101; t=1753203533;
+	bh=zcW3ufrPeS9z5vjFN56GirhJJTbdaCIUAEbrqpAovKM=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:From;
+	b=nLYtFGj+YjoGNEYGiQTtSSrpLjsViKYD5wc5TuPqddAJ8ED6zjoIGvwZgXShXXwZt
+	 Z82UlljOtC8H/vyP3+1XHhLAhJvsSdBXSHJ84a1lkAM+dC0eOenHEapfk4l+xPw3Yp
+	 Tt3Lpn5k1a8EeQHBGdtankMXR8c2x9H6h+0GL1KdQYwwtXGBVhacT1Ab7+XMA9Vwvr
+	 jaS1KWf/6v6gMYlrDFaRXV8sXwAbLXlPwERIbq3nL8fW2l05WOB61yjvWDeSWsbJtw
+	 LjgcnAROyJDyAmDWXrktO4r2jj7OpE+JXGo7pOG10BKOA/G6IDssVi679Ct4qgRD8y
+	 fQKKcG4D5VH1Q==
+Date: Tue, 22 Jul 2025 09:58:48 -0700
+From: "H. Peter Anvin" <hpa@zytor.com>
+To: Greg KH <gregkh@linuxfoundation.org>, WangYuli <wangyuli@uniontech.com>
+CC: airlied@gmail.com, akpm@linux-foundation.org, alison.schofield@intel.com,
+        andrew+netdev@lunn.ch, andriy.shevchenko@linux.intel.com,
+        arend.vanspriel@broadcom.com, bp@alien8.de,
+        brcm80211-dev-list.pdl@broadcom.com, brcm80211@lists.linux.dev,
+        colin.i.king@gmail.com, cvam0000@gmail.com, dan.j.williams@intel.com,
+        dave.hansen@linux.intel.com, dave.jiang@intel.com, dave@stgolabs.net,
+        davem@davemloft.net, dri-devel@lists.freedesktop.org,
+        edumazet@google.com, guanwentao@uniontech.com,
+        ilpo.jarvinen@linux.intel.com, intel-xe@lists.freedesktop.org,
+        ira.weiny@intel.com, j@jannau.net, jeff.johnson@oss.qualcomm.com,
+        jgross@suse.com, jirislaby@kernel.org, johannes.berg@intel.com,
+        jonathan.cameron@huawei.com, kuba@kernel.org, kvalo@kernel.org,
+        kvm@vger.kernel.org, linux-cxl@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org,
+        linux-wireless@vger.kernel.org, linux@treblig.org,
+        lucas.demarchi@intel.com, marcin.s.wojtas@gmail.com,
+        ming.li@zohomail.com, mingo@kernel.org, mingo@redhat.com,
+        netdev@vger.kernel.org, niecheng1@uniontech.com,
+        oleksandr_tyshchenko@epam.com, pabeni@redhat.com, pbonzini@redhat.com,
+        quic_ramess@quicinc.com, ragazenta@gmail.com, rodrigo.vivi@intel.com,
+        seanjc@google.com, shenlichuan@vivo.com, simona@ffwll.ch,
+        sstabellini@kernel.org, tglx@linutronix.de,
+        thomas.hellstrom@linux.intel.com, vishal.l.verma@intel.com,
+        x86@kernel.org, xen-devel@lists.xenproject.org, yujiaoliang@vivo.com,
+        zhanjun@uniontech.com
+Subject: Re: [PATCH v2 6/8] serial: 8250_dw: Fix typo "notifer"
+User-Agent: K-9 Mail for Android
+In-Reply-To: <2025072252-halves-sadness-18dc@gregkh>
+References: <BD5C52D2838AEA48+20250715134050.539234-1-wangyuli@uniontech.com> <2BF1749F02ADE664+20250715134407.540483-6-wangyuli@uniontech.com> <2025071607-outbid-heat-b0ba@gregkh> <634BA467821D37FE+0b2ace38-07d9-4500-8bb7-5a4fa65c4b9f@uniontech.com> <2025072252-halves-sadness-18dc@gregkh>
+Message-ID: <10127165-7020-4D35-B0F3-099F58B2AF4E@zytor.com>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, 2025-07-22 at 15:34 +0800, WangYuli wrote:
-> There is a spelling mistake of 'notifer' in the comment which
-> should be 'notifier'.
->=20
-> Signed-off-by: WangYuli <wangyuli@uniontech.com>
-Reviewed-by: Thomas Hellstr=C3=B6m <thomas.hellstrom@linux.intel.com>
+On July 22, 2025 12:57:33 AM PDT, Greg KH <gregkh@linuxfoundation=2Eorg> wr=
+ote:
+>On Tue, Jul 22, 2025 at 03:22:18PM +0800, WangYuli wrote:
+>> Hi greg k-h,
+>>=20
+>> On 2025/7/16 16:08, Greg KH wrote:
+>> > > Signed-off-by: WangYuli <wangyuli@uniontech=2Ecom>
+>> > Is your name all one word like that, or should there be a " " between
+>> > them?
+>>=20
+>> If I were to follow Western naming conventions, my name would be writte=
+n as
+>> 'Yuli Wang'=2E
+>>=20
+>> However, frankly, I find it unnecessary and can't be bothered to follow
+>> their customs, unless a maintainer strongly insists=2E (For example, yo=
+u can
+>> see that my signature on commits for the LoongArch subsystem is differe=
+nt
+>> from my other contributions)=2E
+>>=20
+>> Since Chinese names are written without any spaces in Chinese character=
+s, I
+>> don't think it matters=2E
+>
+>Then use your Chinese name, don't feel like you need to change it to any
+>other naming convention=2E  There's no requirement here at all to do so=
+=2E
+>
+>thanks,
+>
+>greg k-h
 
-> ---
-> =C2=A0drivers/gpu/drm/xe/xe_vm_types.h | 2 +-
-> =C2=A01 file changed, 1 insertion(+), 1 deletion(-)
->=20
-> diff --git a/drivers/gpu/drm/xe/xe_vm_types.h
-> b/drivers/gpu/drm/xe/xe_vm_types.h
-> index 1979e9bdbdf3..0ca27579fd1f 100644
-> --- a/drivers/gpu/drm/xe/xe_vm_types.h
-> +++ b/drivers/gpu/drm/xe/xe_vm_types.h
-> @@ -259,7 +259,7 @@ struct xe_vm {
-> =C2=A0		 * up for revalidation. Protected from access with
-> the
-> =C2=A0		 * @invalidated_lock. Removing items from the list
-> =C2=A0		 * additionally requires @lock in write mode, and
-> adding
-> -		 * items to the list requires either the
-> @userptr.notifer_lock in
-> +		 * items to the list requires either the
-> @userptr.notifier_lock in
-> =C2=A0		 * write mode, OR @lock in write mode.
-> =C2=A0		 */
-> =C2=A0		struct list_head invalidated;
+To put it differently: what Greg (and the rest of us) want to make sure is=
+ that your name appears the way you prefer=2E=20
 
+Having the Latin transliteration in whatever form you prefer is greatly ap=
+preciated, of course, since the knowledge of Chinese script is limited outs=
+ide East Asia, but that's just about it=2E
+
+If you want to add your name in proper Chinese script in addition that sho=
+uld be fine, too=2E
