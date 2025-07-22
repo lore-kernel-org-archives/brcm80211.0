@@ -1,147 +1,242 @@
-Received: from omta038.useast.a.cloudfilter.net (omta038.useast.a.cloudfilter.net [44.202.169.37])
+Received: from smtp14.infineon.com (smtp14.infineon.com [217.10.52.160])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87C0BA95C
-	for <brcm80211@lists.linux.dev>; Mon, 21 Jul 2025 19:03:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=44.202.169.37
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F16E24414
+	for <brcm80211@lists.linux.dev>; Tue, 22 Jul 2025 04:46:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.10.52.160
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753124621; cv=none; b=Ernmq63LCWxIQW/Pq9JhG3X25InPNXdPCdpcY2uLFo9t/m0YJxeZINlx04k9G9cCiJ9SdzB6hlyKM8m0KeWE5Sa4fPFI25UYwoE9OK9ZfVZAJxBACXhMuVZN+b7jyjdEUmkFFClHPly8RwcpoUAHxxFlnC4XRxpuN4ZVBr/aYS0=
+	t=1753159608; cv=none; b=aFmwXIBclosjkmdEmBLMYIugIvtc0Xf4QFmmPFVakimsabMTJwZWi6uK/v194UdrG0Ba+udQI20xBOVxOBCgUM6SIdTHwhEc60fg+T/OWBOYoAZApAxm3Z0Fo1Gyf/DgDvkyp6jggYIm9gNDiy00b7gyYiU292cwxflCyIDveyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753124621; c=relaxed/simple;
-	bh=AI9EcMyXH2NqQn7pn/7lI+3/dZr4645CtGDIQIk10To=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gvW3i68FfwEUAR+yMooe7CUh5gtg2eJzlJ91U3L++XpLuziG7Qz0r1MK8NcdxvugInWCCB7BoaHdhRo6ZmxvrkOX7THRQSZ+UebRmNes/ngPE4TYJSkXxTd7l5TnMlSSywcKYXV9ItixQBeasv8yGE3/Yg7qBnBsYnON5PDqFnw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=embeddedor.com; spf=pass smtp.mailfrom=embeddedor.com; dkim=pass (2048-bit key) header.d=embeddedor.com header.i=@embeddedor.com header.b=EhMu0TmI; arc=none smtp.client-ip=44.202.169.37
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=embeddedor.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=embeddedor.com
+	s=arc-20240116; t=1753159608; c=relaxed/simple;
+	bh=SYivqxCPm9LQm7dkbIeg3oRDa228+MkB+hQxas6ijuw=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=jUxdxS+MM7aXAqpGo6THg2w121RO+NRSIJN9h38v+13BlnYd/XdzHpwuHgULYOgV75nD/eif+hzfJImhlZE+naZ6CTCcyGOaIpUyMMj/oTta9R9+WxirSMPCjLsS1HfVxfwm5U+GvuVXngWbCn4waCzyQmdnEzBSowZEoNZEBd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infineon.com; spf=pass smtp.mailfrom=infineon.com; dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b=A+syiu4v; arc=none smtp.client-ip=217.10.52.160
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infineon.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infineon.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=embeddedor.com header.i=@embeddedor.com header.b="EhMu0TmI"
-Received: from eig-obgw-5002a.ext.cloudfilter.net ([10.0.29.215])
-	by cmsmtp with ESMTPS
-	id dslfuSdi1iuzSdvnWuUYDH; Mon, 21 Jul 2025 19:03:38 +0000
-Received: from gator4166.hostgator.com ([108.167.133.22])
-	by cmsmtp with ESMTPS
-	id dvnVudoGqCvF1dvnVuQ8fx; Mon, 21 Jul 2025 19:03:38 +0000
-X-Authority-Analysis: v=2.4 cv=fvwXZ04f c=1 sm=1 tr=0 ts=687e8f0a
- a=1YbLdUo/zbTtOZ3uB5T3HA==:117 a=elAakMZAzsQyfqpwiXQzJA==:17
- a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=7T7KSl7uo7wA:10 a=VwQbUJbxAAAA:8
- a=QyXUC8HyAAAA:8 a=bUQKSiCPAAAA:8 a=pGLkceISAAAA:8 a=Q-fNiiVtAAAA:8
- a=PW-KNzBFAAAA:8 a=xzhjGNMdqhMncFuJsFsA:9 a=QEXdDO2ut3YA:10
- a=-fHZXUhsFbuwFN3fwQAr:22 a=84zbTXrhsdUYOv-GFPQN:22 a=xYX6OU9JNrHFPr8prv8u:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=embeddedor.com; s=default; h=Content-Transfer-Encoding:Content-Type:
-	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=GCiLCi7Cr1qi66PR1V2dUYh9RHKXTknJEBYAIn6dHjM=; b=EhMu0TmI3OOqbXwnwDEqp0bXIZ
-	J5gQ6BlFra6K9I+PEv+IxagOfJ6DdTvSs6EKKZpFlz1yOtii1VlknJdy/AurXhlCEDPFiy16WqcCv
-	XwYx1Ft/l0Wt8tqTqFRTLTtOishxlpzsFzmmXYmzdHG6gMftbM8lUlyEWtgHflhHhQYiF5Y2ZAuCS
-	OZaLvy5xMnK7OXTab2urJ5mFiilLv0ytVT421qaTMMDeBLMPzRH2SsQiSiLjd3SyBP+P28KmnNrqv
-	kRcLHUUxw5+1PqA8oSd6anpiiH4BgsSNYYdbWpcZ6HNWW54aEbXcABAwsbWBTN10l4sSzrIrUnFDz
-	gqFkzIAA==;
-Received: from [177.238.16.239] (port=35216 helo=[192.168.0.21])
-	by gator4166.hostgator.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.98.1)
-	(envelope-from <gustavo@embeddedor.com>)
-	id 1udvnU-000000027hi-1RNt;
-	Mon, 21 Jul 2025 14:03:36 -0500
-Message-ID: <54478268-48d1-4163-9bcb-d576cc93f7ce@embeddedor.com>
-Date: Mon, 21 Jul 2025 13:03:23 -0600
+	dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b="A+syiu4v"
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=infineon.com; i=@infineon.com; q=dns/txt; s=IFXMAIL;
+  t=1753159606; x=1784695606;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=SYivqxCPm9LQm7dkbIeg3oRDa228+MkB+hQxas6ijuw=;
+  b=A+syiu4vRLAoOMDTsFzyM8VHmUmUP/Xgg6gQoedRd6fytva7ewSjw9W0
+   V2bJhZioNFVVwepJtJZK6ZGF/HjZLkqPMkTXR5c4R//b/EiMURtLX0VE7
+   OXF0Xjc9CGl4JqrqLcZOuafEKOSme4+WIebm+hGBf23nDzWQ3d80LsP+J
+   Q=;
+X-CSE-ConnectionGUID: Bt3BzFcuTZyoVAPH9Qf0rA==
+X-CSE-MsgGUID: QvG+GlO+QMC167nW9dOLQA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11499"; a="92249881"
+X-IronPort-AV: E=Sophos;i="6.16,330,1744063200"; 
+   d="scan'208";a="92249881"
+Received: from unknown (HELO MUCSE805.infineon.com) ([172.23.29.31])
+  by smtp14.infineon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jul 2025 06:45:34 +0200
+Received: from MUCSE827.infineon.com (172.23.29.20) by MUCSE805.infineon.com
+ (172.23.29.31) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Tue, 22 Jul
+ 2025 06:45:33 +0200
+Received: from ISCN5CG14747PP.infineon.com (10.161.6.196) by
+ MUCSE827.infineon.com (172.23.29.20) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.14; Tue, 22 Jul 2025 06:45:32 +0200
+From: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
+To: Arend van Spriel <arend.vanspriel@broadcom.com>, Johannes Berg
+	<johannes@sipsolutions.net>
+CC: <linux-wireless@vger.kernel.org>, <brcm80211@lists.linux.dev>,
+	<wlan-kernel-dev-list@infineon.com>, Gokul Sivakumar
+	<gokulkumar.sivakumar@infineon.com>
+Subject: [PATCH wireless-next v3 RESEND] wifi: brcmfmac: fix EXTSAE WPA3 connection failure due to AUTH TX failure
+Date: Tue, 22 Jul 2025 10:15:15 +0530
+Message-ID: <20250722044515.2562-1-gokulkumar.sivakumar@infineon.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] wifi: brcmfmac: cyw: Fix __counted_by to be LE variant
-To: Kees Cook <kees@kernel.org>, Johannes Berg <johannes.berg@intel.com>
-Cc: Chung-Hsien Hsu <chung-hsien.hsu@infineon.com>,
- Chi-hsien Lin <chi-hsien.lin@infineon.com>,
- James Prestwood <prestwoj@gmail.com>,
- Arend van Spriel <arend.vanspriel@broadcom.com>,
- "Gustavo A. R. Silva" <gustavoars@kernel.org>,
- Ting-Ying Li <tingying.li@cypress.com>, linux-wireless@vger.kernel.org,
- brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com,
- linux-hardening@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250721181810.work.575-kees@kernel.org>
-Content-Language: en-US
-From: "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-In-Reply-To: <20250721181810.work.575-kees@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - gator4166.hostgator.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - embeddedor.com
-X-BWhitelist: no
-X-Source-IP: 177.238.16.239
-X-Source-L: No
-X-Exim-ID: 1udvnU-000000027hi-1RNt
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: ([192.168.0.21]) [177.238.16.239]:35216
-X-Source-Auth: gustavo@embeddedor.com
-X-Email-Count: 5
-X-Org: HG=hgshared;ORG=hostgator;
-X-Source-Cap: Z3V6aWRpbmU7Z3V6aWRpbmU7Z2F0b3I0MTY2Lmhvc3RnYXRvci5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfIVyJpJog2ftQbKUz2TvnQ16fbh9aTxlIyMRtMwuCrmZqezvbRbDRJZHfd7uCgOCRWk8m21nb/v9sw6P/x/6EUbwuxcNcnQcjNtwjtD6IPCVilgv9z68
- 3GKLXD7yjyxWuBAl2sCibIo7/IeZGG508824e2JAe91aue2WoMz1yPux0botOAIEcgl54K/Dug+1I4shCud9KIBjBlK8Jm8QYfQ=
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: MUCSE812.infineon.com (172.23.29.38) To
+ MUCSE827.infineon.com (172.23.29.20)
 
+From: Ting-Ying Li <tingying.li@cypress.com>
 
+For WPA3-SAE Connection in EXTSAE mode, the userspace daemon is allowed to
+generate the SAE Auth frames. The driver uses the "mgmt_frame" FW IOVAR to
+transmit this MGMT frame.
 
-On 21/07/25 12:18, Kees Cook wrote:
-> In brcmf_cyw_mgmt_tx() the "len" counter of the struct
-> brcmf_mf_params_le::data flexible array is stored as little-endian via
-> cpu_to_le16() so the __counted_by_le() variant must be used:
-> 
-> 	struct brcmf_mf_params_le *mf_params;
-> 	...
-> 	mf_params_len = offsetof(struct brcmf_mf_params_le, data) +
-> 			(len - DOT11_MGMT_HDR_LEN);
-> 	mf_params = kzalloc(mf_params_len, GFP_KERNEL);
-> 	...
->          mf_params->len = cpu_to_le16(len - DOT11_MGMT_HDR_LEN);
-> 
-> Fixes: 66f909308a7c ("wifi: brcmfmac: cyw: support external SAE authentication in station mode")
-> Signed-off-by: Kees Cook <kees@kernel.org>
+Before sending the IOVAR, the Driver is incorrectly treating the channel
+number read from the FW as a frequency value and again attempts to convert
+this into a channel number using ieee80211_frequency_to_channel().
 
-Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+This added an invalid channel number as part of the IOVAR request to the FW
+And some FW which strictly expects a valid channel would return BAD_CHAN
+error, while failing to transmit the driver requested SAE Auth MGMT frame.
 
-Thanks!
--Gustavo
+Fix this in the CYW vendor specific MGMT TX cfg80211 ops handler, by not
+treating the channel number read from the FW as frequency value and skip
+the attempt to convert it again into a channel number.
 
-> ---
-> Cc: Johannes Berg <johannes.berg@intel.com>
-> Cc: Chung-Hsien Hsu <chung-hsien.hsu@infineon.com>
-> Cc: Chi-hsien Lin <chi-hsien.lin@infineon.com>
-> Cc: James Prestwood <prestwoj@gmail.com>
-> Cc: Arend van Spriel <arend.vanspriel@broadcom.com>
-> Cc: "Gustavo A. R. Silva" <gustavoars@kernel.org>
-> Cc: Ting-Ying Li <tingying.li@cypress.com>
-> Cc: <linux-wireless@vger.kernel.org>
-> Cc: <brcm80211@lists.linux.dev>
-> Cc: <brcm80211-dev-list.pdl@broadcom.com>
-> Cc: <linux-hardening@vger.kernel.org>
-> ---
->   .../net/wireless/broadcom/brcm80211/brcmfmac/cyw/fwil_types.h   | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/fwil_types.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/fwil_types.h
-> index 08c69142495a..669564382e32 100644
-> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/fwil_types.h
-> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/fwil_types.h
-> @@ -80,7 +80,7 @@ struct brcmf_mf_params_le {
->   	u8 da[ETH_ALEN];
->   	u8 bssid[ETH_ALEN];
->   	__le32 packet_id;
-> -	u8 data[] __counted_by(len);
-> +	u8 data[] __counted_by_le(len);
->   };
->   
->   #endif /* CYW_FWIL_TYPES_H_ */
+Also fix this in the generic MGMT TX cfg80211 ops handler.
+
+Fixes: c2ff8cad6423 ("brcm80211: make mgmt_tx in brcmfmac accept a NULL channel")
+Fixes: 66f909308a7c ("wifi: brcmfmac: cyw: support external SAE authentication in station mode")
+Signed-off-by: Ting-Ying Li <tingying.li@cypress.com>
+Signed-off-by: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
+---
+
+v3 RESEND:
+  * Resending the same v3 patch for review reminder, after adding additional
+    mailing lists in CC.
+
+v3:
+  * Fixed the "warning: incorrect type in assignment (different base types)"
+    properly now, after kernel test robot reported it again.
+
+  * Used brcmf_fil_cmd_data_get() instead of brcmf_fil_cmd_int_get() util
+    for reading the channel number from the firmware as __le32 / __le16
+    type instead of s32 type.
+
+v2:
+  * Fixed wifibot "warning: incorrect type in assignment (different base types)"
+    in cyw/core.c file.
+
+  * Fixed >80 line length checkpatch warning by reducing variable name len
+    in cfg80211.c file.
+
+  * Handled the return value of the BRCMF_C_GET_CHANNEL IOCTL Read operation
+    in cfg80211.c & cyw/core.c files.
+
+ .../broadcom/brcm80211/brcmfmac/cfg80211.c    | 33 ++++++++++++-------
+ .../broadcom/brcm80211/brcmfmac/cyw/core.c    | 29 ++++++++++------
+ 2 files changed, 41 insertions(+), 21 deletions(-)
+
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+index 40a9a8177de6..54b1f0c8117e 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -5544,8 +5544,8 @@ brcmf_cfg80211_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
+ 	struct brcmf_fil_action_frame_le *action_frame;
+ 	struct brcmf_fil_af_params_le *af_params;
+ 	bool ack;
+-	s32 chan_nr;
+-	u32 freq;
++	s32 ch;
++	__le32 hw_ch;
+ 
+ 	brcmf_dbg(TRACE, "Enter\n");
+ 
+@@ -5606,25 +5606,36 @@ brcmf_cfg80211_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
+ 		/* Add the channel. Use the one specified as parameter if any or
+ 		 * the current one (got from the firmware) otherwise
+ 		 */
+-		if (chan)
+-			freq = chan->center_freq;
+-		else
+-			brcmf_fil_cmd_int_get(vif->ifp, BRCMF_C_GET_CHANNEL,
+-					      &freq);
+-		chan_nr = ieee80211_frequency_to_channel(freq);
+-		af_params->channel = cpu_to_le32(chan_nr);
++		if (chan) {
++			ch = ieee80211_frequency_to_channel(chan->center_freq);
++			af_params->channel = cpu_to_le32(ch);
++		} else {
++			err = brcmf_fil_cmd_data_get(vif->ifp,
++						     BRCMF_C_GET_CHANNEL,
++						     &hw_ch, sizeof(hw_ch));
++			if (err) {
++				bphy_err(drvr,
++					 "unable to get current hw channel\n");
++				goto free;
++			} else {
++				af_params->channel = hw_ch;
++			}
++		}
++
+ 		af_params->dwell_time = cpu_to_le32(params->wait);
+ 		memcpy(action_frame->data, &buf[DOT11_MGMT_HDR_LEN],
+ 		       le16_to_cpu(action_frame->len));
+ 
+-		brcmf_dbg(TRACE, "Action frame, cookie=%lld, len=%d, freq=%d\n",
+-			  *cookie, le16_to_cpu(action_frame->len), freq);
++		brcmf_dbg(TRACE, "Action frame, cookie=%lld, len=%d, channel=%d\n",
++			  *cookie, le16_to_cpu(action_frame->len),
++			  le32_to_cpu(af_params->channel));
+ 
+ 		ack = brcmf_p2p_send_action_frame(cfg, cfg_to_ndev(cfg),
+ 						  af_params);
+ 
+ 		cfg80211_mgmt_tx_status(wdev, *cookie, buf, len, ack,
+ 					GFP_KERNEL);
++free:
+ 		kfree(af_params);
+ 	} else {
+ 		brcmf_dbg(TRACE, "Unhandled, fc=%04x!!\n", mgmt->frame_control);
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
+index c9537fb597ce..2cbb4a809ca7 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
+@@ -112,8 +112,8 @@ int brcmf_cyw_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
+ 	struct brcmf_cfg80211_vif *vif;
+ 	s32 err = 0;
+ 	bool ack = false;
+-	s32 chan_nr;
+-	u32 freq;
++	s32 ch;
++	__le16 hw_ch;
+ 	struct brcmf_mf_params_le *mf_params;
+ 	u32 mf_params_len;
+ 	s32 ready;
+@@ -143,13 +143,20 @@ int brcmf_cyw_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
+ 	mf_params->len = cpu_to_le16(len - DOT11_MGMT_HDR_LEN);
+ 	mf_params->frame_control = mgmt->frame_control;
+ 
+-	if (chan)
+-		freq = chan->center_freq;
+-	else
+-		brcmf_fil_cmd_int_get(vif->ifp, BRCMF_C_GET_CHANNEL,
+-				      &freq);
+-	chan_nr = ieee80211_frequency_to_channel(freq);
+-	mf_params->channel = cpu_to_le16(chan_nr);
++	if (chan) {
++		ch = ieee80211_frequency_to_channel(chan->center_freq);
++		mf_params->channel = cpu_to_le16(ch);
++	} else {
++		err = brcmf_fil_cmd_data_get(vif->ifp, BRCMF_C_GET_CHANNEL,
++					     &hw_ch, sizeof(hw_ch));
++		if (err) {
++			bphy_err(drvr, "unable to get current hw channel\n");
++			goto free;
++		} else {
++			mf_params->channel = hw_ch;
++		}
++	}
++
+ 	memcpy(&mf_params->da[0], &mgmt->da[0], ETH_ALEN);
+ 	memcpy(&mf_params->bssid[0], &mgmt->bssid[0], ETH_ALEN);
+ 	mf_params->packet_id = cpu_to_le32(*cookie);
+@@ -159,7 +166,8 @@ int brcmf_cyw_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
+ 	brcmf_dbg(TRACE, "Auth frame, cookie=%d, fc=%04x, len=%d, channel=%d\n",
+ 		  le32_to_cpu(mf_params->packet_id),
+ 		  le16_to_cpu(mf_params->frame_control),
+-		  le16_to_cpu(mf_params->len), chan_nr);
++		  le16_to_cpu(mf_params->len),
++		  le16_to_cpu(mf_params->channel));
+ 
+ 	vif->mgmt_tx_id = le32_to_cpu(mf_params->packet_id);
+ 	set_bit(BRCMF_MGMT_TX_SEND_FRAME, &vif->mgmt_tx_status);
+@@ -185,6 +193,7 @@ int brcmf_cyw_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
+ tx_status:
+ 	cfg80211_mgmt_tx_status(wdev, *cookie, buf, len, ack,
+ 				GFP_KERNEL);
++free:
+ 	kfree(mf_params);
+ 	return err;
+ }
+
+base-commit: 6b04716cdcac37bdbacde34def08bc6fdb5fc4e2
+-- 
+2.43.0
 
