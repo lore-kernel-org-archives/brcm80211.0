@@ -1,63 +1,63 @@
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
+Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F407279DB2
-	for <brcm80211@lists.linux.dev>; Wed, 23 Jul 2025 08:24:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1882927A103
+	for <brcm80211@lists.linux.dev>; Wed, 23 Jul 2025 08:44:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753259093; cv=none; b=WlfPQoeNeAx+QNZ0SKabD2VU9vg9tnHovR/FgMZSMZr7P1Ep79D44W5wQ2kE7J34dxR7kQhE9SrErh2MTbE4P0RFeaQ47pSoEhai77a03HoXAxocuBKuU7+RH3c/g/Av/IldWWYxGXtIwGOUYPVIGmrmmQO0G0SDtfVRGQp7Ygo=
+	t=1753260256; cv=none; b=uxSHb+0YFVtSkvbIvvxJ/sqLoYsHW+EshXvVUrpeoUT2q7I3tWRntLmjdSWCFVifCnJ3ToKM8V1MOZCGG1Qr77GGQ6hjm987jaonjWCzmeTxTwpP+X2YttUaOg7JXBUnfheHjlEgx8ROkPr40CrJyoZai6Ub1rswmXybtzz13kw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753259093; c=relaxed/simple;
-	bh=zHZZuz+dsh7Rq8cyvoRuAaGsj1WkcZU7y1nbwvlE6lI=;
+	s=arc-20240116; t=1753260256; c=relaxed/simple;
+	bh=WVittBvUo8cCbbunm7xGONFFTiaXociDe98Y4I5I2xw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DlHsYReKKnIh12KPtqgA4YlNdHV9DeVc7d0TS+6BYljLxDjRDykko/ebmEP/XrJov4iu6WnFjLkx7D+5UEUfKNEYA0qVgoAMTTvvR+3vnoGtHS3knQpPVNxQM/8Mv4ou62rbn651bDWfAvlxfjMu7eq5lWvIGprlg2+P7QiR59I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=XMqgeS4q; arc=none smtp.client-ip=209.85.219.47
+	 In-Reply-To:Content-Type; b=DTigu0xKUiImBsOhIsJJhfnmFt6lFP0pjxDREZraxT68QKvKnNH1aywYHYibpQiT24k3kZSrhywE1gLr7udZ/MQdC9BPn03Lnu1nHjhX6DNgn5x2jaOEXzmVogBYdwDDK3OPxg4JGCRkox3h13nZEqfxmATdeRObmEm5z1IIFZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=PTA0gTd5; arc=none smtp.client-ip=209.85.222.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="XMqgeS4q"
-Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-70707651960so1365066d6.3
-        for <brcm80211@lists.linux.dev>; Wed, 23 Jul 2025 01:24:51 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="PTA0gTd5"
+Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-7e278d8345aso619523385a.0
+        for <brcm80211@lists.linux.dev>; Wed, 23 Jul 2025 01:44:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1753259090; x=1753863890; darn=lists.linux.dev;
+        d=broadcom.com; s=google; t=1753260254; x=1753865054; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=ayKpcwRvYtK0EhDXuHbYCp34WLgrsSuefhaaE7uX6Fw=;
-        b=XMqgeS4qrxSbKwW1SIgdxuvkX0bePGw8/HP9QcUXBMrQCQtNcvXbzof1E5BQV6IVt3
-         Rl9kiHEUS6DLwVFGD4MPF5yvl3+2xqD1TK9jChqsrp/LaljOvwWNxK5nMVnJYL+BZwhC
-         7s5vFTi/Z1Rq8fjSKZC0TaBIA9vCZHl1ea1yY=
+        bh=eUbxncqgui8cg4e9QdhgKjwrTGgMU2+j/6biSS2Wr3o=;
+        b=PTA0gTd5YTUCc1lrVqoodMcWNPe6Xdr92W3bNVeSRDmJ2o8PpxgKIx6VGeN+PAjmYn
+         KBq9eE8RXbGSWHZ2BXQ6F9IqwkjKBRx5d16WTTqnhP03sGeE/ayKPJttEq9BLxZCUfu8
+         8P1sLe082G3KM10J/em4D0GOgbDILrkWFdEw8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753259090; x=1753863890;
+        d=1e100.net; s=20230601; t=1753260254; x=1753865054;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ayKpcwRvYtK0EhDXuHbYCp34WLgrsSuefhaaE7uX6Fw=;
-        b=dBLflyJwtZZZWJs0vvGtpWM0OGxwK69VPWWvYTcgRMWo0Alv6YoZPgU3DHutev9h2k
-         FqrNnup50b+3UkmiZUA0ZBQe3VeGKhyUMhobJ+RiNhIfNTkfLR1GpjeqsxP15pUCdW2d
-         u8mt35a2GLGzUtn2pOJlBSm4ihNmtJXhXPXLqQbUzNDYGX//t62jN5wxzcvRluP6bkEb
-         FXzPzHC6S4RwxI3RhEqiM15fYToaV2yFnEPaZQ7MJnqu4d45RmUAyYfIGMuwJdvGD36i
-         bq3zC6Fbs7Kb4RUZ9auJnWOlw2kH5dTeByEpvMFomO4cOYN074Gn95xP59HoCRoYTEzP
-         haRQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUnssGAV2y7hNWgXG57/lAzL/yvCP2OidFBu9IxfCIyBMKpYJoMWBAjFn8bUHHsLLrxf4oM/zgXYlc=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzc+TngH5/zCbmJ8SOWtYXRQ2gFWafqVl60jVrFp422N9dsHhwP
-	eWB2vFpnBqfjQJP4uXy3TRmuc296HnSZ4tMBX+QQ9hcwvlcja7/ivULO8yF0sIYu5A==
-X-Gm-Gg: ASbGnct/QxUBK29ubV1EiLtO96xhXDxYNVJ20czqkT2gBNRXHUHZPaZOh2ttA3ncbar
-	fjX3ttDV6LE2dL1tsz0KqvbDYZR6DAhyLp5TqrPMpJRYjxnttQt8rPsgkl7j7ZJhgVPDXqzC4xd
-	2Hj3VihT04G3bG3suHvYa83AVyrnctT8Qg43GPB1hpugeZELCCcQGynCVLhtuLxWnsqGGPf4bG/
-	ZbKhWmGp+XzW9tf1hOfbKUDeYdNxrnVmfDRD+BO9Ofww9Th5aWsPFNk66FNNQ8iTpDeVJohr6Qd
-	btD76x6a1Xj/MdmAUP+UwQ3WNIPtzCgvItVkz3DyYZN0Xou+0MxKxtUEwp0e1SCFoVuqI78BowT
-	0dsr2N7sHtjDlrC6xiiFQtNJaAei/W6UMqTrSFLYzELdhjDT8w67l08EPFRUoX9o=
-X-Google-Smtp-Source: AGHT+IGOHZzWlortsj68aKlGMpOALc3sSrw/3gjV8rBmjPrJGjTFuJ+tfLA6wTlliLWqmdm1E/jCgA==
-X-Received: by 2002:a05:6214:300a:b0:700:c46f:3bd with SMTP id 6a1803df08f44-707006ca2a1mr27235426d6.25.1753259090479;
-        Wed, 23 Jul 2025 01:24:50 -0700 (PDT)
+        bh=eUbxncqgui8cg4e9QdhgKjwrTGgMU2+j/6biSS2Wr3o=;
+        b=wWh/VwYVq4ljLEyTWp3OT9o4pSSbugqsjV2gbDqAQAQZDd09EdXbU+GqSMuTPkJYuY
+         +3piosaUU/fBGDBxoJPq+NSPRolbUhRkq1jQeXKuKQrOJhwb6rVRio83c3lmOXOIZR+E
+         yX6C/1flBbfngmc0020W3KmVtNJGgd1Uo8GVZXR9AtRCTIbH8SKkncn9c45pN8AcjX1s
+         +sXaSDqfowpfwb6I+DnsSEwa5p78SZZ3eNUNXPNotDeg9aF9V3c2SIKqZBiV0BsuFLxy
+         yD4GJbcFc1w91nykbvR/zxZA9DGwJu+bN15D5gA06ysyXdkpenrkCHzXh9NvcF1wTm7h
+         iPPA==
+X-Forwarded-Encrypted: i=1; AJvYcCWfA0TtUymz0gZaGK/t3ZVk8lg1GKGCK+tfcwREApRPrLfxFJV62exb35frhFWxCzSBiJT3enEkQow=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yxaf4+rudz1qhawHtQZzqZEhv5heVcSpWNu1VL1+Yn1d4czNmTj
+	jxoPA3STpPvCzuZ2SY2V5DepmUWu5vRLBRHthKLWyUKDRs/zJUPxlShJ3wqo5IVq5A==
+X-Gm-Gg: ASbGncswWu/xu8K60GVKQ550WP2ZU5ntVCrsbbGdXFpa55ZTRjsATwrK5SYloSjX3ru
+	k13oJZKPp3+R6mNobMiTNKrLEe8Z8cdWajafUmBhA4zICCn9Y6Wz+RgDN78jlFCBFIoaKAYNQ3c
+	+RXdwi5HE8ld9h4bDKV6IgUbygkQC+86v6NgdXd0wDaeg7xghylpz6sm0kNL+sUqrsoF2IgjMUs
+	WRbM2lYyQuQzmScs9IWJxQ455tbYEj12gkwUn3+Qc//S+N2Cu9IXiyENnktEWPl1WHDKEONjbeb
+	EtQQhC50v/4ePYf0/Fv7M+MTlScmmV3Z73bltvcFelnQsS6G73XASj3aUkdQPJ6RxQDXcuajGRf
+	fWxSqKqRyg3DK4CG/xj6btYodHFwcoa4DMii7kFZFQ59Sgvp1Yjf4
+X-Google-Smtp-Source: AGHT+IHOWmWlfk8kH9RBo2XZP7T3Fup5j8wp5NczajHeV8KaLN1TrtCQzem0unYAynyHHbUbAaoP5Q==
+X-Received: by 2002:ac8:7d02:0:b0:4ab:6fdc:70d4 with SMTP id d75a77b69052e-4ae6de72667mr28783791cf.20.1753260253366;
+        Wed, 23 Jul 2025 01:44:13 -0700 (PDT)
 Received: from [10.176.2.145] ([192.19.176.250])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-7051b921b86sm62071826d6.49.2025.07.23.01.24.48
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4abb4b3106bsm64954691cf.60.2025.07.23.01.44.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 23 Jul 2025 01:24:50 -0700 (PDT)
-Message-ID: <0030b46b-d8c2-4a85-9725-4d08b5787830@broadcom.com>
-Date: Wed, 23 Jul 2025 10:24:46 +0200
+        Wed, 23 Jul 2025 01:44:12 -0700 (PDT)
+Message-ID: <89c25e60-5e35-4ec6-bb3b-2f7fcfdc168d@broadcom.com>
+Date: Wed, 23 Jul 2025 10:44:09 +0200
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -65,13 +65,13 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RESEND] brcmfmac: Add an error log for brcmf_sdiod_ramrw()
-To: Wentao Liang <vulab@iscas.ac.cn>
-Cc: kvalo@kernel.org, sebastian.reichel@collabora.com,
- erick.archer@outlook.com, megi@xff.cz, linux-wireless@vger.kernel.org,
- brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com,
- linux-kernel@vger.kernel.org
-References: <20250414074232.2342-1-vulab@iscas.ac.cn>
+Subject: Re: [PATCH wireless-next v3 RESEND] wifi: brcmfmac: fix EXTSAE WPA3
+ connection failure due to AUTH TX failure
+To: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>,
+ Johannes Berg <johannes@sipsolutions.net>
+Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
+ wlan-kernel-dev-list@infineon.com
+References: <20250722044515.2562-1-gokulkumar.sivakumar@infineon.com>
 Content-Language: en-US
 From: Arend van Spriel <arend.vanspriel@broadcom.com>
 Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
@@ -117,22 +117,33 @@ Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
  NKowQLrlMBGXT4NnRNV0+yHmusXPOPIqQCKEtbWSx9s2slQxmXukPYvLnuRJqkPkvrTgjn5d
  eSE0Dkhni4292/Nn/TnZf5mxCNWH1p3dz/vrT6EIYk2GSJgCLoTkCcqaM6+5E4IwgYOq3UYu
  AAgeEbPV1QeTVAPrntrLb0t0U5vdwG7Xl40baV9OydTv7ghjYZU349w1d5mdxg==
-In-Reply-To: <20250414074232.2342-1-vulab@iscas.ac.cn>
+In-Reply-To: <20250722044515.2562-1-gokulkumar.sivakumar@infineon.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 4/14/2025 9:42 AM, Wentao Liang wrote:
-> The function brcmf_sdio_buscore_activate() calls the function
-> brcmf_sdiod_ramrw(), but does not check its return value. Log
-> the error message to prevent silent failure if the function fails.
+On 7/22/2025 6:45 AM, Gokul Sivakumar wrote:
+> From: Ting-Ying Li <tingying.li@cypress.com>
+> 
+> For WPA3-SAE Connection in EXTSAE mode, the userspace daemon is allowed to
+> generate the SAE Auth frames. The driver uses the "mgmt_frame" FW IOVAR to
+> transmit this MGMT frame.
+> 
 
-Johannes delegated this to me in patchwork so catching up on what was 
-already forgotten. Sorry about that.
+[...]
 
-The likelihood that writing the reset vector in device memory fails is 
-next to nothing, because this step is done after we have written the 
-firmware and nvram into device memory. Any issue accessing device memory 
-would have cause a failure in those steps. So I suggest to drop this patch.
+> 
+> Fixes: c2ff8cad6423 ("brcm80211: make mgmt_tx in brcmfmac accept a NULL channel")
+> Fixes: 66f909308a7c ("wifi: brcmfmac: cyw: support external SAE authentication in station mode")
+> Signed-off-by: Ting-Ying Li <tingying.li@cypress.com>
+> Signed-off-by: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
+> ---
+> 
+> v3 RESEND:
+>    * Resending the same v3 patch for review reminder, after adding additional
+>      mailing lists in CC.
+
+Please do not RESEND as a reminder. It creates another entry in 
+patchwork. Simply respond to your original patch to ping me.
 
 Regards,
 Arend
