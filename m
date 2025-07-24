@@ -1,96 +1,193 @@
-Received: from smtp9.infineon.com (smtp9.infineon.com [217.10.52.204])
+Received: from smtp14.infineon.com (smtp14.infineon.com [217.10.52.160])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D336D2417C6
-	for <brcm80211@lists.linux.dev>; Thu, 24 Jul 2025 10:03:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.10.52.204
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BE343F9D2
+	for <brcm80211@lists.linux.dev>; Thu, 24 Jul 2025 10:12:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.10.52.160
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753351397; cv=none; b=YQyV/hyPupqMb+HdZ19Pqc4mqt35cePm25kks0rtLCyqsFgvg3QKIBdMZxEvXwQr0AVgQ1PjOKB0Ipa1wfdFV7bnKn149+hdRo5X1O6P7F1+PoEucwycO+M9YotA+zhB/Af8j8bytV7FgAYGz+bl+AQrOFOxAc3MsPdeCybTKUA=
+	t=1753351951; cv=none; b=F4Cm9n3ZTrZRFgX4xFyylGEYgHuDvVgjlTtNSYQgDxyUBjAH11JvZSmehy4slDx8nW9cYBSqujgCen9ETW2cmS1OBT3AeRSJiaZ65XJ2OTMoKU08Wc+9fEB88Qc30rsj1uCanGomW6GT1oqfw/A1oQ6hWrcjYqlOqGg/aTPxhaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753351397; c=relaxed/simple;
-	bh=ptT1zoAqPii7EeHZ39Zr6sDYfhlB7eKzhp7y7BMyhAI=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iDSarmU4AJX6+40Lx072VLWnSygTURPDAsoJPRKKgvAgJEMPBJQYqwePf+UTyKQwWEVhQnqiKTM2OlHwDLzh19comDO1TjRR0A7jAFpk4aIKZ/ufX9dPOmamm6Eemv+VpMkCTk+qUAbOMsD9tdJy0cSCcHDxpFtoVKk9amR77XA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infineon.com; spf=pass smtp.mailfrom=infineon.com; dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b=k+XEtvH4; arc=none smtp.client-ip=217.10.52.204
+	s=arc-20240116; t=1753351951; c=relaxed/simple;
+	bh=RDlND4lGoIDtk7mgAw8eKVrm+9ItkUgUUyDoNe7QPC4=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=lnVVBN4wUO8cbcE2wPMpJqR+XLfayTKKZt1oAFPMZXR3iLE8e1Es/4HzplYhC69OprrB74PEAb/MOSYBGfPXuV+cPuGWR+ILsHld/88/B7xD0GEwJ2IRY7pec8iwQySDm+R9QojXpa8G1mUE2Sfk7/cac4Zabe183uTpdxlwKiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infineon.com; spf=pass smtp.mailfrom=infineon.com; dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b=XLJwg9Uu; arc=none smtp.client-ip=217.10.52.160
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infineon.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infineon.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b="k+XEtvH4"
+	dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b="XLJwg9Uu"
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
   d=infineon.com; i=@infineon.com; q=dns/txt; s=IFXMAIL;
-  t=1753351394; x=1784887394;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=ptT1zoAqPii7EeHZ39Zr6sDYfhlB7eKzhp7y7BMyhAI=;
-  b=k+XEtvH4ZJDXuEH6+8lVEezjL6x1MYDd3g5SGDTE5pL8H81DPUeiFTHo
-   nxAIzUx/ic/7P9knvFsT6+QXKw9mf+G1XQDYWPq12DLhjP0nn6v8i6tPT
-   5oFreE8HrvMvGxZyMuMyk7iaqhB8RRHI+rVgK1Z+DLI75dzvZ75YLMfOK
-   k=;
-X-CSE-ConnectionGUID: N6Jbso52Tx6n7Nt36byzCA==
-X-CSE-MsgGUID: o5n959voQC6dVuYrZf/21A==
-X-IronPort-AV: E=McAfee;i="6800,10657,11501"; a="58680006"
+  t=1753351948; x=1784887948;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=RDlND4lGoIDtk7mgAw8eKVrm+9ItkUgUUyDoNe7QPC4=;
+  b=XLJwg9UuWVVkCTn3/kAgzBhCqYwwMPAMi54KHwK1rgvYdYSOfWFaZI8l
+   zaBj4wMNc6oMs2D+YXjJvzf3jBGADmj21dCyNbH60y/avxJJBICGkua2p
+   dUzLNHTt5Wl3qD7oSZ2Sxl989nYFnyXjAZpWiR1o0bVJc94lrMrsgSiCN
+   4=;
+X-CSE-ConnectionGUID: a427PJtIQHeqMYxXssGOuQ==
+X-CSE-MsgGUID: 5Qfyut7ESCy0oW3Nurj3jA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11501"; a="92558837"
 X-IronPort-AV: E=Sophos;i="6.16,336,1744063200"; 
-   d="scan'208";a="58680006"
-Received: from unknown (HELO MUCSE812.infineon.com) ([172.23.29.38])
-  by smtp9.infineon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jul 2025 12:02:03 +0200
-Received: from MUCSE827.infineon.com (172.23.29.20) by MUCSE812.infineon.com
- (172.23.29.38) with Microsoft SMTP Server (version=TLS1_2,
+   d="scan'208";a="92558837"
+Received: from unknown (HELO MUCSE803.infineon.com) ([172.23.29.29])
+  by smtp14.infineon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jul 2025 12:12:20 +0200
+Received: from MUCSE827.infineon.com (172.23.29.20) by MUCSE803.infineon.com
+ (172.23.29.29) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Thu, 24 Jul
- 2025 12:02:03 +0200
+ 2025 12:12:19 +0200
 Received: from ISCN5CG14747PP.infineon.com (10.161.6.196) by
  MUCSE827.infineon.com (172.23.29.20) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.14; Thu, 24 Jul 2025 12:02:01 +0200
-Date: Thu, 24 Jul 2025 15:31:54 +0530
+ 15.2.1544.14; Thu, 24 Jul 2025 12:12:17 +0200
 From: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
 To: Arend van Spriel <arend.vanspriel@broadcom.com>, Johannes Berg
 	<johannes@sipsolutions.net>
 CC: <linux-wireless@vger.kernel.org>, <brcm80211@lists.linux.dev>,
-	<wlan-kernel-dev-list@infineon.com>
-Subject: Re: [PATCH wireless-next v2] wifi: brcmfmac: remove 43752 SDIO
- incorrectly labelled as Cypress chip
-Message-ID: <aIIEko_R94DVBDGY@ISCN5CG14747PP.infineon.com>
-References: <20250724084613.6336-1-gokulkumar.sivakumar@infineon.com>
- <432d50a2995dee6c421aad6bd21acceec191990e.camel@sipsolutions.net>
- <084b0c7e-1ef4-4522-b671-d9dab84537dd@broadcom.com>
+	<wlan-kernel-dev-list@infineon.com>, Gokul Sivakumar
+	<gokulkumar.sivakumar@infineon.com>
+Subject: [PATCH wireless-next v3] wifi: brcmfmac: fix 43752 SDIO FWVID incorrectly labelled as Cypress (CYW)
+Date: Thu, 24 Jul 2025 15:41:36 +0530
+Message-ID: <20250724101136.6691-1-gokulkumar.sivakumar@infineon.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <084b0c7e-1ef4-4522-b671-d9dab84537dd@broadcom.com>
-X-ClientProxiedBy: MUCSE819.infineon.com (172.23.29.45) To
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: MUCSE817.infineon.com (172.23.29.43) To
  MUCSE827.infineon.com (172.23.29.20)
 
-On 07/24, Arend van Spriel wrote:
-> On 7/24/2025 11:15 AM, Johannes Berg wrote:
-> > On Thu, 2025-07-24 at 14:16 +0530, Gokul Sivakumar wrote:
-> > > Cypress(Infineon) is not the vendor for this 43752 SDIO WLAN chip, and so
-> > > has not officially released any firmware binary for it. It is incorrect to
-> > > maintain this WLAN chip with firmware vendor ID as "CYW". So relabel the
-> > > chip as "WCC" as suggested by the maintainer.
-> > > 
-> > > Fixes: d2587c57ffd8 ("brcmfmac: add 43752 SDIO ids and initialization")
-> > > Fixes: f74f1ec22dc2 ("wifi: brcmfmac: add support for Cypress firmware api")
-> > > Signed-off-by: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
-> > > ---
-> > > 
-> > > v2:
-> > >   * Relabelled the 43752-SDIO chip from CYW to WCC instead of dropping the
-> > >     support for this chip as suggested by Arend.
-> > > 
-> > 
-> > Maybe update the subject now?
-> 
-> That would be nice. Please not that the vendor ID is more about the
-> firmware API that should be used for the device and not so much about
-> maintainers.
-> 
+Cypress(Infineon) is not the vendor for this 43752 SDIO WLAN chip, and so
+has not officially released any firmware binary for it. It is incorrect to
+maintain this WLAN chip with firmware vendor ID as "CYW". So relabel the
+chip's firmware Vendor ID as "WCC" as suggested by the maintainer.
 
-Will send the patch again after rephrasing the subject to indicate that the
-incorrect firmware Vendor ID (FWVID) is fixed by this patch.
+Fixes: d2587c57ffd8 ("brcmfmac: add 43752 SDIO ids and initialization")
+Fixes: f74f1ec22dc2 ("wifi: brcmfmac: add support for Cypress firmware api")
+Signed-off-by: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
+---
 
-Gokul
+v3:
+ * Rephrased the subject to indicate that the incorrect firmware Vendor ID
+   (FWVID) of 43752 SDIO is fixed by this patch.
+
+v2:
+ * Relabelled the 43752-SDIO chip from CYW to WCC instead of dropping the
+   support for this chip as suggested by Arend.
+
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c | 2 +-
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c   | 4 ++--
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c   | 8 ++++----
+ .../net/wireless/broadcom/brcm80211/include/brcm_hw_ids.h | 1 -
+ include/linux/mmc/sdio_ids.h                              | 2 +-
+ 5 files changed, 8 insertions(+), 9 deletions(-)
+
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
+index 8ab7d1e34a6e..6a3f187320fc 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
+@@ -997,9 +997,9 @@ static const struct sdio_device_id brcmf_sdmmc_ids[] = {
+ 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_4356, WCC),
+ 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_4359, WCC),
+ 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_43751, WCC),
++	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_43752, WCC),
+ 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_CYPRESS_4373, CYW),
+ 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_CYPRESS_43012, CYW),
+-	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_CYPRESS_43752, CYW),
+ 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_CYPRESS_89359, CYW),
+ 	CYW_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_CYPRESS_43439, CYW),
+ 	{ /* end: all zeroes */ }
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c
+index 9074ab49e806..4239f2b21e54 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c
+@@ -738,8 +738,8 @@ static u32 brcmf_chip_tcm_rambase(struct brcmf_chip_priv *ci)
+ 	case BRCM_CC_4364_CHIP_ID:
+ 	case CY_CC_4373_CHIP_ID:
+ 		return 0x160000;
+-	case CY_CC_43752_CHIP_ID:
+ 	case BRCM_CC_43751_CHIP_ID:
++	case BRCM_CC_43752_CHIP_ID:
+ 	case BRCM_CC_4377_CHIP_ID:
+ 		return 0x170000;
+ 	case BRCM_CC_4378_CHIP_ID:
+@@ -1452,7 +1452,7 @@ bool brcmf_chip_sr_capable(struct brcmf_chip *pub)
+ 		return (reg & CC_SR_CTL0_ENABLE_MASK) != 0;
+ 	case BRCM_CC_4359_CHIP_ID:
+ 	case BRCM_CC_43751_CHIP_ID:
+-	case CY_CC_43752_CHIP_ID:
++	case BRCM_CC_43752_CHIP_ID:
+ 	case CY_CC_43012_CHIP_ID:
+ 		addr = CORE_CC_REG(pmu->base, retention_ctl);
+ 		reg = chip->ops->read32(chip->ctx, addr);
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
+index 8a0bad5119a0..8cf9d7e7c3f7 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
+@@ -655,10 +655,10 @@ static const struct brcmf_firmware_mapping brcmf_sdio_fwnames[] = {
+ 	BRCMF_FW_ENTRY(BRCM_CC_4356_CHIP_ID, 0xFFFFFFFF, 4356),
+ 	BRCMF_FW_ENTRY(BRCM_CC_4359_CHIP_ID, 0xFFFFFFFF, 4359),
+ 	BRCMF_FW_ENTRY(BRCM_CC_43751_CHIP_ID, 0xFFFFFFFF, 43752),
++	BRCMF_FW_ENTRY(BRCM_CC_43752_CHIP_ID, 0xFFFFFFFF, 43752),
+ 	BRCMF_FW_ENTRY(CY_CC_4373_CHIP_ID, 0xFFFFFFFF, 4373),
+ 	BRCMF_FW_ENTRY(CY_CC_43012_CHIP_ID, 0xFFFFFFFF, 43012),
+ 	BRCMF_FW_ENTRY(CY_CC_43439_CHIP_ID, 0xFFFFFFFF, 43439),
+-	BRCMF_FW_ENTRY(CY_CC_43752_CHIP_ID, 0xFFFFFFFF, 43752)
+ };
+ 
+ #define TXCTL_CREDITS	2
+@@ -3426,8 +3426,8 @@ static int brcmf_sdio_download_firmware(struct brcmf_sdio *bus,
+ static bool brcmf_sdio_aos_no_decode(struct brcmf_sdio *bus)
+ {
+ 	if (bus->ci->chip == BRCM_CC_43751_CHIP_ID ||
+-	    bus->ci->chip == CY_CC_43012_CHIP_ID ||
+-	    bus->ci->chip == CY_CC_43752_CHIP_ID)
++	    bus->ci->chip == BRCM_CC_43752_CHIP_ID ||
++	    bus->ci->chip == CY_CC_43012_CHIP_ID)
+ 		return true;
+ 	else
+ 		return false;
+@@ -4278,8 +4278,8 @@ static void brcmf_sdio_firmware_callback(struct device *dev, int err,
+ 
+ 		switch (sdiod->func1->device) {
+ 		case SDIO_DEVICE_ID_BROADCOM_43751:
++		case SDIO_DEVICE_ID_BROADCOM_43752:
+ 		case SDIO_DEVICE_ID_BROADCOM_CYPRESS_4373:
+-		case SDIO_DEVICE_ID_BROADCOM_CYPRESS_43752:
+ 			brcmf_dbg(INFO, "set F2 watermark to 0x%x*4 bytes\n",
+ 				  CY_4373_F2_WATERMARK);
+ 			brcmf_sdiod_writeb(sdiod, SBSDIO_WATERMARK,
+diff --git a/drivers/net/wireless/broadcom/brcm80211/include/brcm_hw_ids.h b/drivers/net/wireless/broadcom/brcm80211/include/brcm_hw_ids.h
+index b39c5c1ee18b..df3b67ba4db2 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/include/brcm_hw_ids.h
++++ b/drivers/net/wireless/broadcom/brcm80211/include/brcm_hw_ids.h
+@@ -60,7 +60,6 @@
+ #define CY_CC_4373_CHIP_ID		0x4373
+ #define CY_CC_43012_CHIP_ID		43012
+ #define CY_CC_43439_CHIP_ID		43439
+-#define CY_CC_43752_CHIP_ID		43752
+ 
+ /* USB Device IDs */
+ #define BRCM_USB_43143_DEVICE_ID	0xbd1e
+diff --git a/include/linux/mmc/sdio_ids.h b/include/linux/mmc/sdio_ids.h
+index fe3d6d98f8da..673cbdf43453 100644
+--- a/include/linux/mmc/sdio_ids.h
++++ b/include/linux/mmc/sdio_ids.h
+@@ -77,7 +77,7 @@
+ #define SDIO_DEVICE_ID_BROADCOM_43439		0xa9af
+ #define SDIO_DEVICE_ID_BROADCOM_43455		0xa9bf
+ #define SDIO_DEVICE_ID_BROADCOM_43751		0xaae7
+-#define SDIO_DEVICE_ID_BROADCOM_CYPRESS_43752	0xaae8
++#define SDIO_DEVICE_ID_BROADCOM_43752		0xaae8
+ 
+ #define SDIO_VENDOR_ID_CYPRESS			0x04b4
+ #define SDIO_DEVICE_ID_BROADCOM_CYPRESS_43439	0xbd3d
+
+base-commit: 3630f043302c065adb3d919992173b7dcb251b7b
+-- 
+2.25.1
+
