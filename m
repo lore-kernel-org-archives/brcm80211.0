@@ -1,72 +1,69 @@
-Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
+Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA17A8634C
-	for <brcm80211@lists.linux.dev>; Tue, 12 Aug 2025 12:36:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 731B9217F27
+	for <brcm80211@lists.linux.dev>; Sun, 17 Aug 2025 09:41:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755002209; cv=none; b=GHijnFVMiy2+n1Jjb2trYA4yQMPuUoog7zeCHg/fpqNk+o+C+A3VHvW2y62g2Tvl6eaE+2V+oH7GXPyC/kpdoLSSJwhkXLdzjhFEWJYUQbV/l+I0Khj4lXlOyBXjUtA0TD437KD+HQ+7l8LbMhgC/Hhp2U2W0YiJg+Ipl3czWMU=
+	t=1755423678; cv=none; b=eJFehVHkTXJgQuuhhaKhn1g3iOHzkcVXCwMWJlY3zt6v/D5w47s29P+3W7U8jT2yBsaZd4RSxldbd0WOJcfpolAmi4ZFUfyoW0ijYzTGm5aK1+kMmpmxIC/z9/Eu3K3+uslI9kU5s5mVwCOxZNwXcWBR75lUVvooiGz7XrDrf+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755002209; c=relaxed/simple;
-	bh=36qCfev6CBHhrWddvv28EObqicMIqSDDel4IWLfJoNs=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=R74+8pIK3y7tySEOEPe4vZgviWssK7CuoJ9t/Q+dDuW04y57gBCkbDhI90JduR6as7JjwATqNG8zp6qWX1/8FEcfsyf9SmcSDowN+V3TD608KRS+BliHChwNd51Q+WERTzwJkpF/gpiK9C38fVg9DL72A6krqtKU1JucT6pbkqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XKf+vZ6l; arc=none smtp.client-ip=209.85.210.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1755423678; c=relaxed/simple;
+	bh=tYVHe9Aemop4I8tQPMkluI1puokuZbTfjk2Bink7Slc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=bhD3S5fl3fZGpeeKe8Uzq+pb3o/tDPEWhxp9GpQNi7SM2XrE6dqQGCY8USRkzn5B0TV8z/cYfGlSLfVtKk0WLQbOYxSI32/ENoyBZkx8vLKSCbl/Z5B+QVQ3QOpPkAz4L9a64AhedQa5J8TdQpNoCGN3lDvv8EWKFrzBmj3V49U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=Q46Zr+L6; arc=none smtp.client-ip=209.85.219.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XKf+vZ6l"
-Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-7425bd5a83aso4588475b3a.0
-        for <brcm80211@lists.linux.dev>; Tue, 12 Aug 2025 05:36:45 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="Q46Zr+L6"
+Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-70a9f5625b7so32485686d6.2
+        for <brcm80211@lists.linux.dev>; Sun, 17 Aug 2025 02:41:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755002205; x=1755607005; darn=lists.linux.dev;
+        d=broadcom.com; s=google; t=1755423674; x=1756028474; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=KCP9QD2yVDf9WyEMP7gZz0SvVxf9faaBdK+nGQh+dYM=;
-        b=XKf+vZ6l4XvYbdwmavV+W5oMUHMVw7T1LW1E+K/07l9kYRAMXOhOQR+9DT4uGqNb1z
-         R83MtlSj8IEyiTzXK8163u1PvBdNsLqUJ7ZuovfRSsU47FdsF3ZtGsw2QGaVVJZGGsXH
-         ivpcBuK4iUUDvDRfJjLEMh6cOPIO0aYimNlBUieiixOel8JoaMRCMEWRMl0UGCMAE3mI
-         xse0UEdGB/r7uDAfsACfqptlobevuIql3Jl8jIYiSq1MWuRSNc15B4/J0ayqu7Qpl4OK
-         byrGGAc1qf0wJKKU9M4gpOQprLcNg5EV47SR3T95OD4xgmwOoz5APH7ACyIfsN1xvfMu
-         UjXg==
+        bh=IOf6nM9z/FNgdzr+RRXAWsT29ZV2aI9xwsVeixOlN4U=;
+        b=Q46Zr+L6YJKF+5pvU1H5Xb0eABjjhMKn8j3ejS/yViblZlsBOqxFSsNWaWnwyGy3Ac
+         DyvKFJzyrKCFP9OTUk32rbxK0+pz5YZBggKBsNqDMWxlj9DNW5KHZ64uj54xX+/cZJAH
+         OQ836iy2u3QHokAwPO/mp3GmxswDhJ1Hwo+w0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755002205; x=1755607005;
+        d=1e100.net; s=20230601; t=1755423674; x=1756028474;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=KCP9QD2yVDf9WyEMP7gZz0SvVxf9faaBdK+nGQh+dYM=;
-        b=NE6K2zE78IQroogJl4Rkx5ffAP6BiC801NBLS/giXg19aqxTS/KpSkPvIWZSyq8J/o
-         OWqNjYOP1yYtqSzogtBAMnKWbhrcOV5EQUO9PGHNF+1m5H8w6oiKza7AZL5Xu+bn0lo8
-         UST7AXBkTugxM5pnS+6qDSEpQyFQOSkLHiiqPyhxXBPFc9FBMWU7JJAiE1XA341Mtpmg
-         fKoiPSSck2x5I9tqSCcol5gvJT9Khg3OpCVUZPmr19Bl5t+lRhXm1t8aDu4tQ6S7o/eE
-         3ztF3knsAsOpdkdWt51xUQqUQvNK+LJWJreMJiNSz0jtYcDcS8a9FKZPKK1sBxoUxi8s
-         yChg==
-X-Forwarded-Encrypted: i=1; AJvYcCWJpD7Kh4gFVfdeCkjAoR+lZqs/v1+k3aO2MRYWlhgY0PBHPXX7qmD/sMfDs3RlV2c1tNm794q17U8=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyQYz30LWgHpbt75UZsjctDCi9GVvHaT2swGVY1f+xqWdHDBzRJ
-	ebn3NdRp5E5u5vvtwrV35epH59A7dpGk0gl574VI7qtWnWaE+Yam6CWl
-X-Gm-Gg: ASbGncsJmUBZeAt0/xhjmySw3Lyc9sGrwTRlIMFA1cn6GbXbEs5g+hHgTUWmjhxekmj
-	Me2wmV7UhQKW+8/0q5gtfAiCga0ehL6PePTE34NOHsznkXR0zFf91bNUeEZfNZpQyZnh3K0OVl2
-	ibiopkm24YslrZdfo5hLPpkO/JP2Ye6dM5n/bUbj9Xhv/bGKFO5xnNpxswE3KqDTfuvbNKONvtd
-	R1oBPTBki/H2PrtBuRXYpmSP10JI0/BsCS4P5M5TLndUBkeK1NdizsOqqXkTO9LqEhm1jmi+Xvb
-	6d7p80T725qgUecXWrlrTcTCbFq4pYWEHT+Glrr114H15OYnzNYXGGsIylCED6Kl9tdX+eFlyDg
-	FDB8q1pIgYYKNuqjrVeiQ9PbUuFNOuDF7vz6VHZpHwtXQ0B+p
-X-Google-Smtp-Source: AGHT+IHZ/ewI4Y6s4Ti2kEtLEeMRKw80tXrowny5hfX+HTcxoMLrIZ9RNU5wYF2LB6c3wyXwKrkCxA==
-X-Received: by 2002:a05:6a00:2195:b0:76b:ca98:fab4 with SMTP id d2e1a72fcca58-76c460d2e40mr21394486b3a.2.1755002204566;
-        Tue, 12 Aug 2025 05:36:44 -0700 (PDT)
-Received: from localhost.localdomain ([2401:4900:8898:77ef:d42e:3af1:d5eb:7170])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76bccfe50c8sm29337295b3a.120.2025.08.12.05.36.41
+        bh=IOf6nM9z/FNgdzr+RRXAWsT29ZV2aI9xwsVeixOlN4U=;
+        b=C2KcoYkJYE9Y27shW5U3tkkzjpWapbv8tjlVjSkHnGOeVkyMEiyZ9NwmpVTYl/dj27
+         NIWZI+hkoIVN7gGsDudnezBag0AHRmh7D3tPBhUeZ5fQrK5NGGigEkVwPTc++QQ9aHJ0
+         lhgnyATK4Nxml2DZwNAaTYccP58SWFuyKaOETJkR4h8ChM82abI08R1kz8GIjOONw369
+         7fBAynGk4DurcOCCV1XUDwVCaNXcBOvU8CLxwdaSefgqlSQqmgV7wxVxH+CF9vnEnWp/
+         GxUtk/mhvFpzhqjpVZwReJfLeO8IbPrZQ/D9+dUJmfyLcgf2jO88lC3Tn70tVCg2IvD5
+         MJtQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX56Yyszrcj7Nwek9LUeZUl434FZvV0FIwYfL6h4pSIUmDJFiM3cFlnDJRvCbrG3j68KyzdnxkHBlo=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxmA/4oa+cKMLI6NGwZ48DeYItncD8Og5P2/Z/9/37p/gNOBH91
+	6ADtIogFV3Qz0y5LztCB3iaWq71pQ+KcoxEdDt6ZEBNZ5qF1x2UzVPUdDXqz7tOZokJriNcnZNE
+	OcfgZFL11
+X-Gm-Gg: ASbGnctEp9Oy/yg9rYqSpjmkYFYZBUxkgs8FZPRrE5EUxLrvrsumwEuZEg4WuB9ukRA
+	EOUF3ulWOA2NYyFpJW3U6f9d+Ym7aX2HodCcj8JJPBnHktZcMwU4pe2PQKvDBRrxQ0+C5kQ19Gs
+	D1J/X+rffQuU+AL9ORTUjnwODF75jSxNy3796LYvX7bNLIknKQ5oevXKzi0hL1bJWaP+5UlCmr+
+	pBi0VuaS0CuY8vSMYtWfAOoE+fEcEMttwiAbCypZBcx1ZrHLjifYpFAt5JqqKGvdGRadhA1BofD
+	yu9fqFL9Dz6GrxJ88rNvJVTZHFGgRPUVO0NbeqG43M/RVqFsnTjQHh5Re8GGTqnvhtkF6V9ZOCw
+	NGcwx/aG2ZIRPgk829SOzIYg2znI8w/ogvbpj8W99DqOEmTvYvaLh0I+ddhl3eQ9iYrVxoqR6X1
+	cv3HBBlA==
+X-Google-Smtp-Source: AGHT+IE4FSCfSlwTloizbtYnAgm9CSWMGk5sSYOkkx4tW7xHYf656/W6IVjSDrkvU4sbTajRgcQChw==
+X-Received: by 2002:a05:6214:3003:b0:704:9239:bdf3 with SMTP id 6a1803df08f44-70ba7c8446bmr88003936d6.40.1755423674285;
+        Sun, 17 Aug 2025 02:41:14 -0700 (PDT)
+Received: from bld-bun-02.bun.broadcom.net ([192.19.176.227])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-70ba902f819sm35706346d6.9.2025.08.17.02.41.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Aug 2025 05:36:44 -0700 (PDT)
-From: darshanrathod475@gmail.com
-To: arend.vanspriel@broadcom.com
+        Sun, 17 Aug 2025 02:41:13 -0700 (PDT)
+From: Arend van Spriel <arend.vanspriel@broadcom.com>
+To: Johannes Berg <johannes@sipsolutions.net>
 Cc: linux-wireless@vger.kernel.org,
 	brcm80211@lists.linux.dev,
-	brcm80211-dev-list.pdl@broadcom.com,
-	linux-kernel@vger.kernel.org,
-	Darshan Rathod <darshanrathod475@gmail.com>
-Subject: [PATCH] brcmfmac: avoid assignment in if/else-if conditions in NVRAM load path
-Date: Tue, 12 Aug 2025 18:06:36 +0530
-Message-Id: <20250812123636.2142292-1-darshanrathod475@gmail.com>
-X-Mailer: git-send-email 2.25.1
+	Arend van Spriel <arend.vanspriel@broadcom.com>
+Subject: [PATCH wl-next 0/4] wifi: changes for NL80211_CMD_SET_BSS support
+Date: Sun, 17 Aug 2025 11:40:59 +0200
+Message-ID: <20250817094103.941090-1-arend.vanspriel@broadcom.com>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -75,54 +72,34 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Darshan Rathod <darshanrathod475@gmail.com>
+Here a series with my idea on how to solve the fact that drivers may not
+support or handle all parameters contained in NL80211_CMD_SET_BSS message
+as sent by user-space. The driver can announce in the wiphy info which
+parameters it supports and user-space can indicate that the kernel may
+enforce strict checking for the NL80211_CMD_SET_BSS.
 
-The NVRAM selection logic in brcmf_fw_request_nvram_done() used
-patterns like:
+Arend van Spriel (3):
+  wifi: nl80211: allow drivers to support subset of NL80211_CMD_SET_BSS
+  wifi: drivers; indicate support for attributes in NL80211_CMD_SET_BSS
+  wifi: nl80211: strict checking attributes for NL80211_CMD_SET_BSS
 
-    if ((data = bcm47xx_nvram_get_contents(&data_len)))
-        free_bcm47xx_nvram = true;
-    else if ((data = brcmf_fw_nvram_from_efi(&data_len)))
-        kfree_nvram = true;
+Wright Feng (1):
+  wifi: brcmfmac: support AP isolation to restrict reachability between
+    stations
 
-This style violates kernel coding style guidelines and triggers
-checkpatch.pl errors. It also slightly reduces readability.
+ drivers/net/wireless/ath/wil6210/cfg80211.c   |  1 +
+ .../broadcom/brcm80211/brcmfmac/cfg80211.c    | 24 +++++
+ .../wireless/microchip/wilc1000/cfg80211.c    |  9 +-
+ .../staging/rtl8723bs/os_dep/ioctl_cfg80211.c |  8 --
+ include/net/cfg80211.h                        | 29 ++++++
+ include/uapi/linux/nl80211.h                  |  7 ++
+ net/mac80211/main.c                           |  8 ++
+ net/wireless/core.c                           |  9 ++
+ net/wireless/nl80211.c                        | 91 +++++++++++++++++--
+ 9 files changed, 160 insertions(+), 26 deletions(-)
 
-Refactor these cases by separating the assignment and the check,
-ensuring behavior remains identical while complying with coding
-standards.
 
-Signed-off-by: Darshan Rathod <darshanrathod475@gmail.com>
----
- .../broadcom/brcm80211/brcmfmac/firmware.c         | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
-
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
-index 83f8ed7d00f9..ef79924fd8f4 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
-@@ -554,12 +554,16 @@ static int brcmf_fw_request_nvram_done(const struct firmware *fw, void *ctx)
- 		data = (u8 *)fw->data;
- 		data_len = fw->size;
- 	} else {
--		if ((data = bcm47xx_nvram_get_contents(&data_len)))
-+		data = bcm47xx_nvram_get_contents(&data_len);
-+		if (data) {
- 			free_bcm47xx_nvram = true;
--		else if ((data = brcmf_fw_nvram_from_efi(&data_len)))
--			kfree_nvram = true;
--		else if (!(cur->flags & BRCMF_FW_REQF_OPTIONAL))
--			goto fail;
-+		} else {
-+			data = brcmf_fw_nvram_from_efi(&data_len);
-+			if (data)
-+				kfree_nvram = true;
-+			else if (!(cur->flags & BRCMF_FW_REQF_OPTIONAL))
-+				goto fail;
-+		}
- 	}
- 
- 	if (data)
+base-commit: d9104cec3e8fe4b458b74709853231385779001f
 -- 
-2.25.1
+2.43.5
 
