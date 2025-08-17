@@ -1,154 +1,105 @@
-Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
+Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38BFA2877E1
-	for <brcm80211@lists.linux.dev>; Sun, 17 Aug 2025 10:56:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D148214813
+	for <brcm80211@lists.linux.dev>; Sun, 17 Aug 2025 19:04:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755428188; cv=none; b=onO9ilQsGl+o3rvt0obs4r6G4/FftzZViUEPGuKHCI0wnDa9EVCV7rbyxrcaKRq6r6ffP/bIy0Xo3GlGw5kboSRriw765glCPAean5t6oyxfr8FtIkbMjlwUOWeXXXUkO+L6DVQhq53syWe9g9wtQIL+v3uA2kRO1EVhYD1I7Kk=
+	t=1755457495; cv=none; b=o/pHJubAaP7vuOBTbLeSYijXJh2yWWEEFwWBC+JMyD+t3uVB/e0PZY68msqHuKPGhxvRRMvZoCIJ1lxPjJyu4T6JBF7YVIhjac3qvZ9YY639jfmtr8Ar/sxa208WgG7gZ/EUJxa9uaaAsE2H7XIpms4kpKH3T7gRw99/dQUNDC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755428188; c=relaxed/simple;
-	bh=qOuSNQcHK6ukKtHKC1lmaCUSL3Dqedq0J93il9s0RNw=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=LOUw5hDgUWDuICv51sh5Wwlr6dhWkQljnsEQq1TwphkdO9hTUPRQ7CIJpD1y9Ep6pzIazRU1a067zPIMlNeJ8XpnhXmRudumtxTQTfDLbMvO3G54gKrEkfoLKvJ65qHMXNyE3V5T2/P5ysur6KwT2VAgxEtW2S2WFsdpc8V4Cio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=Dn/gngJE; arc=none smtp.client-ip=209.85.222.182
+	s=arc-20240116; t=1755457495; c=relaxed/simple;
+	bh=jwzphG+Az96Vdglwlj/nfJWwr5JXfZ64zxuJLYyJXzI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=r/tkey/AVTzfSGNDwTcD3eu8cy+atHs3TeZ0xSPs9lSUsaFlul5NKa5c7Jg4vJJxfLjJRCif52zlNfEkdkxOPWBMN7nrBFWrsxk9hQi3n23qpWTXJtv9/5O8+B8kRe1tVAHirsg1dtyYEftusdGS2RivkqRSKDpEJMzroqY38FY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=UrN4hZJq; arc=none smtp.client-ip=209.85.160.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="Dn/gngJE"
-Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-7e870666dd4so397394085a.2
-        for <brcm80211@lists.linux.dev>; Sun, 17 Aug 2025 03:56:26 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="UrN4hZJq"
+Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-4b109bcceb9so42156901cf.2
+        for <brcm80211@lists.linux.dev>; Sun, 17 Aug 2025 12:04:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1755428186; x=1756032986; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :references:cc:to:from:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=FxwHslc+aNOj4ZVlJxCfT88pdUZFU0Q7EaozNXDqlAo=;
-        b=Dn/gngJEIxdoHOqo9Rt/CwF6Jvitezd+fTXy7dV+lVmM7fW8YOoF8DLha1zv99iIi6
-         OhIhn9Y8C9XLBh83lrwNxbOqjql4015o6/vQSDtnNJ/AQ4sUs2zXN+oXGcZEoPfB0EZL
-         iWZwGcX/o1Oa1q81fCn7HwkkKzYr7/hOJHaE0=
+        d=broadcom.com; s=google; t=1755457492; x=1756062292; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=stkdniq3T479U2/HC4Jl2YCOaNORwWoeYv674Y4LHh8=;
+        b=UrN4hZJqgj1WKGXo0ClrojtLLOJOiU0fI1mXE6Pz5u/szIpoUczrstR98hHJiB8NFD
+         Tnf+/9lBAtixu3I+G5SkEeIAPZLKwhgYSgNaowTwvSe0dFkqHPY2UlrQW7eSYaMRcIau
+         VXQkQqZti/1YQoSELTLbSP7F3xMFlsfattdVI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755428186; x=1756032986;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :references:cc:to:from:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1755457492; x=1756062292;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=FxwHslc+aNOj4ZVlJxCfT88pdUZFU0Q7EaozNXDqlAo=;
-        b=EWQYKCK+jTv9JU/cR5+fo7MDc2+y7r+Fb38IMWI4PBwMhFOwPanxsbwen2Y5T8d6Vi
-         s8sflVLEgPrpUkEKr+s5k8sN8Qwqlku79vJ98X0WayQexisYz5oDaZFWeWMpqE1jZocT
-         OxcAPjGtphqdGgqie2OQeV9o/w8PVWc16j3HLoUtBTdfG1A0Y28IiGT8gTEPMDLjvGT+
-         dGyidsD99vRZ9D6lcDuQwwEWH0/yda9XYqAeaBf8snidTCMlZLv15opJQ/imm0bgiAYE
-         vuqxVzYSH7EumnpE9Ce9FUC2JZ505tJyy6ulPH0Ou4QT8B8RHA1ZbXRaW0kqoxO8A48D
-         y6eQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVIVXmE7KXAOpJQ3v1zIMW5IylS4KD3gx84SUKNKNEanJQnLo0VbU6qIFK9oK+LYFDLLLFLv53939U=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yxz0QmA9Yj56bzPOURYDfWXH/WqIOORMJ7OGQiOfNmibFxq14pW
-	+KVnVCPbD7+ZWjQvSFWFkWYW1MyF5yrVAfMCMXzRW3fNuYBVUo4d4gLLeqYvg892Xg==
-X-Gm-Gg: ASbGncuXA4bErRN6nFd8M10sSAKEWNCUYovUCe0EijldwGAwEZLdQyu1MpaaJxIKBYi
-	6XN8/4ZaUzGoC+i2ktlTF3e1cwkh/SS4TM30EeQjgM/BU/SIqx2Gre0SDz6PsYbVBy7GHCTre8R
-	89nIc7VkErxqOZfn74xUuT2rShuYrXh8aSpAusUcSJgEKAiF+DuHwl+im2hjnAxQ4m9QxXJsaQb
-	INOJgSJfqs/8Iv8qcUgd3qJTd7ieBQC6sLyeafhPcxFylL/cvar7c25mSA0GO9bOTW9TZfnQ8UI
-	T/UC/t4wBeBBpLQW9ay3OqJXIeMC5fvydaYTmIc++pVeXHpQn96JbzbbIQ4EapoVic6wub2+Dmu
-	nrWnfkv75gs3M12rZOWFW2nxOr9G8P6SSZ1zFrsOdbOgqZsEbMOWQ56PNbB3pyl/vkyQbK92iVY
-	uZ+w==
-X-Google-Smtp-Source: AGHT+IFusN4DUbUusp7Umki1FAQcmK57wdk3DtLZJPMwMbwaRtjlR4gBLpyyIYtC5UhIVkDYlHVQbg==
-X-Received: by 2002:a05:620a:2809:b0:7e3:3dfa:c678 with SMTP id af79cd13be357-7e87e06f270mr1163901285a.53.1755428186033;
-        Sun, 17 Aug 2025 03:56:26 -0700 (PDT)
-Received: from [192.168.178.137] (f215227.upc-f.chello.nl. [80.56.215.227])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-70ba9067c23sm35801006d6.18.2025.08.17.03.56.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 17 Aug 2025 03:56:25 -0700 (PDT)
-Message-ID: <fceaae4e-a58e-4144-8c91-b62d030d28c5@broadcom.com>
-Date: Sun, 17 Aug 2025 12:56:19 +0200
+        bh=stkdniq3T479U2/HC4Jl2YCOaNORwWoeYv674Y4LHh8=;
+        b=sjGRmKZnYymxLLCW/RdFwzWwRexHHSNCKrbY8WL3HwhnSEaBLom8NDCInZAOX/3u1d
+         kuWKLfz71d6PMq9xUsOnjUbUmf8nrA1TybMp5Dj3aWN6daAkhFQBwdespSH6PAtzPR1o
+         0llQbyxi3ppXoe/Qb4Vtu40rg62ZkSbcoKDJyJR5hKdFXvRT+NHxLK55rv1YLF1q11OB
+         V+5m6Jr/3vzZYRT8GReWEaX/5E9/o9+9XwyM011bkDUTAWsR+LxbX88321tIfE1qKIkR
+         JvkMCkOmQO4NV0IXu/21wPO1vOxNeOD8yoFH8/Wxy1arQZo9uliJxb1D+Vh0K79X7V1P
+         1JAw==
+X-Forwarded-Encrypted: i=1; AJvYcCUZmCgpNO1keXeImv0M8OPhTd3OQPC+PhprNNIk+lPulY0nwPOrR0j2Hslz2VdLcJBc59FwXSAtQGs=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzMTFQXIXCUVrx4zfDQC5vLExW/T9s1bP5d5HDPx5rGnnaR4t1O
+	VDc4ONsSqKDmzw89uLkAV89mnA53slIe8T8IWdFTRNQP97C99VVWhZ1VIA6/43SGXfHzhFI1+QX
+	F1JbtsQ3d
+X-Gm-Gg: ASbGncsU+xSIWdlFIDL/20onVt/JN7krAmNWc4n5skj7BJtRH4d0kkxFUvEcb90xvKL
+	OXtfeI937KAdC0umDtWINLyIXwWFOa9VgGLw057lq24DITX8WaT84CVtuUwfWAr1CzjfWiQgEOA
+	FYkv/NR/gFboIGiGQhpKfKBCyi5DtVVu1Ks+NvzRBL+AQPqaLFzS3YOiwRPNPjfmkT9gUaOGk7X
+	nPI2l1QqAMJ4SgSwXv1AzykJKy3ihB/066Uabhik3GKsyZhXAKRVOrRe6GyKCJQmJA9546fHqLD
+	MMog7B+9cg+PcXm5ol+xYlaa2udwPvBxcXzksFgvXjHwdlfsXhKpWLOYjVEevWKjnryy0wHSjIA
+	T8yJWkl63Ug8RaejQmjAjWvx7DhM1ombicM1B2ww3Nn4YfO1piMoQGTOleIGjqpSdyz8HRU9U2E
+	e9HQ==
+X-Google-Smtp-Source: AGHT+IETavnthNhCzGCss+welECI8tYBDm3EH1B8GP392KksVfDAaovV7zH0zBxr19zj7pQPRNCruw==
+X-Received: by 2002:ac8:5cd1:0:b0:4ab:4d30:564f with SMTP id d75a77b69052e-4b11e2c486amr161485611cf.47.1755457492133;
+        Sun, 17 Aug 2025 12:04:52 -0700 (PDT)
+Received: from bld-bun-02.bun.broadcom.net ([192.19.176.227])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4b11de50b31sm40382461cf.51.2025.08.17.12.04.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 17 Aug 2025 12:04:51 -0700 (PDT)
+From: Arend van Spriel <arend.vanspriel@broadcom.com>
+To: Johannes Berg <johannes@sipsolutions.net>
+Cc: linux-wireless@vger.kernel.org,
+	brcm80211@lists.linux.dev,
+	Arend van Spriel <arend.vanspriel@broadcom.com>
+Subject: [PATCH wireless-next v2 0/4] wifi: changes for NL80211_CMD_SET_BSS support
+Date: Sun, 17 Aug 2025 21:04:31 +0200
+Message-ID: <20250817190435.1495094-1-arend.vanspriel@broadcom.com>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH wl-next 4/4] wifi: brcmfmac: support AP isolation to
- restrict reachability between stations
-From: Arend van Spriel <arend.vanspriel@broadcom.com>
-To: Johannes Berg <johannes@sipsolutions.net>
-Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
- Wright Feng <wright.feng@cypress.com>,
- Chi-hsien Lin <chi-hsien.lin@cypress.com>,
- Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
-References: <20250817094103.941090-1-arend.vanspriel@broadcom.com>
- <20250817094103.941090-5-arend.vanspriel@broadcom.com>
- <b241fff3-b81e-45a0-ab8e-27fc0a3a75e1@broadcom.com>
-Content-Language: en-US
-Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
- 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
-In-Reply-To: <b241fff3-b81e-45a0-ab8e-27fc0a3a75e1@broadcom.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-On 8/17/2025 12:41 PM, Arend van Spriel wrote:
-> On 8/17/2025 11:41 AM, Arend van Spriel wrote:
->> From: Wright Feng <wright.feng@cypress.com>
->>
->> hostapd & wpa_supplicant userspace daemons exposes an AP mode specific
->> config file parameter "ap_isolate" to the user, which is used to control
->> low-level bridging of frames between the stations associated in the BSS.
->>
->> In driver, handle this user setting in the newly defined cfg80211_ops
->> function brcmf_cfg80211_change_bss() by enabling "ap_isolate" IOVAR in
->> the firmware.
->>
->> In AP mode, the "ap_isolate" value from the cfg80211 layer represents,
->>   0 = allow low-level bridging of frames between associated stations
->>   1 = restrict low-level bridging of frames to isolate associated 
->> stations
->> -1 = do not change existing setting
-> 
-> Hi Johannes,
-> 
-> See that auto-delegation in Patchwork is working, but if you don't mind 
-> I bounce this one back to you as I feel being a bit too involved in this 
-> one.
+Here a series with my idea on how to solve the fact that drivers may not
+support or handle all parameters contained in NL80211_CMD_SET_BSS message
+as sent by user-space. The driver can announce in the wiphy info which
+parameters it supports and user-space can indicate that the kernel may
+enforce strict checking for the NL80211_CMD_SET_BSS.
 
-Nevermind. Let me first fix the checkpatch/build issues :-(
+Arend van Spriel (3):
+  wifi: nl80211: allow drivers to support subset of NL80211_CMD_SET_BSS
+  wifi: drivers; indicate support for attributes in NL80211_CMD_SET_BSS
+  wifi: nl80211: strict checking attributes for NL80211_CMD_SET_BSS
 
-Gr. AvS
+Wright Feng (1):
+  wifi: brcmfmac: support AP isolation to restrict reachability between
+    stations
+
+ drivers/net/wireless/ath/wil6210/cfg80211.c   |  1 +
+ .../broadcom/brcm80211/brcmfmac/cfg80211.c    | 23 +++++
+ .../wireless/microchip/wilc1000/cfg80211.c    |  7 --
+ .../staging/rtl8723bs/os_dep/ioctl_cfg80211.c |  8 --
+ include/net/cfg80211.h                        | 29 ++++++
+ include/uapi/linux/nl80211.h                  |  7 ++
+ net/mac80211/main.c                           |  8 ++
+ net/wireless/core.c                           |  9 ++
+ net/wireless/nl80211.c                        | 89 +++++++++++++++++--
+ 9 files changed, 158 insertions(+), 23 deletions(-)
+
+
+base-commit: d9104cec3e8fe4b458b74709853231385779001f
+-- 
+2.43.5
+
