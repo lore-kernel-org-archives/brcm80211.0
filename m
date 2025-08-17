@@ -1,70 +1,70 @@
-Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
+Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D50C20485B
-	for <brcm80211@lists.linux.dev>; Sun, 17 Aug 2025 19:04:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B503121FF26
+	for <brcm80211@lists.linux.dev>; Sun, 17 Aug 2025 19:04:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755457497; cv=none; b=dijncJh+qUuooTTSVtTjZISuUF+hCcjOxHHlmW3QZImk9A3ftRXx3fgeGgzdsZ3BaE9a2lgRAsHnqQ1c4qWbTvZaViUwtEas82R4WyThAa6FteT851iX3w247B8DO8Jy5gRqAbRwz8ORUTCOAeZjJVfl/eF8537kL6xNtjJ1stQ=
+	t=1755457499; cv=none; b=jc8cD1apESiE95mLMAF4fBuIpf/cwUnBg7U+keZzYSY0lH5dZlhx0BMkhRLiX8Rogf54MVkbfIozthqH5WblAOZiZHu7VSTYxZRmN8nWPt53TwMuOb6IVkRr7Cc3elJqtUyeSkFspmZcr+mLgbGb0bRNuLQHf4uJz0zxo+4mBDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755457497; c=relaxed/simple;
-	bh=MxEblRKCkXJ/DgdSCMep5VgKqcORb1UxgFVjKkOzcpE=;
+	s=arc-20240116; t=1755457499; c=relaxed/simple;
+	bh=vEFVbB2SmisgIXJoaMjaiuVu+dXZ4m1ouQNidypipqk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CWhWIfBonYsC0o6fkkO+t6lyXB0eLjRzaJwby/wFapmXwshUhJG52jySb5OKnB3s+7CboS+QezQusWhxcQbEtFJHAW8VBEXA0euUN5KNFNDI6LiRl8YZg4UVb2nftL9whIhbok3y5nlJX/zovCfDSguMQugB5FtNU5KnCdATXyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=HYI3BXmp; arc=none smtp.client-ip=209.85.160.171
+	 MIME-Version; b=H1lXjbIvSdzBg0rXLltMsE0B6i8tSbBqk9kXnCtff5nhfHk+3IA8dvclJfB/zypznjGSL8YSl7UikaHMRJ6fcVvXMQc7SmgdWms9mh7zfN3ejDnZCKOBjOvTAtkilMEhNwM8svfXhrpz1efkuXGfbAnCwRdgncI9z4JAAmIACWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=A6VUhNK4; arc=none smtp.client-ip=209.85.160.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="HYI3BXmp"
-Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-4b109c63e84so37289261cf.3
-        for <brcm80211@lists.linux.dev>; Sun, 17 Aug 2025 12:04:55 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="A6VUhNK4"
+Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-4b133b24e66so6443721cf.2
+        for <brcm80211@lists.linux.dev>; Sun, 17 Aug 2025 12:04:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1755457495; x=1756062295; darn=lists.linux.dev;
+        d=broadcom.com; s=google; t=1755457496; x=1756062296; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=HG3pn2yI0jlbVIy2QdxZ8bTkBToAwMOqbtcIXoALkyU=;
-        b=HYI3BXmpw+EriT3PuHrkKp5nlgSIhCoy6nf8aMFUb2yZgnyAxrMAiCqAT0nMsERf50
-         hSB6PKxA8Qv0soMoFmmxAzt6dR9/hRPGFkFCwVJxGzDUs3zWwPC8dtvKdgR4gbsAPs3z
-         yaWjXQiQ6cLK+vzuTxfdS/TWMjaDf3HG52WM8=
+        bh=0K9F9stUcHItMGPx2gd9JWX+dHSLyDbc7/NXa2s6Tvk=;
+        b=A6VUhNK4z+pjadEXOt4RQYG4wJ8qIrGwSkySGwOo3qD8RQOx/pLBrjFhFT8vGcAeaN
+         TbxudgMormLZyTxCTIugkD0ru2KlSeRvTUWThfS/THXDiVaFJfmckG4nxKVDioIUkIRU
+         Z7meyfRPm56X8vbsHROQuAiMK1jglTvCLA9xE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755457495; x=1756062295;
+        d=1e100.net; s=20230601; t=1755457496; x=1756062296;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=HG3pn2yI0jlbVIy2QdxZ8bTkBToAwMOqbtcIXoALkyU=;
-        b=tsofjKB1xWs3jzeRNOQ0lF14lJeagaTI9101Zqla/AqKJPBNkiX0o+/ZX9uwxv7NJK
-         Oqz7VCaGbjMQJyZA1kRFKVjot/RQLfJvM+MQhMNkzJZvHdanv0oK9x2KGqPsJ8gsKiZB
-         kYOTtQUd1/hhx/C81MF/dPEj3kYE2r2vLu2Y0APPNDS9T6OUPmE0QokgfHkZyXMgXFc0
-         +IYBBpYqHpt8rs6/IeJHPrWCAButGdBdGxTMd2LEgjWcaAkyrc3aqtfZTL7RbrYaUO8j
-         y8Q7wjGRXCa796CtDnLfMbyhqWketUV+mDxLgY6wc3V8TqjvEZGO7iLPO0Pe5OjTWI3T
-         0mJg==
-X-Forwarded-Encrypted: i=1; AJvYcCXv3pqiFbkFNmffvZFjCqhlotDJZn4SHadpBaaknWoLb4NuottPBlH66yTTvJfZGkj0y6J1lg7dOKg=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzkEwI9YQM7ANPUQm6udXX00+pGAD1fS8wMxanYFHceK1sQ0bgJ
-	S2fqeGBZNr8mltYv+vfukIAXt6EsWEzbD1Ufwv+bPsaS2GTce26QeGxKqjqZ+HCq8JiyYSCO1cl
-	N8cAzB65g
-X-Gm-Gg: ASbGncug8Ogw5srp96HKf5gfTMNJ/Azb0yRBtm3TGMxMOcnzXaE5pZw/lsvgGDXY29l
-	x6Jn8lLy9KTHtRQPtNHYeIvBpjIJNQH8Uqt4oU+WdFYsba+BQrvJioUDiT+8+/H2gYpi6eZOLZ/
-	UBqIL/pKlQudiiLkQGwAZkCKbSW7TT/cV+kL0bN8/PC/9/szotJhrREeMLEtmJzCwoidFD4GwMM
-	Qlb3sJUvyWA7fRzJ9owJfhy9coFAA95Aga1QErb93fCvL4+y+ce7agEewyZNmnHZ+LFJtg+8wyD
-	mM0GLMtJA3TRtJ67cyihqbHQLLWEgGv+RBkWfge3lj+tis2AYACrVx+BFNC6oCC+bMbpyxJ+Qcw
-	R59okR+X1H9MsSVWDHDHpNtql44U2vJOWSv7d1ENtJ7fxZkOGj4pt1jhvhW1r4qj3nlD/zj1rhX
-	Ml3w==
-X-Google-Smtp-Source: AGHT+IH5PD6F5Xet9ktLWPtrRVw+c5s7WwvNKhosT89aMGG9sb1Wggf6mRV66QUd0fWY+ozXhIJPyQ==
-X-Received: by 2002:a05:622a:5444:b0:4b0:b7cf:8cde with SMTP id d75a77b69052e-4b129209c6emr60569101cf.21.1755457495036;
-        Sun, 17 Aug 2025 12:04:55 -0700 (PDT)
+        bh=0K9F9stUcHItMGPx2gd9JWX+dHSLyDbc7/NXa2s6Tvk=;
+        b=lMKm7Q8i616VX0cxqMVoodfz3UnY75qZEHVB+vzmaNkhH7z+OG/48vFOj40x4gzb+Y
+         GjNromovIzVf+/gFfA1DiTLnoaOhWoax+IkWCNznyN/6rHxzOAQZowZYxDwENTZzdvVo
+         BcLqGAjA5OK08liVU16+o8mC6QwUij3Pj6tTeDxSEYRP880LkyMBalopXGF3bui2+hh5
+         t5ARd69ePwbiXfFN+FynDXyF/I1cdI4sErSc5WzSqnO8KukFDUj/Jv4vupnAN+yUZwPy
+         WK8bDk7qgdWRAPN9A0spdPp2cCG9VLUntUMrtcEAHX9/Xw/ApSD3bNTy1TWGdkGn4aNL
+         Jf3Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWgoecdoMNM5kE77g8P8ZDIsiDkv0HOGD8n9p2w53b4cX7oywu7O7C9rfpV0jdT8u5pPewZrzBKwH0=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz0WYezIBk/RUgeTYBDpPpru6jtJjGQoOYSgIBuS7OFk7VnGh+t
+	Vp26WkZQryoIjgSCM2KsdmgGLjqH0yk1pRYqVuF+ZahcPgrPYGqp5SDotRGajUpCGzgvkmSCc3d
+	QunQJ+WjW
+X-Gm-Gg: ASbGncuTzIPXV/p2SuWJgj6ETJkc6V/DuUKYU2YI/ybA/K+KXNErtK4x/9LP25g6yCm
+	Jz7ksTAmtt2xMcEW3nyNaRiW3ggmYqNuOQUJFjFZCGSirTQQE1j4iMvZbrP/Yyi+J+s3DxIhV+h
+	Lpr/Yyy8Q1fioF6APSwEeuLmr9/whbwYtVGc7NG8utNT5ZI1CbG69QADlkf43PiQqZ9DYMfANPv
+	QAEeexLlb2tSjpVhgi3V2C8bq4ox3zbjdcQqi98lMB/D/mLIdBrSdQlDTglszofazichz4yGtaf
+	OYhCojkWgzghcff9O6kdFe9pPbEZvC8t7u5xvmhsaiSRDl3NKpDYUcFKoSl1C4Dvi9xHdIl9bV4
+	YX+qS0N7mzLj5xdL59K/uYS86QjpC+bOmSe1tpv3I8WR4tLPcTWk+ghgstC+FFuRAKuroR4scHl
+	XArOSagQ==
+X-Google-Smtp-Source: AGHT+IGi9Zj7stGLJybSRddb3OnvwILzVShuwQyRhJS2TSWURorhoA2bJxWJb8jYjrjKAMzlED6Quw==
+X-Received: by 2002:a05:622a:4a1a:b0:4ab:9586:bdd6 with SMTP id d75a77b69052e-4b12a3afe95mr100367011cf.53.1755457496500;
+        Sun, 17 Aug 2025 12:04:56 -0700 (PDT)
 Received: from bld-bun-02.bun.broadcom.net ([192.19.176.227])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4b11de50b31sm40382461cf.51.2025.08.17.12.04.53
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4b11de50b31sm40382461cf.51.2025.08.17.12.04.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 17 Aug 2025 12:04:54 -0700 (PDT)
+        Sun, 17 Aug 2025 12:04:56 -0700 (PDT)
 From: Arend van Spriel <arend.vanspriel@broadcom.com>
 To: Johannes Berg <johannes@sipsolutions.net>
 Cc: linux-wireless@vger.kernel.org,
 	brcm80211@lists.linux.dev,
 	Arend van Spriel <arend.vanspriel@broadcom.com>
-Subject: [PATCH wireless-next v2 2/4] wifi: drivers; indicate support for attributes in NL80211_CMD_SET_BSS
-Date: Sun, 17 Aug 2025 21:04:33 +0200
-Message-ID: <20250817190435.1495094-3-arend.vanspriel@broadcom.com>
+Subject: [PATCH wireless-next v2 3/4] wifi: nl80211: strict checking attributes for NL80211_CMD_SET_BSS
+Date: Sun, 17 Aug 2025 21:04:34 +0200
+Message-ID: <20250817190435.1495094-4-arend.vanspriel@broadcom.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20250817190435.1495094-1-arend.vanspriel@broadcom.com>
 References: <20250817190435.1495094-1-arend.vanspriel@broadcom.com>
@@ -76,101 +76,146 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The command NL80211_CMD_SET_BSS has a number of individual attributes
-and the driver can advertise which of those it will handle when it is
-changed by user-space. For drivers providing an empty .change_bss()
-the callback has been removed.
+Assure user-space only modifies attributes for NL80211_CMD_SET_BSS
+that are supported by the driver. This stricter checking is only done
+when user-space commits to it by including NL80211_ATTR_BSS_PARAM.
 
 Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
 ---
- drivers/net/wireless/ath/wil6210/cfg80211.c        | 1 +
- drivers/net/wireless/microchip/wilc1000/cfg80211.c | 7 -------
- drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c  | 8 --------
- net/mac80211/main.c                                | 8 ++++++++
- 4 files changed, 9 insertions(+), 15 deletions(-)
+ include/uapi/linux/nl80211.h |  5 +++-
+ net/wireless/nl80211.c       | 52 +++++++++++++++++++++++++++++++-----
+ 2 files changed, 49 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/wil6210/cfg80211.c b/drivers/net/wireless/ath/wil6210/cfg80211.c
-index 7703a0933a14..7218fe70f3bc 100644
---- a/drivers/net/wireless/ath/wil6210/cfg80211.c
-+++ b/drivers/net/wireless/ath/wil6210/cfg80211.c
-@@ -2708,6 +2708,7 @@ static void wil_wiphy_init(struct wiphy *wiphy)
- 	wiphy->n_cipher_suites = ARRAY_SIZE(wil_cipher_suites);
- 	wiphy->mgmt_stypes = wil_mgmt_stypes;
- 	wiphy->features |= NL80211_FEATURE_SK_TX_STATUS;
-+	wiphy->bss_param_support = WIPHY_BSS_PARAM_AP_ISOLATE;
- 
- 	wiphy->n_vendor_commands = ARRAY_SIZE(wil_nl80211_vendor_commands);
- 	wiphy->vendor_commands = wil_nl80211_vendor_commands;
-diff --git a/drivers/net/wireless/microchip/wilc1000/cfg80211.c b/drivers/net/wireless/microchip/wilc1000/cfg80211.c
-index a395829ebadf..c39e7f313ea1 100644
---- a/drivers/net/wireless/microchip/wilc1000/cfg80211.c
-+++ b/drivers/net/wireless/microchip/wilc1000/cfg80211.c
-@@ -794,12 +794,6 @@ static int get_station(struct wiphy *wiphy, struct net_device *dev,
- 	return 0;
- }
- 
--static int change_bss(struct wiphy *wiphy, struct net_device *dev,
--		      struct bss_parameters *params)
--{
--	return 0;
--}
--
- static int set_wiphy_params(struct wiphy *wiphy, int radio_idx, u32 changed)
- {
- 	int ret = -EINVAL;
-@@ -1709,7 +1703,6 @@ static const struct cfg80211_ops wilc_cfg80211_ops = {
- 	.change_station = change_station,
- 	.get_station = get_station,
- 	.dump_station = dump_station,
--	.change_bss = change_bss,
- 	.set_wiphy_params = set_wiphy_params,
- 
- 	.external_auth = external_auth,
-diff --git a/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c b/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
-index ac3d085808e9..315bab373729 100644
---- a/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
-+++ b/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
-@@ -2441,13 +2441,6 @@ static int	cfg80211_rtw_dump_station(struct wiphy *wiphy,
- 	return ret;
- }
- 
--static int	cfg80211_rtw_change_bss(struct wiphy *wiphy,
--					struct net_device *ndev,
--					struct bss_parameters *params)
--{
--	return 0;
--}
--
- void rtw_cfg80211_rx_action(struct adapter *adapter, u8 *frame, uint frame_len, const char *msg)
- {
- 	s32 freq;
-@@ -2704,7 +2697,6 @@ static struct cfg80211_ops rtw_cfg80211_ops = {
- 	.del_station = cfg80211_rtw_del_station,
- 	.change_station = cfg80211_rtw_change_station,
- 	.dump_station = cfg80211_rtw_dump_station,
--	.change_bss = cfg80211_rtw_change_bss,
- 
- 	.mgmt_tx = cfg80211_rtw_mgmt_tx,
+diff --git a/include/uapi/linux/nl80211.h b/include/uapi/linux/nl80211.h
+index b27614269d98..9e0427ecaf3c 100644
+--- a/include/uapi/linux/nl80211.h
++++ b/include/uapi/linux/nl80211.h
+@@ -2929,7 +2929,10 @@ enum nl80211_commands {
+  *	@enum nl80211_s1g_short_beacon_attrs for the attribute definitions.
+  *
+  * @NL80211_ATTR_BSS_PARAM: nested attribute used with %NL80211_CMD_GET_WIPHY
+- *	which indicates which BSS parameters can be modified.
++ *	which indicates which BSS parameters can be modified. The attribute can
++ *	also be used as flag attribute by user-space in %NL80211_CMD_SET_BSS to
++ *	indicate that it wants strict checking on the BSS parameters to be
++ *	modified.
+  *
+  * @NUM_NL80211_ATTR: total number of nl80211_attrs available
+  * @NL80211_ATTR_MAX: highest attribute number currently defined
+diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
+index 379c6d40b650..66b58a1d43db 100644
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -871,6 +871,7 @@ static const struct nla_policy nl80211_policy[NUM_NL80211_ATTR] = {
+ 	[NL80211_ATTR_S1G_LONG_BEACON_PERIOD] = NLA_POLICY_MIN(NLA_U8, 2),
+ 	[NL80211_ATTR_S1G_SHORT_BEACON] =
+ 		NLA_POLICY_NESTED(nl80211_s1g_short_beacon),
++	[NL80211_ATTR_BSS_PARAM] = { .type = NLA_FLAG },
  };
-diff --git a/net/mac80211/main.c b/net/mac80211/main.c
-index 9c8f18b258a6..cfa3cc4dd446 100644
---- a/net/mac80211/main.c
-+++ b/net/mac80211/main.c
-@@ -862,6 +862,14 @@ struct ieee80211_hw *ieee80211_alloc_hw_nm(size_t priv_data_len,
- 	if (emulate_chanctx || ops->remain_on_channel)
- 		wiphy->flags |= WIPHY_FLAG_HAS_REMAIN_ON_CHANNEL;
  
-+	wiphy->bss_param_support = WIPHY_BSS_PARAM_CTS_PROT |
-+				   WIPHY_BSS_PARAM_SHORT_PREAMBLE |
-+				   WIPHY_BSS_PARAM_SHORT_SLOT_TIME |
-+				   WIPHY_BSS_PARAM_BASIC_RATES |
-+				   WIPHY_BSS_PARAM_AP_ISOLATE |
-+				   WIPHY_BSS_PARAM_HT_OPMODE |
-+				   WIPHY_BSS_PARAM_P2P_CTWINDOW |
-+				   WIPHY_BSS_PARAM_P2P_OPPPS;
- 	wiphy->features |= NL80211_FEATURE_SK_TX_STATUS |
- 			   NL80211_FEATURE_SAE |
- 			   NL80211_FEATURE_HT_IBSS |
+ /* policy for the key attributes */
+@@ -8864,6 +8865,8 @@ static int nl80211_set_bss(struct sk_buff *skb, struct genl_info *info)
+ 	struct net_device *dev = info->user_ptr[1];
+ 	struct bss_parameters params;
+ 	u32 bss_param_support = rdev->wiphy.bss_param_support;
++	u32 changed = 0;
++	bool strict;
+ 
+ 	memset(&params, 0, sizeof(params));
+ 	params.link_id = nl80211_link_id_or_invalid(info->attrs);
+@@ -8876,26 +8879,54 @@ static int nl80211_set_bss(struct sk_buff *skb, struct genl_info *info)
+ 	params.p2p_ctwindow = -1;
+ 	params.p2p_opp_ps = -1;
+ 
+-	if (info->attrs[NL80211_ATTR_BSS_CTS_PROT])
++	strict = nla_get_flag(info->attrs[NL80211_ATTR_BSS_PARAM]);
++	if (info->attrs[NL80211_ATTR_BSS_CTS_PROT]) {
++		if (strict && !(bss_param_support & WIPHY_BSS_PARAM_CTS_PROT))
++			return -EINVAL;
+ 		params.use_cts_prot =
+ 		    nla_get_u8(info->attrs[NL80211_ATTR_BSS_CTS_PROT]);
+-	if (info->attrs[NL80211_ATTR_BSS_SHORT_PREAMBLE])
++		changed |= WIPHY_BSS_PARAM_CTS_PROT;
++	}
++	if (info->attrs[NL80211_ATTR_BSS_SHORT_PREAMBLE]) {
++		if (strict &&
++		    !(bss_param_support & WIPHY_BSS_PARAM_SHORT_PREAMBLE))
++			return -EINVAL;
+ 		params.use_short_preamble =
+ 		    nla_get_u8(info->attrs[NL80211_ATTR_BSS_SHORT_PREAMBLE]);
+-	if (info->attrs[NL80211_ATTR_BSS_SHORT_SLOT_TIME])
++		changed |= WIPHY_BSS_PARAM_SHORT_PREAMBLE;
++	}
++	if (info->attrs[NL80211_ATTR_BSS_SHORT_SLOT_TIME]) {
++		if (strict &&
++		    !(bss_param_support & WIPHY_BSS_PARAM_SHORT_SLOT_TIME))
++			return -EINVAL;
+ 		params.use_short_slot_time =
+ 		    nla_get_u8(info->attrs[NL80211_ATTR_BSS_SHORT_SLOT_TIME]);
++		changed |= WIPHY_BSS_PARAM_SHORT_SLOT_TIME;
++	}
+ 	if (info->attrs[NL80211_ATTR_BSS_BASIC_RATES]) {
++		if (strict &&
++		    !(bss_param_support & WIPHY_BSS_PARAM_BASIC_RATES))
++			return -EINVAL;
+ 		params.basic_rates =
+ 			nla_data(info->attrs[NL80211_ATTR_BSS_BASIC_RATES]);
+ 		params.basic_rates_len =
+ 			nla_len(info->attrs[NL80211_ATTR_BSS_BASIC_RATES]);
++		changed |= WIPHY_BSS_PARAM_BASIC_RATES;
+ 	}
+-	if (info->attrs[NL80211_ATTR_AP_ISOLATE])
+-		params.ap_isolate = !!nla_get_u8(info->attrs[NL80211_ATTR_AP_ISOLATE]);
+-	if (info->attrs[NL80211_ATTR_BSS_HT_OPMODE])
++	if (info->attrs[NL80211_ATTR_AP_ISOLATE]) {
++		if (strict && !(bss_param_support & WIPHY_BSS_PARAM_AP_ISOLATE))
++			return -EINVAL;
++		params.ap_isolate =
++			!!nla_get_u8(info->attrs[NL80211_ATTR_AP_ISOLATE]);
++		changed |= WIPHY_BSS_PARAM_AP_ISOLATE;
++	}
++	if (info->attrs[NL80211_ATTR_BSS_HT_OPMODE]) {
++		if (strict && !(bss_param_support & WIPHY_BSS_PARAM_HT_OPMODE))
++			return -EINVAL;
+ 		params.ht_opmode =
+ 			nla_get_u16(info->attrs[NL80211_ATTR_BSS_HT_OPMODE]);
++		changed |= WIPHY_BSS_PARAM_HT_OPMODE;
++	}
+ 
+ 	if (info->attrs[NL80211_ATTR_P2P_CTWINDOW]) {
+ 		if (dev->ieee80211_ptr->iftype != NL80211_IFTYPE_P2P_GO)
+@@ -8905,6 +8936,7 @@ static int nl80211_set_bss(struct sk_buff *skb, struct genl_info *info)
+ 		if (params.p2p_ctwindow != 0 &&
+ 		    !(bss_param_support & WIPHY_BSS_PARAM_P2P_CTWINDOW))
+ 			return -EINVAL;
++		changed |= WIPHY_BSS_PARAM_P2P_CTWINDOW;
+ 	}
+ 
+ 	if (info->attrs[NL80211_ATTR_P2P_OPPPS]) {
+@@ -8913,9 +8945,11 @@ static int nl80211_set_bss(struct sk_buff *skb, struct genl_info *info)
+ 		if (dev->ieee80211_ptr->iftype != NL80211_IFTYPE_P2P_GO)
+ 			return -EINVAL;
+ 		tmp = nla_get_u8(info->attrs[NL80211_ATTR_P2P_OPPPS]);
++		if (tmp && !(bss_param_support & WIPHY_BSS_PARAM_P2P_OPPPS))
++			return -EINVAL;
+ 		params.p2p_opp_ps = tmp;
+ 		if (params.p2p_opp_ps &&
+-		    !(bss_param_support & WIPHY_BSS_PARAM_P2P_OPPPS))
++		    !(rdev->wiphy.bss_param_support & WIPHY_BSS_PARAM_P2P_OPPPS))
+ 			return -EINVAL;
+ 	}
+ 
+@@ -8926,6 +8960,10 @@ static int nl80211_set_bss(struct sk_buff *skb, struct genl_info *info)
+ 	    dev->ieee80211_ptr->iftype != NL80211_IFTYPE_P2P_GO)
+ 		return -EOPNOTSUPP;
+ 
++	changed &= rdev->wiphy.bss_param_support;
++	if (!changed)
++		return 0;
++
+ 	return rdev_change_bss(rdev, dev, &params);
+ }
+ 
 -- 
 2.43.5
 
