@@ -1,148 +1,156 @@
-Received: from zg8tmja5ljk3lje4mi4ymjia.icoremail.net (zg8tmja5ljk3lje4mi4ymjia.icoremail.net [209.97.182.222])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F360126E175
-	for <brcm80211@lists.linux.dev>; Fri, 22 Aug 2025 04:15:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.97.182.222
+Received: from azure-sdnproxy.icoremail.net (azure-sdnproxy.icoremail.net [52.229.205.26])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07C13287507
+	for <brcm80211@lists.linux.dev>; Fri, 22 Aug 2025 05:09:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=52.229.205.26
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755836140; cv=none; b=S7fd0QgCq0f54LImV6t7fPNZ4zc7gyn2tJk9b6mHEDMmVcM/p6Pg/PpGuA1E4+9TU1LwH7tkTkMlgbHWUIFuvpupLrN4qbldeTKnZgv3WPwCusncx5oJa+QIogx9EW4WFjMNSCzYMKiZhWJjZHrK/tCozOq22kO8FanYh1EkOtM=
+	t=1755839346; cv=none; b=iKapZ9kxdirDsu+4FNvEssA7GS+C9Cg3T7A/dFkflqPw52GRuVBxgv/xX5mBQNgwHiL+CO2QCnFcJUzXzSRP2VIvxGEE7//H4QnyyiF2aSSGjXOn9bxb3Hg+cYx0TEecVS3QexHIpJt5JhcMcJtp3hcMpgOp7YOf4j6jg0mkrVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755836140; c=relaxed/simple;
-	bh=yHZW6QAYcecxeMX4vd5Y5vERSVULekZvJqL0CUduSSY=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=rvvmhBLYwrr36kwb1f3zVVcXJbTkmsEUCNq9Rq2FgKUYXQJg8aMkV3bkdYsLKsKVgsqMfRuXzrwEop0Mbg8WDLYRrsi/vSQCXXSXOPYgpaWhuN6p6H+9B/hX9rAJeDovTwCU3e6Z7h6oRDWvgEbYwkAt7ELqWHPLOo+37uixHJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=zju.edu.cn; spf=pass smtp.mailfrom=zju.edu.cn; arc=none smtp.client-ip=209.97.182.222
+	s=arc-20240116; t=1755839346; c=relaxed/simple;
+	bh=ImzbWSeUVNC5unK6e2Xdbt/EPWZNXA1qmCgfG7zJiXk=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=uTlgKe47F+4WF7u7f/Eq56Od5TZD6jwupT47gqWryKFJU1FI+ATbh6FON83JsM+PfcgSHnkLQeQKb0j8mbCRJPdjb/a25Tq4+ZbJERK/refMS3Ro0Z1KyvCSMXIkYUqS17vpfAFBCjR/C/qULDkm7NZqMPyrHQ6P5jdp06/ecPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=zju.edu.cn; spf=pass smtp.mailfrom=zju.edu.cn; arc=none smtp.client-ip=52.229.205.26
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=zju.edu.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zju.edu.cn
 Received: from zju.edu.cn (unknown [218.12.21.37])
-	by mtasvr (Coremail) with SMTP id _____wAX4mnV7qdoDAV6AQ--.6421S3;
-	Fri, 22 Aug 2025 12:15:18 +0800 (CST)
-Received: from duoming$zju.edu.cn ( [218.12.21.37] ) by
- ajax-webmail-mail-app3 (Coremail) ; Fri, 22 Aug 2025 12:15:16 +0800
- (GMT+08:00)
-Date: Fri, 22 Aug 2025 12:15:16 +0800 (GMT+08:00)
-X-CM-HeaderCharset: UTF-8
-From: duoming@zju.edu.cn
-To: "Arend van Spriel" <arend.vanspriel@broadcom.com>
-Cc: brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com,
-	linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org,
-	mingo@kernel.org, tglx@linutronix.de
-Subject: Re: [PATCH] brcmfmac: btcoex: Fix use-after-free when rescheduling
- brcmf_btcoex_info work
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 2024.3-cmXT6 build
- 20250620(94335109) Copyright (c) 2002-2025 www.mailtech.cn zju.edu.cn
-In-Reply-To: <d071faf8-e800-4169-a670-8971d57b6997@broadcom.com>
-References: <20250821043202.21263-1-duoming@zju.edu.cn>
- <d071faf8-e800-4169-a670-8971d57b6997@broadcom.com>
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+	by mtasvr (Coremail) with SMTP id _____wCHJGlf+6doK096AQ--.18128S3;
+	Fri, 22 Aug 2025 13:08:48 +0800 (CST)
+Received: from ubuntu.localdomain (unknown [218.12.21.37])
+	by mail-app1 (Coremail) with SMTP id yy_KCgDHHNha+6doUlRxAQ--.48590S2;
+	Fri, 22 Aug 2025 13:08:46 +0800 (CST)
+From: Duoming Zhou <duoming@zju.edu.cn>
+To: brcm80211@lists.linux.dev
+Cc: brcm80211-dev-list.pdl@broadcom.com,
+	linux-kernel@vger.kernel.org,
+	linux-wireless@vger.kernel.org,
+	mingo@kernel.org,
+	tglx@linutronix.de,
+	arend.vanspriel@broadcom.com,
+	Duoming Zhou <duoming@zju.edu.cn>
+Subject: [PATCH v2] brcmfmac: btcoex: Fix use-after-free when rescheduling brcmf_btcoex_info work
+Date: Fri, 22 Aug 2025 13:08:39 +0800
+Message-Id: <20250822050839.4413-1-duoming@zju.edu.cn>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <5c6b3d94.1a56d.198cffcee28.Coremail.duoming@zju.edu.cn>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:zS_KCgA3N2rV7qdoXHfcAQ--.33238W
-X-CM-SenderInfo: qssqjiasttq6lmxovvfxof0/1tbiAwcGAWindnkDHwABse
-X-CM-DELIVERINFO: =?B?5vsP6AXKKxbFmtjJiESix3B1w3uoVhYI+vyen2ZzBEkOnu5chDpkB+ZdGnv/zQ0PbP
-	CR1+zuF684oMJgko7VNBv0xCqybbqAGDzvdPubGTDTDeKon0hvnfTSJoXn8JLOYbgBWidP
-	Q67ZDg0KXq4zAMyK1BVyjQfHArfj8LgopAbg/4K1qnuLrCoaw9QcDzIskPmDXA==
-X-Coremail-Antispam: 1Uk129KBj93XoWxXF48GF47Zr4kXFy8ZF4DZFc_yoWrGFW8pF
-	W3Ja43trWkt3yakrsrJFn3Xry5KwsrGF1qyrn5Wr43urZIqF4xtFW8trn09ay7CF10v3WI
-	yF4Fvay3trs0yFXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:yy_KCgDHHNha+6doUlRxAQ--.48590S2
+X-CM-SenderInfo: qssqjiasttq6lmxovvfxof0/1tbiAwAGAWindnkDJAALso
+X-CM-DELIVERINFO: =?B?XBWk/gXKKxbFmtjJiESix3B1w3uoVhYI+vyen2ZzBEkOnu5chDpkB+ZdGnv/zQ0PbP
+	CR1+FKPRRHSLOk9dZ6tUQqRhJiqWo8QcKJNUBNPSN6B4l5UJbmYI+M+3mlBheizaJvNRuQ
+	3dECz0taxrGnZuv6MqtMe5xQh6TzeVOiyZZ44+8EP+AOCOuPfhje8WtXyKsysQ==
+X-Coremail-Antispam: 1Uk129KBj93XoWxJw1ktFWrCrykWFyfCr17Arc_yoW5tryfpa
+	93J34ayry0qrW3KrWkJr1kZFy5KanrG3Wqyr48CF43uFsIqr4xtF40yF12gFW7CFWI9ay2
+	yF4FqFy3Jrs8tFXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
 	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
-	0xBIdaVrnRJUUUmvb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I20VC2zVCF04k26cxKx2
+	0xBIdaVrnRJUUUvmb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I20VC2zVCF04k26cxKx2
 	IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
 	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_tr0E3s1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
 	0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x0267AK
 	xVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
 	02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAF
 	wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7VAKI48JM4x0Y48IcxkI7V
-	AKI48G6xCjnVAKz4kxM4xvF2IEb7IF0Fy264kE64k0F24lFcxC0VAYjxAxZF0Ex2IqxwAK
-	zVCY07xG64k0F24l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxV
-	Aqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r12
-	6r1DMIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6x
-	kF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AK
-	xVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UMVCEFcxC0VAYjxAxZFUvcSsGvf
-	C2KfnxnUUI43ZEXa7IU848BUUUUUU==
+	AKI48G6xCjnVAKz4kxMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I
+	3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxV
+	WUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8I
+	cVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aV
+	AFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZE
+	Xa7IU801v3UUUUU==
 
-T24gVGh1LCAyMSBBdWcgMjAyNSAyMDo0NDoyMSArMDIwMCBBcmVuZCB2YW4gU3ByaWVsIHdyb3Rl
-Ogo+ID4gVGhlIGJyY21mX2J0Y29leF9kZXRhY2goKSBvbmx5IHNodXRzIGRvd24gdGhlIGJ0Y29l
-eCB0aW1lciwgaWYgdGhlCj4gPiBmbGFnIHRpbWVyX29uIGlzIGZhbHNlLiBIb3dldmVyLCB0aGUg
-YnJjbWZfYnRjb2V4X3RpbWVyZnVuYygpLCB3aGljaAo+ID4gcnVucyBhcyB0aW1lciBoYW5kbGVy
-LCBzZXRzIHRpbWVyX29uIHRvIGZhbHNlLiBUaGlzIGNyZWF0ZXMgYSBjcml0aWNhbAo+ID4gcmFj
-ZSBjb25kaXRpb246Cj4gPiAKPiA+IDEuSWYgYnJjbWZfYnRjb2V4X2RldGFjaCgpIGlzIGNhbGxl
-ZCB3aGlsZSBicmNtZl9idGNvZXhfdGltZXJmdW5jKCkKPiA+IGlzIGV4ZWN1dGluZywgaXQgbWF5
-IG9ic2VydmUgdGltZXJfb24gYXMgZmFsc2UgYW5kIHNraXAgdGhlIGNhbGwgdG8KPiA+IHRpbWVy
-X3NodXRkb3duX3N5bmMoKS4KPiA+IAo+ID4gMi5UaGUgYnJjbWZfYnRjb2V4X3RpbWVyZnVuYygp
-IG1heSB0aGVuIHJlc2NoZWR1bGUgdGhlIGJyY21mX2J0Y29leF9pbmZvCj4gPiB3b3JrZXIgYWZ0
-ZXIgdGhlIGNhbmNlbF93b3JrX3N5bmMoKSBoYXMgYmVlbiBleGVjdXRlZC4KPiA+IAo+ID4gMy5T
-dWJzZXF1ZW50bHksIHRoZSBicmNtZl9idGNvZXhfaW5mbyBzdHJ1Y3R1cmUgaXMgZnJlZWQuCj4g
-PiAKPiA+IDQuRmluYWxseSwgdGhlIHJlc2NoZWR1bGVkIHdvcmtlciBhdHRlbXB0cyB0byBleGVj
-dXRlLCBsZWFkaW5nIHRvCj4gPiB1c2UtYWZ0ZXItZnJlZSBidWdzIGJ5IGFjY2Vzc2luZyB0aGUg
-ZnJlZWQgYnJjbWZfYnRjb2V4X2luZm8gb2JqZWN0Lgo+IAo+IFRoYW5rcyBmb3IgdGhlIHBhdGNo
-LiBCZWluZyBhIG5pdCBwaWNrZXIganVzdCB3YW50ZWQgdG8gZGF5IHRoYXQgdGhlIAo+IHVzZS1h
-ZnRlci1mcmVlIGhhcHBlbnMgYSBiaXQgZWFybGllciBhcyB0aGUgd29ya2VyIGl0c2VsZiBpcyBj
-b250YWluZWQgCj4gaW4gc3RydWN0IGJyY21mX2J0Y29leF9pbmZvLiBBbHNvIHRoZSBkaWFncmFt
-IGJlbG93IGRvZXMgbm90IGFkZCBtdWNoIAo+IG1vcmUgdGhhbiB0aGUgdGV4dHVhbCBkZXNjcmlw
-dGlvbiBhYm92ZS4KClRoYW5rIHlvdSB2ZXJ5IG11Y2ggZm9yIHlvdXIgZ3VpZGFuY2UuCgpUaGUg
-dXNlLWFmdGVyLWZyZWUgYnVncyBvY2N1ciBpbiB0d28gZGlzdGluY3Qgc2NlbmFyaW9zLCBkZXBl
-bmRpbmcgb24gCnRoZSB0aW1pbmcgb2Ygd2hlbiB0aGXCoGJyY21mX2J0Y29leF9pbmZvwqBzdHJ1
-Y3QgaXMgZnJlZWQgcmVsYXRpdmUgdG8gCnRoZSBleGVjdXRpb24gb2YgaXRzIHdvcmtlciB0aHJl
-YWQuCgpTY2VuYXJpbyAxOiBGcmVlZCBiZWZvcmUgdGhlIHdvcmtlciBpcyBzY2hlZHVsZWQKClRo
-ZcKgYnJjbWZfYnRjb2V4X2luZm8gaXMgZGVhbGxvY2F0ZWTCoGJlZm9yZcKgdGhlIHdvcmtlciBp
-cyBzY2hlZHVsZWQuIApBIHJhY2UgY29uZGl0aW9uIGNhbiBvY2N1ciB3aGVuwqBzY2hlZHVsZV93
-b3JrKCZidF9sb2NhbC0+d29yaynCoGlzIApjYWxsZWQgYWZ0ZXIgdGhlIHRhcmdldCBtZW1vcnkg
-aGFzIGJlZW4gZnJlZWQuIFRoZSBzZXF1ZW5jZSBvZiBldmVudHMgCmlzIGRldGFpbGVkIGJlbG93
-OgoKQ1BVMCAgICAgICAgICAgICAgICAgICAgICAgICAgIHwgQ1BVMQpicmNtZl9idGNvZXhfZGV0
-YWNoICAgICAgICAgICAgfCBicmNtZl9idGNvZXhfdGltZXJmdW5jCiAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICB8ICAgYnRfbG9jYWwtPnRpbWVyX29uID0gZmFsc2U7CiAgaWYgKGNmZy0+
-YnRjb2V4LT50aW1lcl9vbikgICB8CiAgICAuLi4gICAgICAgICAgICAgICAgICAgICAgICB8CiAg
-Y2FuY2VsX3dvcmtfc3luYygpOyAgICAgICAgICB8CiAgLi4uICAgICAgICAgICAgICAgICAgICAg
-ICAgICB8CiAga2ZyZWUoY2ZnLT5idGNvZXgpOyAvLyBGUkVFICB8CiAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICB8ICAgc2NoZWR1bGVfd29yaygmYnRfbG9jYWwtPndvcmspOyAvLyBVU0UK
-ClNjZW5hcmlvIDI6IEZyZWVkIGFmdGVyIHRoZSB3b3JrZXIgaXMgc2NoZWR1bGVkCgpUaGXCoGJy
-Y21mX2J0Y29leF9pbmZvIGlzIGZyZWVkwqBhZnRlcsKgdGhlIHdvcmtlciBoYXMgYmVlbiBzY2hl
-ZHVsZWQgCmJ1dMKgYmVmb3JlwqBvcsKgZHVyaW5nwqBpdHMgZXhlY3V0aW9uLiBJbiB0aGlzIGNh
-c2UsIHN0YXRlbWVudHMgd2l0aGluIAp0aGXCoGJyY21mX2J0Y29leF9oYW5kbGVyKCnCoHdvcmtl
-ciDigJQgc3VjaCBhcyB0aGXCoGNvbnRhaW5lcl9vZsKgbWFjcm8gCmFuZCBzdWJzZXF1ZW50IGRl
-cmVmZXJlbmNlcyBvZiB0aGXCoGJyY21mX2J0Y29leF9pbmZvwqBvYmplY3Qgd2lsbCAKY2F1c2Ug
-YSB1c2UtYWZ0ZXItZnJlZSBhY2Nlc3MuIFRoZSBmb2xsb3dpbmcgdGltZWxpbmUgaWxsdXN0cmF0
-ZXMKdGhpcyBzY2VuYXJpbzoKCkNQVTAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfCBDUFUx
-CmJyY21mX2J0Y29leF9kZXRhY2ggICAgICAgICAgICAgfCBicmNtZl9idGNvZXhfdGltZXJmdW5j
-CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfCAgIGJ0X2xvY2FsLT50aW1lcl9vbiA9
-IGZhbHNlOwogIGlmIChjZmctPmJ0Y29leC0+dGltZXJfb24pICAgIHwKICAgIC4uLiAgICAgICAg
-ICAgICAgICAgICAgICAgICB8CiAgY2FuY2VsX3dvcmtfc3luYygpOyAgICAgICAgICAgfAogIC4u
-LiAgICAgICAgICAgICAgICAgICAgICAgICAgIHwgICBzY2hlZHVsZV93b3JrKCZidF9sb2NhbC0+
-d29yayk7IC8vIFJlc2NoZWR1bGUKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB8CiAg
-a2ZyZWUoY2ZnLT5idGNvZXgpOyAvLyBGUkVFICAgfCAgIGJyY21mX2J0Y29leF9oYW5kbGVyKCkg
-Ly8gV29ya2VyCiAgLyogICAgICAgICAgICAgICAgICAgICAgICAgICAgfCAgICAgYnRjaSA9IGNv
-bnRhaW5lcl9vZiguLi4uKTsgLy8gVVNFCiAgIFRoZSBrZnJlZSgpIGFib3ZlIGNvdWxkICAgICAg
-fCAgICAgLi4uCiAgIGFsc28gb2NjdXIgYXQgYW55IHBvaW50ICAgICAgfCAgICAgYnRjaS0+dmlm
-OyAvLyBVU0UKICAgZHVyaW5nIHRoZSB3b3JrZXIncyBleGVjdXRpb258IAogICAqLyAgICAgICAg
-ICAgICAgICAgICAgICAgICAgIHwKCkkgd291bGQgbGlrZSB0byBzdWJtaXQgYSB2MiBwYXRjaCB0
-byBtYWtlIHRoZSBkZXNjcmlwdGlvbiBjbGVhcmVyLgoKPiA+IFRoZSBmb2xsb3dpbmcgZGlhZ3Jh
-bSBpbGx1c3RyYXRlcyB0aGlzIHNlcXVlbmNlIG9mIGV2ZW50czoKPiA+IAo+ID4gY3B1MCAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICBjcHUxCj4gPiBicmNtZl9idGNvZXhfZGV0YWNoICAgICAg
-ICAgIHwgIGJyY21mX2J0Y29leF90aW1lcmZ1bmMKPiA+ICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgIHwgICAgYnRfbG9jYWwtPnRpbWVyX29uID0gZmFsc2U7Cj4gPiAgICBpZiAoY2ZnLT5i
-dGNvZXgtPnRpbWVyX29uKSB8Cj4gPiAgICAgIC4uLiAgICAgICAgICAgICAgICAgICAgICB8Cj4g
-PiAgICBjYW5jZWxfd29ya19zeW5jKCk7ICAgICAgICB8Cj4gPiAgICAuLi4gICAgICAgICAgICAg
-ICAgICAgICAgICB8ICAgIHNjaGVkdWxlX3dvcmsoKSAvL3Jlc2NoZWR1bGUKPiA+ICAgIGtmcmVl
-KGNmZy0+YnRjb2V4KTsvL2ZyZWUgIHwKPiA+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-IHwgICAgYnJjbWZfYnRjb2V4X2hhbmRsZXIoKSAvL3dvcmtlcgo+ID4gICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgfCAgICBidGNpLT4gLy91c2UKPiA+IAo+ID4gVG8gcmVzb2x2ZSB0aGlz
-IHJhY2UgY29uZGl0aW9uLCBkcm9wIHRoZSBjb25kaXRpb25hbCBjaGVjayBhbmQgY2FsbAo+ID4g
-dGltZXJfc2h1dGRvd25fc3luYygpIGRpcmVjdGx5LiBJdCBjYW4gZGVhY3RpdmF0ZSB0aGUgdGlt
-ZXIgcmVsaWFibHksCj4gPiByZWdhcmRsZXNzIG9mIGl0cyBjdXJyZW50IHN0YXRlLiBPbmNlIHN0
-b3BwZWQsIHRoZSB0aW1lcl9vbiBzdGF0ZSBpcwo+ID4gdGhlbiBzZXQgdG8gZmFsc2UuCj4gCj4g
-SG93ZXZlciwgbm8gcmVhc29uIHRvIHN0b3AgdGhpcyBwYXRjaCBmcm9tIGdvaW5nIGluIHNvLi4u
-Cj4gCj4gQWNrZWQtYnk6IEFyZW5kIHZhbiBTcHJpZWwgPGFyZW5kLnZhbnNwcmllbEBicm9hZGNv
-bS5jb20+Cj4gCj4gPiBGaXhlczogNjE3MzBkNGRmZmZjICgiYnJjbWZtYWM6IHN1cHBvcnQgY3Jp
-dGljYWwgcHJvdG9jb2wgQVBJIGZvciBESENQIikKPiA+IFNpZ25lZC1vZmYtYnk6IER1b21pbmcg
-WmhvdSA8ZHVvbWluZ0B6anUuZWR1LmNuPgo+ID4gLS0tCj4gPiAgIGRyaXZlcnMvbmV0L3dpcmVs
-ZXNzL2Jyb2FkY29tL2JyY204MDIxMS9icmNtZm1hYy9idGNvZXguYyB8IDYgKystLS0tCj4gPiAg
-IDEgZmlsZSBjaGFuZ2VkLCAyIGluc2VydGlvbnMoKyksIDQgZGVsZXRpb25zKC0pCgpCZXN0IHJl
-Z2FyZHMsCkR1b21pbmcgWmhvdQo=
+The brcmf_btcoex_detach() only shuts down the btcoex timer, if the
+flag timer_on is false. However, the brcmf_btcoex_timerfunc(), which
+runs as timer handler, sets timer_on to false. This creates critical
+race conditions:
+
+1.If brcmf_btcoex_detach() is called while brcmf_btcoex_timerfunc()
+is executing, it may observe timer_on as false and skip the call to
+timer_shutdown_sync().
+
+2.The brcmf_btcoex_timerfunc() may then reschedule the brcmf_btcoex_info
+worker after the cancel_work_sync() has been executed, resulting in
+use-after-free bugs.
+
+The use-after-free bugs occur in two distinct scenarios, depending on
+the timing of when the brcmf_btcoex_info struct is freed relative to
+the execution of its worker thread.
+
+Scenario 1: Freed before the worker is scheduled
+
+The brcmf_btcoex_info is deallocated before the worker is scheduled.
+A race condition can occur when schedule_work(&bt_local->work) is
+called after the target memory has been freed. The sequence of events
+is detailed below:
+
+CPU0                           | CPU1
+brcmf_btcoex_detach            | brcmf_btcoex_timerfunc
+                               |   bt_local->timer_on = false;
+  if (cfg->btcoex->timer_on)   |
+    ...                        |
+  cancel_work_sync();          |
+  ...                          |
+  kfree(cfg->btcoex); // FREE  |
+                               |   schedule_work(&bt_local->work); // USE
+
+Scenario 2: Freed after the worker is scheduled
+
+The brcmf_btcoex_info is freed after the worker has been scheduled
+but before or during its execution. In this case, statements within
+the brcmf_btcoex_handler() — such as the container_of macro and
+subsequent dereferences of the brcmf_btcoex_info object will cause
+a use-after-free access. The following timeline illustrates this
+scenario:
+
+CPU0                            | CPU1
+brcmf_btcoex_detach             | brcmf_btcoex_timerfunc
+                                |   bt_local->timer_on = false;
+  if (cfg->btcoex->timer_on)    |
+    ...                         |
+  cancel_work_sync();           |
+  ...                           |   schedule_work(); // Reschedule
+                                |
+  kfree(cfg->btcoex); // FREE   |   brcmf_btcoex_handler() // Worker
+  /*                            |     btci = container_of(....); // USE
+   The kfree() above could      |     ...
+   also occur at any point      |     btci-> // USE
+   during the worker's execution|
+   */                           |
+
+To resolve the race conditions, drop the conditional check and call
+timer_shutdown_sync() directly. It can deactivate the timer reliably,
+regardless of its current state. Once stopped, the timer_on state is
+then set to false.
+
+Fixes: 61730d4dfffc ("brcmfmac: support critical protocol API for DHCP")
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+---
+Changes in v2:
+  - Make the description clearer.
+
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/btcoex.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/btcoex.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/btcoex.c
+index 69ef8cf203d2..67c0c5a92f99 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/btcoex.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/btcoex.c
+@@ -393,10 +393,8 @@ void brcmf_btcoex_detach(struct brcmf_cfg80211_info *cfg)
+ 	if (!cfg->btcoex)
+ 		return;
+ 
+-	if (cfg->btcoex->timer_on) {
+-		cfg->btcoex->timer_on = false;
+-		timer_shutdown_sync(&cfg->btcoex->timer);
+-	}
++	timer_shutdown_sync(&cfg->btcoex->timer);
++	cfg->btcoex->timer_on = false;
+ 
+ 	cancel_work_sync(&cfg->btcoex->work);
+ 
+-- 
+2.34.1
 
