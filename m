@@ -1,156 +1,99 @@
-Received: from azure-sdnproxy.icoremail.net (azure-sdnproxy.icoremail.net [52.229.205.26])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07C13287507
-	for <brcm80211@lists.linux.dev>; Fri, 22 Aug 2025 05:09:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=52.229.205.26
+Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0D03222562
+	for <brcm80211@lists.linux.dev>; Wed, 24 Sep 2025 02:59:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755839346; cv=none; b=iKapZ9kxdirDsu+4FNvEssA7GS+C9Cg3T7A/dFkflqPw52GRuVBxgv/xX5mBQNgwHiL+CO2QCnFcJUzXzSRP2VIvxGEE7//H4QnyyiF2aSSGjXOn9bxb3Hg+cYx0TEecVS3QexHIpJt5JhcMcJtp3hcMpgOp7YOf4j6jg0mkrVY=
+	t=1758682783; cv=none; b=Ldi/9k+Lo4wxHckuDXlQCgZs8xyXB4YmFLV+AnJgJFwbLSs/dl/uvg5ZLOWwLM30GNPjxU0zOrBYBA0i9/pjDj7g04jybTLqs2P4JqyvHpbd94hggLSUMLmD9FCuOlaTpoEczlTJ6/RJ/wvaURklBbCzYSPiXtwsgg/Nd5VYNKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755839346; c=relaxed/simple;
-	bh=ImzbWSeUVNC5unK6e2Xdbt/EPWZNXA1qmCgfG7zJiXk=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=uTlgKe47F+4WF7u7f/Eq56Od5TZD6jwupT47gqWryKFJU1FI+ATbh6FON83JsM+PfcgSHnkLQeQKb0j8mbCRJPdjb/a25Tq4+ZbJERK/refMS3Ro0Z1KyvCSMXIkYUqS17vpfAFBCjR/C/qULDkm7NZqMPyrHQ6P5jdp06/ecPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=zju.edu.cn; spf=pass smtp.mailfrom=zju.edu.cn; arc=none smtp.client-ip=52.229.205.26
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=zju.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zju.edu.cn
-Received: from zju.edu.cn (unknown [218.12.21.37])
-	by mtasvr (Coremail) with SMTP id _____wCHJGlf+6doK096AQ--.18128S3;
-	Fri, 22 Aug 2025 13:08:48 +0800 (CST)
-Received: from ubuntu.localdomain (unknown [218.12.21.37])
-	by mail-app1 (Coremail) with SMTP id yy_KCgDHHNha+6doUlRxAQ--.48590S2;
-	Fri, 22 Aug 2025 13:08:46 +0800 (CST)
-From: Duoming Zhou <duoming@zju.edu.cn>
-To: brcm80211@lists.linux.dev
-Cc: brcm80211-dev-list.pdl@broadcom.com,
-	linux-kernel@vger.kernel.org,
-	linux-wireless@vger.kernel.org,
-	mingo@kernel.org,
-	tglx@linutronix.de,
-	arend.vanspriel@broadcom.com,
-	Duoming Zhou <duoming@zju.edu.cn>
-Subject: [PATCH v2] brcmfmac: btcoex: Fix use-after-free when rescheduling brcmf_btcoex_info work
-Date: Fri, 22 Aug 2025 13:08:39 +0800
-Message-Id: <20250822050839.4413-1-duoming@zju.edu.cn>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1758682783; c=relaxed/simple;
+	bh=K0LCRCl86/E+hbnMzqJRccdVEjWIG0h84oyt/QPKKnY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=EPuVfvmGny83EguWVcvvF0cpfNS8SIXOrpOVnmuKZqWlh6y33WXqJipRDQ5zIgKNhC/SFlA3+awNEeSsjWfA2VN2ZesAZeXQlvDXsXzjbH0dkWYb9NHaHNGUffSxHLah4xxQ6exVZnC92fD9ebVdSQ7DDtGed2bZ5eD30EoOTnY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cJVmlMe1; arc=none smtp.client-ip=209.85.219.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cJVmlMe1"
+Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-ea5bafdfea3so6415006276.0
+        for <brcm80211@lists.linux.dev>; Tue, 23 Sep 2025 19:59:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758682781; x=1759287581; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=K0LCRCl86/E+hbnMzqJRccdVEjWIG0h84oyt/QPKKnY=;
+        b=cJVmlMe1ntyw/1cAJBZah1D6MuHSJwlF8Mv/FqFvDNhWHV02ZrUPPvNX3a0WCja3iq
+         ggWYBz8YEM/hpj9LZctzYS61uMMt7Bxm+26ft7AvJCQuX/RhCc0Jy6+UjK0HbJXdlVLP
+         9xiY1PXtY9pyfhyW6JkXScE1sBLWqb1WAipnlIY/PCLEzmF5RHEZTV3B78G7bY6teWYw
+         +qVTqerq0YVmshzV1UrV6X3OE+OxxpagusXjZjAjCtYzpGkTd1269LG7gsDnqM00+KMr
+         CibMOLkBE4XNY9hpAwvMl6xxYdD/TBrZVYB2US8OE8H1giWk8EDhLX6ml4IxtkmhXmk/
+         AReg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758682781; x=1759287581;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=K0LCRCl86/E+hbnMzqJRccdVEjWIG0h84oyt/QPKKnY=;
+        b=ElX3V55X1ZFNX7xA/hl+bdCg763S25lvOqHinREEDtSjbnhy6NPSs5NqArYzeZK0Ln
+         6JHqqcst/+SVuN4NHyMVt0mGrDaKWYWIA+r8EjE6jQgo/uDGKXQas6zZWs2tJcwIfsZS
+         BXJssgx9GEXrJmt2FygIhb/XQdrIRJ4mGVaAHszT4S1/9lPKp+8yGDTUWfB4zaB7j0Ub
+         ucHhh/qtswPUy9meVSeKo5/mtLHpIf/aTYhhaTYoAD4VnTB3mQHvGXlnw3oIHseTy4ix
+         YZ6J/zVrTng6y1Bh0tyuVlQIkOqnMu+KntTHG7NGu7NAG9l5BOK6/eSSjncVboKJSL3m
+         5tQw==
+X-Forwarded-Encrypted: i=1; AJvYcCVL4f9KidyhyR0WFn3VjD0vvedWtFGrnk07KnJXw10JyYN5BybxAXcywM2C1tahKrSpFlEDXKHunJA=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yym4BZ5j7FSl2xebGyHkD3kmGbeqDWYO2B2rRpT6gBZ1aaGeKel
+	Bvf+uze6960QxHLr4ivwp6/5npUtKAozBgGoIJwobjArGJpdNCrgQAtl1qVdS1B+IP2JEKYyl8f
+	Vb0x3teKHZ95fWi2C+wGaNZ5DMYj89N8cndWRB7M=
+X-Gm-Gg: ASbGncs/fuIlYvFc/X2i4M/Ru6YVTiz/ddUVxckWLw//Joftkj+qgWYHDxw5V2MoAAF
+	IPFL1XL5wXiLGnyNarmo6BfEWP7vj0s4PvVOZObS4ZcxNihNt29gmBSNrg3QcNRYGUOF59SXqpr
+	FbYuxcnJqMDTtr27dFO5xDpVhY9fQQf4HvDEL+fubBhqG++rCPvVQkQJ7VLf2nsYmicVJVLBxBt
+	9rveQ==
+X-Google-Smtp-Source: AGHT+IGn9alfmVUHg4s/EOSBDcyVeO2o2b4luEq/9VzOv8PSl8c2p18Wc2e62ATf4njqxKj8/5WQBlx5CdWjoV5QOQI=
+X-Received: by 2002:a05:690e:150d:b0:635:4ecc:fc21 with SMTP id
+ 956f58d0204a3-636046650e7mr4242077d50.41.1758682780546; Tue, 23 Sep 2025
+ 19:59:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:yy_KCgDHHNha+6doUlRxAQ--.48590S2
-X-CM-SenderInfo: qssqjiasttq6lmxovvfxof0/1tbiAwAGAWindnkDJAALso
-X-CM-DELIVERINFO: =?B?XBWk/gXKKxbFmtjJiESix3B1w3uoVhYI+vyen2ZzBEkOnu5chDpkB+ZdGnv/zQ0PbP
-	CR1+FKPRRHSLOk9dZ6tUQqRhJiqWo8QcKJNUBNPSN6B4l5UJbmYI+M+3mlBheizaJvNRuQ
-	3dECz0taxrGnZuv6MqtMe5xQh6TzeVOiyZZ44+8EP+AOCOuPfhje8WtXyKsysQ==
-X-Coremail-Antispam: 1Uk129KBj93XoWxJw1ktFWrCrykWFyfCr17Arc_yoW5tryfpa
-	93J34ayry0qrW3KrWkJr1kZFy5KanrG3Wqyr48CF43uFsIqr4xtF40yF12gFW7CFWI9ay2
-	yF4FqFy3Jrs8tFXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
-	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
-	0xBIdaVrnRJUUUvmb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I20VC2zVCF04k26cxKx2
-	IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
-	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_tr0E3s1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
-	0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x0267AK
-	xVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
-	02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAF
-	wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7VAKI48JM4x0Y48IcxkI7V
-	AKI48G6xCjnVAKz4kxMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I
-	3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxV
-	WUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8I
-	cVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aV
-	AFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZE
-	Xa7IU801v3UUUUU==
+References: <CAE3HL_yv8t1Rkd+jLfQMkc3YrNONQp0pRFESV+v92ECf_+7Xjw@mail.gmail.com>
+In-Reply-To: <CAE3HL_yv8t1Rkd+jLfQMkc3YrNONQp0pRFESV+v92ECf_+7Xjw@mail.gmail.com>
+From: Hsien Chou <s311332@gmail.com>
+Date: Wed, 24 Sep 2025 10:59:29 +0800
+X-Gm-Features: AS18NWB8jHPnvcaCYS_yFLDa1ZG3B37swbIlzMYM-jKhhrBXrPRh4H2FVUfXz2U
+Message-ID: <CAE3HL_yETM7LBD5nu3V3zzfR1fThbAzULA=+YJt2tPY6=769Bw@mail.gmail.com>
+Subject: Re: brcmfmac: driver crash with iOS 18.6.1, potential DoS
+To: arend.vanspriel@broadcom.com
+Cc: linux-wireless@vger.kernel.org, brcm80211-dev-list.pdl@broadcom.com, 
+	brcm80211@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 
-The brcmf_btcoex_detach() only shuts down the btcoex timer, if the
-flag timer_on is false. However, the brcmf_btcoex_timerfunc(), which
-runs as timer handler, sets timer_on to false. This creates critical
-race conditions:
+Hi Arend and everyone on the mailing lists,
 
-1.If brcmf_btcoex_detach() is called while brcmf_btcoex_timerfunc()
-is executing, it may observe timer_on as false and skip the call to
-timer_shutdown_sync().
+I'm reporting a driver crash in brcmfmac that can be triggered by an
+iPhone with iOS 18.6.1 or newer. This issue allows a remote,
+unauthenticated device to crash the Wi-Fi driver, leading to a denial
+of service.
 
-2.The brcmf_btcoex_timerfunc() may then reschedule the brcmf_btcoex_info
-worker after the cancel_work_sync() has been executed, resulting in
-use-after-free bugs.
+The full details, including complete crash logs and a step-by-step
+reproduction guide, are available on the GitHub issue page:
+https://github.com/raspberrypi/linux/issues/7033
 
-The use-after-free bugs occur in two distinct scenarios, depending on
-the timing of when the brcmf_btcoex_info struct is freed relative to
-the execution of its worker thread.
+For a quick reference, here are the key details:
+* Affected devices: A Raspberry Pi running as a Wi-Fi access point.
+* Trigger: An iPhone with iOS > 18.6.1 attempts to view the properties
+of the Wi-Fi network.
+* Root cause (based on preliminary analysis): The driver panics,
+possibly due to a malformed or unexpected frame.
 
-Scenario 1: Freed before the worker is scheduled
+Please let me know if you need any additional information to debug this issue.
 
-The brcmf_btcoex_info is deallocated before the worker is scheduled.
-A race condition can occur when schedule_work(&bt_local->work) is
-called after the target memory has been freed. The sequence of events
-is detailed below:
+Thank you for your time and attention.
 
-CPU0                           | CPU1
-brcmf_btcoex_detach            | brcmf_btcoex_timerfunc
-                               |   bt_local->timer_on = false;
-  if (cfg->btcoex->timer_on)   |
-    ...                        |
-  cancel_work_sync();          |
-  ...                          |
-  kfree(cfg->btcoex); // FREE  |
-                               |   schedule_work(&bt_local->work); // USE
+Regards,
 
-Scenario 2: Freed after the worker is scheduled
-
-The brcmf_btcoex_info is freed after the worker has been scheduled
-but before or during its execution. In this case, statements within
-the brcmf_btcoex_handler() — such as the container_of macro and
-subsequent dereferences of the brcmf_btcoex_info object will cause
-a use-after-free access. The following timeline illustrates this
-scenario:
-
-CPU0                            | CPU1
-brcmf_btcoex_detach             | brcmf_btcoex_timerfunc
-                                |   bt_local->timer_on = false;
-  if (cfg->btcoex->timer_on)    |
-    ...                         |
-  cancel_work_sync();           |
-  ...                           |   schedule_work(); // Reschedule
-                                |
-  kfree(cfg->btcoex); // FREE   |   brcmf_btcoex_handler() // Worker
-  /*                            |     btci = container_of(....); // USE
-   The kfree() above could      |     ...
-   also occur at any point      |     btci-> // USE
-   during the worker's execution|
-   */                           |
-
-To resolve the race conditions, drop the conditional check and call
-timer_shutdown_sync() directly. It can deactivate the timer reliably,
-regardless of its current state. Once stopped, the timer_on state is
-then set to false.
-
-Fixes: 61730d4dfffc ("brcmfmac: support critical protocol API for DHCP")
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
----
-Changes in v2:
-  - Make the description clearer.
-
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/btcoex.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/btcoex.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/btcoex.c
-index 69ef8cf203d2..67c0c5a92f99 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/btcoex.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/btcoex.c
-@@ -393,10 +393,8 @@ void brcmf_btcoex_detach(struct brcmf_cfg80211_info *cfg)
- 	if (!cfg->btcoex)
- 		return;
- 
--	if (cfg->btcoex->timer_on) {
--		cfg->btcoex->timer_on = false;
--		timer_shutdown_sync(&cfg->btcoex->timer);
--	}
-+	timer_shutdown_sync(&cfg->btcoex->timer);
-+	cfg->btcoex->timer_on = false;
- 
- 	cancel_work_sync(&cfg->btcoex->work);
- 
--- 
-2.34.1
-
+--
+Ken Chou
