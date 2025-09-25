@@ -1,81 +1,81 @@
-Received: from mail-il1-f227.google.com (mail-il1-f227.google.com [209.85.166.227])
+Received: from mail-io1-f99.google.com (mail-io1-f99.google.com [209.85.166.99])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE3FD315D5C
-	for <brcm80211@lists.linux.dev>; Thu, 25 Sep 2025 18:29:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.227
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4274C319865
+	for <brcm80211@lists.linux.dev>; Thu, 25 Sep 2025 18:31:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.99
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758824958; cv=none; b=I3uyOquuAo2whbuOERSyPyK4+lV8lTCZ2AjrD2JN9UM4eimGcCtE6oOj+pY7nYLa9wCcfQ1abN8OidpoDkCTZvMvVSwmv1eRE48ivBlWWh5IduEA4T3H/uxwAAhxgIgwYVdzyLHymP8lPyhhkOo741AIcKZGTcKGygeoqgRmlis=
+	t=1758825070; cv=none; b=AsMlXj6ctie0OZDd/rl7JiGUFbuFPWf6m2zGET1vrHYZpPoCc7Q5O0qSwQdzu8Y1QJzQhL07mUkPQJZloBecfOkPSMU268z4BB3KYo2QSO+evKV0zW3+xWGD/pMF2GO+iJlSk8pei0ZEMbUczHfM/ho9bsoIxMPFXziPGKfvIyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758824958; c=relaxed/simple;
-	bh=pBO/UX4J7C0KI04B26XSe7hPoe9OX9Q+92VaUGVxbJI=;
+	s=arc-20240116; t=1758825070; c=relaxed/simple;
+	bh=U2Y1oZnw0CPSvphNGIRZ/c0Hw/FN3c04/zntgc90mKM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RAluWM7oeeNk0OT8QOQjFHM0QgQG1yb4s2+ATyjRIhjMZ7ZITA45b9IkT0/D13tRYIqz1HYObnNTKdFL7X+wdbSvLTp5l3Iy0bgg6BG8aKMmPawB7hI8+mVbHCeDWIRTShzTR7FGIWdf7g6UtfZZobLjJK1bNYSEKW7nAbV30QY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=HlbhaeOJ; arc=none smtp.client-ip=209.85.166.227
+	 In-Reply-To:Content-Type; b=Ip951ZjA0xaipBeMoBw1pqUUFX0kdNtfi6SD6N+JsEGQ8duw0wMNkgrnuV2kRuzyrAOV0z9MD4uhSQ2eoId1K9WT/Jtg40kmt0vrrUs5TU7O9tQn8FPt8JC6pSXjEJVLarboNkSeJ2wm7m2uxUNgLy4fGM3H9va9PaQbAQLGyos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=Dv5/3IS3; arc=none smtp.client-ip=209.85.166.99
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="HlbhaeOJ"
-Received: by mail-il1-f227.google.com with SMTP id e9e14a558f8ab-4248c9a64f7so7259215ab.0
-        for <brcm80211@lists.linux.dev>; Thu, 25 Sep 2025 11:29:15 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="Dv5/3IS3"
+Received: by mail-io1-f99.google.com with SMTP id ca18e2360f4ac-8b0055cbd0fso107224739f.2
+        for <brcm80211@lists.linux.dev>; Thu, 25 Sep 2025 11:31:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758824955; x=1759429755;
+        d=1e100.net; s=20230601; t=1758825068; x=1759429868;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:dkim-signature:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=P9mUkWMYiaFyyO8vrDokgAXf/iLB3jaofepgCpBek4g=;
-        b=dacsNwiO57FwhRk0VF8EseQYRbIYpWPSZ6ssUcSdyQxdve0E2Ug/LPPF3tcdkqIwGj
-         Tuaj5ZxPCEMoT5noTyoyh6nf78+sdKQCNF3CU3tLzxb8DYGGKk/N8QUf8E21hIEl/cUY
-         OplB3b0MUBSqrU716ATlWCeLQbpfhTmQEAszt9mCFqn1bylA83YZm2ZThCIEYrlmdIUn
-         lwkCKtnVTwr+T3EbekB+hE1uudq1IBGo7L2EUZ6l7ZznltwVypjTT3BVitJ2OZe+OjZG
-         x+NHKqK69dCPF2lp7s316nxmG///KZ6DCaekC/cHjdnPfS4Wafhy1eAm7kwEqwDem3xC
-         +x7w==
-X-Forwarded-Encrypted: i=1; AJvYcCXkC+4glBZQ3aOJ8Kj/7Ek8oU2Ov8H9pvbOoBg0ER8kgogqjy6L6M+ypCXGr139WPHAVqr5PUlnipk=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzRT4y86XfF57eSLZNTKZJalPwp6tEQuMxCQiAtvTMP3K7uTHmO
-	px2nxyInZDaa1PSi/+TZXzCeJEh+/CaE2e8/nhMiVvd3Fs2EL5a+yyKKvftHItU6lQReV9woD5P
-	C20QpEWMU17mtXhITyHJcYiwXlD9iSfJiXV/pCPj4sMYLljfwcgHK/+uKKFX2Bf/MQb289PVV85
-	HMRxvukYOTb5NXKUMrR4w/QcqnYl0bsQ8cEVb5X/ay1IJM9SVnzHbjc5poe+D5hTX1VnB4xcBwE
-	+TgLaKy/JqR/iF3RsxENA==
-X-Gm-Gg: ASbGncvQnjSaKZymsHpacIJ/+UYHnv2O+Ssr3wMsMPRy/Ix64obF+D0vAlVcOQhrn9R
-	ruZhvQ0GU7vf00M4ZyETTIFYJLf56tteqt5K708+eucoYvY+cfxdNkZTQjY3i8icOI++MWUAmCk
-	IVTghb0pBHGyz2mUUrzrqNEtCVUgg/rI4/7fWfgKZWMIy+C4ehIkLqW6NTtj0NkBxA68iuv1Ozu
-	Ye/ysPiM4tryrAYw+NsHwNjN7Q2SFv3KAa1DgVLMzHTJqhtcnQhKW+qde7KmD9iPXxVYECnpi1P
-	TomP16iJBpSW099N/EL1yAH7WuoJCZi/j7gyFLMdzOIUcdnD60TEGowiSzmAZPJk+7l08y9KmfG
-	30nqcOY/oGHnVfw3+7bp8kL5wQR+55Tb9l/12OVL280JYNKUz+Ihxkk7BNF+KRrKCB5nBrPJ1K2
-	QjBxcTjQ==
-X-Google-Smtp-Source: AGHT+IEkGjSiTiYCzp6dEKHLn2ufCYK5XnZsrDpe4tzMx4Y/hNNaOz8KjLtQ104E3Aw1SvUO73uUmVUar4Fp
-X-Received: by 2002:a05:6e02:b26:b0:425:51dc:5b6c with SMTP id e9e14a558f8ab-425c31d86d3mr42905755ab.13.1758824952987;
-        Thu, 25 Sep 2025 11:29:12 -0700 (PDT)
+        bh=kdZ7JXoUq4xQim4IeeTfkCOZr7doJLlGQb8qr7xzIoM=;
+        b=FzO/qVu8K9NLMZhutr4UCf2fH1XwPK+kfZgpdMDMfapDsd/Ie98I7lJM+/s94A8bW/
+         c4z4rtyEHmnEfBHuiP06Wx4P7e3XJP2UA2VShwCrcyakJ8uvyC9nqjdk/wr33Y4K4LA2
+         SwkF5LY2JtD/yeYJqkCFGD5c4qtQIKXhiMCAbYxujvUi4Wwt18RbNELtJcntjc2O0/rp
+         NHLqYMvBAOtiYdzVLkON93ABBUop1+GzIxb0AhhHqlHOCoICCXolVLYhxpam3cPN3Itd
+         q7njMWzhWqr19/xSLlkpDMYEJL0rTInZ3Q+bGgebBj329Ju2lgn9EBe16/hb30NV38EL
+         raEA==
+X-Forwarded-Encrypted: i=1; AJvYcCWJV6dGAe7jgMadOdRYsHUqTwv3YEDzJPEMgmV2eWLOQ2rJrh0x9TEN1ihemMiXQQ75Z/nsYP7Luxk=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyGxESCUpZJdOzCnsDGkiaOSs4/bpsRU4epqxuojzF4eOWN5CPT
+	sRaRWOnPeg3aGhX0qYkAsZ9iLDEwyhj/Nu1gqVsdNmZjQZB85qUSFg3j2BcX/rZvuVJzVVkDxlc
+	Tl6YnOhCrD8fKi0rDdVBCtTgh2uGJSBgEFfbhtvNE6iAlSRrtDJ3rTXyYSeKELVfYGWlQ4NNuqi
+	s8gEqBTYbISsbHMmligu6pZYlm/OvXRUjDpszuWOrXj+MkC1dgMYI18ncnx8elZT0qyB7v/pebL
+	R+13iXnW/uYkPWpwfm+3A==
+X-Gm-Gg: ASbGncttT4xGGYHLx3aXkpuVjbV/j30c7C/8d0WWGbvsa4KVz/FnMlTOPAwG/3qMAkH
+	ZoNAH4RgINK22zVykcT6D7Q5P6D6YRdxASfDXeIYsWXpp3AdAV7CQ/0tnpAtR7AnmVm9HecwF1q
+	GJxvRIOdENVHEEc+WxC/dIKU9srM8e4Fm1ERbprCusBqZu2JlNYdSGM4v25zqx/feE4A5vGAS8I
+	dG1X+mEb7RpWSuCKr7+8Qh6veA2aKp6M+oXEiJyFiY2LA2Z3nKmHv9rpUq9zVKNw+zhcdp+KnOU
+	ZG9AlqbhzeRXRG5dCxeElpWjrkhC8snPSCj1e/00CzIHsgxj/0LD3uv0Vt6vpS01DYnipMCkn3p
+	wHp3YaYrih07EvsuMkZgfv7KKkUjlR7YQYlb3MclexhFhCyeDH70EdAu/GfuFgqNu1fWdrYyFgT
+	u4vVxIpA==
+X-Google-Smtp-Source: AGHT+IGVHMeIyFqdWQJC/YITVmMeLWOCieM1ZbshogRQHtj+Yshh6zh1It/SDjt9435k79E+06XPyJamsxev
+X-Received: by 2002:a05:6e02:3702:b0:425:951f:52fa with SMTP id e9e14a558f8ab-425955f259amr79696405ab.14.1758825068196;
+        Thu, 25 Sep 2025 11:31:08 -0700 (PDT)
 Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-121.dlp.protect.broadcom.com. [144.49.247.121])
-        by smtp-relay.gmail.com with ESMTPS id e9e14a558f8ab-425c02657fbsm1815115ab.42.2025.09.25.11.29.11
+        by smtp-relay.gmail.com with ESMTPS id e9e14a558f8ab-425c02658acsm1615535ab.40.2025.09.25.11.31.07
         for <brcm80211@lists.linux.dev>
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 25 Sep 2025 11:29:12 -0700 (PDT)
+        Thu, 25 Sep 2025 11:31:08 -0700 (PDT)
 X-Relaying-Domain: broadcom.com
 X-CFilter-Loop: Reflected
-Received: by mail-ej1-f69.google.com with SMTP id a640c23a62f3a-b353cefb829so101560366b.1
-        for <brcm80211@lists.linux.dev>; Thu, 25 Sep 2025 11:29:11 -0700 (PDT)
+Received: by mail-ej1-f69.google.com with SMTP id a640c23a62f3a-b360d0224f3so143255166b.0
+        for <brcm80211@lists.linux.dev>; Thu, 25 Sep 2025 11:31:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1758824950; x=1759429750; darn=lists.linux.dev;
+        d=broadcom.com; s=google; t=1758825066; x=1759429866; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=P9mUkWMYiaFyyO8vrDokgAXf/iLB3jaofepgCpBek4g=;
-        b=HlbhaeOJNDEt/iFkSBDm6eGzX/CNt/mvy6o/LEPAGn5QMUpubR/upDCwShI9Z46D/O
-         RsheOiIliGZT1F3K+ZtlMQbynLwahdVyP8p2HwZEZJmK4pQVGm99OfSwbEnvVe+Jn/fO
-         w8Yt+rxHtXjKjfyWdbbug0uOoRsrTEjyCeFMo=
-X-Forwarded-Encrypted: i=1; AJvYcCXXQZ7Id4zxRLs9XNneEKBTH4erdMFT7wsTgIn5VHJ/wL1naqbKVvf6f9jLEuSMjIyywg67ySf8Xoo=@lists.linux.dev
-X-Received: by 2002:a17:907:908c:b0:b36:f77e:15d0 with SMTP id a640c23a62f3a-b36f77e2046mr120543966b.37.1758824950253;
-        Thu, 25 Sep 2025 11:29:10 -0700 (PDT)
-X-Received: by 2002:a17:907:908c:b0:b36:f77e:15d0 with SMTP id a640c23a62f3a-b36f77e2046mr120543066b.37.1758824949890;
-        Thu, 25 Sep 2025 11:29:09 -0700 (PDT)
+        bh=kdZ7JXoUq4xQim4IeeTfkCOZr7doJLlGQb8qr7xzIoM=;
+        b=Dv5/3IS3wiyHr7TVtojRv2iL6xjgwJ9XHTQpi2OMQD8LzHZtHMkLHypCqlivZ99l8O
+         hco2B7CHdJXtfCbkCENjj4+NyvjCo/8xJFhCCAjhxBbE5q4/ttpK0pLg8DWWzmZnFLtr
+         IWDBKOfnRHrrO/zSrqjrkPxu/rQqZHEk6Ws6s=
+X-Forwarded-Encrypted: i=1; AJvYcCXcovqs/T+GD7Jg61L2ZWUrYb1rhu9y6M55rf7CszOwsf+lZucjbCG/ZBttwYvrkcfsIGnEzr8UVTA=@lists.linux.dev
+X-Received: by 2002:a17:907:3e21:b0:b34:99e3:3a88 with SMTP id a640c23a62f3a-b34bbccf844mr430955266b.58.1758825065686;
+        Thu, 25 Sep 2025 11:31:05 -0700 (PDT)
+X-Received: by 2002:a17:907:3e21:b0:b34:99e3:3a88 with SMTP id a640c23a62f3a-b34bbccf844mr430953266b.58.1758825065213;
+        Thu, 25 Sep 2025 11:31:05 -0700 (PDT)
 Received: from [192.168.178.137] (f215227.upc-f.chello.nl. [80.56.215.227])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b353e5d155asm220768766b.6.2025.09.25.11.29.09
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b353fa65880sm213136266b.45.2025.09.25.11.31.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 Sep 2025 11:29:09 -0700 (PDT)
-Message-ID: <1122cfba-0735-4392-accb-ed42c5b3bf6a@broadcom.com>
-Date: Thu, 25 Sep 2025 20:29:08 +0200
+        Thu, 25 Sep 2025 11:31:04 -0700 (PDT)
+Message-ID: <02ff0c6e-f2e5-450e-9666-3ce8b8404f86@broadcom.com>
+Date: Thu, 25 Sep 2025 20:31:04 +0200
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -83,16 +83,11 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: hostapd Kernel Crashes with IOS
-To: Chris Spargo <chris@streetlogic.pro>,
- "linux-wireless@vger.kernel.org" <linux-wireless@vger.kernel.org>,
- "brcm80211@lists.linux.dev" <brcm80211@lists.linux.dev>,
- "brcm80211-dev-list.pdl@broadcom.com" <brcm80211-dev-list.pdl@broadcom.com>
-Cc: Jonah Finkelstein <jonah@streetlogic.pro>,
- Parker Borneman <parker@streetlogic.pro>
-References: <MW2PR02MB3674333A04868446C75C39EDB51CA@MW2PR02MB3674.namprd02.prod.outlook.com>
- <1997f6d2b48.2873.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
- <MW2PR02MB36742154B795D5FBCB77C394B51FA@MW2PR02MB3674.namprd02.prod.outlook.com>
+Subject: Re: brcmfmac: driver crash with iOS 18.6.1, potential DoS
+To: Hsien Chou <s311332@gmail.com>
+Cc: linux-wireless@vger.kernel.org, brcm80211-dev-list.pdl@broadcom.com,
+ brcm80211@lists.linux.dev
+References: <CAE3HL_yv8t1Rkd+jLfQMkc3YrNONQp0pRFESV+v92ECf_+7Xjw@mail.gmail.com>
 Content-Language: en-US
 From: Arend van Spriel <arend.vanspriel@broadcom.com>
 Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
@@ -138,26 +133,36 @@ Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
  NKowQLrlMBGXT4NnRNV0+yHmusXPOPIqQCKEtbWSx9s2slQxmXukPYvLnuRJqkPkvrTgjn5d
  eSE0Dkhni4292/Nn/TnZf5mxCNWH1p3dz/vrT6EIYk2GSJgCLoTkCcqaM6+5E4IwgYOq3UYu
  AAgeEbPV1QeTVAPrntrLb0t0U5vdwG7Xl40baV9OydTv7ghjYZU349w1d5mdxg==
-In-Reply-To: <MW2PR02MB36742154B795D5FBCB77C394B51FA@MW2PR02MB3674.namprd02.prod.outlook.com>
+In-Reply-To: <CAE3HL_yv8t1Rkd+jLfQMkc3YrNONQp0pRFESV+v92ECf_+7Xjw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
 
-On 9/25/2025 3:36 PM, Chris Spargo wrote:
-> It appears that user was also testing with the Pixel7 (mentioned in the 
-> ticket).
+On 9/24/2025 4:53 AM, Hsien Chou wrote:
+> Hi Arend and everyone on the mailing lists,
 > 
-> Our experience has been both the little circled information icon on 
-> iphone triggers this, as well as simply joining the network then leaving 
-> it.  It’s been a bit of a diagnostic frenzy here yesterday, so I need to 
-> slow down and understand if those are both the same failure, or 
-> different overruns that cause fundamentally the same crash.
+> I'm reporting a driver crash in brcmfmac that can be triggered by an 
+> iPhone with iOS 18.6.1 or newer. This issue *allows a remote, 
+> unauthenticated device* to crash the Wi-Fi driver, leading to a denial 
+> of service.
 > 
-> I will pull together cleaner examples of both crashes.  Should I attach 
-> them to the github ticket or forward directly here?
+> The full details, including complete crash logs and a step-by-step 
+> reproduction guide, are available on the GitHub issue page:
+> https://github.com/raspberrypi/linux/issues/7033 <https://github.com/ 
+> raspberrypi/linux/issues/7033>
+> 
+> For a quick reference, here are the key details:
+> * *Affected devices:* A Raspberry Pi running as a Wi-Fi access point.
+> * *Trigger:* An iPhone with iOS > 18.6.1 attempts to view the properties 
+> of the Wi-Fi network.
+> * *Root cause (based on preliminary analysis):* The driver panics, 
+> possibly due to a malformed or unexpected frame.
+> 
+> Please let me know if you need any additional information to debug this 
+> issue.
 
-Either way works for me although I have a slight preference for using 
-the mailing lists.
+Having the kernel .config file from the Raspberry Pi would be helpful 
+reproducing the driver build. Can you provide that?
 
 Regards,
 Arend
