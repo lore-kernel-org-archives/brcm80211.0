@@ -1,199 +1,137 @@
-Received: from mail-yw1-f227.google.com (mail-yw1-f227.google.com [209.85.128.227])
+Received: from mail-yx1-f49.google.com (mail-yx1-f49.google.com [74.125.224.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1FE9238142
-	for <brcm80211@lists.linux.dev>; Mon, 29 Sep 2025 18:23:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.227
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0910328B51E
+	for <brcm80211@lists.linux.dev>; Thu,  2 Oct 2025 23:20:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759170213; cv=none; b=ASE0/PWlyh2RS5ECjUkqcYEiyWd1wXsmAusTX13Nwk2KrYp/7xHK43HKTrjdnrcwyRGBHK0Eoygb8vlII9SwuRHaoJ000ITNnByeuNmaiCoD1ses1vwZT1FkN7ANOWOAcdNYxGE9w2qLE2g+wlafitrE3GfXVYi2NP0SZPXe/AM=
+	t=1759447224; cv=none; b=Sbbl6+CoFujM0eKPr3J2QlL62kPykfRs8VvATjOkV9+YUORXpIsoeJEgFcVCt+jTLptiz0J9BGoKe6PAPi+7x+4bI+36G61i0yEoz9O1dPdXjCM8SesuA5YYIFjEtfK2UIoE6sthErMUx5xtrq33FTNGYHosdiyaC+zoBHXr8m8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759170213; c=relaxed/simple;
-	bh=QJFtZVXeI6V/F7PauM5ALE2r/fz4phzD29nTCt36V1s=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JEDZ4VfT/nHJB1Dhc9obqDlbYPAALsb+zQ+kXOK1k1T3oIdZ1WPrh2IHAsbhCQTQsBVESDOPCq9typK+2Ho270viCEyzyB0Oi0rNwYd75X6WQISk27SpY/xAnwI03zuB0Imv/d9zz+MF9bnD+EmhHZPfIXRXYF5GN99FLiZsfz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=Np9YMIcZ; arc=none smtp.client-ip=209.85.128.227
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+	s=arc-20240116; t=1759447224; c=relaxed/simple;
+	bh=oauH4H5fAhE9YQilFd4Uh+kG+na5T1OTLmpjiT3+6CU=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=cMd63n8ecpj7tKrGAgBqlsC1Z0ZYv7blw0t7X0UuDbRx4zoz228gS+8fk9XCPMMVi/gVi7nCXp1uXXfbwkBcimfjh7kwaWeK9i6N/U8et/vUAMXZJNIWeQcB3e+s2bP4/xUl2RRrhcJO8GGx3MnnVMC+WSDhV8oF9SucbfqOQMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=govivid.ai; spf=pass smtp.mailfrom=govivid.ai; dkim=pass (2048-bit key) header.d=govivid-ai.20230601.gappssmtp.com header.i=@govivid-ai.20230601.gappssmtp.com header.b=ENRxv0yl; arc=none smtp.client-ip=74.125.224.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=govivid.ai
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=govivid.ai
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="Np9YMIcZ"
-Received: by mail-yw1-f227.google.com with SMTP id 00721157ae682-74625f748a0so54820277b3.2
-        for <brcm80211@lists.linux.dev>; Mon, 29 Sep 2025 11:23:31 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759170210; x=1759775010;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:dkim-signature:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8820Bco2QKTOhDzV/dKofCVg3cLeM7g3fa83BzQ1oeE=;
-        b=fTCSZoMoYyTpb7Qu2dHbwQKokPnPl9YaD26FoId2MfOJlVyVA3OoT39iMtr1Pu5IT6
-         Ctwuk4a9l6Xj/K13gVmB1meHoGhnQ1sjVioP25VYVezZKhOyMHgTiJ7ESR8S0tb/ukrk
-         7/AU993i+lUdfwBnR2wNA2bC12qZPKEOUnVe7pCvREkJfW4k1BsZGMl2Q8lquf7blC/2
-         wxxTjJELqaw5CCYrkPDj24glVQqw+H5vsX+dYuCB5A76XZeEYMGgdFDYqOQY6PTAUdaI
-         63XIpYgvUk38lsysrnwqwE2XhLTKpNwTK64uj7YmEo/Sn+1eX0eWl+vH3kPCdhnr9E2a
-         86Gg==
-X-Forwarded-Encrypted: i=1; AJvYcCWqZbyOHr5Jrs6aFqEdnRGhxVTbwi8D1UGWk2g0nKZcA/jYLcqRiNgRHUBXRpiZpyEzrqXuVR2LU1A=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxZR7TBbIylZl3JUV+wYqrc0P9AbTmjMtZsJknHuqxMLm4l4Av3
-	VL+IJd8dwm2XzpyjD+vMqgApbOL+Bd1TaKwynQgjRk7B7CRYS/sB9ho5qDvvjyEdNgacWmJkr7s
-	txUtdYwIJJDZBOUZg+SmIHaibo4sP8RYa9DdwFrOwKIcW7LDAhtgPiCBcRPUbpuU7JHbkHs0yBn
-	lJ4X+PnfLlA4uYxDn9DTRsupRZw4SJqyNy2peExsztOZs6ECkztwfjZiYc6swzm8Th629/49M8x
-	pXLqU5qu+EWpV0KfVl0Ig==
-X-Gm-Gg: ASbGnctwyGP+NS2hBN2CRcUhvAuezf9Mz9sprchawzyJ8ozW3WhLzYErkruEz/a09/p
-	RK12vnBSFO/R9ShpMmHDinNZ8Ser8kiZevALP4sQfP03VkXJPL8GuesfM4SIrFneOTFkPDBDi6t
-	j0wqtCU1BPrszZynXpLS/7B+oWTI6/f0LcbJssjdnLC2CtLIgmZPc8HfcBMO2sYgP5apTkevMvZ
-	Gyr0JV84g39RC280dfoaZ8UTpomshRxdO+h4HQkkG/At5TyZgHHm2ldpXEFjQpBHFoekLpsIU5/
-	gsc8X6CqorRqWkQH1vB8nIIEnEsdXQ4Rejb05l59YUOfbVD4mIJQY7roJOzVvIkoEfrcBIveSH8
-	BL7Wkt62d7/Wnohd2l/VyKSBmzgVJk6sMznLh3D5HmGXCtivjy82tF3jFP1ZnOG7hOvQE0Xur7K
-	jW57g=
-X-Google-Smtp-Source: AGHT+IG6PT/f7xEpLdxpAZ5cBoCHzRxWXOS2BMNpSRrphtd4vbHHsNRCOD9LKW0tZk65Pt6GHWM3oyjXW4v6
-X-Received: by 2002:a05:690e:d51:b0:634:751b:1d13 with SMTP id 956f58d0204a3-6361a783fd1mr19693708d50.23.1759170210469;
-        Mon, 29 Sep 2025 11:23:30 -0700 (PDT)
-Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-14.dlp.protect.broadcom.com. [144.49.247.14])
-        by smtp-relay.gmail.com with ESMTPS id 956f58d0204a3-6361e979679sm532320d50.17.2025.09.29.11.23.30
-        for <brcm80211@lists.linux.dev>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 29 Sep 2025 11:23:30 -0700 (PDT)
-X-Relaying-Domain: broadcom.com
-X-CFilter-Loop: Reflected
-Received: by mail-wm1-f72.google.com with SMTP id 5b1f17b1804b1-46e3a049abaso20764075e9.0
-        for <brcm80211@lists.linux.dev>; Mon, 29 Sep 2025 11:23:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=govivid-ai.20230601.gappssmtp.com header.i=@govivid-ai.20230601.gappssmtp.com header.b="ENRxv0yl"
+Received: by mail-yx1-f49.google.com with SMTP id 956f58d0204a3-636d5cefab2so2318029d50.2
+        for <brcm80211@lists.linux.dev>; Thu, 02 Oct 2025 16:20:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1759170209; x=1759775009; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=8820Bco2QKTOhDzV/dKofCVg3cLeM7g3fa83BzQ1oeE=;
-        b=Np9YMIcZsZhHwr4S/pFtoQ28Xli3UBbCvEb6jN8GFr1EgZUMMMb6FnGInjQ7zVnDrm
-         TgD+vm2qkxnhDLfE24TXNBpwJpxG8LGQFlXtfQiw9Om1Qt5uS1CevcWV0Mfh/bWrZxV3
-         IhJ+tIZTj08+0UX/0p9RFRwdIk7WXHzy3nij8=
-X-Forwarded-Encrypted: i=1; AJvYcCUMSu+tyzB4jrdrz4srXZXPtXkqZx/wDE0X9L/r9/+Lv+fmZ1AcLFisnPYPQ2Utvd5UfLWGSkDiTE8=@lists.linux.dev
-X-Received: by 2002:adf:ee44:0:b0:3ec:1b42:1f93 with SMTP id ffacd0b85a97d-413591d7997mr9616573f8f.37.1759170208774;
-        Mon, 29 Sep 2025 11:23:28 -0700 (PDT)
-X-Received: by 2002:adf:ee44:0:b0:3ec:1b42:1f93 with SMTP id ffacd0b85a97d-413591d7997mr9616558f8f.37.1759170208302;
-        Mon, 29 Sep 2025 11:23:28 -0700 (PDT)
-Received: from [10.229.41.112] ([192.19.176.227])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-40fc6921b7dsm18996937f8f.42.2025.09.29.11.23.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Sep 2025 11:23:27 -0700 (PDT)
-Message-ID: <b2e0bf04-f149-4a23-aba5-cad55a8923c1@broadcom.com>
-Date: Mon, 29 Sep 2025 20:23:27 +0200
+        d=govivid-ai.20230601.gappssmtp.com; s=20230601; t=1759447221; x=1760052021; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1vEeRe4D2iYgy2mgRonuW34c4fqpWoMFMo0z9bQP5aY=;
+        b=ENRxv0ylyeHmluBE4xyp0tqTX1rRj8oZ/mwgilmdySYen8Gj8Y1EwEFi6qCNMGQd3N
+         qo0CF4It0+nbuZKVVMalItxSlt83bf498DnJ1PIJGb4S9WZDEdDDnp6TFsjPRUHsi0sn
+         5Ek1O+J/QM5cKYVot+GSkFo1cjzgwcRsikuemReDl+rihCbMTc087NH8MU54DMNbjQLy
+         nJuNEUYn7i5u9+kq0aFCPRhnxGIHzy8reztRYJw8REks7rC3Idzt+P0eNEwm3iTIb9Se
+         kjto+/f46q1eT5I1SWgIQIx+/9YTxX/xaA8s+1YPdUAeoJNUXyjjs77vWmCd3eSdvQqQ
+         ODhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759447221; x=1760052021;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=1vEeRe4D2iYgy2mgRonuW34c4fqpWoMFMo0z9bQP5aY=;
+        b=eZtB9Luce1//XiRcSaM/aZ4OAQgqAXlls164ZdCzHv+akYP0VlXXTGtQyOnA9vnTkP
+         W6Ewc5ayFzKRdto7Pawvy9aUHawRRY1zgDw5Qoec2Xe/GVWy3xFkL0xINgj2PAYezbkK
+         ocwHlUWJNEricn1C/m9s9XzKD3PrgfVbveUOfPBDoe5Z2BXD8lRXu+RkKw4VikfA5bmp
+         6ChV4dGd9FBvAxXr515Ipwxpw4gQBSDbDS5SrduY+56QTicHWL5GjgiTzJBOROeM9qnW
+         dVLPegM40eGEIUqPCV4xwsqlaLULT6NbMv0X/aol1K2wAE6YHKGzo/+LB9XFDsd+f0/p
+         aeog==
+X-Forwarded-Encrypted: i=1; AJvYcCVuuo4pEM88fAZpRljGUvlZaqbQjSe5YAcW7Tq3B8g/1pVgCitGlL7gn4+TPlpKOXQnFCcMGwbOEOI=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwLR4AQiV//G73FlOPLwl8GHir6Ofc8ku9VxWQ/60QXvqVdhrcu
+	9hTQgxr2uEf6QFg+ADdlQskkXnbjmtUyLuWob2QP1Ua/+QjOCYS5p4HhwY+FzpcpFI4=
+X-Gm-Gg: ASbGncvXjpuCjyXKJxXK1kBv8qolvGdLQ8ICObdjB9/+v9ndodcwURKcuVE6y0EfPey
+	Aimsm5XwwqFPf0Xbou+K+y4os0/ufydPeS66d9IEYDP+sRzyvxVBmOGG+u2n5CxhjjJKdNJGzCH
+	7IiY0aollW3ZYvA7zvh2+eav0rkLAmY+5ZdGqeYuGwZMBh/JOBNj0gbofOH5Lzfoj3b6JnC74WH
+	WnMHfUTJNtHowlWR+FHKIEhew7ALiUSwfVBYBy17MJ1MbZwW5M8zdxOOW45Uxc76iqZxi6iXyUS
+	lzewiOEmLAIslr7W1SzT4sijIX4htMkPiq1t+8iyTLnsp6iSXDW4nPU5NieOcKjHsKN5ESGYwNQ
+	mTBKb8CjWHq/vNEdeu59Nw5PHF2eCQMBLq1DL8w==
+X-Google-Smtp-Source: AGHT+IHUT9ip7xSAFrwOkDS8HcSQ3yhtpEFu+6Rm5cFScpIZ6IFLNK6QOyaEwbV4IGE++pXYiQOi9g==
+X-Received: by 2002:a05:690e:23c3:b0:635:4ed0:5730 with SMTP id 956f58d0204a3-63b9a11d957mr721196d50.52.1759447220908;
+        Thu, 02 Oct 2025 16:20:20 -0700 (PDT)
+Received: from pop-os.. ([12.41.86.113])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-63b845a71a6sm1156736d50.11.2025.10.02.16.20.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Oct 2025 16:20:20 -0700 (PDT)
+From: Richard Reigh <richard@govivid.ai>
+To: arend.vanspriel@broadcom.com
+Cc: brcm80211-dev-list.pdl@broadcom.com,
+	brcm80211@lists.linux.dev,
+	chris@streetlogic.pro,
+	linux-wireless@vger.kernel.org,
+	s311332@gmail.com,
+	wahrenst@gmx.net,
+	Richard Reigh <richard@govivid.ai>
+Subject: [PATCH] brcmfmac: Fix NULL pointer dereference in P2P action frame handling
+Date: Thu,  2 Oct 2025 18:20:02 -0500
+Message-Id: <20251002232002.124609-1-richard@govivid.ai>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <b2e0bf04-f149-4a23-aba5-cad55a8923c1@broadcom.com>
+References: <b2e0bf04-f149-4a23-aba5-cad55a8923c1@broadcom.com>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: brcmfmac: driver crash with iOS 18.6.1, potential DoS
-To: Stefan Wahren <wahrenst@gmx.net>, Hsien Chou <s311332@gmail.com>,
- Chris Spargo <chris@streetlogic.pro>
-Cc: "linux-wireless@vger.kernel.org" <linux-wireless@vger.kernel.org>,
- "brcm80211-dev-list.pdl@broadcom.com" <brcm80211-dev-list.pdl@broadcom.com>,
- "brcm80211@lists.linux.dev" <brcm80211@lists.linux.dev>
-References: <fd88175f-497b-4fec-9094-58709ddfd1bf@gmx.net>
-Content-Language: en-US
-From: Arend van Spriel <arend.vanspriel@broadcom.com>
-Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
- 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
-In-Reply-To: <fd88175f-497b-4fec-9094-58709ddfd1bf@gmx.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
+Content-Transfer-Encoding: 8bit
 
-On 9/29/2025 7:06 PM, Stefan Wahren wrote:
-> Hi,
-> regarding reproducibility, I would assume Arend is using the mainline 
-> kernel and Hsien just tested the Raspberry Pi vendor kernel. The 
-> brcmfmac driver has some modifications downstream.
+When iPhones query network information via the WiFi settings "i" button,
+the brcmfmac driver crashes with a NULL pointer dereference. This occurs
+because the P2P device vif is not initialized when handling certain action
+frames.
 
-Actually, I tried to build the downstream RPi vendor kernel. However, 
-there are some variables in play. The config Hsien Chou sent was 6.6.28, 
-but the log is 6.12.34. So I have taken the provided config and built 
-from the rpi-6.6.y branch:
+Add NULL check for vif before dereferencing in brcmf_p2p_tx_action_frame()
+and return -ENODEV when vif is NULL. Also modify the retry loop in
+brcmf_p2p_send_action_frame() to stop immediately on permanent failures
+rather than retrying.
 
-commit bba53a117a4a5c29da892962332ff1605990e17a (HEAD, rpi/rpi-6.6.y)
-Author: Phil Elwell <phil@raspberrypi.com>
-Date:   Wed Mar 26 11:28:28 2025 +0000
+Tested on Raspberry Pi Zero 2 W with kernel 6.1.21-v8+
 
-     dts: rp1: Don't use DMA with UARTs
+Signed-off-by: Richard Reigh <richard@govivid.ai>
+---
+ .../wireless/broadcom/brcm80211/brcmfmac/p2p.c   | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-     DMA has been enabled on RP1's UART0, but with mixed success. Transmits
-     seem to work, but the DMA interface is not well suited to receiving
-     arbitrary amounts of data. In particular, the PL011 driver is slow to
-     pass on the received data, batching it into large blocks.
-
-     On balance, it's better to just disable the DMA support. As with the
-     other UARTs, the required runes are left in the DTS as comments.
-
-     Signed-off-by: Phil Elwell <phil@raspberrypi.com>
-
-Probably should have tried withthe rpui-6.12.y branch instead. Let me 
-try that although...:
-
-$ git diff rpi/rpi-6.6.y rpi/rpi-6.12.y -- 
-drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c 
-b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
-index 7376f9f37d07..7949f78c61e1 100644
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
+index 10d9d9c63..2c73156fa 100644
 --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
 +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
-@@ -2339,7 +2339,7 @@ struct wireless_dev *brcmf_p2p_add_vif(struct 
-wiphy *wiphy, const char *name,
-                 goto fail;
-         }
-
--       strncpy(ifp->ndev->name, name, sizeof(ifp->ndev->name) - 1);
-+       strscpy(ifp->ndev->name, name, sizeof(ifp->ndev->name));
-         ifp->ndev->name_assign_type = name_assign_type;
-         err = brcmf_net_attach(ifp, true);
-         if (err) {
-
-Gr. AvS
-
-> @Hsien or @Chris,
-> are you able to reproduce it with a mainline/torvalds kernel?
-> You only need to replace Kernel, Modules and Device tree.
-> 
-> Best regards
->
+@@ -1559,6 +1559,12 @@ static s32 brcmf_p2p_tx_action_frame(struct brcmf_p2p_info *p2p,
+ 	else
+ 		vif = p2p->bss_idx[P2PAPI_BSSCFG_DEVICE].vif;
+ 
++	/* add NULL check */
++	if (!vif) {
++		brcmf_err("vif is NULL, cannot send action frame\n");
++		return -ENODEV;
++	}
++
+ 	err = brcmf_fil_bsscfg_data_set(vif->ifp, "actframe", af_params,
+ 					sizeof(*af_params));
+ 	if (err) {
+@@ -1857,7 +1863,15 @@ bool brcmf_p2p_send_action_frame(struct brcmf_cfg80211_info *cfg,
+ 		if (af_params->channel)
+ 			msleep(P2P_AF_RETRY_DELAY_TIME);
+ 
+-		ack = !brcmf_p2p_tx_action_frame(p2p, af_params);
++		int result = brcmf_p2p_tx_action_frame(p2p, af_params);
++
++		/* if it's a permanent failure (like NULL vif), stop retrying */
++		if (result == -ENODEV) {
++			brcmf_err("Permanent failure, stop retries\n");
++			break;
++		}
++
++		ack = !result;
+ 		tx_retry++;
+ 		dwell_overflow = brcmf_p2p_check_dwell_overflow(requested_dwell,
+ 								dwell_jiffies);
+-- 
+2.34.1
 
