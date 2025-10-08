@@ -1,262 +1,217 @@
-Received: from mail-yw1-f227.google.com (mail-yw1-f227.google.com [209.85.128.227])
+Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74399299AA3
-	for <brcm80211@lists.linux.dev>; Wed,  8 Oct 2025 18:47:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.227
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D35C027814C
+	for <brcm80211@lists.linux.dev>; Wed,  8 Oct 2025 20:22:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759949253; cv=none; b=g55FEjTugqxNA22OvADCqMMn1SSot8U2PHR0xNX1t7cWSdDVz/4/imv32p5xZV0QniufuYz4ttQp5VzWsB01S+BT5DTPCJHguuVBuRLl33bsXprmAPOkzXTuvXco53j08NSroG0JwoRlR95P9fGKPG9R5YBWXpq0+9rv/0yvKuc=
+	t=1759954930; cv=none; b=EJ9fJyZDsjWr90KEqTZPHbfdBhlLXhkJEdPWyodabe5VJLUKqixJ6jyvUX8WMk0QutosRRNrpd7IErYUsVkPPss5gLtSj3Fjwag6cEaACqRZbJMVcc9E3IMmSSaaB261zM1Ft3LJ5fQeVYNrXrqH7+/v5ijXfFjFtJFwPvyhPmQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759949253; c=relaxed/simple;
-	bh=oARGZ/Uigev2OUQjparhkqsJ/8B0Bc9qqzIxWuZfA+o=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dqGjVrn9kZgv905M9oTTq9FGLVdxxywOBDeb3rsabzMn+RFZE8Ad3klfgset/+mFNThWuF8unuSgbuP8f+VxfH3GkfcP5gguG5c41dSSapstALUblPFClqDWZCRL/Vkp/Qcp1DiuPrNL5QT3jVXR/L/WcJTe6h0nR6kRqmV2EI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=TrPYGlcN; arc=none smtp.client-ip=209.85.128.227
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+	s=arc-20240116; t=1759954930; c=relaxed/simple;
+	bh=puSg/lQO8ygBa3eA22URg5jUY+paghrDl1XlMy1GSqY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=LEzUENI1LlAyjEKbm7GDsnQ5QhHv0bgW+989lwfYf9OMUgr/fHj+i/SY8ChHxoLZ/Rz/Xyc3/7Tz2q59WJ8Bkd7d127WwbYa7y6/QwoQkGGCzmCNNu94SLgc+XmEblhgOLAaZs9JKLrCAV3wMvgIcqcq9UDkELwzXoGFEIbmQX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=govivid.ai; spf=pass smtp.mailfrom=govivid.ai; dkim=pass (2048-bit key) header.d=govivid-ai.20230601.gappssmtp.com header.i=@govivid-ai.20230601.gappssmtp.com header.b=1cLOQC6A; arc=none smtp.client-ip=209.85.219.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=govivid.ai
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=govivid.ai
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="TrPYGlcN"
-Received: by mail-yw1-f227.google.com with SMTP id 00721157ae682-71d71bcab69so2074117b3.0
-        for <brcm80211@lists.linux.dev>; Wed, 08 Oct 2025 11:47:31 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759949250; x=1760554050;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:dkim-signature:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kwOortMTHEjR5fNshyp9JXt7EgfSopghsEteNp61B+E=;
-        b=X/VvV2Y3BMHv0Arjh8r+RZgh5uo/6qf2GG5Q2XvZyK6oNhAfQkmZ6U7I7ghz70BtFy
-         j6V272P0qzo6sDnTqAVEdXCKsGfSkkW1QeHQkXZpaAx99i3j9tUz5AV05EE7uzNOgUO7
-         hH6AAwyp/XJfk5ixnycPIdZ/LTyn5Ci5CT01w/bN12izNGBrAkEj4oQNCN5K7pmGADHj
-         3JRfiD8PD5ds1VPoAC59xHgjiF78Dfs5cczNZXMS0rM3FY2bg71HM+vkwo9Tgyy8uYJ5
-         BpzX8gGtVZulE5xmKCOibgAV5frh4a1VuyRe6VFUsJ2zl8l9aBs7WyQV8Lv7slB/RgyC
-         f7Fg==
-X-Forwarded-Encrypted: i=1; AJvYcCX9Q8E1M46KSLTDKAhc5tyUPiL9GwJFr+2PDc25qRG+EcHSdF15d4BmFZtiDMPP9wjXcolZghJdKo0=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx2fV094oxDPnVgRL1Xg/+fgIayuSAkS+ARVSfwPS/cFFc0B6r7
-	u8KWa+U6g2nZVV1UMJVeX5fBj8Vt8jrMk1pLVKOvU4x3r3YVroFrz0jNVR4s47WxUz/p9T0v5e3
-	6L4Ik4O0f/QwzZz8hVb8FN4W4aq+JdTlhgUyxCBvqD6t7j8I0JzZjcNF5KBc30uvm9eQKHzqhGH
-	6H0nRlRNFTLgRhBSR7M91QgS0m2g1RE4mMi6okI7U49+OMQXsXgnRVoMM5BgVnf/td1HQxA1jzg
-	pypPUp1XCoBW/45r1Df4A==
-X-Gm-Gg: ASbGncvb4XX5CHqP2EklH+DY4PKkcYQsZVJT7QXNlgPEVB5CoBH2rlUiDh0GVG0unSb
-	qv+dfjc8wLPrc3kcaIjXG0PrmTF0SqNzRlqp3ehFDxvkln7R8kMM3nzVIs5xF3X30eLHgL/qmNS
-	9qN21kGUx3z+QTTAwDsh92iVtscWTmcdIoiyUkOMHPvevyZ+Pwwc0USGx+sfs9o0IhNCvw+rEpe
-	DD1ifdwvbrE+iL9a17TVOWN6CPOmt9hHh5y0l71rcNjk1EpDxY6GIwwu2pV84vOS+3c++bEqnbr
-	xaDng5tFZSGUGYwctOuD8p+8Cn2G6tFY8y0wOo2gaj1jrQEOp3DkdFsitGsYqkZO2Gg514cNjip
-	74527fnhktlJVvhL648AMKQLYoF9mEjbLYH0AMJI/sMsNbj8lf5ZXffPMFHGEQYzRpAuBhAMQ2b
-	J/rQDM4A==
-X-Google-Smtp-Source: AGHT+IHk2fuPPip6V6UsF5lISpnP+UCjV9J5CGd45SAfzIW/w77qgn13L4ESFwgojgyE9z/SlFyW3y7wDEj9
-X-Received: by 2002:a05:690c:e1a:b0:77d:fbf5:8dad with SMTP id 00721157ae682-780e148334fmr53622567b3.24.1759949250324;
-        Wed, 08 Oct 2025 11:47:30 -0700 (PDT)
-Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-0.dlp.protect.broadcom.com. [144.49.247.0])
-        by smtp-relay.gmail.com with ESMTPS id 00721157ae682-77f81c0c39bsm10536897b3.4.2025.10.08.11.47.30
-        for <brcm80211@lists.linux.dev>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 08 Oct 2025 11:47:30 -0700 (PDT)
-X-Relaying-Domain: broadcom.com
-X-CFilter-Loop: Reflected
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-872d1a88c7dso77903885a.0
-        for <brcm80211@lists.linux.dev>; Wed, 08 Oct 2025 11:47:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=govivid-ai.20230601.gappssmtp.com header.i=@govivid-ai.20230601.gappssmtp.com header.b="1cLOQC6A"
+Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-78ed682e9d3so2842606d6.0
+        for <brcm80211@lists.linux.dev>; Wed, 08 Oct 2025 13:22:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1759949249; x=1760554049; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=kwOortMTHEjR5fNshyp9JXt7EgfSopghsEteNp61B+E=;
-        b=TrPYGlcNQS1KTrPfcqgcAZrXWrAi5sqwWImPseyoxq00UnZ/+KuHSbLzsBV8ZMbpSv
-         8KkJvWcZiVatuk9YYm4R9z1gsCsxe0zW8O+udEnVyiLlGdSFXBEZ88TfCZe3FhIzgRn3
-         dyGqE/GgCFaSZkXAybYL0DoAFbnu7+DKpvxHs=
-X-Forwarded-Encrypted: i=1; AJvYcCUdTyFAP+aevc7DtaNrpmrVNtYVCCIMXjtCrba0Z7FP5tmyjtJMrjlhufUKGWpJdoGZxCTq5Yxbf/c=@lists.linux.dev
-X-Received: by 2002:a05:620a:2849:b0:828:984d:f44 with SMTP id af79cd13be357-883546e1988mr800250185a.73.1759949249477;
-        Wed, 08 Oct 2025 11:47:29 -0700 (PDT)
-X-Received: by 2002:a05:620a:2849:b0:828:984d:f44 with SMTP id af79cd13be357-883546e1988mr800245485a.73.1759949248911;
-        Wed, 08 Oct 2025 11:47:28 -0700 (PDT)
-Received: from [192.168.178.137] (f215227.upc-f.chello.nl. [80.56.215.227])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8849f9ad8f2sm48229185a.20.2025.10.08.11.47.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Oct 2025 11:47:28 -0700 (PDT)
-Message-ID: <77ace9a0-ca88-473a-85f3-967d90f28411@broadcom.com>
-Date: Wed, 8 Oct 2025 20:47:24 +0200
+        d=govivid-ai.20230601.gappssmtp.com; s=20230601; t=1759954926; x=1760559726; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=25qMuzpGcNHSTEbT3R9d9+5ATFcD7MyEFcRkiV8vMp0=;
+        b=1cLOQC6ApVz+0xFKOSax0AhN0YEJTQ7wNE3aK/q7vXfRDdHXTLZjalfi7CLFc99CyV
+         Cg3/rks/8ZUeEUpdWCMOUvAlFkZo/C2Viet0WL0owwuMr9oqQx7Di0oF/ZX2nW5ywCHL
+         zUKT9JAYM+C1QBhbjePn5j2W0XRHmN80w8/2kIoFQLRtq6spiVRv+k5Xy+JjS9PbvvSM
+         o9nlnhtR32xJZR87DTzuKEs3dF8lJf3jFmjifOTaVYDAoiCKaddOKM8nAHXNCMY2EHxl
+         BXTDeNAM4UUti66D5WTZqqMb7CxpTu/Jnt59T9M/eaer8wgky84oUkFUjaGcxR4Dlaa8
+         DbCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759954926; x=1760559726;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=25qMuzpGcNHSTEbT3R9d9+5ATFcD7MyEFcRkiV8vMp0=;
+        b=doIzQRohNn+n0KCstoa8IhJ9j2hbLvDoanSH7+ib4uLR+mJvoj8u3HxZufNjfCUQBY
+         N7hIBH5AwB8CKb6aikqk+FvCTX54tY7oAGUtpk3evcMnN8t6I3p8PG6P4pl383eAfrAn
+         GZ4waWAgmdYbdJ9IuKvFcI4GD5qNgjhqh6OY5AsdOUhyMEX8AWKemb209+JZx6fVBU5v
+         HBNuIZwJpY+sHoVhuS/L53UcPDzB7l1tpOUzqu7O6zXaoxvxBIqwjQ5+GMWh25Whg+GC
+         CwV4i0OkOOdmJAp4IgHFcV97VZVQiCeue7hrQ6VzowHSrPUjaQkO1YdatBIlgS+BA3OG
+         ZzJw==
+X-Forwarded-Encrypted: i=1; AJvYcCXa5Bk0nnRVuWbsSvV3J/IfDcduQAhjvDDJhITKll7vJZCffzorEZREI2crjAdOqlT7ROLFeJeH7us=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzQRG9HbhCvlr9oMysVYOGeIOvGCkHsK8sL3qkEnR3JWKNT7nAM
+	8nuxq33ufyWuPNeKaHBF0DdKZwU51nfzd6gqx0Qbyl1vo5Ms6iNfhWE/mbsorEYXDg0FP5T6rqO
+	VORIqvlmV5ciR/KJ8XzKFtHyrSebfFKSDLZzeVm+W+g==
+X-Gm-Gg: ASbGnctan5KJdrTRv5oSwiVWwgL+tFiJ6HOaMjVjWPynnqcMg+9M7h0iLo177prlB13
+	QScGuz0PxrW+8MCIdedn/cF5YputWMKJbvoKMSA9igsmHXfcM6rCoMzJAkH4EbgftL0f/PneMuc
+	cBmjFnJLFwyW3cbvOXYW6A7KWt3mAQkEdc/k5Lq6vMPS1BvOKmnoK2DLIrHsroxFTLjmx9rebMY
+	8tQl97I0eUDTrkUSMSRxIotvcXt8c2Vrp9m8tlK
+X-Google-Smtp-Source: AGHT+IEcBAAvWdzvqH7WgyMVJiYVQXJj0ztgGwGMsV1ShSizbLJ+8NOGOnYK6J4Pq89/DB4JuHumtxxs9uhfZkJJn6A=
+X-Received: by 2002:ad4:4ee5:0:b0:86c:1f66:e2eb with SMTP id
+ 6a1803df08f44-87b2ef6c75amr57102176d6.33.1759954926359; Wed, 08 Oct 2025
+ 13:22:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+References: <b2e0bf04-f149-4a23-aba5-cad55a8923c1@broadcom.com>
+ <20251002232002.124609-1-richard@govivid.ai> <199aacd7e50.2873.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
+ <d1510cb6-a613-4e22-91aa-4fee1fdfa29b@gmx.net> <1bb08036-2569-454a-bd26-f1d713b4c299@broadcom.com>
+ <f0352cba-0810-43c3-9c53-baa012f93513@gmx.net> <CAFwtOaWsS5U-gb3=DM0QZ6MuZgAHV-O-qLtC9-npQEjGsog1AA@mail.gmail.com>
+ <281c880e-9e7b-4826-a275-0d02a040a37c@gmx.net> <CAFwtOaU3tDrKhwdAGi=C0-YJiZJzatBQiRRjsLQSiGC_4CUWPw@mail.gmail.com>
+ <77ace9a0-ca88-473a-85f3-967d90f28411@broadcom.com>
+In-Reply-To: <77ace9a0-ca88-473a-85f3-967d90f28411@broadcom.com>
+From: Richard Reigh <richard@govivid.ai>
+Date: Wed, 8 Oct 2025 15:21:55 -0500
+X-Gm-Features: AS18NWCf9iFwWA-dGVCQJHBC-rl2zDD6qWy8xKDaVyOuufS6WS_jau41UkS2Asc
+Message-ID: <CAFwtOaXYUtP0kO4+v=RL+6oKHw5t0tXb-MDms7tbnJJXS9c9SA@mail.gmail.com>
 Subject: Re: [PATCH] brcmfmac: Fix NULL pointer dereference in P2P action
  frame handling
-To: Richard Reigh <richard@govivid.ai>, Stefan Wahren <wahrenst@gmx.net>
-Cc: brcm80211-dev-list.pdl@broadcom.com, brcm80211@lists.linux.dev,
- linux-wireless@vger.kernel.org, chris@streetlogic.pro, s311332@gmail.com
-References: <b2e0bf04-f149-4a23-aba5-cad55a8923c1@broadcom.com>
- <20251002232002.124609-1-richard@govivid.ai>
- <199aacd7e50.2873.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
- <d1510cb6-a613-4e22-91aa-4fee1fdfa29b@gmx.net>
- <1bb08036-2569-454a-bd26-f1d713b4c299@broadcom.com>
- <f0352cba-0810-43c3-9c53-baa012f93513@gmx.net>
- <CAFwtOaWsS5U-gb3=DM0QZ6MuZgAHV-O-qLtC9-npQEjGsog1AA@mail.gmail.com>
- <281c880e-9e7b-4826-a275-0d02a040a37c@gmx.net>
- <CAFwtOaU3tDrKhwdAGi=C0-YJiZJzatBQiRRjsLQSiGC_4CUWPw@mail.gmail.com>
-Content-Language: en-US
-From: Arend van Spriel <arend.vanspriel@broadcom.com>
-Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
- 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
-In-Reply-To: <CAFwtOaU3tDrKhwdAGi=C0-YJiZJzatBQiRRjsLQSiGC_4CUWPw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
+To: Arend van Spriel <arend.vanspriel@broadcom.com>
+Cc: Stefan Wahren <wahrenst@gmx.net>, brcm80211-dev-list.pdl@broadcom.com, 
+	brcm80211@lists.linux.dev, linux-wireless@vger.kernel.org, 
+	chris@streetlogic.pro, s311332@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 10/6/2025 8:37 PM, Richard Reigh wrote:
-> On Mon, Oct 6, 2025 at 12:28 PM Stefan Wahren <wahrenst@gmx.net> wrote:
->>
->> Am 06.10.25 um 19:08 schrieb Richard Reigh:
->>> On Mon, Oct 6, 2025 at 10:47 AM Stefan Wahren <wahrenst@gmx.net> wrote:
->>>> Hi Richard,
->>>>
->>>> Am 04.10.25 um 11:22 schrieb Arend van Spriel:
->>>>> On 10/3/2025 7:02 PM, Stefan Wahren wrote:
->>>>>> Hi,
->>>>>>
->>>>>> Am 03.10.25 um 18:00 schrieb Arend van Spriel:
->>>>>>> Op 3 oktober 2025 01:20:21 schreef Richard Reigh <richard@govivid.ai>:
->>>>>>>
->>>>>>>> When iPhones query network information via the WiFi settings "i"
->>>>>>>> button,
->>>>>>>> the brcmfmac driver crashes with a NULL pointer dereference. This
->>>>>>>> occurs
->>>>>>>> because the P2P device vif is not initialized when handling certain
->>>>>>>> action
->>>>>>>> frames.
->>>>>>> That does make a lot more sense than the line that gdb gave me with
->>>>>>> my driver rebuild attempt.
->>>>>>>
->>>>>>>> Add NULL check for vif before dereferencing in
->>>>>>>> brcmf_p2p_tx_action_frame()
->>>>>>>> and return -ENODEV when vif is NULL. Also modify
->>>>>>> Now I don't think it is necessary to bail out here. See my
->>>>>>> suggestion below...
->>>>>>>
->>>>>>>> the retry loop in
->>>>>>>> brcmf_p2p_send_action_frame() to stop immediately on permanent
->>>>>>>> failures
->>>>>>>> rather than retrying.
->>>>>>>>
->>>>>>>> Tested on Raspberry Pi Zero 2 W with kernel 6.1.21-v8+
->>>>>>>>
->>>>>>>> Signed-off-by: Richard Reigh <richard@govivid.ai>
->>>>>>>> ---
->>>>>>>> .../wireless/broadcom/brcm80211/brcmfmac/p2p.c   | 16 +++++++++++++++-
->>>>>>>> 1 file changed, 15 insertions(+), 1 deletion(-)
->>>>>>>>
->>>>>>>> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
->>>>>>>> b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
->>>>>>>> index 10d9d9c63..2c73156fa 100644
->>>>>>>> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
->>>>>>>> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
->>>>>>>> @@ -1559,6 +1559,12 @@ static s32 brcmf_p2p_tx_action_frame(struct
->>>>>>>> brcmf_p2p_info *p2p,
->>>>>>>> else
->>>>>>>> vif = p2p->bss_idx[P2PAPI_BSSCFG_DEVICE].vif;
->>>>>>>>
->>>>>>>> + /* add NULL check */
->>>>>>>> + if (!vif) {
->>>>>>>> + brcmf_err("vif is NULL, cannot send action frame\n");
->>>>>>>> + return -ENODEV;
->>>>>>>> + }
->>>>>>> Instead of giving up and surrender we can use primary vif, ie. p2p-
->>>>>>>> bss_idx[P2PAPI_BSSCFG_PRIMARY].vif:
->>>>>>> if (!vif) {
->>>>>>>          brcmf_dbg(TRACE, "no P2P device setup\n");
->>>>>>>          vif = p2p->bss_idx[P2PAPI_BSSCFG_PRIMARY].vif;
->>>>>>> }
->>>>>> this looks much better. But the whole patch needs a fixes tag.
->>>>> Sure.
->>>>>
->>>>>> In case this issue is reproducible before Linux 5.8, the tag should
->>>>>> reference:
->>>>>> 18e2f61db3b7 ("brcmfmac: P2P action frame tx.")
->>>>>>
->>>>>> otherwise it should reference:
->>>>>> d524d5ce3655 ("brcmfmac: p2p cert 6.1.9-support GOUT handling p2p
->>>>>> presence request")
->>>>> Both good suggestions. Looking at the code I would say that
->>>>> 18e2f61db3b7 ("brcmfmac: P2P action frame tx.") is the best choice.
->>>> thanks. @Richard Do you plan to submit a V2 patch?
->>>>
->>>> Best regards
->>>>> Regards,
->>>>> Arend
->>> Stefan,
->>>
->>> Yes, I plan on submitting a V2 patch, after I finish testing the change.
->>>
->>> I will also add the suggested fixes tag to the patch submission.
->> Sure, take your time.
->>
->> Thanks
->>>
->>> Thanks,
->>> Richard
-> 
-> Hi Arend and Stefan,
-> 
-> Thank you for the feedback on V1. I've tested the suggested fallback
-> to PRIMARY vif, but unfortunately it still crashes with a NULL pointer
-> dereference.
-> 
-> The PRIMARY vif itself is not NULL (confirmed via debug output), but
-> using it for P2P action frames causes a crash later in
-> brcmf_p2p_tx_action_frame(). It appears the PRIMARY vif may not have
-> the necessary P2P-specific structures initialized.
-> 
-> Should I:
-> 
-> 1. Investigate which specific pointer/structure is NULL when using
-> PRIMARY vif for P2P operations, or
+On Wed, Oct 8, 2025 at 1:47=E2=80=AFPM Arend van Spriel
+<arend.vanspriel@broadcom.com> wrote:
+>
+> On 10/6/2025 8:37 PM, Richard Reigh wrote:
+> > On Mon, Oct 6, 2025 at 12:28=E2=80=AFPM Stefan Wahren <wahrenst@gmx.net=
+> wrote:
+> >>
+> >> Am 06.10.25 um 19:08 schrieb Richard Reigh:
+> >>> On Mon, Oct 6, 2025 at 10:47=E2=80=AFAM Stefan Wahren <wahrenst@gmx.n=
+et> wrote:
+> >>>> Hi Richard,
+> >>>>
+> >>>> Am 04.10.25 um 11:22 schrieb Arend van Spriel:
+> >>>>> On 10/3/2025 7:02 PM, Stefan Wahren wrote:
+> >>>>>> Hi,
+> >>>>>>
+> >>>>>> Am 03.10.25 um 18:00 schrieb Arend van Spriel:
+> >>>>>>> Op 3 oktober 2025 01:20:21 schreef Richard Reigh <richard@govivid=
+.ai>:
+> >>>>>>>
+> >>>>>>>> When iPhones query network information via the WiFi settings "i"
+> >>>>>>>> button,
+> >>>>>>>> the brcmfmac driver crashes with a NULL pointer dereference. Thi=
+s
+> >>>>>>>> occurs
+> >>>>>>>> because the P2P device vif is not initialized when handling cert=
+ain
+> >>>>>>>> action
+> >>>>>>>> frames.
+> >>>>>>> That does make a lot more sense than the line that gdb gave me wi=
+th
+> >>>>>>> my driver rebuild attempt.
+> >>>>>>>
+> >>>>>>>> Add NULL check for vif before dereferencing in
+> >>>>>>>> brcmf_p2p_tx_action_frame()
+> >>>>>>>> and return -ENODEV when vif is NULL. Also modify
+> >>>>>>> Now I don't think it is necessary to bail out here. See my
+> >>>>>>> suggestion below...
+> >>>>>>>
+> >>>>>>>> the retry loop in
+> >>>>>>>> brcmf_p2p_send_action_frame() to stop immediately on permanent
+> >>>>>>>> failures
+> >>>>>>>> rather than retrying.
+> >>>>>>>>
+> >>>>>>>> Tested on Raspberry Pi Zero 2 W with kernel 6.1.21-v8+
+> >>>>>>>>
+> >>>>>>>> Signed-off-by: Richard Reigh <richard@govivid.ai>
+> >>>>>>>> ---
+> >>>>>>>> .../wireless/broadcom/brcm80211/brcmfmac/p2p.c   | 16 ++++++++++=
++++++-
+> >>>>>>>> 1 file changed, 15 insertions(+), 1 deletion(-)
+> >>>>>>>>
+> >>>>>>>> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2=
+p.c
+> >>>>>>>> b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
+> >>>>>>>> index 10d9d9c63..2c73156fa 100644
+> >>>>>>>> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
+> >>>>>>>> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
+> >>>>>>>> @@ -1559,6 +1559,12 @@ static s32 brcmf_p2p_tx_action_frame(stru=
+ct
+> >>>>>>>> brcmf_p2p_info *p2p,
+> >>>>>>>> else
+> >>>>>>>> vif =3D p2p->bss_idx[P2PAPI_BSSCFG_DEVICE].vif;
+> >>>>>>>>
+> >>>>>>>> + /* add NULL check */
+> >>>>>>>> + if (!vif) {
+> >>>>>>>> + brcmf_err("vif is NULL, cannot send action frame\n");
+> >>>>>>>> + return -ENODEV;
+> >>>>>>>> + }
+> >>>>>>> Instead of giving up and surrender we can use primary vif, ie. p2=
+p-
+> >>>>>>>> bss_idx[P2PAPI_BSSCFG_PRIMARY].vif:
+> >>>>>>> if (!vif) {
+> >>>>>>>          brcmf_dbg(TRACE, "no P2P device setup\n");
+> >>>>>>>          vif =3D p2p->bss_idx[P2PAPI_BSSCFG_PRIMARY].vif;
+> >>>>>>> }
+> >>>>>> this looks much better. But the whole patch needs a fixes tag.
+> >>>>> Sure.
+> >>>>>
+> >>>>>> In case this issue is reproducible before Linux 5.8, the tag shoul=
+d
+> >>>>>> reference:
+> >>>>>> 18e2f61db3b7 ("brcmfmac: P2P action frame tx.")
+> >>>>>>
+> >>>>>> otherwise it should reference:
+> >>>>>> d524d5ce3655 ("brcmfmac: p2p cert 6.1.9-support GOUT handling p2p
+> >>>>>> presence request")
+> >>>>> Both good suggestions. Looking at the code I would say that
+> >>>>> 18e2f61db3b7 ("brcmfmac: P2P action frame tx.") is the best choice.
+> >>>> thanks. @Richard Do you plan to submit a V2 patch?
+> >>>>
+> >>>> Best regards
+> >>>>> Regards,
+> >>>>> Arend
+> >>> Stefan,
+> >>>
+> >>> Yes, I plan on submitting a V2 patch, after I finish testing the chan=
+ge.
+> >>>
+> >>> I will also add the suggested fixes tag to the patch submission.
+> >> Sure, take your time.
+> >>
+> >> Thanks
+> >>>
+> >>> Thanks,
+> >>> Richard
+> >
+> > Hi Arend and Stefan,
+> >
+> > Thank you for the feedback on V1. I've tested the suggested fallback
+> > to PRIMARY vif, but unfortunately it still crashes with a NULL pointer
+> > dereference.
+> >
+> > The PRIMARY vif itself is not NULL (confirmed via debug output), but
+> > using it for P2P action frames causes a crash later in
+> > brcmf_p2p_tx_action_frame(). It appears the PRIMARY vif may not have
+> > the necessary P2P-specific structures initialized.
+> >
+> > Should I:
+> >
+> > 1. Investigate which specific pointer/structure is NULL when using
+> > PRIMARY vif for P2P operations, or
+>
+> I would be interested to see the log of the "PRIMARY vif" tesing if you
+> still have it.
+>
+> Regards,
+> Arend
 
-I would be interested to see the log of the "PRIMARY vif" tesing if you 
-still have it.
+Unfortunately, I don't have any logs for this test. When the bug occurs, th=
+e
+Pi immediately becomes unstable and is unable to sync files to disk, so no
+logs are preserved.
 
-Regards,
-Arend
+Richard
