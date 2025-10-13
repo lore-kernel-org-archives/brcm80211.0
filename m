@@ -1,188 +1,161 @@
-Received: from smtp11.infineon.com (smtp11.infineon.com [217.10.52.105])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f225.google.com (mail-pg1-f225.google.com [209.85.215.225])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844DA145B3E
-	for <brcm80211@lists.linux.dev>; Mon, 13 Oct 2025 07:30:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.10.52.105
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5815C2FD1CE
+	for <brcm80211@lists.linux.dev>; Mon, 13 Oct 2025 09:26:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.225
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760340623; cv=none; b=clYGtP2BytVn5CLj/tBw5s76Md05R2ojIUnlnGMjRf9RYalb2oKUDzkZZaNrnAri12T3yT/ucHWrmpiNRHJzt1mbnVr51MbhGdbZ9O2al7jDHkfRZnKRfWJo6pwmiCNyrlLNHjTF5N6jyhQHcN6qAwGSVyu+Pancogrrby9Dl1w=
+	t=1760347570; cv=none; b=DwXgUzMKwYwYIFr7FnUxsJkMIGjPWv4BgCpH9mcYGyahzq6j0M+TNXXEnykWumYQ5yAD8gDYgkwJFNDVz/VXNRoSjIx+Uzp+I5oXkEhc0ZUy3cCMIGPdTSUmDRwrYiHIifmJcbW6rkEojDHi7CJ2xdkEthmJi2q8NvDsH9rcpJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760340623; c=relaxed/simple;
-	bh=T9N1F/ssv2+Yb4PZMJoCocjOG3Ky+daCqJjUbxs6Wlc=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GRgl7S1yByg+GLTGC+ueU3RIdgdUjuCqyWpmbP83aw/AmNnOMQ4Q5oUq9048Ye7ab+SPO2wLbm+i/qLLn2FcrsVQR5TEBtbscSqioT9eeLyzHbvDie9SXS4Jy2NE3NJduW5asUOs6bRrhjrcGorA7+l6AulxAc8gve0hOELWQTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infineon.com; spf=pass smtp.mailfrom=infineon.com; dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b=FqLp6acL; arc=none smtp.client-ip=217.10.52.105
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infineon.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infineon.com
+	s=arc-20240116; t=1760347570; c=relaxed/simple;
+	bh=382/roRFqkOwJECYdfbCfLLziMSqs9guVhAUjCFzQjU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=q63RtMcPjCq3UmATLQKwlzD1fszHMTCZOo2cq/4wn8p6Xp5FV3B/KjtEfSyeYTDi5qFHJTrvOpSeK43M+r+qSLyRTPCugqjBr028V/S6GsJLCuShu5EJ1NdR8CZYctmOuFrrKyTK5twYxBqAdjJwMSJE6JynxfUA22ZgNboaQXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=hJNl8kC8; arc=none smtp.client-ip=209.85.215.225
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b="FqLp6acL"
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=infineon.com; i=@infineon.com; q=dns/txt; s=IFXMAIL;
-  t=1760340622; x=1791876622;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=T9N1F/ssv2+Yb4PZMJoCocjOG3Ky+daCqJjUbxs6Wlc=;
-  b=FqLp6acLqOoUJf7/IvqEH9085Ymz2ZcyVt69ESPdoQXHDRb657uykJ5e
-   7p7l3pZSlLGp1XD5/9qxQ3ZXy+ZuXM6CxbmCgnctp62lJH65Y0Mxf+DEV
-   CMi40HeHrZpAfbBm4k95fsuDZotLcTBqeT/o7dqBuQgrk0D0WI7dD1ngU
-   0=;
-X-CSE-ConnectionGUID: ocYOW8omTAGJDCNc8tBYdA==
-X-CSE-MsgGUID: LTvFHWwNQQOo8gXs6iu40Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11580"; a="114287522"
-X-IronPort-AV: E=Sophos;i="6.19,224,1754949600"; 
-   d="scan'208";a="114287522"
-X-Amp-Result: SKIPPED(no attachment in message)
-Received: from unknown (HELO MUCSE805.infineon.com) ([172.23.29.31])
-  by smtp11.infineon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Oct 2025 09:29:11 +0200
-Received: from MUCSE827.infineon.com (172.23.29.20) by MUCSE805.infineon.com
- (172.23.29.31) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 13 Oct
- 2025 09:29:09 +0200
-Received: from ISCN5CG14747PP.infineon.com (10.161.6.196) by
- MUCSE827.infineon.com (172.23.29.20) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.20; Mon, 13 Oct 2025 09:29:07 +0200
-Date: Mon, 13 Oct 2025 12:58:58 +0530
-From: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
-To: Arend van Spriel <arend.vanspriel@broadcom.com>
-CC: <brcm80211-dev-list.pdl@broadcom.com>, <brcm80211@lists.linux.dev>,
-	<chris@streetlogic.pro>, <linux-wireless@vger.kernel.org>,
-	<richard@govivid.ai>, <s311332@gmail.com>, <wahrenst@gmx.net>,
-	<wlan-kernel-dev-list@infineon.com>, <johannes@sipsolutions.net>
-Subject: Re: [PATCH wireless-next] wifi: brcmfmac: fix crash while sending
- Action Frames in standalone AP Mode
-Message-ID: <aOyqOnKEnkNqfg9u@ISCN5CG14747PP.infineon.com>
-References: <9a0849d8-befd-4fca-9d5d-a24520ccfa26@broadcom.com>
- <20251009073928.6803-1-gokulkumar.sivakumar@infineon.com>
- <08368241-6b89-49e5-81cf-8e7874c91696@broadcom.com>
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="hJNl8kC8"
+Received: by mail-pg1-f225.google.com with SMTP id 41be03b00d2f7-b6271ea39f4so2663385a12.3
+        for <brcm80211@lists.linux.dev>; Mon, 13 Oct 2025 02:26:07 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760347566; x=1760952366;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:dkim-signature:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=a+WyV8pCzt+hpRaPvT/xOVlqiGN48UdZ8Ff3wBlnLB4=;
+        b=OGmJz/mEH+ebDH+iho2q7ZyZQPR74R1l8/u6wUTCd+3mtO+bYrTcQ8CIHW3JAZqvqu
+         IfAnhxUHRQSSfJuZaRHQXLU4JoQ87DXypJj3OLxVnSq9p/3gd0AH+rbcPq/BidgTyjLV
+         wDPDLHzH6gKwepfxLBs8ckAh7jTjo7wV2okoAnkEot5nzYtMPgIm9CVq0YeN9Qkrh3LY
+         KMtAjIxls+hH43NVc66x3yNXuO4Zfk+8Z06RSJdVDJcD2CWiu70AMT/FsNfz5DUzK2kx
+         Oboe9I3WjIVQ3Irgl8lgFGQ4K+PvBnsPwK94vom3iLmH64OUHJl1U8OqxK8liSc54L7Q
+         3sHg==
+X-Forwarded-Encrypted: i=1; AJvYcCUMwKUO4x89VyuDZcWfkdBQOeRo39hEm/NHEhv+t26QdmRvPuKxgohh5Zx4gGoSc+5X22BiA3PJjfU=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxKO1Po0UDpT5ReB5RBw/9nCGN4Ugr9MqstseX9k6H7HdHuGUy9
+	jCOCRJz4Xmzj2zXt7tjNeF6LWM5084ltkbudBxhMyx4x8CZOLJsktiWcHiRBqPca/klgEnfE/I3
+	XscpjGcnQQoNvzgQH83GuPY5niFUmxJgg2YtxY/qVq4qay+XvPjQG9qRpWDyC3ukoXRBcHHwieY
+	+J9T0hFzAhfQEHKZySG0i+huNDQre6QqHHqanW85Kf0Q6iBwXs7aKgC/MNsRjvVeb6YrJkeMrqi
+	6HAIoOCPWol4GoDwyUf4A==
+X-Gm-Gg: ASbGnctkNI8YF409P/sRDxxNexLZu4nVYWxJJa0x0deVNKurE+QPU/gjLPUoBCMMC8+
+	h1YM9/l1Yu7a8lzphTfhjsDq/Y82DeR0PAQL7dsHiQgnvONznF6m3Ru5TyfWAG6LDeeYmI0zeDm
+	Spe2QEIF3u30ER9yTwHe7x2qBIU8OC32a5DVH8VRo0IjBu1jfXdNaxwJ+H0M0ehGGnTJEHO4o3V
+	OD24Yc8ot9yVr4KOPvrSUrJuT3IIvPYADfskNvpo27K/rYjPVsb6j/dtsLqrxDXqTn+LD//5Ub5
+	26TxFnbkNBLBkEkR4Oqfk0+tBtX/wdY9/XzFp6C6SMvR1YHoL04tpww+hSZilvPFis5MLz5GjEd
+	/2g/7t9gi9dlPA6evjN0oHfgxtvlws03BMBg8JtY/mQJR19qplwfS5cCPGDRXVbwx90L4fltIEe
+	/B4qA=
+X-Google-Smtp-Source: AGHT+IECIqtCUmnkUCIG0HPuHI5BOsRMuAQIvKoiviXWi+zBDMZ3/n1mey+wpO9T3od0skLTIFXYQi577+ZS
+X-Received: by 2002:a17:903:38cf:b0:267:87be:505e with SMTP id d9443c01a7336-2902737c68bmr223395695ad.23.1760347566380;
+        Mon, 13 Oct 2025 02:26:06 -0700 (PDT)
+Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-15.dlp.protect.broadcom.com. [144.49.247.15])
+        by smtp-relay.gmail.com with ESMTPS id d9443c01a7336-29034df7392sm10624515ad.6.2025.10.13.02.26.05
+        for <brcm80211@lists.linux.dev>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 13 Oct 2025 02:26:06 -0700 (PDT)
+X-Relaying-Domain: broadcom.com
+X-CFilter-Loop: Reflected
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-78eb8a9d229so200242266d6.1
+        for <brcm80211@lists.linux.dev>; Mon, 13 Oct 2025 02:26:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google; t=1760347565; x=1760952365; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=a+WyV8pCzt+hpRaPvT/xOVlqiGN48UdZ8Ff3wBlnLB4=;
+        b=hJNl8kC8L4bWlNwvR/GEpfgQAprHQDSgOGNtFjCra60/j5j15GFfi2VDz7rQ1PPVCG
+         2czpxWBMCNjrOGpvt01T49PLGsb6d4D5di6J5zPBwgA7luFVups11MCord/0xAVGcutu
+         EdUV1jIwsLIz3rk5Gm91NNx9a/mvsdkS7Tc9E=
+X-Forwarded-Encrypted: i=1; AJvYcCVRjFuMKsmiki8PNXCyKsRmg2NDl0KfTLxEfCSFK/0Filopla1I485gdzM+0P9+s1S06cB/JhSw4+E=@lists.linux.dev
+X-Received: by 2002:ad4:5ccc:0:b0:79c:f4b0:6813 with SMTP id 6a1803df08f44-87b21065472mr297538796d6.21.1760347565048;
+        Mon, 13 Oct 2025 02:26:05 -0700 (PDT)
+X-Received: by 2002:ad4:5ccc:0:b0:79c:f4b0:6813 with SMTP id 6a1803df08f44-87b21065472mr297538586d6.21.1760347564680;
+        Mon, 13 Oct 2025 02:26:04 -0700 (PDT)
+Received: from [10.176.2.222] ([192.19.176.227])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-87bc3479578sm68700836d6.19.2025.10.13.02.26.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 13 Oct 2025 02:26:04 -0700 (PDT)
+Message-ID: <4d24f3ed-0b7d-45cb-9dfc-b8b5e0b37fd2@broadcom.com>
+Date: Mon, 13 Oct 2025 11:26:01 +0200
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <08368241-6b89-49e5-81cf-8e7874c91696@broadcom.com>
-X-ClientProxiedBy: MUCSE803.infineon.com (172.23.29.29) To
- MUCSE827.infineon.com (172.23.29.20)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH wireless-next] wifi: brcmfmac: fix crash while sending
+ Action Frames in standalone AP Mode
+To: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
+Cc: brcm80211-dev-list.pdl@broadcom.com, brcm80211@lists.linux.dev,
+ chris@streetlogic.pro, linux-wireless@vger.kernel.org, richard@govivid.ai,
+ s311332@gmail.com, wahrenst@gmx.net, wlan-kernel-dev-list@infineon.com,
+ johannes@sipsolutions.net
+References: <9a0849d8-befd-4fca-9d5d-a24520ccfa26@broadcom.com>
+ <20251009073928.6803-1-gokulkumar.sivakumar@infineon.com>
+ <08368241-6b89-49e5-81cf-8e7874c91696@broadcom.com>
+ <aOyqOnKEnkNqfg9u@ISCN5CG14747PP.infineon.com>
+Content-Language: en-US
+From: Arend van Spriel <arend.vanspriel@broadcom.com>
+Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
+ xsFNBGP96SABEACfErEjSRi7TA1ttHYaUM3GuirbgqrNvQ41UJs1ag1T0TeyINqG+s6aFuO8
+ evRHRnyAqTjMQoo4tkfy21XQX/OsBlgvMeNzfs6jnVwlCVrhqPkX5g5GaXJnO3c4AvXHyWik
+ SOd8nOIwt9MNfGn99tkRAmmsLaMiVLzYfg+n3kNDsqgylcSahbd+gVMq+32q8QA+L1B9tAkM
+ UccmSXuhilER70gFMJeM9ZQwD/WPOQ2jHpd0hDVoQsTbBxZZnr2GSjSNr7r5ilGV7a3uaRUU
+ HLWPOuGUngSktUTpjwgGYZ87Edp+BpxO62h0aKMyjzWNTkt6UVnMPOwvb70hNA2v58Pt4kHh
+ 8ApHky6IepI6SOCcMpUEHQuoKxTMw/pzmlb4A8PY//Xu/SJF8xpkpWPVcQxNTqkjbpazOUw3
+ 12u4EK1lzwH7wjnhM3Fs5aNBgyg+STS1VWIwoXJ7Q2Z51odh0XecsjL8EkHbp9qHdRvZQmMu
+ Ns8lBPBkzpS7y2Q6Sp7DcRvDfQQxPrE2sKxKLZVGcRYAD90r7NANryRA/i+785MSPUNSTWK3
+ MGZ3Xv3fY7phISvYAklVn/tYRh88Zthf6iDuq86m5mr+qOO8s1JnCz6uxd/SSWLVOWov9Gx3
+ uClOYpVsUSu3utTta3XVcKVMWG/M+dWkbdt2KES2cv4P5twxyQARAQABzS9BcmVuZCB2YW4g
+ U3ByaWVsIDxhcmVuZC52YW5zcHJpZWxAYnJvYWRjb20uY29tPsLBhwQTAQgAMRYhBLX1Z69w
+ T4l/vfdb0pZ6NOIYA/1RBQJj/ek9AhsDBAsJCAcFFQgJCgsFFgIDAQAACgkQlno04hgD/VGw
+ 8A//VEoGTamfCks+a12yFtT1d/GjDdf3i9agKMk3esn08JwjJ96x9OFFl2vFaQCSiefeXITR
+ K4T/yT+n/IXntVWT3pOBfb343cAPjpaZvBMh8p32z3CuV1H0Y+753HX7gdWTEojGWaWmKkZh
+ w3nGoRZQEeAcwcF3gMNwsM5Gemj7aInIhRLUeoKh/0yV85lNE1D7JkyNheQ+v91DWVj5/a9X
+ 7kiL18fH1iC9kvP3lq5VE54okpGqUj5KE5pmHNFBp7HZO3EXFAd3Zxm9ol5ic9tggY0oET28
+ ucARi1wXLD/oCf1R9sAoWfSTnvOcJjG+kUwK7T+ZHTF8YZ4GAT3k5EwZ2Mk3+Rt62R81gzRF
+ A6+zsewqdymbpwgyPDKcJ8YUHbqvspMQnPTmXNk+7p7fXReVPOYFtzzfBGSCByIkh1bB45jO
+ +TM5ZbMmhsUbqA0dFT5JMHjJIaGmcw21ocgBcLsJ730fbLP/L08udgWHywPoq7Ja7lj5W0io
+ ZDLz5uQ6CEER6wzD07vZwSl/NokljVexnOrwbR3wIhdr6B0Hc/0Bh7T8gpeM+QcK6EwJBG7A
+ xCHLEacOuKo4jinf94YQrOEMnOmvucuQRm9CIwZrQ69Mg6rLn32pA4cK4XWQN1N3wQXnRUnb
+ MTymLAoxE4MInhDVsZCtIDFxMVvBUgZiZZszN33OwU0EY/3pIgEQAN35Ii1Hn90ghm/qlvz/
+ L+wFi3PTQ90V6UKPv5Q5hq+1BtLA6aj2qmdFBO9lgO9AbzHo8Eizrgtxp41GkKTgHuYChijI
+ kdhTVPm+Pv44N/3uHUeFhN3wQ3sTs1ZT/0HhwXt8JvjqbhvtNmoGosZvpUCTwiyM1VBF/ICT
+ ltzFmXd5z7sEuDyZcz9Q1t1Bb2cmbhp3eIgLmVA4Lc9ZS3sK1UMgSDwaR4KYBhF0OKMC1OH8
+ M5jfcPHR8OLTLIM/Thw0YIUiYfj6lWwWkb82qa4IQvIEmz0LwvHkaLU1TCXbehO0pLWB9HnK
+ r3nofx5oMfhu+cMa5C6g3fBB8Z43mDi2m/xM6p5c3q/EybOxBzhujeKN7smBTlkvAdwQfvuD
+ jKr9lvrC2oKIjcsO+MxSGY4zRU0WKr4KD720PV2DCn54ZcOxOkOGR624d5bhDbjw1l2r+89V
+ WLRLirBZn7VmWHSdfq5Xl9CyHT1uY6X9FRr3sWde9kA/C7Z2tqy0MevXAz+MtavOJb9XDUlI
+ 7Bm0OPe5BTIuhtLvVZiW4ivT2LJOpkokLy2K852u32Z1QlOYjsbimf77avcrLBplvms0D7j6
+ OaKOq503UKfcSZo3lF70J5UtJfXy64noI4oyVNl1b+egkV2iSXifTGGzOjt50/efgm1bKNkX
+ iCVOYt9sGTrVhiX1ABEBAAHCwXYEGAEIACAWIQS19WevcE+Jf733W9KWejTiGAP9UQUCY/3p
+ PgIbDAAKCRCWejTiGAP9UaC/EACZvViKrMkFooyACGaukqIo/s94sGuqxj308NbZ4g5jgy/T
+ +lYBzlurnFmIbJESFOEq0MBZorozDGk+/p8pfAh4S868i1HFeLivVIujkcL6unG1UYEnnJI9
+ uSwUbEqgA8vwdUPEGewYkPH6AaQoh1DdYGOleQqDq1Mo62xu+bKstYHpArzT2islvLdrBtjD
+ MEzYThskDgDUk/aGPgtPlU9mB7IiBnQcqbS/V5f01ZicI1esy9ywnlWdZCHy36uTUfacshpz
+ LsTCSKICXRotA0p6ZiCQloW7uRH28JFDBEbIOgAcuXGojqYx5vSM6o+03W9UjKkBGYFCqjIy
+ Ku843p86Ky4JBs5dAXN7msLGLhAhtiVx8ymeoLGMoYoxqIoqVNaovvH9y1ZHGqS/IYXWf+jE
+ H4MX7ucv4N8RcsoMGzXyi4UbBjxgljAhTYs+c5YOkbXfkRqXQeECOuQ4prsc6/zxGJf7MlPy
+ NKowQLrlMBGXT4NnRNV0+yHmusXPOPIqQCKEtbWSx9s2slQxmXukPYvLnuRJqkPkvrTgjn5d
+ eSE0Dkhni4292/Nn/TnZf5mxCNWH1p3dz/vrT6EIYk2GSJgCLoTkCcqaM6+5E4IwgYOq3UYu
+ AAgeEbPV1QeTVAPrntrLb0t0U5vdwG7Xl40baV9OydTv7ghjYZU349w1d5mdxg==
+In-Reply-To: <aOyqOnKEnkNqfg9u@ISCN5CG14747PP.infineon.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
 
-On 10/12, Arend van Spriel wrote:
-> On 10/9/2025 9:39 AM, Gokul Sivakumar wrote:
-> > Currently, whenever there is a need to transmit an Action frame,
-> > the brcmfmac driver always uses the P2P vif to send the "actframe" IOVAR to
-> > firmware. The P2P interfaces were available when wpa_supplicant is managing
-> > the wlan interface.
-> > 
-> > However, the P2P interfaces are not created/initialized when only hostapd
-> > is managing the wlan interface. And if hostapd receives an ANQP Query REQ
-> > Action frame even from an un-associated STA, the brcmfmac driver tries
-> > to use an uninitialized P2P vif pointer for sending the IOVAR to firmware.
-> > This NULL pointer dereferencing triggers a driver crash.
-> > 
-> >   [ 1417.074538] Unable to handle kernel NULL pointer dereference at virtual
-> >   address 0000000000000000
-> >   [...]
-> >   [ 1417.075188] Hardware name: Raspberry Pi 4 Model B Rev 1.5 (DT)
-> >   [...]
-> >   [ 1417.075653] Call trace:
-> >   [ 1417.075662]  brcmf_p2p_send_action_frame+0x23c/0xc58 [brcmfmac]
-> >   [ 1417.075738]  brcmf_cfg80211_mgmt_tx+0x304/0x5c0 [brcmfmac]
-> >   [ 1417.075810]  cfg80211_mlme_mgmt_tx+0x1b0/0x428 [cfg80211]
-> >   [ 1417.076067]  nl80211_tx_mgmt+0x238/0x388 [cfg80211]
-> >   [ 1417.076281]  genl_family_rcv_msg_doit+0xe0/0x158
-> >   [ 1417.076302]  genl_rcv_msg+0x220/0x2a0
-> >   [ 1417.076317]  netlink_rcv_skb+0x68/0x140
-> >   [ 1417.076330]  genl_rcv+0x40/0x60
-> >   [ 1417.076343]  netlink_unicast+0x330/0x3b8
-> >   [ 1417.076357]  netlink_sendmsg+0x19c/0x3f8
-> >   [ 1417.076370]  __sock_sendmsg+0x64/0xc0
-> >   [ 1417.076391]  ____sys_sendmsg+0x268/0x2a0
-> >   [ 1417.076408]  ___sys_sendmsg+0xb8/0x118
-> >   [ 1417.076427]  __sys_sendmsg+0x90/0xf8
-> >   [ 1417.076445]  __arm64_sys_sendmsg+0x2c/0x40
-> >   [ 1417.076465]  invoke_syscall+0x50/0x120
-> >   [ 1417.076486]  el0_svc_common.constprop.0+0x48/0xf0
-> >   [ 1417.076506]  do_el0_svc+0x24/0x38
-> >   [ 1417.076525]  el0_svc+0x30/0x100
-> >   [ 1417.076548]  el0t_64_sync_handler+0x100/0x130
-> >   [ 1417.076569]  el0t_64_sync+0x190/0x198
-> >   [ 1417.076589] Code: f9401e80 aa1603e2 f9403be1 5280e483 (f9400000)
-> > 
-> > Fix this, by always using the vif corresponding to the wdev on which the
-> > Action frame Transmission request was initiated by the userspace. This way,
-> > even if P2P vif is not available, the IOVAR is sent to firmware on AP vif
-> > and the ANQP Query RESP Action frame is transmitted without crashing the
-> > driver.
-> > 
-> > Remove init_completion() for "send_af_done" from brcmf_p2p_create_p2pdev()
-> > and do it in brcmf_p2p_tx_action_frame() instead of reinit_completion().
-> > Because the formar function would not get executed when hostapd is managing
-> > wlan interface, and so it is not safe to do reinit_completion() without any
-> > prior init_completion().
-> > 
-> > And in the brcmf_p2p_tx_action_frame() function, the condition check for
-> > P2P Presence response frame is not needed, since the wpa_supplicant is
-> > properly sending the P2P Presense Response frame on the P2P-GO vif instead
-> > of the P2P-Device vif.
-> 
-> Thanks, Gokul
-> 
-> Looks good. Respecting the vif provided by userspace is a better
-> approach. So the actual issue is that hostapd does not create the
-> P2P-Device interface, which is why I suggested to fallback on the
-> primary vif. Overlooked the fact that we are doing a init_completion()
-> in brcmf_p2p_create_p2pdev() which is needed for the action frame
-> transmit. I have some comment on theat init_completion() change you made
-> (see below).
-> 
-> Still would prefer to move the action frame transmit (afx) functionality
-> out of the p2p source file, but that can be a separate rework.
+On 10/13/2025 9:28 AM, Gokul Sivakumar wrote:
+>>> -     reinit_completion(&p2p->send_af_done);
+>>> +     init_completion(&p2p->send_af_done);
+>> I think we should not do this here. It used to be init_completion() here
+>> but the kernel API changed introducing the reinit_completion() to make
+>> explicit distinction between init and reinit. So I would suggest to do
+>> the init_completion() in brcmf_p2p_attach() which is always invoked and
+>> leave the reinit_completion() here.
+> That works too. Will create an updated v2 patch after making this change
+> and submit it for the wireless tree instead of wireless-next.
 
-I agree. The action frame transmission funcationality should properly work
-for STA and AP mode, irrespective of P2P being enabled/disabled. So this
-functionality needs to be cleaned up.
+Great.
 
-> > Fixes: 18e2f61db3b7 ("brcmfmac: P2P action frame tx.")
-> > Signed-off-by: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
-> > ---
-> >   .../broadcom/brcm80211/brcmfmac/cfg80211.c    |  3 +-
-> >   .../broadcom/brcm80211/brcmfmac/p2p.c         | 28 ++++++-------------
-> >   .../broadcom/brcm80211/brcmfmac/p2p.h         |  3 +-
-> >   3 files changed, 11 insertions(+), 23 deletions(-)
-> [...]
-> 
-> > diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
-> > index 0dc9d28cd77b..c7c40dc3be08 100644
-> > --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
-> > +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
-> 
-> [...]
-> 
-> > @@ -1538,28 +1539,20 @@ int brcmf_p2p_notify_action_tx_complete(struct brcmf_if *ifp,
-> >    * The WLC_E_ACTION_FRAME_COMPLETE event will be received when the action
-> >    * frame is transmitted.
-> >    */
-> > -static s32 brcmf_p2p_tx_action_frame(struct brcmf_p2p_info *p2p,
-> > +static s32 brcmf_p2p_tx_action_frame(struct brcmf_if *ifp,
-> > +                                  struct brcmf_p2p_info *p2p,
-> >                                    struct brcmf_fil_af_params_le *af_params)
-> >   {
-> >       struct brcmf_pub *drvr = p2p->cfg->pub;
-> > -     struct brcmf_cfg80211_vif *vif;
-> > -     struct brcmf_p2p_action_frame *p2p_af;
-> >       s32 err = 0;
-> > 
-> >       brcmf_dbg(TRACE, "Enter\n");
-> > 
-> > -     reinit_completion(&p2p->send_af_done);
-> > +     init_completion(&p2p->send_af_done);
-> 
-> I think we should not do this here. It used to be init_completion() here
-> but the kernel API changed introducing the reinit_completion() to make
-> explicit distinction between init and reinit. So I would suggest to do
-> the init_completion() in brcmf_p2p_attach() which is always invoked and
-> leave the reinit_completion() here.
-
-That works too. Will create an updated v2 patch after making this change
-and submit it for the wireless tree instead of wireless-next.
+Thanks,
+Arend
