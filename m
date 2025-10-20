@@ -1,150 +1,164 @@
-Received: from mail-pl1-f228.google.com (mail-pl1-f228.google.com [209.85.214.228])
+Received: from mail-pf1-f228.google.com (mail-pf1-f228.google.com [209.85.210.228])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 234E81C84A2
-	for <brcm80211@lists.linux.dev>; Sun, 19 Oct 2025 11:19:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.228
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B72522C0284
+	for <brcm80211@lists.linux.dev>; Mon, 20 Oct 2025 08:16:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.228
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760872785; cv=none; b=tZxMnTPHcaNiGPJIU4SAO2e/N2zBaeBeGIn5yMnHQHrhv7b5PUkyNFBJaynx3kvLGMpVH8j3ZyXWN/7cmH0yEaMzPCHIFdIRGafL6/LkIVamA4/ljrbTuJkG6+NrEnCtLW5ugBqAjtkkvLg1C4KpBgI4lBydPSr8NXldGwOLkCc=
+	t=1760948185; cv=none; b=Vng9yqHHTFqeEkbU8KKy8hh/ENsasj2vJOGD53u0to1wfLP19r5Ldb/O7rcDQg8o4XUzwQIsAXIXOxoc0oXdJqIywx6yED6N3xRxOC8wuje5p2AcYQXWLggvJ1B8M+SD4xeeA6O9AlomXm6IMKJSyK6FYxf270bbCqMAdb1iI+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760872785; c=relaxed/simple;
-	bh=tEkQp2sIfkQfzEDx03lu2c624oUqElD/6WOKBOub6o8=;
-	h=From:To:CC:Date:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type; b=K0VpGqXJnCzF8X3mh2nFnbt8tPO8igeQQYp3VC/qYMv1fadzxcjPxCVh5dEvJLw8Dx43JO8B4RqzGntOCoWOgJMdmdwAht4XXmtx3A6MpfJJZ9mR7bsdgA8Safefc5EG1itjlqPUvVcelrNBKWXwn/3Mh8IA0LBJztcnRp8x50M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=HUdOZzkN; arc=none smtp.client-ip=209.85.214.228
+	s=arc-20240116; t=1760948185; c=relaxed/simple;
+	bh=HAe2ANNczQ1hQD47t0KQRzbIEvlgjgBQ4sfsg+S1m0A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BApQE+X/go/STRfjSwOBbDAicNl3a8Z0xDFJ4qCPJsSs0j8pv9m7CX/o7RUBTCjhNZcTZ7v7dKl3uMKcrPwXn2WjLNcmUgRh3LJV/Md9zY9Epz5gC3lbvsqUPbYfKIUCL3jsjTnaKQW14bxz+4uCjoZ9qxRDBfR4FFzUBgmRKIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=gv25pcCM; arc=none smtp.client-ip=209.85.210.228
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="HUdOZzkN"
-Received: by mail-pl1-f228.google.com with SMTP id d9443c01a7336-27d3540a43fso36694685ad.3
-        for <brcm80211@lists.linux.dev>; Sun, 19 Oct 2025 04:19:43 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="gv25pcCM"
+Received: by mail-pf1-f228.google.com with SMTP id d2e1a72fcca58-7a213c3c3f5so5312571b3a.3
+        for <brcm80211@lists.linux.dev>; Mon, 20 Oct 2025 01:16:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760872783; x=1761477583;
-        h=content-transfer-encoding:mime-version:subject:user-agent
-         :references:in-reply-to:message-id:date:cc:to:from:dkim-signature
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0TsB+tDEbHrQirUzM2BvJAhO/Udv9gdfHtlGbbHKvJc=;
-        b=QIEYsh/1cGSdp1r572xvCSUq5vW1xTaOqoGqtQ+FKnZsw1J9eTnQf6rllQiq4dGbj3
-         exQSkwi3FLpJAPH6ohidjwUeqkc912r6esxm9lmkG6aSc7b0xK4Mhz+wWkD7LYZxioOT
-         cCxUhy8VJQ+xRW8vI4zyj5FivXnPHpeA6BBUagK478f8uGwbPTFAAPkkAajO0a5bkHAx
-         EhYAztxsyKBMeezCMCC6GmTEuSKDQB/BywIZm3bD6+z0iVOBdg6olZlpUU/qp9cwGiQ4
-         sqmEYhy/cn2V0xfY35oZFQG3fDH0l32OHEQ8hgo/sEqXOw9MjV2A7+5rE5icH/H1h24O
-         eUHA==
-X-Forwarded-Encrypted: i=1; AJvYcCVROEByTKeFycfsUXCciVaLcrvrLe2wW10Mw2uhGq/REMrfwp6JGlg9y7RUyviORlHv9zSUzl7Eo0s=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwQLMwPkkeFM6zIof9/RptQ6mrDc3Bp7Hz1nE1dvbyAGOc5WF9/
-	/FQAD559oREL8vUpn0+RPwL0FNKos0/+nryAqUeKmcfcOJO+4zgzNx0juJtkTU2ihvg6jfmCHVO
-	fKengNqSdPPR/drMdA1TtXblyaTbK0kVXElqKDupcWcyljJr9lk4ZO91NKPFs7xRZOrSHOvs85v
-	Bigv2nvNQuat9C0+hXbVJsS+BUigoL5WnKeiQRm5KGmzgqDRTmpID2nJS8kSnZg5ES7LXf740Z1
-	0GmbbPbz6FrS4RE/5BI8o7y
-X-Gm-Gg: ASbGncs3tvumXZ7uKULq8uZqKrJKWtloU3uI4kYCxHhFqeJ+IrUMkYW2ZHyVm7DpyF4
-	H3dVxuGO/RytuNwfdChCngQQFIPJ6toiQVlZa6ZRXiiSUvsSX05jCucgU6t9fWnowQODthYf7Rp
-	T66/1pRPRIhMbo4/ERru2kHquQQuY990ewoZIEPWeVOVqfNY12C19n9FcI0hTP95h7g6umLBzZ+
-	KGyuHJaHEM+66+NfiRwFCqBko8R5OO6DMhTUs1jY3tiv0Nlx1qUMFxvKJP/Z2+8feu7aH+8AsH0
-	zRSRSFso9YUqJ4fUxy4wXMK6W91gKcYfNvaIhk2sgSzjJEyOzklmfezCCiEiSq/etSHN2UU/tr0
-	TSpfoCUxab3Euc729YTaIR1aumFUUcGN8/W8z+EawLpFfZO4xeuf87hy2wj7Lq39dkye89KkmEx
-	l1tm4JR9NzXITXQKbeHuqqez85b4BBpX2OjmuSbQ==
-X-Google-Smtp-Source: AGHT+IHvTm+033BEiwR8hU9Z8Iwwtd/4jzuu1B7+SbtAvpBcVlgXf1+px8a3NzS2y6FcCFEbLnKPcek0bMYz
-X-Received: by 2002:a17:902:e74a:b0:267:776b:a315 with SMTP id d9443c01a7336-290caf844ddmr118989775ad.32.1760872783257;
-        Sun, 19 Oct 2025 04:19:43 -0700 (PDT)
-Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-19.dlp.protect.broadcom.com. [144.49.247.19])
-        by smtp-relay.gmail.com with ESMTPS id 98e67ed59e1d1-33d5de225aasm611980a91.4.2025.10.19.04.19.42
+        d=1e100.net; s=20230601; t=1760948183; x=1761552983;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:dkim-signature:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZExFzEY6BbrN3cESb2NgIfxCgGmmIVBR6lSIxOhgXSY=;
+        b=ZlPmsxHCPNGW7njtX5/I132yVvbcCBGgTWtnjV5WalXudyo3P6gwa2KQHNYTuet3TT
+         lbGLwbOsgEK4YgrAX8iSnvux9mWFL9iObfcLtMNZaZSabC0EKOhEiih3uuWGG0XYD2q8
+         Rw2s4V01szAczJ0oFEJIzGMhB6zwDHizRdp0p14y/z8fW7UAjMoUjnXPBoJCUZtCQYfI
+         nfC2VANJB1A/MhBZhlwD8qekEexY7KXQM9jwbrPJkSy1/kHEbwtxufrMcb9ROo+oTo8r
+         AoPDsdLHkAAUm/RYKxkeqtmF5E1dYYf4REtwNYYrUgQASmRjwSL00+c79ASfMoeYZG/9
+         UZxQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV2gDSboyOaPmHkdZKYqfP2CKB4XrlJxlnTIXIN3705D/T1ma1NCjcEuJRHYUK7H1JP2aYGJq2KHzo=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzIOUld7xtiuzwWJVVz+G/uOAGtwO0SkB7+hq3XJKTzLVS+bbiE
+	t9985LqA8+CzVx826VSVyO1iVCCrckyXrdze+wPJxMb2rEa8pnwdXh4pr/VeG3pxuU5fnAkAjz2
+	l3F/eXA4yrloZceukDx9D9UgK4PV19vuyrtW5xkySxIMYpKiXdEggHHdrqj6kajvXSCkqiisdBL
+	r4lDocz/uwUS/mym0H+Crsy7E315fUXAnO9HyRS1UT1Q9TV9xtJ+d+P44VexGLdOhtCq6XFCtf9
+	DlRXh7LcLsjNFPxCl7GRQ==
+X-Gm-Gg: ASbGncu7XCwBP0JhZgZfGOZvf2amW5YyDmD2ubm2wgF5EndhZyP4kOsjaQZTXL5TthI
+	t2LLPLt1wCqkh5GrToyPFVZMbSO7oLl6/XT3VV0snvnjGi9XFOBzDyDdV1F+ReGttvYcPKKkZ35
+	6FznGpL+9hQbcVj9eHpD0rPRze6COyAqRK/hxM9YXsOoZCflEvqx33VFCA0LvDLUVZRy/THfeaC
+	2MIdWQapQdW5g7Ptu/F3SYHU9nW6VA9/L5FFSSvq5bo76SIopq9HD1+XMBb+cwSFliG03GVs20b
+	nkORZH+5z8kmD0zYQsk+wKL7lIRCfVRdQ7Ci7BVBh5gtCLLE3KBJKFU4AKwfqB/ZvUEqsFKRK6U
+	7Oq8TdTDBTb1Gkrf7hQUnXUIt4pGjog+9Dtq01n8yP2Hov+DqL92xlzbXVSg9dFe14uwWZM0Sz/
+	/isdpronvw/UqObWVVqWAS9AILV9d/yIj6wulHog==
+X-Google-Smtp-Source: AGHT+IF22R6q/7UsNPFDM7/2akCt0/3wp6ZZcy7uubtT7iGwYmSyT8iWcfJZeLegHH/laILr3+ccWb291Uhe
+X-Received: by 2002:a05:6a00:1827:b0:781:4f6:a409 with SMTP id d2e1a72fcca58-7a220aa98e9mr13909242b3a.11.1760948182953;
+        Mon, 20 Oct 2025 01:16:22 -0700 (PDT)
+Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-11.dlp.protect.broadcom.com. [144.49.247.11])
+        by smtp-relay.gmail.com with ESMTPS id d2e1a72fcca58-7a2300e0576sm1041380b3a.10.2025.10.20.01.16.22
         for <brcm80211@lists.linux.dev>
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 19 Oct 2025 04:19:43 -0700 (PDT)
+        Mon, 20 Oct 2025 01:16:22 -0700 (PDT)
 X-Relaying-Domain: broadcom.com
 X-CFilter-Loop: Reflected
-Received: by mail-ej1-f72.google.com with SMTP id a640c23a62f3a-b58d1fe8cd7so486716566b.2
-        for <brcm80211@lists.linux.dev>; Sun, 19 Oct 2025 04:19:42 -0700 (PDT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-88ef355f7a3so1842931285a.3
+        for <brcm80211@lists.linux.dev>; Mon, 20 Oct 2025 01:16:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1760872781; x=1761477581; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:subject:user-agent
-         :references:in-reply-to:message-id:date:cc:to:from:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0TsB+tDEbHrQirUzM2BvJAhO/Udv9gdfHtlGbbHKvJc=;
-        b=HUdOZzkNNolKKop9t5+Z39tp3hfjBVy36hicT4n4BkMizb2TpJYcmkv3g4HUBgnpyK
-         7qqSRr7H+Q/BnrSrV9JuFl2TF+uNU0KVEEOUIUCaGXjNxyx/apuTvY6BV4axOb13crRo
-         UD5+3b8IJZhoZQOAS2o8fKytedgT/KMHi2dBI=
-X-Forwarded-Encrypted: i=1; AJvYcCU2TicTNNgczP+OEZTN/0pLxmqq3bRqFsUkxyzOe7XDv7kd490mjjWgyKCCjPYM98J11vRuglCHSqs=@lists.linux.dev
-X-Received: by 2002:a17:906:c14c:b0:b62:ac4e:c14f with SMTP id a640c23a62f3a-b6475012dd8mr1084721966b.54.1760872781370;
-        Sun, 19 Oct 2025 04:19:41 -0700 (PDT)
-X-Received: by 2002:a17:906:c14c:b0:b62:ac4e:c14f with SMTP id a640c23a62f3a-b6475012dd8mr1084720466b.54.1760872780874;
-        Sun, 19 Oct 2025 04:19:40 -0700 (PDT)
-Received: from [192.168.178.31] (f215227.upc-f.chello.nl. [80.56.215.227])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b65e8391523sm479130766b.18.2025.10.19.04.19.40
+        d=broadcom.com; s=google; t=1760948181; x=1761552981; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZExFzEY6BbrN3cESb2NgIfxCgGmmIVBR6lSIxOhgXSY=;
+        b=gv25pcCMjy6201gRgf4CP5ABAp2+ka6KVvhLSEqwCe5a7wQrtUNYXg0MFphqzr3b89
+         dqkcijdaPQ+fzX9dhttB6Td2luPSHmrjicjnXqo56+iSmz1uMJ/yq1/56E/GzGeeWNrT
+         zRZdTE8eaH3iK7xlaJ6rh9k9In6OsR6qx3pps=
+X-Forwarded-Encrypted: i=1; AJvYcCWw4fI3HxgDNtM0Q7+VdkqQQ3j7grXdrqrPYjfd9oJx+1DlQmH6IbF75CJKbMRReou7K0m4kw0r3TQ=@lists.linux.dev
+X-Received: by 2002:a05:620a:1a9f:b0:884:f411:1962 with SMTP id af79cd13be357-8906ff0dff6mr1326052985a.47.1760948180877;
+        Mon, 20 Oct 2025 01:16:20 -0700 (PDT)
+X-Received: by 2002:a05:620a:1a9f:b0:884:f411:1962 with SMTP id af79cd13be357-8906ff0dff6mr1326051485a.47.1760948180352;
+        Mon, 20 Oct 2025 01:16:20 -0700 (PDT)
+Received: from [172.29.0.98] (161-51-84-2.static.ef-service.nl. [161.51.84.2])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-891cf0af3f3sm516545885a.37.2025.10.20.01.16.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 19 Oct 2025 04:19:40 -0700 (PDT)
-From: Arend van Spriel <arend.vanspriel@broadcom.com>
-To: Berkem Dincman <berkem.dincman@gmail.com>
-CC: "linux-wireless" <linux-wireless@vger.kernel.org>, <brcm80211@lists.linux.dev>
-Date: Sun, 19 Oct 2025 13:19:40 +0200
-Message-ID: <199fc3250e0.2873.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
-In-Reply-To: <CAC3nzgJM6azT8T4StreR874h5sUarLH62mgHvRZndV_XEOBEgQ@mail.gmail.com>
-References: <CAC3nzgJ9uX3rREGQGbLA+oJMzDh0Bc-Fs5sP1sM_4DGScgq=3w@mail.gmail.com>
- <977b67ef-ef6f-4ae4-99db-eeb921a17e3f@broadcom.com>
- <CAC3nzgJM6azT8T4StreR874h5sUarLH62mgHvRZndV_XEOBEgQ@mail.gmail.com>
-User-Agent: AquaMail/1.55.2 (build: 105502562)
-Subject: Re: New test release reload driver
+        Mon, 20 Oct 2025 01:16:19 -0700 (PDT)
+Message-ID: <98a614cf-0016-4cb2-9109-84dec84b535f@broadcom.com>
+Date: Mon, 20 Oct 2025 10:16:10 +0200
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: New test release reload driver
+To: Berkem Dincman <berkem.dincman@gmail.com>
+Cc: linux-wireless <linux-wireless@vger.kernel.org>, brcm80211@lists.linux.dev
+References: <CAC3nzgJ9uX3rREGQGbLA+oJMzDh0Bc-Fs5sP1sM_4DGScgq=3w@mail.gmail.com>
+ <977b67ef-ef6f-4ae4-99db-eeb921a17e3f@broadcom.com>
+ <CAC3nzgJM6azT8T4StreR874h5sUarLH62mgHvRZndV_XEOBEgQ@mail.gmail.com>
+ <199fc3250e0.2873.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
+ <CAC3nzgJxowTjrJJppahVMg1iLVXad38D5ZR38-rzsDQm8daUTA@mail.gmail.com>
+Content-Language: en-US
+From: Arend van Spriel <arend.vanspriel@broadcom.com>
+Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
+ 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
+In-Reply-To: <CAC3nzgJxowTjrJJppahVMg1iLVXad38D5ZR38-rzsDQm8daUTA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
 
-Op 19 oktober 2025 01:45:47 schreef Berkem Dincman <berkem.dincman@gmail.com>:
+On 10/19/2025 1:50 PM, Berkem Dincman wrote:
+>     [ 17.288032] Bluetooth: BNEP socket layer initialized
+>     [ 17.319081] Bluetooth: MGMT ver 1.23
+>     [ 20.068465] brcmfmac: brcmf_sdio_bus_rxctl: resumed on timeout
+> 
+>     As Bluetooth resides on the same chip as wifi I find that suspicious. I
+>     would like to know what happens when you disable Bluetooth. Can you
+>     test that?
+> 
+> No I turned Bluetooth off and restarted the same error messages would be 
+> printed onto the screen
 
-> This is dmesg the last lines after reloading the driver module
-
-Better to respond inline and avoid top posting.
-
->
-> 18 Eki 2025 Cmt 21:46 tarihinde Arend van Spriel <
-> arend.vanspriel@broadcom.com> şunu yazdı:
->
->> On 10/18/2025 5:38 PM, Berkem Dincman wrote:
->>> I have PostmarketOS on Pinebook Pro v25.06 it has an 6.6.34 kernel
->>> originally I have custom kernels 6.16.7 6.17-rc7 also booting and wifi
->>> working 6.18-rc1 sends alot error messages to the screen but works fine
->>> if the driver (brcmfmac) is reloaded
->>
->> Thanks for the feedback. I would be happy to look into the 6.18-rc1
->> issue, but you are giving me much to work with. Any kernel logs that
->> show the error messages would be a start.
-
-So the error messages indicate communication with the firmware on the wifi 
-device is broken.
-
-[ 20.068465] brcmfmac: brcmf_sdio_bus_rxctl: resumed on timeout
-[ 20.069067] ieee80211 phy0: brcmf_cfg80211_get_channel: chanspec failed (-110)
-
-But the firmware started ok because I see before the failures start to occur:
-
-[ 16.137950] brcmfmac: brcmf_c_preinit_dcmds: Firmware: BCM4345/6 wl0: Apr 
-15 2021 03:03:20 version 7.45.234 (4ca95bb CY) FWID 01-996384e2
-
-Things seem to go south when Bluetooth is starting:
-
-[ 17.273314] Bluetooth: hci0: BCM4345C0 (003.001.025) build 0382
-[ 17.287981] Bluetooth: BNEP (Ethernet Emulation) ver 1.3
-[ 17.288011] Bluetooth: BNEP filters: protocol multicast
-[ 17.288032] Bluetooth: BNEP socket layer initialized
-[ 17.319081] Bluetooth: MGMT ver 1.23
-[ 20.068465] brcmfmac: brcmf_sdio_bus_rxctl: resumed on timeout
-
-As Bluetooth resides on the same chip as wifi I find that suspicious. I 
-would like to know what happens when you disable Bluetooth. Can you test that?
+Ok. Thanks for testing. What do you mean by "turned Bluetooth off"? I 
+want to assure the bluetooth part of the chip is not powered on. This is 
+probably not the same as "turned Bluetooth off". Please provide logs for 
+each test and/or verification done. It may save going back and forth 
+over email.
 
 Regards,
 Arend
-
->> Also please put the mailing lists in Cc: so other people seeing the same
->> issue can chime in.
->>
->> Regards,
->> Arend
-
-
 
