@@ -1,153 +1,162 @@
-Received: from AS8PR04CU009.outbound.protection.outlook.com (mail-westeuropeazolkn19011026.outbound.protection.outlook.com [52.103.33.26])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f228.google.com (mail-il1-f228.google.com [209.85.166.228])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA1DA2E090E
-	for <brcm80211@lists.linux.dev>; Tue, 21 Oct 2025 12:49:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.33.26
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761051001; cv=fail; b=hwKN6acHKM3opMVo/l4piu54IolKJYnhspPRcXtTZ0MMhSCiw8w6dRe8D8mmjZry04D0PbD0ApoC/N9zmCyK/ND0qaWuPUdb+lNEMne7T6E45ECsoaU72BupwdU+Heyv0ndD8hsYi4s+xSFLAvIm9tmA2gtOiQTcb/JQOsSsxPE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761051001; c=relaxed/simple;
-	bh=2t7usjkMIO56S7zC+wGWUQVRXREWVQPS8YcZXdZqhE8=;
-	h=From:To:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=t14n4eqwAr2rVpTGBKhi82pcym53xCvendXtEoJa8xH7KWAcJy42n4dK06PwvTa86gi5hbD9OJ+e54miGtMfqg+uBXPsNbGeeACexm6GnBIV+UTS6Cd4cbxImHFydPTJgyKU3YBCdJUXGAtN+5KKa64S3VPXpg1al2qGPys06hg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=jdOOscEq; arc=fail smtp.client-ip=52.103.33.26
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4693D2DEA9D
+	for <brcm80211@lists.linux.dev>; Thu, 23 Oct 2025 10:42:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.228
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1761216167; cv=none; b=D7cyZBXZq5Sk7YoXK55d2gHOIBgNz7FnxQyXAu2S7w29Oh1vY/TJnKNAN+sdBGrg7ITcMRLIBvFeGJIoEMnYYCcPIUYQgnCdHg2h8f4+ZlHIFOVnuSHRP2jZxZxqavmYByH0rQeypshP39z72KCuT/LxCfbz53r6hgiE/rZAEBE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1761216167; c=relaxed/simple;
+	bh=n/xZM8n22nFHKZ6e6otWxRw0eIWjOIdonEm1GvVupwo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=Ka5xKlptoxxf5hdvhlhv/n0fXJcnfKr4fTFapvPFhu2Sqf+vOuz32joaoEYsASsMXisrq8ZGNaWOUAP/YfQ4reJNPFaW9+X20jWBc4h1t3PGIqdjEwdwGJv5hMLmWX/81DGZ5sPPuKVyyePMY1njzo8hkHuSYoaIWiZgA/4HV/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=XiDvn6Bo; arc=none smtp.client-ip=209.85.166.228
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="jdOOscEq"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=DBqf4OC6VNJ2NwcnOUReZFcYvCtUlVlIuEzkHbULCHNX2BF+rNOy98Y0Tqp0IiooHWvTWSB08soywqqwJP88pOyUS0Tz0kQjyDrb1qjQpoEMBY6AaXKse49ANpUtCpcpj81iD841m4dp3EbeMIBpFSundTmlsO4fBcL362h2OLAwsaxudgpbHBgkzcDVUReybdfptc4RHNnIYZnib6BA9Fb25obWi5wqohYqCRQUjpfdkzGmwIjdzyNUiky+k6lWbSRocHKjnmXe5SCOCswe7jsi/ajmxXeX/AFIfZeDxr6BxBWcR7y1lYDkzfj8G+ZXOJXEAQV72CtPxhNR8YLfvg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=2t7usjkMIO56S7zC+wGWUQVRXREWVQPS8YcZXdZqhE8=;
- b=jmICRlqmLszSCEAjV/JWugW0gkEBAVLSItQc5aVHTYYaBl5FVowtwOwq19gTN+NLovofciv16yODUHlsb/vBWlUCJvYXY/ckfLxBw4Da2cIkVrVSmqHtbtcLhwrboUzsaCPTZ+izyb2hfvZa8+4kya63pilYbVOrnwcntr3kTGAn/wq6itKxgonazQhKvIyL3UMQHbnJP5S4bJNFWX2aGU4l8cN1STsIIR7Qy+DZRShbdJE8DQbvuj+GX42p5W8wrFE6UXPjhfdvd9DRptonZe/Cwn/wpZRm4RPHvtWeJLv0HB+AcbK+YSdlwYaGTGoYvquL+ozlVKGWqCQ1LsF+EA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=2t7usjkMIO56S7zC+wGWUQVRXREWVQPS8YcZXdZqhE8=;
- b=jdOOscEqZPWzWkvUsH8VkOUb8qpPjWqYWzp9co6UvGCHDsmFH1m8EexqAFTzSHysShXK8uawRdrT4puk2675jnFlN/9DmlmjyZdqiyus6M8BXWhocAZ5pe1vr7YTQGFMNp9INCNbOF6Y7K79TY+mW/N9XEeH4EnB7WeJVMg1fsCwwM5pwqmMWYeQWCvvZuPRxfSTl7rFSZsDN1p8v3VRXFF34ctezolztbR4JjuaKsHDuCO7Mcx6W7eF4PBG9/MuLnrbpcKtxoTsJKQSLVtNpe4gH7bVFE2IVV2jNXlQf7Qyg6AiD2Da123rTfnQ4ers9l6uYIAPJcCHNxhoaViNHA==
-Received: from AS8P194MB1919.EURP194.PROD.OUTLOOK.COM (2603:10a6:20b:52e::13)
- by PA4P194MB1071.EURP194.PROD.OUTLOOK.COM (2603:10a6:102:cc::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9228.17; Tue, 21 Oct
- 2025 12:45:53 +0000
-Received: from AS8P194MB1919.EURP194.PROD.OUTLOOK.COM
- ([fe80::4fe7:bffd:1115:25b9]) by AS8P194MB1919.EURP194.PROD.OUTLOOK.COM
- ([fe80::4fe7:bffd:1115:25b9%4]) with mapi id 15.20.9228.014; Tue, 21 Oct 2025
- 12:45:53 +0000
-From: Stephen C Goodman <Stephen.C.Goodman2@outlook.com>
-To: "linux-wireless@vger.kernel.org" <linux-wireless@vger.kernel.org>,
-	"brcm80211@lists.linux.dev" <brcm80211@lists.linux.dev>,
-	"arend.vanspriel@broadcom.com" <arend.vanspriel@broadcom.com>
-Subject: Broadcom brcm80211 Displays WPA3 as WEP in OpenWRT
-Thread-Topic: Broadcom brcm80211 Displays WPA3 as WEP in OpenWRT
-Thread-Index: AQHcQoijvopPopH3iUiSdrbdYdZfjA==
-Date: Tue, 21 Oct 2025 12:45:53 +0000
-Message-ID:
- <AS8P194MB19190A3E9648FD04DCFD5A789DF2A@AS8P194MB1919.EURP194.PROD.OUTLOOK.COM>
-References:
- <AS8P194MB1919C4BF0BF0BF222F65BA449DF2A@AS8P194MB1919.EURP194.PROD.OUTLOOK.COM>
-In-Reply-To:
- <AS8P194MB1919C4BF0BF0BF222F65BA449DF2A@AS8P194MB1919.EURP194.PROD.OUTLOOK.COM>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: AS8P194MB1919:EE_|PA4P194MB1071:EE_
-x-ms-office365-filtering-correlation-id: 5c5d8fc8-3042-4e06-1959-08de109fc5cf
-x-microsoft-antispam:
- BCL:0;ARA:14566002|19110799012|15030799006|8062599012|15080799012|8060799015|461199028|31061999003|40105399003|440099028|3412199025|102099032|3430499032;
-x-microsoft-antispam-message-info:
- =?iso-8859-1?Q?Jg2DCRWkbKJtaVE1CEWCdHVA3cTnlhzfwZat4oJhH6IlD3TGkrefRfVyLE?=
- =?iso-8859-1?Q?l5wd2oxefpFetnos7u86laO2cIpwpu01o7Irki1/zwMWszTL9UJ0SROuEL?=
- =?iso-8859-1?Q?0t6gGQVRHDxrQuN659nyPa0mN7Zcuee5AC8N9ZKIlgj29CnxMaxwfTHgnZ?=
- =?iso-8859-1?Q?K2rthvcXtyXc1ovzQ/ZF4Rwmz/Av/u9saEvMzR+dqqEVMTXYNOWJpBKZsK?=
- =?iso-8859-1?Q?V1JSa17ITTBKPSdb1ksLjn7iqs3j2VMU3UPXLTXijInv2n0+YTZqvU+0bp?=
- =?iso-8859-1?Q?7piVPvw0QO1fGIq8UeSZpr2T7yaM+nPXococqTRzd3g/ktfqDrlZ9Cbjwd?=
- =?iso-8859-1?Q?btWmhDYPPxCukrAlwkHywq/6obRj5skxiBVHyst+/aYkpCPjuAMRbUIeJW?=
- =?iso-8859-1?Q?lsbXZj7EQbdWWdTzts+FLCMrb9iJldyaZVfh3i3WP/nxdbLn6id/enimnH?=
- =?iso-8859-1?Q?prZHx/OIZFoMAusv+zGMc5DZT0lu7SiKAhRbpJVJrw70qniuTsNF5lhPEt?=
- =?iso-8859-1?Q?5UqVzCIcWvVctnxPUyQ07UMJNQx6DsWfRRdEPpni1okt2j7mNjMsj5Asgc?=
- =?iso-8859-1?Q?6IHByUtOSuwHcqs3UTjqqQIqoUCztXNpyrmmEJSn/kdtXZjHGBrj2+Xr+o?=
- =?iso-8859-1?Q?Ui6E0akekiAWHY/NgJz5VAEbHWqinJbaktNPEa2mkvfCDNyT+g539GXayZ?=
- =?iso-8859-1?Q?pbHJDI9TxecoTasJTMTsGPuO3MLcjNYXG56ifBIDVhoeuMvxeJbIHJhWAh?=
- =?iso-8859-1?Q?23nHCxSZaF0eG48ZxB7KDCcsg8AAB3xijd+BTBscjl7DlrxrSP4wRFU9jA?=
- =?iso-8859-1?Q?oM5P6rkNJ66V8xCOuK3Wmfaqsf/ux59exZUiYUNrZU/P09WAymCtg74tg3?=
- =?iso-8859-1?Q?UIMCLCkRi3rFDUVGlZJbbBYFBVF+jUheNnHNBznIoeYyMZYGl84oRYOSu0?=
- =?iso-8859-1?Q?hSzYw6BsU3wMyaCkfB34a6NkJMGobV3JXUT/G2ITtGI0Tlpk9EL1Y/QNP0?=
- =?iso-8859-1?Q?7mQqMzUSFCVWk8f2ilUoXuln47xD0puyBx0ynV/9SELX1FiHBmpV2zmPmr?=
- =?iso-8859-1?Q?mq07aWiEPPrbepdvXkWwzISJPGjnSsfZG7VvwybN4z4cawt4hU9MNnOfAj?=
- =?iso-8859-1?Q?woOjvUjivFPKpMghaOnzjxOMSEqUPTrkYbei6P8FPPnneujr1FarwtVnMR?=
- =?iso-8859-1?Q?JveE7cRp8qAUzVgTnZhcRjW6c92vVZrgPKnPbPG+A16h0xszGJU+TGWm?=
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?iso-8859-1?Q?+imClX3NbnMVyk45Yk9ccS/HX3pVXWFyn5N/RhaIWlkQ/zPzFaB7GDXtEc?=
- =?iso-8859-1?Q?xS0J3zF3OKPD6l0n1widWts1+p32Bf0cmAbsK2/UP4dDb2m0yWuqULBCq0?=
- =?iso-8859-1?Q?1DxaS2BgnuSzbKX5H+uKU5yMoIywECT06KSirgTsHmiinv7dbSemn3rVz8?=
- =?iso-8859-1?Q?a+62I0xWg9c56AKhFFAoM1kqRSpcff2w9ehlQR5APYz2v/Iw/VCUNoX4ca?=
- =?iso-8859-1?Q?T7Yq1fAHNGT5GSvG3US1Ia+X2rW2St5z3qdlSySZX4Oe3O3UCMm4vqu2fJ?=
- =?iso-8859-1?Q?fWh95YZYhw71QJY6mT/XIsp+W6XbNudZyi0ounNA6KD6aUJjVlX7DCPR/j?=
- =?iso-8859-1?Q?Is20+XNyOUGc6cCFWjB7F1vc5XAN7mLP2+2kU8cMhULL9f3CyN6vM18qm/?=
- =?iso-8859-1?Q?st4QINtn2YIVhk/R3jy3tpd2B2XZQPZf75jJ1lIp1uLwyWqvHySnuLi/JN?=
- =?iso-8859-1?Q?88lIyBI8HTr2LYmFwxBlbFV4u7HKqvhv31Lcguvlk9tuS34a7HxAvzGZqJ?=
- =?iso-8859-1?Q?VapdGy+pTSUnnI4pEx5fB0Tt4V+YxoP8/59UKLIarkA7iMwpPpQXbHm1kj?=
- =?iso-8859-1?Q?l1lNv+MLofcz0bqVcuH/QODQCXZFxU4df1qlMXhwV8FtB1vsUJ8BONwzru?=
- =?iso-8859-1?Q?aeKnOK10w3AvRWPQHmPC44PiC2f+L3vn3kqoBa/arlgKwMJ8qlK7AReED7?=
- =?iso-8859-1?Q?Pzsp54AvLVw04Xh1YHp8F+tZ/ip+vh1lJHPVG7nvJCY227mf3LEW4qebFX?=
- =?iso-8859-1?Q?C8DhGVJYmS7IqfB06LlZTd6qX39sjZo29/GjkWdvMjv6/SowNAEshn4AuK?=
- =?iso-8859-1?Q?vb33buFNaNh0BIN+MTAOJXzmaq071abpjlTEJ7fNAOIWKhplPU562WTlkS?=
- =?iso-8859-1?Q?A15MjCX5XkoX4/TxnITDZnYvr23bBTZSImGxi619+/ebAw/6f0bXuJta59?=
- =?iso-8859-1?Q?f4n85OpQyk4CsW3UAkhlJ5+D88JAYJvBvMEUV27bGBvK/cgwpvS6UJSCZF?=
- =?iso-8859-1?Q?IWVEtXgB8cyIoqqqoZ+biSjFcMpVNeXQLLXM+kxkA+matnpY6Z3WRajZwp?=
- =?iso-8859-1?Q?ZjlTZZD/xpXnpJXilE8BYi9Qn4tReSL9uHgwyZMc/MopWK3B8BGtrc+Pp8?=
- =?iso-8859-1?Q?/kMfobsppMNJJhjeg45i7NWyhV6IvE35JyPZuOH0FTOkHCIfR30/AoEngD?=
- =?iso-8859-1?Q?sMOMhhr3Wv+r5G025FF8ifuks5CxcE2kDhdhBnU54qbSsF/9iwpgtIa3XN?=
- =?iso-8859-1?Q?Y/dSHB0LmI6MKhMR9wk6Lymwg7kOQZawK4sFxnXSdZ4HFSFgP0IMJfksTE?=
- =?iso-8859-1?Q?Q7GD?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="XiDvn6Bo"
+Received: by mail-il1-f228.google.com with SMTP id e9e14a558f8ab-430ccd45f19so8317815ab.1
+        for <brcm80211@lists.linux.dev>; Thu, 23 Oct 2025 03:42:45 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761216165; x=1761820965;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:dkim-signature:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=AlVa3o8KCZev/Xc6g+qB46PrsHJwpamp8X7A9zs/vC4=;
+        b=PchYB/9CQoafI9t24EXMxKcvaKsIH/Wf6VAPZ5+hqNO67uLMCrGxO58v3aUTfCnbqd
+         gCu/NiHvbFbq3DI5bW1HQjqkuUVo6FcMWItsz8UmT1kwkxyJfyMhhA+d8DHyjqf6yrm2
+         PpGiicGsY8Wxp+7PVN7XzuMyTYlImWQUc3iQg5dk3AEp3014a41jnCTh//NOqBEuW6su
+         3QIaJhzIOLXj/io8H69zV5aKciMI0aqrBt+vfxaoZ0u0rexytYCiJ3xkPliyIlyVXvPt
+         vToihImChAwCR+4P2LBKwa/ciXSETEvYizdrLpfxsnoJ6RTrRjxI1XYCZHrAJL/cgoZT
+         1uEg==
+X-Forwarded-Encrypted: i=1; AJvYcCULoc+ihxDQ6l6ZSTVLki8YCVLEAwNyVYDSwsph2P5t0eJb3wynoKk3MX1jMTbou9dkgX4mM+l/HME=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw1PwCoTpm/6evqLTbiul0eKj1HOOCDjqab8VyLjpp5QPWMRduE
+	jL08ACUBkk6wQaYhH/R/cEauoz2tlBUS/ZUdeZcGwZA8iDpeEHD9UNHm+p4zGq/NzQjO9QdIfja
+	WEfVVRcP9sOO5NzbcfNht/A0nUh7ticlpUMqw6BD0MVvjzh1vGI3Cdt9G93UuRf4xDDaG1/9alR
+	bE3Fro6VMrcGqcfcTliQacU1qYUIJXyklXKMYg+aiDR8+EzuiWercX0p5tdFQOh6Ho3s7wvjnZv
+	Lle2+Tfs3q3e/aACWpjpw==
+X-Gm-Gg: ASbGncuWGGD6r1qS303cj9DlsuokElCt7WCYuengR+frdBxnzmO/fD5wWq3cGb6IO1z
+	MvHkV8BJHbOJfoiCMj253tO6p/5ANluxd90KRMRVZ71SJAIBDMmaL1Q2Sz1LLxvpfpBfFs5P1W9
+	EUaEn2z2W5QrgouiGARcfpiZgN9kxoFnItH9yCpX0UugQJiucZNKQya5Fxr/iUyHbUiNFrQo3KQ
+	d2oYd6ZySMQRxbcsnIWOb7RIJyvnhJCUX1OoQBDCAtHENxqzZun3dB2Lc8ZGIkgWwbOs89AyWSx
+	lwHkbuNqXA7ecvnZhFomgdUReanDq7hzehvRBk+/0Iv9X4woeFiw+KsA7FHOiSU2WwZNbuuIiOm
+	qU0oYNsEqy41OFkEJUyashhKB8GNKNVTVzblrOhhYT5v5HSb0SAH8a2ZsTyphkHyY9NePZQ95/h
+	zspcLEMAyN4q25T/hd0VycoCk/hNHeo03VwSVX+2eu
+X-Google-Smtp-Source: AGHT+IHNDPngoL5OAjjuuDyIQQsqcL/W6qUsThNTadf3itK9LRHyDQjTygSmV+l3Hnbiq+7c9jH7vGNcDt/U
+X-Received: by 2002:a05:6e02:3e06:b0:42f:9501:69e with SMTP id e9e14a558f8ab-430c5295023mr300949385ab.20.1761216165272;
+        Thu, 23 Oct 2025 03:42:45 -0700 (PDT)
+Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-124.dlp.protect.broadcom.com. [144.49.247.124])
+        by smtp-relay.gmail.com with ESMTPS id 8926c6da1cb9f-5abb4a51222sm122172173.1.2025.10.23.03.42.44
+        for <brcm80211@lists.linux.dev>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 23 Oct 2025 03:42:45 -0700 (PDT)
+X-Relaying-Domain: broadcom.com
+X-CFilter-Loop: Reflected
+Received: by mail-wm1-f69.google.com with SMTP id 5b1f17b1804b1-47113dcc1e0so3902215e9.3
+        for <brcm80211@lists.linux.dev>; Thu, 23 Oct 2025 03:42:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google; t=1761216163; x=1761820963; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=AlVa3o8KCZev/Xc6g+qB46PrsHJwpamp8X7A9zs/vC4=;
+        b=XiDvn6Boj4nbaMKr/ot/vHnnVD3IHm72R0iRmkJEd7O75WRJHIZWuyVe77D3h3n+C9
+         R0LuAZmP5mxpnJIHcekFs4xHiCa2230SEp2aupZtnrL1lWSjxHbdwHe+0wjomIH3p5yY
+         SkMavKrqteZAqDrn5OFdArdQn5hcUfvtVNZzI=
+X-Forwarded-Encrypted: i=1; AJvYcCWlKPXFnCz+j1SRpv2/UOHeOKvTct4G4t+1BgTedtuH+VTP4M1WWyuLM+VMfpK5YM36n2FTX2L649s=@lists.linux.dev
+X-Received: by 2002:a05:600c:444d:b0:45b:79fd:cb3d with SMTP id 5b1f17b1804b1-471179202famr168147525e9.36.1761216163451;
+        Thu, 23 Oct 2025 03:42:43 -0700 (PDT)
+X-Received: by 2002:a05:600c:444d:b0:45b:79fd:cb3d with SMTP id 5b1f17b1804b1-471179202famr168147345e9.36.1761216163002;
+        Thu, 23 Oct 2025 03:42:43 -0700 (PDT)
+Received: from [10.176.3.11] ([192.19.176.250])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-475c428dafesm87788295e9.6.2025.10.23.03.42.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Oct 2025 03:42:42 -0700 (PDT)
+Message-ID: <6c5c0180-fc6b-421b-a2cf-3342cb6dc21b@broadcom.com>
+Date: Thu, 23 Oct 2025 12:42:40 +0200
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AS8P194MB1919.EURP194.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5c5d8fc8-3042-4e06-1959-08de109fc5cf
-X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Oct 2025 12:45:53.7469
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4P194MB1071
+User-Agent: Mozilla Thunderbird
+Subject: Re: Broadcom brcm80211 Displays WPA3 as WEP in OpenWRT
+To: Stephen C Goodman <Stephen.C.Goodman2@outlook.com>,
+ "linux-wireless@vger.kernel.org" <linux-wireless@vger.kernel.org>,
+ "brcm80211@lists.linux.dev" <brcm80211@lists.linux.dev>
+References: <AS8P194MB1919C4BF0BF0BF222F65BA449DF2A@AS8P194MB1919.EURP194.PROD.OUTLOOK.COM>
+ <AS8P194MB19190A3E9648FD04DCFD5A789DF2A@AS8P194MB1919.EURP194.PROD.OUTLOOK.COM>
+Content-Language: en-US
+From: Arend van Spriel <arend.vanspriel@broadcom.com>
+Autocrypt: addr=arend.vanspriel@broadcom.com; keydata=
+ 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
+In-Reply-To: <AS8P194MB19190A3E9648FD04DCFD5A789DF2A@AS8P194MB1919.EURP194.PROD.OUTLOOK.COM>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
 
-I would like to report a bug concerning the Broadcom bcm4366c0 driver, whic=
-h affects most brcmfmac PCIe chips.=0A=
-Issue Details:=0A=
-Chipset: Broadcom bcm4366c0=0A=
-Environment: OpenWRT=0A=
-Kernel Version: 6.12.54=0A=
-mac80211 Version: 6.16 (backports)=0A=
-Description: While WPA3 is shown as SAE in OpenWRT LuCI, attempts to connec=
-t to the network or using a Wi-Fi analyzer reveal that it is actually opera=
-ting as WEP. This discrepancy creates confusion and undermines security exp=
-ectations.=0A=
-Steps to Reproduce:=0A=
-Use the Broadcom bcm4366c0 in an OpenWRT environment.=0A=
-Configure a wireless network with WPA3 security via LuCI.=0A=
-Attempt to connect to the network or perform a scan with a Wi-Fi analyzer.=
-=0A=
-Observe that it identifies WPA3 as WEP.=0A=
-Please let me know if you require any additional information or logs to hel=
-p diagnose this issue. Thank you for addressing this matter promptly.=0A=
-Best regards,=0A=
-Stephen=
+On 10/21/2025 2:45 PM, Stephen C Goodman wrote:
+> I would like to report a bug concerning the Broadcom bcm4366c0 driver, which affects most brcmfmac PCIe chips.
+> Issue Details:
+> Chipset: Broadcom bcm4366c0
+> Environment: OpenWRT
+> Kernel Version: 6.12.54
+> mac80211 Version: 6.16 (backports)
+> Description: While WPA3 is shown as SAE in OpenWRT LuCI, attempts to connect to the network or using a Wi-Fi analyzer reveal that it is actually operating as WEP. This discrepancy creates confusion and undermines security expectations.
+> Steps to Reproduce:
+> Use the Broadcom bcm4366c0 in an OpenWRT environment.
+> Configure a wireless network with WPA3 security via LuCI.
+> Attempt to connect to the network or perform a scan with a Wi-Fi analyzer.
+> Observe that it identifies WPA3 as WEP.
+> Please let me know if you require any additional information or logs to help diagnose this issue. Thank you for addressing this matter promptly.
+
+Can you get radio info using the iw utility? Also please share the 
+contents of /sys/kernel/debug/ieee80211/phy0/features and 
+/sys/kernel/debug/ieee80211/phy0/fwcap.
+
+Regards,
+Arend
