@@ -1,114 +1,115 @@
-Received: from mailout2.w1.samsung.com (mailout2.w1.samsung.com [210.118.77.12])
+Received: from cvsmtppost106.wmail.worksmobile.com (cvsmtppost106.wmail.worksmobile.com [125.209.209.73])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B1B6264A9D
-	for <brcm80211@lists.linux.dev>; Wed, 14 Jan 2026 23:16:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.118.77.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3F09364054
+	for <brcm80211@lists.linux.dev>; Sat, 31 Jan 2026 17:34:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=125.209.209.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768432595; cv=none; b=unYKJuB3v3pFgdyUF6wU/SVVWcBm1EWIUbxoqqojd5E10HRzMYzJSBpobLl2OmyNHPr7mLA6oRLGHfEHejZJnvKGPdx7/mhDBl1Qk7BYQC86Yi29PvwPUwmvLRuIvwJwefkMJvyjIRIAYgv/Ggfc+YKkOwHwWbMWbY938Q0v8M4=
+	t=1769880851; cv=none; b=g69KoTfJgdNyJEHNZy8riun48qUkhno68gJRxNTiIt4XT4o/GCuqQtUq0Q7xO/SbsGkXxrQpePPDqV+ErqnHSmDHvdaTBFGd2iQAtyD3vafldS2U4ogy0Si9WSeSEJ6+4Q3c5g1jI5v8MSqlZ/HeUtBkAHZGWMZDeme3vLwXl/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768432595; c=relaxed/simple;
-	bh=lL+eRe3ATart73Wr2RHXzJKq3uaRaLZiPZcHscRAc7k=;
-	h=Message-ID:Date:MIME-Version:Subject:To:From:In-Reply-To:
-	 Content-Type:References; b=M2fgcKK3W/Ixn9ZCoAjmjfSq0pLnKUaNPtT8SR93e0NlRBPmEzJeHOXz9Sz+VT0JYA8VVwP2FjfH6NtnrDBmYfCO5hvVpoQRJApGYkK9wESvEmujz+aZHXbQRR56NipecpZTXhHiYnBo99cOHHssck3LRQlY6nM7dH8lzN2/Di0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=L3+H26Ba; arc=none smtp.client-ip=210.118.77.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
+	s=arc-20240116; t=1769880851; c=relaxed/simple;
+	bh=h0BHEf3EUV2XoZUux+VQ9dvTNp8V8LICsw0jUbT9E/E=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=IxG/CyNnRmEfT3M5bKWXvXZNVjubDhyn4e07/+7FaCLE84R/0BcRphlv7l6XR2R9tlVCKVqyMTYp6OAW420h6PcDtq9/AhvEXMhOn7Nt148itVRdubwo/O2mbHKdQd8X836pRrDid9y8u327iJTNlvj2jTtmFzBCBSwL1dMYpYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=korea.ac.kr; spf=pass smtp.mailfrom=korea.ac.kr; dkim=pass (2048-bit key) header.d=worksmobile.com header.i=@worksmobile.com header.b=gsaDFw7C; dkim=pass (1024-bit key) header.d=korea.ac.kr header.i=@korea.ac.kr header.b=W/pI+f5Y; arc=none smtp.client-ip=125.209.209.73
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=korea.ac.kr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=korea.ac.kr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="L3+H26Ba"
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-	by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20260114231630euoutp02a395108caacee1604c0ebeadebb3c175~KvBJaszt-1114511145euoutp02l
-	for <brcm80211@lists.linux.dev>; Wed, 14 Jan 2026 23:16:30 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20260114231630euoutp02a395108caacee1604c0ebeadebb3c175~KvBJaszt-1114511145euoutp02l
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1768432590;
-	bh=jp1zL6vqiComiuZbdY62XP/xe/O5UGBTESSkK4unQds=;
-	h=Date:Subject:To:From:In-Reply-To:References:From;
-	b=L3+H26Bam8+NSHjr9khzESLVGmS0Nk0vlIZuqz+JvJBjF8P5fxFFTjQZPAKFBNrSr
-	 p7J5UNKpBGd7cqXWq4SPhbtfPBWMHSteDg9hTmQ36Wf1CS2HD8x4ePm0TtevhcsWT7
-	 NwvRqSF0/JG/LN71tdPzRiC3jYLIaDorrQZoL4yQ=
-Received: from eusmtip2.samsung.com (unknown [203.254.199.222]) by
-	eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-	20260114231629eucas1p2e5a6a703d0e1b3fb87c1b8225fb4e5ce~KvBITRi511370613706eucas1p2f;
-	Wed, 14 Jan 2026 23:16:29 +0000 (GMT)
-Received: from [106.210.134.192] (unknown [106.210.134.192]) by
-	eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-	20260114231629eusmtip2a1670c5b1c80e00d589c0812e8d6a8a6~KvBH2pP6r2574325743eusmtip2K;
-	Wed, 14 Jan 2026 23:16:28 +0000 (GMT)
-Message-ID: <062fde49-7438-4001-a06e-50175547b54c@samsung.com>
-Date: Thu, 15 Jan 2026 00:16:28 +0100
+	dkim=pass (2048-bit key) header.d=worksmobile.com header.i=@worksmobile.com header.b="gsaDFw7C";
+	dkim=pass (1024-bit key) header.d=korea.ac.kr header.i=@korea.ac.kr header.b="W/pI+f5Y"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=worksmobile.com;
+	s=s20171120; t=1769880237;
+	bh=h0BHEf3EUV2XoZUux+VQ9dvTNp8V8LICsw0jUbT9E/E=;
+	h=From:To:Subject:Date:Message-Id:From:Subject:Feedback-ID:
+	 X-Works-Security;
+	b=gsaDFw7C2mQxqsB5sr/SbPw7BD63OZAuVrergK5MTJ6XAvvyQgx7YEhitgD2vihSW
+	 f27mxjhkAriu8MU7XeYqsPc7tCCwflqZqMQLrdqpWz2Rr870H0+oIDcKgsK8TmoXMw
+	 VAr4az0NZ8BSnosOGhwaT7grhOYpxwy59x3cvn00BurWuM08VncuC7oRXGLhJ/D0HJ
+	 w5aviLQKDrZInL7OY3gZcyTfcgAAjlHBJto2PQd62rzzyh1Dxz2ZA1Bgob6Yvj8N9p
+	 USMGwWEn1ecbgVzeRlp1W8s4Ui2l5JwbqUnC0fA51zpQTM0nsHC0vvFJnqFMUSIA+A
+	 i5LynD1sMyvQg==
+Received: from cvsendbo003.wmail ([10.113.20.165])
+  by cvsmtppost106.wmail.worksmobile.com with ESMTP id XkqUbWZoRx64fjVsXeNawQ
+  for <brcm80211@lists.linux.dev>;
+  Sat, 31 Jan 2026 17:23:57 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=korea.ac.kr;
+	s=naverworks; t=1769880237;
+	bh=h0BHEf3EUV2XoZUux+VQ9dvTNp8V8LICsw0jUbT9E/E=;
+	h=From:To:Subject:Date:Message-Id:From:Subject:Feedback-ID:
+	 X-Works-Security;
+	b=W/pI+f5Yh9HQwZWjwUdlvNw5BP0pbZZhnu8UvCgKkdymnK/TMYgUq/P7T9ajSEPIS
+	 GsA6GJXVZrXw0ttNfAommFfJ6LALbGiKM3+GCctAN+4IDXYwTbYXIcYyVQePL4dE5p
+	 IIInfq/BMsE9/8VZZXHiIWWN7vxUNGymGuAh64MU=
+X-Session-ID: 1W-InNWnSW2Nn+Ds4VGMFQ
+X-Works-Send-Opt: kendjAJYjHm/FqM9FqJYFxMqFNwYjAg=
+X-Works-Smtp-Source: A9bdaAvrFqJZ+HmXKq2X+6E=
+Received: from s2lab05.. ([163.152.163.130])
+  by jvnsmtp402.gwmail.worksmobile.com with ESMTP id 1W-InNWnSW2Nn+Ds4VGMFQ
+  for <multiple recipients>
+  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+  Sat, 31 Jan 2026 17:23:57 -0000
+From: Ingyu Jang <ingyujang25@korea.ac.kr>
+To: linux-wireless@vger.kernel.org
+Cc: arend.vanspriel@broadcom.com,
+	brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com,
+	Ingyu Jang <ingyujang25@korea.ac.kr>
+Subject: [PATCH] wifi: brcmsmac: phy: Remove unreachable error handling code
+Date: Sun,  1 Feb 2026 02:23:55 +0900
+Message-Id: <20260131172355.3367673-1-ingyujang25@korea.ac.kr>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH] wifi: brcmfmac: Fix potential kernel oops when probe
- fails
-To: Arend van Spriel <arend.vanspriel@broadcom.com>,
-	linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
-	brcm80211-dev-list.pdl@broadcom.com
-Content-Language: en-US
-From: Marek Szyprowski <m.szyprowski@samsung.com>
-In-Reply-To: <74e3bb49-ebbe-4692-b278-c04f2a30bf96@broadcom.com>
 Content-Transfer-Encoding: 8bit
-X-CMS-MailID: 20260114231629eucas1p2e5a6a703d0e1b3fb87c1b8225fb4e5ce
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20251231143556eucas1p141b278048039730d03edf85c6f3e5350
-X-EPHeader: CA
-X-CMS-RootMailID: 20251231143556eucas1p141b278048039730d03edf85c6f3e5350
-References: <CGME20251231143556eucas1p141b278048039730d03edf85c6f3e5350@eucas1p1.samsung.com>
-	<20251231143544.4158840-1-m.szyprowski@samsung.com>
-	<74e3bb49-ebbe-4692-b278-c04f2a30bf96@broadcom.com>
 
-On 14.01.2026 14:45, Arend van Spriel wrote:
-> On 12/31/2025 3:35 PM, Marek Szyprowski wrote:
->> When probe of the sdio brcmfmac device fails for some reasons (i.e.
->> missing firmware), the sdiodev->bus is set to error instead of NULL, 
->> thus
->> the cleanup later in brcmf_sdio_remove() tries to free resources via
->> invalid bus pointer. Fix this.
->
-> Hi Marek,
->
-> Thanks for the fix. Please consider my suggestion below...
->
->> Fixes: 0ff0843310b7 ("wifi: brcmfmac: Add optional lpo clock enable 
->> support")
->> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
->> ---
->>   drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c | 1 +
->>   1 file changed, 1 insertion(+)
->>
->> diff --git 
->> a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c 
->> b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
->> index 6a3f187320fc..6615748fa5bb 100644
->> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
->> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
->> @@ -954,6 +954,7 @@ int brcmf_sdiod_probe(struct brcmf_sdio_dev 
->> *sdiodev)
->
-> Maybe use a local variable bus and assign it only on success:
->
->>       bus = brcmf_sdio_probe(sdiodev);
->>       if (IS_ERR(bus)) {
->>           ret = PTR_ERR(bus);
->>           goto out;
->>       }
->> +    sdiodev->bus = bus;
->> brcmf_sdiod_host_fixup(sdiodev->func2->card->host);
->
-Well, that would look much better, but sdiodev->bus is also assigned 
-inside brcmf_sdio_probe() and I didn't check if this is required by the 
-functions called there or not. Maybe brcmf_sdio_probe() should simply 
-return error code to make things easier to track?
+wlc_phy_txpwr_srom_read_lcnphy() in wlc_phy_attach_lcnphy() always
+returns true, making the error handling code unreachable. Change the
+function's return type to void and remove the dead code, similar to
+the cleanup done for wlc_phy_txpwr_srom_read_nphy() in commit
+47f0e32ffe4e ("wifi: brcmsmac: phy: Remove unreachable code").
 
+Signed-off-by: Ingyu Jang <ingyujang25@korea.ac.kr>
+---
+ .../wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c   | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
-Best regards
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c
+index b4bba67a45ec3..5258681218ea9 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c
+@@ -4790,7 +4790,7 @@ void wlc_phy_init_lcnphy(struct brcms_phy *pi)
+ 	wlc_lcnphy_calib_modes(pi, PHY_PERICAL_PHYINIT);
+ }
+ 
+-static bool wlc_phy_txpwr_srom_read_lcnphy(struct brcms_phy *pi)
++static void wlc_phy_txpwr_srom_read_lcnphy(struct brcms_phy *pi)
+ {
+ 	s8 txpwr = 0;
+ 	int i;
+@@ -4879,8 +4879,6 @@ static bool wlc_phy_txpwr_srom_read_lcnphy(struct brcms_phy *pi)
+ 				sprom->ant_available_bg);
+ 	}
+ 	pi_lcn->lcnphy_cck_dig_filt_type = -1;
+-
+-	return true;
+ }
+ 
+ void wlc_2064_vco_cal(struct brcms_phy *pi)
+@@ -4992,10 +4990,7 @@ bool wlc_phy_attach_lcnphy(struct brcms_phy *pi)
+ 	pi->pi_fptr.radioloftget = wlc_lcnphy_get_radio_loft;
+ 	pi->pi_fptr.detach = wlc_phy_detach_lcnphy;
+ 
+-	if (!wlc_phy_txpwr_srom_read_lcnphy(pi)) {
+-		kfree(pi->u.pi_lcnphy);
+-		return false;
+-	}
++	wlc_phy_txpwr_srom_read_lcnphy(pi);
+ 
+ 	if (LCNREV_IS(pi->pubpi.phy_rev, 1)) {
+ 		if (pi_lcn->lcnphy_tempsense_option == 3) {
 -- 
-Marek Szyprowski, PhD
-Samsung R&D Institute Poland
+2.34.1
 
