@@ -1,124 +1,145 @@
-Received: from mail-pl1-f227.google.com (mail-pl1-f227.google.com [209.85.214.227])
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DCE41C701F
-	for <brcm80211@lists.linux.dev>; Thu, 12 Feb 2026 06:38:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.227
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8571614E2F2
+	for <brcm80211@lists.linux.dev>; Tue, 17 Feb 2026 02:31:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770878306; cv=none; b=JZ8yDE9Zn7nmq/Ad/l5QL/KsqOFg5zofQWhnvhRS34Z70UCKr8ix3XNBhaJDWafwUUowBzuIIjL/1+Vz3Afe/KA/e3CfMHschQENGdEoOCmIFa5YmRorGOc4cAs/ptZHnCjmkZjObFOILVZU5GbUcp2nvzmYt3LYpjhk4MlOHBg=
+	t=1771295463; cv=none; b=HPgSrKcTPJXl5Ggbe7Lu6OohEgG4vaTowPMENCxnXo0/SvYwTaKptRHuX8N28F9ycvenjsax0AFlWaRhrVa4eyaMxggM31scfpDUhfWn+7vrwJfG1ZvWgZ4ZENKRRWxnkVh3sK3hVB3HLlzy0Nis4UP0SN3gxTuB/72NN+NOTCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770878306; c=relaxed/simple;
-	bh=tCxxY3UDXOguCn5Z6PMX8hLpOHU+oxvdtRMs/2XO+EQ=;
-	h=From:To:Date:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type; b=oNnUv2/wUSN2J0jkw9DljpsPVxAPjO4FHt5IC2ncNynmGS7ASdcdQ+BnuVb36hHZhdclS+eWDJuSFW3ELZceiGKdDh/ZEJrvmUE3rGJWKgZ0h9LRdAKDFI5VYXUP5WeOp85Y+33NRaEQZp6BEY9eVRJPtuaKWGLnHPlzLW1Y/kM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=YUmkMB/J; arc=none smtp.client-ip=209.85.214.227
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+	s=arc-20240116; t=1771295463; c=relaxed/simple;
+	bh=kObS168gQBNE3xpbI2vaprxcEmPUWL2LSLVxVbKppr8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=HGexVWJ83r87cd9y1f7tf7HY7Sfub9gs395DN3+TpRhbdH30opKgEFCGrEvpWAjVMbXYlYRg8JLp64apI05R4QX+u+JSyaaYq9HDcZQrAeaYtBv00MCWuRD29BwVmdCD817rCNfKVwNm0sHOH/cGmvO02naKDxQCypAM2KS42rM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Tk0kmACw; arc=none smtp.client-ip=209.85.128.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="YUmkMB/J"
-Received: by mail-pl1-f227.google.com with SMTP id d9443c01a7336-2a95de4b5cbso54156475ad.1
-        for <brcm80211@lists.linux.dev>; Wed, 11 Feb 2026 22:38:25 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770878305; x=1771483105;
-        h=content-transfer-encoding:mime-version:subject:user-agent
-         :references:in-reply-to:message-id:date:to:from:dkim-signature
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=LNM/BrzTJVVndX+x0JaCN6syaAPmeFxITXLSICcILmM=;
-        b=QzKfNKR4pZpE9jUXCfIV0TshRczfh10N4Hp+j8k/W6tqxFbZOU3BB1FwdDKxQH3jj2
-         LFNw9NvohGBlPEBJERr1t8L2CVC7UQnFoLPsabJBWlsDWkITSKlNNKvCeq5F6fm2vpUE
-         0l6DRkpVhLcL2VbfdYf/RcEpFqCxslz9irExoPfhyi+8T/jtJqoupVTJuT45vVX0rWZA
-         utxHPATfigLIpYgEPN/ssAch+pLoHaefFC57tckwaAUfglSJmYJGGA59tubLj7OjxK11
-         XmWBzTTsggINdQzhkiIJJKhHqPHZzgUzHm26hxi+aGmm8uqKKGUTwH54wz5KzZ6W9DN3
-         zkdw==
-X-Forwarded-Encrypted: i=1; AJvYcCX3NJ03D9voDURwVsKdtT/jWjp7RLTS0u2ml0ku/o2PzII2UgXyFrz6onLZ3x7jQCg73UXv0QOZkTw=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwgCjHgaUsofPz4xxVRK2b5wlvF4u1ZwKKRGnTAc81A7LLMBiVc
-	Nj+Va2KJdjQ6jMvCxUq6OW1y/5cA5QUrL6Cqy9jSomOzC7bKQBdSL/Dmh/sNHvswbLiCjz0o1ZG
-	M8/nkuYiitj6kXfN2IpSlZGt4ig+/qEe3sjZEVLf/JS34gnKWI1+8mzDHm9nHIfw6lNIIyg3uDo
-	Hrh9NNmdKR0RJ8RuB3PXluaoVVyfaONEqDLCTJGi48kxjTgvz6NJibFdjPjNHTUjWK8vg7fJD+n
-	ENySqsXRDBcZbcPnUxJGw==
-X-Gm-Gg: AZuq6aJhWj1KVLKqdwO7bqe6DYrS6NUKY0a3VtwfKrxuwGxPYhlbewru4/vdUmLtESM
-	A26ZA5kT1OVBMvXM+p4hJKfROEERh7jcfFH08P4drV7Ny8pSBtIBSZiYtwRTB2SXuISVaXEbHJF
-	lj04JUMWxXfIHZrdLbef9WRIhfb8uoIWUQnxTZIfgg58xyqSM3QuNn/kyl/nhnxT5OFpa+FjQX6
-	5OO9n/1nAw2vGos5LlWtlnYfpkTp8/f26PnMtb2j6fRkbb63gJFsQ2dsCKfUzKN+mZbYuD8+T0y
-	83LWDPbIfO5h0+5FGiCjRGQvuec54uEkvgsdg0786T6I2BjD7Wdc0Vnn3HgucxbJa7zAKGIu3jm
-	luVQGO+DzpbLEsF+lwLnzWMz2f6V2C90QeCk57q3+5s43KIHbt1/xNNyT1wANy6TbyIeByPxVJT
-	0de3vErq1QBB9runJfp2/6HRFTFo25ZO1uKpUBtCIL0qQdJtfOTIr8nbmLlJHH3qg=
-X-Received: by 2002:a17:902:e78b:b0:2aa:d333:ce86 with SMTP id d9443c01a7336-2ab39668663mr19144905ad.6.1770878304573;
-        Wed, 11 Feb 2026 22:38:24 -0800 (PST)
-Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-117.dlp.protect.broadcom.com. [144.49.247.117])
-        by smtp-relay.gmail.com with ESMTPS id d9443c01a7336-2ab29884ec8sm5109885ad.22.2026.02.11.22.38.24
-        for <brcm80211@lists.linux.dev>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 11 Feb 2026 22:38:24 -0800 (PST)
-X-Relaying-Domain: broadcom.com
-X-CFilter-Loop: Reflected
-Received: by mail-dy1-f199.google.com with SMTP id 5a478bee46e88-2ba9a744f7dso2010701eec.0
-        for <brcm80211@lists.linux.dev>; Wed, 11 Feb 2026 22:38:23 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Tk0kmACw"
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-7927b1620ddso45677947b3.0
+        for <brcm80211@lists.linux.dev>; Mon, 16 Feb 2026 18:31:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1770878303; x=1771483103; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:subject:user-agent
-         :references:in-reply-to:message-id:date:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=LNM/BrzTJVVndX+x0JaCN6syaAPmeFxITXLSICcILmM=;
-        b=YUmkMB/JMy6G6hXY/HPvHHI9qyR+pE12aJuGGtyfPEAqyH3B0fTuuOFplmUgoi7YRP
-         561TiteVxV+n+Gai1vYX+aJntElWpaZ6HW40PQlrxmaMeQT5aa3Th9qbiSp77qhAqgIK
-         b7+kLBnN0tqBVjh67DOICo3K3bAJ0uevRRaKY=
-X-Forwarded-Encrypted: i=1; AJvYcCVY7dLaCxywcQ2fx1taGeOxFsYQdKEHFsm3zbwT47vKrTP7sxRqFcmQAAHRATHE/UdFwFJNigxid9U=@lists.linux.dev
-X-Received: by 2002:a05:7300:572c:b0:2b8:26b8:3446 with SMTP id 5a478bee46e88-2baa7f6d670mr760881eec.2.1770878302853;
-        Wed, 11 Feb 2026 22:38:22 -0800 (PST)
-X-Received: by 2002:a05:7300:572c:b0:2b8:26b8:3446 with SMTP id 5a478bee46e88-2baa7f6d670mr760876eec.2.1770878302298;
-        Wed, 11 Feb 2026 22:38:22 -0800 (PST)
-Received: from [10.229.40.11] ([192.19.176.250])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2ba9dbcc02bsm3373410eec.8.2026.02.11.22.38.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Feb 2026 22:38:21 -0800 (PST)
-From: Arend van Spriel <arend.vanspriel@broadcom.com>
-To: Marek Szyprowski <m.szyprowski@samsung.com>, <linux-wireless@vger.kernel.org>, <brcm80211@lists.linux.dev>, <brcm80211-dev-list.pdl@broadcom.com>
-Date: Thu, 12 Feb 2026 07:38:18 +0100
-Message-ID: <19c50926790.2873.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
-In-Reply-To: <20260203102133.1478331-1-m.szyprowski@samsung.com>
-References: <CGME20260203102148eucas1p10c43be72827d74e5be41fe40a84fbd59@eucas1p1.samsung.com>
- <20260203102133.1478331-1-m.szyprowski@samsung.com>
-User-Agent: AquaMail/1.56.0 (build: 105600589)
-Subject: Re: [PATCH v2] wifi: brcmfmac: Fix potential kernel oops when probe fails
+        d=gmail.com; s=20230601; t=1771295461; x=1771900261; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=1fworB1P/Jzlnt8opUorAnuBCM+SRM92++aaBkD5qF0=;
+        b=Tk0kmACwdgXHOXjhDfoALXKvfO0QJIE04ni+7IsIaZp5C5aoOO7dTKYRfLWswhe4SZ
+         D4PgOosItusXMIhFG3j6zscj2I7co0tVd4np6d+8lSdVyRfDFi4E1awdNfis1ZkDUZ3F
+         yBMzajplBuYOCD4goDkUaLwzCwQgE50544nHDJ5HyEmoSwYJ9Wn9nX3AP0r3YkdqTp0W
+         FUyLO01/RrxTHc5uJG6nzjMhKNdkxhKaTNMHvUefqzrFhhg05GyZgboCUGC3Pn4leM0O
+         ub109QPlXemeJCnYeDnJKfM8jB1bgDtKeC9bKqLj1kCyJak2c5MR+kaa/2WmFGHkcuFK
+         5hlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771295461; x=1771900261;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1fworB1P/Jzlnt8opUorAnuBCM+SRM92++aaBkD5qF0=;
+        b=TcW8KGIChk3ypJ/I4W9Z/oCMWcvPG7TCJKUSA/tDCxVqIH17jZKNoPYfZAL2GVIj/q
+         Lax3u5n2ZtNh/d0x3ESK8+1Xx8QK8OgzXTESxpO5L12Xcmb6SqlI7fo7rpWEtmG0XezW
+         Hf0PoI5zDBRJvMoSlRGETwVq2Lnk2kw+U4eOviB4dttdPJ9vaQLEF/punLyFiHmqA7O5
+         7JnkRq71+DHXB2RSZM2RDuNV5caqq3iiVL54d5W2MI8u3GNlV2ogyA6gm1EtrXFSQg9u
+         FhG2BTCSqAss/j1+ejEc8X/+3Wk9VATa2SrfGfzN/FrJj9OAfwOQ2AP+KPZv6IXOQr4E
+         45NQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUKBRWd933crUfAnCSvJM24PHi+8jrzYuYYlnlVgFUAPOirVyffzBG3ot2lKBb9mqaLiEn599JQqZY=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyFr14Byd1gs4AVqhr+JjupyHVfM6EXgDZCh4d7y1WkcRV5xavW
+	J4ToeUATTOg7GLuuQbLYpoeegh8P8AFipyqtuy2NDw0DHa6fzoHnuN1v
+X-Gm-Gg: AZuq6aIvQB+GKK1oPSe+nH+JKghQi0XWuf8rFLcmzDgzYfozpQWtBpBpoaFLUrrVMyQ
+	Emyd2LjsmKGFNXDDJN0i9z5EgZoJxGPW3H/Ni82WblexRtKCZMJOaR+lwCa9GfxKDTJenymZfe6
+	4Ccp80ZvOoWCS7GbLin8fJTBFgLTlSDTgilXGYnOCNvxcbYcXaNmF10gbUP/Mj+LOwDYGW52P2q
+	7Fk9d2Vv5PVoNimL2zvljFTzsTItMKJh5JKDXdpDLTnuClNQxDlcy5fkcjhDcbyCrQYHqumqGCu
+	dl6M4vwtHMLBshvFJs9kMNxuD/QA+26ee3mfXoiISNYMsJDrFdMW7d7NcxgDT8aqztbj38UX2ci
+	Bo5xW6F4xiItBCxvVmT5SnUBQsfOC1fI/SsX2sb4hLabqfOqD4XQn8XUkOYoGq7nP/7m1ZTREvG
+	F3K4NxcUG1G0fX8e5YuEmhVHiGOgy3flCRYqZunVCCaeIgOGe2jN0QmelBKNbQ4HcUp/fXCTtNa
+	Rn36Oo4GrQRgv5wpUKNy4hvn8a7OJx8xgXRHGPrGec=
+X-Received: by 2002:a05:690c:67c8:b0:794:c04d:bcfc with SMTP id 00721157ae682-797aa851693mr89684017b3.13.1771295461531;
+        Mon, 16 Feb 2026 18:31:01 -0800 (PST)
+Received: from tux ([2601:7c0:c37c:4c00:e3a8:26f7:7e08:88e1])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7966c254daasm106806247b3.44.2026.02.16.18.31.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Feb 2026 18:31:01 -0800 (PST)
+From: Ethan Tidmore <ethantidmore06@gmail.com>
+To: arend.vanspriel@broadcom.com
+Cc: linux-wireless@vger.kernel.org,
+	brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com,
+	linux-kernel@vger.kernel.org,
+	johannes.berg@intel.com,
+	Ethan Tidmore <ethantidmore06@gmail.com>
+Subject: [PATCH] brcmfmac: Fix error pointer dereference
+Date: Mon, 16 Feb 2026 20:30:43 -0600
+Message-ID: <20260217023043.73631-1-ethantidmore06@gmail.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset="us-ascii"
 Content-Transfer-Encoding: 8bit
-X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
 
-Op 3 februari 2026 11:21:51 schreef Marek Szyprowski 
-<m.szyprowski@samsung.com>:
+The function brcmf_chip_add_core() can return an error pointer and is
+not checked. Add checks for error pointer.
 
-> When probe of the sdio brcmfmac device fails for some reasons (i.e.
-> missing firmware), the sdiodev->bus is set to error instead of NULL, thus
-> the cleanup later in brcmf_sdio_remove() tries to free resources via
-> invalid bus pointer. This happens because sdiodev->bus is set 2 times:
-> first in brcmf_sdio_probe() and second time in brcmf_sdiod_probe(). Fix
-> this by chaning the brcmf_sdio_probe() function to return the error code
-> and set sdio->bus only there.
->
-> Fixes: 0ff0843310b7 ("wifi: brcmfmac: Add optional lpo clock enable support")
+Detected by Smatch:
+drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c:1010 brcmf_chip_recognition() error:
+'core' dereferencing possible ERR_PTR()
 
-Acked-by: Arend van Spriel<arend.vanspriel@broadcom.com>
+drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c:1013 brcmf_chip_recognition() error:
+'core' dereferencing possible ERR_PTR()
 
-> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-> ---
-> Changelog:
-> v2:
-> - changed return type of brcmf_sdio_probe() function
->
-> v1: 
-> https://lore.kernel.org/all/20251231143544.4158840-1-m.szyprowski@samsung.com
-> ---
-> drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c | 7 +++----
-> drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c   | 7 ++++---
-> drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.h   | 2 +-
-> 3 files changed, 8 insertions(+), 8 deletions(-)
+drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c:1016 brcmf_chip_recognition() error:
+'core' dereferencing possible ERR_PTR()
 
+drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c:1019 brcmf_chip_recognition() error:
+'core' dereferencing possible ERR_PTR()
+
+drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c:1022 brcmf_chip_recognition() error:
+'core' dereferencing possible ERR_PTR()
+
+Fixes: cb7cf7be9eba7 ("brcmfmac: make chip related functions host interface independent")
+Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
+---
+ .../wireless/broadcom/brcm80211/brcmfmac/chip.c   | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c
+index 4239f2b21e54..dcd8a296de10 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c
+@@ -1007,18 +1007,33 @@ static int brcmf_chip_recognition(struct brcmf_chip_priv *ci)
+ 
+ 		core = brcmf_chip_add_core(ci, BCMA_CORE_CHIPCOMMON,
+ 					   SI_ENUM_BASE_DEFAULT, 0);
++		if (IS_ERR(core))
++			return PTR_ERR(core);
++
+ 		brcmf_chip_sb_corerev(ci, core);
+ 		core = brcmf_chip_add_core(ci, BCMA_CORE_SDIO_DEV,
+ 					   BCM4329_CORE_BUS_BASE, 0);
++		if (IS_ERR(core))
++			return PTR_ERR(core);
++
+ 		brcmf_chip_sb_corerev(ci, core);
+ 		core = brcmf_chip_add_core(ci, BCMA_CORE_INTERNAL_MEM,
+ 					   BCM4329_CORE_SOCRAM_BASE, 0);
++		if (IS_ERR(core))
++			return PTR_ERR(core);
++
+ 		brcmf_chip_sb_corerev(ci, core);
+ 		core = brcmf_chip_add_core(ci, BCMA_CORE_ARM_CM3,
+ 					   BCM4329_CORE_ARM_BASE, 0);
++		if (IS_ERR(core))
++			return PTR_ERR(core);
++
+ 		brcmf_chip_sb_corerev(ci, core);
+ 
+ 		core = brcmf_chip_add_core(ci, BCMA_CORE_80211, 0x18001000, 0);
++		if (IS_ERR(core))
++			return PTR_ERR(core);
++
+ 		brcmf_chip_sb_corerev(ci, core);
+ 	} else if (socitype == SOCI_AI) {
+ 		ci->iscoreup = brcmf_chip_ai_iscoreup;
+-- 
+2.53.0
 
