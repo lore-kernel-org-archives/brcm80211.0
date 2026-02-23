@@ -1,69 +1,70 @@
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C67881B0F19
-	for <brcm80211@lists.linux.dev>; Fri, 20 Feb 2026 02:27:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EAC3265620
+	for <brcm80211@lists.linux.dev>; Mon, 23 Feb 2026 03:05:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771554479; cv=none; b=GkQjz3woZaxOGfrxZW+kX6/slX9TEBkDVXy7EoecBCnKQOuXEJg3jTo4ZiO9w0cRa4YV5BDEZ01BjfqyCVI/LwDi/M0xRmAWuJL9r5CgxBmgCngF+cXQTJtKzvDwx9HLeaDO9OSURqIFcXZuu/o1rNscpGQxsA6DQrveVqijqvM=
+	t=1771815960; cv=none; b=QWBRWHBt0G5xaJWtpUlAVzRJ5+OzO7sEaFD61DL7ISrMlnSnWU9gAfsDLatdNjB6nIytP4A2XNEnjzlZt4JH6PPFYYpS9paVRTqPdufwPY+JtX3n3lpESdI2tr596n+I9h31X9wsDd4ps8RqcmB9gM6gYxmeEmDChuQ6jNiqBmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771554479; c=relaxed/simple;
-	bh=z0S+zYxCh5ZAGTpi8o0OuRy1X+bKoH18PQz5rt7kZjQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=g8VKgOIczFXVPrzeJcIN3DZoJDGPOFLXt+dKXD6QtQxH9HdbOVTc5wSrKK5xD1/FMXc66+4YXcg5ZYtK5vWQERH1Anfe03kwC1lgigijtN+00P5vWAkQxn4Zx/cReaG9NonozSbtBuWkP89fBtQCoqWkSJ9ds+XA/zylqYruJ6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hVbwBgxd; arc=none smtp.client-ip=209.85.128.180
+	s=arc-20240116; t=1771815960; c=relaxed/simple;
+	bh=i5vgvg3sg+UXIaRcyERPIMtjQmPcakNHGsM4C/i0qXs=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=J/n3GKBaRRCVwIBCFuhkE+LHTpIQ15siRt8zinmrIo00QPTDzTHF7/5NDnRbmuUtJ890fantqKPU/L/HlRRBHCBRBlMMODNcxwmQV1XO+pG6pIdhKsJZFc83cAweZw/yLaHjBoC+kT/OQbSv7IazK0GEPN24OVygcqlwbqCrGdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AqwiIUOO; arc=none smtp.client-ip=209.85.214.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hVbwBgxd"
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-797d36fdb96so33773817b3.1
-        for <brcm80211@lists.linux.dev>; Thu, 19 Feb 2026 18:27:58 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AqwiIUOO"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2ad4d639db3so18249125ad.0
+        for <brcm80211@lists.linux.dev>; Sun, 22 Feb 2026 19:05:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771554477; x=1772159277; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1771815957; x=1772420757; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=jaxTrnZCeT1cAUjaI26ZzZAsxZfpYi5XVIt7dxhlksQ=;
-        b=hVbwBgxd0MeSyeCrIFLSgUxpjWPzPYnidqwaiyI0J7D1IyG0Icn+YsWeMbTy5vlFqt
-         oqoAGhw2H3I0vG0LNJGwhyUf2cvzaCo3W6hJf3uUUhJJM6OmnoF5RICy63lnS7Q4ZTL2
-         yvJjdXdQUt0gV/p+mQOagu6nM2sVfPWb6Vczm7kCI6EhrKnFa04DGz/XBZTbLe01b8XH
-         d6fRJyWHvQpz52VaOBZ4p9zg129NVuC5lqqzyAUknnn9VuIJan1faqlwkY/BHv3qYPPk
-         y8HWq5Av9SGHDrgPkX0iXirgkPWYWEOEBf5kcuoC0AmgeRgPhoYtMN1HAm3CbMW5R5KY
-         4mfw==
+        bh=GSnvmMEphQ4/6s6fXwVUjqcFnb8wnWTRkYiCVtaRqA8=;
+        b=AqwiIUOOhACPGzrTYClXUvs1iBZJlyVWat+Zh83v6XNhu64VNhMX+gvLNdDNVNGSKB
+         zIoi5U5+C5dbudiA5SLVaLVUEiioqjTNiV5DSy2RgEIt8TlonKL5kbrEhUgQGZm9U7vT
+         38CmGhXPhDWREq9L82DaTTRjCLYr1h8jsLAhlfwroT8UXpmXxXneR+8kUXclL4EynB0y
+         k7sSU8lg48Xeer0LcBbLvgTQOfrHXnPu58M1HxudUV09aZvL84zxyAhMD3qqhHjZVAiy
+         cKwkqrjDXKT5CnWB+pDgNpy02DuON9ugCUt3tEDrSoZ20+a0pddrwp0TLecI1xlqebbU
+         ogNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771554477; x=1772159277;
+        d=1e100.net; s=20230601; t=1771815957; x=1772420757;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=jaxTrnZCeT1cAUjaI26ZzZAsxZfpYi5XVIt7dxhlksQ=;
-        b=XHxG9Su6cXC3AP6zCgPVR0DDQL0Hxdi8qLz7OQocfUYIwyYPji6w9q/xr60NNA4EXc
-         MN6gknJw0F3wEfYAGhGB/jjrrI6ZFREnyrsoJtmByj+4HyetnVcWANZCN8AEwW4ePxGn
-         roHa5qjYOaVL3EUo0OebGUWoMq1GAA3McXd1rc3mDwpecXmRS24/gGDd5ml75LdeRtQ5
-         yPl/p7MukPKBvfYJXQ027wvRmxJSxWOHSCzMhBECdRaUv5ZvKn3fKwoO4J1OngLlfcL3
-         Yr6CCK/UzfwUSy5wvtyn8mSoLUg78qa1p7lF1Rxsavt2Z2kTskJojDTPvsT6Q9KylfFI
-         EZ7g==
-X-Forwarded-Encrypted: i=1; AJvYcCV84bE7caQkpboV9IjExtSBQ+SZgOzrLFjqfFyYaWV8WyKj1da86WEe+hwMg0Uws+4sRMp5Y92gDWo=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyaFK4W7UCR7XpQXQ8FcpzHAj/RlTJJocC61dseIKM5n4KVwucK
-	6DBXm05OclpPB+nneiiQ7HfP8GWewebeznZm88D/Ka4zCcmmdFU6Cdoi
-X-Gm-Gg: AZuq6aIHWq5drFhcY4O2XPDQCzZEZ3EZI3G8Oe7MxnRiuqviBtcXOGPXRv8EUuab2NL
-	tL8K+KNpGh1v6dah4VZkc/nodbVbfXM1I6uzEncFQHz6hGPwKcru5lYWgJYOV0Ym7fHey5afyA+
-	AIMBDHj8cBYyMmwAbQQxzSqXy9zk9qmqYETOIsE5a3WQe1jBn7VQ09sHQYzL0HKJPWspEX1p/nX
-	IAnSUO1k0M3qRyKffK0kHkF9eh7KoSgdxyRHzbvaTrMuLOdvoVo78+yXWj3yUbmWzSSI4Nc8lZ2
-	JuWyhLbMdIJrmzRV3jFzDw55DKtoDpwuW6eod6SElp+cUVNVhlZ/ByiQbuZZvanSh+D8mFl+prD
-	K0+1t3fZYs5nSRAQvGAMx5uEbbbEu1P2B8SrtRENtbqFqVZwo/3xYGz2CqkcEb9FOuhP1
-X-Received: by 2002:a05:690c:f09:b0:794:c283:5fb8 with SMTP id 00721157ae682-79807d19561mr29435477b3.25.1771554477482;
-        Thu, 19 Feb 2026 18:27:57 -0800 (PST)
+        bh=GSnvmMEphQ4/6s6fXwVUjqcFnb8wnWTRkYiCVtaRqA8=;
+        b=fhwnGNqkQGsSPztjpdMRtKmW+qKiOWpUDI4NbhJ5/I62vK13WnVnX/n0p5Jf/kY/HD
+         Pwhef4slZIIOvaJLDJPOTQa8gh/GMA+Y7rxV49eoWeMqFAhRIpTzEjbUzdz41Lwx3Oub
+         XM/PY/DJlxTfPgp7sUe4wvoZW2/rEPF0miOUCEuE4jqF+vMqn9FyyqoSl9q0E+ce24J0
+         29P9tFLmfjXIzF1fyeEm8h0o5HfwHTzYpR5WWlfbi0rr/DuRQFOxJSzbSfZfDxCZKudV
+         K5GHt1M1eFzVVt95AzzjA3YXRwnGrR7R0IwJcXhmJOljioLIwLRdwnMbkR2r9HUmKq2k
+         xhRQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWAbQ6znCc3smF+m+HuT3qDSoIDNw+eqWIpwd5shzcnXJRErf0IM1xwY0/JwMXknmuScUGSKFMBgOc=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwV4AnTEMiTXMS5tals4kT8ipZN0NfORvW3p395GePoAXE1vq2+
+	DWcIrB7ridQJV6pnsTTf1Hy7MuChEBOZGLwcn/ciBcSIs4LI8i0RqiXe
+X-Gm-Gg: AZuq6aJiVH02K4hEPKdPZ5CSFjjdl+fhxfoYI0Nndadc3KGg6E1JyyRnxvhdbeIs9Pa
+	oZiZnudTYHvmQVt8tEf85Gz/+3cKUrgcdZRCn9k37tsxg5Y36mCMl1ihiKvvLxWZwOI11rYg8pn
+	31fHQCg2m0jbXoqfAFYRW4r7jl7vqEAPzkEkeRgZG/ug5XZc6YL/Pt7huSBoESq6JrRqyUCmOsm
+	HwIXtFAddk+XWJtRh1BjUkfm2Opz0WNdeWysUAbsRqGDfnOMZACSAUShEAUhGijXdxsjdNuXMpk
+	Q0f59G+/jqjei0Mu8xJydB5toq+UCCs7icv2Q1FOqfDuFMBDAIyk1EAs9u70shLXxtsjipFiIWk
+	eOhHaQ1GJvqgR9thHMuQ9MKXXElnPmxBg63OK1WudbnArIGN2wzhGIWyyMUic+19Ji+AmKKwdz9
+	0kaXj1LmVCLvV4HRf0VXMh4J530/GZGRv7wJGU1ZL9YfNObmNxpSpI+VoLWBpbKdvP
+X-Received: by 2002:a17:903:9cf:b0:2a0:8ca7:69de with SMTP id d9443c01a7336-2ad74540793mr68899235ad.41.1771815957390;
+        Sun, 22 Feb 2026 19:05:57 -0800 (PST)
 Received: from ryzen ([2601:644:8000:56f5::8bd])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7966c257ed5sm137116877b3.45.2026.02.19.18.27.56
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ad750591e2sm56676485ad.91.2026.02.22.19.05.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Feb 2026 18:27:57 -0800 (PST)
+        Sun, 22 Feb 2026 19:05:56 -0800 (PST)
 From: Rosen Penev <rosenp@gmail.com>
 To: linux-wireless@vger.kernel.org
 Cc: Arend van Spriel <arend.vanspriel@broadcom.com>,
 	brcm80211@lists.linux.dev (open list:BROADCOM BRCM80211 IEEE802.11 WIRELESS DRIVERS),
 	brcm80211-dev-list.pdl@broadcom.com (open list:BROADCOM BRCM80211 IEEE802.11 WIRELESS DRIVERS),
 	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH wireless-next] wifi: brcmfmac: of: defer probe for MAC address
-Date: Thu, 19 Feb 2026 18:27:39 -0800
-Message-ID: <20260220022739.41755-1-rosenp@gmail.com>
+Subject: [PATCH wireless-next] wifi: brcmsmac: use FAM for debug code
+Date: Sun, 22 Feb 2026 19:05:39 -0800
+Message-ID: <20260223030539.19307-1-rosenp@gmail.com>
 X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
@@ -73,29 +74,83 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-of_get_mac_address can return EPROBE_DEFER if the specific nvmem driver
-has not been loaded yet.
+Debug code requires a separate allocation to duplicate a string. A FAM
+allows properly sized allocation with a single kfree.
 
 Signed-off-by: Rosen Penev <rosenp@gmail.com>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ .../broadcom/brcm80211/brcmsmac/mac80211_if.c     | 15 +++++----------
+ .../broadcom/brcm80211/brcmsmac/mac80211_if.h     |  2 +-
+ 2 files changed, 6 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
-index 1681ad00f82e..03efae36a0b2 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
-@@ -128,7 +128,9 @@ int brcmf_of_probe(struct device *dev, enum brcmf_bus_type bus_type,
- 	if (err)
- 		brcmf_err("failed to get OF country code map (err=%d)\n", err);
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
+index aadcff1e2b5d..87b636273b3f 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
+@@ -317,9 +317,6 @@ static void brcms_free(struct brcms_info *wl)
+ 	/* free timers */
+ 	for (t = wl->timers; t; t = next) {
+ 		next = t->next;
+-#ifdef DEBUG
+-		kfree(t->name);
+-#endif
+ 		kfree(t);
+ 	}
+ }
+@@ -1499,7 +1496,11 @@ struct brcms_timer *brcms_init_timer(struct brcms_info *wl,
+ {
+ 	struct brcms_timer *t;
 
--	of_get_mac_address(np, settings->mac);
-+	err = of_get_mac_address(np, settings->mac);
-+	if (err == -EPROBE_DEFER)
-+		return err;
++#ifdef DEBUG
++	t = kzalloc(struct_size(t, name, strlen(name) + 1), GFP_ATOMIC);
++#else
+ 	t = kzalloc(sizeof(*t), GFP_ATOMIC);
++#endif
+ 	if (!t)
+ 		return NULL;
 
- 	if (bus_type != BRCMF_BUSTYPE_SDIO)
- 		return 0;
+@@ -1511,7 +1512,7 @@ struct brcms_timer *brcms_init_timer(struct brcms_info *wl,
+ 	wl->timers = t;
+
+ #ifdef DEBUG
+-	t->name = kstrdup(name, GFP_ATOMIC);
++	strcpy(t->name, name);
+ #endif
+
+ 	return t;
+@@ -1574,9 +1575,6 @@ void brcms_free_timer(struct brcms_timer *t)
+
+ 	if (wl->timers == t) {
+ 		wl->timers = wl->timers->next;
+-#ifdef DEBUG
+-		kfree(t->name);
+-#endif
+ 		kfree(t);
+ 		return;
+
+@@ -1586,9 +1584,6 @@ void brcms_free_timer(struct brcms_timer *t)
+ 	while (tmp) {
+ 		if (tmp->next == t) {
+ 			tmp->next = t->next;
+-#ifdef DEBUG
+-			kfree(t->name);
+-#endif
+ 			kfree(t);
+ 			return;
+ 		}
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.h b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.h
+index eaf926a96a88..8ef6d657e487 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.h
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.h
+@@ -43,7 +43,7 @@ struct brcms_timer {
+ 	bool set;		/* indicates if timer is active */
+ 	struct brcms_timer *next;	/* for freeing on unload */
+ #ifdef DEBUG
+-	char *name;		/* Description of the timer */
++	char name[];		/* Description of the timer */
+ #endif
+ };
+
 --
 2.53.0
 
