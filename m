@@ -1,128 +1,109 @@
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from www537.your-server.de (www537.your-server.de [188.40.3.216])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C28A32D9EF4
-	for <brcm80211@lists.linux.dev>; Tue, 10 Mar 2026 01:47:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.44
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773107241; cv=pass; b=s8nKYu26bpXSeQkXNx8NAp9ViQIblGNRUJDED4K5kRTULySHqgBAt5EAQztd1tQiOD5MIdVKt+sxdxM1L75qAbdiOVQGJwe/aoxL6UTDx5ebHx8XPYZ4MoIbe5nqWPLCNDaY2CfELqiZj/9kdMYyuNpubAY3zC3jbC91M9kPfiE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773107241; c=relaxed/simple;
-	bh=NBlN5KyU0kHRd0EUy91TOrcNkPwjsWDsVfWWuChOLbo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=N8AsjlEC0OywIKqkKAfJmhj9Vsp9kitvgq7amVkq4KTu9G34oY+j+8X9cXZZz/crbTpALwPyJHQ8rs+k1IALNKmV6McusFygnBD+8jRcvSuEcCt2lVvIIUDQI9R9KHiTRsV7tFKolWT0w7podQU6ijf7QXKLro66APC8KP1o504=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PlXrfxT5; arc=pass smtp.client-ip=209.85.218.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C9C934A775;
+	Tue, 17 Mar 2026 11:12:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.40.3.216
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773745928; cv=none; b=iCH/M5/iTHEIHQol2JvJMtpwRewi+0mDDvYKgU2SrtZE+bMnF6Hl0YXzqDkxS6dPTQFsNZXCySc0RR79Y0i/hPMh6577ixa20sOp/hsqxHCOvoMNEDH1b2+Ycf3D5iOIUIoSrdtqiUcm9ZiuktmZSEh0G/enC7v7o3xP6qJiKyw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773745928; c=relaxed/simple;
+	bh=UpMbgdGpif1VYGxms0CsIIG4VYoqm+CrqUZVO+7ixKg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Ks3p3OIsilPJYnuSvAjlIEt05bVrEQvAlyU7PR8dG/I/JbwN2VWByQoVObCJWK3g8dgKyN3bvVrBpw1SVkWT1bU11DiyRnYH6mhmAKlVQCul/Do9dEEyTm2W4Jus83uIjs/9o9RRPuYk30p3k89Oqgg1p1eP0AcQg38E/rdeIfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ew.tq-group.com; spf=pass smtp.mailfrom=ew.tq-group.com; dkim=pass (2048-bit key) header.d=ew.tq-group.com header.i=@ew.tq-group.com header.b=AbeO/2KI; arc=none smtp.client-ip=188.40.3.216
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ew.tq-group.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ew.tq-group.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PlXrfxT5"
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-b7cf4a975d2so1478527366b.2
-        for <brcm80211@lists.linux.dev>; Mon, 09 Mar 2026 18:47:19 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773107238; cv=none;
-        d=google.com; s=arc-20240605;
-        b=MBXI5u9QTZT5V1YbI4qZErstvDwW46OXlKg7jgir87XWDvmBA3jWOsHz/hLZDjaKaT
-         n2d9NSO/mDjQjDdp68RVT9lwYkR+UZJJd1EJPGe+eXTf6UM1ZuD4T3GCDBnipOT2Dfvl
-         cGt6LnW/7GbLqARZy/6WosotEqXIIhs2kZJIqIl/z0vWr4WYFuuQgOXHJFGODxBNRFA2
-         IB4urF+9+n7sgyV4W4X9j8iVEgJguNTfxxxsy8Qk8IaUTKHjuVkSJ+8sEx/Dmtm0B3Iw
-         tKP7Whv8kutnwdE9CY6f18ZlwueH8kxW/jSsMuX7sicq06UX01x9zlehp0OfPvxKSjqO
-         X0pg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=NBlN5KyU0kHRd0EUy91TOrcNkPwjsWDsVfWWuChOLbo=;
-        fh=6cBQcPWi2Qt9ENdJOUvNH7N5L9WWpd+AFOfndBPNbxg=;
-        b=U4L+fgm3P2eGdwYm7sjkjTW1F7PYpW9eUBBBLxDv3NIrXS/rvuWJUnQlsiWAPRhiFs
-         e9VwNeAonNceqo0oMKgl1jLZ2tnTJicdunTdtK6hIsOiSYCF8KYoPR7sRR4sKgaKonwC
-         2OyIO+dXhN0fcqXFx8YKWgYti3CgBDC6NofD7yW1uRA/EVyO6gkFA1QiMJUukPMBir6d
-         ZcVflSIP00eBa4q3AIFLlP0qWha+msvgd8MZGzz/NRQ9eXWxqwD0Cw6NwMwKaQ8QBW7Q
-         6dEo+s4GO4STfEvKyvPV0WdEr3QdOp2kWn9osU3VB42wg++8CKStesUl5jWucCaPoGT9
-         uyiw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773107238; x=1773712038; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NBlN5KyU0kHRd0EUy91TOrcNkPwjsWDsVfWWuChOLbo=;
-        b=PlXrfxT5T45GmOn0V87lkv1QwSz88nUAMFcou/l2TzSXi185fkH9pYWL+YwYWUqvmF
-         zXnJBXlEKTzuRh9ziRqujh2yWxV07G4cKQ3/VFpeRZHT4zLzWM1t0gro8XYcXURw7O2p
-         CNlYop2w925BmKZ56AxKsNGQd3XdFarNdc+Obfn3m3IwqbJMqKzZXd3GJwlzUGIH4wV6
-         QZgTPyizBbPUU0ogxtlJ1q81lz2mFoXmqT08nnzRmpxITnUzk4k/yFgA9Nz56SzWG2UU
-         DQig7xehfGx6jRuIa+CN/wEpL+JphJQ1g6q/NcSkgpfE1d9QR5eqFk4upeVEqJYv6oVI
-         Oiig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773107238; x=1773712038;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=NBlN5KyU0kHRd0EUy91TOrcNkPwjsWDsVfWWuChOLbo=;
-        b=UITqMsaAyMDL6lCnGUji5dHRicIpdYPo1MdN360+vVUYm5SuivN3Tmtl7BEWeGlGM+
-         vbehGB8jzYwFAGzW2J+Iyj10QHFsozlEIrDM19G1AGyA4AE5PuK9tbA5KKUmKWknquWH
-         o6PFYRYKnEjs2rLc0qtmRC73YUcumCTRwxhoFXr3CpS2wClFuooBuR6mt3QCqTYfgtrp
-         +gjTbkrpO/TSuCz0jVvaVZAlDoS5IX/8emq0B8VYDeVB8/SqWvj+5UlYq0hNCV5YnwF+
-         DnOzAB0L2KoOP/LT8U0CDJ0NxNda5ioq6RKU3ajera1L0q63+CS/XHLpZU24mbyn8EUL
-         DAUw==
-X-Forwarded-Encrypted: i=1; AJvYcCWDtUdCF1yt8EWz0qpQPwSkOPKuARTE2ND50QUTpmrUm8h5i88MNXbMuWiAPy6BWOu6KPlTgv4wOD8=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzxdEKYcUtEDpa96CLqzQ85HbAZF47hTWUW+MEEhsTPgDN1+FDg
-	FOtE7Py7VQPTT/wWtmiTwWHJbRX0iBeIaO33VYSRWAoR60N7vdK//M9Y4723zMLfqC1uv5wgQFn
-	ViKc07mKpx8m+VHikhicZHX4HXMh3Q3w=
-X-Gm-Gg: ATEYQzzP8XZHqcSMsZ/NNqHKZmQI9ct/miZrjf+Z+QWPY4Y11/K+Jqmnay+X4unGSt+
-	vverYa0HSJJQ0pbOLk/ddVLIbNtjDLhaT9PPErziRezJFjUhX789dKwnkcK9bnB7zvpXtgjWve6
-	Sonrf4mK1Bu9QWh7g7lgf+PEEAYd5JPP4jh6/VOChi4K/Gq5khycDFZTE+rsFK1zKmU2oJKVDKy
-	jgDbNooOtSdxTX2Vs8JarZhw79ep9Li8boMRqJBlcuW0W3f1b7RDMFmbv0iXnjqwC+CU0jUO6Jj
-	8PM8mCefrkyjUgOKbDRMOI/ELfLvqnlcGRfi67EVW2Y1j+wgFIPjaZJlpmy9x5nXMTmRKD3PT6Y
-	7h7N8kA==
-X-Received: by 2002:a17:907:1c9d:b0:b8f:79bc:b0d3 with SMTP id
- a640c23a62f3a-b942df82589mr725605566b.37.1773107237626; Mon, 09 Mar 2026
- 18:47:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ew.tq-group.com header.i=@ew.tq-group.com header.b="AbeO/2KI"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=ew.tq-group.com; s=default2602; h=Content-Transfer-Encoding:MIME-Version:
+	Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:In-Reply-To:References;
+	bh=cWxcmL/wzD9sIbxY9dY33pmEH2ZkxNt9cL7up/78YR4=; b=AbeO/2KIxISN9bz4EwO+aNxxrp
+	2SpEtQUK0o7Um0w4cLmLHfy/F8TWd7XEOEDPLFVVslPlzRN7TcesbuFo25UgAPj6ZLdrv6KuNhqgX
+	2fY8l6B3QoCSg7FSGwxgqs93X7FoGFeM4b+OBiKzTkMu5aoKJPOnen825QJr9B68ptSvOvCoD57/L
+	RDSszh/QtDRl38TjmCKl5sY6W0aPvsZSHNthISb86rOm8FvnVNfmPBQK/jJZdOGDIQ5JGL/89Xo+u
+	odT/Xz9TUhdQJjORS/HhJSiUg7tZzdcQGneoKzGkYGk0/ZeRwgCzk2baJn3VIscV6g9nuy9M+5ejb
+	ovKYTQ8Q==;
+Received: from sslproxy04.your-server.de ([78.46.152.42])
+	by www537.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.96.2)
+	(envelope-from <alexander.stein@ew.tq-group.com>)
+	id 1w2SLE-0007KF-1x;
+	Tue, 17 Mar 2026 12:12:04 +0100
+Received: from localhost ([127.0.0.1])
+	by sslproxy04.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <alexander.stein@ew.tq-group.com>)
+	id 1w2SLD-0005Ox-30;
+	Tue, 17 Mar 2026 12:12:04 +0100
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
+To: Arend van Spriel <arend.vanspriel@broadcom.com>
+Cc: Alexander Stein <alexander.stein@ew.tq-group.com>,
+	linux-wireless@vger.kernel.org,
+	brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 1/1] wifi: brcmfmac: silence warning for non-existent, optional firmware
+Date: Tue, 17 Mar 2026 12:12:01 +0100
+Message-ID: <20260317111202.1074675-1-alexander.stein@ew.tq-group.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260309215907.5789-1-rosenp@gmail.com> <CAGRGNgUsVxecZobcXvVwmaHD+QHmzp4qTPGSLOpJb6Uinrpa+w@mail.gmail.com>
-In-Reply-To: <CAGRGNgUsVxecZobcXvVwmaHD+QHmzp4qTPGSLOpJb6Uinrpa+w@mail.gmail.com>
-From: Rosen Penev <rosenp@gmail.com>
-Date: Mon, 9 Mar 2026 18:47:06 -0700
-X-Gm-Features: AaiRm51zrgLQDKQia7UXn_pjjoGPF9vlpqAXxflLJWQ092NFPl7NmMqXjcYFJ_o
-Message-ID: <CAKxU2N_i3d2Bkx-35k7COtQ15UATVJja9wrHb8Pp8x9gDnpnBA@mail.gmail.com>
-Subject: Re: [PATCHv2 wireless-next] wifi: brcmsmac: use FAM for debug code
-To: Julian Calaby <julian.calaby@gmail.com>
-Cc: Arend van Spriel <arend.vanspriel@broadcom.com>, linux-wireless@vger.kernel.org, 
-	"open list:BROADCOM BRCM80211 IEEE802.11 WIRELESS DRIVERS" <brcm80211@lists.linux.dev>, 
-	"open list:BROADCOM BRCM80211 IEEE802.11 WIRELESS DRIVERS" <brcm80211-dev-list.pdl@broadcom.com>, 
-	open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-Virus-Scanned: Clear (ClamAV 1.4.3/27943/Tue Mar 17 07:24:09 2026)
 
-On Mon, Mar 9, 2026 at 6:11=E2=80=AFPM Julian Calaby <julian.calaby@gmail.c=
-om> wrote:
->
-> Hi Arend,
->
-> On Tue, Mar 10, 2026 at 8:59=E2=80=AFAM Rosen Penev <rosenp@gmail.com> wr=
-ote:
-> >
-> > Debug code requires a separate allocation to duplicate a string. A FAM
-> > allows properly sized allocation with a single kfree.
->
-> Sorry Rosen for hijacking your patch here.
->
-> With these changes, does allocating and copying the string really need
-> to be behind a DEBUG ifdef?
-I don't know. I didn't write this code.
->
-> The allocation, copying and freeing of the memory isn't in a hot path,
-> so allocating/freeing a couple more bytes shouldn't matter that much,
-> which only leaves the memory footprint, which appears to be less than
-> 10 bytes.
->
-> Thanks,
->
-> --
-> Julian Calaby
->
-> Email: julian.calaby@gmail.com
-> Profile: http://www.google.com/profiles/julian.calaby/
+The driver tries to load optional firmware files, specific to
+the actual board compatible. These might not exist resulting in a warning
+like this:
+brcmfmac mmc2:0001:1: Direct firmware load for brcm/brcmfmac4373-sdio.tq,imx93-tqma9352-mba93xxla-mini.bin failed with error -2
+
+Silence this by using firmware_request_nowait_nowarn() for all firmware
+loads which use brcmf_fw_request_done_alt_path() as callback. This one
+handles optional firmware files.
+
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+---
+ .../broadcom/brcm80211/brcmfmac/firmware.c         | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
+index 4bacd83db052e..e84cec58470c5 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
+@@ -714,9 +714,10 @@ static void brcmf_fw_request_done_alt_path(const struct firmware *fw, void *ctx)
+ 		if (!alt_path)
+ 			goto fallback;
+ 
+-		ret = request_firmware_nowait(THIS_MODULE, true, alt_path,
+-					      fwctx->dev, GFP_KERNEL, fwctx,
+-					      brcmf_fw_request_done_alt_path);
++		ret = firmware_request_nowait_nowarn(THIS_MODULE,
++						     alt_path, fwctx->dev,
++						     GFP_KERNEL, fwctx,
++						     brcmf_fw_request_done_alt_path);
+ 		kfree(alt_path);
+ 
+ 		if (ret < 0)
+@@ -779,9 +780,10 @@ int brcmf_fw_get_firmwares(struct device *dev, struct brcmf_fw_request *req,
+ 					    fwctx->req->board_types[0]);
+ 	if (alt_path) {
+ 		fwctx->board_index++;
+-		ret = request_firmware_nowait(THIS_MODULE, true, alt_path,
+-					      fwctx->dev, GFP_KERNEL, fwctx,
+-					      brcmf_fw_request_done_alt_path);
++		ret = firmware_request_nowait_nowarn(THIS_MODULE,
++						     alt_path, fwctx->dev,
++						     GFP_KERNEL, fwctx,
++						     brcmf_fw_request_done_alt_path);
+ 		kfree(alt_path);
+ 	} else {
+ 		ret = request_firmware_nowait(THIS_MODULE, true, first->path,
+-- 
+2.43.0
+
