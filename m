@@ -1,71 +1,71 @@
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
+Received: from mail-oi1-f179.google.com (mail-oi1-f179.google.com [209.85.167.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DE8E284B29
-	for <brcm80211@lists.linux.dev>; Tue, 31 Mar 2026 23:32:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75C952848BE
+	for <brcm80211@lists.linux.dev>; Fri,  3 Apr 2026 19:33:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774999978; cv=none; b=EkMaaHsGUfuRRSYiVSDGk0Ne+5uFkn2A4VQoJTmJWSroUXrXrNf9H/ktnrJnsKxEZ8I7YI9bfRMT1fuu9/QuwF2FNzzzGnZWmbVbmSmxOGtB83UMcug3ZNA1JCuQ0psOu3wiS0yhQjHEN1Ppx8i8XdoPBMMS0+1Bt+7ziFjQklg=
+	t=1775244819; cv=none; b=go+/rTua6gzEAa9jmLveRbDhoL9Rf6V8PPAImcLWp+0ukKTzd5FLCdreAGxRrGGkSQVVOEsFow4KoM1kZX+s4qE0cYpmUKPOzq9fCdjv9mbt+ZvtuYbPrOk5ZHa4IPmbODJpQsBnbb+9tn6N3eDdsZ26F8RlhFhPGmyeQ27iu6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774999978; c=relaxed/simple;
-	bh=244mleRO43LNTUCWzp/ZKAnyfQyLqVy88A4aiCBlJ0Y=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=O6/xzvwIJiGDk7tFOEAnYY4/sMg6ERefsbEuPQTYSoeEmBhUbANpNmA6vp+m6NDuAs8h+SWidFkBif6sc8J4vf2YcCxsZElBL+d7MAA12/ruDU7TDS+MAiFa+3CrSIKGAP8mICye5yDniBXOlaVWl2Pg8e5PKuOvDtlGEX1tw3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LIG6aENh; arc=none smtp.client-ip=209.85.216.41
+	s=arc-20240116; t=1775244819; c=relaxed/simple;
+	bh=42PyYXbbrCXrnlLrkcAJSkhIJKA1qYoiOfjYEveJ0/c=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Dtr/jPiXn55HkTPTV7S8UJLdF9X+YNsfS6nzAVn6SNCIVYGSy13LqdxRmxyX6+BUqqor7uEyecvTDLFfX2nQk0Sj6vPgTExujFGO2WuHLia2u7VrXszTx3FUVz26ERW+oUTnEldw0Slc6AjtoaIEnCOeVl9lcdergueMdITM8+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ldIcHPKS; arc=none smtp.client-ip=209.85.167.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LIG6aENh"
-Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-35d94f4ee36so2233722a91.3
-        for <brcm80211@lists.linux.dev>; Tue, 31 Mar 2026 16:32:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ldIcHPKS"
+Received: by mail-oi1-f179.google.com with SMTP id 5614622812f47-46fc5b8a04dso361137b6e.3
+        for <brcm80211@lists.linux.dev>; Fri, 03 Apr 2026 12:33:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774999977; x=1775604777; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1775244817; x=1775849617; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=adQV9YrsC4jfyVUOST6M3hgxRoSvm9YrFP3OZEy1JPc=;
-        b=LIG6aENhrWPNnNy1p6uSakmL7LGjhFRfIso6KaXXYh4LsAoiFBOp4lB16RZ1tcued7
-         H0neIk4TfrfFFGDSbWMHVGsyC8JhW3DwZ4GhrwHR3isjh7a5DWPEVwZ2HBKBe4Z51uk1
-         +6T94+DyKRfRfow1b0q7NInVw4lHyrAZtQZV0MbFh+CHzgM+M8xrNLGN8pKQzfNjjIxf
-         o2S/VVGFvylm4aWO5trNqbqI7ebi9/9a3xOObPwzqgMrk73abD7PunYtXHrpn0A1yYEf
-         QA495oLbTsZvtF7g27nOrUHDfNUW1Jie3BWKCjSajrx7D6UTu1RJUpyHkG2vFEYcm9BQ
-         HYiA==
+        bh=OQH7/NI1jwBIKC/CRnXuSNLGKjUStOMp1+ygXfJhwDU=;
+        b=ldIcHPKSLb1dq9sp23H/VqMGzemtB4V98aSyTdGt1xtZLJwMrYr/vXqZ79krK6Xtg1
+         3d/LU8vz2pyS3LjyeS9ZZNAII8ijRkl0Bibq+lk4wm7drurBbI7mdoID0RiLY0KsyiBE
+         JjpJCq6guBVixFFfjjyXNyJ4st0ffWgzUXHPBizOlcjvDS8VNHe2wfc5gyp1qGkdbU0e
+         aJNkBmSiDBwTN8VrKpTRk93QgyuzptmTOSrioUB7T4HmMfFsMmTSIDuWvzkaW2+TA2p5
+         aByo1RR5XVCwag1IKzXiSsDOmKYyBnigUpDaOKVwtXIBDL5OloXELTEYQkI8y7jGF1Tk
+         wIlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774999977; x=1775604777;
+        d=1e100.net; s=20251104; t=1775244817; x=1775849617;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=adQV9YrsC4jfyVUOST6M3hgxRoSvm9YrFP3OZEy1JPc=;
-        b=ABVRaDAKR8deiQlxMlSO58WAYDoQpaWEF1uD1+irHhp2Ge90qPh13llLH67HEEq2ir
-         V+Gd/d0aqsrsJnBjeDNxPKBeV9qb/y03vrg2vxGJpNl0tY4Z1xP77HbUzKxyUYEp8DdA
-         pMzEInrytFxvZrbXiKE848hPXzOvNTpZwzUNTZzgAj/POCg7A3rGG3kNioDE4PFhKHbJ
-         ovfGAs9G/hGpRp2moAXq5bq65G6zEQh15bmzOs5/clKneh8bdHNxw4cDwBiExqrT/exm
-         kSPNXUPBGwkdTgOa74vRLxoiqtgU2LzVkQN8MNl2VTMgFSe2CmmKqkeEAN3cc/QTdZ3l
-         xdFg==
-X-Forwarded-Encrypted: i=1; AJvYcCWj8omPV6gqRpgtNyfkmWPAlYu9BkVG4RxLaw5JlLnfyqwKmV7Zed3DTf+Z75uZ9SutRIhdP/RGsr4=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzks6ZLFV+kQytac62q3Slpdcf56yELBHXKEszFuoPeQQCHe1h6
-	UP25hZ4uPAhr1t6ww635+/9XvvgPMlWgvzym+8slHAaW0QTnnIPULOQlJsKL7Q==
-X-Gm-Gg: ATEYQzwh15HKQrwHJPwnaywCLpF+YVC2W4ufLxRtc+vmvexE8IYiyqexzwDeRHfUeYA
-	AYENeT/SmgaHk2PyQj+FG//2ekpezGhuta56BoDoEnf+7IHfhqQn14k5AP/YtaOvih+51Zbu0rM
-	4n8YZrqsEYbyY7SFnwek66KulhtlzUfVm1UgBYdMmiw8mh9pR54WaU422gQ9TJVyBoO3Ryj7UF/
-	phNi38yl9RxwZWJEe7Z2VLnWsoOGH3FmzT+moe8UXG80oPloVE4FAuGgUm+YLjtrZitEhkYTsOl
-	8omPLXDfadZClsE1amK96dekEgjAH9wUrG81eDWyqR/6vS/46U0uTRkGNbykX6Xu94bEec8uc1c
-	0T5s4AJOHL9FGo/b0Zz3KW6KxmeBq5has68kJnMnRd1bODXNJzcS0DSQECFLlJky3uU4zXyVovj
-	Z/EXVIdnfgFO7r9X7lI7VxmsWhs7kZ9mzN0NVJKjziy6AYEH67hPTFeCM=
-X-Received: by 2002:a17:90b:4c:b0:35d:a62c:19de with SMTP id 98e67ed59e1d1-35dc6e7aabemr987113a91.1.1774999976654;
-        Tue, 31 Mar 2026 16:32:56 -0700 (PDT)
-Received: from ryzen ([2601:644:8000:5b5d::8bd])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35dbe6d8682sm2775605a91.14.2026.03.31.16.32.55
+        bh=OQH7/NI1jwBIKC/CRnXuSNLGKjUStOMp1+ygXfJhwDU=;
+        b=H6UCeXmFXWLQpC93fQV0c5nzdVavaee9TGYP4SlB4T2Ux93uSEhous1qxYYdNlxX/i
+         IccT8WfD5YTPYkM3IN/TGDqnFOBM4J4DSxR93gHC1P5+BWK5keapinQ/0pXmXHEGk8jZ
+         zOiJIlf3UUJcPsNnIPOOM4Q+xDYqhQ1qsufn495UVSoQfr9CbHxKbrV1dcuSaryp0grP
+         1DeUcC2a+LJtv4fSGbJwd5Wn4ry0mvCA5NCHiJqmhrYCpuwmWqZyDO/TcSPgUNqj0nQj
+         fqMUDZ91/wr8h6vQmZDkfiY8lOnvyGBfwt/ZFf/O1RBeCOBuuRK0vHaOkahmeBfmNEGj
+         zu4w==
+X-Forwarded-Encrypted: i=1; AJvYcCVGnNSnqQRq2W+SjrAt1vSST/5tgTCOGIWLMUCABLO5cOMNTcCAffJmm4qwoPG59FH0AcysQaPnxlI=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwwhzfJPs3DST9pBwCaeDIHoKE+olFuts9ThKe10pMbP1DCM21r
+	qXytyx0BydJmwpaS012meKqRJvUFvWrifizqssNC8eb/MdaDcVu084XI
+X-Gm-Gg: ATEYQzy3r64JMxRwD33AQx9YNx4eP7kY+jhJTV6jQAVpD8hAya9H7asjRldHT/MvgnV
+	mE+OSDhYW3w5Wg49ZZv/LlZvqncqLw1JgR6kuicERb2bJ1GLWq1wpAtlNaTPxF4O1RN9QhXqpOI
+	6SaT9s+CHBmOnXNl74Q1iZLeEZLV8corubj1s8u718fdWeZa/19UU6LygiQT7HeKpo/QIf3IVr/
+	cXzJ1DG+DHeuYz1KB97NZucL8z7Dp0L43eL4EUBj0EdUOX1OsYfM9IR330N8v1MmFyl9DDN9bke
+	gCV6p07xOO+wfjII5giMTu8hrGZ5rK0QtrVqW8ey9ZEaDQX3hH1p89q5kySDEy53x21yVwnv34V
+	fiRS25TxDX1G6QlPY4rE7aXmBvT517grF8Owr6ZNIpeqNTDgoyqlwiAGDmkfmtiloCyDxN/Woaj
+	UkxfVi2smVMMsISyGySPg0K2V0kmJ6tVE1Cx3ELxD3lHN79yZIuZM=
+X-Received: by 2002:a05:6808:4fe9:b0:45e:84e7:c20b with SMTP id 5614622812f47-46ef791a149mr2203314b6e.25.1775244817319;
+        Fri, 03 Apr 2026 12:33:37 -0700 (PDT)
+Received: from Linux-Ub241.fyre.ibm.com ([170.225.223.17])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-46d93271094sm3942276b6e.15.2026.04.03.12.33.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Mar 2026 16:32:56 -0700 (PDT)
-From: Rosen Penev <rosenp@gmail.com>
-To: linux-wireless@vger.kernel.org
-Cc: Arend van Spriel <arend.vanspriel@broadcom.com>,
-	brcm80211@lists.linux.dev (open list:BROADCOM BRCM80211 IEEE802.11 WIRELESS DRIVERS),
-	brcm80211-dev-list.pdl@broadcom.com (open list:BROADCOM BRCM80211 IEEE802.11 WIRELESS DRIVERS),
-	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH wireless-next] wifi: brcm80211: change current_bss to a FAM
-Date: Tue, 31 Mar 2026 16:32:38 -0700
-Message-ID: <20260331233238.23527-1-rosenp@gmail.com>
-X-Mailer: git-send-email 2.53.0
+        Fri, 03 Apr 2026 12:33:36 -0700 (PDT)
+From: Chelsy Ratnawat <chelsyratnawat2001@gmail.com>
+To: arend.vanspriel@broadcom.com
+Cc: linux-wireless@vger.kernel.org,
+	brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com,
+	Chelsy Ratnawat <chelsyratnawat2001@gmail.com>
+Subject: [PATCH] wifi: brcmsmac: phy_lcn: Remove dead code in wlc_lcnphy_radio_2064_channel_tune_4313()
+Date: Fri,  3 Apr 2026 12:33:24 -0700
+Message-ID: <20260403193324.141753-1-chelsyratnawat2001@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -74,92 +74,61 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Change to a single allocation with kzalloc_flex and remove some
-boilerplate.
+The variable rfpll_doubler is initialized to 0 and then unconditionally
+set to 1 on the very next line, making the subsequent check for
+!rfpll_doubler always evaluate to false. This results in logically
+dead code that has never been executed.
 
-Done as a FAM instead of value to keep -> usage in codebase.
+Remove the unused variable, the unreachable conditional branch, and
+simplify the fpfd calculation to directly use the PLL doubler values.
 
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Signed-off-by: Chelsy Ratnawat <chelsyratnawat2001@gmail.com>
 ---
- .../broadcom/brcm80211/brcmsmac/main.c        | 32 ++-----------------
- .../broadcom/brcm80211/brcmsmac/main.h        |  2 +-
- 2 files changed, 3 insertions(+), 31 deletions(-)
+ .../broadcom/brcm80211/brcmsmac/phy/phy_lcn.c       | 13 +++----------
+ 1 file changed, 3 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.c
-index c7eaf160e1fa..4f57d64b1dd3 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.c
-@@ -418,21 +418,12 @@ static int brcms_chspec_bw(u16 chanspec)
- 	return BRCMS_10_MHZ;
- }
-
--static void brcms_c_bsscfg_mfree(struct brcms_bss_cfg *cfg)
--{
--	if (cfg == NULL)
--		return;
--
--	kfree(cfg->current_bss);
--	kfree(cfg);
--}
--
- static void brcms_c_detach_mfree(struct brcms_c_info *wlc)
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c
+index 8cec5ad79fda..d65a68045ca8 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c
+@@ -1607,7 +1607,6 @@ wlc_lcnphy_radio_2064_channel_tune_4313(struct brcms_phy *pi, u8 channel)
  {
- 	if (wlc == NULL)
- 		return;
-
--	brcms_c_bsscfg_mfree(wlc->bsscfg);
-+	kfree(wlc->bsscfg);
- 	kfree(wlc->pub);
- 	kfree(wlc->modulecb);
- 	kfree(wlc->default_bss);
-@@ -453,25 +444,6 @@ static void brcms_c_detach_mfree(struct brcms_c_info *wlc)
- 	kfree(wlc);
- }
-
--static struct brcms_bss_cfg *brcms_c_bsscfg_malloc(uint unit)
--{
--	struct brcms_bss_cfg *cfg;
--
--	cfg = kzalloc_obj(*cfg, GFP_ATOMIC);
--	if (cfg == NULL)
--		goto fail;
--
--	cfg->current_bss = kzalloc_obj(*cfg->current_bss, GFP_ATOMIC);
--	if (cfg->current_bss == NULL)
--		goto fail;
--
--	return cfg;
--
-- fail:
--	brcms_c_bsscfg_mfree(cfg);
--	return NULL;
--}
--
- static struct brcms_c_info *
- brcms_c_attach_malloc(uint unit, uint *err, uint devid)
- {
-@@ -527,7 +499,7 @@ brcms_c_attach_malloc(uint unit, uint *err, uint devid)
- 		goto fail;
- 	}
-
--	wlc->bsscfg = brcms_c_bsscfg_malloc(unit);
-+	wlc->bsscfg = kzalloc_flex(*wlc->bsscfg, current_bss, 1, GFP_ATOMIC);
- 	if (wlc->bsscfg == NULL) {
- 		*err = 1011;
- 		goto fail;
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.h b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.h
-index b7ca0d9891c4..e9cbb95a5a17 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.h
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.h
-@@ -614,7 +614,7 @@ struct brcms_bss_cfg {
- 	u8 SSID_len;
- 	u8 SSID[IEEE80211_MAX_SSID_LEN];
- 	u8 BSSID[ETH_ALEN];
--	struct brcms_bss_info *current_bss;
-+	struct brcms_bss_info current_bss[];
- };
-
- int brcms_c_txfifo(struct brcms_c_info *wlc, uint fifo, struct sk_buff *p);
---
-2.53.0
+ 	uint i;
+ 	const struct chan_info_2064_lcnphy *ci;
+-	u8 rfpll_doubler = 0;
+ 	u8 pll_pwrup, pll_pwrup_ovr;
+ 	s32 qFcal;
+ 	u8 d15, d16, f16, e44, e45;
+@@ -1618,18 +1617,12 @@ wlc_lcnphy_radio_2064_channel_tune_4313(struct brcms_phy *pi, u8 channel)
+ 	u16 g30, d28;
+ 
+ 	ci = &chan_info_2064_lcnphy[0];
+-	rfpll_doubler = 1;
+ 
+ 	mod_radio_reg(pi, RADIO_2064_REG09D, 0x4, 0x1 << 2);
+ 
+ 	write_radio_reg(pi, RADIO_2064_REG09E, 0xf);
+-	if (!rfpll_doubler) {
+-		loop_bw = PLL_2064_LOOP_BW;
+-		d30 = PLL_2064_D30;
+-	} else {
+-		loop_bw = PLL_2064_LOOP_BW_DOUBLER;
+-		d30 = PLL_2064_D30_DOUBLER;
+-	}
++	loop_bw = PLL_2064_LOOP_BW_DOUBLER;
++	d30 = PLL_2064_D30_DOUBLER;
+ 
+ 	if (CHSPEC_IS2G(pi->radio_chanspec)) {
+ 		for (i = 0; i < ARRAY_SIZE(chan_info_2064_lcnphy); i++)
+@@ -1669,7 +1662,7 @@ wlc_lcnphy_radio_2064_channel_tune_4313(struct brcms_phy *pi, u8 channel)
+ 	e44 = 0;
+ 	e45 = 0;
+ 
+-	fpfd = rfpll_doubler ? (pi->xtalfreq << 1) : (pi->xtalfreq);
++	fpfd = pi->xtalfreq << 1;
+ 	if (pi->xtalfreq > 26000000)
+ 		e44 = 1;
+ 	if (pi->xtalfreq > 52000000)
+-- 
+2.43.0
 
