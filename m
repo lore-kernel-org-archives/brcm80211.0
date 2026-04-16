@@ -1,392 +1,193 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mailout2.w1.samsung.com (mailout2.w1.samsung.com [210.118.77.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D91CC3DA7FA;
-	Tue, 14 Apr 2026 11:25:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C50A25A2DD
+	for <brcm80211@lists.linux.dev>; Thu, 16 Apr 2026 09:34:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.118.77.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776165916; cv=none; b=m75XkqjS071wRLEgcQyw6DbJ5gdQbYVRHnaNVCBu2NntPvh0zRxQfuBdfc/+P6jZn7ENhpQrNAD/R6gLMicKPcuxjPRODJnIZHSZtuZ1SYPjYylsBJX+JAQmhAvsPtA6dieU/X3j3Rj4YAISEJMLN/OSwCZ+N4VcDd6XvHbuyE4=
+	t=1776332080; cv=none; b=bZd77VOUX7ykvzTQMFi9YfKurlTkhCRqB1h/KhJOpaMynlNWGKQ+J8mZLp4Cy/EwqYJdp7FJd5SFnAwtih6iGAJkwAzNnNC1RHTNb+8qsC1JvNCVUKAbjvE/JMeQ6hQ3In1QVgN3rVlw06hD8lpahdowgFGSm8j1jR7eKVLhP0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776165916; c=relaxed/simple;
-	bh=Bzr2bh91YAKJAoTSgULgagBtRIPAUCKSWOYnWZMIWOE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DCct3/tN5YL5fSRNeoMz1HyNCA2JRTt8/EmdndSVppZNWR3PxWiQ1XlewUqysHRtaYYVXmXL/HxxEfx9HYjw8V8N0F+/AA7IusN8rDdad9D7JcfbdUQs360w/OWrPNNd7RXo+WzUZFO6dpKBmRQAbIn0IupCUVatcLYb7qBDxSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZtLwS3nE; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1776332080; c=relaxed/simple;
+	bh=tWmas1cm6B5QN1jq8ekbiSzKgEB5Kt9NC51/8xvjC3E=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 References; b=dA1cAFUHW6Ywc5oWprRRtLITRbFUgH/UmDds6Waa6TMuCsU4Np+1HKp/mHrV94xZYyxn4gfqUX3WWakEF6ado8IfPDkeUes/n9w5H/t7UEv/Huf/ugHZa3mEEByFtC1JVyyFEEb1SIEBeWue2nYVMNipJa4xXNjACyy5haJM4dM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=E0J5Y2Aa; arc=none smtp.client-ip=210.118.77.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZtLwS3nE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAD91C4AF0B;
-	Tue, 14 Apr 2026 11:25:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776165916;
-	bh=Bzr2bh91YAKJAoTSgULgagBtRIPAUCKSWOYnWZMIWOE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZtLwS3nEsRoIG6sLyMR5oY4H+BOyWTQDhoZAMk5Y79B4YmdI+tfrT5Xpt9V1sbnnZ
-	 xFCofmzlHyNjHzI0Qg1qlCaLFwBiT4pLVaRmEDty1/dZUoeJfhovTzqJUy3GWY5hAV
-	 MBTKHwzTCC5LOTIPxasO+o27jbSoNbd59d3vXYA4XWd+Rq35TRv6wvVQqlZN4VJ/Rk
-	 7+JutFU5uyqlleC0R/m3HwKXrOr4li5grqPFh2G9kTrwMefm4DdBfkwwjPK5aH9obz
-	 x2V2j12K52xTITS+i0MlZSmbugK8WK5IZLu0ggJJWoPX7EcQwnCp0OofKMgIbXOzoh
-	 0tCyRmPiTiNWA==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org,
-	brcm80211@lists.linux.dev,
-	brcm80211-dev-list.pdl@broadcom.com,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.10] wifi: brcmfmac: validate bsscfg indices in IF events
-Date: Tue, 14 Apr 2026 07:25:00 -0400
-Message-ID: <20260414112509.410217-4-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260414112509.410217-1-sashal@kernel.org>
-References: <20260414112509.410217-1-sashal@kernel.org>
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="E0J5Y2Aa"
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+	by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20260416093428euoutp0201b217713deb863f982ef052617669e1~mzJrsBV5w2419124191euoutp02_
+	for <brcm80211@lists.linux.dev>; Thu, 16 Apr 2026 09:34:28 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20260416093428euoutp0201b217713deb863f982ef052617669e1~mzJrsBV5w2419124191euoutp02_
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1776332068;
+	bh=23FazvtiCIPv2qrEXvDfkLiYN3Ax9w9NKvlIby1PYlo=;
+	h=From:To:Cc:Subject:Date:References:From;
+	b=E0J5Y2Aa+QRx2NIYqv4jOcOQ69f7AtBW0WLnk+N2syJsJsU6QJQOKZNgplXE2D5YI
+	 Bt5Q40ZI2cYu53JOIKOUvQQrUpzzeLrqKIjLx+F6rHL4a4P2ks8XUrQovyOf/69wvN
+	 FoJVfkYciuwdhjXF43oUT0kgndh98WKfJoTMKBtM=
+Received: from eusmtip1.samsung.com (unknown [203.254.199.221]) by
+	eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+	20260416093428eucas1p2fde898f84c1e15dd94d1ecb52707c72b~mzJrbkITF1661516615eucas1p2c;
+	Thu, 16 Apr 2026 09:34:28 +0000 (GMT)
+Received: from AMDC4653.digital.local (unknown [106.120.51.32]) by
+	eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+	20260416093428eusmtip1af3f197c1f60f0a9d44c4640aeca3c7b~mzJrJ2eQc0938209382eusmtip1P;
+	Thu, 16 Apr 2026 09:34:28 +0000 (GMT)
+From: Marek Szyprowski <m.szyprowski@samsung.com>
+To: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com
+Cc: Marek Szyprowski <m.szyprowski@samsung.com>, Arend van Spriel
+	<arend.vanspriel@broadcom.com>
+Subject: [PATCH] wifi: brcmfmac: Fix potential use-after-free issue when
+ stopping watchdog task
+Date: Thu, 16 Apr 2026 11:33:39 +0200
+Message-Id: <20260416093339.2066829-1-m.szyprowski@samsung.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.19.12
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+X-CMS-MailID: 20260416093428eucas1p2fde898f84c1e15dd94d1ecb52707c72b
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20260416093428eucas1p2fde898f84c1e15dd94d1ecb52707c72b
+X-EPHeader: CA
+X-CMS-RootMailID: 20260416093428eucas1p2fde898f84c1e15dd94d1ecb52707c72b
+References: <CGME20260416093428eucas1p2fde898f84c1e15dd94d1ecb52707c72b@eucas1p2.samsung.com>
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Watchdog task might end between send_sig() and kthread_stop() calls, what
+results in the use-after-free issue. Fix this by increasing watchdog task
+reference count before calling send_sig() and dropping it by switching to
+kthread_stop_put().
 
-[ Upstream commit 304950a467d83678bd0b0f46331882e2ac23b12d ]
-
-brcmf_fweh_handle_if_event() validates the firmware-provided interface
-index before it touches drvr->iflist[], but it still uses the raw
-bsscfgidx field as an array index without a matching range check.
-
-Reject IF events whose bsscfg index does not fit in drvr->iflist[]
-before indexing the interface array.
-
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20260323074551.93530-1-pengpeng@iscas.ac.cn
-[add missing wifi prefix]
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 373c83a801f1 ("brcmfmac: stop watchdog before detach and free everything")
+Fixes: a9ffda88be74 ("brcm80211: fmac: abstract bus_stop interface function pointer")
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
 ---
+This fixes the following, rarely observed issue when no firmware binary
+is available:
 
-LLM Generated explanations, may be completely bogus:
+brcmfmac mmc2:0001:1: Direct firmware load for brcm/brcmfmac4330-sdio.txt failed with error -2
+------------[ cut here ]------------
+------------[ cut here ]------------
+WARNING: kernel/fork.c:781 at __put_task_struct+0x13c/0x140, CPU#0: kworker/0:1/10
+Modules linked in: brcmfmac hci_uart btbcm btintel bluetooth sha256 cfg80211 s5p_csis s5p_fimc s5p_mfc exynos4_is_common v4l2_fwnode v4l2_async ecdh_generic ecc s5p_jpeg videobuf2_dma_contig v4l2_mem2mem videobuf2_memops videobuf2_v4l2 videobuf2_common videodev brcmutil mc
+CPU: 0 UID: 0 PID: 10 Comm: kworker/0:1 Not tainted 7.0.0-rc6-next-20260402 #12549 PREEMPT 
+Hardware name: Samsung Exynos (Flattened Device Tree)
+Workqueue: events request_firmware_work_func
+Call trace: 
+ unwind_backtrace from show_stack+0x10/0x14
+ show_stack from dump_stack_lvl+0x68/0x88
+ dump_stack_lvl from __warn+0x94/0x204
+ __warn from warn_slowpath_fmt+0x1b0/0x1bc
+ warn_slowpath_fmt from __put_task_struct+0x13c/0x140
+ __put_task_struct from rcu_core+0x330/0x1220
+ rcu_core from handle_softirqs+0x130/0x5b0
+ handle_softirqs from __irq_exit_rcu+0x144/0x1f0
+ __irq_exit_rcu from irq_exit+0x8/0x28
+ irq_exit from call_with_stack+0x18/0x20
+ call_with_stack from __irq_svc+0x9c/0xd0
+Exception stack(0xe0891c20 to 0xe0891c68)
+...
+ __irq_svc from console_flush_one_record+0x394/0x570
+ console_flush_one_record from console_unlock+0x78/0x148
+ console_unlock from vprintk_emit+0x224/0x390
+ vprintk_emit from vprintk_default+0x20/0x28
+ vprintk_default from _printk+0x2c/0x5c
+ _printk from warn_slowpath_fmt+0xe8/0x1bc
+ warn_slowpath_fmt from kthread_stop+0x2bc/0x364
+ kthread_stop from brcmf_sdio_remove+0x2c/0x194 [brcmfmac]
+ brcmf_sdio_remove [brcmfmac] from brcmf_sdiod_remove+0x20/0xb8 [brcmfmac]
+ brcmf_sdiod_remove [brcmfmac] from brcmf_ops_sdio_remove+0x34/0x5c [brcmfmac]
+ brcmf_ops_sdio_remove [brcmfmac] from sdio_bus_remove+0x30/0x10c
+ sdio_bus_remove from device_release_driver_internal+0x190/0x204
+ device_release_driver_internal from brcmf_sdio_firmware_callback+0x50/0x944 [brcmfmac]
+ brcmf_sdio_firmware_callback [brcmfmac] from brcmf_fw_request_done+0x154/0x17c [brcmfmac]
+ brcmf_fw_request_done [brcmfmac] from request_firmware_work_func+0x50/0x98
+ request_firmware_work_func from process_one_work+0x260/0x7dc
+ process_one_work from worker_thread+0x1ac/0x3b0
+ worker_thread from kthread+0x128/0x168
+ kthread from ret_from_fork+0x14/0x28
+Exception stack(0xe0891fb0 to 0xe0891ff8)
+...
+irq event stamp: 18820
+hardirqs last  enabled at (18826): [<c01c7d8c>] vprintk_emit+0x364/0x390
+hardirqs last disabled at (18831): [<c01c7d48>] vprintk_emit+0x320/0x390
+softirqs last  enabled at (18598): [<c0add65c>] __alloc_skb+0x168/0x1c0
+softirqs last disabled at (18629): [<c013e038>] __irq_exit_rcu+0x144/0x1f0
+---[ end trace 0000000000000000 ]---
+WARNING: lib/refcount.c:25 at kthread_stop+0x2bc/0x364, CPU#0: kworker/0:1/10
+refcount_t: addition on 0; use-after-free.
+Modules linked in: brcmfmac hci_uart btbcm btintel bluetooth sha256 cfg80211 s5p_csis s5p_fimc s5p_mfc exynos4_is_common v4l2_fwnode v4l2_async ecdh_generic ecc s5p_jpeg videobuf2_dma_contig v4l2_mem2mem videobuf2_memops videobuf2_v4l2 videobuf2_common videodev brcmutil mc
+CPU: 0 UID: 0 PID: 10 Comm: kworker/0:1 Tainted: G        W           7.0.0-rc6-next-20260402 #12549 PREEMPT 
+Tainted: [W]=WARN
+Hardware name: Samsung Exynos (Flattened Device Tree)
+Workqueue: events request_firmware_work_func
+Call trace: 
+ unwind_backtrace from show_stack+0x10/0x14
+ show_stack from dump_stack_lvl+0x68/0x88
+ dump_stack_lvl from __warn+0x94/0x204
+ __warn from warn_slowpath_fmt+0x124/0x1bc
+ warn_slowpath_fmt from kthread_stop+0x2bc/0x364
+ kthread_stop from brcmf_sdio_remove+0x2c/0x194 [brcmfmac]
+ brcmf_sdio_remove [brcmfmac] from brcmf_sdiod_remove+0x20/0xb8 [brcmfmac]
+ brcmf_sdiod_remove [brcmfmac] from brcmf_ops_sdio_remove+0x34/0x5c [brcmfmac]
+ brcmf_ops_sdio_remove [brcmfmac] from sdio_bus_remove+0x30/0x10c
+ sdio_bus_remove from device_release_driver_internal+0x190/0x204
+ device_release_driver_internal from brcmf_sdio_firmware_callback+0x50/0x944 [brcmfmac]
+ brcmf_sdio_firmware_callback [brcmfmac] from brcmf_fw_request_done+0x154/0x17c [brcmfmac]
+ brcmf_fw_request_done [brcmfmac] from request_firmware_work_func+0x50/0x98
+ request_firmware_work_func from process_one_work+0x260/0x7dc
+ process_one_work from worker_thread+0x1ac/0x3b0
+ worker_thread from kthread+0x128/0x168
+ kthread from ret_from_fork+0x14/0x28
+Exception stack(0xe0891fb0 to 0xe0891ff8)
+...
+irq event stamp: 19327
+hardirqs last  enabled at (19435): [<c01c3810>] __up_console_sem+0x50/0x60
+hardirqs last disabled at (19460): [<c01c37fc>] __up_console_sem+0x3c/0x60
+softirqs last  enabled at (19458): [<c013dc0c>] handle_softirqs+0x330/0x5b0
+softirqs last disabled at (19443): [<c013e038>] __irq_exit_rcu+0x144/0x1f0
+---[ end trace 0000000000000000 ]---
 
-Now I have all the information needed for a complete analysis. Let me
-compile the findings.
-
+Best regards
+Marek Szyprowski, PhD
+Samsung R&D Institute Poland
 ---
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
-
-**Step 1.1: Subject Line**
-- Subsystem: `wifi: brcmfmac`
-- Action verb: "validate" — this is adding a missing safety check
-- Summary: Adds bounds validation for firmware-provided `bsscfgidx`
-  before using it as an array index
-- Record: [wifi: brcmfmac] [validate] [add missing bounds check for
-  bsscfgidx in IF event handler]
-
-**Step 1.2: Tags**
-- `Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>` — author
-- `Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>` — Broadcom
-  subsystem maintainer acked it
-- `Link:
-  https://patch.msgid.link/20260323074551.93530-1-pengpeng@iscas.ac.cn`
-  — original submission
-- `Signed-off-by: Johannes Berg <johannes.berg@intel.com>` — applied by
-  wireless maintainer
-- No Fixes: tag, no Cc: stable, no Reported-by — expected for manual
-  review candidates
-
-**Step 1.3: Commit Body**
-- The commit message explains that `brcmf_fweh_handle_if_event()`
-  already validates `ifidx` before using it to index `drvr->iflist[]`,
-  but does NOT validate `bsscfgidx` before using it the same way.
-- Bug: out-of-bounds array access when firmware provides `bsscfgidx >=
-  BRCMF_MAX_IFS` (16)
-- Failure mode: kernel crash / memory corruption / potential code
-  execution
-
-**Step 1.4: Hidden Bug Fix?**
-- This IS a bug fix. The word "validate" means adding a missing safety
-  check. The commit directly prevents an out-of-bounds array access from
-  firmware-controlled data.
-
-## PHASE 2: DIFF ANALYSIS
-
-**Step 2.1: Inventory**
-- Single file: `drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c`
-- +5 lines added, 0 removed
-- Function modified: `brcmf_fweh_handle_if_event()`
-- Scope: single-file surgical fix
-
-**Step 2.2: Code Flow Change**
-- BEFORE: `ifevent->bsscfgidx` is used directly as an array index at
-  line 157 (`ifp = drvr->iflist[ifevent->bsscfgidx]`) and at line 162
-  (`brcmf_add_if(drvr, ifevent->bsscfgidx, ...)`), with no bounds check.
-- AFTER: A bounds check `ifevent->bsscfgidx >= BRCMF_MAX_IFS` is added
-  before any array access, returning early with an error log if out of
-  bounds.
-- Only affects the error path for malformed IF events from firmware.
-
-**Step 2.3: Bug Mechanism**
-- Category: **Buffer overflow / out-of-bounds array access**
-- `drvr->iflist` is declared as `struct brcmf_if *iflist[BRCMF_MAX_IFS]`
-  where `BRCMF_MAX_IFS = 16`
-- `ifevent->bsscfgidx` is a `u8` from firmware (range 0-255), used as
-  index without validation
-- This is the SAME class of bug as **CVE-2022-3628**, which was fixed in
-  the sibling code path by commit `6788ba8aed4e2`
-
-**Critical insight**: There are TWO separate `bsscfgidx` fields from
-firmware:
-1. `event->emsg.bsscfgidx` (event message header) — validated by
-   CVE-2022-3628 fix in `brcmf_fweh_event_worker()`
-2. `ifevent->bsscfgidx` (IF event payload, `struct brcmf_if_event`) —
-   **NOT validated** until this commit
-
-For IF events (BRCMF_E_IF), `brcmf_fweh_event_worker()` calls
-`brcmf_fweh_handle_if_event()` which uses `ifevent->bsscfgidx` from the
-payload, bypassing the header check entirely.
-
-Additionally, `brcmf_add_if()` at `core.c:860` also indexes
-`drvr->iflist[bsscfgidx]` without its own bounds check, so the fix
-protects that path too.
-
-**Step 2.4: Fix Quality**
-- Obviously correct: identical pattern to `ifidx` check 4 lines above
-  and `bsscfgidx` check in `brcmf_fweh_event_worker()` at line 275
-- Minimal and surgical: 5 lines, one conditional, one log message, one
-  return
-- Zero regression risk: only rejects malformed firmware events, does not
-  change any normal path
-
-## PHASE 3: GIT HISTORY INVESTIGATION
-
-**Step 3.1: Blame**
-- The unchecked `drvr->iflist[ifevent->bsscfgidx]` at line 157 was
-  introduced by commit `37a869ec859308` (Hante Meuleman, 2015-10-29),
-  "brcmfmac: Use consistent naming for bsscfgidx." This was a rename of
-  an even older pattern.
-- The buggy code has existed since at least 2015, present in ALL active
-  stable trees.
-
-**Step 3.2: CVE-2022-3628 (Related Fix)**
-- Commit `6788ba8aed4e2` fixed the same bug class (CVE-2022-3628) in
-  `brcmf_fweh_event_worker()` but missed the
-  `brcmf_fweh_handle_if_event()` path.
-- That fix was explicitly Cc'd to stable and applied to all active
-  stable trees.
-- This current commit completes the original CVE fix.
-
-**Step 3.3: File History**
-- The file has minimal recent changes. The last relevant bug fix was
-  `6788ba8aed4e2` (the CVE fix). No other patches touch this function.
-- This commit is standalone — no dependencies.
-
-**Step 3.4: Author**
-- Pengpeng Hou also submitted other security-related bounds-check fixes
-  (NFC pn533, bnxt_en, ipv6 ioam6, Bluetooth btusb).
-
-**Step 3.5: Dependencies**
-- No dependencies. The check pattern already exists for `ifidx` in the
-  same function. Applies cleanly to any tree that has the original code.
-
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-
-**Step 4.1-4.2: Patch Discussion**
-- Acked by Arend van Spriel (Broadcom brcmfmac maintainer) — no caveats
-- Applied by Johannes Berg (wireless maintainer) with only a minor
-  subject prefix fixup
-- Appears to be accepted on v1 (no version indicator in subject)
-
-**Step 4.3: Bug Report**
-- No external bug report — this was found by code inspection (comparing
-  against the CVE-2022-3628 fix)
-
-**Step 4.4-4.5: Related Patches**
-- Standalone fix, not part of a series.
-
-## PHASE 5: CODE SEMANTIC ANALYSIS
-
-**Step 5.1-5.2: Functions and Callers**
-- `brcmf_fweh_handle_if_event()` is called only from
-  `brcmf_fweh_event_worker()` (line 303)
-- `brcmf_fweh_event_worker()` is a work queue handler processing
-  firmware events
-- The firmware events come from the Broadcom WiFi hardware/firmware via
-  the event queue
-
-**Step 5.3-5.4: Call Chain**
-- Firmware sends events → `brcmf_fweh_process_event()` queues them →
-  `brcmf_fweh_event_worker()` processes → `brcmf_fweh_handle_if_event()`
-  handles IF events → unchecked array access
-- The path is reachable from firmware-provided data. For USB-attached
-  Broadcom WiFi devices, a malicious device could craft events with
-  arbitrary bsscfgidx values.
-
-**Step 5.5: Similar Patterns**
-- The exact same check already exists in `brcmf_fweh_event_worker()` at
-  line 275 (for the header's bsscfgidx). This commit adds the equivalent
-  check for the payload's bsscfgidx.
-
-## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
-
-**Step 6.1: Buggy Code in Stable Trees**
-- The unvalidated `drvr->iflist[ifevent->bsscfgidx]` access has existed
-  since at least kernel 3.x (original brcmfmac code from 2012-2015).
-- All active stable trees (5.15, 6.1, 6.6, 6.12) contain this bug.
-- The CVE-2022-3628 fix (6788ba8aed4e2) is present in stable 5.15+, but
-  only covered the worker path.
-
-**Step 6.2: Backport Complications**
-- Expected: clean apply. The function has been stable, with no
-  structural changes since the CVE fix.
-- The 5-line patch touches a single, well-isolated location.
-
-**Step 6.3: Related Fixes Already in Stable**
-- CVE-2022-3628 fix is in stable but incomplete — it doesn't cover this
-  code path.
-
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-
-**Step 7.1: Subsystem Criticality**
-- Subsystem: WiFi driver (brcmfmac — Broadcom FullMAC WiFi)
-- Criticality: IMPORTANT — widely used in Raspberry Pi, many laptops,
-  USB WiFi dongles
-- Broadcom WiFi is one of the most common WiFi chipsets in consumer
-  hardware
-
-**Step 7.2: Subsystem Activity**
-- Moderate activity — recent vendor-specific event handling rework, but
-  the core event handler is mature code.
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-**Step 8.1: Affected Users**
-- All users with Broadcom brcmfmac WiFi hardware (Raspberry Pi, many
-  laptops, USB WiFi adapters)
-
-**Step 8.2: Trigger Conditions**
-- Triggered by malicious/buggy firmware sending an IF event with
-  `bsscfgidx >= 16`
-- For USB WiFi: a malicious USB device can inject arbitrary firmware
-  events (physical access attack vector)
-- For embedded firmware: a firmware bug could produce out-of-range
-  values
-
-**Step 8.3: Failure Mode Severity**
-- Out-of-bounds array access on `drvr->iflist[]` (16-element pointer
-  array)
-- Consequence: kernel crash (GPF/oops), potential memory corruption,
-  potential code execution
-- Severity: **CRITICAL** (same class as CVE-2022-3628)
-
-**Step 8.4: Risk-Benefit**
-- BENEFIT: Very high — prevents kernel crash and potential security
-  exploit from firmware-controlled data
-- RISK: Very low — 5 lines, identical pattern to existing validated
-  checks, zero normal-path impact
-- Ratio: Strongly favorable for backporting
-
-## PHASE 9: FINAL SYNTHESIS
-
-**Step 9.1: Evidence Compilation**
-
-FOR backporting:
-- Fixes an out-of-bounds array access from firmware-controlled data
-  (same class as CVE-2022-3628)
-- Completes an incomplete CVE fix
-- Extremely small (5 lines), obviously correct, identical pattern to
-  existing checks
-- Acked by Broadcom maintainer, applied by wireless maintainer
-- Bug present in ALL stable trees
-- Zero regression risk — only rejects malformed firmware events
-- Hardware is widely used (Raspberry Pi, laptops, USB WiFi)
-
-AGAINST backporting:
-- No reported real-world trigger (found by code audit)
-- No CVE assigned (yet) — but same class as CVE-2022-3628
-
-**Step 9.2: Stable Rules Checklist**
-1. Obviously correct and tested? **YES** — identical pattern to existing
-   checks, Acked by maintainer
-2. Fixes a real bug? **YES** — out-of-bounds array access from firmware
-   data
-3. Important issue? **YES** — kernel crash / security vulnerability
-4. Small and contained? **YES** — 5 lines, single file, single function
-5. No new features or APIs? **YES** — pure bug fix
-6. Can apply to stable? **YES** — clean apply expected, no dependencies
-
-**Step 9.3: Exception Categories**
-- Not an exception category — this is a standard, clear-cut
-  security/stability bug fix.
-
-**Step 9.4: Decision**
-- Overwhelming evidence supports backporting. This is a surgical 5-line
-  fix completing a CVE fix that was already backported to stable.
-
-## Verification
-
-- [Phase 1] Parsed tags: Acked-by from Broadcom maintainer, Link to
-  patch submission, applied by Johannes Berg
-- [Phase 2] Diff analysis: +5 lines in `brcmf_fweh_handle_if_event()`,
-  adds bounds check for `ifevent->bsscfgidx` before `drvr->iflist[]`
-  indexing
-- [Phase 2] Verified TWO separate bsscfgidx fields: `struct
-  brcmf_event_msg_be.bsscfgidx` (fweh.h:234) vs `struct
-  brcmf_if_event.bsscfgidx` (fweh.h:283) — confirmed different
-  structures, different data sources
-- [Phase 2] Verified `brcmf_add_if()` at core.c:860 also uses bsscfgidx
-  as array index without its own bounds check — this fix protects that
-  path too
-- [Phase 3] git blame: line 157 (`drvr->iflist[ifevent->bsscfgidx]`)
-  introduced by commit 37a869ec859308 (2015-10-29)
-- [Phase 3] git show 6788ba8aed4e2: confirmed CVE-2022-3628 fix only
-  added bounds check in `brcmf_fweh_event_worker()`, NOT in
-  `brcmf_fweh_handle_if_event()`
-- [Phase 3] Verified BRCMF_MAX_IFS = 16, iflist array is 16 elements
-  (core.h:118)
-- [Phase 4] Patch acked by Arend van Spriel (Broadcom maintainer) with
-  no caveats
-- [Phase 5] Traced call chain: firmware → brcmf_fweh_process_event() →
-  queue → brcmf_fweh_event_worker() → brcmf_fweh_handle_if_event() →
-  unchecked array access
-- [Phase 5] Confirmed event->emsg.bsscfgidx check at line 275 does NOT
-  protect ifevent->bsscfgidx used at line 157 (different data fields)
-- [Phase 6] Code exists in all active stable trees (5.15, 6.1, 6.6,
-  6.12) — verified via git log
-- [Phase 6] CVE-2022-3628 fix (6788ba8aed4e2) is in stable since 5.15,
-  but incomplete
-- [Phase 8] Failure mode: out-of-bounds read/write on pointer array →
-  kernel GPF/oops, severity CRITICAL
-
-**YES**
-
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c
-index c2d98ee6652f3..1d25dc9ebca8b 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c
-@@ -153,6 +153,11 @@ static void brcmf_fweh_handle_if_event(struct brcmf_pub *drvr,
- 		bphy_err(drvr, "invalid interface index: %u\n", ifevent->ifidx);
- 		return;
- 	}
-+	if (ifevent->bsscfgidx >= BRCMF_MAX_IFS) {
-+		bphy_err(drvr, "invalid bsscfg index: %u\n",
-+			 ifevent->bsscfgidx);
-+		return;
-+	}
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
+index d34db69c25a7..e6de88a6a852 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
+@@ -2477,8 +2477,9 @@ static void brcmf_sdio_bus_stop(struct device *dev)
+ 	brcmf_dbg(TRACE, "Enter\n");
  
- 	ifp = drvr->iflist[ifevent->bsscfgidx];
+ 	if (bus->watchdog_tsk) {
++		get_task_struct(bus->watchdog_tsk);
+ 		send_sig(SIGTERM, bus->watchdog_tsk, 1);
+-		kthread_stop(bus->watchdog_tsk);
++		kthread_stop_put(bus->watchdog_tsk);
+ 		bus->watchdog_tsk = NULL;
+ 	}
+ 
+@@ -4568,8 +4569,9 @@ void brcmf_sdio_remove(struct brcmf_sdio *bus)
+ 	if (bus) {
+ 		/* Stop watchdog task */
+ 		if (bus->watchdog_tsk) {
++			get_task_struct(bus->watchdog_tsk);
+ 			send_sig(SIGTERM, bus->watchdog_tsk, 1);
+-			kthread_stop(bus->watchdog_tsk);
++			kthread_stop_put(bus->watchdog_tsk);
+ 			bus->watchdog_tsk = NULL;
+ 		}
  
 -- 
-2.53.0
+2.34.1
 
