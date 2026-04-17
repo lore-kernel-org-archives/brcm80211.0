@@ -1,119 +1,199 @@
-Received: from mail-qt1-f226.google.com (mail-qt1-f226.google.com [209.85.160.226])
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98B1B3C555C
-	for <brcm80211@lists.linux.dev>; Fri, 17 Apr 2026 19:26:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.226
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776454014; cv=none; b=W3xOgmYFKB9NG5RTvHzp/WNpruQa/DjeHPfQmcdRedz+WHRXOlEUXpZcQIJWHqdkrL2hF697AXpBdW0YaQlL5pkEQxAUiJK0ol8OpMgluEzMZE1F4kTOpNGE9QAI3iXKoVZUrFz7Qbo3vF+caVEm3rgX1oPm8FQaWcwTN7fkq2A=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776454014; c=relaxed/simple;
-	bh=c46MhwJjv3+RX6D1Ajl2g2/Z8vW4GKzlDlrVDuAkbm4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=SKRu8L5/f/r762JluIiXkHjqlkwo5zwBnRqe0SkrjpWSABCEwii5LNT/ege1/kIz9aJItOWs3LW4hg+CuopjLwGy4k2a6GrYiDpIw6av4wCiiAe0S4MSzLMRKsB76ZiaIwBnzmgaBGIKQ5+jPtqdV/gqKQLRiaLUcMjV2Qq/FfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=Rni5aKUP; arc=none smtp.client-ip=209.85.160.226
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E08282D9EDC
+	for <brcm80211@lists.linux.dev>; Fri, 17 Apr 2026 20:47:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.54
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1776458838; cv=pass; b=R4+8otLFHRxLKLKSsIgNTO4jj02R2StzIG/qpT9Z07eN0w9cfnjUyO5hJ7nlYOO+NIWYAlWNWjdRmGc+LXISvoufhF1p4I8onc77yX3X+O+0vwVT60A4XW0GfwzAARedBzRybwKcR1CYw0zZ37twhVkX/Pul0qs+w5poG42R9Vo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1776458838; c=relaxed/simple;
+	bh=fkLn4MUAb/1CdcaVVBNrvFmjlYd3Xzh5v+4UhL/ncyQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=VzlFRBi48PLeeRBe0qJ6FlmGmi1XePu8sqc3OBmjSegxegS8qSsmmtrEahZW61J4SlwDJR59gQajQCKO17L9tmlpN5z4sFMAp5MnumVu3K1k1nRxGmkqm0W0t/eNDKHEsj1t3O8ZhIp4HTl4lYv9ol8wIg8Ig78wOYbbIWpzWhs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QpInHvSZ; arc=pass smtp.client-ip=209.85.218.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="Rni5aKUP"
-Received: by mail-qt1-f226.google.com with SMTP id d75a77b69052e-506aa685d62so5740561cf.0
-        for <brcm80211@lists.linux.dev>; Fri, 17 Apr 2026 12:26:52 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776454011; x=1777058811;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :dkim-signature:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=psFzhtTARPiia800y0nrnAWpk78pBCr1jh1L3zJLkQM=;
-        b=kjsSPeFWM1Z2Lw8teqMj6k96SvOTjhddcmiLuUcu1NB/MT+nM7Hqk8oUn3fq8VOGF0
-         FvQQr0s+a/hBKqsvprW92TMQHTSShiZhJ+PaVwBoGzXrQ3p3fTrKYIV9JGBoGVZ/JfNE
-         FbdQyVfMBbsCnIORgl495CV1CjczE2k48I0r/tIxzsPoYRR92xPtps2JoSxd4jCUUSRU
-         P72jZ5g6w5hk4Btz9Q6TIL72BISAdspYsVo8pOgNyXsM7b/3F/EpTFV2dcbXhtEKhqzF
-         6SdisEgS7aXoJqFzD6ST2RsXXrtubN9YJpJU/7ake8B2sMM5m42GYB7Umvch+bakg688
-         W2dw==
-X-Forwarded-Encrypted: i=1; AFNElJ+48kbToRTKXxJovHG0lsxqowZTzYp+CL0G6LOZ3S7UNOfflhLmmLB+oPB7zdg4cO6iABRlhepm71o=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzRoRtmob2vAZ6TuyIUbiis1nG8Pvmu4dTVt/kOm7nTAXdCwg79
-	got7QXUNcVeTHr+qvmkLI0+lRWGZ285JV7HCf+SrhagSyvw8E3RxqnlpJbj3ckrqIyCrPLVI7Ze
-	nOc78nhGkYw8rTy+zZ6+InfWvQueP36AyboUdQDjuTUU2yw+YF6JzO5fag0TkYJuyV1jhHuvFm0
-	ux2sYLUUcMazf2SbZwvv69d4SYGZBdgok953ASKwgKTbfGJye4A6skkYWc8RbvllhryY0EA96fF
-	PQT+CqIQOcLMrv9/tSsQw==
-X-Gm-Gg: AeBDiesm8YbIE9zhQCqfS26MwNwCsMuFx3V7BaHjDWeZHK+TExI05fyLd9wGhleLRYj
-	N3+unTc8Kw3xwj0e8ZYmBA1o9z7fzuJEUFAbKCdVcJVTw1LPZWeUhysJLRFhGkSRfRt09RBQnt3
-	gtzRc6napKSp4evM+kiAvsGCl4VJz3GCDOf2fxLJH2/omhsE+LfCy9Jm26J0IclnWzgQvgF2e+U
-	Pb7MhzoS9G3ZLyu0azmr7tbZ0tF94083EBblhCS0sPIX6nJZDYV/CyhCoVjOywt1W76L01JaG9y
-	XUbqWOftBF6PQQ1lr0yrWqxEOCrUoCLWRc7RaUn2VEUe29F4vH6v8575J1miuGb/ryYYTyOQDDN
-	KXoaO4yNcqvWL28HTgqUM7oH0M4a/5ctYmqQ6KwcjqAJ/OcXxWn4mEywNcIOklmcckut2QVfZHm
-	oVwDYBewiuvAPcl/g1zJQ/9droC8L85u8Rw9TN0TRLwds2PPmr0Bo00hbvvwZOcaVLuygQYvo=
-X-Received: by 2002:a05:622a:13d4:b0:50b:277d:efc9 with SMTP id d75a77b69052e-50e36bd641emr64284181cf.39.1776454011357;
-        Fri, 17 Apr 2026 12:26:51 -0700 (PDT)
-Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-15.dlp.protect.broadcom.com. [144.49.247.15])
-        by smtp-relay.gmail.com with ESMTPS id d75a77b69052e-50e392ee3a1sm1702351cf.7.2026.04.17.12.26.51
-        for <brcm80211@lists.linux.dev>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 17 Apr 2026 12:26:51 -0700 (PDT)
-X-Relaying-Domain: broadcom.com
-X-CFilter-Loop: Reflected
-Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-8acb85a973cso17647716d6.3
-        for <brcm80211@lists.linux.dev>; Fri, 17 Apr 2026 12:26:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QpInHvSZ"
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-ba3b9601b97so170029066b.2
+        for <brcm80211@lists.linux.dev>; Fri, 17 Apr 2026 13:47:16 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776458835; cv=none;
+        d=google.com; s=arc-20240605;
+        b=bjHb9ExPvDB3EyoMWrRdOHhzVAUsxRwBxPerelqin0VbogxlHUHOqWZp5dzczWt53S
+         i2uJM5iQibmusru660gJ+8j3u+IRiyh7PPlqNhPg4qSVDA6EwiAdFfYNYNqVpFaIg6Yj
+         1cmkoAZckHmgX2PygSZnq7ttCkH/5tcTeLOnd0kEdV2r7CBDRGf1bzTotZ+NackhAX5Z
+         1bwRSCQfaqssZChToGq4rPQ8gnkB0jLisOJ01KyMC6cyPWZ9oHGlSuhYNKgjP7gYDtxl
+         VDSphO/aIXH+zt4bm4Aa03W7iog01+kBg+O61VwOsacHniZCgtiZgapkoXzemmMvOmdf
+         w18Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=/YDtpkD+GmNdsxlX7i3/rbUlU6XEg9qRnletGPADEbY=;
+        fh=FMYkageZDBOzNw9xDkBQ2zNhysHeFGe+LBbKsiuGsE4=;
+        b=UT8JJBBaJNvtJwnpf3+BKPVBr6XFqyACWdDodn92w4DMEzpo1f3Kfj1MbHmekfLwW3
+         qpxcBLXWuHPH3OoFvuhILMwqR5a79KRkleDMLy5rTcnQSOA6sKPDnJ7B37AimrN+yFFp
+         XohwD/8ja/Hm/roULYoEerYKxAK65h95HVEqkxZMFlUkkVDlWR/ulsm/1MaFGC38HmLd
+         aVnRozZMKdFSL8o/ECybBU7eE6dqJboSyrNnPhPwmuH+fZL8Q1rnc/7IipffwIYX0/tF
+         XAYNMa8nWXC3Vpta2zB2eiU/uyAPAP2WoACgX9HQpZUD6q4MH90WF/2XRcldHoxTTWQ9
+         OJ8w==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1776454010; x=1777058810; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
+        d=gmail.com; s=20251104; t=1776458835; x=1777063635; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/YDtpkD+GmNdsxlX7i3/rbUlU6XEg9qRnletGPADEbY=;
+        b=QpInHvSZxLj7q1f9RvCR3eyb+KeuLB7Mqg/V9+n92OUwnWcZWlsGyvTq+dQHFi6g9q
+         iPCfHQnzUySLsfqNvESheaPz2m5X2g2IPCpiWCne0b5Wtl2DWPkqwXA2AKYAhs5gNW+t
+         r43sjdmzwAY7MJxjuvSDIXXIy24cblK1OiflBoJn1nj9v0pk20CbSD4AiAAgNv/xQev9
+         R/2JBolwe9u4JR0eBgOLyMbhcyZu4bxCGrOJKi7B4t19l6aBnB7G4WN1scQ9uM7wyQfi
+         aSN0q4tJ9spUGWzP+TjyVmT5lrWk7OUjbe838OgWSrHju/eD3sePTX475j+1DY0wxq1S
+         kb1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776458835; x=1777063635;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=psFzhtTARPiia800y0nrnAWpk78pBCr1jh1L3zJLkQM=;
-        b=Rni5aKUPYOYFZeMi4s7N16lH2WwNy5enB0RdXWwxf3UzXqKFNQlTWYh97oSReQlLiG
-         GkwVMovsATQz8dBffqsuQPt4j79a8gjpocVf2Y5VbKJRkcZHN8trVJdsBrYre/LGN3iR
-         Kt3JM/omX87ihAbHhhVlD+1DSDbpo4SYliD0U=
-X-Forwarded-Encrypted: i=1; AFNElJ8cKtxAEK0ZC6xDHlb/9Nz/RnMD9tyhesOdS+lmGwRc5ooyVPCiQgvc/ELPCQ+zOrSl0dAsI+BrIsI=@lists.linux.dev
-X-Received: by 2002:a05:620a:2986:b0:8d7:a2b3:3aab with SMTP id af79cd13be357-8e792b5d38cmr612160485a.58.1776454010455;
-        Fri, 17 Apr 2026 12:26:50 -0700 (PDT)
-X-Received: by 2002:a05:620a:2986:b0:8d7:a2b3:3aab with SMTP id af79cd13be357-8e792b5d38cmr612155385a.58.1776454009744;
-        Fri, 17 Apr 2026 12:26:49 -0700 (PDT)
-Received: from [192.168.178.26] (f215227.upc-f.chello.nl. [80.56.215.227])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8e7d64cbbdbsm198331985a.12.2026.04.17.12.26.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Apr 2026 12:26:49 -0700 (PDT)
-Message-ID: <de97fcd3-2ea5-4855-bfb1-99483a87deaa@broadcom.com>
-Date: Fri, 17 Apr 2026 21:26:46 +0200
+        bh=/YDtpkD+GmNdsxlX7i3/rbUlU6XEg9qRnletGPADEbY=;
+        b=VxS30COVaNPxnm2NptAwxfNT5PUvR4NqBWhAVYxvFKFoOllhalwk06h7xlnUV/CIIJ
+         KM/fN/HL3DIPV452S8gBH8AJIRp2i9Beokom18jiFz+RkLvXYr56mLV8qOYVlVxfCCxu
+         yVNcYKYBdxg9+g9BkM1yspf6Ex0WPMEhQSqz5HXGw/hoD2v+uElPYy2ZW53DOcnkfuax
+         /fP93Go/TisOj1ug26Xb3gCbRQV5Sq2aK4i74efvVcVtKAwKYKwZ7MQXmSEyakwuJcsH
+         aI0fJyENGaqs/cHQFfpTLPqqYGv0/w6J5N4RcRFWqcfTIhsyy6nIJCPX7kajcqbtPAXT
+         jaIg==
+X-Forwarded-Encrypted: i=1; AFNElJ9O01Ng4t4M30NsB3li6yF4dbcv6VmmthcaPDGMsZvvDCmhJLeoP+dIsscT5A5eGBh+YrBbaVtMxuo=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyLFGzwfTe4lUtw39ZDUN4vWwAxhA/yS7x78mqcJJgu0fwy6DhN
+	NrdfgXBtYDBLov5wu8m81inqFNllDuzet0xIhD2y95KBufdpZO02RsMTEcsuAWUV8nj3TXnC/8d
+	Mr5nSz5rPeJSE+bSfx2Th9Ld/WvZ1n6OHplDW
+X-Gm-Gg: AeBDiesA9HHxVQchB1s8hnqDRizMHnrK7IEmH+pTyobd+SS7eKcpDUlTSuwYV+jUlSk
+	+FMzaZ+N0/fYSzKVHKA5IwQwh4PCsqzpAkCSH+pirYYZ+j/wCGEdCf+WB21Gn7EIhEr9l8E5zf+
+	Cr+AkHHZAZroB29jFt+cszPaQeeaSkK9QyBiPL4KH5HdCWlVAq2EB7R5Oc0iJPy0Kxm45ermTI8
+	0LupfGuLUtlHiJgasBQDgFifVaiaXUoX8tmzy5UTGYRcZzpHHiCYYm2utJpUq6HrCRnBValHBIb
+	KVoAzQYpVFwzqyowr6BQP16TBVLu9l1VBZ96r6xRLPHM8Y4HLNE7P7ZjJrUawO4W8orAZ0YiQD6
+	mu5KD8ZnLIQomZyOa
+X-Received: by 2002:a17:907:3d02:b0:ba4:8ecb:7d69 with SMTP id
+ a640c23a62f3a-ba48ecb824amr199874966b.13.1776458834892; Fri, 17 Apr 2026
+ 13:47:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] wifi: brcmfmac: Fix potential use-after-free issue when
- stopping watchdog task
-To: Marek Szyprowski <m.szyprowski@samsung.com>,
- linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
- brcm80211-dev-list.pdl@broadcom.com
-References: <CGME20260416093428eucas1p2fde898f84c1e15dd94d1ecb52707c72b@eucas1p2.samsung.com>
- <20260416093339.2066829-1-m.szyprowski@samsung.com>
-Content-Language: en-US
-From: Arend van Spriel <arend.vanspriel@broadcom.com>
-In-Reply-To: <20260416093339.2066829-1-m.szyprowski@samsung.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
+References: <20260331233238.23527-1-rosenp@gmail.com> <a612564e-7338-430a-b7d8-8276adb45b05@broadcom.com>
+In-Reply-To: <a612564e-7338-430a-b7d8-8276adb45b05@broadcom.com>
+From: Rosen Penev <rosenp@gmail.com>
+Date: Fri, 17 Apr 2026 13:47:03 -0700
+X-Gm-Features: AQROBzCNC8Wra5fJSWY11x4yLjA-7doLAGoTcu93dmmZhzp8sgQDeMKM48XVbyc
+Message-ID: <CAKxU2N8yEfv0RG9Owb0W8PtmbDSzYunxUJzQo0v8Gvbw2PCBgA@mail.gmail.com>
+Subject: Re: [PATCH wireless-next] wifi: brcm80211: change current_bss to a FAM
+To: Arend van Spriel <arend.vanspriel@broadcom.com>
+Cc: linux-wireless@vger.kernel.org, 
+	"open list:BROADCOM BRCM80211 IEEE802.11 WIRELESS DRIVERS" <brcm80211@lists.linux.dev>, 
+	"open list:BROADCOM BRCM80211 IEEE802.11 WIRELESS DRIVERS" <brcm80211-dev-list.pdl@broadcom.com>, 
+	open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 16/04/2026 11:33, Marek Szyprowski wrote:
-> Watchdog task might end between send_sig() and kthread_stop() calls, what
-> results in the use-after-free issue. Fix this by increasing watchdog task
-> reference count before calling send_sig() and dropping it by switching to
-> kthread_stop_put().
-> 
-> Fixes: 373c83a801f1 ("brcmfmac: stop watchdog before detach and free everything")
-> Fixes: a9ffda88be74 ("brcm80211: fmac: abstract bus_stop interface function pointer")
+On Fri, Apr 17, 2026 at 12:15=E2=80=AFPM Arend van Spriel
+<arend.vanspriel@broadcom.com> wrote:
+>
+> On 01/04/2026 01:32, Rosen Penev wrote:
+> > Change to a single allocation with kzalloc_flex and remove some
+> > boilerplate.
+> >
+> > Done as a FAM instead of value to keep -> usage in codebase.
+>
+> I get it and it looks a bit like a trick, but....
+Used in many places in the kernel:
 
-Looks good to me. Maybe add stable?
-
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-
-> Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-> ---
-
-[...]
-
-> ---
->   drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c | 6 ++++--
->   1 file changed, 4 insertions(+), 2 deletions(-)
+git grep kzalloc_flex | grep ,\ 1 | wc -l
+33
+git grep struct_size | grep 1\) | wc -l
+99
+>
+> > Signed-off-by: Rosen Penev <rosenp@gmail.com>
+> > ---
+> >   .../broadcom/brcm80211/brcmsmac/main.c        | 32 ++----------------=
+-
+> >   .../broadcom/brcm80211/brcmsmac/main.h        |  2 +-
+> >   2 files changed, 3 insertions(+), 31 deletions(-)
+> >
+> > diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.c b/=
+drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.c
+> > index c7eaf160e1fa..4f57d64b1dd3 100644
+> > --- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.c
+> > +++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.c
+> > @@ -418,21 +418,12 @@ static int brcms_chspec_bw(u16 chanspec)
+> >       return BRCMS_10_MHZ;
+> >   }
+> >
+> > -static void brcms_c_bsscfg_mfree(struct brcms_bss_cfg *cfg)
+> > -{
+> > -     if (cfg =3D=3D NULL)
+> > -             return;
+> > -
+> > -     kfree(cfg->current_bss);
+> > -     kfree(cfg);
+> > -}
+> > -
+>
+> ... it does clearly give some code reduction.
+>
+> >   static void brcms_c_detach_mfree(struct brcms_c_info *wlc)
+> >   {
+> >       if (wlc =3D=3D NULL)
+> >               return;
+> >
+> > -     brcms_c_bsscfg_mfree(wlc->bsscfg);
+> > +     kfree(wlc->bsscfg);
+> >       kfree(wlc->pub);
+> >       kfree(wlc->modulecb);
+> >       kfree(wlc->default_bss);
+>
+> [...]
+>
+> > @@ -527,7 +499,7 @@ brcms_c_attach_malloc(uint unit, uint *err, uint de=
+vid)
+> >               goto fail;
+> >       }
+> >
+> > -     wlc->bsscfg =3D brcms_c_bsscfg_malloc(unit);
+> > +     wlc->bsscfg =3D kzalloc_flex(*wlc->bsscfg, current_bss, 1, GFP_AT=
+OMIC);
+> >       if (wlc->bsscfg =3D=3D NULL) {
+> >               *err =3D 1011;
+> >               goto fail;
+> > diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.h b/=
+drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.h
+> > index b7ca0d9891c4..e9cbb95a5a17 100644
+> > --- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.h
+> > +++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.h
+> > @@ -614,7 +614,7 @@ struct brcms_bss_cfg {
+> >       u8 SSID_len;
+> >       u8 SSID[IEEE80211_MAX_SSID_LEN];
+> >       u8 BSSID[ETH_ALEN];
+> > -     struct brcms_bss_info *current_bss;
+> > +     struct brcms_bss_info current_bss[];
+>
+> It does feel icky to use a flex array for 1:1 object relation. It seems
+> the lifetime of both objects is exactly the same so I would consider
+> using the value instead of FAM. It would give the same code reduction,
+> but making the patch slightly larger.
+>
+> main.c: kfree(cfg->current_bss);
+> main.c: cfg->current_bss =3D kzalloc_obj(*cfg->current_bss, GFP_ATOMIC);
+> main.c: if (cfg->current_bss =3D=3D NULL)
+> main.c:                 wlc->bsscfg->current_bss->chanspec =3D chanspec;
+> main.c:         rs =3D &wlc->bsscfg->current_bss->rateset;
+> main.c:                 mcsset_bss =3D wlc->bsscfg->current_bss;
+> main.c:         bi =3D wlc->bsscfg->current_bss->beacon_period << 10;
+>
+> So it is used in just 4 places not counting the first 3 hits for obvious
+> reasons. Not too much effort to use value here so please do that.
+Sure. Will send when the merge window opens.
+>
+> Regards,
+> Arend
