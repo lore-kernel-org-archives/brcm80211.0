@@ -1,75 +1,74 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11EA03B27C2
-	for <brcm80211@lists.linux.dev>; Wed, 29 Apr 2026 10:26:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D97237F018
+	for <brcm80211@lists.linux.dev>; Wed, 29 Apr 2026 10:30:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777458399; cv=none; b=m3BhpX0TdyAnWwa7LMdrzxC9bvz1FbOz1g1Oj694HFm1L6QWXV2++YqcrXvrmqNKmhKnd5NNz87An/k9DYVpAZBNgUp3Br22ZnWoslxUG3tJjC2C3zWjJXHp4tYh0j1WeT6UrzmufeWHH4Mj+5fI+q8Hg+wUH2+L9XB7ahNHbhk=
+	t=1777458625; cv=none; b=XVipi42lkzJBKb2K/G6iQAtqOvDXlGjN73s7s7LDkaqvmVPdwHPuUkUZz37Zqau7wH+m6IZbI6iow4XopC+iXQeAqQBY4FZR1XOaw+QKMTeIKQMKAXsZeDJRg+hiJUugCmKVdakIcongxIgB0jI4YFEii94xedPP7clTs/BufRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777458399; c=relaxed/simple;
-	bh=G1W/SI+R62/Tf87Hp2bXOJ+Uw+JF2EHw6TW2eBuH8Go=;
+	s=arc-20240116; t=1777458625; c=relaxed/simple;
+	bh=8k+/eJ+oplAKwa6y8hgdOMX1aMdC7hSdvQ+WDtJexew=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=R7nx+5wdfWtxFXIx/44YiDNfvrIzpP2JE0dPg4T4cwAAoNSd84d3QqYatj9mri7GoIbLMu8I/+a52tcXH6nfZ5y+MAFDMR6tRg7ix/62llO7tr4kXp06owNAT6lq7zpur9cf7BuK1tiU9/ywOV1pxh13BaUa0EN0ZYQm3w8AJOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20251104.gappssmtp.com header.i=@baylibre-com.20251104.gappssmtp.com header.b=VilbVB0j; arc=none smtp.client-ip=209.85.128.44
+	 Content-Type:Content-Disposition:In-Reply-To; b=b//gt07hlS8NbwD6myle8QO4HDMf1JPhtegkvkDjsNvA/jVZJAvr3d8IsDX2hykwbAI3Sqn7hsodtcJ3MgMv5dDiPgmGACzOAF70Ev1NfbYmG1RMIN8RrpxyBq1JcAVaBTV5rGwEd0MlpE/0j8jUDBQz/vHeECxAdiNiKzXMwVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20251104.gappssmtp.com header.i=@baylibre-com.20251104.gappssmtp.com header.b=jiDCr8BS; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20251104.gappssmtp.com header.i=@baylibre-com.20251104.gappssmtp.com header.b="VilbVB0j"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4838c15e3cbso113560555e9.3
-        for <brcm80211@lists.linux.dev>; Wed, 29 Apr 2026 03:26:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=baylibre-com.20251104.gappssmtp.com header.i=@baylibre-com.20251104.gappssmtp.com header.b="jiDCr8BS"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-488ab2db91aso174863465e9.3
+        for <brcm80211@lists.linux.dev>; Wed, 29 Apr 2026 03:30:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20251104.gappssmtp.com; s=20251104; t=1777458395; x=1778063195; darn=lists.linux.dev;
+        d=baylibre-com.20251104.gappssmtp.com; s=20251104; t=1777458622; x=1778063422; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=mfvKfJJPf0ASmalSXv+63KXtxyjY0rmQCt/O1qy7v1U=;
-        b=VilbVB0jtjoWzuu0YzgTqx1MEpMBrYg8PFAxFtE7wD3V6OafMPjZA9yxStVfWny8PB
-         QSzSyzoQLMowrmEMFldHjMY1Gm7YvqqobKMah9GGG2Q+4d0eRJv5JQQt1OVJtQ+qo5DH
-         yvzkRVW9I0p+n8EnNEh0fyKZ9JLnMzUMXtexrU0L9T6o5jRFhe32LDVFGPaldHenthn+
-         346PjubL/ox+svxmRXcQUAwtF5fhNspk6SXM61GALZO4ZqMk98nteZJe08oTgtFBF5LD
-         8qX4uXpUOQoeGKHJ3FyeYA3yhQRWPtMRUfr8V+3Z56XiKyGJhIainOdfSMc7NAlexCej
-         xU7g==
+        bh=4K3CX6fQVp3G5LFrOMSsx2n8N4FljSdUREsN/3Z40rY=;
+        b=jiDCr8BSks3lzO6/WUmTzlBHrKAI2yUdBLuIUXuxbUq7sI+l8pPJi8ZyAHpZu2uMDk
+         jl+qbTL0UvghseUIdXzKYxBMP2o/g47g0nP3gLxONDNi23b+Dd9oxbbNELSAXQ0Foo65
+         QcA0oOv7hJS4D8vLeRdxWhZKDj5VwX+pA1Q8vgOJs/nTf+GKczlJGZoz5L+lsRFXoIHr
+         DaLOoNyTmHIzrsdk8Lzxu0f94lDdduIOWB9T7w41zMp+FktpPCwQkvQgcHNd4Rn3Enz8
+         hrLRc9yjXKzNRILDTGZqn1NjNP4i9XjHxgZPhQaXKADF+4AbCuiTfRVMHY/CQsshfLER
+         CahQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777458395; x=1778063195;
+        d=1e100.net; s=20251104; t=1777458622; x=1778063422;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=mfvKfJJPf0ASmalSXv+63KXtxyjY0rmQCt/O1qy7v1U=;
-        b=P/02d773JqlFXcHQ3UC30aa4DymfC5ycd9X188CQo8P+/fPj0BZqK9YnRnVLphEIcu
-         qeK1vSiHZN0JpO0YVu4PyVXqTIyabsXQJE0qvpJRt/xwl7W5UrEA4bQVL6FC0jYKWkcU
-         DykNwFge7iVTQPsu+8iomrymSxLxsu/iyWCtvlqrxEzLhgGP287uMcI+1G50liUlUSrl
-         0/feHzqnduK/hox1jNmx/tyus34xMAXGOkgCCRRHyng6pPBldavQCWI3FBGx2OBurYhG
-         O77dqypNNXiu1IMSs/GZeEPm+Rdb2AC4fgC4Gc8cHSPJ8trn5gLT3seYDnTvGXN9B/zr
-         E2xg==
-X-Forwarded-Encrypted: i=1; AFNElJ99kOOydVEXz/Wau9Zi30meiKxDRyTlsIJNYnN/Mc/rfZCGzfL81ugXsfMgEo9tHuZrdl4musqZ32k=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzF4Gkp+hlvLK3JvlWzDu/hPoTQMXj4iFKJim+Vq7qOsEs+pVh5
-	RwkIeeZeJdj+Htd68K9jdiuCDy1uZYYrlUMZqGdv+Rg1O1xVbU/mucKRji20mula3Ow=
-X-Gm-Gg: AeBDieseSDBcNkJjwL1/ZTyPVHuiCDjU85cVU917konDRNYXXm2xUTVN9xFQdhNUcHI
-	D6fi8CPl6SyU3WvzS5ErKA+/HW3dCmoeT8+F3rG5UMArqrGfScNv28lMlysC2gVhd6zNr0JB9z0
-	HaIaOY/fp8YPqz5uzYdyvRq4BWjOSK0NeDyDejdZ/oYc90sfrWJY0sawNiuToW41jadmhrVBJ8A
-	BPvQ+UGkhbOaHh+9mq0CrVl+kTphOXzCnD+s9jzXxaYCfzdmAng9DqXlEp2bwXtFeLpqaRoOiUA
-	naqQkNhwaNL1WqnzHLMfaJ13aCPnfBcoFnyqUnX3f9qAx+15aQRBl9kG1n4wUm6SeFVt48xrBv7
-	Pu2aH2oDWtQX7y0Qmwm3Qu3qumm0b7gMucGLLl+N9logP/Z9919w3/ETClQs1GbquKxBwtSDAB/
-	GhLwWbnkEaCgJClfdHMyc3AT7t42O6+rUA7EnBvUoFS2U/GTJfTYHDVB2uGWDboY+J26aV7kc5M
-	LEwDVMCRcmEUiE0zoer2Vx+yg==
-X-Received: by 2002:a05:600d:8402:b0:489:149a:f9e7 with SMTP id 5b1f17b1804b1-48a77b25340mr88922285e9.27.1777458393898;
-        Wed, 29 Apr 2026 03:26:33 -0700 (PDT)
+        bh=4K3CX6fQVp3G5LFrOMSsx2n8N4FljSdUREsN/3Z40rY=;
+        b=dHvwwXSROVsuH1bZ775m2vKIErROLXus0FMvw9cjHUuiZnTTKyzajrazbOS1KOFcLb
+         5Wc8qH6/QXTqCgs5SdduPJ3rNZzNSgiRbLQQi2azvIOWMJX2CIR468JflsivdbNuOjVc
+         rvn1WNhDbL18kamibHTTMXgzyOOcbxNv0J2sidJA8yYgqOB+AK+GQk3oriNnDUaMQUey
+         y6gEcVNZmWypDqUtxd7ZCxTEPmkh60TQCpWeGVGHSlbsSZi5tlXwonYIQzNeoWq2GJyN
+         ptrtl57RqMGtFd2ZhQ0O6cZOgQfNdW8lyaaF9E161+9z93fbULHvYJ4UiW9yIiXfctZW
+         BlQQ==
+X-Forwarded-Encrypted: i=1; AFNElJ92QVNHDqsnyTSRs8YFbccoyMAnFL0Lmlc9C6xX4Sxix7sNJmR5ghabHEAFb33VZ2m+64+eq3bIuS4=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz10v2wULhECgj8nsqqjvIxtA5TtT0kMqX1U4AWbmfxC4hTZ8aX
+	KYkwxP55O0A8yxscQGhrjak/39wbF5RFnuZMXmz8cPznwaLZ3j1wtoVrDxPQJdasO4w=
+X-Gm-Gg: AeBDieuZV6W0xS+euk/UfweVVGmeeEeMgR6RcoEV69aHBTjafmZ4zmEDSTQIO/hR8ZV
+	A0yFvTeXn7sX+1wvndkB1HaDJQO9drkxltQmNX3SIY40iemWQYDy0qfHFcoJBIXui1kU+pSgJIq
+	LXt7AD5qlZ/MwMvwhhBofAO0IK7PS26apPh/8c0L0tGdLE0fzkyFKosGCRUUwLDIUFrrVyRu182
+	86aweuix7UAorBjZqtaLuqh626MHq9lhKvIdsQ8Wc3OzRWbQOLzW654SlkAlFkCJk2aVKaWWp85
+	txVrNECPpiZ4ai0Z95vaf8ePUG0d2JzWHJK+v2lSTtbX1c0FfHHgYiRe3V+nXRgxHZfUQ2Qof1l
+	HiUs4eC1eqBynKrAtOza9DRESgVeecgj4YLJpIF3FLz5C7yVtU5oDYJO3J8K7yc8rNJpQX/wwrZ
+	+8Jc25Cxj0zqn+Mxi2vI+mtZv9H7GDilgItwDPWieEE0kB4gY1qrJeqnPjWATIxglP1+UUufGfQ
+	auca8Afk9VUfnH51Kc64YEx0Q==
+X-Received: by 2002:a05:600c:a4f:b0:485:3a03:ceca with SMTP id 5b1f17b1804b1-48a7b543796mr66187605e9.23.1777458621928;
+        Wed, 29 Apr 2026 03:30:21 -0700 (PDT)
 Received: from localhost (p200300f65f114e08936c55da887fa426.dip0.t-ipconnect.de. [2003:f6:5f11:4e08:936c:55da:887f:a426])
-        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-48a7b912ee3sm28053445e9.2.2026.04.29.03.26.32
+        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-48a7c57b641sm47160965e9.6.2026.04.29.03.30.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Apr 2026 03:26:33 -0700 (PDT)
-Date: Wed, 29 Apr 2026 12:26:32 +0200
+        Wed, 29 Apr 2026 03:30:21 -0700 (PDT)
+Date: Wed, 29 Apr 2026 12:30:20 +0200
 From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig_=28The_Capable_Hub=29?= <u.kleine-koenig@baylibre.com>
-To: Andy Shevchenko <andriy.shevchenko@intel.com>
+To: Marc Kleine-Budde <mkl@pengutronix.de>
 Cc: Michael Grzeschik <m.grzeschik@pengutronix.de>, 
 	Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller" <davem@davemloft.net>, 
 	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, 
-	Paolo Abeni <pabeni@redhat.com>, Marc Kleine-Budde <mkl@pengutronix.de>, 
-	Vincent Mailhol <mailhol@kernel.org>, Krzysztof Halasa <khc@pm.waw.pl>, 
-	Johannes Berg <johannes@sipsolutions.net>, Markus Schneider-Pargmann <msp@baylibre.com>, 
-	Steffen Klassert <klassert@kernel.org>, David Dillow <dave@thedillows.org>, 
-	Ion Badulescu <ionut@badula.org>, Mark Einon <mark.einon@gmail.com>, 
-	Rasesh Mody <rmody@marvell.com>, GR-Linux-NIC-Dev@marvell.com, 
+	Paolo Abeni <pabeni@redhat.com>, Vincent Mailhol <mailhol@kernel.org>, 
+	Krzysztof Halasa <khc@pm.waw.pl>, Johannes Berg <johannes@sipsolutions.net>, 
+	Markus Schneider-Pargmann <msp@baylibre.com>, Steffen Klassert <klassert@kernel.org>, 
+	David Dillow <dave@thedillows.org>, Ion Badulescu <ionut@badula.org>, 
+	Mark Einon <mark.einon@gmail.com>, Rasesh Mody <rmody@marvell.com>, GR-Linux-NIC-Dev@marvell.com, 
 	Manish Chopra <manishc@marvell.com>, Potnuri Bharat Teja <bharat@chelsio.com>, 
 	Denis Kirjanov <kirjanov@gmail.com>, Jijie Shao <shaojijie@huawei.com>, 
 	Jian Shen <shenjian15@huawei.com>, Cai Huoqing <cai.huoqing@linux.dev>, 
@@ -90,19 +89,20 @@ Cc: Michael Grzeschik <m.grzeschik@pengutronix.de>,
 	Jacob Keller <jacob.e.keller@intel.com>, Philipp Stanner <phasta@kernel.org>, 
 	Bjorn Helgaas <bhelgaas@google.com>, Yeounsu Moon <yyyynoom@gmail.com>, 
 	Denis Benato <benato.denis96@gmail.com>, Yonglong Liu <liuyonglong@huawei.com>, 
-	Yicong Hui <yiconghui@gmail.com>, Randy Dunlap <rdunlap@infradead.org>, 
-	MD Danish Anwar <danishanwar@ti.com>, Nathan Chancellor <nathan@kernel.org>, 
-	Sai Krishna <saikrishnag@marvell.com>, Ethan Nelson-Moore <enelsonmoore@gmail.com>, 
-	Larysa Zaremba <larysa.zaremba@intel.com>, Joe Damato <joe@dama.to>, Double Lo <double.lo@cypress.com>, 
+	Andy Shevchenko <andriy.shevchenko@intel.com>, Yicong Hui <yiconghui@gmail.com>, 
+	Randy Dunlap <rdunlap@infradead.org>, MD Danish Anwar <danishanwar@ti.com>, 
+	Nathan Chancellor <nathan@kernel.org>, Sai Krishna <saikrishnag@marvell.com>, 
+	Ethan Nelson-Moore <enelsonmoore@gmail.com>, Larysa Zaremba <larysa.zaremba@intel.com>, 
+	Joe Damato <joe@dama.to>, Double Lo <double.lo@cypress.com>, 
 	Colin Ian King <colin.i.king@gmail.com>, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, 
 	linux-can@vger.kernel.org, linux-parisc@vger.kernel.org, intel-wired-lan@lists.osuosl.org, 
 	linux-rdma@vger.kernel.org, oss-drivers@corigine.com, linux-wireless@vger.kernel.org, 
 	brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com
 Subject: Re: [PATCH net-next] net: Consistently define pci_device_ids using
  named initializers
-Message-ID: <afHbcwzVucHRYmDW@monoceros>
+Message-ID: <afHdAUpvfYa7A3AE@monoceros>
 References: <20260428171845.2288395-2-u.kleine-koenig@baylibre.com>
- <afGrPvUeZ-DjWbC8@ashevche-desk.local>
+ <20260429-responsible-clever-coyote-6b79f1-mkl@pengutronix.de>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -110,12 +110,12 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="k4r3nmtfjdpszuus"
+	protocol="application/pgp-signature"; boundary="3grpbpcumi4i3vj3"
 Content-Disposition: inline
-In-Reply-To: <afGrPvUeZ-DjWbC8@ashevche-desk.local>
+In-Reply-To: <20260429-responsible-clever-coyote-6b79f1-mkl@pengutronix.de>
 
 
---k4r3nmtfjdpszuus
+--3grpbpcumi4i3vj3
 Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
@@ -123,123 +123,61 @@ Subject: Re: [PATCH net-next] net: Consistently define pci_device_ids using
  named initializers
 MIME-Version: 1.0
 
-[I dropped a few addresses from Cc: that bounced for me before.]
+Hello Marc,
 
-Hello Andy,
-
-On Wed, Apr 29, 2026 at 09:54:54AM +0300, Andy Shevchenko wrote:
-> On Tue, Apr 28, 2026 at 07:18:44PM +0200, Uwe Kleine-K=F6nig (The Capable=
- Hub) wrote:
-> > ... and PCI device helpers.
-> >=20
-> > The various struct pci_device_id arrays were initialized mostly by one
-> > the PCI_DEVICE macros and then list expressions. The latter isn't easily
-> > readable if you're not into PCI. Using named initializers is more
-> > explicit and thus easier to parse.
-> >=20
-> > Also use PCI_DEVICE* helper macros to assign .vendor, .device,
-> > .subvendor and .subdevice where appropriate and skip explicit
-> > assignments of 0 (which the compiler takes care of).
-> >=20
-> > The secret plan is to make struct pci_device_id::driver_data an
-> > anonymous union (similar to
-> > https://lore.kernel.org/all/cover.1776579304.git.u.kleine-koenig@baylib=
-re.com/)
-> > and that requires named initializers. But it's also a nice cleanup on
-> > its own.
-> >=20
-> > This change doesn't introduce changes to the compiled pci_device_id
-> > arrays. Tested on x86 and arm64.
->=20
-> ...
->=20
-> > -	{0,}						/* 0 terminated list. */
-> > +	{ }						/* 0 terminated list. */
->=20
-> The comments like these are just noises.
-
-Agreed, but I'd consider it out of scope for this patch to drop these
-comments. That might also be subjective.
-
-> The rule of thumb is to play with a
-> trailing comma:
-> - always drop it in the terminator entry
-> - always keep it in the normal initialisers when semantically it's not a
-> terminator
-
-That was my intention. Will rework.
-
-> >  static const struct pci_device_id liquidio_pci_tbl[] =3D {
-> >  	{       /* 68xx */
-> > -		PCI_VENDOR_ID_CAVIUM, 0x91, PCI_ANY_ID, PCI_ANY_ID, 0, 0, 0
-> > +		PCI_VDEVICE(CAVIUM, 0x91)
->=20
-> Use full fixed-width device id value(s). 0x0091 here and so on...
-
-Sounds fair.
-
+On Wed, Apr 29, 2026 at 11:10:21AM +0200, Marc Kleine-Budde wrote:
+> On 28.04.2026 19:18:44, Uwe Kleine-K=F6nig (The Capable Hub) wrote:
 > >  	},
->=20
-> Also seems that you may decrease number of LoC here putting it as
->=20
-> 	{ PCI_VDEVICE(CAVIUM, 0x0091) }, /* 68xx */
->=20
-> and so on...
-
-Agreed if all lines of an array can be compressed like that.
-
-> >  	{       /* 66xx */
-> > -		PCI_VENDOR_ID_CAVIUM, 0x92, PCI_ANY_ID, PCI_ANY_ID, 0, 0, 0
-> > +		PCI_VDEVICE(CAVIUM, 0x92)
-> >  	},
-> >  	{       /* 23xx pf */
-> > -		PCI_VENDOR_ID_CAVIUM, 0x9702, PCI_ANY_ID, PCI_ANY_ID, 0, 0, 0
-> > +		PCI_VDEVICE(CAVIUM, 0x9702)
-> >  	},
-> > -	{
-> > -		0, 0, 0, 0, 0, 0, 0
-> > -	}
+> > -	{ 0,}
 > > +	{ }
-> >  };
 >=20
-> ...
+> Nitpick: can you convert the terminating entry to follow the same style
+> as the rest of the driver:
 >=20
-> >  #define CH_PCI_DEVICE_ID_TABLE_DEFINE_END \
-> > -		{ 0, } \
-> > +		{ } \
-> >  	}
->=20
-> Why do we have this macro at all?
+> diff --git a/drivers/net/can/sja1000/plx_pci.c b/drivers/net/can/sja1000/=
+plx_pci.c
+> index a03553b80a5d..d69ff0ccfd94 100644
+> --- a/drivers/net/can/sja1000/plx_pci.c
+> +++ b/drivers/net/can/sja1000/plx_pci.c
+> @@ -353,8 +353,8 @@ static const struct pci_device_id plx_pci_tbl[] =3D {
+>                  PCI_DEVICE_SUB(ASEM_RAW_CAN_VENDOR_ID, ASEM_RAW_CAN_DEVI=
+CE_ID,
+>                                 ASEM_RAW_CAN_SUB_VENDOR_ID, ASEM_RAW_CAN_=
+SUB_DEVICE_ID_BIS),
+>                  .driver_data =3D (kernel_ulong_t)&plx_pci_card_info_asem=
+_dual_can,
+> -        },
+> -        { }
+> +        }, {
+> +        }
+>  };
+>  MODULE_DEVICE_TABLE(pci, plx_pci_tbl);
 
-Over engineering? Reworking that also seems to be out of scope for this
-patch to me.
+That might be subjective. I also see some value to have the terminating
+entry stand out a bit in the formatting and so I usually kept the entry
+as it was.
 
-> Also I somehow managed to remove, but I remember you had an inner comma i=
-n some
-> cases after the .driver_data, when the full ID entry is located on a sing=
-le
-> line. I.o.w. do
->=20
-> 	{ PCI_...(), .driver_data =3D ... // no trailing comma here! },
+If you prefer I can rework the can drivers at least to match your taste.
 
-That was also my intention. Will rework.
+As you didn't object to have the can drivers converted as part of the
+drivers/net patch, I assume that part is OK for you?!
 
 Best regards
 Uwe
 
---k4r3nmtfjdpszuus
+--3grpbpcumi4i3vj3
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmnx3NUACgkQj4D7WH0S
-/k7M1wf/QelV4pupjiZbLcg8qPVRzGgZ0AKqDUMY0oLZjH5ck6W8VSMONm3Ln4fu
-Tbzeul8HVUK14PBHvYKQiDU7OCUzVwfgAgM2qs9BuyfAmX3mBr2SaZI1M1DtYNUv
-3FRPKSiDWXcbe5sguySJb0BKepJc6DdUYzpRBrF5m90mvuM2dZALWRiO3lFvMYlS
-Kls/wTkony/O5uB/oAAHI7y91nhHIw++GuY0fge4rmRUISKTZ+G1/Lz8VrcUzt+p
-8iTGVh5MpStGQuFRrjho2JzPcrXxcOYiI6Z3rRBMCu5qZbVlrzaKcVvwCMd7n4gc
-gbcV922oXzCW/OtCAcZtPNggcidTXA==
-=we79
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmnx3bkACgkQj4D7WH0S
+/k6JpggAqaPu+dVWg39EGo869zm4GExkyk9Cfi0y4X05WE8coeYG2q3U4oD1x05e
+mbEJVHdpAHnBcB/vafRjFDSueFN1LbdYKyqmCOoSEVZm6FUryg3uez5LBTQ1H2M+
+HSSsw95R2MJqtNxxGphk2Cr4lR3yVrG+oJpIot8CPMMed7xddK4yn7AdrudrcYAv
+fhOuS+7KEB4g6yajDT95eF2Jj+hN7rzcU0+g6TBO5Gd3GnLwIhG6FG4iZnwnaU8Z
+FqH+sC+KN85L/JYWezdPXgx5DnHkrmX1530hPFowO9u5SBLf6zBmbuKUgF8CdU4H
+gSp6StxoogXj+z4H3WJRpNSbxjHwNQ==
+=BqTG
 -----END PGP SIGNATURE-----
 
---k4r3nmtfjdpszuus--
+--3grpbpcumi4i3vj3--
