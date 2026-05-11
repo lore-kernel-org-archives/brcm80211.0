@@ -1,155 +1,252 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B57036EAAC
-	for <brcm80211@lists.linux.dev>; Sat,  9 May 2026 06:42:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E5F03C9EEE
+	for <brcm80211@lists.linux.dev>; Mon, 11 May 2026 09:00:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778308965; cv=none; b=UoL3Gqc7fpagmk1PmJgNN1Aj8nLigHbh6Mw00DrSRWrfAGfUGN+nWQcimd1BRFgjWJQOKPpZWyuyL9PF2hFZ/bmw8uOoVpg1s4e8nd6MqqvMBG/Q389PTkd1LHpCcBMGLBwplnOJmspNqlNWM6ssXcao1xJeHoZ00+Hm+W2IDe0=
+	t=1778490042; cv=none; b=Mi0EJzvZc+h8nntYmU1cicgz6rwnB7Fuwebs7pYACCAlMU5MqtB8Ok4+ImhGKTWztwLJugp2kFXp9U/NkGtX/auut+Bdi0ovcrHpyz6cTASBBweRhMyo3Guslr9TsR/DjKJJxO4SnOqfB2dihyViKcMxWXH1tERc+GSTn3s+arg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778308965; c=relaxed/simple;
-	bh=GEoZHVYUfoQ2POcefbZ30StKEf4EcthVZSlNu+ybULg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HbqDZGoW7GA+l3Tzfb5rEpVv3YMlvexqzhm+M16XoZTctlyQWGHlYp/khTgGTaaQSZzCTWFmmc14F48/y4BW1BANXN5GIIYJVWcwe40D7noY0hNdCRXXDfeMasdFIM+uEd4O4UIrYFJFbCVfEXw0Rxb4wK3ZsiWP4YEUtfP8JHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20251104.gappssmtp.com header.i=@baylibre-com.20251104.gappssmtp.com header.b=d1NA0kgV; arc=none smtp.client-ip=209.85.128.51
+	s=arc-20240116; t=1778490042; c=relaxed/simple;
+	bh=ZYGinJLF1cDgGH/aGo4d1Hy0fwsOtdFNgDp8EWspf48=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=augHO3VjqlDCRxFx5twXokRFa6l6VtEwSsYge5oFylOLbdYuK9A3DekTsx0kCa7BHmyi/Uf3SCTI3LwFJ8Vq1HyQt0jYKowChAa9cx+H2NEHu4+9/SmQX9UiKNwfem8PI7bMAEfm1E+ij2gnMMmrC1ODh0OO0LmoEsmtIiMgLU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20251104.gappssmtp.com header.i=@baylibre-com.20251104.gappssmtp.com header.b=J1RB3SxN; arc=none smtp.client-ip=209.85.221.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20251104.gappssmtp.com header.i=@baylibre-com.20251104.gappssmtp.com header.b="d1NA0kgV"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4891e86fabeso31992835e9.1
-        for <brcm80211@lists.linux.dev>; Fri, 08 May 2026 23:42:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=baylibre-com.20251104.gappssmtp.com header.i=@baylibre-com.20251104.gappssmtp.com header.b="J1RB3SxN"
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-444826c16ffso3542532f8f.1
+        for <brcm80211@lists.linux.dev>; Mon, 11 May 2026 02:00:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20251104.gappssmtp.com; s=20251104; t=1778308961; x=1778913761; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=4fgHjlyy8GzHWAXn0Fq+FtEi3bvrm+LBlHiRLm/LF+E=;
-        b=d1NA0kgV9ZgTsjwJ9tGSTEDLXY6MbPNBb+UnGxCh4gmRv0oXdNqr6znENiOK5vFlUO
-         Xmg0wtsgyDfshFXUQDTl5rewjEXiLaoDiPLKC9zmGA0FmS0Tb9W7MIMuftbDC1htugdO
-         rDc42kj4yT3KtM0HPlISKxeN5WcI7gyV/FDkaUEQTZqEHu74DuBf7MG2iPKJCzEXOZSV
-         FsKG4CDPnGh1kcoblM4rowQmONexYybY5wGuy4Xa8wRHGmKbYa7hg50QuM7wSr41PJbh
-         ViT1u2rR2YRy+0L8RoprYFxPuhLmqS/h3Saccw2OqXVmmYaVVbSdIRWtPiIwN7nv61kz
-         dwRg==
+        d=baylibre-com.20251104.gappssmtp.com; s=20251104; t=1778490038; x=1779094838; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=zA2t05MaP/podHX+JpTZXPs7rW/q4RVQKoAjNccx6WY=;
+        b=J1RB3SxNEXfQgzEuedoKBP+ZGi4OOJ2eaG4gp1PwWP8XOcV7MARz5gzazyXLpKQyAD
+         /ctgOHjlH1IBpbp4lb4F2UwORnQv9u05zq1fc6ombjxvn4UQC2w+sxSj+Ak5Kvqrv0yQ
+         3BJykEPTij9hUWwZZSz0key33Tejuc3+In6o0Qu6pKvUIj/n2mk6R+QsI1VEYuF3cJBf
+         zm+3jrhy2zwszTGSaegReI3k4TBkBjaGUB7eARq3DtnP6zgwiezTTZoLweTlRn3VJM8K
+         sQqoSEoEJqIxujL6NuG2IkIRVi6hl9cP5MWRuDikui/4IxYcJTVlX6Y36t4UOJ01oGO6
+         qZqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778308961; x=1778913761;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4fgHjlyy8GzHWAXn0Fq+FtEi3bvrm+LBlHiRLm/LF+E=;
-        b=ZrWw3Uq4gWZ+DQ5dLkGTXFVfTpwL9OP4W3/tpTgeuDCt1jMjMvWHMsHISB2QIc+G9k
-         dqqC0bEhUp+0w2kYHLKKObsQeSMbbxiDQnf1xlxgc8Z5G3rFjkVrEKfK3ZUfShl4xUxz
-         5/JWIdWZu7qRYWBtGlRKnBaGdnwW4fz1kmmbEfnAAu3bkbBXzOiTSP2pYLyHE4XL7fNs
-         vCjoBCGIK3Y97bFVJDyUvq9KnU+pmZ3xUvEcJZhwT3nQZ+ftKEjmxlExcWEHGaB4Oh54
-         riVDADqfHHAALcQMlY2my9CXjgUty6mIgaCUicMZ/SufUu+BsD2f+hAgumhhhIWsFx81
-         tywg==
-X-Forwarded-Encrypted: i=1; AFNElJ/cqDQL+AyfR65BCafmVLjiBjft0/RvQMIw45G3polDvWF/r1niM1NstPEXwIvDvp1FZQXKX3C1hr8=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw4oQY+VF08Mn6p1Fvskuvx51L5gsdKTPej8YA9nRD6nbkhIv3c
-	aMvOdQe9Psh7qO9hhhY1JwruFM5PP5HXb54fxCVhS6xQ/+YyeCOJ8fl2+0/lxYP09Nc=
-X-Gm-Gg: Acq92OG7QUAcreXZT22FrCHRTtzP+wEfbN9tCKUqMjtErPfrXCFVPQwmlJwaRy2eQv+
-	d2/HMVqWN0KBr1MU68JOHeQL87QKI+OfOGVtG//S5a9l/8SzGNFExTLtJLbEJW7NM80lUDrFpZ8
-	DsQme33ExINvhXyPeiFO/g5fsouW4iIcrefJV5H5wFflbQ0ntJJYZIC1NQmxIhk4NjMheFy66GX
-	qwgW7khKqVy4VrPuBlp0AGFNnopLHbn6MFkfx7PhZoC7yn9yRIzVT5CAWYwpLjV+7XWAF9TSjpP
-	jM1lwgAzfL3PQBOdDQOmS9Gq3nt7gQq8u4TAXRqrWv/mRETvgQca+VF9pDMkUu6UlViT0Sy7aAC
-	nZASSJHbEJXEMbFCd1fy0t8J/6ILV9Df1BPCApqRFsm+qWsXB1uFGmskmDRTOnb2UElGOZ6NS9t
-	EpyPNlZYxAFhZ1ZzCkwh5XOItVB7RgKsE58YQ2CzY=
-X-Received: by 2002:a05:600c:4f51:b0:48d:1a94:56c with SMTP id 5b1f17b1804b1-48e51f3054cmr269055545e9.18.1778308960358;
-        Fri, 08 May 2026 23:42:40 -0700 (PDT)
-Received: from localhost ([2a02:8071:56d1:2de0:1d24:d58d:2b65:c291])
-        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-48e6db1e1a1sm15355095e9.34.2026.05.08.23.42.37
+        d=1e100.net; s=20251104; t=1778490038; x=1779094838;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zA2t05MaP/podHX+JpTZXPs7rW/q4RVQKoAjNccx6WY=;
+        b=XYbIwsUz1yxtFV9AFgdc1cV1ZIyv1WE2VlBw/1jVxNLpdov/0DeR2EzXLPLmbW8SnV
+         M13xIX5Mx+IBI5J6geaYQmIVTnSi0IabDAyopN4lisf88g0nrDem3gpMGFNORUkSKB8f
+         10iZo1aMEmfiiOxBesdBZxT6npHJx6Xj5hVvQaQIXLxtmDqAPuTruGVNVYEQlmsHfIc5
+         Cvs9ZxXoJCfnOyoAZeVs1pMgZwkxXIBIySICRZAGEubWAl2na7wkHm9egS9RHU7Elii2
+         vWHo2w4zXMr99QX0PlW+pubNSOQXpMBngWstkyvK0J2QwbV+gFq8iff705foiuiJxKUu
+         DOEA==
+X-Forwarded-Encrypted: i=1; AFNElJ8cT++NkP4jAXJJO7sIywBeehEu0xSZvv1RAUCk3OQ/eBMZzw7hu5BlMYlLxMt//Wz/HdiwvVWeT8k=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzQUomN8jf7tj4oLJjjU61j8x/B52JVxWJqa3xUSx03QG2l++8j
+	KZR0ruiCPgPwYY4Nznbo3o6uNudggkwkHbb9fcrg7aKwqoDiHQT3qBOz2B/V1zd/Vx0=
+X-Gm-Gg: Acq92OFvQ3F8cAtrlp9lGFn1sVM6+39nocTLAWKHhesES/KLUmSG7/tIGEjMccs/QbF
+	8hxeCQt5Zt5z3N70yfzgOW1w6daIPbg3YsZGBXzzTljB/ON6eDE0rnq6Ddn43CJpcKN0+QBYGld
+	Hq9UpdVNUIlEPmf7GdnDiVUDyigzYnpwgnBPEZshhHe+3//3m6O17LV31cS/vDIfaYZ7pt+5YpK
+	RKIP2ktRTGl6AWz2Nx8VqM/Fmz5O1FsPACx/ES5HXZHzY5zmz2V4rI5bxGQYKujbtdJZPbuXyLm
+	Qt9NXH/00B7BbZJBr8MEr7OkzeA4KapM5qGpDxx10GO0Oa/mUe3QCbkSbvXoQNMTEPQKhxZpNQF
+	i49bwC6ccQpx8hDSKZ3DHq92tDRkntX/uNLMrtgsmXjByaoAF7hW7zRKJQQHPyTGK9EW3QAqdYA
+	XlBtNVwwXLURHjihCd4x4qOWPAOiN2nNyb/qi5vLzeC1c0QUI0T/dYtjChj5Vg09SBF2WTU1Zqa
+	5uW/s+ENv3vT7SiNU4v+ZUd+g==
+X-Received: by 2002:a5d:64e3:0:b0:449:cfea:ca91 with SMTP id ffacd0b85a97d-4515da96254mr34460937f8f.37.1778490037223;
+        Mon, 11 May 2026 02:00:37 -0700 (PDT)
+Received: from localhost (p200300f65f114e0841c796eda31a14b3.dip0.t-ipconnect.de. [2003:f6:5f11:4e08:41c7:96ed:a31a:14b3])
+        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-4548e6a5b65sm25209225f8f.8.2026.05.11.02.00.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 May 2026 23:42:38 -0700 (PDT)
-Date: Sat, 9 May 2026 08:42:36 +0200
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig_=28The_Capable_Hub=29?= <u.kleine-koenig@baylibre.com>
-To: Jakub Kicinski <kuba@kernel.org>
-Cc: Michael Grzeschik <mgr@kernel.org>, 
-	Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller" <davem@davemloft.net>, 
-	Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>, 
-	Marc Kleine-Budde <mkl@pengutronix.de>, Vincent Mailhol <mailhol@kernel.org>, 
-	Krzysztof Halasa <khc@pm.waw.pl>, Johannes Berg <johannes@sipsolutions.net>, 
-	Steffen Klassert <klassert@kernel.org>, David Dillow <dave@thedillows.org>, 
-	Ion Badulescu <ionut@badula.org>, Mark Einon <mark.einon@gmail.com>, 
-	Rasesh Mody <rmody@marvell.com>, GR-Linux-NIC-Dev@marvell.com, 
-	Manish Chopra <manishc@marvell.com>, Potnuri Bharat Teja <bharat@chelsio.com>, 
-	Denis Kirjanov <kirjanov@gmail.com>, Jijie Shao <shaojijie@huawei.com>, 
-	Jian Shen <shenjian15@huawei.com>, Cai Huoqing <cai.huoqing@linux.dev>, 
-	Fan Gong <gongfan1@huawei.com>, Tony Nguyen <anthony.l.nguyen@intel.com>, 
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>, Tariq Toukan <tariqt@nvidia.com>, 
-	Saeed Mahameed <saeedm@nvidia.com>, Leon Romanovsky <leon@kernel.org>, 
-	Mark Bloch <mbloch@nvidia.com>, Ido Schimmel <idosch@nvidia.com>, 
-	Petr Machata <petrm@nvidia.com>, Yibo Dong <dong100@mucse.com>, 
-	Heiner Kallweit <hkallweit1@gmail.com>, nic_swsd@realtek.com, Jiri Pirko <jiri@resnulli.us>, 
-	Francois Romieu <romieu@fr.zoreil.com>, Daniele Venzano <venza@brownhat.org>, 
-	Samuel Chessman <chessman@tux.org>, Jiawen Wu <jiawenwu@trustnetic.com>, 
-	Mengyuan Lou <mengyuanlou@net-swift.com>, Kevin Curtis <kevin.curtis@farsite.co.uk>, 
-	Arend van Spriel <arend.vanspriel@broadcom.com>, Stanislav Yakovlev <stas.yakovlev@gmail.com>, 
-	Richard Cochran <richardcochran@gmail.com>, Kees Cook <kees@kernel.org>, 
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>, Thomas Gleixner <tglx@kernel.org>, 
-	Jacob Keller <jacob.e.keller@intel.com>, Thomas Fourier <fourier.thomas@gmail.com>, 
-	Ingo Molnar <mingo@kernel.org>, Kory Maincent <kory.maincent@bootlin.com>, 
-	Zilin Guan <zilin@seu.edu.cn>, Vadim Fedorenko <vadim.fedorenko@linux.dev>, 
-	Marco Crivellari <marco.crivellari@suse.com>, Bjorn Helgaas <bhelgaas@google.com>, 
-	David Arinzon <darinzon@amazon.com>, Yeounsu Moon <yyyynoom@gmail.com>, 
-	Denis Benato <benato.denis96@gmail.com>, Yonglong Liu <liuyonglong@huawei.com>, 
-	Andy Shevchenko <andriy.shevchenko@intel.com>, Randy Dunlap <rdunlap@infradead.org>, 
-	Yicong Hui <yiconghui@gmail.com>, MD Danish Anwar <danishanwar@ti.com>, 
-	Nathan Chancellor <nathan@kernel.org>, Ethan Nelson-Moore <enelsonmoore@gmail.com>, 
-	Larysa Zaremba <larysa.zaremba@intel.com>, Ian Lin <ian.lin@infineon.com>, 
-	Colin Ian King <colin.i.king@gmail.com>, Double Lo <double.lo@cypress.com>, 
-	Markus Schneider-Pargmann <msp@baylibre.com>, Simon Horman <horms@kernel.org>, netdev@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-can@vger.kernel.org, linux-parisc@vger.kernel.org, 
-	intel-wired-lan@lists.osuosl.org, linux-rdma@vger.kernel.org, oss-drivers@corigine.com, 
-	linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com
-Subject: Re: [PATCH net-next v2 0/2] Rework pci_device_id initialisation
-Message-ID: <af7WyUi8jEzInj5z@monoceros>
-References: <cover.1778149923.git.u.kleine-koenig@baylibre.com>
- <20260508153452.6a1a9044@kernel.org>
+        Mon, 11 May 2026 02:00:36 -0700 (PDT)
+From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig=20=28The=20Capable=20Hub=29?= <u.kleine-koenig@baylibre.com>
+To: Michael Grzeschik <mgr@kernel.org>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Vincent Mailhol <mailhol@kernel.org>,
+	Johannes Berg <johannes@sipsolutions.net>
+Cc: Steffen Klassert <klassert@kernel.org>,
+	David Dillow <dave@thedillows.org>,
+	Ion Badulescu <ionut@badula.org>,
+	Mark Einon <mark.einon@gmail.com>,
+	Rasesh Mody <rmody@marvell.com>,
+	GR-Linux-NIC-Dev@marvell.com,
+	Manish Chopra <manishc@marvell.com>,
+	Potnuri Bharat Teja <bharat@chelsio.com>,
+	Denis Kirjanov <kirjanov@gmail.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Jian Shen <shenjian15@huawei.com>,
+	Cai Huoqing <cai.huoqing@linux.dev>,
+	Fan Gong <gongfan1@huawei.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Yibo Dong <dong100@mucse.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	nic_swsd@realtek.com,
+	Jiri Pirko <jiri@resnulli.us>,
+	Francois Romieu <romieu@fr.zoreil.com>,
+	Daniele Venzano <venza@brownhat.org>,
+	Samuel Chessman <chessman@tux.org>,
+	Jiawen Wu <jiawenwu@trustnetic.com>,
+	Mengyuan Lou <mengyuanlou@net-swift.com>,
+	Kevin Curtis <kevin.curtis@farsite.co.uk>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Stanislav Yakovlev <stas.yakovlev@gmail.com>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Kees Cook <kees@kernel.org>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Kory Maincent <kory.maincent@bootlin.com>,
+	Zilin Guan <zilin@seu.edu.cn>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Marco Crivellari <marco.crivellari@suse.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	David Arinzon <darinzon@amazon.com>,
+	Yeounsu Moon <yyyynoom@gmail.com>,
+	Denis Benato <benato.denis96@gmail.com>,
+	Yonglong Liu <liuyonglong@huawei.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Yicong Hui <yiconghui@gmail.com>,
+	MD Danish Anwar <danishanwar@ti.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Ethan Nelson-Moore <enelsonmoore@gmail.com>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
+	Ian Lin <ian.lin@infineon.com>,
+	Colin Ian King <colin.i.king@gmail.com>,
+	Double Lo <double.lo@cypress.com>,
+	Markus Schneider-Pargmann <msp@baylibre.com>,
+	Simon Horman <horms@kernel.org>,
+	netdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-can@vger.kernel.org,
+	linux-parisc@vger.kernel.org,
+	intel-wired-lan@lists.osuosl.org,
+	linux-rdma@vger.kernel.org,
+	oss-drivers@corigine.com,
+	linux-wireless@vger.kernel.org,
+	brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com
+Subject: [PATCH net-next v3 0/2] Rework pci_device_id initialisation
+Date: Mon, 11 May 2026 11:00:22 +0200
+Message-ID: <20260511090023.1634387-4-u.kleine-koenig@baylibre.com>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="pa3si5htqwvg7uxg"
-Content-Disposition: inline
-In-Reply-To: <20260508153452.6a1a9044@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4853; i=u.kleine-koenig@baylibre.com; h=from:subject; bh=ZYGinJLF1cDgGH/aGo4d1Hy0fwsOtdFNgDp8EWspf48=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBqAZqnnelkHiCtzmBC4y0fb7vJdPOE1eZ7YhPdE 2SrLv8jYlGJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCagGapwAKCRCPgPtYfRL+ TjAaB/4oo4PlfsIbeG6MCk6KG/Z4+gxMxrSewie9L+e4GgVdrB4TOBKkquVHmIZGwKjcVZ4TTHb NefjSqaVMX4GAGFyvubu+IYDalSlSnAzan/1cuw698pTu8HJAZcUiXsULIZGAzyccgEjFzFRtOG 9zcX6kiJPNLHyc4KCm8r2nVxLqV6bD0Ra/lsh4CIqsXdKbNgT8R/zlx5qsBD4jv6XuZojWf/47T BGjl0kKv9jdWqI2IyZT+iFIbeMxYEcWSMZLzC6lnFeTSGLW7f1AVp8qVTep3xLTu5Qrh0AUeJ60 G6q8VibpIILN8q4yuUlgLX0vBjjeLn9Q8sKtPvNkz+TLgLBC
+X-Developer-Key: i=u.kleine-koenig@baylibre.com; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+Content-Transfer-Encoding: 8bit
 
+Hello,
 
---pa3si5htqwvg7uxg
-Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH net-next v2 0/2] Rework pci_device_id initialisation
-MIME-Version: 1.0
+the previous iteration of this series (v2) is available at
+https://lore.kernel.org/netdev/cover.1778149923.git.u.kleine-koenig@baylibre.com
 
-On Fri, May 08, 2026 at 03:34:52PM -0700, Jakub Kicinski wrote:
-> On Thu,  7 May 2026 12:50:18 +0200 Uwe Kleine-K=F6nig (The Capable Hub)
-> wrote:
-> >   net: Consistently define pci_device_ids using named initializers
-> >   net: nfp: Drop PCI class entries with .class_mask =3D 0
->=20
-> There's a transient build failure between these two patches,
-> you should probably reorder them?
+Changes since v2:
 
-I did build test with the first patch only, using gcc on x86 and arm64.
-I guess this is about the ambiguity I mentioned in the cover letter and
-maybe using clang? I'll try to reproduce and fix.
+ - swap patch order as Jakub Kicinski reported a build failure (that I
+   couldn't reproduce though)
+ - drop the change to drivers/net/can/m_can/m_can_pci.c on Markus
+   Schneider-Pargmann's (non-public) request as this patch conflicts
+   with a cleanup he has in his queue that will prepare this driver
+   for my quest to add a union to pci_device_id in a differnt way.
+ - drop a recipent from Cc: that bounced before (khc@pm.waw.pl).
 
 Best regards
 Uwe
 
---pa3si5htqwvg7uxg
-Content-Type: application/pgp-signature; name="signature.asc"
+Uwe Kleine-König (The Capable Hub) (2):
+  net: nfp: Drop PCI class entries with .class_mask = 0
+  net: Consistently define pci_device_ids using named initializers
 
------BEGIN PGP SIGNATURE-----
+ drivers/net/arcnet/com20020-pci.c             | 242 +++------
+ drivers/net/can/sja1000/plx_pci.c             | 167 +++----
+ drivers/net/ethernet/3com/3c59x.c             |  80 +--
+ drivers/net/ethernet/3com/typhoon.c           |  75 ++-
+ drivers/net/ethernet/8390/ne2k-pci.c          |  24 +-
+ drivers/net/ethernet/adaptec/starfire.c       |   4 +-
+ drivers/net/ethernet/agere/et131x.c           |   6 +-
+ drivers/net/ethernet/broadcom/bnx2.c          |  62 ++-
+ .../net/ethernet/broadcom/bnx2x/bnx2x_main.c  |  50 +-
+ .../net/ethernet/cavium/liquidio/lio_main.c   |  10 +-
+ .../ethernet/cavium/liquidio/lio_vf_main.c    |   7 +-
+ drivers/net/ethernet/chelsio/cxgb/common.h    |   2 +-
+ drivers/net/ethernet/chelsio/cxgb/subr.c      |   2 +-
+ .../net/ethernet/chelsio/cxgb3/cxgb3_main.c   |   4 +-
+ .../net/ethernet/chelsio/cxgb4/cxgb4_main.c   |   4 +-
+ .../ethernet/chelsio/cxgb4vf/cxgb4vf_main.c   |   4 +-
+ drivers/net/ethernet/dec/tulip/de2104x.c      |   6 +-
+ drivers/net/ethernet/dec/tulip/dmfe.c         |  12 +-
+ drivers/net/ethernet/dec/tulip/tulip_core.c   |  78 +--
+ drivers/net/ethernet/dec/tulip/uli526x.c      |   6 +-
+ drivers/net/ethernet/dec/tulip/winbond-840.c  |  13 +-
+ drivers/net/ethernet/dlink/dl2k.h             |  12 +-
+ drivers/net/ethernet/dlink/sundance.c         |  14 +-
+ drivers/net/ethernet/fealnx.c                 |   8 +-
+ .../net/ethernet/hisilicon/hibmcge/hbg_main.c |   2 +-
+ .../net/ethernet/hisilicon/hns3/hns3_enet.c   |  50 +-
+ .../hisilicon/hns3/hns3pf/hclge_main.c        |  18 +-
+ .../hisilicon/hns3/hns3vf/hclgevf_main.c      |  12 +-
+ .../net/ethernet/huawei/hinic/hinic_main.c    |  12 +-
+ .../net/ethernet/huawei/hinic3/hinic3_lld.c   |   7 +-
+ drivers/net/ethernet/intel/e100.c             |   9 +-
+ drivers/net/ethernet/intel/e1000e/netdev.c    | 471 +++++++++++++-----
+ drivers/net/ethernet/intel/fm10k/fm10k_pci.c  |  10 +-
+ drivers/net/ethernet/intel/i40e/i40e_main.c   |  59 +--
+ drivers/net/ethernet/intel/iavf/iavf_main.c   |  10 +-
+ drivers/net/ethernet/intel/igb/igb_main.c     |  66 +--
+ drivers/net/ethernet/intel/igbvf/netdev.c     |   4 +-
+ drivers/net/ethernet/intel/igc/igc_main.c     |  34 +-
+ drivers/net/ethernet/intel/ixgbe/ixgbe_main.c | 106 ++--
+ .../net/ethernet/intel/ixgbevf/ixgbevf_main.c |  49 +-
+ drivers/net/ethernet/mellanox/mlx4/main.c     |   6 +-
+ .../net/ethernet/mellanox/mlx5/core/main.c    |  26 +-
+ .../net/ethernet/mellanox/mlxsw/spectrum.c    |  16 +-
+ drivers/net/ethernet/micrel/ksz884x.c         |   8 +-
+ .../net/ethernet/mucse/rnpgbe/rnpgbe_main.c   |  10 +-
+ drivers/net/ethernet/natsemi/natsemi.c        |   4 +-
+ drivers/net/ethernet/netronome/nfp/nfp_main.c |  65 +--
+ .../ethernet/netronome/nfp/nfp_netvf_main.c   |  33 +-
+ drivers/net/ethernet/qlogic/qede/qede_main.c  |  20 +-
+ drivers/net/ethernet/realtek/8139too.c        |  52 +-
+ drivers/net/ethernet/realtek/r8169_main.c     |   8 +-
+ drivers/net/ethernet/rocker/rocker_main.c     |   4 +-
+ drivers/net/ethernet/sis/sis190.c             |   6 +-
+ drivers/net/ethernet/sis/sis900.c             |  10 +-
+ drivers/net/ethernet/smsc/epic100.c           |  18 +-
+ drivers/net/ethernet/sun/cassini.c            |   8 +-
+ drivers/net/ethernet/sun/sungem.c             |  26 +-
+ drivers/net/ethernet/ti/tlan.c                |  41 +-
+ drivers/net/ethernet/wangxun/ngbe/ngbe_main.c |  26 +-
+ .../net/ethernet/wangxun/ngbevf/ngbevf_main.c |  26 +-
+ .../net/ethernet/wangxun/txgbe/txgbe_main.c   |  18 +-
+ .../ethernet/wangxun/txgbevf/txgbevf_main.c   |  18 +-
+ drivers/net/wan/farsync.c                     |  24 +-
+ drivers/net/wan/pc300too.c                    |  14 +-
+ drivers/net/wan/pci200syn.c                   |   6 +-
+ drivers/net/wan/wanxl.c                       |  11 +-
+ .../broadcom/brcm80211/brcmfmac/pcie.c        |  17 +-
+ drivers/net/wireless/intel/ipw2x00/ipw2200.c  |  52 +-
+ 68 files changed, 1285 insertions(+), 1099 deletions(-)
 
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmn+11kACgkQj4D7WH0S
-/k623gf/Q5yF7db6dzmHCyOj113/GHbgzci3Yxu4CEcdvsPNimdU2fG1YgBtP6nM
-r1i/YnPw6mQRQh4Qq7870HLsc/WC4sNLH9xZ3NjusUle3e5XMEkpB3mxW2hH/UzB
-b0H3xhJvSgiMvib07RqvaVi8kUtsRwkCSR/2zVeSQ2EsMZxwRzV2P09lA/wTiPhB
-Hxl7XbIAvVTsDMnnDW4UcyR/xqwsoEjLpTqPSymYwgE9A7kCU1/JD8EO+CNKisYk
-AXjQUXekCwI/z5gR4lWMD0xqU7WtNMVfI48Bi7t3gVYPaJTnyY/z0PJuUfKvA8BP
-Ar9LmlMuhzaJTsnOdLsr4fzHOJuHdg==
-=2L5C
------END PGP SIGNATURE-----
 
---pa3si5htqwvg7uxg--
+base-commit: 254f49634ee16a731174d2ae34bc50bd5f45e731
+-- 
+2.47.3
+
