@@ -1,735 +1,215 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11011010.outbound.protection.outlook.com [40.107.130.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F40E426ED3;
-	Wed,  3 Jun 2026 08:42:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780476123; cv=none; b=Ocn3MXHmK7c4Is1B0eOmArRvlAp7u+Ti9yowdD0IOyUUgJfgX7GL58dq7ArpO1wy+xSkwqe6jWu3uuvaRYDlZMNIJ3Dhk9E4vLZleavnfNgHl0A6+fAa+E9PsFcdnWYWrkKMTLRFMBUY5tRKSW3OZUBiX00RXjqPmO/ptFGSxWE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780476123; c=relaxed/simple;
-	bh=WuDGrJLK9bzLaWzEe07dlHOYpZOb3lGL1ZcgVnTyKmM=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=h959XtZkbQFPqPHerElto8K4RhfJpVwrfu/qv6TC8ky/kQM7TaQwheemyMoLlpEhTlI2LHYPL1TWZXRTmKlqtx+3nBGZkkDeIJQd3ZZIIIVFczVy7HJ7TjxaHGF/D3MCMvWMgczzVME8NyoH065fBhqSzsYnrCiaz9n7cQaG12E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de; spf=pass smtp.mailfrom=arndb.de; dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b=QLTxwh4l; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RF/jcWn2; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A15D1232395;
+	Wed,  3 Jun 2026 12:49:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.130.10
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780490968; cv=fail; b=r9mksPnRb0/dlsg+evS3Uf2GTsRXwZC00GP+5udHvGdorM4PNPh/oDoRi0TAPdlCHfOAiu1RJgtnUwFt3SJJ6iCGj2aLZV+2KUt/eR6W2mAi9tZrClYhQ/EaAZdtiLBlqKp5Xb/jVORrWKBjLFXumF3Duz5lLnzNGzPWNU6Sb8w=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780490968; c=relaxed/simple;
+	bh=lJAhqtEnAGYI/M0inpQ/yNbH3yxhkaMNkXTq1i1fzh8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 Content-Type:MIME-Version; b=sa4yE/OrlGX0u8yTObZlQq0kDq0uHZqXjGy4hbKvGRcS8/ufo1wo5P68L3FngBqSSUo7mq5oHSojIi1nwmji6jTFfeFOK4TMLrwFZQTDLkRFVGMmhCYAnvNtT88avNMboFNjn9lC6SOnWFo6VCTUGVxi2pp4OMU3bd23Hx19wH8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=prevas.dk; spf=pass smtp.mailfrom=prevas.dk; dkim=pass (1024-bit key) header.d=prevas.dk header.i=@prevas.dk header.b=Ymlz/BTy; arc=fail smtp.client-ip=40.107.130.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=prevas.dk
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=prevas.dk
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b="QLTxwh4l";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RF/jcWn2"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 413AEEC00B5;
-	Wed,  3 Jun 2026 04:42:00 -0400 (EDT)
-Received: from phl-imap-05 ([10.202.2.95])
-  by phl-compute-04.internal (MEProxy); Wed, 03 Jun 2026 04:42:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1780476120;
-	 x=1780562520; bh=vVyiUH+m+c0Pw2AXcQyAOjRt3bx8/ecnoqePaItRyK0=; b=
-	QLTxwh4lLgLUduSsXf/btg/XCNzjHPocI9s/J4PwyHqzW2KUi9omEpP8nWXaqkLY
-	vfQM4k+YTmxgrspvnxSjLK3gFQ8pJBkni92TeVqX69TTTlwOYweC0AiN1MDCSQtQ
-	X5areN9F+ra9iPSljD6T7XNrmehuILm3FYM4VCwTA1iV7fmdTmIGVJIFVgVhzZOE
-	KpPd9hBTJtUR/OBoxxm44nfiRUzJixB1SeWaw2oF1CnxrgP6Wk3m/t7QCLw66XaW
-	S6KwdZlUpMHgtY7vhAX+t23bDCBPeePXy/3HdG3N27Kr6t6zDbYwIJ1Zn6dPzj8q
-	Wp1Kpha1l+B9nT76hdARAw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1780476120; x=
-	1780562520; bh=vVyiUH+m+c0Pw2AXcQyAOjRt3bx8/ecnoqePaItRyK0=; b=R
-	F/jcWn2vUy5JrQvGg/OfyMPHyclIcjyTXuOK1YeV4Sq4S3dZ0ICmW9j0IVaAXB9M
-	o3j0rxAyFQdstTpvFB68R5RnNdWaacOftKAvUfADmfS+dgWlJRKLhALNzUX/6r5J
-	dbcuj0eM1yubwXIxUDA8Pf5FSbf1Jpa7illtcB5IlvYC166MYZBNzKb7FgtvFYwk
-	1xdkAgjZg6vxad/2X+GqVTWLHn+tTmkDrZSzMBTcie6eVfnplxW2KLwMLkSkV2yK
-	BIY1aI66UoLoRppeXaA6i/IAb8TQPFBIcwvq3U+ShrkOlSLDU0wCAO3iyGsnS5IH
-	CoJJ4HNDtnBS3Bi5yez2g==
-X-ME-Sender: <xms:1-gfankRdvTVsPuGCOok348e9H0Z2qVwHHYQq64fNhgbp3-EBaubmQ>
-    <xme:1-gfalr6Eg9KMqY5FUQHt0mX7BrbirUZhD9sRMVJUnScUJReJdVBAb9-jDyh3Do9j
-    Nh77Cc_r_l9s1Ow2q30kwe36c7mvjJediGtAz0-jxTZodkqcL2HbC4>
-X-ME-Proxy-Cause: dmFkZTEM3vOKNwb1UkGT2CzPPD9IL8yqTxfRhGM7aT4uWG/NV2TGFckBa4g+hI2eSjLsg9
-    JuypidcxrOT/bdo7unzBukQiJ+FcKjj1nhhDLhq3TTIoMwDGiPxanI1gca9AVzflVmUixL
-    HNDc4aOO69twBiSHGBLSEt3SLLOCyLKqYSFpL4dh/xOzQevTAvhJI+pY1iF0F5y7W5xnlH
-    Ie5jkQEqtRwC/Sjj0yXHm8DTSx+yGGW3nc/BlzEbDRZUrf1nI6YdrsYSEs9kPnViBYdHws
-    e1eOTryCPwnfaFPqoW8nqov5jUfMkYRaC4zEnN1os4tvOjv6oD5CaahXTOJg2FWvSYdxoz
-    sVCqTcfxYc57QfBVXn+DO08+KFTdqWqivm7UN9yNkgAZPJJBc4ioQk7kzItrjvv16DyJuD
-    LrNvsZfZTC1c02liayYtuyBqnwV+4t/DlaJeO8gKBRyYhyTOxhSPK6qbH8wN3mFiDX3jPy
-    LHeIYk2fg9r8uhu08H1F3FxgdfkDtlMaeJRdJzCeYbCgZreFFlzU9k6HK0oREI/FygjNf4
-    /Xw+3NIz2AlrRR6uqY6TMExyI9vRCwHsdnxV3WRLE+k2IdNtEtBHOl5zeuaN2Q2XcAplsp
-    xl2LHgKxc1fIuUR22J0BYMyMGLVXdPzDruOPyGI8Yi/ucbBPKu1+JYJBhFLA
-X-ME-Proxy: <xmx:1-gfaunFUYXh-KrFWNiH1oJiG6TzZgXC9qq4KVpU2WmwiAvskPK0Dw>
-    <xmx:1-gfavLLyq2DMmAILuCgIawK2NH3jBKJIvD7ETCbQzY4vGx2FNXUWw>
-    <xmx:1-gfakqrfVtiu7kuWQ8jRti6mxjHIMAiejmGHYCGr4z2opBG9ldF-A>
-    <xmx:1-gfasTJrTRnRdDukRaya1CJ5WWlbVbayPZ0Xhpx6HFqifuZ3QVJWQ>
-    <xmx:2OgfatWdJX9U8pqS9Di0HpeaSIT8du7-v9dtgBmhtFYmGmTbZ0TN_Zdc>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 18857182007A; Wed,  3 Jun 2026 04:41:59 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (1024-bit key) header.d=prevas.dk header.i=@prevas.dk header.b="Ymlz/BTy"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=IeuRyLKCIy8ZVY2u6CZoBcnaFg5Fs+K7MASsIzQH2JgnS+9FyFSjHwfy5e/2xrKCEpYYI3+dgmFc62TEwZlAzPiqBbVMz/EmvkoEXvSQVP5p6xrbH5o6lU0W6V58KyLGAwF+h602fVKRKFVR1rI8q5wRPqj+8ABf80wZoBNTPwS1f5AwRbuwvkk/3FBjJcGBvSZcR4/8/mTFgsfEFaoIvoZhDWDza1f6GSqBu1ajWFExF5/WNwaO/VhtBtr73t8K/ln7H2Al5mBK+aCdFoRWZkpKt2urviwFY3EgIl+hO3SOfQs130GgPRfolHTyoFVPzt5ueLZbkvbjmsdMEKTpyw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=VAZbrhAsQ3EzdG55w24NXdb7XkL1n92bID843FSTc/s=;
+ b=ZlfWTEUTlmDBkgJ+McYdKU3SfYjOsmX3hDuesN/oVc/MlhAzeKswAKX25Yw0YCCwksPR8l0SKAIGMQBxxV5tWGhkZ+lf5wYSm183P+cgW1tyIWqnACV8zWrUBTWfEzc7cWyoCsVRZ2E4F3TcOwQjlxjecIE1W4Wtnnnzo0Kd8aCU7lu6qmlg8KCKSo8jnPdkv9/BFNIoEshWFdJN9EPADPpCmMTHNCEjZwz+j/KeptrLa2guY9Hozz9wbfTlnMisLUVpj2qO/gainwz83X8zmG6SX4wWeNkaOTpIE0q9/u2LePPDtuqdPEUernK4K2G+B75MMY5ThFYqzZOGpwVuKw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=prevas.dk; dmarc=pass action=none header.from=prevas.dk;
+ dkim=pass header.d=prevas.dk; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=prevas.dk;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=VAZbrhAsQ3EzdG55w24NXdb7XkL1n92bID843FSTc/s=;
+ b=Ymlz/BTya/JOkXY5MI3ZxEFoRaDqUhus6JnN2OCJmGL/xqb3FFSErwIkwpTmrAhjDkuYYLANKdBTzcIBB4tfFvcQ+wtj4pvd2am6W2xCv5DXQa/D6XBuFi9UXUiYyYDu0yuMCXntMxlWA+AAy0+4qT7NgvdUWFlDTLlYFcNvS4w=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=prevas.dk;
+Received: from AS5PR10MB8243.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:20b:681::18)
+ by DB8PR10MB3323.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:10:11c::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.7; Wed, 3 Jun 2026
+ 12:49:20 +0000
+Received: from AS5PR10MB8243.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::ebc6:4e0d:5d6b:95d8]) by AS5PR10MB8243.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::ebc6:4e0d:5d6b:95d8%6]) with mapi id 15.21.0092.006; Wed, 3 Jun 2026
+ 12:49:20 +0000
+From: Rasmus Villemoes <ravi@prevas.dk>
+To: "Arnd Bergmann" <arnd@arndb.de>
+Cc: "Andy Shevchenko" <andriy.shevchenko@linux.intel.com>,  "Arnd Bergmann"
+ <arnd@kernel.org>,  "Steven Rostedt" <rostedt@goodmis.org>,  "Masami
+ Hiramatsu" <mhiramat@kernel.org>,  "Andrew Morton"
+ <akpm@linux-foundation.org>,  "Petr Mladek" <pmladek@suse.com>,  "Nathan
+ Chancellor" <nathan@kernel.org>,  "Dennis Dalessandro"
+ <dennis.dalessandro@cornelisnetworks.com>,  "Jason Gunthorpe"
+ <jgg@ziepe.ca>,  "Leon Romanovsky" <leon@kernel.org>,  "Arend van Spriel"
+ <arend.vanspriel@broadcom.com>,  "Miri Korenblit"
+ <miriam.rachel.korenblit@intel.com>,  "Mathieu Desnoyers"
+ <mathieu.desnoyers@efficios.com>,  "Sergey Senozhatsky"
+ <senozhatsky@chromium.org>,  "Nick Desaulniers"
+ <nick.desaulniers+lkml@gmail.com>,  "Bill Wendling" <morbo@google.com>,
+  "Justin Stitt" <justinstitt@google.com>,  "Vlastimil Babka (SUSE)"
+ <vbabka@kernel.org>,  <linux-rdma@vger.kernel.org>,
+  <linux-kernel@vger.kernel.org>,  <linux-wireless@vger.kernel.org>,
+  <brcm80211@lists.linux.dev>,  <brcm80211-dev-list.pdl@broadcom.com>,
+  <linux-trace-kernel@vger.kernel.org>,  <llvm@lists.linux.dev>
+Subject: Re: [PATCH 1/2] tracing: work around -Wmissing-format-attribute
+ warning
+In-Reply-To: <aafe201a-64a6-438f-89a3-d1cd10a357a7@app.fastmail.com> (Arnd
+	Bergmann's message of "Wed, 03 Jun 2026 10:41:18 +0200")
+References: <20260602150904.2258624-1-arnd@kernel.org>
+	<ah8n-Nk305S5hRwN@ashevche-desk.local>
+	<WPQQfPHOiGJbSxrXRdFDy9jURhS7JMpNu9sD54Vfe5wB-JOjyGY6xPQyACz3MSGg0xGp79eOYCyZ2Hi2CsPeUg==@protonmail.internalid>
+	<35c1ba62-e74d-4abc-aa73-ccd35968ff89@app.fastmail.com>
+	<875x40hz7k.fsf@prevas.dk>
+	<cODLVx6ZlerCiOgdpsG7OSsC2YRA6pXmq2jBdTjRB2UQoTIY4hI-yhV1lrumRNBH1hTT2aJRS-MgtlbhNWUTEw==@protonmail.internalid>
+	<aafe201a-64a6-438f-89a3-d1cd10a357a7@app.fastmail.com>
+Date: Wed, 03 Jun 2026 14:49:18 +0200
+Message-ID: <87zf1bhjqp.fsf@prevas.dk>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+Content-Type: text/plain
+X-ClientProxiedBy: GV2PEPF00023989.SWEP280.PROD.OUTLOOK.COM
+ (2603:10a6:158:400::366) To AS5PR10MB8243.EURPRD10.PROD.OUTLOOK.COM
+ (2603:10a6:20b:681::18)
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-ThreadId: AAuCPBQLA6as
-Date: Wed, 03 Jun 2026 10:41:18 +0200
-From: "Arnd Bergmann" <arnd@arndb.de>
-To: "Rasmus Villemoes" <linux@rasmusvillemoes.dk>
-Cc: "Andy Shevchenko" <andriy.shevchenko@linux.intel.com>,
- "Arnd Bergmann" <arnd@kernel.org>,
- "Steven Rostedt" <rostedt@goodmis.org>,
- "Masami Hiramatsu" <mhiramat@kernel.org>,
- "Andrew Morton" <akpm@linux-foundation.org>,
- "Petr Mladek" <pmladek@suse.com>,
- "Nathan Chancellor" <nathan@kernel.org>,
- "Dennis Dalessandro" <dennis.dalessandro@cornelisnetworks.com>,
- "Jason Gunthorpe" <jgg@ziepe.ca>, "Leon Romanovsky" <leon@kernel.org>,
- "Arend van Spriel" <arend.vanspriel@broadcom.com>,
- "Miri Korenblit" <miriam.rachel.korenblit@intel.com>,
- "Mathieu Desnoyers" <mathieu.desnoyers@efficios.com>,
- "Sergey Senozhatsky" <senozhatsky@chromium.org>,
- "Nick Desaulniers" <nick.desaulniers+lkml@gmail.com>,
- "Bill Wendling" <morbo@google.com>,
- "Justin Stitt" <justinstitt@google.com>,
- "Vlastimil Babka (SUSE)" <vbabka@kernel.org>, linux-rdma@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org,
- brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com,
- linux-trace-kernel@vger.kernel.org, llvm@lists.linux.dev
-Message-Id: <aafe201a-64a6-438f-89a3-d1cd10a357a7@app.fastmail.com>
-In-Reply-To: <875x40hz7k.fsf@prevas.dk>
-References: <20260602150904.2258624-1-arnd@kernel.org>
- <ah8n-Nk305S5hRwN@ashevche-desk.local>
- <WPQQfPHOiGJbSxrXRdFDy9jURhS7JMpNu9sD54Vfe5wB-JOjyGY6xPQyACz3MSGg0xGp79eOYCyZ2Hi2CsPeUg==@protonmail.internalid>
- <35c1ba62-e74d-4abc-aa73-ccd35968ff89@app.fastmail.com>
- <875x40hz7k.fsf@prevas.dk>
-Subject: Re: [PATCH 1/2] tracing: work around -Wmissing-format-attribute warning
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AS5PR10MB8243:EE_|DB8PR10MB3323:EE_
+X-MS-Office365-Filtering-Correlation-Id: d40e37ea-4692-4789-33ba-08dec16e87f1
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|7416014|376014|1800799024|3023799007|22082099003|18002099003|4143699003|11063799006|6133799003|56012099006;
+X-Microsoft-Antispam-Message-Info:
+	2hwtOGHiqQ9Taob/DXxXNKGwwENxmTsM6wwqwbqEZG7LeSX25e6MhSAsLsFqnUVQ9K30Uc1s59/d6rWvnkQUVqnbMi9EYnDeqDZy5Lj5hYOzJpD5pamsxxtDvuVk66aNRefsSTsTv6mH2NhB8cW6M6VW5YJ3r6VSlEx/+g/FZQdXxvIM+2YF338klUJE3ir0Nm9mVUmkeSfilv2NSzpz/gwXbUpRy1TCEQ4ouBafQscDHLYStOntcbpTyuBmcieK8ED10MDXXzDUSfkbCiSpOFz2FDUZlb18zzWdDruhkqhtWOTcDQvFVA3oV4euKzSk/lQbRU63tArdd8NIJQA+YhhyODmN5KFOqgyvYR9jSF2Ebkhc5zMNhIaJOgrmv9USDJWvyAxVcgpeAT7G8ZG7g6yy9ojY2tGRZ7byBhX/fFujeEWTjF+cUD0EOCZ5IgoaZr7I5Tq7aQhpTSMPHa+P4Gh0JkVyUok0x3YlbmdZyTuprJQM2IpdncTaVcmrV6B6od1NzFeBp8D0SzqhL2ayfF4f27Z56Uno4QHQsKQ6Toof8jgJiUXAiOB7etTVFw3KYZVC0vrXj3Qc2frEFRRVV7j2nUhxJ44Zyrg+NwXJOu/rFDduMqLxdW/3X2Bw7r+eI7DmR/CjIl+5BoGe+wIy4AXeaIdP+8zXKrKbarYj9vmeO5KWZKKsubHLMj8wSDJh
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS5PR10MB8243.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(366016)(7416014)(376014)(1800799024)(3023799007)(22082099003)(18002099003)(4143699003)(11063799006)(6133799003)(56012099006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?RA6C5FdOO+tjjw1+zzXfb44vBIBqVDEJAxSb/395wY6BnhDsyD6ksskatHfg?=
+ =?us-ascii?Q?GId+y5SZPxFhwc7MZfvT+NK74rnyQy1veq622AzTQfQNDHLqdbVAF/zVGPEg?=
+ =?us-ascii?Q?WrGt9c6r3uqPWe78fiqJAfdigAifInGGN6c1q0dqjgb4vb/HySknfBIBfUqj?=
+ =?us-ascii?Q?+qaTxjHXmfftFkWA/Q3mLMTzNJuDz+O3Lep3GtfYJk8pk9POzcWjaXJF/Kec?=
+ =?us-ascii?Q?FD9o07r0pMMGxfTEILR2lFgjvvp6mz7Cj2gCfdQ8MoTOTkdoG3/tX07QB/LL?=
+ =?us-ascii?Q?M93rcPOg5D5VKMCwAKFlAyrjCxMrTAq/QXKkkoUBVlQUmYYwhekZqyMcf2OO?=
+ =?us-ascii?Q?/FQE9lCv+dA/3S6sygYo6jjoSUAPe6ccm3UDrdNt5TUOXSTvenVsL40MYYMn?=
+ =?us-ascii?Q?3Gn+N1acjMq9GhNiG7gk6jTdLE1XfKko6HZHo5f92SPexURlxQl/e6vw32RJ?=
+ =?us-ascii?Q?jA+X5RzYDs+R6ch/eeDAcAPXf/V2Coe7lDgbgU1LpH+r47POMpfKXuDdSQ8E?=
+ =?us-ascii?Q?yCnYAykqHzZdwOezTrnf/pTsjX8lxL8LTsCn19NRh9keqlF4D4jWGBZy/ueW?=
+ =?us-ascii?Q?cXlM0PhqaBIGwdKyxDdNijCd6Xgkg7DrQuiRDxeRIrvLcDeJ09C6YcbAXvHp?=
+ =?us-ascii?Q?W+AejfSBgWF/LANluxwzjynVWa0REc+hYENB3kIoolpQQb9UvmOyEQ1pOjCM?=
+ =?us-ascii?Q?bczUB65qHrBbpgGWX3cp5ctx67eCi0bPhI4keemmMkwMeo9LOAwiVMvumi/x?=
+ =?us-ascii?Q?UMhYBXruUziWsqg4AQya2evpc/tSRUq52fsSb+dIOCePU3z5VUloMnFCQOD8?=
+ =?us-ascii?Q?pYjoLYqv7EfvY/AsOeQo6UkV4FoA/YjRY/kKQP+h27rjmhAd1oghwJAsCC6j?=
+ =?us-ascii?Q?2CutafZ423eSezaPVfeFn6glZzKzaJDSwMfm2DBY2xylirAWsYrpy9qqqOCc?=
+ =?us-ascii?Q?ekwxRsXHqYFnhWzdGDB4XoRahJV6LOz25aqgu5rPQP6NqWU5cbc+nt5trMCv?=
+ =?us-ascii?Q?FGUXAZczAoof6mHqM1YPKJ3mr2upc+224pUxN13wws6mpRwynYGtrzOzZRgJ?=
+ =?us-ascii?Q?MNZrV+V18V43zRM48DuunXZGJnbjDOh/KeNlNGSoRSBvQPIAazydGJeVQXP3?=
+ =?us-ascii?Q?1cmGv2Jhm+owaLCGJPCZ69APcLX06F1H/7pNh2qcH+qNPIELiqnO+UH7du2s?=
+ =?us-ascii?Q?HVNVMICkCDaIAQS761TG+M0eQvn/dIaSPxP7myTiw1VkRKvBez0h6Wrh+jpl?=
+ =?us-ascii?Q?VyGffdFNVUHID7FQybOUbLGExvSCMfDTcpoL7i/7xPhUnNAzY629uamtS3Ce?=
+ =?us-ascii?Q?H3O28hS/xE46GvNJEoQVNN2OabbFi1+CUkWWWqY3GHh51V2B8JJchVEhPK4+?=
+ =?us-ascii?Q?IFXqE9pSsZHT85n2KjN5YYa7Tkz6TfF8M7uq+QWWTgMEpWbErNSkNzU5q76E?=
+ =?us-ascii?Q?nm2fQyoAEDnnf0Z2IvGkNTZC4N1YtL6kKVDNhoQ1lz9lQPzz5zQARzeNUqGb?=
+ =?us-ascii?Q?9phIBIOGQ0ZAbWx/0jn8WgFR4F9p0+1l69JQBN6uv0BqvNi6VucJUadpHazZ?=
+ =?us-ascii?Q?bSoND7C7Xd9R8hIV3O3yAZ2xoVi9HmcxBpTHeHIxLnbihRfSxtWckJAbW/7E?=
+ =?us-ascii?Q?MOaKtw7dNZvlgG881nYYxljJb+K+v8nZ4NPf433JKatbIrUFEACZSaI1+rDA?=
+ =?us-ascii?Q?cLCUwV12b35Rs1lQhlwpOmnz00Slx8DdZCNQrLxuQN9OAIyr7+WgBcE7Zlnq?=
+ =?us-ascii?Q?lVkUJy9+grTqK+LCdtIXb65p7YIty2c=3D?=
+X-OriginatorOrg: prevas.dk
+X-MS-Exchange-CrossTenant-Network-Message-Id: d40e37ea-4692-4789-33ba-08dec16e87f1
+X-MS-Exchange-CrossTenant-AuthSource: AS5PR10MB8243.EURPRD10.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jun 2026 12:49:20.7290
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: d350cf71-778d-4780-88f5-071a4cb1ed61
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: S9039GmgpCOjqjI8gtuFf2XcyEjf8STTB+ETy37Dipne9vsw8xuFEYKdBIVrgmjaO5FtykKy3c/f8S74/jNVIL5Xt1up9ypticMkI3qmgNE=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB8PR10MB3323
 
-On Wed, Jun 3, 2026, at 09:15, Rasmus Villemoes wrote:
-> On Tue, Jun 02 2026, "Arnd Bergmann" <arnd@arndb.de> wrote:
->> On Tue, Jun 2, 2026, at 20:59, Andy Shevchenko wrote:
->>> On Tue, Jun 02, 2026 at 05:07:05PM +0200, Arnd Bergmann wrote:
+On Wed, Jun 03 2026, "Arnd Bergmann" <arnd@arndb.de> wrote:
+
+> On Wed, Jun 3, 2026, at 09:15, Rasmus Villemoes wrote:
+>> On Tue, Jun 02 2026, "Arnd Bergmann" <arnd@arndb.de> wrote:
+>>> On Tue, Jun 2, 2026, at 20:59, Andy Shevchenko wrote:
+>>>> On Tue, Jun 02, 2026 at 05:07:05PM +0200, Arnd Bergmann wrote:
+>>
+>> May I suggest a different approach, that avoids having that extra
+>> function emitted (which presumably compiles to a single jump
+>> instruction, but still, with retpoline and CFI and all that it all adds
+>> up): Keep the declaration of __vsnprintf() in the header without the
+>> __print() attribute, but then do
+>>
+>> int __vsnprintf(char *buf, size_t size, const char *fmt_str, va_list args)
+>>    __alias(vsnprintf);
+>>
+>> in vsprintf.c. Aside from reusing the same entry point, I could well
+>> imagine a compiler some day complaining about seeing the printf
+>> attribute applied in a local extra declaration but not having it in the
+>> header file.
+>>
+>> Presumably it will need its own EXPORT_SYMBOL if any of the intended
+>> users are modular, and it certainly still needs a comment.
 >
-> May I suggest a different approach, that avoids having that extra
-> function emitted (which presumably compiles to a single jump
-> instruction, but still, with retpoline and CFI and all that it all adds
-> up): Keep the declaration of __vsnprintf() in the header without the
-> __print() attribute, but then do
+> I had tried that earlier but given up because the attributes have to
+> match exactly.
 >
-> int __vsnprintf(char *buf, size_t size, const char *fmt_str, va_list args) 
->    __alias(vsnprintf);
+> This definition works with all currently supported versions of gcc,
+> but may have to change when the there is a new version that adds
+> even more attributes:
 >
-> in vsprintf.c. Aside from reusing the same entry point, I could well
-> imagine a compiler some day complaining about seeing the printf
-> attribute applied in a local extra declaration but not having it in the
-> header file.
+> int
+> __printf(3, 0)
+> __attribute__((nothrow))
+> __attribute__((nonnull(1)))
+> __vsnprintf(char *__restrict buf, size_t size,
+>             const char * __restrict fmt_str, va_list args)
+>                __alias(vsnprintf);
 >
-> Presumably it will need its own EXPORT_SYMBOL if any of the intended
-> users are modular, and it certainly still needs a comment.
 
-I had tried that earlier but given up because the attributes have to
-match exactly.
+Ah, I see. The documentation for the alias attribute does say that the
+types have to match, but I didn't know that the nothrow and nonnull
+attributes were considered part of the type identity. Oddly enough, if
+one does
 
-This definition works with all currently supported versions of gcc,
-but may have to change when the there is a new version that adds
-even more attributes:
+  typeof(vsnprintf) __vsnprintf __alias(vsnprintf);
 
-int
-__printf(3, 0)
-__attribute__((nothrow))
-__attribute__((nonnull(1)))
-__vsnprintf(char *__restrict buf, size_t size,
-            const char * __restrict fmt_str, va_list args)
-               __alias(vsnprintf);
+that still fails, but only complains about nothrow, not nonnull.
 
-We'd probably want to also add __nothrow and __nonnull macros
-in linux/compiler-attributes.h if we do this.
+I don't remember what minimum gcc we currently require, but gcc 9
+introduced another attribute that is apperently meant for cases like
+this: 'copy'. This seems to build:
 
-For reference, see below for the alternative idea I had
-that avoids adding the __vsnprintf() alias altogether by
-passing down the va_format using "%pV".
+diff --git a/lib/vsprintf.c b/lib/vsprintf.c
+index 9f359b31c8d1..c1402d375429 100644
+--- a/lib/vsprintf.c
++++ b/lib/vsprintf.c
+@@ -2988,6 +2988,9 @@ int vsnprintf(char *buf, size_t size, const char *fmt_str, va_list args)
+ }
+ EXPORT_SYMBOL(vsnprintf);
+ 
++int __vsnprintf(char *buf, size_t size, const char *fmt_str, va_list args)
++       __alias(vsnprintf) __attribute__((__copy__(vsnprintf)));
++
+ /**
+  * vscnprintf - Format a string and place it in a buffer
+  * @buf: The buffer to place the result into
 
-I don't think I actually got this one right in the end
-since I only build-tested it, but I expect it could be done
-if someone is able to test and fix all the corner cases
-properly.
+That at least should handle any future "gcc knows this-or-that about the
+vsnprintf function". But I don't know if clang supports that copy
+mechanism or if the minimum supported gcc is too old.
 
-       Arnd
-
-diff --git a/include/linux/trace_events.h b/include/linux/trace_events.h
-index 4715330c7b6b..8e44fc3e60b0 100644
---- a/include/linux/trace_events.h
-+++ b/include/linux/trace_events.h
-@@ -956,14 +956,11 @@ perf_trace_buf_submit(void *raw_data, int size, int rctx, u16 type,
-  * gcc warns that you can not use a va_list in an inlined
-  * function. But lets me make it into a macro :-/
-  */
--#define __trace_event_vstr_len(fmt, va)			\
-+#define __trace_event_vstr_len(vf)			\
- ({							\
--	va_list __ap;					\
- 	int __ret;					\
- 							\
--	va_copy(__ap, *(va));				\
--	__ret = __vsnprintf(NULL, 0, fmt, __ap) + 1;	\
--	va_end(__ap);					\
-+	__ret = snprintf(NULL, 0, "%pV", vf) + 1;	\
- 							\
- 	min(__ret, TRACE_EVENT_STR_MAX);		\
- })
-diff --git a/samples/trace_events/trace-events-sample.h b/samples/trace_events/trace-events-sample.h
-index 1a05fc153353..2f3ee3632e77 100644
---- a/samples/trace_events/trace-events-sample.h
-+++ b/samples/trace_events/trace-events-sample.h
-@@ -143,20 +143,20 @@
-  *         saved string into the "foo" field.
-  *
-  *   __vstring: This is similar to __string() but instead of taking a
-- *         dynamic length, it takes a variable list va_list 'va' variable.
-+ *         dynamic length, it takes a variable list va_format 'vaf' variable.
-  *         Some event callers already have a message from parameters saved
-- *         in a va_list. Passing in the format and the va_list variable
-- *         will save just enough on the ring buffer for that string.
-- *         Note, the va variable used is a pointer to a va_list, not
-- *         to the va_list directly.
-+ *         in a va_format. Passing in the va_format variable will save just
-+ *	   enough on the ring buffer for that string.
-  *
-- *           (va_list *va)
-+ *           (va_format *vaf)
-  *
-- *         __vstring(foo, fmt, va)  is similar to:  vsnprintf(foo, fmt, va)
-+ *         __vstring(foo, vaf)  is similar to:
-+ *
-+ *	     vsnprintf(foo, "%pV", vaf)
-  *
-  *         To assign the string, use the helper macro __assign_vstr().
-  *
-- *         __assign_vstr(foo, fmt, va);
-+ *         __assign_vstr(foo, vaf);
-  *
-  *         In most cases, the __assign_vstr() macro will take the same
-  *         parameters as the __vstring() macro had to declare the string.
-@@ -292,9 +292,9 @@ TRACE_EVENT(foo_bar,
- 
- 	TP_PROTO(const char *foo, int bar, const int *lst,
- 		 const char *string, const struct cpumask *mask,
--		 const char *fmt, va_list *va),
-+		 struct va_format *vaf),
- 
--	TP_ARGS(foo, bar, lst, string, mask, fmt, va),
-+	TP_ARGS(foo, bar, lst, string, mask, vaf),
- 
- 	TP_STRUCT__entry(
- 		__array(	char,	foo,    10		)
-@@ -303,7 +303,7 @@ TRACE_EVENT(foo_bar,
- 		__string(	str,	string			)
- 		__bitmask(	cpus,	num_possible_cpus()	)
- 		__cpumask(	cpum				)
--		__vstring(	vstr,	fmt,	va		)
-+		__vstring(	vstr,	vaf			)
- 		__string_len(	lstr,	foo,	bar / 2 < strlen(foo) ? bar / 2 : strlen(foo) )
- 	),
- 
-@@ -314,7 +314,7 @@ TRACE_EVENT(foo_bar,
- 		       __length_of(lst) * sizeof(int));
- 		__assign_str(str);
- 		__assign_str(lstr);
--		__assign_vstr(vstr, fmt, va);
-+		__assign_vstr(vstr, vaf);
- 		__assign_bitmask(cpus, cpumask_bits(mask), num_possible_cpus());
- 		__assign_cpumask(cpum, cpumask_bits(mask));
- 	),
-diff --git a/include/trace/stages/stage6_event_callback.h b/include/trace/stages/stage6_event_callback.h
-index 7d6a6ca6e779..2a4611b20afa 100644
---- a/include/trace/stages/stage6_event_callback.h
-+++ b/include/trace/stages/stage6_event_callback.h
-@@ -28,7 +28,7 @@
- #define __string_len(item, src, len) __dynamic_array(char, item, -1)
- 
- #undef __vstring
--#define __vstring(item, fmt, ap) __dynamic_array(char, item, -1)
-+#define __vstring(item, vf) __dynamic_array(char, item, -1)
- 
- #undef __assign_str
- #define __assign_str(dst)						\
-@@ -41,13 +41,8 @@
- 	} while (0)
- 
- #undef __assign_vstr
--#define __assign_vstr(dst, fmt, va)					\
--	do {								\
--		va_list __cp_va;					\
--		va_copy(__cp_va, *(va));				\
--		__vsnprintf(__get_str(dst), TRACE_EVENT_STR_MAX, fmt, __cp_va); \
--		va_end(__cp_va);					\
--	} while (0)
-+#define __assign_vstr(dst, vf)						\
-+	snprintf(__get_str(dst), TRACE_EVENT_STR_MAX, "%pV", vf);
- 
- #undef __bitmask
- #define __bitmask(item, nr_bits) __dynamic_array(unsigned long, item, -1)
-diff --git a/drivers/infiniband/hw/hfi1/trace_dbg.h b/drivers/infiniband/hw/hfi1/trace_dbg.h
-index 05c4f1354269..c96144d516db 100644
---- a/drivers/infiniband/hw/hfi1/trace_dbg.h
-+++ b/drivers/infiniband/hw/hfi1/trace_dbg.h
-@@ -26,10 +26,10 @@ DECLARE_EVENT_CLASS(hfi1_trace_template,
- 		    TP_PROTO(const char *function, struct va_format *vaf),
- 		    TP_ARGS(function, vaf),
- 		    TP_STRUCT__entry(__string(function, function)
--				     __vstring(msg, vaf->fmt, vaf->va)
-+				     __vstring(msg, vaf)
- 				     ),
- 		    TP_fast_assign(__assign_str(function);
--				   __assign_vstr(msg, vaf->fmt, vaf->va);
-+				   __assign_vstr(msg, vaf);
- 				   ),
- 		    TP_printk("(%s) %s",
- 			      __get_str(function),
-diff --git a/drivers/net/wireless/ath/ath10k/trace.h b/drivers/net/wireless/ath/ath10k/trace.h
-index 68b78ca17eaa..c258ad7de79e 100644
---- a/drivers/net/wireless/ath/ath10k/trace.h
-+++ b/drivers/net/wireless/ath/ath10k/trace.h
-@@ -52,12 +52,12 @@ DECLARE_EVENT_CLASS(ath10k_log_event,
- 	TP_STRUCT__entry(
- 		__string(device, dev_name(ar->dev))
- 		__string(driver, dev_driver_string(ar->dev))
--		__vstring(msg, vaf->fmt, vaf->va)
-+		__vstring(msg, vaf)
- 	),
- 	TP_fast_assign(
- 		__assign_str(device);
- 		__assign_str(driver);
--		__assign_vstr(msg, vaf->fmt, vaf->va);
-+		__assign_vstr(msg, vaf);
- 	),
- 	TP_printk(
- 		"%s %s %s",
-@@ -89,13 +89,13 @@ TRACE_EVENT(ath10k_log_dbg,
- 		__string(device, dev_name(ar->dev))
- 		__string(driver, dev_driver_string(ar->dev))
- 		__field(unsigned int, level)
--		__vstring(msg, vaf->fmt, vaf->va)
-+		__vstring(msg, vaf)
- 	),
- 	TP_fast_assign(
- 		__assign_str(device);
- 		__assign_str(driver);
- 		__entry->level = level;
--		__assign_vstr(msg, vaf->fmt, vaf->va);
-+		__assign_vstr(msg, vaf);
- 	),
- 	TP_printk(
- 		"%s %s %s",
-diff --git a/drivers/net/wireless/ath/ath11k/trace.h b/drivers/net/wireless/ath/ath11k/trace.h
-index 75246b0a82e3..0ac14b72deac 100644
---- a/drivers/net/wireless/ath/ath11k/trace.h
-+++ b/drivers/net/wireless/ath/ath11k/trace.h
-@@ -127,12 +127,12 @@ DECLARE_EVENT_CLASS(ath11k_log_event,
- 	TP_STRUCT__entry(
- 		__string(device, dev_name(ab->dev))
- 		__string(driver, dev_driver_string(ab->dev))
--		__vstring(msg, vaf->fmt, vaf->va)
-+		__vstring(msg, vaf)
- 	),
- 	TP_fast_assign(
- 		__assign_str(device);
- 		__assign_str(driver);
--		__assign_vstr(msg, vaf->fmt, vaf->va);
-+		__assign_vstr(msg, vaf);
- 	),
- 	TP_printk(
- 		"%s %s %s",
-diff --git a/drivers/net/wireless/ath/ath6kl/trace.h b/drivers/net/wireless/ath/ath6kl/trace.h
-index 8577aa459c58..d46fe6b675f9 100644
---- a/drivers/net/wireless/ath/ath6kl/trace.h
-+++ b/drivers/net/wireless/ath/ath6kl/trace.h
-@@ -253,10 +253,10 @@ DECLARE_EVENT_CLASS(ath6kl_log_event,
- 	TP_PROTO(struct va_format *vaf),
- 	TP_ARGS(vaf),
- 	TP_STRUCT__entry(
--		__vstring(msg, vaf->fmt, vaf->va)
-+		__vstring(msg, vaf)
- 	),
- 	TP_fast_assign(
--		__assign_vstr(msg, vaf->fmt, vaf->va);
-+		__assign_vstr(msg, vaf);
- 	),
- 	TP_printk("%s", __get_str(msg))
- );
-@@ -281,11 +281,11 @@ TRACE_EVENT(ath6kl_log_dbg,
- 	TP_ARGS(level, vaf),
- 	TP_STRUCT__entry(
- 		__field(unsigned int, level)
--		__vstring(msg, vaf->fmt, vaf->va)
-+		__vstring(msg, vaf)
- 	),
- 	TP_fast_assign(
- 		__entry->level = level;
--		__assign_vstr(msg, vaf->fmt, vaf->va);
-+		__assign_vstr(msg, vaf);
- 	),
- 	TP_printk("%s", __get_str(msg))
- );
-diff --git a/drivers/net/wireless/ath/trace.h b/drivers/net/wireless/ath/trace.h
-index 82aac0a4baff..298a56349ea7 100644
---- a/drivers/net/wireless/ath/trace.h
-+++ b/drivers/net/wireless/ath/trace.h
-@@ -40,13 +40,13 @@ TRACE_EVENT(ath_log,
- 	    TP_STRUCT__entry(
- 		    __string(device, wiphy_name(wiphy))
- 		    __string(driver, KBUILD_MODNAME)
--		    __vstring(msg, vaf->fmt, vaf->va)
-+		    __vstring(msg, vaf)
- 	    ),
- 
- 	    TP_fast_assign(
- 		    __assign_str(device);
- 		    __assign_str(driver);
--		    __assign_vstr(msg, vaf->fmt, vaf->va);
-+		    __assign_vstr(msg, vaf);
- 	    ),
- 
- 	    TP_printk(
-diff --git a/drivers/net/wireless/ath/wil6210/trace.h b/drivers/net/wireless/ath/wil6210/trace.h
-index 201f44612c31..7eb6ca2b0cb6 100644
---- a/drivers/net/wireless/ath/wil6210/trace.h
-+++ b/drivers/net/wireless/ath/wil6210/trace.h
-@@ -70,10 +70,10 @@ DECLARE_EVENT_CLASS(wil6210_log_event,
- 	TP_PROTO(struct va_format *vaf),
- 	TP_ARGS(vaf),
- 	TP_STRUCT__entry(
--		__vstring(msg, vaf->fmt, vaf->va)
-+		__vstring(msg, vaf)
- 	),
- 	TP_fast_assign(
--		__assign_vstr(msg, vaf->fmt, vaf->va);
-+		__assign_vstr(msg, vaf);
- 	),
- 	TP_printk("%s", __get_str(msg))
- );
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/tracepoint.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/tracepoint.h
-index 6c4e00e9ccd1..66b179adb80c 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/tracepoint.h
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/tracepoint.h
-@@ -33,11 +33,11 @@ TRACE_EVENT(brcmf_err,
- 	TP_ARGS(func, vaf),
- 	TP_STRUCT__entry(
- 		__string(func, func)
--		__vstring(msg, vaf->fmt, vaf->va)
-+		__vstring(msg, vaf)
- 	),
- 	TP_fast_assign(
- 		__assign_str(func);
--		__assign_vstr(msg, vaf->fmt, vaf->va);
-+		__assign_vstr(msg, vaf);
- 	),
- 	TP_printk("%s: %s", __get_str(func), __get_str(msg))
- );
-@@ -48,12 +48,12 @@ TRACE_EVENT(brcmf_dbg,
- 	TP_STRUCT__entry(
- 		__field(u32, level)
- 		__string(func, func)
--		__vstring(msg, vaf->fmt, vaf->va)
-+		__vstring(msg, vaf)
- 	),
- 	TP_fast_assign(
- 		__entry->level = level;
- 		__assign_str(func);
--		__assign_vstr(msg, vaf->fmt, vaf->va);
-+		__assign_vstr(msg, vaf);
- 	),
- 	TP_printk("%s: %s", __get_str(func), __get_str(msg))
- );
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/brcms_trace_brcmsmac_msg.h b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/brcms_trace_brcmsmac_msg.h
-index dc296d8bf775..369171af1a30 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/brcms_trace_brcmsmac_msg.h
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/brcms_trace_brcmsmac_msg.h
-@@ -28,10 +28,10 @@ DECLARE_EVENT_CLASS(brcms_msg_event,
- 	TP_PROTO(struct va_format *vaf),
- 	TP_ARGS(vaf),
- 	TP_STRUCT__entry(
--		__vstring(msg, vaf->fmt, vaf->va)
-+		__vstring(msg, vaf)
- 	),
- 	TP_fast_assign(
--		__assign_vstr(msg, vaf->fmt, vaf->va);
-+		__assign_vstr(msg, vaf);
- 	),
- 	TP_printk("%s", __get_str(msg))
- );
-@@ -62,12 +62,12 @@ TRACE_EVENT(brcms_dbg,
- 	TP_STRUCT__entry(
- 		__field(u32, level)
- 		__string(func, func)
--		__vstring(msg, vaf->fmt, vaf->va)
-+		__vstring(msg, vaf)
- 	),
- 	TP_fast_assign(
- 		__entry->level = level;
- 		__assign_str(func);
--		__assign_vstr(msg, vaf->fmt, vaf->va);
-+		__assign_vstr(msg, vaf);
- 	),
- 	TP_printk("%s: %s", __get_str(func), __get_str(msg))
- );
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-devtrace-msg.h b/drivers/net/wireless/intel/iwlwifi/iwl-devtrace-msg.h
-index 0db1fa5477af..80cfb9fc8ad8 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-devtrace-msg.h
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-devtrace-msg.h
-@@ -18,10 +18,10 @@ DECLARE_EVENT_CLASS(iwlwifi_msg_event,
- 	TP_PROTO(struct va_format *vaf),
- 	TP_ARGS(vaf),
- 	TP_STRUCT__entry(
--		__vstring(msg, vaf->fmt, vaf->va)
-+		__vstring(msg, vaf)
- 	),
- 	TP_fast_assign(
--		__assign_vstr(msg, vaf->fmt, vaf->va);
-+		__assign_vstr(msg, vaf);
- 	),
- 	TP_printk("%s", __get_str(msg))
- );
-@@ -53,12 +53,12 @@ TRACE_EVENT(iwlwifi_dbg,
- 	TP_STRUCT__entry(
- 		__field(u32, level)
- 		__string(function, function)
--		__vstring(msg, vaf->fmt, vaf->va)
-+		__vstring(msg, vaf)
- 	),
- 	TP_fast_assign(
- 		__entry->level = level;
- 		__assign_str(function);
--		__assign_vstr(msg, vaf->fmt, vaf->va);
-+		__assign_vstr(msg, vaf);
- 	),
- 	TP_printk("%s", __get_str(msg))
- );
-diff --git a/drivers/usb/chipidea/trace.h b/drivers/usb/chipidea/trace.h
-index 1875419cd17f..9ec0df074872 100644
---- a/drivers/usb/chipidea/trace.h
-+++ b/drivers/usb/chipidea/trace.h
-@@ -28,11 +28,11 @@ TRACE_EVENT(ci_log,
- 	TP_ARGS(ci, vaf),
- 	TP_STRUCT__entry(
- 		__string(name, dev_name(ci->dev))
--		__vstring(msg, vaf->fmt, vaf->va)
-+		__vstring(msg, vaf)
- 	),
- 	TP_fast_assign(
- 		__assign_str(name);
--		__assign_vstr(msg, vaf->fmt, vaf->va);
-+		__assign_vstr(msg, vaf);
- 	),
- 	TP_printk("%s: %s", __get_str(name), __get_str(msg))
- );
-diff --git a/drivers/usb/host/xhci-trace.h b/drivers/usb/host/xhci-trace.h
-index 724cba2dbb78..575c02109b4b 100644
---- a/drivers/usb/host/xhci-trace.h
-+++ b/drivers/usb/host/xhci-trace.h
-@@ -28,9 +28,9 @@
- DECLARE_EVENT_CLASS(xhci_log_msg,
- 	TP_PROTO(struct va_format *vaf),
- 	TP_ARGS(vaf),
--	TP_STRUCT__entry(__vstring(msg, vaf->fmt, vaf->va)),
-+	TP_STRUCT__entry(__vstring(msg, vaf)),
- 	TP_fast_assign(
--		__assign_vstr(msg, vaf->fmt, vaf->va);
-+		__assign_vstr(msg, vaf);
- 	),
- 	TP_printk("%s", __get_str(msg))
- );
-diff --git a/drivers/usb/mtu3/mtu3_trace.h b/drivers/usb/mtu3/mtu3_trace.h
-index 89870175d635..56c9263a99d8 100644
---- a/drivers/usb/mtu3/mtu3_trace.h
-+++ b/drivers/usb/mtu3/mtu3_trace.h
-@@ -23,11 +23,11 @@ TRACE_EVENT(mtu3_log,
- 	TP_ARGS(dev, vaf),
- 	TP_STRUCT__entry(
- 		__string(name, dev_name(dev))
--		__vstring(msg, vaf->fmt, vaf->va)
-+		__vstring(msg, vaf)
- 	),
- 	TP_fast_assign(
- 		__assign_str(name);
--		__assign_vstr(msg, vaf->fmt, vaf->va);
-+		__assign_vstr(msg, vaf);
- 	),
- 	TP_printk("%s: %s", __get_str(name), __get_str(msg))
- );
-diff --git a/drivers/usb/musb/musb_trace.h b/drivers/usb/musb/musb_trace.h
-index 726e6697d475..7dba44b0496d 100644
---- a/drivers/usb/musb/musb_trace.h
-+++ b/drivers/usb/musb/musb_trace.h
-@@ -28,11 +28,11 @@ TRACE_EVENT(musb_log,
- 	TP_ARGS(musb, vaf),
- 	TP_STRUCT__entry(
- 		__string(name, dev_name(musb->controller))
--		__vstring(msg, vaf->fmt, vaf->va)
-+		__vstring(msg, vaf)
- 	),
- 	TP_fast_assign(
- 		__assign_str(name);
--		__assign_vstr(msg, vaf->fmt, vaf->va);
-+		__assign_vstr(msg, vaf);
- 	),
- 	TP_printk("%s: %s", __get_str(name), __get_str(msg))
- );
-diff --git a/include/trace/events/iscsi.h b/include/trace/events/iscsi.h
-index 990fd154f586..2e2667658b51 100644
---- a/include/trace/events/iscsi.h
-+++ b/include/trace/events/iscsi.h
-@@ -26,12 +26,12 @@ DECLARE_EVENT_CLASS(iscsi_log_msg,
- 
- 	TP_STRUCT__entry(
- 		__string(dname, 	dev_name(dev)		)
--		__vstring(msg,		vaf->fmt, vaf->va)
-+		__vstring(msg,		vaf)
- 	),
- 
- 	TP_fast_assign(
- 		__assign_str(dname);
--		__assign_vstr(msg, vaf->fmt, vaf->va);
-+		__assign_vstr(msg, vaf);
- 	),
- 
- 	TP_printk("%s: %s",__get_str(dname),  __get_str(msg)
-diff --git a/include/trace/events/qla.h b/include/trace/events/qla.h
-index 74a7534b99b6..554ae9a623c6 100644
---- a/include/trace/events/qla.h
-+++ b/include/trace/events/qla.h
-@@ -17,11 +17,11 @@ DECLARE_EVENT_CLASS(qla_log_event,
- 
- 	TP_STRUCT__entry(
- 		__string(buf, buf)
--		__vstring(msg, vaf->fmt, vaf->va)
-+		__vstring(msg, vaf)
- 	),
- 	TP_fast_assign(
- 		__assign_str(buf);
--		__assign_vstr(msg, vaf->fmt, vaf->va);
-+		__assign_vstr(msg, vaf);
- 	),
- 
- 	TP_printk("%s %s", __get_str(buf), __get_str(msg))
-diff --git a/include/trace/stages/stage1_struct_define.h b/include/trace/stages/stage1_struct_define.h
-index 69e0dae453bf..0ae49a935d16 100644
---- a/include/trace/stages/stage1_struct_define.h
-+++ b/include/trace/stages/stage1_struct_define.h
-@@ -27,7 +27,7 @@
- #define __string_len(item, src, len) __dynamic_array(char, item, -1)
- 
- #undef __vstring
--#define __vstring(item, fmt, ap) __dynamic_array(char, item, -1)
-+#define __vstring(item, vf) __dynamic_array(char, item, -1)
- 
- #undef __bitmask
- #define __bitmask(item, nr_bits) __dynamic_array(char, item, -1)
-diff --git a/include/trace/stages/stage2_data_offsets.h b/include/trace/stages/stage2_data_offsets.h
-index 8b0cff06d346..5c6dc3092e07 100644
---- a/include/trace/stages/stage2_data_offsets.h
-+++ b/include/trace/stages/stage2_data_offsets.h
-@@ -33,7 +33,7 @@
- #define __string_len(item, src, len) __dynamic_array(char, item, -1)
- 
- #undef __vstring
--#define __vstring(item, fmt, ap) __dynamic_array(char, item, -1)
-+#define __vstring(item, vf) __dynamic_array(char, item, -1)
- 
- #undef __bitmask
- #define __bitmask(item, nr_bits) __dynamic_array(unsigned long, item, -1)
-diff --git a/include/trace/stages/stage4_event_fields.h b/include/trace/stages/stage4_event_fields.h
-index b6f679ae21aa..77f74d509760 100644
---- a/include/trace/stages/stage4_event_fields.h
-+++ b/include/trace/stages/stage4_event_fields.h
-@@ -42,7 +42,7 @@
- #define __string_len(item, src, len) __dynamic_array(char, item, -1)
- 
- #undef __vstring
--#define __vstring(item, fmt, ap) __dynamic_array(char, item, -1)
-+#define __vstring(item, vf) __dynamic_array(char, item, -1)
- 
- #undef __bitmask
- #define __bitmask(item, nr_bits) __dynamic_array(unsigned long, item, -1)
-diff --git a/include/trace/stages/stage5_get_offsets.h b/include/trace/stages/stage5_get_offsets.h
-index c6a62dfb18ef..1ce5ca15a8ed 100644
---- a/include/trace/stages/stage5_get_offsets.h
-+++ b/include/trace/stages/stage5_get_offsets.h
-@@ -65,8 +65,8 @@ static inline const char *__string_src(const char *str)
- 	__data_offsets->item##_ptr_ = src;
- 
- #undef __vstring
--#define __vstring(item, fmt, ap) __dynamic_array(char, item,		\
--		      __trace_event_vstr_len(fmt, ap))
-+#define __vstring(item, vf) __dynamic_array(char, item,		\
-+		      __trace_event_vstr_len(vf))
- 
- #undef __rel_dynamic_array
- #define __rel_dynamic_array(type, item, len)				\
-diff --git a/net/batman-adv/trace.h b/net/batman-adv/trace.h
-index 7da692ec38e9..ac88789330a3 100644
---- a/net/batman-adv/trace.h
-+++ b/net/batman-adv/trace.h
-@@ -36,13 +36,13 @@ TRACE_EVENT(batadv_dbg,
- 	    TP_STRUCT__entry(
- 		    __string(device, bat_priv->mesh_iface->name)
- 		    __string(driver, KBUILD_MODNAME)
--		    __vstring(msg, vaf->fmt, vaf->va)
-+		    __vstring(msg, vaf)
- 	    ),
- 
- 	    TP_fast_assign(
- 		    __assign_str(device);
- 		    __assign_str(driver);
--		    __assign_vstr(msg, vaf->fmt, vaf->va);
-+		    __assign_vstr(msg, vaf);
- 	    ),
- 
- 	    TP_printk(
-diff --git a/net/mac80211/trace_msg.h b/net/mac80211/trace_msg.h
-index aea4ce55c5ac..0de50dfa13ed 100644
---- a/net/mac80211/trace_msg.h
-+++ b/net/mac80211/trace_msg.h
-@@ -22,11 +22,11 @@ DECLARE_EVENT_CLASS(mac80211_msg_event,
- 	TP_ARGS(vaf),
- 
- 	TP_STRUCT__entry(
--		__vstring(msg, vaf->fmt, vaf->va)
-+		__vstring(msg, vaf)
- 	),
- 
- 	TP_fast_assign(
--		__assign_vstr(msg, vaf->fmt, vaf->va);
-+		__assign_vstr(msg, vaf);
- 	),
- 
- 	TP_printk("%s", __get_str(msg))
-diff --git a/samples/trace_events/trace-events-sample.c b/samples/trace_events/trace-events-sample.c
-index ecc7db237f2e..07096eadfb7b 100644
---- a/samples/trace_events/trace-events-sample.c
-+++ b/samples/trace_events/trace-events-sample.c
-@@ -23,6 +23,7 @@ static void do_simple_thread_func(int cnt, const char *fmt, ...)
- {
- 	unsigned long bitmask[1] = {0xdeadbeefUL};
- 	va_list va;
-+	struct va_format vf = { .fmt = fmt };
- 	int array[6];
- 	int len = cnt % 5;
- 	int i;
-@@ -35,10 +36,11 @@ static void do_simple_thread_func(int cnt, const char *fmt, ...)
- 	array[i] = 0;
- 
- 	va_start(va, fmt);
-+	vf.va = &va;
- 
- 	/* Silly tracepoints */
- 	trace_foo_bar("hello", cnt, array, random_strings[len],
--		      current->cpus_ptr, fmt, &va);
-+		      current->cpus_ptr, &vf);
- 
- 	va_end(va);
- 
+Rasmus
