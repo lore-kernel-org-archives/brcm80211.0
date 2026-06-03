@@ -1,101 +1,146 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
+Received: from mail-106112.protonmail.ch (mail-106112.protonmail.ch [79.135.106.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBBC437756F;
-	Wed,  3 Jun 2026 05:47:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A48B394786
+	for <brcm80211@lists.linux.dev>; Wed,  3 Jun 2026 07:15:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.112
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780465627; cv=none; b=t1kDmuK0o6EpJUhOL+B3CqXTZhziZAz5UiCRIJNPSDdffqyXSzsGZuHmt9DRjmJ3TFbd+HIDk7wakvltkSJZnnsQH/cGhIhijU85GaUa4N2wiT7m8rlHrx12sUO2mfy6b6CV5xHjwW8AhgqrhobKwJ/CmVQsXQONWqAIJYgO9R4=
+	t=1780470935; cv=none; b=Sr7Zj9igPCBum9loQWGFfnVPD/4z4hwyvsWgNE8zRFrr9Rj2R9K53y4JaiMM68BodsWLe0sB9ao7q0i9hcU+mlQTUL4Q0sLsu3Ukmf4+A4YJ3Oai5/eJpNiRYop+RSoZ2VC6iU/mnZyB78kYudOBDwd5pNWEteVJwNupIHPQlDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780465627; c=relaxed/simple;
-	bh=/FLTeWNgbJxy3Ry7en1bPUx4V4oTJRJksctul9uRdys=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=I2kuMDdc6Px0YOc7f15hwIjbTqZHagNiWGPdsPAykCe0/8wXdQ65YgCIB6Dq++6Mnc5h7CkTtqj/99eL1cYeAUZVdVb1EdcMh8rAZQ3cETo2YhdKZJVYjT9P3wSUo501VV1s4MOL3x1XjXAzxCGZ3f0z3d2t0oT39a39gLz+iYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=UdSzM+U+; arc=none smtp.client-ip=192.198.163.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1780470935; c=relaxed/simple;
+	bh=M1qhC0UFXz8MVPH15I4zPG/B8TW75biCWf4twzWwS/M=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=OGjk6ouinY8Ged3DTawa3BrAr9vNOOYIzxvQplaBYTv3KdJ6ZacKpzQAyXz+DqL5HMxc2JMeGAuBRDcHB3NvTTijiJtnnaJ14DxHQHcIA9Hec/GyYvt8HMLRGZ5Nq6tFcGjUXGBFiKvrjSWqdexCWV2kedlRaG53qlJF2cDrt0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=rasmusvillemoes.dk; spf=pass smtp.mailfrom=rasmusvillemoes.dk; dkim=pass (2048-bit key) header.d=rasmusvillemoes.dk header.i=@rasmusvillemoes.dk header.b=PQbU687e; arc=none smtp.client-ip=79.135.106.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=rasmusvillemoes.dk
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rasmusvillemoes.dk
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="UdSzM+U+"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1780465626; x=1812001626;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=/FLTeWNgbJxy3Ry7en1bPUx4V4oTJRJksctul9uRdys=;
-  b=UdSzM+U+EplFsOf4XNA2qaf1T+vx6hptvRRxtl/KhEWlhBZ/kK8dx3bR
-   UrqnTYgYJXYMDxGJiO/dYI1lCu5ffh8v/0NpwSt3rD9nt3fcOXu/i5OTo
-   LIuTRUgM941gZ99qNV7T+yn7tIQk3t9it15PWFw+f9uM2UsB73qGVIXH1
-   2k15QiSZGbal2ODtdhaf22a1yruuv0GirdhD7DFk9Ps658MWSMDzWRTuV
-   D8Swyx0a++xHMz6ELqXgZwN9p/TrujUI2a1Y27W65P4eJdQs9NAiMtiTX
-   8/8bkV42Kypb+ExwUmbLiB5f3A0imYBTi8MiTeLRjY+bLLloEE9zSeQ87
-   w==;
-X-CSE-ConnectionGUID: OZVDjEHlTnSriuQI4LY+UQ==
-X-CSE-MsgGUID: xGoe0QnLTnO33ZgRQ2rVQA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11805"; a="83842272"
-X-IronPort-AV: E=Sophos;i="6.24,184,1774335600"; 
-   d="scan'208";a="83842272"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
-  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Jun 2026 22:47:05 -0700
-X-CSE-ConnectionGUID: FNlwVWqVTf2houfD4TQfCw==
-X-CSE-MsgGUID: WZFOE495REOFrIL2m/+VhQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,184,1774335600"; 
-   d="scan'208";a="243966295"
-Received: from pgcooper-mobl3.ger.corp.intel.com (HELO localhost) ([10.245.244.116])
-  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Jun 2026 22:46:59 -0700
-Date: Wed, 3 Jun 2026 08:46:57 +0300
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Arnd Bergmann <arnd@kernel.org>, Steven Rostedt <rostedt@goodmis.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Petr Mladek <pmladek@suse.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
-	Jason Gunthorpe <jgg@ziepe.ca>, Leon Romanovsky <leon@kernel.org>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
-	Bill Wendling <morbo@google.com>,
-	Justin Stitt <justinstitt@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>, linux-rdma@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org,
-	brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com,
-	linux-trace-kernel@vger.kernel.org, llvm@lists.linux.dev
+	dkim=pass (2048-bit key) header.d=rasmusvillemoes.dk header.i=@rasmusvillemoes.dk header.b="PQbU687e"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rasmusvillemoes.dk;
+	s=protonmail; t=1780470921; x=1780730121;
+	bh=LmZEeSZAd+OZ1Gn48j9QvYPymSsKNATaHgUOGJMb/zs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:From:To:
+	 Cc:Date:Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=PQbU687emmJLIgwcPqMgFazSSKX0n0cdzFemS41SLCaXBkfiNvkSXGFWGo/n0UiqD
+	 oc3+1sUKRdBrTkJ0u6DrQtBYqE/67eBNluaDN9SbjNwZL6mJQtY7CIFAVv2Oq+/ZIt
+	 jvFfcGMHkPqudRC0yuZqRg6nksQi7sGyEP6TbUdYj1lg/9M4/oRdbj4wYXflpAwtlG
+	 zYVA7vUcVJ5Z6/+X5XKinW8nlbv948aAcHGuMzDAUQ+ns8HvapWodahfQOKD/6n9oV
+	 AhDAIn+6TmVBlnnICNTlwVoFnIvCwOVO65mMr+Sc5eZBYOU1Nzibau0b5NDda6Au50
+	 sZ/qvAPNDmkFA==
+X-Pm-Submission-Id: 4gVf9D52zyz2SccQ
+From: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+To: "Arnd Bergmann" <arnd@arndb.de>
+Cc: "Andy Shevchenko" <andriy.shevchenko@linux.intel.com>,  "Arnd Bergmann"
+ <arnd@kernel.org>,  "Steven Rostedt" <rostedt@goodmis.org>,  "Masami
+ Hiramatsu" <mhiramat@kernel.org>,  "Andrew Morton"
+ <akpm@linux-foundation.org>,  "Petr Mladek" <pmladek@suse.com>,  "Nathan
+ Chancellor" <nathan@kernel.org>,  "Dennis Dalessandro"
+ <dennis.dalessandro@cornelisnetworks.com>,  "Jason Gunthorpe"
+ <jgg@ziepe.ca>,  "Leon Romanovsky" <leon@kernel.org>,  "Arend van Spriel"
+ <arend.vanspriel@broadcom.com>,  "Miri Korenblit"
+ <miriam.rachel.korenblit@intel.com>,  "Mathieu Desnoyers"
+ <mathieu.desnoyers@efficios.com>,  "Sergey Senozhatsky"
+ <senozhatsky@chromium.org>,  "Nick Desaulniers"
+ <nick.desaulniers+lkml@gmail.com>,  "Bill Wendling" <morbo@google.com>,
+  "Justin Stitt" <justinstitt@google.com>,  "Vlastimil Babka (SUSE)"
+ <vbabka@kernel.org>,  <linux-rdma@vger.kernel.org>,
+  <linux-kernel@vger.kernel.org>,  <linux-wireless@vger.kernel.org>,
+  <brcm80211@lists.linux.dev>,  <brcm80211-dev-list.pdl@broadcom.com>,
+  <linux-trace-kernel@vger.kernel.org>,  <llvm@lists.linux.dev>
 Subject: Re: [PATCH 1/2] tracing: work around -Wmissing-format-attribute
  warning
-Message-ID: <ah-_0aAnev7pHU57@ashevche-desk.local>
+In-Reply-To: <35c1ba62-e74d-4abc-aa73-ccd35968ff89@app.fastmail.com> (Arnd
+	Bergmann's message of "Tue, 02 Jun 2026 22:32:04 +0200")
 References: <20260602150904.2258624-1-arnd@kernel.org>
- <20260603105842.1e0ef8cb4a55cb776d6a4971@kernel.org>
+	<ah8n-Nk305S5hRwN@ashevche-desk.local>
+	<WPQQfPHOiGJbSxrXRdFDy9jURhS7JMpNu9sD54Vfe5wB-JOjyGY6xPQyACz3MSGg0xGp79eOYCyZ2Hi2CsPeUg==@protonmail.internalid>
+	<35c1ba62-e74d-4abc-aa73-ccd35968ff89@app.fastmail.com>
+Date: Wed, 03 Jun 2026 09:15:11 +0200
+Message-ID: <875x40hz7k.fsf@prevas.dk>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260603105842.1e0ef8cb4a55cb776d6a4971@kernel.org>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs, Bertel Jungin Aukio 5, 02600 Espoo
+Content-Type: text/plain
 
-On Wed, Jun 03, 2026 at 10:58:42AM +0900, Masami Hiramatsu wrote:
-> On Tue,  2 Jun 2026 17:07:05 +0200
-> Arnd Bergmann <arnd@kernel.org> wrote:
+On Tue, Jun 02 2026, "Arnd Bergmann" <arnd@arndb.de> wrote:
 
-...
+> On Tue, Jun 2, 2026, at 20:59, Andy Shevchenko wrote:
+>> On Tue, Jun 02, 2026 at 05:07:05PM +0200, Arnd Bergmann wrote:
+>>>
+>>> A number of tracing headers turn off -Wsuggest-attribute=format for
+>>> gcc, but they don't turn it off for clang, so the same warning still
+>>> happens on new versions of clang that support the format attribute.
+>>>
+>>> To avoid duplicating the same thing in each tracing header, as well
+>>> as changing all of them to also turn it off for clang, add a new
+>>> __vsnprintf() helper that is not annotated this way in linux/sprintf.h
+>>> but is defined to work the same way as the regular vsprintf.
+>>
+>> vsprintf()
+>
+> Fixed now
+>
+>> Why the __printf() annotation is in the C file and not here?
+>> Is this all about headers as the second paragraph in the commit message
+>> explains?
+>> I would add a comment to explain it here, otherwise we might see false
+>> patches to "make things consistent" in a wrong way.
+>
+> I've tried to come up with a kerneldoc comment now, similar to
+> the one for the vsnprintf() function, and added a separate prototype
+> in the header. Does this address your concern?
+>
+>       Arnd
+>
+> diff --git a/lib/vsprintf.c b/lib/vsprintf.c
+> index 3caf0796f54d..7c696aea2ed3 100644
+> --- a/lib/vsprintf.c
+> +++ b/lib/vsprintf.c
+> @@ -2975,7 +2975,23 @@ int vsnprintf(char *buf, size_t size, const char *fmt_str, va_list args)
+>  }
+>  EXPORT_SYMBOL(vsnprintf);
+>
+> -int __printf(3, 0) __vsnprintf(char *buf, size_t size, const char *fmt_str, va_list args)
+> +/**
+> + * __vsnprintf - vsnprintf() wrapper without __printf() attribute
+> + * @buf: The buffer to place the result into
+> + * @size: The size of the buffer, including the trailing null space
+> + * @fmt_str: The format string to use
+> + * @args: Arguments for the format string
+> + *
+> + * This has the exact same behavior as vsnprintf() but can be used in call
+> + * sites that are missing a __printf() annotation, e.g. because they
+> + * get a 'va_format' argument instead of format and varargs.
+> + *
+> + * For this to work, the attribute is added to the declaration here but
+> + * not in the header.
+> + */
+> +int __printf(3, 0) __vsnprintf(char *buf, size_t size, const char *fmt_str, va_list args);
+> +
+> +int __vsnprintf(char *buf, size_t size, const char *fmt_str, va_list args)
+>  {
+>  	return vsnprintf(buf, size, fmt_str, args);
+>  }
 
-> I think this is a slightly confusing name. What about vsnprintf_nocheck()?
+May I suggest a different approach, that avoids having that extra
+function emitted (which presumably compiles to a single jump
+instruction, but still, with retpoline and CFI and all that it all adds
+up): Keep the declaration of __vsnprintf() in the header without the
+__print() attribute, but then do
 
-What check? If you want to be more precise: vsnprintf_no_printf_attr() or
-vsnprintf_no_format_check(). But they also seem to me not the good choices.
-(Just slight preference to the latter one no_format_check.)
+int __vsnprintf(char *buf, size_t size, const char *fmt_str, va_list args) 
+   __alias(vsnprintf);
 
--- 
-With Best Regards,
-Andy Shevchenko
+in vsprintf.c. Aside from reusing the same entry point, I could well
+imagine a compiler some day complaining about seeing the printf
+attribute applied in a local extra declaration but not having it in the
+header file.
 
+Presumably it will need its own EXPORT_SYMBOL if any of the intended
+users are modular, and it certainly still needs a comment.
 
+Rasmus
