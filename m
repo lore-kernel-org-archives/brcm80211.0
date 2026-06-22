@@ -1,104 +1,127 @@
-Received: from mail-m1024.netease.com (mail-m1024.netease.com [154.81.10.24])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7075352C2C
-	for <brcm80211@lists.linux.dev>; Fri, 19 Jun 2026 06:44:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=154.81.10.24
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 231083CB2E9
+	for <brcm80211@lists.linux.dev>; Mon, 22 Jun 2026 16:03:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781851461; cv=none; b=bpyWIWJabg4/UPxXJ/aKfwxbczXiztvqAiZoDHzf/h8ZUf2TaeosX/xDy9yaMI3pN3Cq3JlOCFcWPgT+vulJ0Lf4HxJYP3R9AJ4qUJO+0l2tFLe3jnUCX01Af/WOxoC90Xbr/mla90EKv99ZBdcWhTcfoBMMCQVzykLY4eMawko=
+	t=1782144183; cv=none; b=BTf33r+rqjeyi1o6yeI4vekZb5+uC8sCeQHLKZUvN17qIYzhMlcaP1hqLsF/G7soJp29m68TLLS9QmmnoKISup6KRLsaAfX9Ukw2iDDsHcVLhucJBAlfU/eIhYWhmBSIa3T4WP5XA/mcSRF4gQFoAI32wh0TsEFUxWw4igfaqEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781851461; c=relaxed/simple;
-	bh=9NXh6/9qz2LceVwkRiOX7/YYyxldLVwnuMR2NARbEnE=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=LZ/JQrgGv36Jr+XCJJOYRQIHOt3UMEwV+rT/FCB9hprdP1FfJVADhSnzoPIburcOlz8YhLHz0gk9Yv2NHF4QWWFUhfCVAI5vKyDRz3H7EIpum4KQYf+ZsbrC0zJKDEPBL3HAm4HANrA6PwKs7zCmg3KiN37EQwIhhDx75Ve3qec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=seu.edu.cn; spf=pass smtp.mailfrom=seu.edu.cn; dkim=pass (1024-bit key) header.d=seu.edu.cn header.i=@seu.edu.cn header.b=l3xo/TYm; arc=none smtp.client-ip=154.81.10.24
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=seu.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=seu.edu.cn
+	s=arc-20240116; t=1782144183; c=relaxed/simple;
+	bh=+5VtcywrfYSETUagn4J9ivVLSqQ5OKfTp7Oz4HoZsG8=;
+	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=k7jz37Kj94Qa7Narv633nR5zuBnhj1L6Chw/DxKmS+a7o0SdTrrSEg1CtqAsoEHksDU0EtU2fjjFVHlTrsgqUZ3qHRoitnInlutqROlSrLFrkTRiCDMgBFJsc0FYQCZLurf48iwj0L9Z8RxsI+3iRTNiHt3LQlspn9TQS1zx9NA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hBQWrCOH; arc=none smtp.client-ip=209.85.214.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=seu.edu.cn header.i=@seu.edu.cn header.b="l3xo/TYm"
-Received: from PC-202605011814.localdomain (unknown [58.241.16.34])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 43005476a;
-	Fri, 19 Jun 2026 14:44:07 +0800 (GMT+08:00)
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
-To: Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Kalle Valo <kvalo@kernel.org>
-Cc: Pieter-Paul Giesberts <pieterpg@broadcom.com>,
-	Hante Meuleman <meuleman@broadcom.com>,
-	Daniel Kim <dekim@broadcom.com>,
-	Franky Lin <frankyl@broadcom.com>,
-	linux-wireless@vger.kernel.org,
-	brcm80211@lists.linux.dev,
-	brcm80211-dev-list.pdl@broadcom.com,
-	linux-kernel@vger.kernel.org,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	stable@vger.kernel.org
-Subject: [PATCH wireless] wifi: brcmfmac: initialize SDIO data work before cleanup
-Date: Fri, 19 Jun 2026 14:44:01 +0800
-Message-Id: <20260619064401.1048976-1-runyu.xiao@seu.edu.cn>
-X-Mailer: git-send-email 2.34.1
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hBQWrCOH"
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2c77d52bec4so136085ad.1
+        for <brcm80211@lists.linux.dev>; Mon, 22 Jun 2026 09:03:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782144181; x=1782748981; darn=lists.linux.dev;
+        h=mime-version:content-transfer-encoding:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=jLQ9EFjJ0O0sXXVX/p0kgIxm/pfqnXagQ5iqRb72qZY=;
+        b=hBQWrCOHKQIyu7GcrdfUHKYIHdMlpuaHX59lP4Nh3P+b81iYuPIllEJXlBBdwetZlN
+         rDpw0VEf6P9BnD1k8Gw8vTxwZmgZwyavK6sHD4QwrpWykWZa6T1LQOPutHPvn1Wl02yi
+         2hUphc+LDIJy7Yaac2WEUNr/M7qPYvfQTYZUVSeN3c1VJ79fvNWETnwmJNIaKO1Yt4CU
+         sROIUAbggFxLX5h38sLr8b3h/Au0qrbfHgd7MDCPgfywHd78Q1BgQ7prKsrDsikM3dzp
+         K/4ZCzvJESyUkcDUQI09D4h+WnKproeJ7i+T4yg3UZQHrz8vJBrZXkmOAmRqPwKYjDq7
+         g/4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782144181; x=1782748981;
+        h=mime-version:content-transfer-encoding:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jLQ9EFjJ0O0sXXVX/p0kgIxm/pfqnXagQ5iqRb72qZY=;
+        b=D0j60VWM1jtBRfI7CXmvsSAg1aWK0FXGWCWvR1uyZMyTN7EV3WBJLAN7QKG4JHHmJS
+         KdkqKrHT0o0rT2pkq5Q+7OfDwfcN7hlr+exvQB6sj/XCjcYWnJoHSKio9kk830LCj4Db
+         ERe9sDNAjh9Tt/0hcZw1DOk//4bjjp9BgcN7b8YANzixwGYakA4RxvS+OX8CHmZ27AxP
+         lrQXVlspZX2SxKl6tvu/Qa3mxwKy6vi3XC4tNgF6E1iU/3CzU2O/kc2xctoh2wSQ7HNT
+         J3GBpy6szE7Ois0ljHaIo22WTp4C+5qoJJWJHfvq58uU4gOOZl4WB5qp6PFRYJvdl0hw
+         nKTg==
+X-Forwarded-Encrypted: i=1; AHgh+RpdZCcxJx9VkL6eCV1GqT3ngAtkLfPexr+SkCsbAVzsJp6e5834d2BnFqpGqtWXJtSpO5K4LSa6Ks4=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzm+PLFXPhfUkdIgUsNizgzLeb5zrYVYZxs/ESn6O6mBdHY3X3V
+	GNS/7iNY8wW00+XbehjfoBCWeJVYMvqDtvgHwZAbkhtwiTabsoi9W8nu
+X-Gm-Gg: AfdE7cnHxLBLe+VC/2bQnMTC9V4cEmINQnVGhlK8K783OOG9SfTxmHiw9q8a6js9D1f
+	rhtVxJMhEKsx9oru1MhCVpLZyEjYsfUl3XxTcUZ0JTY7uD0atF7WO3zIEvwnXAm8Q/6l+5PvYQj
+	0EPnjVUVPdXfaA6oBSFrqocnO/umQHB3f0xFRdIgloAzajbhfDP2nAHeek5ooxcrzGVAVlD526l
+	NjWdRUJOiBR/5F9jK10xekjla2qnjkT7WJqIpdChudykctQoI3WzIphFBmU+tpqaC7vjKhl1fTT
+	R3FyfIiOL2z8IKaY7iQr8YKlqh2kcuIvGdMqLm5MtXsyVROlTYFu+LeNTgpXdhZ3fF9FLwgdtgO
+	u/bgmt1ie14N9JNqyQfDkMHkTtO9IpCHjQqq3foKkB71ghTKAGryNl5w6uEt0rU2ByyYL4KWsx1
+	MLRm/SX3N826RE3JmUM+tmki/zTQW2L9M8xH9r0A==
+X-Received: by 2002:a17:903:19e3:b0:2c6:b429:f100 with SMTP id d9443c01a7336-2c7c3ece247mr489955ad.15.1782144181230;
+        Mon, 22 Jun 2026 09:03:01 -0700 (PDT)
+Received: from csl-conti-dell7858.ntu.edu.sg ([155.69.195.57])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c7439f8d11sm87049995ad.43.2026.06.22.09.02.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Jun 2026 09:03:00 -0700 (PDT)
+From: Maoyi Xie <maoyixie.tju@gmail.com>
+To: Arend van Spriel <arend.vanspriel@broadcom.com>
+Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
+ linux-kernel@vger.kernel.org
+Subject:
+ brcmfmac: heap overflow in brcmf_notify_auth_frame_rx() on a short auth frame
+Date: Tue, 23 Jun 2026 00:02:57 +0800
+Message-ID: <178214417708.2368577.16740907093694208834@maoyixie.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0a9ede9f5f6403a1kunmad306698c263f
-X-HM-MType: 10
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVkZS05OVh1NGU9LT0NJQ0tOTVYeHw
-	5VEwETFhoSFyQUDg9ZV1kYEgtZQVlOQ1VJT0pVSk1VSE9ZV1kWGg8SFR0UWUFZT0tIVUpLSEpOTE
-	5VSktLVUpCS0tZBg++
-DKIM-Signature: a=rsa-sha256;
-	b=l3xo/TYmx7/yl/2GyMWB5kl/cVsZTJLkLm3pw/m2r+qiWV4JOdpOV9yfdeqc/x3W8CxgZE3QwyDabHt89U9sgSNTc866UgacnDlqLkoASnqVnYnlfRnXqTgWJ9X67MBOf4rJLuArkXxpAO71fxAoLyTdMzCPzBspGiDEdo1UFiA=; s=default; c=relaxed/relaxed; d=seu.edu.cn; v=1;
-	bh=yxBARackCXMSa2B3FYjrOziMm2lZVByjlsMsksYEZPo=;
-	h=date:mime-version:subject:message-id:from;
 
-brcmf_sdio_probe() stores the newly allocated bus in sdiodev->bus before
-allocating the ordered workqueue. If that allocation fails, the function
-jumps to fail and calls brcmf_sdio_remove().
+Hi all,
 
-brcmf_sdio_remove() unconditionally cancels bus->datawork. Initialize the
-work item before the first failure path that can reach brcmf_sdio_remove(),
-so the cleanup path always observes a valid work object.
+I think brcmf_notify_auth_frame_rx() in
+drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c can overflow the
+heap when the firmware reports a short external auth frame. I would
+appreciate it if you could take a look.
 
-This issue was found by our static analysis tool and then confirmed by
-manual review of the probe error path and the remove-time work drain. The
-problem pattern is an early setup failure that reaches a cleanup helper
-which cancels an embedded work item before its initializer has run.
+The handler takes the frame length from the event, then allocates a buffer
+for it.
 
-A QEMU PoC forced alloc_ordered_workqueue() to fail at the same point in
-brcmf_sdio_probe(), before INIT_WORK(&bus->datawork) is reached. The
-resulting fail path calls brcmf_sdio_remove(), and DEBUG_OBJECTS reports
-the invalid work drain with brcmf_sdio_probe() and brcmf_sdio_remove() in
-the stack.
+	u32 mgmt_frame_len = e->datalen - sizeof(struct brcmf_rx_mgmt_data);
+	...
+	if (e->datalen < sizeof(*rxframe)) {
+		...
+		return -EINVAL;
+	}
+	...
+	mgmt_frame = kzalloc(mgmt_frame_len, GFP_KERNEL);
 
-Fixes: 9982464379e8 ("brcmfmac: make sdio suspend wait for threads to freeze")
-Cc: stable@vger.kernel.org
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
----
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+The only length check is e->datalen >= sizeof(*rxframe). So mgmt_frame_len
+can be anything from 0 up. The frame body is then copied with a length that
+subtracts the management header offset.
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-index 4e6ed02c1591..a7d84ad6ed54 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-@@ -4464,6 +4464,7 @@ int brcmf_sdio_probe(struct brcmf_sdio_dev *sdiodev)
- 	bus->sdiodev = sdiodev;
- 	sdiodev->bus = bus;
- 	skb_queue_head_init(&bus->glom);
-+	INIT_WORK(&bus->datawork, brcmf_sdio_dataworker);
- 	bus->txbound = BRCMF_TXBOUND;
- 	bus->rxbound = BRCMF_RXBOUND;
- 	bus->txminmax = BRCMF_TXMINMAX;
-@@ -4478,7 +4479,6 @@ int brcmf_sdio_probe(struct brcmf_sdio_dev *sdiodev)
- 		goto fail;
- 	}
- 	brcmf_sdiod_freezer_count(sdiodev);
--	INIT_WORK(&bus->datawork, brcmf_sdio_dataworker);
- 	bus->brcmf_wq = wq;
- 
- 	/* attempt to attach to the dongle */
--- 
-2.34.1
+	memcpy(&mgmt_frame->u, frame,
+	       mgmt_frame_len - offsetof(struct ieee80211_mgmt, u));
 
+offsetof(struct ieee80211_mgmt, u) is 24. If mgmt_frame_len is less than 24,
+the subtraction wraps around as an unsigned value to a huge number. The
+memcpy then runs far past the small kzalloc buffer. That is a heap overflow
+driven by the frame the firmware passes up. A malicious or malfunctioning AP
+can make the frame short during the external SAE auth exchange.
+
+The p2p path in the same driver allocates with the header offset included,
+so it does not have this shape.
+
+I reproduced the overflow on 7.1-rc7. With mgmt_frame_len set below the 24
+byte header offset, the subtracted length wraps to a huge value and the copy
+faults.
+
+  BUG: unable to handle page fault ... in memcpy_orig
+
+A check that mgmt_frame_len is at least offsetof(struct ieee80211_mgmt, u)
+before the copy would close it.
+
+Does this look like a real bug to you, and is that the right place to bound
+it? If so I am happy to send a proper patch with a Fixes tag and Cc stable.
+
+Kaixuan Li and I found this together.
+
+Thanks,
+Maoyi
+https://maoyixie.com/
