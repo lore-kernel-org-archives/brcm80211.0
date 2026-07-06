@@ -1,97 +1,92 @@
-Received: from mail-ua1-f100.google.com (mail-ua1-f100.google.com [209.85.222.100])
+Received: from mail-pj1-f99.google.com (mail-pj1-f99.google.com [209.85.216.99])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 779EA3822B4
-	for <brcm80211@lists.linux.dev>; Mon,  6 Jul 2026 19:06:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7974E3A7F41
+	for <brcm80211@lists.linux.dev>; Mon,  6 Jul 2026 19:06:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.99
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783364780; cv=none; b=HaSdg9oabR1W+jWd3c9D5B+EyId44SKWuAV9rEj01aD94oUwbaq4qc+Rr7kKr09sMdb4GV3i8dkFyOUlmV7IuWnOt+jfu83OEYSTsfE8767ztWkIB4xVZSpkF+2H74zSxC2KT+O/64AawXtUIpDs3h+Vf2+D3OsTJvHxvLlNniQ=
+	t=1783364783; cv=none; b=OE4jxL85I2uZbiUnUltn81vOMpOBqGsKhmn9ZvVjTtdDoljZ+FLW7SiJQt3wAKlNdg54F8TMXOvQmelFBUtSy0v7pa8aaS0kYcTLnBJpc4Q0RrRrwy2T/zfd2/NnZmDEUBdB3m82KegoWDXxTzVTVGzhWrEtcqtSVsJ91gmH5yo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783364780; c=relaxed/simple;
-	bh=KvPjYSetF/yUEo5b4twvRTste5FXr5R4057h569+x1g=;
+	s=arc-20240116; t=1783364783; c=relaxed/simple;
+	bh=LrCPJ/QtDYKjWEr9SURf8YATGWYUuKmjnMwYpwXzMCI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RwYvj9TDRRgRzNwNVBpDroZgptdntZCF6OVtdf9sYC25IuYrCDixjOZAVPO39lhLtZndn8YGDf/sCGAfKE5wuiKo6alRPlE0/O+G0IgEyZFhOgp48i5urYlq5c300JsHLI4Y4zjxvmys4DI4SOLB10yiiF9ET3fiJVP2tSwlnCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=NabIcrS/; arc=none smtp.client-ip=209.85.222.100
+	 MIME-Version; b=khjvRdcb5YNN4AWjSXOICWn4cSygW12RupJ6AefxYC9fOHN9q8enANt7UwhWlJN7RIgFnEF+gU+NSyqq7hjTXYGbiumlfdBGoxr7gKkH4jifo3sJMfzYCyDNbS/UEpvQl9PUz08WKbZycrXQpN+lY15msvj6FBZ/fBgO7nns61I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=b5J6vdOn; arc=none smtp.client-ip=209.85.216.99
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="NabIcrS/"
-Received: by mail-ua1-f100.google.com with SMTP id a1e0cc1a2514c-963f63fe025so1009200241.0
-        for <brcm80211@lists.linux.dev>; Mon, 06 Jul 2026 12:06:19 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="b5J6vdOn"
+Received: by mail-pj1-f99.google.com with SMTP id 98e67ed59e1d1-3817f800c8bso2455246a91.1
+        for <brcm80211@lists.linux.dev>; Mon, 06 Jul 2026 12:06:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783364778; x=1783969578;
+        d=1e100.net; s=20251104; t=1783364782; x=1783969582;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:dkim-signature:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Ic1Z9t9IaQ7A2sjcuIlUdtXhSR+9iAL555xfaUA/Ru0=;
-        b=THfW6PegGXGaK5pjKvmrM6XBy2t7F8koG/Zv7o5fWB06pzJRpALRNPNcSQ0EcVCPS5
-         CL6rXoyMMzBdlgMqk2B60SpAe4HN1qnz02rfaiL8QoLPlrdQKprwn3Ofz51+G3DBX6cm
-         tzSiTzWh7d9S6TeoIsmL2i7sGoL7yLQz1gGfHk2LXDUq1D3bqCkwbAT4UNNAnXX5Vit5
-         lVYAh5lA6wldbfS0YGLmovjJXLszj16CT0aDiB+a67ZkdvZAcED7/w5p9+EcrQ9GfQnq
-         d3ZpXP1YdsjH52ZRLcLVkztE8jWZBpWssFGOzrRuqAztDm2KDXVV+iW2z4CfobUKzq4S
-         zgSw==
-X-Forwarded-Encrypted: i=1; AHgh+Rq20YuEDdQ7Xc0fn+/9BwmzqoNPhJ2UkPP6FeRvkQ8yzCybK79/IoA7rGr52UgpiaWAjCXinKYLnAw=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyCiaPbWpNj5oArhjf1n5NX2AZ6asavZ7IHohMPmdemIh9mzGQ6
-	wwSUnpMdkFLlfvSTZDQ/1CxlAlJAl8epoZrKwZtBm4Dg94EVQdH0sTeyQIBLqY6/Qccpn4yjr52
-	xp5SnyEdPcQ6stW9eZAU6fV7ujR7iN7jW33sMlriYJb4xclJqPb5tI6RAoHeKYwqEnWjxmbKZwF
-	hYM4md1oNyI9/k8Jbp876S/7v6ZtYrxzv0mqaDmUTiolm1z7Zw32+fUcjAchoziETrjKfK2D+xI
-	p97TjYd06Jd+Za11DYeEg==
-X-Gm-Gg: AfdE7ckomoielufVu9YzxQ9nw9wg9x8kkT6+UGYRSONFDOwmXIAqcFGyPup+OWDI+9x
-	7naYWYl82ElCKM/EwPTA0Xz5wLjWx6BljCJXNKF/xWuwZNzudmxihQA8IuOK/qHOAzAF0iJSBc0
-	N6fUR5YicoOKUkcjHA1Jk/+jo2IGQ10dmwJlZgdH6GXAcT43uWOjVSTUzvWt7f4vM6bHi13ifpt
-	0JVXVUa/Es5Ta9eBHH4AwzRDsAKMyuqKS4VOjEl0cHEaQbJv6o+CNn2Gvg1NCx4Iz5qTXj/9yCy
-	qeer1M8UBrWi9zYZYJ4d/9Iph3jxQDGMU2CgkoKaeGB9VNNi9mYdrag3I8UZSze112MlcFFw+Qr
-	Y09cINEBEf1dWaBqLPEQQ0UtyavzGQlMfxG63zLvHaOfjEwyKWkqYvoIUJaUoBOgbzMNsnA8W7k
-	M1JivgbcxQ2WE8zFEN+EsH4sz1gWbtrna/kii6UD+jElstZfRCSw==
-X-Received: by 2002:a05:6102:5e82:b0:726:e81f:f3f0 with SMTP id ada2fe7eead31-744b7d54bd6mr967521137.15.1783364778149;
-        Mon, 06 Jul 2026 12:06:18 -0700 (PDT)
-Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-11.dlp.protect.broadcom.com. [144.49.247.11])
-        by smtp-relay.gmail.com with ESMTPS id a1e0cc1a2514c-969839b5e80sm613211241.4.2026.07.06.12.06.17
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=bUr9XqAW3S0CTUcmm68ll/Tep0fc/YKhDOl7KqLiXcE=;
+        b=mq/raLpqI0pSt6yP7qvQFQg6IsW8C2kQ5FusNcSFUJekx3LKZ/Phvi8u26m8u9BROp
+         hHyuaRz0vHkiWR01GRbqviFgF6oZVkYOdJvzgOCWWd8aADPToG2s/WWz6J3RiuYlc7d0
+         tiDFhLHr/MToYB/3r4IacW/bTYs/M/EFJ69mVNlM17IsVj9hVBDQfcGCI3AYNTqOnGwv
+         YgLkbppWZMTRHvbolY9hhLiEGfetnE26egQANJewfxfTYpt1HmBfnURb7uStzAYAwgHu
+         ef4aLMHa5IgNNBVhxfkoW6l2d5sKXZ0tVZ4uNZPs+qxVMO/WdFXFVjSFnCEgP0DE8xpA
+         j46w==
+X-Forwarded-Encrypted: i=1; AHgh+RrtPwJH2rVbZa0Kb5FdCGTN7QZAqZ4Tdbp3rrRZhLpa+LobJ6sj+icn6HVrJkw9WpoU3nt80ylUmIU=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwJUAAKB0RO3svb9W8kaV1GchpgngsUn8bLRn9rEj1XLVkU29HQ
+	kEX4EMYq2AsBKC+VPMm6/y3F2ZADso5xucgpNhYy2JC9VTen7a0hUmls+c+6DZ/Wrq510wbgRCx
+	HQ3k4hwiSebxsZB6pmdlhyLkXsmC8kiXf5ssjbA8RaTLb6Fe8QlDvSg1BUTGEXkjG8BuMcPTksW
+	20Ogw6yeUDsojr4nJ3O1ZUiPv3MWlMdd64MGUdNhovUw+tqjV5jrso11ZKyCKL3wMTtmCxUM8ap
+	j+8Ftky+i1x+MFcISRRcg==
+X-Gm-Gg: AfdE7ckkk8iy3qopBfObCbXxPRXMpuy5iUlyISQfeXlFRBhxnY9wj6V9S+ZoWYRIihm
+	KIzItb4SeQgnXPJXMHKyYT7AGdZDSLmOKaa4hwdlhcgBtVD4M8nwx06kMljAkvUD/FaZ5IY/r4E
+	EfOumQnKWNUhFjM+PkcY7L0bMWlP8qt9T4y6ZNMjeUFHoSe9qOrdjMNnCATX9OEDUdyahzbTXk7
+	knamSd+WnETCzsCPBDxl1oWA2x0Qv+9RII1+J97vactuf+TDndgCH0ijXRHsOskWM2+ZLTRcPLn
+	VGfywtlGxNlevC79f8SXWWvWDSyg4siDBfeFmd1PXuOXjLU64qiJNAfr8NFuwtxwbbTUQapwiGF
+	mPvW68MjXmMX8kb+LwesifdRwYzijpRozkp+8AI1O6TOGzN8/8ZVlHWYIFZ5uOU8l1tNvmPQzB8
+	OHMZVw2BrCcaKYMwDiIgtg4C8ILU/lq4/G9dU6Dhr3ATxMJJ/xWDym
+X-Received: by 2002:a17:90b:39cd:b0:381:85c0:1d88 with SMTP id 98e67ed59e1d1-38755d3edc7mr1981064a91.9.1783364781724;
+        Mon, 06 Jul 2026 12:06:21 -0700 (PDT)
+Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-116.dlp.protect.broadcom.com. [144.49.247.116])
+        by smtp-relay.gmail.com with ESMTPS id 5a478bee46e88-30f0b5b6949sm826742eec.0.2026.07.06.12.06.20
         for <brcm80211@lists.linux.dev>
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 06 Jul 2026 12:06:18 -0700 (PDT)
+        Mon, 06 Jul 2026 12:06:21 -0700 (PDT)
 X-Relaying-Domain: broadcom.com
 X-CFilter-Loop: Reflected
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-92e5fc4c7e9so376842885a.3
-        for <brcm80211@lists.linux.dev>; Mon, 06 Jul 2026 12:06:17 -0700 (PDT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-92e55721a8cso346570985a.1
+        for <brcm80211@lists.linux.dev>; Mon, 06 Jul 2026 12:06:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1783364777; x=1783969577; darn=lists.linux.dev;
+        d=broadcom.com; s=google; t=1783364780; x=1783969580; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=Ic1Z9t9IaQ7A2sjcuIlUdtXhSR+9iAL555xfaUA/Ru0=;
-        b=NabIcrS/K29jFyXbA2LaGIms8Z/eryD8framlfuziIUbiPa/rExkQw2KRMt2hw/wBO
-         ZlJoSi7O7ed/2JnqZRG0Yf6qCGSVwiTh3ZDIg2t83oPYwuDE5B4LA0DBfBpPFks1nDw9
-         DDI0otLRaKk0w1VutoT41B1fW0Yg1fp2Yb8Wk=
-X-Forwarded-Encrypted: i=1; AHgh+RqY/dXrf2Cv6xyJEkM7iHIB5c+hfipFQR6bdNGACQKPuWrCz8UgdeX0/J/zBWNR4eoHHC+dzSv5GDE=@lists.linux.dev
-X-Received: by 2002:a05:620a:2908:b0:92e:6430:3c73 with SMTP id af79cd13be357-92ebb566320mr270472885a.21.1783364777325;
-        Mon, 06 Jul 2026 12:06:17 -0700 (PDT)
-X-Received: by 2002:a05:620a:2908:b0:92e:6430:3c73 with SMTP id af79cd13be357-92ebb566320mr270466385a.21.1783364776661;
-        Mon, 06 Jul 2026 12:06:16 -0700 (PDT)
+         :message-id:reply-to;
+        bh=bUr9XqAW3S0CTUcmm68ll/Tep0fc/YKhDOl7KqLiXcE=;
+        b=b5J6vdOnYPgmpkh9M7mXPgUbUW07w/e10mY7pJ3BeVa6dOX43b1IeiIG+MbE/mqt5G
+         YZAf4Gt7lNQqL9JxCRpFQ8GS6fhkU0GToLyWFuu5WNGN6Z0z0G7xq5MwEmKa8ljCvmNj
+         0q0T+6H42oA81BuF58Jq2atz6cDBfz1+zorGg=
+X-Forwarded-Encrypted: i=1; AHgh+Rp5kuBHxu+1fEvG/mXbkI0KOJGub5Tg+0aKkPgv766sunyu0s+Se0j9ffTLj1qN1o1h/0oIsRJ8iDo=@lists.linux.dev
+X-Received: by 2002:a05:620a:688a:b0:915:cf88:1e26 with SMTP id af79cd13be357-92ebb5680f7mr255496985a.48.1783364779804;
+        Mon, 06 Jul 2026 12:06:19 -0700 (PDT)
+X-Received: by 2002:a05:620a:688a:b0:915:cf88:1e26 with SMTP id af79cd13be357-92ebb5680f7mr255489785a.48.1783364779082;
+        Mon, 06 Jul 2026 12:06:19 -0700 (PDT)
 Received: from bld-bun-02.bun.broadcom.net ([192.19.176.227])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-92e90b800efsm964890985a.4.2026.07.06.12.06.14
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-92e90b800efsm964890985a.4.2026.07.06.12.06.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jul 2026 12:06:16 -0700 (PDT)
+        Mon, 06 Jul 2026 12:06:18 -0700 (PDT)
 From: Arend van Spriel <arend.vanspriel@broadcom.com>
-To: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Cc: Kalle Valo <kvalo@kernel.org>,
-	Pieter-Paul Giesberts <pieterpg@broadcom.com>,
-	Hante Meuleman <meuleman@broadcom.com>,
-	Daniel Kim <dekim@broadcom.com>,
-	Franky Lin <frankyl@broadcom.com>,
-	linux-wireless@vger.kernel.org,
+To: Maoyi Xie <maoyixie.tju@gmail.com>
+Cc: linux-wireless@vger.kernel.org,
 	brcm80211@lists.linux.dev,
 	brcm80211-dev-list.pdl@broadcom.com,
 	linux-kernel@vger.kernel.org,
+	Kaixuan Li <kaixuan.li@ntu.edu.sg>,
 	stable@vger.kernel.org,
 	Arend van Spriel <arend.vanspriel@broadcom.com>
-Subject: Re: [PATCH wireless] wifi: brcmfmac: initialize SDIO data work before cleanup
-Date: Mon,  6 Jul 2026 21:06:10 +0200
-Message-ID: <20260706190612.708609-1-arend.vanspriel@broadcom.com>
+Subject: Re: [PATCH] wifi: brcmfmac: cyw: fix heap overflow on a short auth frame
+Date: Mon,  6 Jul 2026 21:06:11 +0200
+Message-ID: <20260706190612.708609-2-arend.vanspriel@broadcom.com>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260619064401.1048976-1-runyu.xiao@seu.edu.cn>
-References: <20260619064401.1048976-1-runyu.xiao@seu.edu.cn>
+In-Reply-To: <20260627131313.3878893-1-maoyixie.tju@gmail.com>
+References: <20260627131313.3878893-1-maoyixie.tju@gmail.com>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -101,20 +96,27 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
 
-On Fri, 19 Jun 2026 14:44:01 +0800, Runyu Xiao wrote:
-> brcmf_sdio_probe() stores the newly allocated bus in sdiodev->bus before
-> allocating the ordered workqueue. If that allocation fails, the function
-> jumps to fail and calls brcmf_sdio_remove().
->
-> brcmf_sdio_remove() unconditionally cancels bus->datawork. Initialize the
-> work item before the first failure path that can reach brcmf_sdio_remove(),
-> so the cleanup path always observes a valid work object.
+On Sat, 27 Jun 2026 21:13:13 +0800, Maoyi Xie wrote:
+> brcmf_notify_auth_frame_rx() takes the frame length from the firmware
+> event and copies the frame body with the management header offset
+> subtracted:
 
 [...]
 
+> Reject frames shorter than the management header offset before the copy.
+>
+> Fixes: 66f909308a7c ("wifi: brcmfmac: cyw: support external SAE authentication in station mode")
+> Link: https://lore.kernel.org/r/178214417708.2368577.16740907093694208834@maoyixie.com
+> Cc: stable@vger.kernel.org
+> Co-developed-by: Kaixuan Li <kaixuan.li@ntu.edu.sg>
+> Signed-off-by: Kaixuan Li <kaixuan.li@ntu.edu.sg>
+> Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
 > ---
->  drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  .../broadcom/brcm80211/brcmfmac/cyw/core.c   | 6 ++++++
+>  1 file changed, 6 insertions(+)
+
+Nit: the Link: tag in the commit message is normally added by the
+maintainer at apply time, not by the submitter. Please drop it.
 
 Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
 
