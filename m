@@ -1,58 +1,60 @@
-Received: from smtp2.infineon.com (smtp2.infineon.com [217.10.52.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82C3E2EEE77
-	for <brcm80211@lists.linux.dev>; Wed,  8 Jul 2026 07:13:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.10.52.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1B8E41CB4B
+	for <brcm80211@lists.linux.dev>; Thu,  9 Jul 2026 12:16:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783494801; cv=none; b=fMRLsYYL8JnwfQiAF09pZf9Dy9EYTRhUJJTBnoC+IFFDFTbBj9aOBt36T1ElpAU74ttNL2vKQOZsJSpHqzsYS/CRdh0JCgm0jKE1kDvjt8Id5cbk74PteRQaNaSmE/y1htPHiLIwjPNuCiQvYYeA+HicMEHBJafsfTSGnG2Uar4=
+	t=1783599393; cv=none; b=W+MfmOWXjsIlgmvBpZ05xX0uwumt3TufFsiPTMsCYwDgjEMerf1SrMUPmO1Ddmu00NJniyH6D6V9t86bUPlZA3eDPIttagnK9uxYnu6lDYYo8XrSp54PtBSB97CLqKXC+mAcvPTJ0NZVIacE3FK9QiNE9DQZuPdDgouK3LqvfvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783494801; c=relaxed/simple;
-	bh=ljFlnL624I8TG1BExCs/J0GtUC1T3RHuDsGqOjLHZ+M=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iWtkv9BozfNBTBMdFLdi45RdJy+lOmWnZ2uowcncAm7WvSw3/6tKY+NEt4qlndLwy51m9hWyQ0N/Js60ZzNSPe+dd6vYcFO17SNETmTbLZ1W9NJWclQcVl6dtj2P8hO2GjlrfOEi9ecY8ecxz0+4ov5gKwV8WHoEll4aPo2TtsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=infineon.com; spf=pass smtp.mailfrom=infineon.com; dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b=YbJbYsgd; arc=none smtp.client-ip=217.10.52.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=infineon.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infineon.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b="YbJbYsgd"
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=infineon.com; i=@infineon.com; q=dns/txt; s=IFXMAIL;
-  t=1783494793; x=1815030793;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=ljFlnL624I8TG1BExCs/J0GtUC1T3RHuDsGqOjLHZ+M=;
-  b=YbJbYsgdUfleKIcF7+Mx1urqWK2eI9rgy5RML5IVB8dvQPKwjEML7UoI
-   7gorCOGDtw/401d+TivbRM3KW/ly3KR2Hj6d/9imZ20syHtVQ85xIeNAo
-   Q42u8F4v0AYsAtXCPE16re+yi+lNHyu2PBagT0GxozSD7UAw5osEEw1sD
-   0=;
-X-CSE-ConnectionGUID: MpXIkRRUSgKNRzTJHlI1hw==
-X-CSE-MsgGUID: r+Je/hKiSpasPR9yObkH2g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11840"; a="166502876"
-X-IronPort-AV: E=Sophos;i="6.25,153,1779141600"; 
-   d="scan'208";a="166502876"
-X-Amp-Result: SKIPPED(no attachment in message)
-Received: from unknown (HELO MUCSE814.infineon.com) ([172.23.29.40])
-  by smtp2.infineon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jul 2026 09:12:54 +0200
-Received: from MUCSE809.infineon.com (172.23.29.35) by MUCSE814.infineon.com
- (172.23.29.40) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.43; Wed, 8 Jul
- 2026 09:12:54 +0200
-Received: from ISCN5CG5251XQT.infineon.com (10.161.6.196) by
- MUCSE809.infineon.com (172.23.29.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.43; Wed, 8 Jul 2026 09:12:51 +0200
-From: Jason Huang <Jason.Huang2@infineon.com>
-To: <linux-wireless@vger.kernel.org>
-CC: <brcm80211@lists.linux.dev>, <brcm80211-dev-list.pdl@broadcom.com>,
-	<linux-kernel@vger.kernel.org>, <arend.vanspriel@broadcom.com>, Jason Huang
-	<jason.huang2@infineon.com>, Kurt Lee <kurt.lee@cypress.com>
-Subject: [PATCH v4] wifi: brcmfmac: add DPP support
-Date: Wed, 8 Jul 2026 15:12:30 +0800
-Message-ID: <20260708071230.312836-1-Jason.Huang2@infineon.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20260708035843.312554-1-Jason.Huang2@infineon.com>
-References: <20260708035843.312554-1-Jason.Huang2@infineon.com>
+	s=arc-20240116; t=1783599393; c=relaxed/simple;
+	bh=HIHypxlLytZGTSHRjU6ziFuzBnYOi9naX7hETgbaqpA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=QJXSHZqPAEDR7zLFF9yr4LCF4xr3kr7hS7iUWkfz+13LBStz55amyfdxfcuHE6EU4pZ7IDw+3GuyhvOs4TX3VO9BWDAY2DrendRFF9Wp380CCDpzh5zVBUiceBPyvqexSv6D2GL7imD6NjqakLB6V4TWfJ3+Q4Ctst10NuBFKfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=acm.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.210.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=acm.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-845e5504f54so299869b3a.3
+        for <brcm80211@lists.linux.dev>; Thu, 09 Jul 2026 05:16:31 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783599391; x=1784204191;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=0Ng1a+200d11qTnNY6DeqCpI1uBPK99U30nYmIrkcq0=;
+        b=DdXSD+gCSzCwcIdOdNDpn3L8PoL3Wby1u1dRQKB3DHbttvvmzbZRb/AcKLP4Tcyoh0
+         9MaZIs5wwsR7IO8y3c9QPlHxrBviN/ZdIWVLylkUVRrHckmqjwnRgVz7rcu2Mn/WYGwa
+         Gga6kYKUp5yJqEixEg748uMr9uJMXMFjjBcmqI1/njDMD0erGwOc/NDvHURe8cuACM/c
+         iatUMqtOy6sxmj9KRl2XwQt+qtBNa/a+wpqAQkTULXPH7LJj2Tryv1mUK3cFkUTRWYnr
+         DDkC1C70rNmRjwnsRm9+X1av5DOFyaw9ji1FOJnWMInnK7f99R06EXhdGVtA8Jr6J3vb
+         vtJg==
+X-Forwarded-Encrypted: i=1; AHgh+RofvY9IrqdoknhcvbAmgOjcqil71tqmd9BXkN3AKV7eBkPx9wM14H6SxdTd7evckVHsHw5wENb7Fds=@lists.linux.dev
+X-Gm-Message-State: AOJu0YykothtQDsqIveey8HukTDveKUSVfY2LQ/E6I07M5YvJDTqKf2c
+	oct4S5Y9sUxXzjcfCdwA4g2E//VOFSK4lWPE11fNlkimGX0ooxbd2HuxeZcVWZ20mlkdGQ==
+X-Gm-Gg: AfdE7cnx8fR8xJggiLoII6+4NR4gIsgLNm7UnLCpKEndFzPzURp/G22Wnf9p8yr/cIz
+	lCznmzb57auc/BS9NJOGG9XrZtNSMW44kyjX87LfO12VZSLLDFb/piaCiusVRAGoekutApobe8m
+	rG7RMcFd0jMIdOysXpJ/AQ0wTn7ogYx/F3SA6qgj6bKRoyef/uFimbp7a724t4wp0bFHEIhRemK
+	0ojxrTaIjjawbmdYRlYimWrPHtnwAn19o5lrDlbelpBIF7ED6U8g4UyUiroIKBWAnq+gLEMlB9B
+	EH1W3jSpLMLnzjhZkiOSy5O/DKGf4ikcOHzQNTkNa4tdCJ16EcqC4mMkrRxV30TndxE8RpOiob+
+	EbAypRNTPLAD4RYJT4qBqlHSjzsPlItLHWSKufYE8B4HdE6marxUSqhqIK1yM4jNnvNoRFwRD46
+	0LD0DR9WEqPvQgEGjZRMumIcIP1Ba8c1OWhoxpmOTuQTUF7rHmy39oZiFWPOpFbhMLhPI5diqUd
+	VlEVJshr3rnTg==
+X-Received: by 2002:a05:6a00:a0c:b0:842:3932:71cb with SMTP id d2e1a72fcca58-84855fe8b89mr2198327b3a.4.1783599391199;
+        Thu, 09 Jul 2026 05:16:31 -0700 (PDT)
+Received: from 3155-XPS ([58.227.72.130])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8486479b378sm534048b3a.12.2026.07.09.05.16.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Jul 2026 05:16:30 -0700 (PDT)
+From: Bogdan Nicolae <bogdan.nicolae@acm.org>
+To: arend.vanspriel@broadcom.com
+Cc: Bogdan Nicolae <bogdan.nicolae@acm.org>,
+	linux-wireless@vger.kernel.org,
+	brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] wifi: brcmfmac: cyw: clean up PMKID and cookie code
+Date: Thu,  9 Jul 2026 07:16:05 -0500
+Message-ID: <20260709121605.10974-1-bogdan.nicolae@acm.org>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -60,389 +62,64 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: MUCSE817.infineon.com (172.23.29.43) To
- MUCSE809.infineon.com (172.23.29.35)
 
-From: Jason Huang <jason.huang2@infineon.com>
+Avoid setting packet_id to cookie, which is always 0. Instead, use an
+increasing atomic counter. Avoids mismatches of completion events later
+in brcmf_notify_mgmt_tx_status, where packet_id != vif->mgmt_tx_id is
+checked.
 
-Add DPP AKM handling and RSN parsing support. Map DPP to the
-firmware wpa_auth value and recognize DPP public action frames in the
-P2P action-frame TX path.
+Also, zero out auth_status on initialization. Otherwise, garbage will
+leak from the stack to the firmware (when bssid is less than 32 bytes
+and/or when params->pmkid is set). Then, pass the params->pmkid to the
+firmware (without it, the firmware caches a garbage PMKID on successful
+authentication and denies a subsequent association request that includes
+the PMKID).
 
-Allow non-P2P public action frames such as DPP to use the primary vif
-when a P2P device vif is not present. Guard P2P-device IE access for
-the same case.
-
-Gate sup_wpa programming on firmware supplicant capability. Disable it
-only when the selected connection mode does not use firmware supplicant.
-This keeps pure SAE and 802.1X firmware-supplicant paths intact while
-avoiding stale firmware supplicant state for DPP.
-
-Signed-off-by: Kurt Lee <kurt.lee@cypress.com>
-Signed-off-by: Jason Huang <jason.huang2@infineon.com>
+Signed-off-by: Bogdan Nicolae <bogdan.nicolae@acm.org>
 ---
- .../broadcom/brcm80211/brcmfmac/cfg80211.c    | 151 ++++++++++--------
- .../broadcom/brcm80211/brcmfmac/p2p.c         |  59 +++++--
- .../broadcom/brcm80211/include/brcmu_wifi.h   |   2 +
- 3 files changed, 134 insertions(+), 78 deletions(-)
+ .../net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c   | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-index 4b70845e1a26..d61c3e03a106 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-@@ -8,6 +8,7 @@
- #include <linux/kernel.h>
- #include <linux/etherdevice.h>
- #include <linux/module.h>
-+#include <linux/unaligned.h>
- #include <linux/vmalloc.h>
- #include <net/cfg80211.h>
- #include <net/netlink.h>
-@@ -2154,6 +2155,9 @@ brcmf_set_key_mgmt(struct net_device *ndev, struct cfg80211_connect_params *sme)
- 			val = WPA2_AUTH_PSK | WPA2_AUTH_FT;
- 			profile->is_ft = true;
- 			break;
-+		case WLAN_AKM_SUITE_WFA_DPP:
-+			val = WFA_AUTH_DPP;
-+			break;
- 		default:
- 			bphy_err(drvr, "invalid akm suite (%d)\n",
- 				 sme->crypto.akm_suites[0]);
-@@ -2466,43 +2470,50 @@ brcmf_cfg80211_connect(struct wiphy *wiphy, struct net_device *ndev,
- 		goto done;
- 	}
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
+index ce09d44fa..cca53ff19 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
+@@ -23,6 +23,8 @@
+ #define MGMT_AUTH_FRAME_DWELL_TIME	4000
+ #define MGMT_AUTH_FRAME_WAIT_TIME	(MGMT_AUTH_FRAME_DWELL_TIME + 100)
  
--	if (sme->crypto.psk &&
--	    profile->use_fwsup != BRCMF_PROFILE_FWSUP_SAE) {
--		if (WARN_ON(profile->use_fwsup != BRCMF_PROFILE_FWSUP_NONE)) {
--			err = -EINVAL;
--			goto done;
--		}
--		brcmf_dbg(INFO, "using PSK offload\n");
--		profile->use_fwsup = BRCMF_PROFILE_FWSUP_PSK;
--	}
--
--	if (profile->use_fwsup != BRCMF_PROFILE_FWSUP_NONE) {
--		/* enable firmware supplicant for this interface */
--		err = brcmf_fil_iovar_int_set(ifp, "sup_wpa", 1);
--		if (err < 0) {
--			bphy_err(drvr, "failed to enable fw supplicant\n");
--			goto done;
-+	if (brcmf_feat_is_enabled(ifp, BRCMF_FEAT_FWSUP)) {
-+		u32 akm = sme->crypto.n_akm_suites ? sme->crypto.akm_suites[0] : 0;
-+		bool is_sae_akm = akm == WLAN_AKM_SUITE_SAE ||
-+			akm == WLAN_AKM_SUITE_FT_OVER_SAE;
++static atomic_t brcmf_cyw_mgmt_tx_id = ATOMIC_INIT(0);
 +
-+		if (sme->crypto.psk && !is_sae_akm &&
-+		    profile->use_fwsup != BRCMF_PROFILE_FWSUP_SAE) {
-+			if (WARN_ON(profile->use_fwsup !=
-+				    BRCMF_PROFILE_FWSUP_NONE)) {
-+				err = -EINVAL;
-+				goto done;
-+			}
-+			brcmf_dbg(INFO, "using PSK offload\n");
-+			profile->use_fwsup = BRCMF_PROFILE_FWSUP_PSK;
- 		}
--	}
--
--	if (profile->use_fwsup == BRCMF_PROFILE_FWSUP_PSK)
--		err = brcmf_set_pmk(ifp, sme->crypto.psk,
--				    BRCMF_WSEC_MAX_PSK_LEN);
--	else if (profile->use_fwsup == BRCMF_PROFILE_FWSUP_SAE) {
--		/* clean up user-space RSNE */
--		err = brcmf_fil_iovar_data_set(ifp, "wpaie", NULL, 0);
--		if (err) {
--			bphy_err(drvr, "failed to clean up user-space RSNE\n");
--			goto done;
-+		if (profile->use_fwsup != BRCMF_PROFILE_FWSUP_NONE) {
-+			/* enable firmware supplicant for this interface */
-+			err = brcmf_fil_iovar_int_set(ifp, "sup_wpa", 1);
-+			if (err < 0) {
-+				bphy_err(drvr, "failed to enable fw supplicant\n");
-+				goto done;
-+			}
-+		} else {
-+			err = brcmf_fil_iovar_int_set(ifp, "sup_wpa", 0);
- 		}
--		err = brcmf_fwvid_set_sae_password(ifp, &sme->crypto);
--		if (!err && sme->crypto.psk)
-+		if (profile->use_fwsup == BRCMF_PROFILE_FWSUP_PSK)
- 			err = brcmf_set_pmk(ifp, sme->crypto.psk,
- 					    BRCMF_WSEC_MAX_PSK_LEN);
-+		else if (profile->use_fwsup == BRCMF_PROFILE_FWSUP_SAE &&
-+			 sme->crypto.sae_pwd &&
-+			 brcmf_feat_is_enabled(ifp, BRCMF_FEAT_SAE)) {
-+			/* clean up user-space RSNE */
-+			if (brcmf_fil_iovar_data_set(ifp, "wpaie", NULL, 0)) {
-+				bphy_err(drvr, "failed to clean up user-space RSNE\n");
-+				goto done;
-+			}
-+			err = brcmf_fwvid_set_sae_password(ifp, &sme->crypto);
-+			if (!err && sme->crypto.psk)
-+				err = brcmf_set_pmk(ifp, sme->crypto.psk,
-+						    BRCMF_WSEC_MAX_PSK_LEN);
-+		}
-+		if (err)
-+			goto done;
- 	}
--	if (err)
--		goto done;
--
- 	/* Join with specific BSSID and cached SSID
- 	 * If SSID is zero join based on BSSID only
- 	 */
-@@ -4519,6 +4530,11 @@ static bool brcmf_valid_wpa_oui(u8 *oui, bool is_rsn_ie)
- 	return (memcmp(oui, WPA_OUI, TLV_OUI_LEN) == 0);
- }
+ static int brcmf_cyw_set_sae_pwd(struct brcmf_if *ifp,
+ 				 struct cfg80211_crypto_settings *crypto)
+ {
+@@ -155,7 +157,7 @@ int brcmf_cyw_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
  
-+static bool brcmf_valid_dpp_suite(u8 *oui)
-+{
-+	return get_unaligned_be32(oui) == WLAN_AKM_SUITE_WFA_DPP;
-+}
-+
- static s32
- brcmf_configure_wpaie(struct brcmf_if *ifp,
- 		      const struct brcmf_vs_tlv *wpa_ie,
-@@ -4632,42 +4648,47 @@ brcmf_configure_wpaie(struct brcmf_if *ifp,
- 		goto exit;
- 	}
- 	for (i = 0; i < count; i++) {
--		if (!brcmf_valid_wpa_oui(&data[offset], is_rsn_ie)) {
-+		if (brcmf_valid_dpp_suite(&data[offset])) {
-+			wpa_auth |= WFA_AUTH_DPP;
-+			offset += TLV_OUI_LEN;
-+		} else if (brcmf_valid_wpa_oui(&data[offset], is_rsn_ie)) {
-+			offset += TLV_OUI_LEN;
-+			switch (data[offset]) {
-+			case RSN_AKM_NONE:
-+				brcmf_dbg(TRACE, "RSN_AKM_NONE\n");
-+				wpa_auth |= WPA_AUTH_NONE;
-+				break;
-+			case RSN_AKM_UNSPECIFIED:
-+				brcmf_dbg(TRACE, "RSN_AKM_UNSPECIFIED\n");
-+				is_rsn_ie ?
-+					(wpa_auth |= WPA2_AUTH_UNSPECIFIED) :
-+					(wpa_auth |= WPA_AUTH_UNSPECIFIED);
-+				break;
-+			case RSN_AKM_PSK:
-+				brcmf_dbg(TRACE, "RSN_AKM_PSK\n");
-+				is_rsn_ie ? (wpa_auth |= WPA2_AUTH_PSK) :
-+					    (wpa_auth |= WPA_AUTH_PSK);
-+				break;
-+			case RSN_AKM_SHA256_PSK:
-+				brcmf_dbg(TRACE, "RSN_AKM_MFP_PSK\n");
-+				wpa_auth |= WPA2_AUTH_PSK_SHA256;
-+				break;
-+			case RSN_AKM_SHA256_1X:
-+				brcmf_dbg(TRACE, "RSN_AKM_MFP_1X\n");
-+				wpa_auth |= WPA2_AUTH_1X_SHA256;
-+				break;
-+			case RSN_AKM_SAE:
-+				brcmf_dbg(TRACE, "RSN_AKM_SAE\n");
-+				wpa_auth |= WPA3_AUTH_SAE_PSK;
-+				break;
-+			default:
-+				bphy_err(drvr, "Invalid key mgmt info\n");
-+			}
-+		} else {
- 			err = -EINVAL;
- 			bphy_err(drvr, "invalid OUI\n");
- 			goto exit;
- 		}
--		offset += TLV_OUI_LEN;
--		switch (data[offset]) {
--		case RSN_AKM_NONE:
--			brcmf_dbg(TRACE, "RSN_AKM_NONE\n");
--			wpa_auth |= WPA_AUTH_NONE;
--			break;
--		case RSN_AKM_UNSPECIFIED:
--			brcmf_dbg(TRACE, "RSN_AKM_UNSPECIFIED\n");
--			is_rsn_ie ? (wpa_auth |= WPA2_AUTH_UNSPECIFIED) :
--				    (wpa_auth |= WPA_AUTH_UNSPECIFIED);
--			break;
--		case RSN_AKM_PSK:
--			brcmf_dbg(TRACE, "RSN_AKM_PSK\n");
--			is_rsn_ie ? (wpa_auth |= WPA2_AUTH_PSK) :
--				    (wpa_auth |= WPA_AUTH_PSK);
--			break;
--		case RSN_AKM_SHA256_PSK:
--			brcmf_dbg(TRACE, "RSN_AKM_MFP_PSK\n");
--			wpa_auth |= WPA2_AUTH_PSK_SHA256;
--			break;
--		case RSN_AKM_SHA256_1X:
--			brcmf_dbg(TRACE, "RSN_AKM_MFP_1X\n");
--			wpa_auth |= WPA2_AUTH_1X_SHA256;
--			break;
--		case RSN_AKM_SAE:
--			brcmf_dbg(TRACE, "RSN_AKM_SAE\n");
--			wpa_auth |= WPA3_AUTH_SAE_PSK;
--			break;
--		default:
--			bphy_err(drvr, "Invalid key mgmt info\n");
--		}
- 		offset++;
- 	}
+ 	memcpy(&mf_params->da[0], &mgmt->da[0], ETH_ALEN);
+ 	memcpy(&mf_params->bssid[0], &mgmt->bssid[0], ETH_ALEN);
+-	mf_params->packet_id = cpu_to_le32(*cookie);
++	mf_params->packet_id = cpu_to_le32(atomic_inc_return(&brcmf_cyw_mgmt_tx_id));
+ 	memcpy(mf_params->data, &buf[DOT11_MGMT_HDR_LEN],
+ 	       le16_to_cpu(mf_params->len));
  
-@@ -4687,10 +4708,12 @@ brcmf_configure_wpaie(struct brcmf_if *ifp,
- 				 */
- 				if (!(wpa_auth & (WPA2_AUTH_PSK_SHA256 |
- 						  WPA2_AUTH_1X_SHA256 |
-+						  WFA_AUTH_DPP |
- 						  WPA3_AUTH_SAE_PSK))) {
- 					err = -EINVAL;
- 					goto exit;
- 				}
-+
- 				/* Firmware has requirement that WPA2_AUTH_PSK/
- 				 * WPA2_AUTH_UNSPECIFIED be set, if SHA256 OUI
- 				 * is to be included in the rsn ie.
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
-index 6e0c90f4718b..2c1f52ed5138 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
-@@ -6,6 +6,7 @@
- #include <linux/netdevice.h>
- #include <linux/etherdevice.h>
- #include <linux/rtnetlink.h>
-+#include <linux/unaligned.h>
- #include <net/cfg80211.h>
+@@ -200,7 +202,7 @@ brcmf_cyw_external_auth(struct wiphy *wiphy, struct net_device *dev,
+ {
+ 	struct brcmf_if *ifp;
+ 	struct brcmf_pub *drvr;
+-	struct brcmf_auth_req_status_le auth_status;
++	struct brcmf_auth_req_status_le auth_status = {};
+ 	int ret = 0;
  
- #include <brcmu_wifi.h>
-@@ -44,9 +45,6 @@
- 
- #define BRCMF_SCB_TIMEOUT_VALUE	20
- 
--#define P2P_VER			9	/* P2P version: 9=WiFi P2P v1.0 */
--#define P2P_PUB_AF_CATEGORY	0x04
--#define P2P_PUB_AF_ACTION	0x09
- #define P2P_AF_CATEGORY		0x7f
- #define P2P_OUI			"\x50\x6F\x9A"	/* P2P OUI */
- #define P2P_OUI_LEN		3		/* P2P OUI length */
-@@ -143,10 +141,10 @@ struct brcmf_p2p_scan_le {
- /**
-  * struct brcmf_p2p_pub_act_frame - WiFi P2P Public Action Frame
-  *
-- * @category: P2P_PUB_AF_CATEGORY
-- * @action: P2P_PUB_AF_ACTION
-+ * @category: WLAN_CATEGORY_PUBLIC
-+ * @action: WLAN_PUB_ACTION_VENDOR_SPECIFIC
-  * @oui: P2P_OUI
-- * @oui_type: OUI type - P2P_VER
-+ * @oui_type: OUI type - WLAN_OUI_TYPE_WFA_P2P
-  * @subtype: OUI subtype - P2P_TYPE_*
-  * @dialog_token: nonzero, identifies req/rsp transaction
-  * @elts: Variable length information elements.
-@@ -166,7 +164,7 @@ struct brcmf_p2p_pub_act_frame {
-  *
-  * @category: P2P_AF_CATEGORY
-  * @oui: OUI - P2P_OUI
-- * @type: OUI Type - P2P_VER
-+ * @type: OUI Type - WLAN_OUI_TYPE_WFA_P2P
-  * @subtype: OUI Subtype - P2P_AF_*
-  * @dialog_token: nonzero, identifies req/resp tranaction
-  * @elts: Variable length information elements.
-@@ -228,10 +226,38 @@ static bool brcmf_p2p_is_pub_action(void *frame, u32 frame_len)
- 	if (frame_len < sizeof(*pact_frm))
- 		return false;
- 
--	if (pact_frm->category == P2P_PUB_AF_CATEGORY &&
--	    pact_frm->action == P2P_PUB_AF_ACTION &&
--	    pact_frm->oui_type == P2P_VER &&
--	    memcmp(pact_frm->oui, P2P_OUI, P2P_OUI_LEN) == 0)
-+	if (pact_frm->category == WLAN_CATEGORY_PUBLIC &&
-+	    pact_frm->action == WLAN_PUB_ACTION_VENDOR_SPECIFIC &&
-+	    pact_frm->oui_type == WLAN_OUI_TYPE_WFA_P2P &&
-+	    get_unaligned_be24(pact_frm->oui) == WLAN_OUI_WFA)
-+		return true;
-+
-+	return false;
-+}
-+
-+/**
-+ * brcmf_p2p_is_dpp_pub_action() - true if dpp public type frame.
-+ *
-+ * @frame: action frame data.
-+ * @frame_len: length of action frame data.
-+ *
-+ * Determine if action frame is dpp public action type
-+ */
-+static bool brcmf_p2p_is_dpp_pub_action(void *frame, u32 frame_len)
-+{
-+	struct brcmf_p2p_pub_act_frame *pact_frm;
-+
-+	if (!frame)
-+		return false;
-+
-+	pact_frm = (struct brcmf_p2p_pub_act_frame *)frame;
-+	if (frame_len < sizeof(struct brcmf_p2p_pub_act_frame) - 1)
-+		return false;
-+
-+	if (pact_frm->category == WLAN_CATEGORY_PUBLIC &&
-+	    pact_frm->action == WLAN_PUB_ACTION_VENDOR_SPECIFIC &&
-+	    pact_frm->oui_type == WLAN_OUI_TYPE_WFA_DPP &&
-+	    get_unaligned_be24(pact_frm->oui) == WLAN_OUI_WFA)
- 		return true;
- 
- 	return false;
-@@ -257,7 +283,7 @@ static bool brcmf_p2p_is_p2p_action(void *frame, u32 frame_len)
- 		return false;
- 
- 	if (act_frm->category == P2P_AF_CATEGORY &&
--	    act_frm->type  == P2P_VER &&
-+	    act_frm->type  == WLAN_OUI_TYPE_WFA_P2P &&
- 	    memcmp(act_frm->oui, P2P_OUI, P2P_OUI_LEN) == 0)
- 		return true;
- 
-@@ -1281,6 +1307,9 @@ static s32 brcmf_p2p_abort_action_frame(struct brcmf_cfg80211_info *cfg)
  	brcmf_dbg(TRACE, "Enter\n");
- 
- 	vif = p2p->bss_idx[P2PAPI_BSSCFG_DEVICE].vif;
-+	if (!vif)
-+		vif = p2p->bss_idx[P2PAPI_BSSCFG_PRIMARY].vif;
-+
- 	err = brcmf_fil_bsscfg_data_set(vif->ifp, "actframe_abort", &int_val,
- 					sizeof(s32));
- 	if (err)
-@@ -1789,7 +1818,9 @@ bool brcmf_p2p_send_action_frame(struct brcmf_cfg80211_info *cfg,
- 			goto exit;
- 		}
- 	} else if (brcmf_p2p_is_p2p_action(action_frame->data,
--					   action_frame_len)) {
-+					   action_frame_len) ||
-+		   brcmf_p2p_is_dpp_pub_action(action_frame->data,
-+					       action_frame_len)) {
- 		/* do not configure anything. it will be */
- 		/* sent with a default configuration     */
+@@ -208,6 +210,8 @@ brcmf_cyw_external_auth(struct wiphy *wiphy, struct net_device *dev,
+ 	ifp = netdev_priv(dev);
+ 	drvr = ifp->drvr;
+ 	if (params->status == WLAN_STATUS_SUCCESS) {
++		if (params->pmkid)
++			memcpy(auth_status.pmkid, params->pmkid, WLAN_PMKID_LEN);
+ 		auth_status.flags = cpu_to_le16(BRCMF_EXTAUTH_SUCCESS);
  	} else {
-@@ -1826,6 +1857,7 @@ bool brcmf_p2p_send_action_frame(struct brcmf_cfg80211_info *cfg,
- 	/* validate channel and p2p ies */
- 	if (config_af_params.search_channel &&
- 	    IS_P2P_SOCIAL_CHANNEL(le32_to_cpu(af_params->channel)) &&
-+	    p2p->bss_idx[P2PAPI_BSSCFG_DEVICE].vif &&
- 	    p2p->bss_idx[P2PAPI_BSSCFG_DEVICE].vif->saved_ie.probe_req_ie_len) {
- 		afx_hdl = &p2p->afx_hdl;
- 		afx_hdl->peer_listen_chan = le32_to_cpu(af_params->channel);
-@@ -2543,4 +2575,3 @@ void brcmf_p2p_detach(struct brcmf_p2p_info *p2p)
- 	/* just set it all to zero */
- 	memset(p2p, 0, sizeof(*p2p));
- }
--
-diff --git a/drivers/net/wireless/broadcom/brcm80211/include/brcmu_wifi.h b/drivers/net/wireless/broadcom/brcm80211/include/brcmu_wifi.h
-index 7552bdb91991..c465208c4331 100644
---- a/drivers/net/wireless/broadcom/brcm80211/include/brcmu_wifi.h
-+++ b/drivers/net/wireless/broadcom/brcm80211/include/brcmu_wifi.h
-@@ -233,6 +233,8 @@ static inline bool ac_bitmap_tst(u8 bitmap, int prec)
- 
- #define WPA3_AUTH_SAE_PSK	0x40000	/* SAE with 4-way handshake */
- 
-+#define WFA_AUTH_DPP		0x200000 /* WFA DPP AUTH */
-+
- #define DOT11_DEFAULT_RTS_LEN		2347
- #define DOT11_DEFAULT_FRAG_LEN		2346
- 
-
-base-commit: 3737936e2be920977aea7d9f7eb8cb4468d700d7
+ 		bphy_err(drvr, "External authentication failed: status=%d\n",
 -- 
-2.25.1
+2.55.0
 
