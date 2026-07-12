@@ -1,222 +1,150 @@
-Received: from flow-a4-smtp.messagingengine.com (flow-a4-smtp.messagingengine.com [103.168.172.139])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f100.google.com (mail-yx1-f100.google.com [74.125.224.100])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1906B149DF1;
-	Sun, 12 Jul 2026 11:02:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.139
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCA331429D
+	for <brcm80211@lists.linux.dev>; Sun, 12 Jul 2026 22:30:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.100
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783854167; cv=none; b=c2lMRux2fYZI++c/ofiocbPwpRD9hPGEd/3AKP3YCyyw2amkrxzd1UmQg7kZyMkRobNrqqXk7gxyoa9a3+w0sn7O9C40LIPuPyq6u6h5EHVHQiaFAlVjBfTEwaVgBYeZhBERPhQ+0ZMqF1I8ZNMe8IvUYvoZLpVPw/hrsoGTizM=
+	t=1783895449; cv=none; b=cFrakeBQPRPxjvWMDlgkdXvd0u3xizVdNmT/c18zfm/9k+LlksjV+OBTehp7Mr91ESJTWIxe29z8iHgK+Z5lXEd2ZCR/HfHCyoqCt1yKNGtIH60Syteuool25rpeSJ/RmgrTXRoBdHeemYLloModukbnB9nnHY9jaUKeWFgbpQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783854167; c=relaxed/simple;
-	bh=QFAERGkwm7FFeWB0LrovUamDAkSprs7aihtdoZvXuKE=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=NqgIS4ekU3rs6svmcYyHYobl1gY2MT8uxc8rVDnAtFhFu1SYhIIrBsqI57OOgiUjO/W4F3pXIW385MigTN3+7HlG3YaLs506tKaBA3s2p9/ltiMNKv7GXVwstG9gCiQ25sEmjMDDTxunLKlexwqJxBeG1AL04LIL9jdrEIbWKrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de; spf=pass smtp.mailfrom=arndb.de; dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b=WxzzMJFR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UjYqDSeL; arc=none smtp.client-ip=103.168.172.139
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
+	s=arc-20240116; t=1783895449; c=relaxed/simple;
+	bh=ER8tP37lObIhQR9iMWULWXKSl19MKFjdA03HNDy5ju0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BmOb9n8WE6UkorXoTLDtFun1IxVdRm/dKf5xvg9J5GVbMqW8zJyNqNPvndcVZ69A//+Q6znMTZriD50+Kv0w0HOqNu7mbWpFbLdHTOsP1n2EsbCJOp9ZcvosUTltEgP2ogAXjNd3fRBN4U9tZodC1O+ujdrzW0qgUXmySptbFKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=RdeZO08B; arc=none smtp.client-ip=74.125.224.100
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b="WxzzMJFR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UjYqDSeL"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailflow.phl.internal (Postfix) with ESMTP id 0B75A138025E;
-	Sun, 12 Jul 2026 07:02:45 -0400 (EDT)
-Received: from phl-imap-05 ([10.202.2.95])
-  by phl-compute-04.internal (MEProxy); Sun, 12 Jul 2026 07:02:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1783854165;
-	 x=1783861365; bh=VmtnK3tqoDU1aIaol+aWaActTb6DTRuQA5S8IlUXC6U=; b=
-	WxzzMJFRBMefM70b/YtDS4TGQzae1Lt/rly/upptZh5fiBQ/fgL1t0EVfjBFGBN8
-	y3oHExa9YWDQRMyr7UQAu8Svx/w4tjxqi8/PSOMY6DvjDwL0TZKwHwZA9Ozd2pYf
-	s0ypipZNS8YGe2m4DOJe+38aDBHK+jcODlukRpagOVHD9KEJkdoQqgev21V8Bgb3
-	TCdD201xrmKe4YIQ1qTBGr8mMYvetvHkQoCSb6jHBr01wyoKlmdhQmLjG7/Wa4aa
-	rs8eKVjx7yIIkxGCiHi9M1kuHiEPyUx1LiHzPOCzYk3arkdLbjWPxJP8Byp5TUOQ
-	GxF66xEjwQreUjXukLkCxg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1783854165; x=
-	1783861365; bh=VmtnK3tqoDU1aIaol+aWaActTb6DTRuQA5S8IlUXC6U=; b=U
-	jYqDSeLxMU5ePSUGPDE9I0O+Exrzvenmm34qVl7yGd9kO5OjZM4Nba5EIOkF9dv3
-	xbKJusquIu/RrdrD6CtBzIv0EDEmxbAhThdwGvQHTnpo2TDIjQEKyKCx0zVgVG4v
-	MwbaQlaY/YSKqvHcswOF7zPh5R8hrBjf645qkfqkcQmWRXgi/k7HA1iEQiok67Xm
-	69YEfw3juGlJftC0DsXryuUIhIaOjq2ddjeAdhPFtfFc045xVKuzffiJ8QKSF2UW
-	O7Asl8sBFDCyqLasMb974+9PXhLP/sU+LeqELU777jCsaUXHy5EIQlONJRbvQD0l
-	nsD4pCYVBIlHyFjN/7Jsw==
-X-ME-Sender: <xms:SXRTagVsyQ8TX1iEIAxFTrUnBBvg3ouWIpLBpPooAqGRyR2NZALW9Q>
-    <xme:SXRTavZP-nXVqS1pChO9GStBCMnL0eeMY-iAfuLUn6Dud2aygQe_POwJXvQ-rGkj1
-    899by3cZoizkZNHBE50WoNoIx-Ocnc8el2ENhnhSOyttQHye1fMY64>
-X-ME-Proxy-Cause: dmFkZTFFbWNFV8UtK7PJ0YbSmA1A6l1wZb8N5iMZiv4PmzggaXO+c+HZuMN5dbOW4/LwO4
-    YrukvejgOijtkueKJtcp4wgn4EhO63TCyyzHULfYQ2kFzWvDfUC3HWcVgv98a9p3wmqOoP
-    w4qayiqS0HMo3Jap3E4pumgiQ3lyrAKF9DlQo0/x7Vy2uECt+Jy4NACfXefBg4WHXnMK2A
-    UENjemuL/g1YRCyXvDovMaGyHuMBa5JymL5nwjoOE3I2qwrEWoBlVH7JlrO1b+WcK48apy
-    0bh/8MaX95lIq8caXuYf9xgC2zt9vvdMfjxFmpJdLGcSI6sCp93t5lGDrR6djFw1SGbSH9
-    DJwEGK6oflC0+CJsijysvViaYJFn3czJOJ8wT4taro4O3sdXQE4YW1tubTULU31gMU6HDI
-    npWKA0QFVWKK3PC5QuzFhriKLeIyPk0XlEhysD/nSStZ7x0lKeUDYwnJvvSAIigLSn8nWf
-    PyAidznJn1v5eQA/hAL2gj9KhOqesySOSlWonQ+mNx9JRj+A/jnejg8SlNlhLkce3uj5+O
-    /r9MtC7Kknkp+lg03SNpnmqr8+d7VdpV/I/EEDURuqzaOT8bFhRzha5fO5kjgbTdv/NvEG
-    LeDxahJFEmmzScN38liLw+1/3K9JakxlQk2CYCzd0cMpr9LXzeOrR/yxM4wA
-X-ME-Proxy: <xmx:UXRTaj0sSmZd0VqAg1Ab8vc217-LONz6IRtUmshppkUdvY60mSRlZw>
-    <xmx:UXRTaork14UHHg7w8fqQyE86kpW_mANgES-srmAP6Z44K5DH5HjSwg>
-    <xmx:UXRTahF3AcH9RhNQsb3uaMj_kkgPVZA8vLCVaaE8_vKD1PG-G4UdyA>
-    <xmx:UXRTaq7ZeQ01Sj7O-hgfgLPJxURhNMS9O3pblaTcSMXqSYfUUfP1Rg>
-    <xmx:VXRTajwxpExOzP0me6ntckPmhFUoyUd4EPzl75I2G2v1oTlEJtNxvefy>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 29B00182007E; Sun, 12 Jul 2026 07:02:33 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="RdeZO08B"
+Received: by mail-yx1-f100.google.com with SMTP id 956f58d0204a3-6626b5ace23so5307058d50.0
+        for <brcm80211@lists.linux.dev>; Sun, 12 Jul 2026 15:30:47 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783895447; x=1784500247;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:dkim-signature:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=M5Hwfd1WgOYHOQEiKGvpV7zc4NRj0z5awcHqZeRtKQY=;
+        b=nft4NzfzqKyYuEFQqqjfjQaUOKg5PeCdUN/8E7Fn151d0ZFIUkYtEK2p2bH2CGvSB6
+         1hElyUN+CFBew2/D1in3bPcVBmW+FivxbC9CcZJi5YjgAxz+VwNDDiEISB9CvBAt4fn7
+         11apkwvTvYnFQQf1xbRgHvRWTtyqwp1i+dDb1IMc+dhgTBskCq6r/5xWm8xojyga9MgF
+         gN1ORKyr7hFdTJ83PRsF5yIDB6j3m83v28vhbv1ttEuQqqrGStLQRExHmSb06itiYQPi
+         5qTG1Ree0LIlH0W48meKI5KjgLy84thuAs5+Gi16LDB/7gwcIEJJC7suwfrdYHGMbSXQ
+         r+cg==
+X-Forwarded-Encrypted: i=1; AHgh+RplW9S16tpVaFfkIbJQm5xh0vPnZRv9im/6sGCzljnwn2J1FxZzwawLKY3BGjhPAxB0DxzZsPjLbro=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyAkJ3DIyx/ML5HQjxqIzXgUa7SlZz6E3jDJad1+pinuLXlqwdd
+	xuoHMqSAQkvhfYV+9E7atQnnlg+s6286SN+AC5ZF8rnV4MLVdU30Cx0RulOz6++Yv6VcVPKHQuQ
+	3E6/F41V/0rsLpxkT8+TBvMHiELrdrBvQkuxDbJzQjl3JA7KtpK3akLXsbHqG9soicRjtr/Yn/7
+	KfE8v15SUqy/NLdew3sMXZmoZ2CfYF1HnVwIGq0UQrruLAleyVA/b3dA8gyKZ9e8tUb6yqYjcDe
+	VbGqvcq169ksi5cB4AZKw==
+X-Gm-Gg: AfdE7ckcPsxtgiDSFZq6iNePJcw/Gnyx6bp2rWpS3Afr5JeFrhy57h6BJ1/o6MGdXMj
+	zkQCuIVNaLOM83t+C2C7Q4ljJHdudE3a6OYsq4hjbY+HyhfELgN7A+Pz51tPWh918gVXideSQR9
+	SllfzLwEnVbGjZFGJmC+W9pJIxXpUi+acZcXVKJw8gfL+Nluabqzz155GLH89lPQaqe4lZ1De/a
+	Fa2nO9l+m9LNA3THNLr88gRO/iBBN+NPWq+mw/3tomCSUG7BmK7oGySrwRKRmxgCHDWzysr/RbL
+	4wtU1tfCLk+PgbwtiJNsPn/sjGo+q0IWndrSm4BoYmAT5kZUYYFuAqJwaGVBKEmn6WIUe9gqbzp
+	cG4RIJ8KCKA8ZsEK50QvsxvmBssf6iePNd2JESngWpIWzUZloMxq8QKDRIWQCd6D+QyjYT19oMq
+	pnugyKMEu4lCyJK0JyIs8rA2lZ8YLQuBaJwXzUwfc2XDYLQ1QPI/N4
+X-Received: by 2002:a05:690e:12cf:b0:667:f4c8:1119 with SMTP id 956f58d0204a3-667f4c816c3mr811594d50.2.1783895446705;
+        Sun, 12 Jul 2026 15:30:46 -0700 (PDT)
+Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-117.dlp.protect.broadcom.com. [144.49.247.117])
+        by smtp-relay.gmail.com with ESMTPS id 956f58d0204a3-66787a3b85dsm879995d50.23.2026.07.12.15.30.46
+        for <brcm80211@lists.linux.dev>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 12 Jul 2026 15:30:46 -0700 (PDT)
+X-Relaying-Domain: broadcom.com
+X-CFilter-Loop: Reflected
+Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-c9c26587e67so2567517a12.0
+        for <brcm80211@lists.linux.dev>; Sun, 12 Jul 2026 15:30:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google; t=1783895445; x=1784500245; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=M5Hwfd1WgOYHOQEiKGvpV7zc4NRj0z5awcHqZeRtKQY=;
+        b=RdeZO08BoJBArUDk2pYPU6M7LsouCbFaNRhuP48vePmOURfly+jxwnOXJC7vIy+LIc
+         VA/dFb4AfC+pBBx9Rsd3GFc6WdI42afSDyxuqcDxSrXwZaDK0KM/cvaiG5f3uCoAJeDi
+         920k/brxA8qe7JRMcDXdXXzrnXxJ9NjhHeFFI=
+X-Forwarded-Encrypted: i=1; AHgh+RouYzV9vt2GugeN1GRiAMlG1v4X99L4D4StFMr1DrmsaYDRZppyM+tgnO/erLl+hbFbNTne+yz0xnM=@lists.linux.dev
+X-Received: by 2002:a05:6a21:164a:b0:3b3:3506:cf3f with SMTP id adf61e73a8af0-3c0f085cddamr12242629637.1.1783895445297;
+        Sun, 12 Jul 2026 15:30:45 -0700 (PDT)
+X-Received: by 2002:a05:6a21:164a:b0:3b3:3506:cf3f with SMTP id adf61e73a8af0-3c0f085cddamr12242613637.1.1783895444870;
+        Sun, 12 Jul 2026 15:30:44 -0700 (PDT)
+Received: from [192.168.178.26] (f215227.upc-f.chello.nl. [80.56.215.227])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13b924258a2sm35908753c88.1.2026.07.12.15.30.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 12 Jul 2026 15:30:43 -0700 (PDT)
+Message-ID: <99c2c345-c594-46e1-b48a-de7f6e52e1c6@broadcom.com>
+Date: Mon, 13 Jul 2026 00:30:42 +0200
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-ThreadId: ARmmoW1aQeCk
-Date: Sun, 12 Jul 2026 13:01:52 +0200
-From: "Arnd Bergmann" <arnd@arndb.de>
-To: "Fernando Fernandez Mancera" <fmancera@suse.de>,
- Netdev <netdev@vger.kernel.org>
-Cc: "David S . Miller" <davem@davemloft.net>,
- "Eric Dumazet" <edumazet@google.com>, "Jakub Kicinski" <kuba@kernel.org>,
- "Paolo Abeni" <pabeni@redhat.com>, "David Ahern" <dsahern@kernel.org>,
- "Simon Horman" <horms@kernel.org>, "Ido Schimmel" <idosch@nvidia.com>,
- "Jason Gunthorpe" <jgg@ziepe.ca>, "Leon Romanovsky" <leon@kernel.org>,
- "Andrew Lunn" <andrew+netdev@lunn.ch>,
- "Anthony L Nguyen" <anthony.l.nguyen@intel.com>,
- "Przemek Kitszel" <przemyslaw.kitszel@intel.com>,
- "Elad Nachman" <enachman@marvell.com>,
- "Saeed Mahameed" <saeedm@nvidia.com>, "Tariq Toukan" <tariqt@nvidia.com>,
- "Mark Bloch" <mbloch@nvidia.com>, "Petr Machata" <petrm@nvidia.com>,
- "Edward Cree" <ecree.xilinx@gmail.com>,
- "Maxime Coquelin" <mcoquelin.stm32@gmail.com>,
- "Alexandre Torgue" <alexandre.torgue@foss.st.com>,
- "Arend van Spriel" <arend.vanspriel@broadcom.com>,
- "Miri Korenblit" <miriam.rachel.korenblit@intel.com>,
- "Keith Busch" <kbusch@kernel.org>, "Jens Axboe" <axboe@kernel.dk>,
- "Christoph Hellwig" <hch@lst.de>, "Sagi Grimberg" <sagi@grimberg.me>,
- "Chaitanya Kulkarni" <kch@nvidia.com>,
- "Saurav Kashyap" <skashyap@marvell.com>,
- "Javed Hasan" <jhasan@marvell.com>,
- GR-QLogic-Storage-Upstream@marvell.com,
- "James E . J . Bottomley" <James.Bottomley@hansenpartnership.com>,
- "Martin K. Petersen" <martin.petersen@oracle.com>,
- "Nilesh Javali" <njavali@marvell.com>,
- "Manish Rangankar" <mrangankar@marvell.com>,
- "Varun Prakash" <varun@chelsio.com>,
- "Alexander Viro" <viro@zeniv.linux.org.uk>,
- "Christian Brauner" <brauner@kernel.org>, "Jan Kara" <jack@suse.cz>,
- "David Howells" <dhowells@redhat.com>,
- "Marc Dionne" <marc.dionne@auristor.com>,
- "Trond Myklebust" <trondmy@kernel.org>,
- "Anna Schumaker" <anna@kernel.org>, "Chuck Lever" <cel@kernel.org>,
- "Jeff Layton" <jlayton@kernel.org>, NeilBrown <neil@brown.name>,
- "Olga Kornievskaia" <okorniev@redhat.com>,
- "Dai Ngo" <Dai.Ngo@oracle.com>, "Tom Talpey" <tom@talpey.com>,
- "Marek Lindner" <marek.lindner@mailbox.org>,
- "Simon Wunderlich" <sw@simonwunderlich.de>,
- "Antonio Quartulli" <antonio@mandelbit.com>,
- "Sven Eckelmann" <sven@narfation.org>,
- "Nikolay Aleksandrov" <razor@blackwall.org>,
- "Pablo Neira Ayuso" <pablo@netfilter.org>,
- "Florian Westphal" <fw@strlen.de>, "Phil Sutter" <phil@nwl.cc>,
- "Johannes Berg" <johannes@sipsolutions.net>,
- "Matthieu Baerts" <matttbe@kernel.org>,
- "Mat Martineau" <martineau@kernel.org>,
- "Geliang Tang" <geliang@kernel.org>, "Julian Anastasov" <ja@ssi.bg>,
- "Aaron Conole" <aconole@redhat.com>,
- "Eelco Chaudron" <echaudro@redhat.com>,
- "Ilya Maximets" <i.maximets@ovn.org>,
- "Allison Henderson" <achender@kernel.org>,
- "Jamal Hadi Salim" <jhs@mojatatu.com>, "Jiri Pirko" <jiri@resnulli.us>,
- "Marcelo Ricardo Leitner" <marcelo.leitner@gmail.com>,
- "Xin Long" <lucien.xin@gmail.com>,
- "D. Wythe" <alibuda@linux.alibaba.com>,
- "Dust Li" <dust.li@linux.alibaba.com>,
- "Sidraya Jayagond" <sidraya@linux.ibm.com>,
- "Wenjia Zhang" <wenjia@linux.ibm.com>,
- "Mahanta Jambigi" <mjambigi@linux.ibm.com>,
- "Tony Lu" <tonylu@linux.alibaba.com>, "Wen Gu" <guwen@linux.alibaba.com>,
- "Jon Maloy" <jmaloy@redhat.com>,
- "Steffen Klassert" <steffen.klassert@secunet.com>,
- "Herbert Xu" <herbert@gondor.apana.org.au>,
- "Vikas Gupta" <vikas.gupta@broadcom.com>,
- "Rajashekar Hudumula" <rajashekar.hudumula@broadcom.com>,
- "Justin Chen" <justin.chen@broadcom.com>,
- "Bhargava Marreddy" <bhargava.marreddy@broadcom.com>,
- "Nicolai Buchwitz" <nb@tipi-net.de>,
- "Florian Fainelli" <florian.fainelli@broadcom.com>,
- "Heiner Kallweit" <hkallweit1@gmail.com>,
- "Krzysztof Kozlowski" <krzk@kernel.org>,
- "Russell King" <rmk+kernel@armlinux.org.uk>, "Yao Zi" <me@ziyao.cc>,
- "Yanteng Si" <siyanteng@cqsoftware.com.cn>,
- "Maxime Chevallier" <maxime.chevallier@bootlin.com>,
- "Julian Braha" <julianbraha@gmail.com>,
- "Joey Lu" <a0987203069@gmail.com>,
- "Shangjuan Wei" <weishangjuan@eswincomputing.com>,
- "Chen-Yu Tsai" <wens@kernel.org>, "Inochi Amaoto" <inochiama@gmail.com>,
- "Lad, Prabhakar" <prabhakar.mahadev-lad.rj@bp.renesas.com>,
- "Qingfang Deng" <qingfang.deng@linux.dev>,
- "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
- "Eric Biggers" <ebiggers@kernel.org>,
- "Ethan Nelson-Moore" <enelsonmoore@gmail.com>,
- "Ard Biesheuvel" <ardb@kernel.org>,
- "Dmitry Safonov" <0x7f454c46@gmail.com>,
- "Kuniyuki Iwashima" <kuniyu@google.com>, "Alyssa Ross" <hi@alyssa.is>,
- linux-rdma@vger.kernel.org, linux-kernel@vger.kernel.org,
- "intel-wired-lan@lists.osuosl.org" <intel-wired-lan@lists.osuosl.org>,
- "open list:NETRONOME ETHERNET DRIVERS" <oss-drivers@corigine.com>,
- linux-net-drivers@amd.com, linux-stm32@st-md-mailman.stormreply.com,
- linux-arm-kernel@lists.infradead.org, linux-wireless@vger.kernel.org,
- brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com,
- linux-nvme@lists.infradead.org, linux-scsi@vger.kernel.org,
- target-devel@vger.kernel.org, linux-fsdevel@vger.kernel.org,
- linux-afs@lists.infradead.org, linux-nfs@vger.kernel.org,
- b.a.t.m.a.n@lists.open-mesh.org,
- "open list:ETHERNET BRIDGE" <bridge@lists.linux.dev>,
- netfilter-devel@vger.kernel.org, coreteam@netfilter.org,
- mptcp@lists.linux.dev, lvs-devel@vger.kernel.org, dev@openvswitch.org,
- rds-devel@oss.oracle.com, linux-sctp@vger.kernel.org,
- linux-s390@vger.kernel.org,
- "open list:TIPC NETWORK LAYER" <tipc-discussion@lists.sourceforge.net>
-Message-Id: <12ffac6a-649a-4e4a-8d12-0b48171e1d95@app.fastmail.com>
-In-Reply-To: <20260712013941.4570-2-fmancera@suse.de>
-References: <20260712013941.4570-1-fmancera@suse.de>
- <20260712013941.4570-2-fmancera@suse.de>
-Subject: Re: [PATCH 01/13 RFC net-next] net: ipv4: introduce CONFIG_IPV4 to decouple
- the IPv4 stack
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] wifi: brcmfmac: cyw: clean up PMKID and cookie code
+To: Bogdan Nicolae <bogdan.nicolae@gmail.com>
+Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
+ brcm80211-dev-list.pdl@broadcom.com, linux-kernel@vger.kernel.org,
+ Bogdan Nicolae <bogdan.nicolae@acm.org>
+References: <20260709122315.11400-1-bogdan.nicolae@gmail.com>
+Content-Language: en-US
+From: Arend van Spriel <arend.vanspriel@broadcom.com>
+In-Reply-To: <20260709122315.11400-1-bogdan.nicolae@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
 
-On Sun, Jul 12, 2026, at 03:38, Fernando Fernandez Mancera wrote:
-> Historically, the IPv4 protocol has been linked to the core INET
-> subsystem. Because shared infrastructure like the TCP/UDP engine,
-> routing or INET hashtables live inside net/ipv4/, it has been impossible
-> to compile a kernel with only IPv6 support.
+On 09/07/2026 14:23, Bogdan Nicolae wrote:
+> Avoid setting packet_id to cookie, which is always 0. Instead, use an
+> increasing atomic counter. Avoids mismatches of completion events later
+> in brcmf_notify_mgmt_tx_status, where packet_id != vif->mgmt_tx_id is
+> checked.
+> 
+> Also, zero out auth_status on initialization. Otherwise, garbage will
+> leak from the stack to the firmware (when bssid is less than 32 bytes
+> and/or when params->pmkid is set). Then, pass the params->pmkid to the
+> firmware (without it, the firmware caches a garbage PMKID on successful
+> authentication and denies a subsequent association request that includes
+> the PMKID).
+> 
+> Signed-off-by: Bogdan Nicolae <bogdan.nicolae@acm.org>
+
+I always get a bit confused when people use different email addresses to 
+send and sign-off patches.
+   > ---
+>   .../net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c   | 8 ++++++--
+>   1 file changed, 6 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
+> index ce09d44fa..cca53ff19 100644
+> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
+> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
+> @@ -23,6 +23,8 @@
+>   #define MGMT_AUTH_FRAME_DWELL_TIME	4000
+>   #define MGMT_AUTH_FRAME_WAIT_TIME	(MGMT_AUTH_FRAME_DWELL_TIME + 100)
+>   
+> +static atomic_t brcmf_cyw_mgmt_tx_id = ATOMIC_INIT(0);
+> +
+>   static int brcmf_cyw_set_sae_pwd(struct brcmf_if *ifp,
+>   				 struct cfg80211_crypto_settings *crypto)
+>   {
+> @@ -155,7 +157,7 @@ int brcmf_cyw_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
+>   
+>   	memcpy(&mf_params->da[0], &mgmt->da[0], ETH_ALEN);
+>   	memcpy(&mf_params->bssid[0], &mgmt->bssid[0], ETH_ALEN);
+> -	mf_params->packet_id = cpu_to_le32(*cookie);
+> +	mf_params->packet_id = cpu_to_le32(atomic_inc_return(&brcmf_cyw_mgmt_tx_id));
+
+As I understand things the cookie value here is an output parameter. The 
+driver should assign it:
+
++	*cookie = atomic_inc_return(&brcmf_cyw_mgmt_tx_id);
+	mf_params->packet_id = cpu_to_le32(*cookie);
+
+>   	memcpy(mf_params->data, &buf[DOT11_MGMT_HDR_LEN],
+>   	       le16_to_cpu(mf_params->len));
 >
-> This patch introduces the CONFIG_IPV4 Kconfig symbol, which is set to
-> 'def_bool y' for now. This does not allow to completely disable the
-> IPv4 stack yet but it lays the necessary build-system work for that
-> goal.
-
-I expect this will cause additional (trivial) build regression in the
-next step when randconfig builds run into obscure corner cases, either
-with INET=y IPV4=n IPV6=y or with INET=y IPV4=n IPV6=n.
-
-I can probably give your patch (with IPV4 visible or disabled) an
-early go on the randconfig tree to find these more quickly.
-If I run into regressions, should I just add more 'depends on IPV4',
-or do you have other plans?
-
-Should we have some logic to ensure that at least one of IPV4 or
-IPV6 is enabled? I think this would work
-
-config IPV4
-      bool "The IPv4 protocol" if IPV6
-      default INET
-
-which only allows turning IPV4 off if IPV6 has enabled.
-
-       Arnd
+Regards,
+Arend
