@@ -1,122 +1,175 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAB7937F745
-	for <brcm80211@lists.linux.dev>; Tue, 14 Jul 2026 02:29:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783996158; cv=none; b=ai9bepAn4An595/8Y6UyP3qs9D+8pmJ7nxVmQPdpruIIfllFAOsJUuPBK2fnuPjww2imBVEWUGwgQRZ3TS2CHi+Qg1ytW9q1E8i3qAoSE5sysDNC/vYPEurpadtbbrmFiYk8lJK31uIp2kHBEswXQOyXBbahMNuWWy5w1uQjgWc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783996158; c=relaxed/simple;
-	bh=Ogf0c96gmvFtj7+Kg/2HQ2FnTL8f6Vlo1YUm+lu9MPk=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=q6FHqxeBu0XvZIwHCbJoiigrC6h8xs/le1QktubPjAu834fk83UQMp6/WymMEAAuSpzm7cqXHTHetsbTmJKbfpw2QPYSebLDi4IF5YAm/1xu9Jv/79J8P+4ynp9AnKMrWnBJhB9wnEVL4U5HBuNj5YV6gzvSrbmkpUyBjDRKtRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A8OFgARc; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E732E3DA5C8
+	for <brcm80211@lists.linux.dev>; Tue, 14 Jul 2026 06:57:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.44
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784012238; cv=pass; b=qTvp3TD8oqtuntISW1x6onfXtv7bZQSUy40PuCzIvJi+I65mDaqIhTLWreIBI9CqAzUSzHQXFDVurFNhuipuDFUPF6l5KBiYQoCTq4liUngN+TKJN0CtEJXl2LNOC5A1BRa+ExzoH73rIoBZHDYBB7lHwnEgHRvSh1v3gyoSnFk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784012238; c=relaxed/simple;
+	bh=sYhPPrA+LEyGe10v/9S9iujhzySyqoZg304AA5V99f8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=j3ZoA9YTx3LkT2ucpyiBXtQKJ9xe5+EkGCIs8kd1YOiXzQuS8+yQmuPVdquc+Gug6LE7ztVuQROUjU90XKNwMsgFp6qnMoxdmrUpjcu3lJyLxjt57q+VDyK6jgN3cxJBMKP8iuahPG6QaqdPmwF/lijS8cjbVBwygvmZ5klvp7I=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T3GYrVG/; arc=pass smtp.client-ip=209.85.208.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A8OFgARc"
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-8487088510aso3605456b3a.0
-        for <brcm80211@lists.linux.dev>; Mon, 13 Jul 2026 19:29:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T3GYrVG/"
+Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-69a33fb0031so683489a12.1
+        for <brcm80211@lists.linux.dev>; Mon, 13 Jul 2026 23:57:16 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784012235; cv=none;
+        d=google.com; s=arc-20260327;
+        b=MjUcNHB4iI4RhwylzeNdPalcDoO7x6QtmtK6AVBbSPO8wJA7fVdwHkw41eF6ujmMh5
+         pvu2phX2+EAu0cjgWLDp+HKZjFhJAUQVRFE3VOuPw33jcFeT+sOpGhYPUEnydCwn8fSB
+         /oZ4XYl02SBzT5iXN9V5Hazr4tkCU9XrJgWeDtNFsLUCkEzOZbfQTF8iBDyY8eEXfA2J
+         rmYQjR8lt5QvICta+yGKfR8zuiWf2Pj8Fzih8Cp0GN/6LNwQCYZzGe4Xdq2vzhFhiN0Z
+         A4XNhzqDY5jy8KGBLUW0+vq1u9do8VuCEJB42SxCbmLzdtggQNsCwXJdhMo1d+6ckLNK
+         k71w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=TWuc1W6rlFvxt2fRtmEwf0XG9lnKi5ioowfRSdvC5p4=;
+        fh=/xqdOLLl5Cu1mzZNNY1bRb3VLTt6NEoH3sIQ7fXR5tE=;
+        b=pUKkKO+Sjvb7OaBXeKe+0E91nT+TXUyvbeOdykJaUFlWj5T8k1Vr/C/htozq/AM9LP
+         2VMnwwvta2L8SnKO9Wt72LuoCTWwQYCkaWEG2Rzw23ygPc72hmDbF1wUQBdpsmNR3NO6
+         Qn878v4/7rqlpPc0lpyJyoddA73CC3bQbZjfrIrIdRywY9/pAya2OjhlffQDBxOJbcP3
+         pHJDovZxZXyN6Sj8WZ/ghdPeF2C++TnyEHYDVMrnvw1jgJnkAt4uc6po9h1V2opoX4Fd
+         cMtmCj+98sxHmf3faJV8p3ZsePpDLXtyyoQy74xLndqTcFZ0wFbvKpRkjgWX+sqf1xIr
+         UXHg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783996156; x=1784600956; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=u5bPrUfoJACi9BYyW8xq/jkNYTvoED+3Sp0FVeU/kPo=;
-        b=A8OFgARcl5HNh7hTlSFKFt8hE5nyFAguk6kg+eTMIYkmuIAN4X2Ep93p6GnGjSI8f3
-         7K6HaM5lJ74AF09A+qVx1IxQN4pQNiRYqP1JtG+xua34eFdWqCbW6e/SmrSochIcXLcP
-         uG8fNnSc14kgo00RsTkQWRisdKwyiVs75IDjA58AWPT4s7grVl1J0w5RAoO82mSxhvTm
-         C0idFVh9PIvUv+np+BOcrQ5T3RnC2yQ8AoeN1a07PbyP9Bpe2m2EC/Vdt5T8lIo03z7E
-         UyZ6sgEacs1zx9k4BmdMs0tCyT5WxWEgxKPXqe/Vx400ARr+hPO304CWEoZMFDt0NLH1
-         KRPw==
+        d=gmail.com; s=20251104; t=1784012235; x=1784617035; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=TWuc1W6rlFvxt2fRtmEwf0XG9lnKi5ioowfRSdvC5p4=;
+        b=T3GYrVG/uHOij2JZSD2WoW6sfOp6LAYw25xFbnDXLpiu1cdF6erePgxozVh28HC9PX
+         ukmjABVazSfOz+YKJuJPqYzG1GNSa8ms9fLk8Ji38PDOwFIybqjRxOecc9pLrSXshENC
+         bzd1poYysDnwV5nREd8YPDVvYnI/RpWTLZrLBwQL0+fiXffceBQbh/OMYb39qTRXt8tt
+         rS9SaouutZGtDvjtMI0sIwnqLORLLqcmRJVasjSKaBQj/rq8fJNpZ10cmWPtnqIR3+kW
+         M910bXjKIwI8Xd+qm5NZ2fvRPri9fF4t+wd7nUan/yLRDuv6Sv0OqHbPFgbTjQDElvum
+         ZZXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783996156; x=1784600956;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=u5bPrUfoJACi9BYyW8xq/jkNYTvoED+3Sp0FVeU/kPo=;
-        b=Em25pV3egDPfK8T2Bv0SUbVbEklmNBSEjloAtS9jn033Pk7aLeF7Kc5gb0XzGzYpLp
-         dC4dYrTOCqHQoAWbKJ/DHrMfkh15gBpEh3T1nCuj6e0Mw5d8nb3E1WjopmRWjJlrZMz0
-         H1DUEZF2WUAkkBRybmcrfRZ6hMpdtuaKoP1D9EE4O1ZsODxCployQzQVu6T3Gro+CFlS
-         lzSM8jTl9ImNvVvtvcOyNC5SH4I6QT1ltsXG2vtHplSf22q4joOREmbL2iUDnER6boDk
-         PYL3xUxdFfvinbutIr76wuab8m0oMs6gvS7VA3p6Z4Vb9qTagQSASLyJ3NjLFcyp1y2u
-         /3uw==
-X-Forwarded-Encrypted: i=1; AHgh+RruSB8AJqU8u0xFPW3v26xiLn5ub+JF1yepcJrYJBDweQA0g4hrvbQEy1gDFWEy3lJJTOj5jBKpEts=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy9xBFZNVG1UbIOR7BKRIytNjYJh1YXTgHwa7BVvGBN9x11EVmr
-	2JO0VKVfhxqWKmDdQjWlJ4msoKvmf1MWzw7KujNZc/Hb0Ba0FbPPN36W
-X-Gm-Gg: AfdE7clzkt2rMtCwJTbynLea/JSwYDssVCg78pOi38ZkJS5EZlNiLzmv/MfUcq30yRz
-	d7051q2nbSwnHYbzQ0oj5Mf7iS5cUlQhubbZXEgtkDWcYyCp8qKFOuOVUJSl3ezl6foLLYcdtnv
-	a8EL8tKTf5QPyfujGDJyZuLorTdL801LPEnXahRlpGWaGaEtphR/kD7IsFcWdiOi+GRUbYdIpJp
-	jeCgY0hEYMzmly+yUvCqKEmnlsg4j9Cd3CibrGxwQl3z9oYwewxgbjvhnu1T4CWN6CcKxIafl2x
-	kOyP2AoNA6t1ERt4nm4F06H5s7VZQ+Qkkkn99rnuM9YDK2npAog7LX9BeKmt9CX/2i0CLa7vBUb
-	a9wDj7cUC9mymSQNuPgm2d20Q9LMdaX+Xf1oJmKHWBmlImZm4XLkvwsA+v7nvILu6qlbBp/lhnk
-	OhPOMXKwInY5unPHNvH8uYYMrDzUhhE/fOkrQ9taqy6KnqWKxSxAk6nihgdezpGj9k9Fv+TdxWW
-	Z/sUuaNsY1xXBIY/veaIPSS
-X-Received: by 2002:a05:6a00:4f8c:b0:848:7835:bbac with SMTP id d2e1a72fcca58-84a516307aemr1475965b3a.65.1783996156182;
-        Mon, 13 Jul 2026 19:29:16 -0700 (PDT)
-Received: from lcwang-Precision-3630-Tower.. (211-23-39-77.hinet-ip.hinet.net. [211.23.39.77])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84a4f238f75sm664039b3a.9.2026.07.13.19.29.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jul 2026 19:29:15 -0700 (PDT)
-From: LiangCheng Wang <zaq14760@gmail.com>
-To: Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
-Cc: LiangCheng Wang <zaq14760@gmail.com>,
-	Kalle Valo <kvalo@kernel.org>,
-	Angus Ainslie <angus@akkea.ca>,
-	Wig Cheng <onlywig@gmail.com>,
-	linux-wireless@vger.kernel.org,
-	brcm80211@lists.linux.dev,
-	brcm80211-dev-list.pdl@broadcom.com,
-	linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org,
-	wlan-kernel-dev-list@infineon.com
-Subject: Re: [PATCH] wifi: brcmfmac: set F2 blocksize to 256 for BCM43752
-Date: Tue, 14 Jul 2026 10:28:59 +0800
-Message-Id: <20260714022859.1849447-1-zaq14760@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <36f4388a-b856-438c-8ef4-795a7b1eda3e@broadcom.com>
-References: <20260713-b43752-f2-blksz-v1-1-8697fcfeaef4@gmail.com> <36f4388a-b856-438c-8ef4-795a7b1eda3e@broadcom.com>
+        d=1e100.net; s=20251104; t=1784012235; x=1784617035;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=TWuc1W6rlFvxt2fRtmEwf0XG9lnKi5ioowfRSdvC5p4=;
+        b=q96eUMy4w4EqdGR7uPr8JiszXo4TMgxS6EelgIJuuGhVaOfMt41/0wYtUUKHd/9ahu
+         vHhSeytb9hlydgtorhEWtMc13EdipFJ0ZsTfVpAOOBEkaOhxXo4q7thsfaPgjoUXlvTv
+         obStnsi2gSph5YFe9PtPjacgSswBlOjwzeZGMKJajzZ+bL/4VjMzN9nJoGRtR+lhY7Oh
+         pYBcb0X2KCRp2CMLePEmjGM8LWOiz0eJlFpZB0YZeyoGB+JRq0FTHcpr6poocxvlhryX
+         H85MiBaDsw3zjMOXY94I/5M/zTEkuYxyxN7LAvHkR81/5rG24qA/ZcT/AQVxkUC+Vnl7
+         Agng==
+X-Forwarded-Encrypted: i=1; AHgh+RrS58Yf9nwOlcXvh0y7TWNMz8Lv7KVcXANrlMvdsT/9ghJ7IjyZthbqBOVUOhleTs9lRNMrOhjs/KE=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz70yhFZtvCJpdeH1t0bYb0qEEqHW9FXSCWHmPV0ZmgiV8iOLKX
+	rPNUJ79VJ1kWodIco2Ai/evLBXFFxlGbcwkzZmtT+rjlP7buf4K4iMVNDwb3Yh+j2NkgGyRdf0L
+	zTWxOBZnYYBKs1cvae/mEVQZ5y+1vvvY=
+X-Gm-Gg: AfdE7cklaPa6qWe9+MTnXtyLl+acZDeARr3+f3/pOlmLcUE4O+Tiim+Kd+8q4ZWZfCl
+	BIXP8Icv3MlK4UAhNI0KzVMLTSaQub0q7bdnmfhxyV6TCh8FNhlastixnnxT2x6v4efzEY8KyPD
+	I5wM6JRppKabmwH/wWF17iWja6WAcjjZieu2MjAqKBg9C14UzcBbnQA0BGzkpEy/5zziMOGY8oq
+	4pBXDeiz56T0ytOwi4m5D7O2PZ75kL3YvS5QzpIwDeNVhcEwVHJIIgPyHmTMYALljS2U3W9b+FB
+	I/zsepY9JdlX65m8qP8Ke2jT7h7zNU0MDT3J56+g1xW0sBtcgYYOVopcwMUWVWGnFpGzUnc=
+X-Received: by 2002:a05:6402:a50f:20b0:69c:799d:125d with SMTP id
+ 4fb4d7f45d1cf-69c799d174emr1419094a12.8.1784012235125; Mon, 13 Jul 2026
+ 23:57:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20260709122315.11400-1-bogdan.nicolae@gmail.com> <99c2c345-c594-46e1-b48a-de7f6e52e1c6@broadcom.com>
+In-Reply-To: <99c2c345-c594-46e1-b48a-de7f6e52e1c6@broadcom.com>
+From: Bogdan Nicolae <bogdan.nicolae@gmail.com>
+Date: Tue, 14 Jul 2026 01:56:47 -0500
+X-Gm-Features: AUfX_mwK4Gri8h9h1CHY-X_flEhORWH-Kdw7WVbunTKwsx3Kedyrp4QrSRTfomo
+Message-ID: <CA+ORkNTNytDi56RJbWHoFXLR2mSAgosz4UxHPgEvCBojmaFOdw@mail.gmail.com>
+Subject: Re: [PATCH] wifi: brcmfmac: cyw: clean up PMKID and cookie code
+To: Arend van Spriel <arend.vanspriel@broadcom.com>
+Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev, 
+	brcm80211-dev-list.pdl@broadcom.com, linux-kernel@vger.kernel.org, 
+	Bogdan Nicolae <bogdan.nicolae@acm.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
 Hi Arend,
 
-On 13/07/2026 12:51, Arend van Spriel wrote:
-> Looks good to me but the stable instruction looks confusion. What do you
-> mean. If there is no 43752 support there is no need for this patch, right?
+The code already sets *cookie=3D0 in the beginning, which according to
+my understanding tells the driver it does not require async tracking
+upstream. This is correct, because the function calls
+wait_for_completion_timeout, so mgmt tx completes by the time we exit
+the function and doesn't need to be tracked upstream. However, while
+we are waiting for mgmt tx to finish, the firmware may generate
+non-matching completion events captured by notify_mgmt_tx_status.
+That's why setting a non-zero packed_id (sent to and returned by
+firmware as part of a completion event) and checking against
+vif->mgmt_tx_id is important.
 
-Thank you for the review, and thanks Gokul for the detailed
-explanation - that is exactly what I meant, and sorry the annotation
-was not clearer. To summarize: 43752 support has been present since
-v5.15 (commit d2587c57ffd8 ("brcmfmac: add 43752 SDIO ids and
-initialization")), under the SDIO_DEVICE_ID_BROADCOM_CYPRESS_43752 id
-name. Commit 74e2ef72bd4b ("wifi: brcmfmac: fix 43752 SDIO FWVID
-incorrectly labelled as Cypress (CYW)"), which landed in v6.18,
-renamed it to SDIO_DEVICE_ID_BROADCOM_43752.
+Cheers,
+Bogdan
 
-I also have to correct myself here: the boundary in the annotation
-should have been "<= 6.17" rather than "<= 6.16", since the rename
-only landed in v6.18. Apologies for the extra confusion.
-
-Gokul's suggestion of cherry-picking the rename patch together with
-this one into the stable trees sounds cleaner to me than editing the
-id name while backporting, so I would be glad to go with that.
-
-If it helps, I would be happy to send a v2 with the stable annotation
-in the prerequisite format from
-Documentation/process/stable-kernel-rules.rst:
-
-  Cc: <stable@vger.kernel.org> # 74e2ef72bd4b: wifi: brcmfmac: fix 43752 SDIO FWVID incorrectly labelled as Cypress (CYW)
-
-Please let me know if you would prefer that, or if the patch is fine
-to take as is.
-
-Best regards,
-LiangCheng
+On Sun, Jul 12, 2026 at 5:30=E2=80=AFPM Arend van Spriel
+<arend.vanspriel@broadcom.com> wrote:
+>
+> On 09/07/2026 14:23, Bogdan Nicolae wrote:
+> > Avoid setting packet_id to cookie, which is always 0. Instead, use an
+> > increasing atomic counter. Avoids mismatches of completion events later
+> > in brcmf_notify_mgmt_tx_status, where packet_id !=3D vif->mgmt_tx_id is
+> > checked.
+> >
+> > Also, zero out auth_status on initialization. Otherwise, garbage will
+> > leak from the stack to the firmware (when bssid is less than 32 bytes
+> > and/or when params->pmkid is set). Then, pass the params->pmkid to the
+> > firmware (without it, the firmware caches a garbage PMKID on successful
+> > authentication and denies a subsequent association request that include=
+s
+> > the PMKID).
+> >
+> > Signed-off-by: Bogdan Nicolae <bogdan.nicolae@acm.org>
+>
+> I always get a bit confused when people use different email addresses to
+> send and sign-off patches.
+>    > ---
+> >   .../net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c   | 8 ++++++-=
+-
+> >   1 file changed, 6 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.=
+c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
+> > index ce09d44fa..cca53ff19 100644
+> > --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
+> > +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
+> > @@ -23,6 +23,8 @@
+> >   #define MGMT_AUTH_FRAME_DWELL_TIME  4000
+> >   #define MGMT_AUTH_FRAME_WAIT_TIME   (MGMT_AUTH_FRAME_DWELL_TIME + 100=
+)
+> >
+> > +static atomic_t brcmf_cyw_mgmt_tx_id =3D ATOMIC_INIT(0);
+> > +
+> >   static int brcmf_cyw_set_sae_pwd(struct brcmf_if *ifp,
+> >                                struct cfg80211_crypto_settings *crypto)
+> >   {
+> > @@ -155,7 +157,7 @@ int brcmf_cyw_mgmt_tx(struct wiphy *wiphy, struct w=
+ireless_dev *wdev,
+> >
+> >       memcpy(&mf_params->da[0], &mgmt->da[0], ETH_ALEN);
+> >       memcpy(&mf_params->bssid[0], &mgmt->bssid[0], ETH_ALEN);
+> > -     mf_params->packet_id =3D cpu_to_le32(*cookie);
+> > +     mf_params->packet_id =3D cpu_to_le32(atomic_inc_return(&brcmf_cyw=
+_mgmt_tx_id));
+>
+> As I understand things the cookie value here is an output parameter. The
+> driver should assign it:
+>
+> +       *cookie =3D atomic_inc_return(&brcmf_cyw_mgmt_tx_id);
+>         mf_params->packet_id =3D cpu_to_le32(*cookie);
+>
+> >       memcpy(mf_params->data, &buf[DOT11_MGMT_HDR_LEN],
+> >              le16_to_cpu(mf_params->len));
+> >
+> Regards,
+> Arend
