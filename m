@@ -1,139 +1,108 @@
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+Received: from mail-yw1-f226.google.com (mail-yw1-f226.google.com [209.85.128.226])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62B4C3AE713
-	for <brcm80211@lists.linux.dev>; Mon, 20 Jul 2026 21:31:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784583077; cv=pass; b=Z6Jm6lg2RvfN2uUkECeuQ/w/MsftLm0bqDduN9nSB7bT1pQPJHxHh7oVwMKREVNo8oL8GPzkPDPZy3zU8NpNaoi51uglXnktv4pv5g0e5/QmzZWScQcpNBAfoIMVl+lBLB1fKFaUnIzI2q0GPDsNfarXvtRkA/IHymN63GAOaBU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784583077; c=relaxed/simple;
-	bh=LyVE2RfK4OPyFdZqMYkgAm8eoo2PwftW/lLocRBSoYk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=U79OWld8OsXDnEadBumO1E9cMvBfmpfeRbD4wUtvAKC3fX4VA2Bvk5OMUPRDCFxIVDLVgFaN82IGoUVC49JVn/s7E2r0Xt4B7jd9RyDK3jtVE2Z+YOCEWF9BeZSRLs9UnrKNi1WVVSWRxMFL9o/PM7Vio8bIRvfc5MBE7DXxjfw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PPIuL7hb; arc=pass smtp.client-ip=209.85.208.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99AAF47DF9B
+	for <brcm80211@lists.linux.dev>; Tue, 21 Jul 2026 10:33:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.226
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784629996; cv=none; b=vAkUS0EAYInqzSDXkDsfFGqji/WzExdWLwREoCgRHYDt5Ux/OHsPYX9sF0uMdniFLqkcdKN0rm8LnDdO4LwiG6g2H5+bLaufWFPFmk869rPCIALjNa9eUCdLjd9uB7kIQjQmHaD2z2mWMWK4RYCDGO0Xh15B3NeznpWAXnXr2nk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784629996; c=relaxed/simple;
+	bh=WLhgUnpb80hHABXwKCUlxo2YuJadWbvTqwKA3k4yvrI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=kZgu/bkCM8Rpp8a4TEiCPUHs1p09PkuIWofJx3xuDd/Ea/JFeUZ/YZVd/bRF3ujIIci9riG2V+MOqnnCY1jqYEl7sBodM1xg/GSKY7wBhZ2odCIo/8aNS0O/cN/gLp5YkKRMZuHApYEaOmAV8g4Zyy8vcS9+bU/1UiQSGG1EcpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=ZTFaWaKr; arc=none smtp.client-ip=209.85.128.226
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PPIuL7hb"
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-698c1df9651so1550927a12.0
-        for <brcm80211@lists.linux.dev>; Mon, 20 Jul 2026 14:31:16 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784583075; cv=none;
-        d=google.com; s=arc-20260327;
-        b=LQWaufc1gTkzHyXc7Dj3twfN2+5VEt5T3Yat5/JrOG7F70Yi1Vh/U/UidP/rSEllX2
-         YbUDOfCallfE6pPlxGDo2RPF1yhhfCyhv1aIR+A55nJ5qrVw3AtquUBi//B2ARLWOmaO
-         7jvCqpWSNE/iAG7LC9OAKFp+uSI58LR2+Nqp4RLJDIRtehv5TdPWREfnQ/H0OJNesKVI
-         uArZpqXycwA9YIPXBgbUdpdTIgSroBKm7tpa9Fb6hnsZ383Dc1tE9lJnaBdXPYGBfTIO
-         J3mfIrX7eyHuloBuiqviBVuTf2Xdb50IifycWFNgcYl5ZiO16UKEBIIJadeNH69/UVgx
-         Hf+g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=nNwA6ao6NzwbPSAsYgBOx8qGkJlRMW3TZGLPQCknqik=;
-        fh=1KA32qv5hvdTQsBTZW32jjxxBcMPIKBzIa27P93GjjE=;
-        b=hS766DcJxrtM99TnPyMyUvacLpiWPZx/XyNKKIwos0RGtag1uO64hKKgGzYKohPIbX
-         YM6MyrhJYAyzSFAwcysAxAFIcVQ0RQiwam2eF7+K4F06VKwBOeca7DA6sCc2nBoAE4pR
-         EcV8HjLJW3CUTysfCXG0RpoeSKsfwws44fvcZqHtEk+rgGPF6tqvOhhWkwiC0Jq4ksd0
-         1txqXbjFqOVtfIKjfPDfVv39HSkZaPTccjcG6AXi/eCSdAnFBYIwRCUB3ELNYHzffnvX
-         zamPdYKrR4fwyUWRVU9+lJ93qkUoQd/3CjenZt69sLz9SzXqMjbMoaisIhwcZVDF3/JX
-         Wb1w==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784583075; x=1785187875; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=nNwA6ao6NzwbPSAsYgBOx8qGkJlRMW3TZGLPQCknqik=;
-        b=PPIuL7hbiS+Su7trjZXLEupAdR7VxhbWQc98NrYlvhJooSEF8yXyT9IlAsRk/hLd8C
-         UADN9dQWKc+v11FByeaM3X2YJNWSXjZkkLDis535LH0u11rKz4NPTuXbF8147arwzs98
-         DkhtDlQDVNenjNhQCRiopkVRMmIey2017d+g/RExguo0Ic1AuxxxgNsZ4xqDSABm79QL
-         cGgN3RAVjmyGKiVkYDBXoFsWd8mOKl6pxWOO1UYp5GIFLviiMYcWBZR9qxpUO9TeX68R
-         aoHWcHKWwDX8lSafFsyuAYj59IHB4IiE2PxScXeARKBsgOn4xSpJ265iB77NqVus0MPZ
-         IsBQ==
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="ZTFaWaKr"
+Received: by mail-yw1-f226.google.com with SMTP id 00721157ae682-8111c0c7561so133369907b3.3
+        for <brcm80211@lists.linux.dev>; Tue, 21 Jul 2026 03:33:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784583075; x=1785187875;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=1e100.net; s=20251104; t=1784629992; x=1785234792;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:dkim-signature:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=lx+yZrA/ioEyz+RtWWATDgMWOm1Gl+ZtzLYIVgkvKcw=;
+        b=r2Zb9RzRebblIocsGDMt+j5m6Kykr+QS1dKY5vd5cRHcRLeaWw0PCVEEnNoFHHx/Et
+         BV4iCQbEk9VmCMWnnGFdPZj29fETOPL5XTqjsAdHcl9KSSjNp85jMfgFz1dz+OU3WRLH
+         w/wPjKYP/2QyP2VU7aVtq7CdpYqqhF35yowafVr0CKbuB9fvrag2Qh8IDiPsa14Jz769
+         fFy/whmWp+U8/WmtF//FF+U2XpYIVKWOV01yl+xp3TuZojkp9JEQXoGF20SR0Kl7XefW
+         hxyLK/3o7w0ZbUvbHLcm5+yU0M2WGejLHQPoQ6ivVk8lINxi/eIoN2blYCLLBhieRB8+
+         Gc3A==
+X-Forwarded-Encrypted: i=1; AHgh+RrJMQI1KIv8HE4AlAeVU3K0OOoSzqEE4WpGFcKBiFpo7DamdQoMzeqITwxUbBM74e+mDmBoCSTQZsI=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzTzInQ2QRGSDgLytEwsc7LB6V71nxJ3JNestEiCC/d0HBLAVLS
+	yJvUjiGpc7x8TkxlMGemlP3xZKaoAiBpFeJoYtEsV0qF1bcYH8PR051FGHxe93gHPwYbEJkCq4K
+	RKBRZKZdMdjCOQsvpz8j2nSG8VnUS0HF2n4kOkAZtAiHmSO9R7lSbX60SaRnRXg7NR/edgC6kmv
+	KVnI3/6O7vWo8mKCpdXGr4Lw5WTZzmpeQ+KDCtkDkPcUXgqcmmq/bOyWO3KfI8ULBgNcls23t5X
+	ExzBjFKIuOw3PLhQQX3jA==
+X-Gm-Gg: AR+sD12/OnW3psmH8N1HX9ePb+g3RU0WfMtqynNJFhNGHoziFJnF/chJ+2jCA+FtWcL
+	lnkb6hpd6bzjM/wqQCDC6kSL/A211uadxk0lv0J/gHc7dnTL6vaAuOevF8mtc9dnag8af5Y6/WX
+	EL2Yu5Pp2Bz8+ePVgnnjtvR+zkaMFblymff6WvjTrj73qGVdm7Fy7KO+lkv9Zxt0Rhpe6r1KA5V
+	4xvixzGC/AhPL4BZolridrIH4tIxXCjdMqsLnHEJfVHFvzCbuwUiMModGUd+02mGYgfjWULcbmv
+	qVrfCxNIuzDLjtqBG3LfBSlV0gf/H4xX74zRCthaR9LYm8O0KeaIoTdwKeX4JQ4QTDZ9xo94Bix
+	5cUUekS8mOBu2URwZEsc33gboflBz4uHh/uD0W+NSX0v4teqmd2tbkCYfu7LM0DufXQAwbAnPvG
+	uyF/DZ8Qd+l9DFmgprIz72xu2u3txYpLC1rnCh0c8=
+X-Received: by 2002:a05:690c:350d:b0:80c:c7f1:96f4 with SMTP id 00721157ae682-81ef2842632mr55692307b3.51.1784629991802;
+        Tue, 21 Jul 2026 03:33:11 -0700 (PDT)
+Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-12.dlp.protect.broadcom.com. [144.49.247.12])
+        by smtp-relay.gmail.com with ESMTPS id 00721157ae682-81f01875ceesm5615207b3.15.2026.07.21.03.33.11
+        for <brcm80211@lists.linux.dev>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 21 Jul 2026 03:33:11 -0700 (PDT)
+X-Relaying-Domain: broadcom.com
+X-CFilter-Loop: Reflected
+Received: by mail-ej1-f70.google.com with SMTP id a640c23a62f3a-c15c6a68406so55210766b.3
+        for <brcm80211@lists.linux.dev>; Tue, 21 Jul 2026 03:33:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google; t=1784629990; x=1785234790; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=nNwA6ao6NzwbPSAsYgBOx8qGkJlRMW3TZGLPQCknqik=;
-        b=qJds8qaXkX9A4A46i4Ret/4MuRu3boHR5+uaUa+YXAy+1HtegMxKIqbK37/dqjaU/K
-         em9XH7OomFg4YRlwzs4KRkiwhcnwrqHq5R+IZyv6dJ1yQSHqOCNmU/tnfE4wNBOA3cFy
-         a6qaDbpEYPGCOEgxztRdo1+6sOFjEWp5Ag1TjT5AxlPehMdGpBt3HW0Ix2Cshsq3wjS4
-         n7WHV/iOtA10xXIW4ofKu3wgi8K7ZW477DtXF+ENSXDLC2L4OS1/J9TdInc1+gU4ibeo
-         5P2huGVhc+4cRKUXHpsl7xqI1CnrXSrq18WiXcSy+5dbGvHHQBo7EIcoskSPp32mPtiv
-         vy9Q==
-X-Forwarded-Encrypted: i=1; AHgh+RpbWSNAf+3R8gP/FGuGfHINTMDQo88yvFPSMFr+mMs34h+ZgiZ/Mqj+7dCMUasJGEErQWD1emYpJ0I=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz5OCLiZoK/k1SBG14M+u1xAH2i/L+C32Yw4kYCPef/8YNhpRfv
-	D6Ln7m91ytATpHn0o2YHbPW6qODQfzU5W6e17A6kpAgw+FiwixetrWChNFfZOv+cViKMqhHszjN
-	lejgkEWPXxPS0Ha0QLaTGDQPFP0ZLFT12pg==
-X-Gm-Gg: AR+sD10+kVWqJMp5WchcumGXx4VIhhSFa6GA033oY/F1c2ZMxbD9hCTw5x/TEA7qAAp
-	WsKfGnuC8nn0GEP3dRvrhvxhwCzvjROBb5YYbt+cw+zQYmYLkkRh/fVlno6dL5jUmMur9WXgTKT
-	hIz9IlCFyCxu8a7UNug4QUPcCOIvBYwnIU1xANq7WvBBrA8gbJEoKk2BBCIUILnHgq+2GsUWBZZ
-	mKrqShis65O0FYp8iphdf6JHqkjPwiCn2/Qz4NWAIQFazT12CSvG6ZfXReo2Hz2kOBmRslfXEtL
-	/Gon/9tWMIHQyw1E9c+F31zD9vitToffozvWjYoqF/yLUzqizr+Hz1QBtIe0IA==
-X-Received: by 2002:a05:6402:360f:b0:69e:1246:a86a with SMTP id
- 4fb4d7f45d1cf-69e65164544mr3489726a12.0.1784583074543; Mon, 20 Jul 2026
- 14:31:14 -0700 (PDT)
+        bh=lx+yZrA/ioEyz+RtWWATDgMWOm1Gl+ZtzLYIVgkvKcw=;
+        b=ZTFaWaKr/RJM2P5nA8Td2BcyBQPmWU7mvkdDKeEQW7vu0DzCsmO8dqxpzW0AmscPnI
+         y66M0RQHT++hbHKeYD2lfDYOjGOKrB5mYZvZ7Ygl81IW34rHrLPEu3LVow6V058Dw53I
+         1LaJfGiP6w+Tr8fUX+uAjlVbM9byAyiRAos4k=
+X-Forwarded-Encrypted: i=1; AHgh+RqPNKgBFScrwuOUR+gJ0oUnRI969WQdZ+UxMXV5YB5Oj6FrRP3srSuww6JN2JO/RWjCi8QHDS0hBPU=@lists.linux.dev
+X-Received: by 2002:a17:907:1c2a:b0:bff:738c:7a64 with SMTP id a640c23a62f3a-c16b487dce6mr675225966b.49.1784629990295;
+        Tue, 21 Jul 2026 03:33:10 -0700 (PDT)
+X-Received: by 2002:a17:907:1c2a:b0:bff:738c:7a64 with SMTP id a640c23a62f3a-c16b487dce6mr675224666b.49.1784629989860;
+        Tue, 21 Jul 2026 03:33:09 -0700 (PDT)
+Received: from ?IPV6:2001:1c00:3d88:a000:438:b9fe:24ed:8a4a? (2001-1c00-3d88-a000-0438-b9fe-24ed-8a4a.cable.dynamic.v6.ziggo.nl. [2001:1c00:3d88:a000:438:b9fe:24ed:8a4a])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-69e6fee3304sm6165928a12.5.2026.07.21.03.33.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 Jul 2026 03:33:08 -0700 (PDT)
+Message-ID: <110674ff-586b-4a28-97d1-2bc0179caaec@broadcom.com>
+Date: Tue, 21 Jul 2026 12:33:11 +0200
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260714150423.53960-1-bogdan.nicolae@gmail.com> <20260720194900.2356442-2-arend.vanspriel@broadcom.com>
-In-Reply-To: <20260720194900.2356442-2-arend.vanspriel@broadcom.com>
-From: Bogdan Nicolae <bogdan.nicolae@gmail.com>
-Date: Mon, 20 Jul 2026 16:30:45 -0500
-X-Gm-Features: AUfX_mwDL3jRFZM-mHkbrMM7Nz61SmsjwFBr2eIOv9ZsHK2PbNfTWiOWo4cXzOE
-Message-ID: <CA+ORkNQcUjZ7ufoR5ULN8UDTzxXccFcmD8=rYe=UWVV3-M15Ug@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] wifi: brcmfmac: cyw: clean up PMKID and cookie code
-To: Arend van Spriel <arend.vanspriel@broadcom.com>
-Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev, 
-	brcm80211-dev-list.pdl@broadcom.com, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: Bogdan Nicolae <bogdan.nicolae@gmail.com>
+Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
+ brcm80211-dev-list.pdl@broadcom.com, linux-kernel@vger.kernel.org
+References: <20260714150423.53960-1-bogdan.nicolae@gmail.com>
+ <20260720194900.2356442-2-arend.vanspriel@broadcom.com>
+ <CA+ORkNQcUjZ7ufoR5ULN8UDTzxXccFcmD8=rYe=UWVV3-M15Ug@mail.gmail.com>
+Content-Language: en-US
+From: Arend van Spriel <arend.vanspriel@broadcom.com>
+In-Reply-To: <CA+ORkNQcUjZ7ufoR5ULN8UDTzxXccFcmD8=rYe=UWVV3-M15Ug@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
 
-Arend,
+On 20/07/2026 23:30, Bogdan Nicolae wrote:
+> Arend,
+> 
+> Sounds good. Do you prefer two patches in a single email or two separate emails?
 
-Sounds good. Do you prefer two patches in a single email or two separate em=
-ails?
+Way easier to deal with separate emails as we use patchwork to track them.
 
-Best,
-Bogdan
-
-On Mon, Jul 20, 2026 at 2:49=E2=80=AFPM Arend van Spriel
-<arend.vanspriel@broadcom.com> wrote:
->
-> On Tue, 14 Jul 2026, bogdan.nicolae@gmail.com wrote:
->
-> > [PATCH] wifi: brcmfmac: cyw: clean up PMKID and cookie code
->
-> The code itself is correct, but there are process issues that need to be
-> fixed before I can accept this:
->
-> 1. This is a resubmission of the patch sent on 2026-07-09 [1]. A
->    resubmission must carry a version tag: the subject line should read
->    "[PATCH v2] wifi: brcmfmac: ..." not "[PATCH] wifi: brcmfmac: ...".
->
-> 2. A v2 submission must include a "Changes in v2:" section below the ---
->    line documenting what changed from v1.
->
-> 3. The From: address (bogdan.nicolae@gmail.com) does not match the
->    Signed-off-by address (bogdan.nicolae@acm.org). Please use a
->    consistent address or add a second Signed-off-by for the sending
->    address.
->
-> 4. The patch addresses two independent issues: fixing the packet_id in
->    brcmf_cyw_mgmt_tx() (SAE auth frame TX) and fixing the zero-init and
->    PMKID copy in brcmf_cyw_external_auth() (auth completion). Please
->    split these into two separate patches.
->
-> Please send a v2 addressing these points.
->
-> [1] https://lore.kernel.org/linux-wireless/20260709122315.11400-1-bogdan.=
-nicolae@gmail.com/
->
-> Regards,
-> Arend
+Regards,
+Arend
