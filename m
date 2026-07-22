@@ -1,106 +1,66 @@
-Received: from smtp14.infineon.com (smtp14.infineon.com [217.10.52.160])
+Received: from sipsolutions.net (s3.sipsolutions.net [168.119.38.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 382703D2FF4
-	for <brcm80211@lists.linux.dev>; Wed, 22 Jul 2026 08:28:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.10.52.160
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61E273C0617;
+	Wed, 22 Jul 2026 09:52:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=168.119.38.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784708915; cv=none; b=B8r+59RAPCIxaKWvw3L1PLrmQfan9TS8cT9RBiplMO/QfRbnqEUU+f71nwuDLJ16yGAdvTSuDGFKabBO895jHbxATDltJA5FEFLZxNjFUsncvEz+j4W7PODvU06qlHIYLa39QpFNCfBhU3j5QlUIXp58hZUSEm2GzZH6rUqVs08=
+	t=1784713947; cv=none; b=u+I7bm1oFIBccuETI3THEZNvspuzMkzvAQIfcu5RLu/3ncHZMVA99EN0cJw3A0iw6jQ50+ZiS6on+H35dgD4eLwlWW7n6x1AbIHrb3D7Okn9MqJmCdlplXn/vAPZUeOsMaf8ZYLm/G18u3LoYOnzK/tiPyg9QM9jSVeY2c2ds1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784708915; c=relaxed/simple;
-	bh=EixoOQ7z6M70FC6xow3sUPIAwW+cfs5a/52T3oyotk4=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=TDQehfn/ejiiI0zD9LRqdyBdVsCPj3OJBteIN6B8sZ7mh42pAXHqq7bIbCWPXB7GudkvuWIcyVoLbOv92ttCJ9kxD0WrbjFOSVSDR/sh/hMSFcrvx8eFzfnBdLNOLbPd3xAcs9pBDmbqmkZf+boWjh1dlNa910SF+gmvJBVH6yY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=infineon.com; spf=pass smtp.mailfrom=infineon.com; dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b=qRlAIoSP; arc=none smtp.client-ip=217.10.52.160
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=infineon.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infineon.com
+	s=arc-20240116; t=1784713947; c=relaxed/simple;
+	bh=YUBmWuesBq0wbR3Llfr7bd0Cy/31CbRKs8gIk37jzoY=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=TP1GqYXFEpzJyvyVCm2UJ5FH/kzvc0Xo+IlqUYDet5QqYk1z+567JleENA/Gax7Xd+P5uVCEJV4hE2g3Bjo1ce0rm+mWuYnsfUosJnMMilFJ2bWWKWuQ2hZ9gU1bv2OdewfwVgxgsR5HO9j/U86PGgbIaRcMK+X7iIaTuWNmeiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=permerror header.from=sipsolutions.net; spf=none smtp.mailfrom=sipsolutions.net; dkim=pass (2048-bit key) header.d=sipsolutions.net header.i=@sipsolutions.net header.b=ddemQMRF; arc=none smtp.client-ip=168.119.38.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=permerror header.from=sipsolutions.net
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=sipsolutions.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b="qRlAIoSP"
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=infineon.com; i=@infineon.com; q=dns/txt; s=IFXMAIL;
-  t=1784708911; x=1816244911;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=EixoOQ7z6M70FC6xow3sUPIAwW+cfs5a/52T3oyotk4=;
-  b=qRlAIoSPYytiAeNzmk4MvXZZdlqdhk5iaWz8PuyMMm+ABiFTHzmOXAmq
-   9pNZLMb6NCBBNVmtmX2nrEO4zUopfI7Kcq99DTl18O7k6kS++/deEiiOh
-   qTuJcxZiywa6Sufibg9k95E0SFVBdpw7K8N16t0oT78kiMs/jW+YwcK8K
-   w=;
-X-CSE-ConnectionGUID: +Fjbd8AoQAK97Dyf0VrqgA==
-X-CSE-MsgGUID: IGo3ju6GSlezfUvYRr7D/A==
-X-IronPort-AV: E=McAfee;i="6800,10657,11853"; a="138945297"
-X-IronPort-AV: E=Sophos;i="6.25,178,1779141600"; 
-   d="scan'208";a="138945297"
-X-Amp-Result: SKIPPED(no attachment in message)
-Received: from unknown (HELO MUCSE819.infineon.com) ([172.23.29.45])
-  by smtp14.infineon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jul 2026 10:27:14 +0200
-Received: from MUCSE809.infineon.com (172.23.29.35) by MUCSE819.infineon.com
- (172.23.29.45) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.43; Wed, 22 Jul
- 2026 10:27:13 +0200
-Received: from ISCN5CG5251XQT.infineon.com (10.161.6.196) by
- MUCSE809.infineon.com (172.23.29.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.43; Wed, 22 Jul 2026 10:27:11 +0200
-From: Jason Huang <Jason.Huang2@infineon.com>
-To: <linux-wireless@vger.kernel.org>
-CC: <brcm80211@lists.linux.dev>, <brcm80211-dev-list.pdl@broadcom.com>,
-	<linux-kernel@vger.kernel.org>, Jason Huang <jason.huang2@infineon.com>
-Subject: [PATCH] wifi: brcmfmac: fix P2P action frame handling without device vif
-Date: Wed, 22 Jul 2026 16:26:08 +0800
-Message-ID: <20260722082608.412472-1-Jason.Huang2@infineon.com>
-X-Mailer: git-send-email 2.25.1
+	dkim=pass (2048-bit key) header.d=sipsolutions.net header.i=@sipsolutions.net header.b="ddemQMRF"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=sipsolutions.net; s=mail; h=MIME-Version:Content-Transfer-Encoding:
+	Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-To:
+	Resent-Cc:Resent-Message-ID; bh=YUBmWuesBq0wbR3Llfr7bd0Cy/31CbRKs8gIk37jzoY=;
+	t=1784713945; x=1785923545; b=ddemQMRFj8gXKYQ+wvdqFGlMXPS243OHd5v8oKxAQuRUg6D
+	UVevtllBx5cj/OXie7FghOUw6J0E6VoKT3TA7X0LlGdZQQT87IrO/cvT8Df4SPFwnK3yEyct0JrYf
+	k944SleQSMFVRfKhsUc0fpt+QyDDmrvJ2khZA+NOivxawTYI+lOfikEm3PtDuMQvqO2Qh8nqrRQ8v
+	UZZEneMw+ofvDnwMJUh9/Q4QHhV+0Ttk2CJ0Z3RyjsU8R4rGK1pdZhWuipwFZNVnlI2Kr0KGZEZfz
+	h8wBvLG1+CxqiHHCaaS8s5wn5bGpjALqmo4Vxus+BDcckAVwYe4DGcSN4eABcN3A==;
+Received: by sipsolutions.net with esmtpsa (TLS1.3:ECDHE_X25519__ECDSA_SECP256R1_SHA256__AES_256_GCM:256)
+	(Exim 4.98.2)
+	(envelope-from <johannes@sipsolutions.net>)
+	id 1wmTck-00000004fwc-1gmQ;
+	Wed, 22 Jul 2026 11:52:22 +0200
+Message-ID: <c0a20c1ab127085ff17b58aec490d06b22a4f092.camel@sipsolutions.net>
+Subject: Re: [PATCH] wifi: brcmfmac: fix P2P action frame handling without
+ device vif
+From: Johannes Berg <johannes@sipsolutions.net>
+To: Jason Huang <Jason.Huang2@infineon.com>, linux-wireless@vger.kernel.org
+Cc: brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com, 
+	linux-kernel@vger.kernel.org
+Date: Wed, 22 Jul 2026 11:52:21 +0200
+In-Reply-To: <20260722082608.412472-1-Jason.Huang2@infineon.com>
+References: <20260722082608.412472-1-Jason.Huang2@infineon.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: MUCSE815.infineon.com (172.23.29.41) To
- MUCSE809.infineon.com (172.23.29.35)
+X-malware-bazaar: not-scanned
 
-From: Jason Huang <jason.huang2@infineon.com>
+On Wed, 2026-07-22 at 16:26 +0800, Jason Huang wrote:
+>=20
+> Fixes: 30fb1b272909 ("brcmfmac: use actframe_abort to cancel ongoing acti=
+on frame")
+> Fixes: 6eda4e2c5425 ("brcmfmac: Add tx p2p off-channel support.")
+>=20
+> Signed-off-by: Jason Huang <jason.huang2@infineon.com>
 
-Some P2P action frame paths assume the P2P device vif is always
-available. That is not true when userspace sends non-P2P public action
-frames through the primary interface, or when action-frame abort runs
-after the P2P device vif has not been created.
+I feel like I might have fixed that for you last time, but there
+shouldn't be a blank line here, please change it in the future.
 
-Fall back to the primary vif when aborting an action frame without a P2P
-device vif, and guard P2P device saved IE access before using it for
-peer channel search.
-
-Fixes: 30fb1b272909 ("brcmfmac: use actframe_abort to cancel ongoing action frame")
-Fixes: 6eda4e2c5425 ("brcmfmac: Add tx p2p off-channel support.")
-
-Signed-off-by: Jason Huang <jason.huang2@infineon.com>
----
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
-index 92c16a317328..66557be28e7b 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
-@@ -1283,6 +1283,9 @@ static s32 brcmf_p2p_abort_action_frame(struct brcmf_cfg80211_info *cfg)
- 	brcmf_dbg(TRACE, "Enter\n");
- 
- 	vif = p2p->bss_idx[P2PAPI_BSSCFG_DEVICE].vif;
-+	if (!vif)
-+		vif = p2p->bss_idx[P2PAPI_BSSCFG_PRIMARY].vif;
-+
- 	err = brcmf_fil_bsscfg_data_set(vif->ifp, "actframe_abort", &int_val,
- 					sizeof(s32));
- 	if (err)
-@@ -1819,6 +1822,7 @@ bool brcmf_p2p_send_action_frame(struct brcmf_if *ifp,
- 	/* validate channel and p2p ies */
- 	if (config_af_params.search_channel &&
- 	    IS_P2P_SOCIAL_CHANNEL(le32_to_cpu(af_params->channel)) &&
-+	    p2p->bss_idx[P2PAPI_BSSCFG_DEVICE].vif &&
- 	    p2p->bss_idx[P2PAPI_BSSCFG_DEVICE].vif->saved_ie.probe_req_ie_len) {
- 		afx_hdl = &p2p->afx_hdl;
- 		afx_hdl->peer_listen_chan = le32_to_cpu(af_params->channel);
--- 
-2.25.1
-
+johannes
