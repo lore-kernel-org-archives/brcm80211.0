@@ -1,66 +1,122 @@
-Received: from sipsolutions.net (s3.sipsolutions.net [168.119.38.16])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61E273C0617;
-	Wed, 22 Jul 2026 09:52:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=168.119.38.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 558DE4BC02F
+	for <brcm80211@lists.linux.dev>; Wed, 22 Jul 2026 11:07:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784713947; cv=none; b=u+I7bm1oFIBccuETI3THEZNvspuzMkzvAQIfcu5RLu/3ncHZMVA99EN0cJw3A0iw6jQ50+ZiS6on+H35dgD4eLwlWW7n6x1AbIHrb3D7Okn9MqJmCdlplXn/vAPZUeOsMaf8ZYLm/G18u3LoYOnzK/tiPyg9QM9jSVeY2c2ds1k=
+	t=1784718444; cv=none; b=iRgG2BK/KsU1R15ouQNfyTJW1mZMHoAPQxJguym/IsUaYkxKJlyNHrjHGFEjPqhbyojQpxsiGEaeb5woDAPMyg6oXLrz+ck/yHFLEyGPgLsF98yyAgq343xDtVnOBeBNS4lvy6vmFeUqgA1/rww5xHfKIRK0SPmE6DaoUbvx1t4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784713947; c=relaxed/simple;
-	bh=YUBmWuesBq0wbR3Llfr7bd0Cy/31CbRKs8gIk37jzoY=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=TP1GqYXFEpzJyvyVCm2UJ5FH/kzvc0Xo+IlqUYDet5QqYk1z+567JleENA/Gax7Xd+P5uVCEJV4hE2g3Bjo1ce0rm+mWuYnsfUosJnMMilFJ2bWWKWuQ2hZ9gU1bv2OdewfwVgxgsR5HO9j/U86PGgbIaRcMK+X7iIaTuWNmeiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=permerror header.from=sipsolutions.net; spf=none smtp.mailfrom=sipsolutions.net; dkim=pass (2048-bit key) header.d=sipsolutions.net header.i=@sipsolutions.net header.b=ddemQMRF; arc=none smtp.client-ip=168.119.38.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=permerror header.from=sipsolutions.net
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=sipsolutions.net
+	s=arc-20240116; t=1784718444; c=relaxed/simple;
+	bh=Gvq8bn9U5dieapHENn6/tVPX84MtSWPT3qgQXTSmcc0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=PHc0rBKcNu3hwEE2azVi/obzIuAUxbJHFPVrLhaLlQuZpAqJqheSJkxca4mWNxSj8k35dx+HMHQhn3AXu5pIf0oGMRMQc1UIt3gz4Pe67IoR5VfQ8GbPgmVDVUFitPmTi3dpPGJ6sxxz/OXZvWV8Y7mlQQ5zYTmfhlH6GxtIdgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cse.iitm.ac.in; spf=pass smtp.mailfrom=cse.iitm.ac.in; dkim=pass (2048-bit key) header.d=cse-iitm-ac-in.20251104.gappssmtp.com header.i=@cse-iitm-ac-in.20251104.gappssmtp.com header.b=IHcPP6DD; arc=none smtp.client-ip=209.85.215.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cse.iitm.ac.in
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cse.iitm.ac.in
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sipsolutions.net header.i=@sipsolutions.net header.b="ddemQMRF"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=sipsolutions.net; s=mail; h=MIME-Version:Content-Transfer-Encoding:
-	Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-To:
-	Resent-Cc:Resent-Message-ID; bh=YUBmWuesBq0wbR3Llfr7bd0Cy/31CbRKs8gIk37jzoY=;
-	t=1784713945; x=1785923545; b=ddemQMRFj8gXKYQ+wvdqFGlMXPS243OHd5v8oKxAQuRUg6D
-	UVevtllBx5cj/OXie7FghOUw6J0E6VoKT3TA7X0LlGdZQQT87IrO/cvT8Df4SPFwnK3yEyct0JrYf
-	k944SleQSMFVRfKhsUc0fpt+QyDDmrvJ2khZA+NOivxawTYI+lOfikEm3PtDuMQvqO2Qh8nqrRQ8v
-	UZZEneMw+ofvDnwMJUh9/Q4QHhV+0Ttk2CJ0Z3RyjsU8R4rGK1pdZhWuipwFZNVnlI2Kr0KGZEZfz
-	h8wBvLG1+CxqiHHCaaS8s5wn5bGpjALqmo4Vxus+BDcckAVwYe4DGcSN4eABcN3A==;
-Received: by sipsolutions.net with esmtpsa (TLS1.3:ECDHE_X25519__ECDSA_SECP256R1_SHA256__AES_256_GCM:256)
-	(Exim 4.98.2)
-	(envelope-from <johannes@sipsolutions.net>)
-	id 1wmTck-00000004fwc-1gmQ;
-	Wed, 22 Jul 2026 11:52:22 +0200
-Message-ID: <c0a20c1ab127085ff17b58aec490d06b22a4f092.camel@sipsolutions.net>
-Subject: Re: [PATCH] wifi: brcmfmac: fix P2P action frame handling without
- device vif
-From: Johannes Berg <johannes@sipsolutions.net>
-To: Jason Huang <Jason.Huang2@infineon.com>, linux-wireless@vger.kernel.org
-Cc: brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com, 
-	linux-kernel@vger.kernel.org
-Date: Wed, 22 Jul 2026 11:52:21 +0200
-In-Reply-To: <20260722082608.412472-1-Jason.Huang2@infineon.com>
-References: <20260722082608.412472-1-Jason.Huang2@infineon.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
+	dkim=pass (2048-bit key) header.d=cse-iitm-ac-in.20251104.gappssmtp.com header.i=@cse-iitm-ac-in.20251104.gappssmtp.com header.b="IHcPP6DD"
+Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-c9e30214d8fso8827817a12.3
+        for <brcm80211@lists.linux.dev>; Wed, 22 Jul 2026 04:07:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=cse-iitm-ac-in.20251104.gappssmtp.com; s=20251104; t=1784718441; x=1785323241; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=Pn78C/RraBqASlFsZzfGipH4Pd/7ButyH44MMOGEmn8=;
+        b=IHcPP6DDJ8Nl4qM0iEMF8dszgiGWQKK9teIMd8gLQxxya+DpXwOAu/Pto6/XNftNS1
+         jw6OrGTfKmCzO5iZKL46OebVzTwqFGY/aY8ZqsxDgeY95GRMPcm6Vz82McYE8W0SEwvi
+         lvlvW1RbGzH3H1ulLvg8XhLTkCZ+h2RC4G6FiOXRUDlwgJ8x6+y6/vAUj/KDz4oxWf8V
+         U7/6JgnJg20c6nfEulikOyPt7/E/fLIDgLZeNx+FCbG7iQ2NeXXw5n8fywiEnM3FbfpZ
+         VY+Am5nQf2BkqRlREbMWyqIthk55ck754mKef0K72Kz82V7wi6FEAI3lEIUycOi/hf1G
+         jQcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784718441; x=1785323241;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Pn78C/RraBqASlFsZzfGipH4Pd/7ButyH44MMOGEmn8=;
+        b=P7nVT9283en3PToy/Nf4+DvHSXT+m3LRpLG9Gm60JZUZxRCo9/TFw+AvcebawLLJ1e
+         7s97P6sO0eRx1onCftfvQfewklonR5PcyrO3AloSCinrWP9bf0gnlcbkxUh0aeaULhzN
+         xTe/Op3jgtdma6kTGN/lbi8wIELdH1UOZld/jISTTUjC89SStPw33yspzSPVETMseT01
+         DxlGqfqvbVmFwwm0bxxKLPsP51PwEHEYW879jTAgMJzXSRZG7xLI1aTE9QdsSIY65PbB
+         vw2OyMmYkL2G0grin0IqBS6xRC5r0s7HD/AkWuR48liV6a0JiRHf0NK/o8RHRVux54GA
+         k3mw==
+X-Forwarded-Encrypted: i=1; AHgh+RoFuZFlx/YinzSed3MzS8BJqxxYOHTm5HDOtBGVRF85j03atZdhiTHVU1v2yK0HviWpILwh3qz+y6Y=@lists.linux.dev
+X-Gm-Message-State: AOJu0YweyxvVTOwVK6ULZvFFMnlGHDjvKXAR3YQy9ZCS9S4addVhW7MM
+	DqBhD+KQta1Xg2CHlEViR86KVhBvT2lMwClJ0CqNiLMMw/alytItUNn1g9Ia5fGWvUM=
+X-Gm-Gg: AR+sD12XBaxNnELzxirDai5OJl15kpf09X/BIkS9gWwq6iHF2Herohad6dOsoRgPQwt
+	iXTrLHh4oXvUqQYGqZwNTCHAqErDd01Y2T7I/0kekJZoQLuvOEUrXBQRWbkFzYNBcIVoANBBOdi
+	Gw2ayMeWnlPT84R/jWqLDihZ8+TuT+5RV0ms3egVi7BwzoWss1W4+akDhVrQVuVlvi2T3RVETko
+	2ZZ9PPk1Dpgpvuhsd6S0yChjYZ/dSMAp4ymGjXi6CZI3DhME9l+ykc7D0bnEEujhZ2sFnsi2Q0G
+	G4Y+kEZdb7JgvG9P1RKy9c9eb+RRB7pSZ/bpJL9RPQDbtf+Nd1WUauIsAoxuXXg9bEuhnF2qyok
+	JoHeZ9wkkZK9sJOCBX696mplAAEkrxhkzeA+HV3poOdfEzPXbX9SVJx6hPfI//rmRxKVvi0//M4
+	JshoSq1kgcXhUUkjUg1tyy1tA23DgRfvBuXhB5d33QRszzRuWN0M5d5vlg63WN0s9WnuEGsblrl
+	+SuKbeT1uR+ZpSXTy1r5Ecq/XG0Hmw5
+X-Received: by 2002:a05:6a21:b94:b0:3bc:5284:5445 with SMTP id adf61e73a8af0-3c3ad7d7fc8mr25322681637.21.1784718441385;
+        Wed, 22 Jul 2026 04:07:21 -0700 (PDT)
+Received: from Metius.iitm.ac.in ([103.158.43.43])
+        by smtp.googlemail.com with ESMTPSA id 5a478bee46e88-3147e07000fsm15952879eec.21.2026.07.22.04.07.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Jul 2026 04:07:20 -0700 (PDT)
+From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+To: arend.vanspriel@broadcom.com
+Cc: Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	linux-wireless@vger.kernel.org,
+	brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com,
+	linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Subject: [PATCH] wifi: brcmfmac: Fix memory leak in brcmf_sdio_read_control()
+Date: Wed, 22 Jul 2026 16:37:12 +0530
+Message-ID: <20260722110713.115988-1-nihaal@cse.iitm.ac.in>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-malware-bazaar: not-scanned
+Content-Transfer-Encoding: 8bit
 
-On Wed, 2026-07-22 at 16:26 +0800, Jason Huang wrote:
->=20
-> Fixes: 30fb1b272909 ("brcmfmac: use actframe_abort to cancel ongoing acti=
-on frame")
-> Fixes: 6eda4e2c5425 ("brcmfmac: Add tx p2p off-channel support.")
->=20
-> Signed-off-by: Jason Huang <jason.huang2@infineon.com>
+The memory allocated for buf is not freed in some of the error paths in
+brcmf_sdio_read_control(). Fix that by adding vfree() calls.
 
-I feel like I might have fixed that for you last time, but there
-shouldn't be a blank line here, please change it in the future.
+Fixes: dd43a01c5cdb ("brcmfmac: use dynamically allocated control frame buffer")
+Cc: stable@vger.kernel.org
+Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+---
+Compile tested only. Issue found using static analysis.
 
-johannes
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
+index b725c64e5b5c..0900211ba2fe 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
+@@ -1792,6 +1792,7 @@ brcmf_sdio_read_control(struct brcmf_sdio *bus, u8 *hdr, uint len, uint doff)
+ 		brcmf_err("%d-byte control read exceeds %d-byte buffer\n",
+ 			  rdlen, bus->sdiodev->bus_if->maxctl);
+ 		brcmf_sdio_rxfail(bus, false, false);
++		vfree(buf);
+ 		goto done;
+ 	}
+ 
+@@ -1800,6 +1801,7 @@ brcmf_sdio_read_control(struct brcmf_sdio *bus, u8 *hdr, uint len, uint doff)
+ 			  len, len - doff, bus->sdiodev->bus_if->maxctl);
+ 		bus->sdcnt.rx_toolong++;
+ 		brcmf_sdio_rxfail(bus, false, false);
++		vfree(buf);
+ 		goto done;
+ 	}
+ 
+@@ -1813,6 +1815,7 @@ brcmf_sdio_read_control(struct brcmf_sdio *bus, u8 *hdr, uint len, uint doff)
+ 			  rdlen, sdret);
+ 		bus->sdcnt.rxc_errors++;
+ 		brcmf_sdio_rxfail(bus, true, true);
++		vfree(buf);
+ 		goto done;
+ 	} else
+ 		memcpy(buf + BRCMF_FIRSTREAD, rbuf, rdlen);
+-- 
+2.43.0
+
