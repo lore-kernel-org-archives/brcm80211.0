@@ -1,105 +1,187 @@
-Received: from smtp14.infineon.com (smtp14.infineon.com [217.10.52.160])
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E63138F253
-	for <brcm80211@lists.linux.dev>; Thu, 23 Jul 2026 05:22:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.10.52.160
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAD16360EF9
+	for <brcm80211@lists.linux.dev>; Thu, 23 Jul 2026 05:56:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784784149; cv=none; b=vD0z+OJ4rLIx96ZwfYuzo3nYeRrs8QfYSnQtYU+rJtWWav0k5yhOGUBJqrRDOCOdLL0H1LhJKeTm4LodoqVQ8LBvtWSYoezUdsb9dVkH/iNn8Y+1ljt+d5bjlZZ/wOZAgHXdh9kjgMZ3ka7+RxnnouB++ou0QhUacFgjE3mUQIE=
+	t=1784786215; cv=none; b=EoTgnG6ttbaSNblJC5rcDnkh9LSsIdqhIoMkCsIPuJTpK7nI5VfTKC2L3RWOY3jwvFdwz8xs4seDaD19RDfxDl7Y9AAoOpxpltk1QFhPyWzRpCVm6Td1ewQQo4EJVL32gOo7Elra7/6d+/2aEnPcf+egQenmDF3KTKCSBwbJvk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784784149; c=relaxed/simple;
-	bh=j5pzo7e1FDluujUuUBNuOKF3mreTTHNBppu+y3L261I=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NtJeLoquyPmzVYvzvNC8hbYbeAmbIIdUvci6G6YvkoA4zHkLMEBT5K/kVhFpNYRWr/9/t5Z+FjFUGobn5VMYNK8WGBv8J8FpxxA1Y1AYB1vNcl0fqrf6EIIaRvRCItY/JCu7KeZSvKcmQnhQyvKniP+rUN/AoWi0DgaL/YzF1BY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=infineon.com; spf=pass smtp.mailfrom=infineon.com; dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b=nCIk4usX; arc=none smtp.client-ip=217.10.52.160
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=infineon.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infineon.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b="nCIk4usX"
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=infineon.com; i=@infineon.com; q=dns/txt; s=IFXMAIL;
-  t=1784784148; x=1816320148;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=j5pzo7e1FDluujUuUBNuOKF3mreTTHNBppu+y3L261I=;
-  b=nCIk4usXRQQOoLWjhMoUCFfEEWRFBkMrpZ0pq3gq0vUxMXW0ewbr1tju
-   Qc5UDKOEWjEq9lqyUCLwTPcUBlCEN963QO/8xkY/t2nurvxCI9F9ETq6V
-   S0HTRcy6Zwxw3KdDENhXxDTe5lso9JNX23wx9i64Z11T4h+I5t80Ro/Za
-   g=;
-X-CSE-ConnectionGUID: uDIU35IcSemwqhpoC3kisQ==
-X-CSE-MsgGUID: 4ImyKAbtTga9VI3B66P+Sw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11854"; a="139078717"
-X-IronPort-AV: E=Sophos;i="6.25,179,1779141600"; 
-   d="scan'208";a="139078717"
-X-Amp-Result: SKIPPED(no attachment in message)
-Received: from unknown (HELO MUCSE814.infineon.com) ([172.23.29.40])
-  by smtp14.infineon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jul 2026 07:22:25 +0200
-Received: from MUCSE809.infineon.com (172.23.29.35) by MUCSE814.infineon.com
- (172.23.29.40) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.43; Thu, 23 Jul
- 2026 07:22:24 +0200
-Received: from ISCN5CG5251XQT.infineon.com (10.161.6.196) by
- MUCSE809.infineon.com (172.23.29.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.43; Thu, 23 Jul 2026 07:22:22 +0200
-Date: Thu, 23 Jul 2026 13:22:14 +0800
-From: HungTsung Huang <Jason.Huang2@infineon.com>
-To: Arend van Spriel <arend.vanspriel@broadcom.com>,
-	<y@ISCN5CG5251XQT.infineon.com>
-CC: <linux-wireless@vger.kernel.org>, <brcm80211@lists.linux.dev>,
-	<brcm80211-dev-list.pdl@broadcom.com>, <linux-kernel@vger.kernel.org>, "Kurt
- Lee" <kurt.lee@cypress.com>
-Subject: Re: [PATCH v5] wifi: brcmfmac: add DPP support
-Message-ID: <20260723052214.GA178538@ISCN5CG5251XQT.infineon.com>
-References: <20260715084718.667522-1-Jason.Huang2@infineon.com>
- <20260720194900.2356442-1-arend.vanspriel@broadcom.com>
+	s=arc-20240116; t=1784786215; c=relaxed/simple;
+	bh=Cqk1ptQtxj4qk/xkEuPbGl6DAS7KDJCCIj4ljvzUlck=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=YNJbMUgFFfmTXNyx9CaeTsNcd0bUESHUNhvyTmMoQ9ztWihW5+oMpgfOYjESj0Arb2jINrRI6dkcnOYYGc0T6ZIIhyQePcAk/KVv9+CaaEjr/zpHeQLg2IJSk/lm4Y+fLmMmtbP+D0SPyBWnSEJbhGrYsixKX8/zRwIpjinmXCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: 486208e6865b11f1aa26b74ffac11d73-20260723
+X-CTIC-Tags:
+	HR_CC_COUNT, HR_CC_DOMAIN_COUNT, HR_CC_NAME, HR_CC_NO_NAME, HR_CTE_8B
+	HR_CTT_MISS, HR_DATE_H, HR_DATE_WKD, HR_DATE_ZONE, HR_FROM_NAME
+	HR_SJ_LANG, HR_SJ_LEN, HR_SJ_LETTER, HR_SJ_NOR_SYM, HR_SJ_PHRASE
+	HR_SJ_PHRASE_LEN, HR_SJ_WS, HR_TO_COUNT, HR_TO_DOMAIN_COUNT, HR_TO_NO_NAME
+	IP_TRUSTED, SRC_TRUSTED, DN_TRUSTED, SA_TRUSTED, SA_EXISTED
+	SN_TRUSTED, SN_EXISTED, SPF_NOPASS, DKIM_NOPASS, DMARC_NOPASS
+	CIE_BAD, CIE_GOOD, CIE_GOOD_SPF, GTI_FG_BS, GTI_RG_INFO
+	GTI_C_BU, AMN_GOOD, ABX_MISS_RDNS
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.12,REQID:7127cefc-d1ad-41d8-8d61-1b111faf8609,IP:15,
+	URL:0,TC:0,Content:-5,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTIO
+	N:release,TS:10
+X-CID-INFO: VERSION:1.3.12,REQID:7127cefc-d1ad-41d8-8d61-1b111faf8609,IP:15,UR
+	L:0,TC:0,Content:-5,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
+	release,TS:10
+X-CID-META: VersionHash:e7bac3a,CLOUDID:800708d5eeef0dfb32c2f880fb7051e1,BulkI
+	D:2607231356460W1D820V,BulkQuantity:0,Recheck:0,SF:10|66|78|102|127|865|89
+	8,TC:nil,Content:0|15|50,EDM:-3,IP:-2,URL:0,File:nil,RT:nil,Bulk:nil,QS:ni
+	l,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:1,BRE:0,ARC:
+	0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: 486208e6865b11f1aa26b74ffac11d73-20260723
+X-User: pengcan@kylinos.cn
+Received: from lenovo [(116.128.244.171)] by mailgw.kylinos.cn
+	(envelope-from <pengcan@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+	with ESMTP id 729145037; Thu, 23 Jul 2026 13:56:43 +0800
+From: Can Peng <pengcan@kylinos.cn>
+To: arend.vanspriel@broadcom.com
+Cc: linux-wireless@vger.kernel.org,
+	brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com,
+	linux-kernel@vger.kernel.org,
+	Can Peng <pengcan@kylinos.cn>,
+	stable@vger.kernel.org
+Subject: [PATCH wireless] wifi: brcmfmac: validate msgbuf flowring IDs before use
+Date: Thu, 23 Jul 2026 13:56:17 +0800
+Message-ID: <20260723055618.550834-1-pengcan@kylinos.cn>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20260720194900.2356442-1-arend.vanspriel@broadcom.com>
-X-ClientProxiedBy: MUCSE823.infineon.com (172.23.29.54) To
- MUCSE809.infineon.com (172.23.29.35)
+Content-Transfer-Encoding: 8bit
 
-Hi Arend,
+Firmware messages carry flow_ring_id values which brcmfmac converts
+to an internal flowid by subtracting
+BRCMF_H2D_MSGRING_FLOWRING_IDSTART. The resulting value is used as
+a bit index in txstatus_done_map and as an array index into
+msgbuf->flowrings and the flowring state.
 
-Thank you for the Acked-by.
-As requested, the standalone P2P device vif guard patch has been
-submitted. Here is the official Linux mailing list link so you can
-track it.
+Validate the firmware supplied flow_ring_id before using it. This
+prevents flow_ring_id values below BRCMF_H2D_MSGRING_FLOWRING_IDSTART
+from underflowing and rejects values outside msgbuf->max_flowrings.
 
-https://patchwork.kernel.org/project/linux-wireless/patch/20260722082608.412472-1-Jason.Huang2@infineon.com/
+In the tx status path, complete the packet with an error after
+removing a valid packet id so the skb is not leaked when the flow
+ring id is invalid.
 
-Best regards,
-Jason
+Fixes: 9a1bb60250d2 ("brcmfmac: Adding msgbuf protocol.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Can Peng <pengcan@kylinos.cn>
+---
+ .../wireless/broadcom/brcm80211/brcmfmac/msgbuf.c  | 46 +++++++++++++++++++---
+ 1 file changed, 40 insertions(+), 6 deletions(-)
 
-On Mon, Jul 20, 2026 at 09:48:56PM +0200, Arend van Spriel wrote:
-> Caution: This e-mail originated outside Infineon Technologies. Please be cautious when sharing information or opening attachments especially from unknown senders. Refer to our intranet guide<https://intranet-content.infineon.com/explore/aboutinfineon/rules/informationsecurity/ug/SocialEngineering/Pages/SocialEngineeringElements_en.aspx> to help you identify Phishing email.
-> 
-> 
-> 
-> On Wed, 15 Jul 2026, Jason Huang wrote:
-> 
-> > [PATCH v5] wifi: brcmfmac: add DPP support
-> >
-> > Add DPP AKM handling and RSN parsing support ...
-> >
-> > Changes since v4:
-> > - Drop the pre-existing P2P device vif fixes; they are now a standalone
-> >   wireless patch.
-> 
-> The DPP code looks good. The P2P fixes have been removed as requested and
-> the changelog is present.
-> 
-> Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-> 
-> This ack is conditional on the standalone P2P device vif guard patch being
-> submitted. When you post it, please reply here with the lore.kernel.org
-> link so I can track it.
-> 
-> Regards,
-> Arend
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
+index ba1ce1552e0f..8146d50d6f07 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
+@@ -560,6 +560,28 @@ brcmf_msgbuf_remove_flowring(struct brcmf_msgbuf *msgbuf, u16 flowid)
+ 	brcmf_flowring_delete(msgbuf->flow, flowid);
+ }
+ 
++static bool brcmf_msgbuf_get_flowid(struct brcmf_msgbuf *msgbuf,
++				    u16 flow_ring_id, u16 *flowid)
++{
++	u32 id = flow_ring_id;
++
++	if (id < BRCMF_H2D_MSGRING_FLOWRING_IDSTART) {
++		bphy_err(msgbuf->drvr, "invalid flowring id %u\n",
++			 flow_ring_id);
++		return false;
++	}
++
++	id -= BRCMF_H2D_MSGRING_FLOWRING_IDSTART;
++	if (id >= msgbuf->max_flowrings) {
++		bphy_err(msgbuf->drvr, "invalid flowring id %u\n",
++			 flow_ring_id);
++		return false;
++	}
++
++	*flowid = id;
++	return true;
++}
++
+ 
+ static struct brcmf_msgbuf_work_item *
+ brcmf_msgbuf_dequeue_work(struct brcmf_msgbuf *msgbuf)
+@@ -880,17 +902,23 @@ brcmf_msgbuf_process_txstatus(struct brcmf_msgbuf *msgbuf, void *buf)
+ 	struct msgbuf_tx_status *tx_status;
+ 	u32 idx;
+ 	struct sk_buff *skb;
++	u16 flow_ring_id;
+ 	u16 flowid;
+ 
+ 	tx_status = (struct msgbuf_tx_status *)buf;
+ 	idx = le32_to_cpu(tx_status->msg.request_id) - 1;
+-	flowid = le16_to_cpu(tx_status->compl_hdr.flow_ring_id);
+-	flowid -= BRCMF_H2D_MSGRING_FLOWRING_IDSTART;
++	flow_ring_id = le16_to_cpu(tx_status->compl_hdr.flow_ring_id);
+ 	skb = brcmf_msgbuf_get_pktid(msgbuf->drvr->bus_if->dev,
+ 				     msgbuf->tx_pktids, idx);
+ 	if (!skb)
+ 		return;
+ 
++	if (!brcmf_msgbuf_get_flowid(msgbuf, flow_ring_id, &flowid)) {
++		brcmf_txfinalize(brcmf_get_ifp(msgbuf->drvr, tx_status->msg.ifidx),
++				 skb, false);
++		return;
++	}
++
+ 	set_bit(flowid, msgbuf->txstatus_done_map);
+ 	commonring = msgbuf->flowrings[flowid];
+ 	atomic_dec(&commonring->outstanding_tx);
+@@ -1237,13 +1265,16 @@ brcmf_msgbuf_process_flow_ring_create_response(struct brcmf_msgbuf *msgbuf,
+ 	struct msgbuf_flowring_create_resp *flowring_create_resp;
+ 	u16 status;
+ 	u16 flowid;
++	u16 flow_ring_id;
+ 
+ 	flowring_create_resp = (struct msgbuf_flowring_create_resp *)buf;
+ 
+-	flowid = le16_to_cpu(flowring_create_resp->compl_hdr.flow_ring_id);
+-	flowid -= BRCMF_H2D_MSGRING_FLOWRING_IDSTART;
++	flow_ring_id = le16_to_cpu(flowring_create_resp->compl_hdr.flow_ring_id);
+ 	status =  le16_to_cpu(flowring_create_resp->compl_hdr.status);
+ 
++	if (!brcmf_msgbuf_get_flowid(msgbuf, flow_ring_id, &flowid))
++		return;
++
+ 	if (status) {
+ 		bphy_err(drvr, "Flowring creation failed, code %d\n", status);
+ 		brcmf_msgbuf_remove_flowring(msgbuf, flowid);
+@@ -1266,13 +1297,16 @@ brcmf_msgbuf_process_flow_ring_delete_response(struct brcmf_msgbuf *msgbuf,
+ 	struct msgbuf_flowring_delete_resp *flowring_delete_resp;
+ 	u16 status;
+ 	u16 flowid;
++	u16 flow_ring_id;
+ 
+ 	flowring_delete_resp = (struct msgbuf_flowring_delete_resp *)buf;
+ 
+-	flowid = le16_to_cpu(flowring_delete_resp->compl_hdr.flow_ring_id);
+-	flowid -= BRCMF_H2D_MSGRING_FLOWRING_IDSTART;
++	flow_ring_id = le16_to_cpu(flowring_delete_resp->compl_hdr.flow_ring_id);
+ 	status =  le16_to_cpu(flowring_delete_resp->compl_hdr.status);
+ 
++	if (!brcmf_msgbuf_get_flowid(msgbuf, flow_ring_id, &flowid))
++		return;
++
+ 	if (status) {
+ 		bphy_err(drvr, "Flowring deletion failed, code %d\n", status);
+ 		brcmf_flowring_delete(msgbuf->flow, flowid);
+-- 
+2.53.0
