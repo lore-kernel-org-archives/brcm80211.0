@@ -1,19 +1,19 @@
 Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAD16360EF9
-	for <brcm80211@lists.linux.dev>; Thu, 23 Jul 2026 05:56:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE3AB41BA77
+	for <brcm80211@lists.linux.dev>; Fri, 24 Jul 2026 09:26:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784786215; cv=none; b=EoTgnG6ttbaSNblJC5rcDnkh9LSsIdqhIoMkCsIPuJTpK7nI5VfTKC2L3RWOY3jwvFdwz8xs4seDaD19RDfxDl7Y9AAoOpxpltk1QFhPyWzRpCVm6Td1ewQQo4EJVL32gOo7Elra7/6d+/2aEnPcf+egQenmDF3KTKCSBwbJvk4=
+	t=1784885172; cv=none; b=I//ojGde8O5IPHSqTk9S368zCqJzdhHhQ0nq9PWkm8bLgUUPt77HyEw9OGTnV+yEKGQRzSBbIbe4iovPwaBLl8FgCLBLbggSwqBJ310JLgrqFQcv/ZMIZ8u0TP+UJC+BvRNMlDQFFh/lrv0LVfFUlKtNbXdq1p3y93kbEUFh160=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784786215; c=relaxed/simple;
-	bh=Cqk1ptQtxj4qk/xkEuPbGl6DAS7KDJCCIj4ljvzUlck=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=YNJbMUgFFfmTXNyx9CaeTsNcd0bUESHUNhvyTmMoQ9ztWihW5+oMpgfOYjESj0Arb2jINrRI6dkcnOYYGc0T6ZIIhyQePcAk/KVv9+CaaEjr/zpHeQLg2IJSk/lm4Y+fLmMmtbP+D0SPyBWnSEJbhGrYsixKX8/zRwIpjinmXCw=
+	s=arc-20240116; t=1784885172; c=relaxed/simple;
+	bh=drXljy61xDN6zke+J1JKPUvou8TShhwpl9OB2ppSrw0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=tsnF0Bkjwuvmviszmj0asjzXrG438TDpz405bG2M4RtyGCYW5gDf/iJXpF9kVLwKPgNfEAKRSzAq0jgpoedZcmk0dwrP9+UFXn9OZ5KAlOyw++66lOfBSwGWfZ7EEHIoc6y8lsrJC1IUiB3tNGfjknG+B05PYD1q9kdm69m33Uk=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: 486208e6865b11f1aa26b74ffac11d73-20260723
+X-UUID: acf78b46874111f1aa26b74ffac11d73-20260724
 X-CTIC-Tags:
 	HR_CC_COUNT, HR_CC_DOMAIN_COUNT, HR_CC_NAME, HR_CC_NO_NAME, HR_CTE_8B
 	HR_CTT_MISS, HR_DATE_H, HR_DATE_WKD, HR_DATE_ZONE, HR_FROM_NAME
@@ -24,27 +24,26 @@ X-CTIC-Tags:
 	CIE_BAD, CIE_GOOD, CIE_GOOD_SPF, GTI_FG_BS, GTI_RG_INFO
 	GTI_C_BU, AMN_GOOD, ABX_MISS_RDNS
 X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.12,REQID:7127cefc-d1ad-41d8-8d61-1b111faf8609,IP:15,
-	URL:0,TC:0,Content:-5,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTIO
-	N:release,TS:10
-X-CID-INFO: VERSION:1.3.12,REQID:7127cefc-d1ad-41d8-8d61-1b111faf8609,IP:15,UR
-	L:0,TC:0,Content:-5,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
-	release,TS:10
-X-CID-META: VersionHash:e7bac3a,CLOUDID:800708d5eeef0dfb32c2f880fb7051e1,BulkI
-	D:2607231356460W1D820V,BulkQuantity:0,Recheck:0,SF:10|66|78|102|127|865|89
-	8,TC:nil,Content:0|15|50,EDM:-3,IP:-2,URL:0,File:nil,RT:nil,Bulk:nil,QS:ni
-	l,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:1,BRE:0,ARC:
-	0
+X-CID-O-INFO: VERSION:1.3.12,REQID:d1d971ef-e0d3-43ae-aac2-a6d42c736a89,IP:15,
+	URL:0,TC:0,Content:-5,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTI
+	ON:release,TS:35
+X-CID-INFO: VERSION:1.3.12,REQID:d1d971ef-e0d3-43ae-aac2-a6d42c736a89,IP:15,UR
+	L:0,TC:0,Content:-5,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
+	:release,TS:35
+X-CID-META: VersionHash:e7bac3a,CLOUDID:e6e350f9cebe034f045e12c66c461c69,BulkI
+	D:260724172559EM6LYIJM,BulkQuantity:0,Recheck:0,SF:10|66|78|102|127|865|89
+	8,TC:nil,Content:0|15|50,EDM:5,IP:-2,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil
+	,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
 X-CID-BVR: 2,SSN|SDN
 X-CID-BAS: 2,SSN|SDN,0,_
 X-CID-FACTOR: TF_CID_SPAM_SNR
 X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: 486208e6865b11f1aa26b74ffac11d73-20260723
+X-UUID: acf78b46874111f1aa26b74ffac11d73-20260724
 X-User: pengcan@kylinos.cn
 Received: from lenovo [(116.128.244.171)] by mailgw.kylinos.cn
 	(envelope-from <pengcan@kylinos.cn>)
 	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
-	with ESMTP id 729145037; Thu, 23 Jul 2026 13:56:43 +0800
+	with ESMTP id 165337671; Fri, 24 Jul 2026 17:25:56 +0800
 From: Can Peng <pengcan@kylinos.cn>
 To: arend.vanspriel@broadcom.com
 Cc: linux-wireless@vger.kernel.org,
@@ -53,9 +52,9 @@ Cc: linux-wireless@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Can Peng <pengcan@kylinos.cn>,
 	stable@vger.kernel.org
-Subject: [PATCH wireless] wifi: brcmfmac: validate msgbuf flowring IDs before use
-Date: Thu, 23 Jul 2026 13:56:17 +0800
-Message-ID: <20260723055618.550834-1-pengcan@kylinos.cn>
+Subject: [PATCH] wifi: brcmfmac: Set DMA direction for msgbuf packet IDs
+Date: Fri, 24 Jul 2026 17:25:30 +0800
+Message-ID: <20260724092530.674624-1-pengcan@kylinos.cn>
 X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
@@ -65,123 +64,38 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Firmware messages carry flow_ring_id values which brcmfmac converts
-to an internal flowid by subtracting
-BRCMF_H2D_MSGRING_FLOWRING_IDSTART. The resulting value is used as
-a bit index in txstatus_done_map and as an array index into
-msgbuf->flowrings and the flowring state.
+brcmf_msgbuf_init_pktids() takes the DMA direction from its callers,
+but never stores it in the packet ID state.  Since the state is zeroed,
+pktids->direction remains DMA_BIDIRECTIONAL for both the TX and RX
+packet ID pools.
 
-Validate the firmware supplied flow_ring_id before using it. This
-prevents flow_ring_id values below BRCMF_H2D_MSGRING_FLOWRING_IDSTART
-from underflowing and rejects values outside msgbuf->max_flowrings.
+All msgbuf packet ID map and unmap paths use pktids->direction.  As a
+result, TX buffers requested with DMA_TO_DEVICE and RX buffers requested
+with DMA_FROM_DEVICE are mapped and unmapped as DMA_BIDIRECTIONAL
+instead.
 
-In the tx status path, complete the packet with an error after
-removing a valid packet id so the skb is not leaked when the flow
-ring id is invalid.
+Store the caller-provided direction when initializing the packet ID
+state.
 
 Fixes: 9a1bb60250d2 ("brcmfmac: Adding msgbuf protocol.")
 Cc: stable@vger.kernel.org
 Signed-off-by: Can Peng <pengcan@kylinos.cn>
 ---
- .../wireless/broadcom/brcm80211/brcmfmac/msgbuf.c  | 46 +++++++++++++++++++---
- 1 file changed, 40 insertions(+), 6 deletions(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
-index ba1ce1552e0f..8146d50d6f07 100644
+index ba1ce1552e0f..c1feb164d845 100644
 --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
 +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
-@@ -560,6 +560,28 @@ brcmf_msgbuf_remove_flowring(struct brcmf_msgbuf *msgbuf, u16 flowid)
- 	brcmf_flowring_delete(msgbuf->flow, flowid);
+@@ -310,6 +310,7 @@ brcmf_msgbuf_init_pktids(u32 nr_array_entries,
+ 	}
+ 	pktids->array = array;
+ 	pktids->array_size = nr_array_entries;
++	pktids->direction = direction;
+ 
+ 	return pktids;
  }
- 
-+static bool brcmf_msgbuf_get_flowid(struct brcmf_msgbuf *msgbuf,
-+				    u16 flow_ring_id, u16 *flowid)
-+{
-+	u32 id = flow_ring_id;
-+
-+	if (id < BRCMF_H2D_MSGRING_FLOWRING_IDSTART) {
-+		bphy_err(msgbuf->drvr, "invalid flowring id %u\n",
-+			 flow_ring_id);
-+		return false;
-+	}
-+
-+	id -= BRCMF_H2D_MSGRING_FLOWRING_IDSTART;
-+	if (id >= msgbuf->max_flowrings) {
-+		bphy_err(msgbuf->drvr, "invalid flowring id %u\n",
-+			 flow_ring_id);
-+		return false;
-+	}
-+
-+	*flowid = id;
-+	return true;
-+}
-+
- 
- static struct brcmf_msgbuf_work_item *
- brcmf_msgbuf_dequeue_work(struct brcmf_msgbuf *msgbuf)
-@@ -880,17 +902,23 @@ brcmf_msgbuf_process_txstatus(struct brcmf_msgbuf *msgbuf, void *buf)
- 	struct msgbuf_tx_status *tx_status;
- 	u32 idx;
- 	struct sk_buff *skb;
-+	u16 flow_ring_id;
- 	u16 flowid;
- 
- 	tx_status = (struct msgbuf_tx_status *)buf;
- 	idx = le32_to_cpu(tx_status->msg.request_id) - 1;
--	flowid = le16_to_cpu(tx_status->compl_hdr.flow_ring_id);
--	flowid -= BRCMF_H2D_MSGRING_FLOWRING_IDSTART;
-+	flow_ring_id = le16_to_cpu(tx_status->compl_hdr.flow_ring_id);
- 	skb = brcmf_msgbuf_get_pktid(msgbuf->drvr->bus_if->dev,
- 				     msgbuf->tx_pktids, idx);
- 	if (!skb)
- 		return;
- 
-+	if (!brcmf_msgbuf_get_flowid(msgbuf, flow_ring_id, &flowid)) {
-+		brcmf_txfinalize(brcmf_get_ifp(msgbuf->drvr, tx_status->msg.ifidx),
-+				 skb, false);
-+		return;
-+	}
-+
- 	set_bit(flowid, msgbuf->txstatus_done_map);
- 	commonring = msgbuf->flowrings[flowid];
- 	atomic_dec(&commonring->outstanding_tx);
-@@ -1237,13 +1265,16 @@ brcmf_msgbuf_process_flow_ring_create_response(struct brcmf_msgbuf *msgbuf,
- 	struct msgbuf_flowring_create_resp *flowring_create_resp;
- 	u16 status;
- 	u16 flowid;
-+	u16 flow_ring_id;
- 
- 	flowring_create_resp = (struct msgbuf_flowring_create_resp *)buf;
- 
--	flowid = le16_to_cpu(flowring_create_resp->compl_hdr.flow_ring_id);
--	flowid -= BRCMF_H2D_MSGRING_FLOWRING_IDSTART;
-+	flow_ring_id = le16_to_cpu(flowring_create_resp->compl_hdr.flow_ring_id);
- 	status =  le16_to_cpu(flowring_create_resp->compl_hdr.status);
- 
-+	if (!brcmf_msgbuf_get_flowid(msgbuf, flow_ring_id, &flowid))
-+		return;
-+
- 	if (status) {
- 		bphy_err(drvr, "Flowring creation failed, code %d\n", status);
- 		brcmf_msgbuf_remove_flowring(msgbuf, flowid);
-@@ -1266,13 +1297,16 @@ brcmf_msgbuf_process_flow_ring_delete_response(struct brcmf_msgbuf *msgbuf,
- 	struct msgbuf_flowring_delete_resp *flowring_delete_resp;
- 	u16 status;
- 	u16 flowid;
-+	u16 flow_ring_id;
- 
- 	flowring_delete_resp = (struct msgbuf_flowring_delete_resp *)buf;
- 
--	flowid = le16_to_cpu(flowring_delete_resp->compl_hdr.flow_ring_id);
--	flowid -= BRCMF_H2D_MSGRING_FLOWRING_IDSTART;
-+	flow_ring_id = le16_to_cpu(flowring_delete_resp->compl_hdr.flow_ring_id);
- 	status =  le16_to_cpu(flowring_delete_resp->compl_hdr.status);
- 
-+	if (!brcmf_msgbuf_get_flowid(msgbuf, flow_ring_id, &flowid))
-+		return;
-+
- 	if (status) {
- 		bphy_err(drvr, "Flowring deletion failed, code %d\n", status);
- 		brcmf_flowring_delete(msgbuf->flow, flowid);
 -- 
 2.53.0
+
