@@ -1,86 +1,86 @@
-Received: from mail-oa1-f97.google.com (mail-oa1-f97.google.com [209.85.160.97])
+Received: from mail-yx1-f97.google.com (mail-yx1-f97.google.com [74.125.224.97])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D70F374A1D
-	for <brcm80211@lists.linux.dev>; Sun, 26 Jul 2026 19:26:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.97
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39A88352020
+	for <brcm80211@lists.linux.dev>; Sun, 26 Jul 2026 19:26:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.97
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785093963; cv=none; b=SzJHbkRtmaOcvOHgDz5TYxbx50/IXY+zc/kAkKGjfYFPuvyHBNwML1SSro92q3+edSxaG5C5cu8nQLhLp9yHdZshPtCGW72Gf3bm01qGoC9WFAoeWyIV3KNHXjX+QYAJCgYcpt4EiYRj1DVZVFVavStkNMnqJw1CyyN/luXXJW4=
+	t=1785093965; cv=none; b=DiFXA2P8u6eO/EcVvbdXyOXlFShK6t4FrV7hPpnmc/SC9JbC4TVcKm9FPjxBDOOqfDxatUPxKLil4hSiNI+7guCxF8p6OZk2IKrkBRFr26EHhEV6/Tkas69WugI3Krknw1a7K1PeZ/onH/a2hSxi8R394OObJgdlolNdQRLva+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785093963; c=relaxed/simple;
-	bh=x5MXwj1d+VB1odu+qOXn2Ic0Y+N5eUhDb+btCILvx44=;
+	s=arc-20240116; t=1785093965; c=relaxed/simple;
+	bh=jMgvxiK9lmLnOAee+XZtVagqR2BdhpjxqxhBR68zT+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d3lZ18pFsl5617Ia7TVJIusmWvS8FUP+WCDOqpWkNRtawh95dEsQX0+si9JjafEwFscbcD/4M7Uc6XR++nEamXBNcZ4fLPh9Bw4qDSNEjrTo+xGoiVhZExn4KCgewbTtRIKC1irkLkqiL4fyaXAFIgy+SqnxWccg11tUdJWrO8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=DJltT2pP; arc=none smtp.client-ip=209.85.160.97
+	 MIME-Version; b=t8uj23FOPEYZ/wiT09HezfngBkQQDsexNW2F2uAwtOg/mZepuhHOtAe+kSodPoIZFWUkEsAvv3LZ/ZlMz1ppHMYAZDfJZ4kREhjAglAnG25h+v9rvfAProftPYP+weEL3f16jbQeQQsAwkSc+thJwAfd3E6em3e0DIyeWh0oZ9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=KE/eWEEX; arc=none smtp.client-ip=74.125.224.97
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="DJltT2pP"
-Received: by mail-oa1-f97.google.com with SMTP id 586e51a60fabf-45691990234so1318652fac.3
-        for <brcm80211@lists.linux.dev>; Sun, 26 Jul 2026 12:26:02 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="KE/eWEEX"
+Received: by mail-yx1-f97.google.com with SMTP id 956f58d0204a3-66843304cbaso2800005d50.2
+        for <brcm80211@lists.linux.dev>; Sun, 26 Jul 2026 12:26:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785093961; x=1785698761;
+        d=1e100.net; s=20251104; t=1785093963; x=1785698763;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:dkim-signature:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=n4PlKcANzq+y1Rq4zco4LLPjQUEuNl07QXAtQYWq7XU=;
-        b=ms0QoUzAL3qExnip2HpO/CQ2cHtp9uRbbTpkXrKHJwKGixFjTFT+MErcIVKqDhKIEZ
-         ZgoAEMRXgEP80eoJndBAhKu9RRI9uJx0+e3/hY/7QkeP6vHhbkBhEwXbLWHTLIsKo9XU
-         mvjVBtNl0J4wRN9TI8+JbR99E6upJV3xhH6Uo7dCcsmcz4AwG5uxo9kI0xC5cn7JYegy
-         5es/POYYOIA4R4vXphxJpoiNP7x4416OX3eevTLtnZHX1nzhwSLrYIdOB/5Y1/xtAiZQ
-         tWMD1AT/yIgMysPxokdbuAmtny2+3li4jwfWZ06mPJ54dXXpVPXNreqW96yIOQP984Tp
-         2EBw==
-X-Forwarded-Encrypted: i=1; AHgh+RpUpqWiM93+ab+v7NnWX+XkKFOCP2dsC7a2MEKnWgQTs9UWMdehMc14+kzT7AX/V1G2jLoH+NjYtEA=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxreKXGvEKlrAWeJbk0QPrhUftoMAzUUvLbmnv2KSfx33h1rceO
-	S/aMgIkUzld2tjnHXGxJGZ0Hg9lIpOThfu7BTlBDCq5EiKF4FAgDTTLZc4NpPYZVLVOqvtKjYvZ
-	MuHkrmvioWWUdPPXelYBrCGng77n/l5tG4Zi6aeIIxigAoibvrDMHLh9/S571Lr0dkuQeF5jxEx
-	e5lsDH+yoenHfZ80EZV9RpA47vzwwl4dkBo85KFfZgPwaCrMsFHFgS/G33j2dneimNdZdrcvG89
-	wG7K/KzWtvgYL+Ki9UDzA==
-X-Gm-Gg: AR+sD130NbOEBILZcaz/oHJq/J64lqba+dC6gFggox4gOmTV2cxoyei7biy8mpCK3QR
-	h4K2tBicInPaVMwbcTfNM9iqrLMQTx8xQcSH11ip4cb3sUEazjllCgE5cGC19vN+qi8UGaCsIbT
-	WprypM4Ktfa7nOsmZNFglVc1BahgeQ1LTWx+n3OJX4c3Pi0W05rqHh0CxAp4O7pppbLOyoaVdHO
-	BHBC7/tzfs/89yAvkKBA7R5Z0LjZovZm21B2HbY1OXIbXafavoEN3Ey8NvHEYpEAIm9yv8ZgvyK
-	T0mBUZ1XDg0nYqeQU4IhXFkj4JphzB9s+endpc8sOgqCfpXHKhX73dfGXqHLg6kr+8XygxaHS6p
-	9x00AhzVEsKNL8jbNVrsbAPx5Z10NaPr3BVtKBZLI+M7vKoZmQ8k+Lkt5B5LxAc0X4vrVGsXkZO
-	fLnuKjvK4Vajzo9CXh3L2YGE8DnxjfFEMPDPg5Gd8=
-X-Received: by 2002:a05:6871:4702:b0:448:8bdd:8358 with SMTP id 586e51a60fabf-457f2479f05mr4770764fac.15.1785093961226;
-        Sun, 26 Jul 2026 12:26:01 -0700 (PDT)
-Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-26.dlp.protect.broadcom.com. [144.49.247.26])
-        by smtp-relay.gmail.com with ESMTPS id 586e51a60fabf-45766ec69f3sm1119859fac.6.2026.07.26.12.25.59
+        bh=Ar0WQnIHDpGHXJ9rIXyWU0tvEfBnqrXceAiqGiwHa6c=;
+        b=R/LspGAKZoPOuQMdT1EWUETgBneGOCp93rOj8w4+WYBzGng0dOr0u4Ej5j+bh/Xo7p
+         r+ro92yT9Z9sZVYqtIeZoe6yf1I6TWPhtXODrf9BDxXhz6aA0eUPgO9CgWhx1h58qlTM
+         MoKefDITUPByhddfsZReKDfPZfLWOLeRJwcxUMTyAnz+hBmz4CxDU0GYgJ9LimiLpfG1
+         qGDSTZZ7CBgMHEwkACOmKGbcdVsyR0J6pxT5fK58STEAaQXes2f2ecibhL6sDxCGAwFX
+         ZLqFX26K9Q43ZxM17RWg9rN+jnQrgUQOuLqt6D6Domo69E3qsUqtprDAVWR94q1r8LDe
+         7Uwg==
+X-Forwarded-Encrypted: i=1; AHgh+Rqtjz+HWZmcb/sDB44d4W6r3UQl24LodlS1/8AwjBb6E7XBxZh65d5FsP9YcFbubYGCaqxLV6qv9hk=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzJQ6mBuzgJ381okEzIaMxRsQDeyA+br2XmHlyMvme5qQ27l09x
+	lp3G+EXb9d7RgSrEQZrm8sy8gcXhlqvAvLHv5wqCTAuwyjWgZo2RMY3H5cy6jqt4C2ppyHg9Be0
+	oKqtNkrNbrHnR4kCkGzbr5W+pCL4LPti0Za2sjrhHtclu54Vw182uIE7xYuPCdI41g4151Qm0pC
+	eZWDvEI8jVSt9GK9JBIT65Ku3FCcPivVy0G0QkuB25bvjiCU/nL4ITK8PIULpH7WSqvGHrz/FfB
+	DvjikEOnWoCcpFipQtBTA==
+X-Gm-Gg: AR+sD11SZQgLPuoMPneooYr7bYfWMk15LEnwko/QU90S+Rpf4xU3XhtJTopJvlv9PTz
+	mzxWhO7LVZsSJjsLA3I8ladQ57zUrp6gKBrmcNmtmDCbpMS4gTEKnC0hDMCT2fuiDHcA2vQ4cbH
+	t4Ih7i8KyCcD1fOR3mpCcYTyLI7pph4PqhHkXaoxcCvVHBXndUxcXyypM56tqAhZdrc8JyuVIyW
+	rIaM8qVVvZYJKWbJRyQ4CltdAfdf+KbUObrpnzBWUWt6OluFYYZRSFySYzIWxOh3gf3fYtcUWow
+	ArPX1oiWOTUnqRiPuqjmLvenrL5ZATD4C7R4XnxPm1GpXyWCGsLZPRCOIB4NgnB5YkCUcqB1Uiz
+	J/C+ZLoTvkvcdwXVjtuEHXA4LbKvtxwndVMYq//DHtNoFzo2eouISrliQSLqxcFzPEpYBZ+iDpD
+	Yvb5o12JYxXkZBsVdIdzWizaZJhCOd2b44Fq8HuyE=
+X-Received: by 2002:a05:690e:1542:10b0:667:9196:4eda with SMTP id 956f58d0204a3-668c79dd7e3mr1292491d50.16.1785093963052;
+        Sun, 26 Jul 2026 12:26:03 -0700 (PDT)
+Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-25.dlp.protect.broadcom.com. [144.49.247.25])
+        by smtp-relay.gmail.com with ESMTPS id 956f58d0204a3-668c6f7e810sm486432d50.22.2026.07.26.12.26.01
         for <brcm80211@lists.linux.dev>
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 26 Jul 2026 12:26:01 -0700 (PDT)
+        Sun, 26 Jul 2026 12:26:03 -0700 (PDT)
 X-Relaying-Domain: broadcom.com
 X-CFilter-Loop: Reflected
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2cae455cf6dso32939435ad.2
-        for <brcm80211@lists.linux.dev>; Sun, 26 Jul 2026 12:25:59 -0700 (PDT)
+Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-38e475f83a2so3304251a91.1
+        for <brcm80211@lists.linux.dev>; Sun, 26 Jul 2026 12:26:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1785093959; x=1785698759; darn=lists.linux.dev;
+        d=broadcom.com; s=google; t=1785093961; x=1785698761; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=n4PlKcANzq+y1Rq4zco4LLPjQUEuNl07QXAtQYWq7XU=;
-        b=DJltT2pPLCrWuS6+z3RcvfKFk/ELdLETFHoZtt2j1i8KWjP2qE6hhVs2jg0KUf9XDE
-         tA69SUoQ17wlyIys2hpWs7AGMStehwddz9MDQEepuHUP2yubxYcv5r9NF5hrzQNT+Tt8
-         YY4DbPoud+hM9gepjK8fb/PZJfFlRq/u82Vl0=
-X-Forwarded-Encrypted: i=1; AHgh+Rr+nuKliqfHbdf/ZDKeCalLs8ITygOaHbyU26hFnHxKaMBuKHkLNeDShRL/td9ygLk7hGVU7Krvpwo=@lists.linux.dev
-X-Received: by 2002:a05:6a21:6196:b0:3c3:bbe6:95b1 with SMTP id adf61e73a8af0-3c67dd8a07amr6021250637.24.1785093958749;
-        Sun, 26 Jul 2026 12:25:58 -0700 (PDT)
-X-Received: by 2002:a05:6a21:6196:b0:3c3:bbe6:95b1 with SMTP id adf61e73a8af0-3c67dd8a07amr6021228637.24.1785093958263;
-        Sun, 26 Jul 2026 12:25:58 -0700 (PDT)
+        bh=Ar0WQnIHDpGHXJ9rIXyWU0tvEfBnqrXceAiqGiwHa6c=;
+        b=KE/eWEEXFJJ+C/Jk+nkHGK6fnY0ddvn7Ywo7w3GkH1fpGZk37WKJul+8MDKkFAwRN7
+         MlzpLfyWPnnzOEFqIy17Md7bEu56wXZv1vVotUciYGWYv7NQeQWMChRapSGXtmfjgVfh
+         Qy+sCTBVC38EKiHXNykLx6ssg1NenLFt4o++I=
+X-Forwarded-Encrypted: i=1; AHgh+Rpj9roKGl2uZZjo4FvhLhesfcVvY9ZDOtwLCBKwrdGI/652WJZ3q7dWfetn/QXvErGnFccoM2dZ6NI=@lists.linux.dev
+X-Received: by 2002:a17:90b:380a:b0:38e:6aa7:68ad with SMTP id 98e67ed59e1d1-38f293cd2f1mr5774175a91.5.1785093960892;
+        Sun, 26 Jul 2026 12:26:00 -0700 (PDT)
+X-Received: by 2002:a17:90b:380a:b0:38e:6aa7:68ad with SMTP id 98e67ed59e1d1-38f293cd2f1mr5774166a91.5.1785093960440;
+        Sun, 26 Jul 2026 12:26:00 -0700 (PDT)
 Received: from bld-bun-02.bun.broadcom.net ([192.19.176.227])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-314bc44cb92sm38355795eec.13.2026.07.26.12.25.56
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-314bc44cb92sm38355795eec.13.2026.07.26.12.25.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 26 Jul 2026 12:25:57 -0700 (PDT)
+        Sun, 26 Jul 2026 12:25:59 -0700 (PDT)
 From: Arend van Spriel <arend.vanspriel@broadcom.com>
 To: Johannes Berg <johannes@sipsolutions.net>
 Cc: linux-wireless@vger.kernel.org,
 	brcm80211@lists.linux.dev,
 	Arend van Spriel <arend.vanspriel@broadcom.com>
-Subject: [PATCH -next 04/10] wifi: wil6210: use pre-assigned cookie for remain_on_channel, mgmt_tx and probe_peer
-Date: Sun, 26 Jul 2026 21:25:35 +0200
-Message-ID: <20260726192541.2816743-5-arend.vanspriel@broadcom.com>
+Subject: [PATCH -next 05/10] wifi: brcmfmac: use pre-assigned cookie for remain_on_channel and mgmt_tx
+Date: Sun, 26 Jul 2026 21:25:36 +0200
+Message-ID: <20260726192541.2816743-6-arend.vanspriel@broadcom.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260726192541.2816743-1-arend.vanspriel@broadcom.com>
 References: <20260726192541.2816743-1-arend.vanspriel@broadcom.com>
@@ -93,69 +93,77 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
 
-Stop overwriting the pre-assigned cookie in wil_p2p_listen(),
-wil_cfg80211_mgmt_tx(), and wil_cfg80211_probe_peer().
+Stop generating cookies in brcmf_p2p_remain_on_channel() and
+brcmf_cfg80211_mgmt_tx().
 
-For remain_on_channel, store the pre-assigned cookie in p2p->cookie
-instead of incrementing it. All cancel and expiry callbacks already
-read from p2p->cookie so they pick up the correct value.
+For remain_on_channel, remove the cookie increment from
+brcmf_p2p_discover_listen() and store the pre-assigned cookie in
+p2p->remain_on_channel_cookie. The expiry callback in
+brcmf_p2p_notify_listen_complete() already reads from that field.
 
-For mgmt_tx, remove the defensive "cookie ? *cookie : 0" guard;
-cfg80211 guarantees a non-NULL cookie pointer.
-
-For probe_peer, store the pre-assigned cookie in req->cookie instead
-of the CID value. The CID is still available via req->cid for STA
-lookup in wil_probe_client_handle().
+For mgmt_tx, remove the "*cookie = 0" assignments in
+brcmf_cfg80211_mgmt_tx() and the cyw extension. The pre-assigned
+cookie is then correctly passed to cfg80211_mgmt_tx_status() which
+already uses *cookie.
 
 Assisted-by: Claude:claude-sonnet-4-6
 Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
 ---
- drivers/net/wireless/ath/wil6210/cfg80211.c | 6 ++----
- drivers/net/wireless/ath/wil6210/p2p.c      | 2 +-
- 2 files changed, 3 insertions(+), 5 deletions(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 2 --
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c | 1 -
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c      | 6 ++----
+ 3 files changed, 2 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/wil6210/cfg80211.c b/drivers/net/wireless/ath/wil6210/cfg80211.c
-index 5f2bd9a31faf..6ebd340c8ef7 100644
---- a/drivers/net/wireless/ath/wil6210/cfg80211.c
-+++ b/drivers/net/wireless/ath/wil6210/cfg80211.c
-@@ -1488,8 +1488,7 @@ int wil_cfg80211_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
- 	 */
- 	tx_status = (rc == 0);
- 	rc = (rc == -EAGAIN) ? 0 : rc;
--	cfg80211_mgmt_tx_status(wdev, cookie ? *cookie : 0, buf, len,
--				tx_status, GFP_KERNEL);
-+	cfg80211_mgmt_tx_status(wdev, *cookie, buf, len, tx_status, GFP_KERNEL);
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+index 20f7fccd6121..7e0368f6860e 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -5573,8 +5573,6 @@ brcmf_cfg80211_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
  
- 	return rc;
+ 	brcmf_dbg(TRACE, "Enter\n");
+ 
+-	*cookie = 0;
+-
+ 	mgmt = (const struct ieee80211_mgmt *)buf;
+ 
+ 	if (!ieee80211_is_mgmt(mgmt->frame_control)) {
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
+index ce09d44fa73c..f0f3a45d7cde 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
+@@ -123,7 +123,6 @@ int brcmf_cyw_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
+ 	if (!ieee80211_is_auth(mgmt->frame_control))
+ 		return brcmf_cfg80211_mgmt_tx(wiphy, wdev, params, cookie);
+ 
+-	*cookie = 0;
+ 	vif = container_of(wdev, struct brcmf_cfg80211_vif, wdev);
+ 
+ 	reinit_completion(&vif->mgmt_tx);
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
+index c7d7b35ab125..3d7bf25f1985 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
+@@ -979,10 +979,8 @@ brcmf_p2p_discover_listen(struct brcmf_p2p_info *p2p, u16 channel, u32 duration)
+ 	p2p->cfg->d11inf.encchspec(&ch);
+ 	err = brcmf_p2p_set_discover_state(vif->ifp, WL_P2P_DISC_ST_LISTEN,
+ 					   ch.chspec, (u16)duration);
+-	if (!err) {
++	if (!err)
+ 		set_bit(BRCMF_P2P_STATUS_DISCOVER_LISTEN, &p2p->status);
+-		p2p->remain_on_channel_cookie++;
+-	}
+ exit:
+ 	return err;
  }
-@@ -2399,13 +2398,12 @@ static int wil_cfg80211_probe_peer(struct wiphy *wiphy,
- 		return -ENOMEM;
+@@ -1020,7 +1018,7 @@ int brcmf_p2p_remain_on_channel(struct wiphy *wiphy, struct wireless_dev *wdev,
+ 		goto exit;
  
- 	req->cid = cid;
--	req->cookie = cid;
-+	req->cookie = *cookie;
+ 	memcpy(&p2p->remain_on_channel, channel, sizeof(*channel));
+-	*cookie = p2p->remain_on_channel_cookie;
++	p2p->remain_on_channel_cookie = *cookie;
+ 	cfg80211_ready_on_channel(wdev, *cookie, channel, duration, GFP_KERNEL);
  
- 	mutex_lock(&vif->probe_client_mutex);
- 	list_add_tail(&req->list, &vif->probe_client_pending);
- 	mutex_unlock(&vif->probe_client_mutex);
- 
--	*cookie = req->cookie;
- 	queue_work(wil->wq_service, &vif->probe_client_worker);
- 	return 0;
- }
-diff --git a/drivers/net/wireless/ath/wil6210/p2p.c b/drivers/net/wireless/ath/wil6210/p2p.c
-index f20caf1a3905..6d2cadca259f 100644
---- a/drivers/net/wireless/ath/wil6210/p2p.c
-+++ b/drivers/net/wireless/ath/wil6210/p2p.c
-@@ -144,7 +144,7 @@ int wil_p2p_listen(struct wil6210_priv *wil, struct wireless_dev *wdev,
- 	}
- 
- 	memcpy(&p2p->listen_chan, chan, sizeof(*chan));
--	*cookie = ++p2p->cookie;
-+	p2p->cookie = *cookie;
- 	p2p->listen_duration = duration;
- 
- 	mutex_lock(&wil->vif_mutex);
+ exit:
 -- 
 2.54.0
 
