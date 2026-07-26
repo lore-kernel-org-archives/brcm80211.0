@@ -1,120 +1,206 @@
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+Received: from mail-pg1-f226.google.com (mail-pg1-f226.google.com [209.85.215.226])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8429D347FC8
-	for <brcm80211@lists.linux.dev>; Sun, 26 Jul 2026 19:25:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.43
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785093910; cv=pass; b=ZmqCkcsAhRxyFl7yFGJ40+8dIPz9txTOAtHABhK/rhmIczdpfA/V8Qe5aidkJnLM4OX2gfBx//hQM15koyKGHC9Aczzu4+HsQXb0MJ04+T0Vz481Z+66ofEDKNy2dqkkRhZl+U6Eg/pYcAAwZf0iBqPxVzGGlC7QJvvEawotFrs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785093910; c=relaxed/simple;
-	bh=xji9I5cCWfyl8rCasHuYwdrQgv7IUf2NXmLBjKTVm1M=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=C+uNNORK0sIYCI9GMNASo+5aWORf7uUQoATCKCSkUHKgaVOMiuYtOmGluJet8OpcCAncFd4gm058i7hon1fe4/oroW+hbX+SiYOepWQGhZDB5qffJ5Qen/Gxg5j7fGlcUDvGHvtYjQc6ta3Cy9utvh+7SGewz9BOLa0013HTlgg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pJoeCUXY; arc=pass smtp.client-ip=209.85.208.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1798B31D39A
+	for <brcm80211@lists.linux.dev>; Sun, 26 Jul 2026 19:25:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.226
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785093954; cv=none; b=AzDqMb1T/dcgSI02NjHUXF8ymDdM9XPqSK7o+KF2y22TWfpQ56A3405Hwvnv0AAiwB3HDcEuHIUMyopQn83i1PPx+v0DILSJOP8KZ8F7YkscocIljeY9AS3Rrx2DJB5zU6UVjpKP5I+hjScDHfDeuf7bVvBVMl6Lw/wq16W9ts0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785093954; c=relaxed/simple;
+	bh=76JWXwdJ8UUupISIOQJZSc9ghowhYAS2iqBJ1IssfPI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Ba7fq47sIApFUzbrEwxBpMRr0XvblpWwR6gGiDlGu+gHlqLaqCl1Moy3TpQ7jFs2/svhlf00IupSwUQDYD3vJ3VcO+P3Fn5Bcc9VDLjl9q0r7dJG8gyyQyIhpdMK5qm+yYBs+yKy/PFv0TDbnMdpRFaC9sFIOajKW69RaipJEOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=E9zsxUA3; arc=none smtp.client-ip=209.85.215.226
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pJoeCUXY"
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-69c3044e4b2so311768a12.2
-        for <brcm80211@lists.linux.dev>; Sun, 26 Jul 2026 12:25:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785093907; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Kz7dB2ifmEVXpVYorsDXGA1kM0ZBHJ/+AFZIH+QfbCsaZ8bKB+y6+J6YWZx4BNpLkJ
-         PzGMDJAQ339Nhasqk8n8fbmLhUOL2UVgEZzTm0FViMVU+biQyV5SBx9WfGBToK2i/X31
-         dF/UyWDJip4a3y+VbP+yKUrhhSE+wsi/uU32rr2AhVfKaOZkEMgdNpwjHE3uSYJhGU7g
-         4R+3tIalsc/bjdtsIxdEly2msl9lv5a4oYAcYmSNj3UQ8nreYvmQbf4t4i/UdJTOMrFd
-         ClRDgm3G9OTrinAUb64uAZqV5f45kmsDxPBZLRldIEwQqXLIKbsJ3pD5c7Gw8xJef4j/
-         zNeQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=xji9I5cCWfyl8rCasHuYwdrQgv7IUf2NXmLBjKTVm1M=;
-        fh=dcHd+rgENWovbPLiW8Bx+5uOmFq1y1rFMg3gptCX0vo=;
-        b=ewlIonlB4arz2tb+QSfp+RWR1nxdgLooKGQFN3naH2MKWyaKU6iwBrVlxZn3YxjUQL
-         8NchsddTd/vZMwQm1Z9n9bN9wbFVnvC1p4jytOq10l2dGqLSXi/aqBh8KVZRdvsRxuQO
-         54eiekummpel2ie01S2YqHiehLLUIh4YvgP/ifL9oilxOwvT/yo50OclwtnZEp2vp/Pu
-         iTvkM6ASYFsPSeAxlCSi4aRBE1Na/1dtMd8Da+e6c1I1/sIyPsnk+XD7t2pFYXqXv0me
-         pdM8XBrL4yR2pgn5DMtkFdNwYwMFaJLOw4B+EPPLkKBhLiZxdMhmC9l8IB1GZ6r4crkQ
-         WHqw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785093907; x=1785698707; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=xji9I5cCWfyl8rCasHuYwdrQgv7IUf2NXmLBjKTVm1M=;
-        b=pJoeCUXYZzfBMotwzELaJ/jvXMcxh08NuO76D8ZqnTKce6EFwJGM4bY1Xt/f701BOW
-         xTQRbodFVHTfCr2rY3W7NBW9ZeFl4fg8XPsZX7DHtBCxiwowQjEU/J3KI0e01T1frTo/
-         xw6b1pM+3KIr0KOr+pjsuLNbOeWZnZla7RU6SBxuLqg0LsGuuqX2aPSEMMvZ4P1SJZsh
-         Dr+kLXINghHQAkzQCF6PF26T4qo8fWUnZ/b2xpXqtwmh5cwwiVhWdMKPRlT4LXv4Ugfi
-         EJGfZExBuc2EYpIWZZF7K+OEwFCdXveN7MF6zC7DZN6h/yP/jBkiVzGF/Cj3yB24tRjX
-         PMww==
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="E9zsxUA3"
+Received: by mail-pg1-f226.google.com with SMTP id 41be03b00d2f7-c9e30214d8fso1565628a12.3
+        for <brcm80211@lists.linux.dev>; Sun, 26 Jul 2026 12:25:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785093907; x=1785698707;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=xji9I5cCWfyl8rCasHuYwdrQgv7IUf2NXmLBjKTVm1M=;
-        b=XoVmgKxmbUSQ+f+nVwM9n7j6ncM/x7K70X8d6jZAj/Ki62IQ4rrEVKHO7buSib4n8X
-         T1Gu9AnSuoTr1atrnxrPNwi5lSM8OfzuN0CDiK91csEOl/Z80j7kiHSMvm5KjQiaVt0A
-         lY/ixxxptCZiVE5p4GsZ8d5G1WaQyQF6Wq33p5YrGWg/rNwOqmvtTbMerI5OI8SmKFm8
-         YlIz+Vsye/WXUMVdI/qw5x7/Mn6YFIYd9x6T4vqwMrdEnJHVmefK1DhVacq++7jtgezQ
-         6Gn55z8KMUegjcHe+RayZnsDxyB4UUVpW4wGC9wfQy8PcGty1Qk6j2GoOnM3VXLwzMGA
-         dtPg==
-X-Forwarded-Encrypted: i=1; AHgh+Rr6F2eymWgsv2SBafHLzBipwoDBXpk1IASBj2U4KyHZM4cpj0UZonLBJks0leimUMlaJhMv8+SKTFQ=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyYrpoPhVq+rf+wtWyZNletRJIpKLGA1puI5XJ7didGdhJgSiTO
-	SuXeJ+kovagECJIZunWiy93+hLT0F+qfJbsx7nz3KPYoYWE/0WlPKWKTqyb2Xfzm5c3ZgHkjKT6
-	fYduRGcKCBRoBBbhEXF4t42eAhMzpt8Q=
-X-Gm-Gg: AR+sD13AyJgNrS9tJpdd5Q+9x7bYs5Cux6v79oEGu6L3QNxkZBkhzIJbgeNWuzrPDUg
-	mdUrdfqEGu32GhVCqHiDgb8sZauKduP8vc6WZcU11TntPmhNj1X4gc54VtvW5Fp/rC4MX+2Bv/d
-	9CdiFlrvCFokfbsVmGDHpL9NHBgDrHwIne5h+7WTcatob6OWWnt4VDjVul6k8cH2xYDMwhD5ZKN
-	DTPjTcl6dz8PuU41cDHCOOhHbLIfmVmXvWbmfkEdY5lSmkODgASryd2TZ6sJnQtY++V32jzMYHg
-	TOZe3bqrAStXk2UZHGLpDMdc+0zhVKWML3UnoXmfqkJHczXDi7RqqJnyO15I
-X-Received: by 2002:a05:6402:234f:b0:698:81d7:b812 with SMTP id
- 4fb4d7f45d1cf-69fc1160318mr1453646a12.3.1785093906641; Sun, 26 Jul 2026
- 12:25:06 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1785093952; x=1785698752;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:dkim-signature:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=aQRSdU6GiunRTylMtdJjDeAsENSZJAWyer9Z3w+0XiQ=;
+        b=RLowi+/zJ0Y4UK96GezBdrkIYxS4EKibRIWtybN/sEyEOr+f+nJbNEkHzpFlANg3AV
+         FF1fxjeUdLlOUTlgsq1+lEMbEP0DRQoPJfEaUkQtU14ju5P09HFe1LrDr3cs0snBpb96
+         TZThpSE+lL+XOl1rhBkhBIwNpmYVOYsCKQM10ZFerCer1EidvDU3SBjEHKzHdmsd8btp
+         AQqCB6bzwpB+cCbM9XSpzLOZEsE7Rd0vO5A52XKshVauWv8UNsn4E6rW6Ocmo02ZVa0+
+         JfuPcrOCQATzWcH79Bs3x4tWDZrzxQrMV+Svh5RKzCWE6JiN4/eWdQ1mRb9ElK7T75Fh
+         pi+Q==
+X-Forwarded-Encrypted: i=1; AHgh+RqS9Xq84lB07WcAOeGnXQUdTSTGlZ/r9szAtx34E+WYSVAC4BAw7vnayewmUXYT5AB2lUjq8IRfbgc=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxTpgKkQViQbV+UUj/6Y0aX4PuL0qDHj25ZLAMc2HzKxr2FwtFX
+	sXrMJiwWez7Ct/RwvSxTDfc09jOAEb2iR/YQt+nNsQ9s1xCxT7Wp0BXr3YtHKKlyrROlN3VhCKV
+	J2UtA2dIIKrm/eiU7ERyioSNir60jEzD+0Lv9UQ8KA+7K7CMwdCBERO0kykvyICIqZZwXlD/DaO
+	YD/vDspqZt77Xgt785qCj1wMyrX4hXV217I6Y7ORHUyHVka/+tFFuJ41mRc6r5pGMYacsBIMj2E
+	hzxdWMjTz0qPz5/U57aHQ==
+X-Gm-Gg: AR+sD10RI8CvsRIA2Y0bNDD5eEAg4tv0ndiCEtimik4nI65ck3xE15QH0NeCHBYIJbL
+	R4+qPu5rKi3NxFSwuo5JOoY9GmRd+TZfXajvhpDxngcdtWf7g6Q92sD61prMUR6eAknYvMU328U
+	Q9uLlLnJ3iUrSLHHfogDhElI894xBcmYbL0pdyuZJwV/Hc7bU2yGL1ax1dKGN2Zahra42Erb4FE
+	LFTfA/JS3kUlZOszxY1o7Qth3YuXwvaKwyoN0xZZd4evBvEAWSLvWp2slzkB5YkTkqs3bpIBNis
+	7+SfGwjUwie2+Etqs96ZLW3BfUh7Cs35wyKpv83U6nQhhPEDT0YUBp8myKEOur14UpmwFkvcCXl
+	wY96BsTWqH2EtHbeWJFRd9rcmKnbNFjljiuoZPj0mDPLTbE9WnWwzSsVVL4YpGK2qoonjPB7xkj
+	MFcmwaTb4JHONQT+/agRimHzsV/wfjqe+z5i0HXK0=
+X-Received: by 2002:a05:6a20:d80f:b0:3bf:6237:4d3f with SMTP id adf61e73a8af0-3c67da1910cmr5485487637.18.1785093952231;
+        Sun, 26 Jul 2026 12:25:52 -0700 (PDT)
+Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-26.dlp.protect.broadcom.com. [144.49.247.26])
+        by smtp-relay.gmail.com with ESMTPS id 5a478bee46e88-314bc3dbddasm281810eec.2.2026.07.26.12.25.51
+        for <brcm80211@lists.linux.dev>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 26 Jul 2026 12:25:52 -0700 (PDT)
+X-Relaying-Domain: broadcom.com
+X-CFilter-Loop: Reflected
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2cee894b3d8so14714895ad.2
+        for <brcm80211@lists.linux.dev>; Sun, 26 Jul 2026 12:25:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google; t=1785093950; x=1785698750; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=aQRSdU6GiunRTylMtdJjDeAsENSZJAWyer9Z3w+0XiQ=;
+        b=E9zsxUA3fgJYjwlSo/VRFgr/tCYoryzGAIsYiGOr9GQBNaUHWMYMJRC7oU1lyB++Ti
+         r7vS5plNTkO8lXibesGwyR79J6cZY0Du+dLwW3NyvGJa70IXKnnNxupKWjOgNFUZFewK
+         P8KyVaiqKMHXz8OWXtx/8ipDqAGYuFUQ/oKBs=
+X-Forwarded-Encrypted: i=1; AHgh+RoivWal35RMcriOnvedBdP8vCfXhu6pUI2xVsbmoL+k/B0s8jXsUzP5iEJRMxxCuOmnUOZGMIqClqI=@lists.linux.dev
+X-Received: by 2002:a17:903:2342:b0:2cf:7f6b:8c8a with SMTP id d9443c01a7336-2cfde85f46cmr52310165ad.30.1785093949930;
+        Sun, 26 Jul 2026 12:25:49 -0700 (PDT)
+X-Received: by 2002:a17:903:2342:b0:2cf:7f6b:8c8a with SMTP id d9443c01a7336-2cfde85f46cmr52309945ad.30.1785093949449;
+        Sun, 26 Jul 2026 12:25:49 -0700 (PDT)
+Received: from bld-bun-02.bun.broadcom.net ([192.19.176.227])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-314bc44cb92sm38355795eec.13.2026.07.26.12.25.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 26 Jul 2026 12:25:48 -0700 (PDT)
+From: Arend van Spriel <arend.vanspriel@broadcom.com>
+To: Johannes Berg <johannes@sipsolutions.net>
+Cc: linux-wireless@vger.kernel.org,
+	brcm80211@lists.linux.dev,
+	Arend van Spriel <arend.vanspriel@broadcom.com>
+Subject: [PATCH -next 00/10] wifi: cfg80211: consolidate cookie assignment for async ops
+Date: Sun, 26 Jul 2026 21:25:31 +0200
+Message-ID: <20260726192541.2816743-1-arend.vanspriel@broadcom.com>
+X-Mailer: git-send-email 2.54.0
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260725014411.170340-1-bogdan.nicolae@gmail.com> <9ca181db-7bec-4f6c-9f42-4a66068af354@broadcom.com>
-In-Reply-To: <9ca181db-7bec-4f6c-9f42-4a66068af354@broadcom.com>
-From: Bogdan Nicolae <bogdan.nicolae@gmail.com>
-Date: Sun, 26 Jul 2026 14:21:17 -0500
-X-Gm-Features: AUfX_mwNTwsOkY6qJ2cpR267Dt0F7D36P3SV6wvBKNyBko86SLQ_6Ni4ThCqsqM
-Message-ID: <CA+ORkNTq5Wn079=D_W6J+k1kbJtL+A1mfDU1furVsB9j=sa_qg@mail.gmail.com>
-Subject: Re: [PATCH v2] wifi: brcmfmac: cyw: set a unique cookie for mgmt tx
-To: Arend van Spriel <arend.vanspriel@broadcom.com>
-Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev, 
-	brcm80211-dev-list.pdl@broadcom.com, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
 
-Sure, it sounds good. Thanks Arend.
+NL80211_ATTR_COOKIE is a userspace-visible u64 that correlates an async
+nl80211 operation with its completion event. Three cfg80211 ops currently
+delegate cookie generation to the driver: remain_on_channel, mgmt_tx, and
+probe_peer. This produces inconsistent strategies across drivers: some use
+an incrementing counter, some use get_random_u32(), some use a CID cast to
+u64, and brcmfmac's mgmt_tx always assigned zero - which is arguably broken
+since cfg80211 treats zero as an invalid cookie.
 
-Bogdan
+The add_nan_func op already does this correctly: cfg80211 calls
+cfg80211_assign_cookie() before invoking the driver, ensuring a unique
+non-zero value without any driver involvement. This series applies the same
+pattern to remain_on_channel, mgmt_tx, probe_peer, and tx_control_port.
 
-On Sun, Jul 26, 2026 at 2:21=E2=80=AFPM Arend van Spriel
-<arend.vanspriel@broadcom.com> wrote:
->
-> On 25/07/2026 03:44, Bogdan Nicolae wrote:
-> > Set cookie using an increasing atomic counter. Avoids mismatches of com=
-pletion
-> > events later in brcmf_notify_mgmt_tx_status, where packet_id !=3D vif->=
-mgmt_tx_id
-> > is checked.
->
-> Thanks for the split. I increased the scope and been looking in the
-> cookie usage in the wireless subsystem. So I have a series lined up to
-> change the cookie to an input parameter and have cfg80211 hand out the
-> cookie value (it already has cfg80211_assign_cookie() function). This
-> will also cover zero cookie fix here. So I would suggest to drop this
-> patch and only let the PMKID patch go in.
->
-> Regards,
-> Arend
+Structure
+---------
+
+Patch 1 is the enabling change: cfg80211 pre-assigns the cookie in the
+nl80211 command handlers before the rdev_* call. Drivers may still
+overwrite the value at this point; subsequent patches remove the per-driver
+generation. Patch 2 updates mac80211, which has its own internal cookie
+counter (roc_cookie_counter) that becomes redundant. Patches 3-9 are
+per-driver cleanups. Patch 10 finalises the interface by converting the
+u64 *cookie output parameter to a u64 cookie input parameter, making the
+direction of data flow explicit. tx_control_port is excluded from patch 10
+because its cookie pointer is nullable (passed as NULL when dont_wait_for_ack
+is set) and that nullable semantics cannot be expressed with a value.
+
+Non-obvious aspects
+-------------------
+
+ath6kl (patch 3): when the destination STA is in power-save mode, ath6kl
+queues the management frame in a software queue (struct ath6kl_mgmt_buff).
+The cookie must survive enqueue and dequeue so that cfg80211_mgmt_tx_status()
+is called with the correct value after the frame is eventually transmitted.
+This means the cookie field is threaded through ath6kl_mgmt_powersave_ap()
+and into the queue entry. The vif->last_roc_id and last_cancel_roc_id fields
+are widened from u32 to u64 to hold the full 64-bit cookie.
+
+Synchronous mgmt_tx (brcmfmac, wil6210): these drivers call
+cfg80211_mgmt_tx_status() before the mgmt_tx callback returns. The status
+event is therefore sent to userspace before the nl80211 command reply that
+carries the cookie. Userspace must buffer the status event and match it
+once the reply arrives. The pre-assigned cookie being consistent across both
+the status event and the reply is what makes that correlation possible.
+Previously brcmfmac passed cookie=0 to cfg80211_mgmt_tx_status(), which was
+broken; this series fixes that as a side effect.
+
+qtnfmac (patch 9): the qlink firmware protocol has no frame-TX-status event
+type. qtnfmac never calls cfg80211_mgmt_tx_status(). The previous code
+generated a random u32 short_cookie and sent it to firmware purely as a
+debug identifier; it was never used for nl80211 cookie correlation. After
+this series qtnfmac simply uses the pre-assigned cookie for the same debug
+purpose and discards it. The absence of tx status reporting for the
+wait_for_ack case is a pre-existing driver limitation not addressed here.
+
+mac80211 0xffffffff removal (patch 2): the old code assigned *cookie =
+0xffffffff for the dont_wait_for_ack + need_offchan case to ensure
+roc->mgmt_tx_cookie was non-zero, which distinguishes a mgmt-tx ROC from a
+regular remain-on-channel ROC internally. That dummy value is no longer
+needed because cfg80211_assign_cookie() guarantees a non-zero result (it
+warns and skips zero if the counter wraps). The cookie is still not sent to
+userspace in the dont_wait_for_ack case.
+
+Arend van Spriel (10):
+  wifi: cfg80211: pre-assign cookie for remain_on_channel, mgmt_tx,
+    probe_peer and tx_control_port
+  wifi: mac80211: stop using ieee80211_mgmt_tx_cookie()
+  wifi: ath6kl: use pre-assigned cookie for remain_on_channel and
+    mgmt_tx
+  wifi: wil6210: use pre-assigned cookie for remain_on_channel, mgmt_tx
+    and probe_peer
+  wifi: brcmfmac: use pre-assigned cookie for remain_on_channel and
+    mgmt_tx
+  wifi: mwifiex: use pre-assigned cookie for remain_on_channel and
+    mgmt_tx
+  wifi: wilc1000: use pre-assigned cookie for remain_on_channel and
+    mgmt_tx
+  wifi: nxpwifi: use pre-assigned cookie for remain_on_channel and
+    mgmt_tx
+  wifi: qtnfmac: use pre-assigned cookie for mgmt_tx
+  wifi: cfg80211: convert cookie output to input parameter
+
+ drivers/net/wireless/ath/ath6kl/cfg80211.c    | 22 ++++++---------
+ drivers/net/wireless/ath/ath6kl/core.h        |  5 ++--
+ drivers/net/wireless/ath/ath6kl/main.c        |  1 +
+ drivers/net/wireless/ath/ath6kl/txrx.c        |  1 +
+ drivers/net/wireless/ath/ath6kl/wmi.c         |  2 +-
+ drivers/net/wireless/ath/ath6kl/wmi.h         |  1 +
+ drivers/net/wireless/ath/wil6210/cfg80211.c   | 12 ++++-----
+ drivers/net/wireless/ath/wil6210/p2p.c        |  6 ++---
+ drivers/net/wireless/ath/wil6210/wil6210.h    |  4 +--
+ .../broadcom/brcm80211/brcmfmac/cfg80211.c    | 12 ++++-----
+ .../broadcom/brcm80211/brcmfmac/cfg80211.h    |  2 +-
+ .../broadcom/brcm80211/brcmfmac/cyw/core.c    |  8 +++---
+ .../broadcom/brcm80211/brcmfmac/p2p.c         | 10 +++----
+ .../broadcom/brcm80211/brcmfmac/p2p.h         |  2 +-
+ .../net/wireless/marvell/mwifiex/cfg80211.c   | 20 +++++++-------
+ .../wireless/microchip/wilc1000/cfg80211.c    | 19 +++++--------
+ drivers/net/wireless/nxp/nxpwifi/cfg80211.c   | 20 +++++++-------
+ .../net/wireless/quantenna/qtnfmac/cfg80211.c |  4 +--
+ include/net/cfg80211.h                        | 18 ++++++++-----
+ net/mac80211/cfg.c                            | 18 ++-----------
+ net/mac80211/ieee80211_i.h                    |  7 ++---
+ net/mac80211/offchannel.c                     | 27 +++++++------------
+ net/mac80211/tx.c                             |  4 +--
+ net/wireless/core.h                           |  2 +-
+ net/wireless/mlme.c                           |  2 +-
+ net/wireless/nl80211.c                        | 11 +++++---
+ net/wireless/rdev-ops.h                       | 12 ++++-----
+ 27 files changed, 105 insertions(+), 147 deletions(-)
+
+
+base-commit: 90883c513ca01e77c56b8d94be7de11420c1dacf
+-- 
+2.54.0
+
