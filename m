@@ -1,111 +1,120 @@
-Received: from mail-oa1-f98.google.com (mail-oa1-f98.google.com [209.85.160.98])
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC05D3515CB
-	for <brcm80211@lists.linux.dev>; Sun, 26 Jul 2026 19:21:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.98
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785093665; cv=none; b=coLyLa7WPNndBY2zRaUXik5nqAHBNa0edjkCKUPCo/sHGYWcntTSRqa2u9lqGLR6K07P50ob6hsd1yutJQhiAFnAMyv+1E+uojEgHD6pGLxfcTiCUG/EdY5t4iARdW1n6qNkoAZRZYFFaj+mX0vA89jGMqv7nCXa0qUEaB4n4ss=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785093665; c=relaxed/simple;
-	bh=fyLOzs4S/leSr8Df5qHayjyTwwiwPthIuUyGjrAo7uI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=h8mcUmvdHwEJB+JcDgzCLkfFqWjYgVT6EluV5T8hGx7L1BLQAtZx239JYjUrNF42V65plceuZOn31jTIsHrrl9KGC/H+nOVfDFhXhORSx0VuXIjhZC+o7zfM/Dl2BCeI8lJ3aG0IH2vlpXPTrmWXmRx2V7kqBxqbeM8dhyg37dI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=UJK7V6hz; arc=none smtp.client-ip=209.85.160.98
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8429D347FC8
+	for <brcm80211@lists.linux.dev>; Sun, 26 Jul 2026 19:25:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.43
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785093910; cv=pass; b=ZmqCkcsAhRxyFl7yFGJ40+8dIPz9txTOAtHABhK/rhmIczdpfA/V8Qe5aidkJnLM4OX2gfBx//hQM15koyKGHC9Aczzu4+HsQXb0MJ04+T0Vz481Z+66ofEDKNy2dqkkRhZl+U6Eg/pYcAAwZf0iBqPxVzGGlC7QJvvEawotFrs=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785093910; c=relaxed/simple;
+	bh=xji9I5cCWfyl8rCasHuYwdrQgv7IUf2NXmLBjKTVm1M=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=C+uNNORK0sIYCI9GMNASo+5aWORf7uUQoATCKCSkUHKgaVOMiuYtOmGluJet8OpcCAncFd4gm058i7hon1fe4/oroW+hbX+SiYOepWQGhZDB5qffJ5Qen/Gxg5j7fGlcUDvGHvtYjQc6ta3Cy9utvh+7SGewz9BOLa0013HTlgg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pJoeCUXY; arc=pass smtp.client-ip=209.85.208.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="UJK7V6hz"
-Received: by mail-oa1-f98.google.com with SMTP id 586e51a60fabf-448b89f700fso1856946fac.2
-        for <brcm80211@lists.linux.dev>; Sun, 26 Jul 2026 12:21:03 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785093663; x=1785698463;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:dkim-signature:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=f/GC7/JY8dkQF9VYMmOxneNdfen5EFzs8r5WpvRe5Po=;
-        b=Tau6HLXkb59SXturAlKB2H+w3RyXRpiL2XxYiffAxaCLXuIZYeRBKJMjOFv7kWSB1x
-         bfLJHbzgh7JYk+O3/doRka+QQo6+K2anpHQgO1yortqDuC6KHuba5SHfZfFb3cUe5EfT
-         +I24Rn0j/Ah8Fk2qSC0iSs+PBrbaL6WnC8s/Tp42P8gPxQx7VdCm5rEUhs3tJXnHKgRM
-         TrAw+aL0f+RpHcuq6+KR1liHiY0blyn65YAonD20CAU7mH4osy0MxxS+4OENQdTp4b4D
-         EHTD7ZVTBIM8TEIfOK3PmMlPrFYsTzPgtRtrN0ljQT9FFSxp/0Ac7sGC9GUxdkIrI5KL
-         4cUQ==
-X-Forwarded-Encrypted: i=1; AHgh+RoQXyrpKUYPjljGCLIhXjQgwuvVTfW+blWVDNSyAnOCcUbR4/BGaq8OGTApfDaTxFLciEMFIav2wqc=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxQKpx0twMMi2GgzBmER8RIW8NmiwiafkhQRhkLOIwLQJOzquft
-	ZpXXR5gCMVUoV5lMP9nvEY0YAoFkD2kjYDMbSpvih0RBADXfjdkaB9kSifzwXIuqWEfJImxjVfj
-	CEkKp4CBO3HefRiAXimkr7l5wPHWIkzWTbSbGv9DVDCjZXx4uCfoLIYtLfqEplxLc/dJT5nKMnm
-	YFFAGYLzoLmfpvw36OZkL/+w/G/7yMR4JNIbwcDTifEtSGcZxmNjC+57f+rufaN/9ymcXe/n612
-	qLEXnvq0LhDIeb9ScBELg==
-X-Gm-Gg: AR+sD12bDKWkvIlguxEnL8qLKi+1H9xa91diQ1SCwxiuNkps4QMgb4LlLMhT/LEsvm0
-	7pCrJwXkoSz/5aLcG77C/G2kQeVLNwD3je8nVWUjTela3F5AXDdZEaNUMKK1VDHOswlYc78A5Og
-	EgB6Mu394JdAi6eZ38Hi6woZKc5Xp2guoM06yEflE8w0QYK/Dp4Eqqr7FjnQDlbbnTMsH8BLVJD
-	eLsQTbK6EAqtv4JcNBjydpqduYu4CdZQwBkYaDBosCIj+OkdpfdC2WfItJUbwgfMr/9K9WkPVDK
-	mgEfJCi1a7+AgNmvKyorRAEX+vfd+55zmdCdgUjNvpcunvXj+sEz8zeikW6bqI0AeEyEE9Y9slK
-	2ho7B3fkaQF3lasNGyi8GOtN9ppDc8N7ibsqY9eVHO8Knwki1V8a0aIMx3ehV7v7wh0B+swogKd
-	YlP7rcmDE/iDqEhvXyCRKt7c0cT07I9z6OnK9EsE8=
-X-Received: by 2002:a05:6870:3049:b0:447:a201:4a5a with SMTP id 586e51a60fabf-457f23bc71dmr4936149fac.8.1785093662693;
-        Sun, 26 Jul 2026 12:21:02 -0700 (PDT)
-Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-25.dlp.protect.broadcom.com. [144.49.247.25])
-        by smtp-relay.gmail.com with ESMTPS id 586e51a60fabf-457dddfd908sm685849fac.15.2026.07.26.12.21.01
-        for <brcm80211@lists.linux.dev>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 26 Jul 2026 12:21:02 -0700 (PDT)
-X-Relaying-Domain: broadcom.com
-X-CFilter-Loop: Reflected
-Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-c85798977dcso3279940a12.0
-        for <brcm80211@lists.linux.dev>; Sun, 26 Jul 2026 12:21:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pJoeCUXY"
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-69c3044e4b2so311768a12.2
+        for <brcm80211@lists.linux.dev>; Sun, 26 Jul 2026 12:25:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785093907; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Kz7dB2ifmEVXpVYorsDXGA1kM0ZBHJ/+AFZIH+QfbCsaZ8bKB+y6+J6YWZx4BNpLkJ
+         PzGMDJAQ339Nhasqk8n8fbmLhUOL2UVgEZzTm0FViMVU+biQyV5SBx9WfGBToK2i/X31
+         dF/UyWDJip4a3y+VbP+yKUrhhSE+wsi/uU32rr2AhVfKaOZkEMgdNpwjHE3uSYJhGU7g
+         4R+3tIalsc/bjdtsIxdEly2msl9lv5a4oYAcYmSNj3UQ8nreYvmQbf4t4i/UdJTOMrFd
+         ClRDgm3G9OTrinAUb64uAZqV5f45kmsDxPBZLRldIEwQqXLIKbsJ3pD5c7Gw8xJef4j/
+         zNeQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=xji9I5cCWfyl8rCasHuYwdrQgv7IUf2NXmLBjKTVm1M=;
+        fh=dcHd+rgENWovbPLiW8Bx+5uOmFq1y1rFMg3gptCX0vo=;
+        b=ewlIonlB4arz2tb+QSfp+RWR1nxdgLooKGQFN3naH2MKWyaKU6iwBrVlxZn3YxjUQL
+         8NchsddTd/vZMwQm1Z9n9bN9wbFVnvC1p4jytOq10l2dGqLSXi/aqBh8KVZRdvsRxuQO
+         54eiekummpel2ie01S2YqHiehLLUIh4YvgP/ifL9oilxOwvT/yo50OclwtnZEp2vp/Pu
+         iTvkM6ASYFsPSeAxlCSi4aRBE1Na/1dtMd8Da+e6c1I1/sIyPsnk+XD7t2pFYXqXv0me
+         pdM8XBrL4yR2pgn5DMtkFdNwYwMFaJLOw4B+EPPLkKBhLiZxdMhmC9l8IB1GZ6r4crkQ
+         WHqw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1785093660; x=1785698460; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20251104; t=1785093907; x=1785698707; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=xji9I5cCWfyl8rCasHuYwdrQgv7IUf2NXmLBjKTVm1M=;
+        b=pJoeCUXYZzfBMotwzELaJ/jvXMcxh08NuO76D8ZqnTKce6EFwJGM4bY1Xt/f701BOW
+         xTQRbodFVHTfCr2rY3W7NBW9ZeFl4fg8XPsZX7DHtBCxiwowQjEU/J3KI0e01T1frTo/
+         xw6b1pM+3KIr0KOr+pjsuLNbOeWZnZla7RU6SBxuLqg0LsGuuqX2aPSEMMvZ4P1SJZsh
+         Dr+kLXINghHQAkzQCF6PF26T4qo8fWUnZ/b2xpXqtwmh5cwwiVhWdMKPRlT4LXv4Ugfi
+         EJGfZExBuc2EYpIWZZF7K+OEwFCdXveN7MF6zC7DZN6h/yP/jBkiVzGF/Cj3yB24tRjX
+         PMww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785093907; x=1785698707;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=f/GC7/JY8dkQF9VYMmOxneNdfen5EFzs8r5WpvRe5Po=;
-        b=UJK7V6hzdfhBC6r2BTJnZgM6Y//ZLy/GKxmwivVUslpQFJO4xhj5s2ti+jz7Ux5teG
-         BVy9WjrAWezba6atox74vEmkL883gUp49N874gVKDzD1eNLuLuaQBy5XemzcFPfzXT4P
-         vEe3g/LZkilK60Amlla4LK3Bg0NAHr87Sm5Pg=
-X-Forwarded-Encrypted: i=1; AHgh+Rocj/KZGYQHZa+DWcIMLfsZeJHN9oZzyMoUhc5JlApUs56m5COq67YP/NxWGVIgvtNivShXfPwpaoY=@lists.linux.dev
-X-Received: by 2002:a05:6a21:6da8:b0:3bf:7c02:c46f with SMTP id adf61e73a8af0-3c67dae4388mr6673902637.14.1785093660090;
-        Sun, 26 Jul 2026 12:21:00 -0700 (PDT)
-X-Received: by 2002:a05:6a21:6da8:b0:3bf:7c02:c46f with SMTP id adf61e73a8af0-3c67dae4388mr6673881637.14.1785093659625;
-        Sun, 26 Jul 2026 12:20:59 -0700 (PDT)
-Received: from [10.229.42.29] ([192.19.176.250])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13d13015052sm43706517c88.5.2026.07.26.12.20.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 26 Jul 2026 12:20:59 -0700 (PDT)
-Message-ID: <9ca181db-7bec-4f6c-9f42-4a66068af354@broadcom.com>
-Date: Sun, 26 Jul 2026 21:20:52 +0200
+        bh=xji9I5cCWfyl8rCasHuYwdrQgv7IUf2NXmLBjKTVm1M=;
+        b=XoVmgKxmbUSQ+f+nVwM9n7j6ncM/x7K70X8d6jZAj/Ki62IQ4rrEVKHO7buSib4n8X
+         T1Gu9AnSuoTr1atrnxrPNwi5lSM8OfzuN0CDiK91csEOl/Z80j7kiHSMvm5KjQiaVt0A
+         lY/ixxxptCZiVE5p4GsZ8d5G1WaQyQF6Wq33p5YrGWg/rNwOqmvtTbMerI5OI8SmKFm8
+         YlIz+Vsye/WXUMVdI/qw5x7/Mn6YFIYd9x6T4vqwMrdEnJHVmefK1DhVacq++7jtgezQ
+         6Gn55z8KMUegjcHe+RayZnsDxyB4UUVpW4wGC9wfQy8PcGty1Qk6j2GoOnM3VXLwzMGA
+         dtPg==
+X-Forwarded-Encrypted: i=1; AHgh+Rr6F2eymWgsv2SBafHLzBipwoDBXpk1IASBj2U4KyHZM4cpj0UZonLBJks0leimUMlaJhMv8+SKTFQ=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyYrpoPhVq+rf+wtWyZNletRJIpKLGA1puI5XJ7didGdhJgSiTO
+	SuXeJ+kovagECJIZunWiy93+hLT0F+qfJbsx7nz3KPYoYWE/0WlPKWKTqyb2Xfzm5c3ZgHkjKT6
+	fYduRGcKCBRoBBbhEXF4t42eAhMzpt8Q=
+X-Gm-Gg: AR+sD13AyJgNrS9tJpdd5Q+9x7bYs5Cux6v79oEGu6L3QNxkZBkhzIJbgeNWuzrPDUg
+	mdUrdfqEGu32GhVCqHiDgb8sZauKduP8vc6WZcU11TntPmhNj1X4gc54VtvW5Fp/rC4MX+2Bv/d
+	9CdiFlrvCFokfbsVmGDHpL9NHBgDrHwIne5h+7WTcatob6OWWnt4VDjVul6k8cH2xYDMwhD5ZKN
+	DTPjTcl6dz8PuU41cDHCOOhHbLIfmVmXvWbmfkEdY5lSmkODgASryd2TZ6sJnQtY++V32jzMYHg
+	TOZe3bqrAStXk2UZHGLpDMdc+0zhVKWML3UnoXmfqkJHczXDi7RqqJnyO15I
+X-Received: by 2002:a05:6402:234f:b0:698:81d7:b812 with SMTP id
+ 4fb4d7f45d1cf-69fc1160318mr1453646a12.3.1785093906641; Sun, 26 Jul 2026
+ 12:25:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+References: <20260725014411.170340-1-bogdan.nicolae@gmail.com> <9ca181db-7bec-4f6c-9f42-4a66068af354@broadcom.com>
+In-Reply-To: <9ca181db-7bec-4f6c-9f42-4a66068af354@broadcom.com>
+From: Bogdan Nicolae <bogdan.nicolae@gmail.com>
+Date: Sun, 26 Jul 2026 14:21:17 -0500
+X-Gm-Features: AUfX_mwNTwsOkY6qJ2cpR267Dt0F7D36P3SV6wvBKNyBko86SLQ_6Ni4ThCqsqM
+Message-ID: <CA+ORkNTq5Wn079=D_W6J+k1kbJtL+A1mfDU1furVsB9j=sa_qg@mail.gmail.com>
 Subject: Re: [PATCH v2] wifi: brcmfmac: cyw: set a unique cookie for mgmt tx
-To: Bogdan Nicolae <bogdan.nicolae@gmail.com>
-Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
- brcm80211-dev-list.pdl@broadcom.com, linux-kernel@vger.kernel.org
-References: <20260725014411.170340-1-bogdan.nicolae@gmail.com>
-Content-Language: en-US
-From: Arend van Spriel <arend.vanspriel@broadcom.com>
-In-Reply-To: <20260725014411.170340-1-bogdan.nicolae@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
+To: Arend van Spriel <arend.vanspriel@broadcom.com>
+Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev, 
+	brcm80211-dev-list.pdl@broadcom.com, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 25/07/2026 03:44, Bogdan Nicolae wrote:
-> Set cookie using an increasing atomic counter. Avoids mismatches of completion
-> events later in brcmf_notify_mgmt_tx_status, where packet_id != vif->mgmt_tx_id
-> is checked.
+Sure, it sounds good. Thanks Arend.
 
-Thanks for the split. I increased the scope and been looking in the 
-cookie usage in the wireless subsystem. So I have a series lined up to 
-change the cookie to an input parameter and have cfg80211 hand out the 
-cookie value (it already has cfg80211_assign_cookie() function). This
-will also cover zero cookie fix here. So I would suggest to drop this 
-patch and only let the PMKID patch go in.
+Bogdan
 
-Regards,
-Arend
+On Sun, Jul 26, 2026 at 2:21=E2=80=AFPM Arend van Spriel
+<arend.vanspriel@broadcom.com> wrote:
+>
+> On 25/07/2026 03:44, Bogdan Nicolae wrote:
+> > Set cookie using an increasing atomic counter. Avoids mismatches of com=
+pletion
+> > events later in brcmf_notify_mgmt_tx_status, where packet_id !=3D vif->=
+mgmt_tx_id
+> > is checked.
+>
+> Thanks for the split. I increased the scope and been looking in the
+> cookie usage in the wireless subsystem. So I have a series lined up to
+> change the cookie to an input parameter and have cfg80211 hand out the
+> cookie value (it already has cfg80211_assign_cookie() function). This
+> will also cover zero cookie fix here. So I would suggest to drop this
+> patch and only let the PMKID patch go in.
+>
+> Regards,
+> Arend
