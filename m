@@ -1,90 +1,90 @@
-Received: from mail-vk1-f228.google.com (mail-vk1-f228.google.com [209.85.221.228])
+Received: from mail-pl1-f228.google.com (mail-pl1-f228.google.com [209.85.214.228])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A55D378D92
-	for <brcm80211@lists.linux.dev>; Sun, 26 Jul 2026 22:11:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.228
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A9A4378D92
+	for <brcm80211@lists.linux.dev>; Sun, 26 Jul 2026 22:12:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.228
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785103872; cv=none; b=klyyj3q6JtgtcCjUncnoytNKyeM1VtGT8/De9qPZwBbzMWIfvxJA4nhekl5HNeiigIvQinpCPfS8oplQHGDyi21kdJ1LEe0m05tXFEHIS/F8hoANhBG2Z7U0csMG9krWtYVJ1kdwfQOocYUuaFlG5VVzBYoPiLZcVjIiPpGFFOQ=
+	t=1785103935; cv=none; b=s0DoBNFJ2l65euz3iaMJbP+qFSUgWIu8WgaSX+WKb+LUpUuyQz2vs2w4oplfmKA5WhekjfP66SG/iI4TYGdBHSMqcgOmgQf21hE9jTHvQxpvZfb1veJEK/MVDKk6laaevnKElDcELwzDP/87Q3MwB24tz1gasPgd+lPupTNELqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785103872; c=relaxed/simple;
-	bh=2CIxhBpPAZNB8okkFClso/bOGlpCuZh9vzdfx8hWPZw=;
+	s=arc-20240116; t=1785103935; c=relaxed/simple;
+	bh=XirBAzOzE0ihAUqfnuAp2o8HAi5p7wNO+MkVNs1T5Uo=;
 	h=From:To:CC:Date:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type; b=tDVRP5/y97/gATe7mtSPKpdY1KwzO5Q9Kh7ZNe8pYEP7efrSr6oN574laHS/1DoD3cQExMIgRFq9oUkAkWE3d9mjPLOzZWjvuSesbS8tZmyVJFajWGEnRC+lrFCty5lir6embkZfIrqflKqEjzTmYumAq+WwYN56LeNlUvoMysw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=HaOYQTp5; arc=none smtp.client-ip=209.85.221.228
+	 MIME-Version:Content-Type; b=WPFcEGZ57kIWSbTHoeHlxjHkIzvRIpX3GbfZ6M6twSyWAUqn+O7Tpbyanz2XsOQyXPD1yej8eaME9uZnT75+nUC82bcuGKP/1H/zE/XN15W1BN6zCcOH/dAV5Zkrc/XoZ7SGAVEOWbZqgDKBgYvX34TnEceRE/ASYjOgXHdHq5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=dOS3Jy1U; arc=none smtp.client-ip=209.85.214.228
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="HaOYQTp5"
-Received: by mail-vk1-f228.google.com with SMTP id 71dfb90a1353d-5c2c0df0b45so617391e0c.1
-        for <brcm80211@lists.linux.dev>; Sun, 26 Jul 2026 15:11:10 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="dOS3Jy1U"
+Received: by mail-pl1-f228.google.com with SMTP id d9443c01a7336-2cf452def93so24671335ad.1
+        for <brcm80211@lists.linux.dev>; Sun, 26 Jul 2026 15:12:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785103869; x=1785708669;
+        d=1e100.net; s=20251104; t=1785103933; x=1785708733;
         h=content-transfer-encoding:content-type:mime-version:subject
          :user-agent:references:in-reply-to:message-id:date:cc:to:from
          :dkim-signature:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=Dz7NlMBaqq6fhbUxmafTBTywhLBIEqhclVZzBK73Jd0=;
-        b=CuftMQeYrBOHMjxP/Q9a3UA5a056KFs9hNSvx1Nt6L/kIGCR7vyVvQO5X+OfAk+8gF
-         5Yfy24swOoiFkcH/XhkGa+XsDpYJXIG+iPRGtWuuN0b4tHMd4u/Z49oSP0azGu3PGEEf
-         RsH7sl8KQPm8HgqBRcQeJYZ48/z6yiVTmRctV+Ziwi6RUApcew0dpJPm+4Se4hp020JK
-         NG2XnaLJtcZWvQm1SWA5+0FTi4UQ3kJ+AEX8v2mlZTeXVDUKw441O0LrUehbYLKbi8BE
-         ibKnrfVQ1N/l8pXV8eHT1u4z4Tt6WJ1xh+z5cC13KiKmMJIfojRvMUEYDEybOVMMAm7/
-         cnqg==
-X-Forwarded-Encrypted: i=1; AHgh+Rp7DhUDrKfjnRuJ3ReeqS0spu+fxljcm/31vsjRqAjhNQnS48cIBYPanCMuEIjBlfCphh/IOvK5QR0=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxZvlhxqAueIIwImLFyn2c00ayS0eXW8RYzOVwiyv/PXjjQLh3/
-	KmmBTupcqAzKSSgIC6FTWYRLcvH9P7yPDlPlOchIiYX8wrhy308yei+rt3uxCjbCiha4IDuQBdC
-	62s8YdKO/UUUh9rhtnzqPzvInxCkFN3xo8gfaReG+B3NjgN9WfHsNx9AXnpb8kG3zBsvlETUY7o
-	xM+/HFB84rEwgakmZx5SbIDDjF8IASBxMdDJ5XJs6uhxaSUy+vHOyLW7w3BE1zdyyNT87M06P/W
-	27XNe8KHxdOWTT0oFiT5Q==
-X-Gm-Gg: AR+sD13hGupafEsKVtaX9/mXX3JqUdtIFkhQXuN15IuxpclB/UrTugWgiXW6n4x/hol
-	oKAwLhFXkSr4WNgT/zIeWGo3+uLW3Siw+LYZksNr/iM0RB/1QiZxqDlkViKg139rUW4yVNoQf96
-	Rw1pufImDvdlKyrJDFT4rALTYhn1EAq1B7Go96+PhF+NTKyhYet/YQdpd/nwSeNRIJU6FkoAIaP
-	Qn7CLNaVaa5hyZxpEbD77QaJMpy/bfzmdgeOkUs8MoNzSmZ3T9xrPhh78QA1n5cxC8+zFQntLjZ
-	upl9gu2WzPP85CPGOV5h3zfemY2+TkJyM8QFRJQ/oLmECLcu3l33MDAbeuR08vIjD6pi48gZlvC
-	zfDyEKr3LBRdYoZ8d9I6JeOAIbZpOgTKgS0jiY5m6n6Yux+shyu9Ifi16wmRWsHpQ8LOUnAn9ek
-	cJOI8/hOvkwqKkMDE2pr0UrsAKk1tzlbMkp1pdhsw=
-X-Received: by 2002:a05:6102:fa8:b0:74a:c575:5fb5 with SMTP id ada2fe7eead31-750406b5cc3mr3375416137.25.1785103869072;
-        Sun, 26 Jul 2026 15:11:09 -0700 (PDT)
+        bh=XirBAzOzE0ihAUqfnuAp2o8HAi5p7wNO+MkVNs1T5Uo=;
+        b=ZYvJutvdVwEAnJQh7omzkhQOkulzpmubcXZ4lJ2HCGzYoEbL4KcQ2vu2ZxpqyHVphK
+         FWSzdT/QMpr1t2lyZYcfnClaKMHw1soQbDv6xeAd7zyuDo7mLby4MbVeCfutKq87Lg7r
+         eUj3ao+pwIwZwTqzFzwhk95Kprj0e7Pwc5AM/kt/Rwt7ZFF66iiqjMueIXlqpAq2l3Hp
+         ZBEWbcIkgkq3Cf1J8U8HQqFxFvbCsF+ogqyOCwgopYPIb/t48s4w8AWwG/LewDdgOUta
+         ge2zm7L0stVQ0vOdn60vjrnQSg0T/iwn7ApgIgSKq1A17bXuiaLHj9xqTFo/3O5Fb9VL
+         QeBQ==
+X-Forwarded-Encrypted: i=1; AHgh+Rruf8zSwhC2AKZjMFb/mjKjPiFJDbKuEdpOvoQbI80G7ddYYwGvy4oKNJ+RgvwpEClH7JhkwCmOKvs=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwgCh9ufvPHCRWvC3BASDMRjG8iJrr8LSRIZXmjNZRBsghEU9WU
+	f6lpAfPWndktqDY5kAly3ZZPbSJVHI5zqXIPjwLsMHV/4G5vdBXmyVW3uPh5haTQ8xHxZGvV4qn
+	PtaBeFm2iFwP4oxr5RWu5zHQQfve8bn3XIVc0BcfJ/gv2HLGyoeeNPDgwWYn27PTSPnc5XSpJT2
+	PHkWIQhDOXwEcfUptjbbot3b6BUGtbgWF7udem50rc54JWyDOXXGrLYFhgN/JyfkQt+cvw4p+p+
+	Kh2uo6Cqsh3Rc+Lt8NHJg==
+X-Gm-Gg: AR+sD10e1wmjYrwD9ni3ebDj6LHWIRg+Gw55i7yghcrBm3iqgKeQX9er/ie53a6VVgG
+	m6tOzLuCYMUAjhaCyHkodPHJCNiD96hPhcqrwPJcX6Ou/qE2G7tcbSXw63c6k5DlnOC1Yczzgy+
+	jX9NedVt9KHS2jERlQBt9AqmOnODM+7qZUWYUfJUqebeBuk8wos81AoYfsUT6vTmU+tEQUmgluf
+	HOZXtgwYtXsWqFO3p3+Oi7mKU4S3TUbJky0i0BMbkHOSAKOjHTCTkyQUHbbspsHWz/lq5ut0M2i
+	LZ6yWmxh/hYGloKX3YgSHvZDuW6tu0s502c5XD7OywW+jX269Bl2bldYIacDIwmrPK/TEopQ8gl
+	5qgPgAlvUb5MOFvCODL5hXBnMxnqon58afRXDUWlv5VjQ1iAbNRrvqt7yAKebFP7pz8KpgXi+n7
+	Btfcceiwm5RoDN0YW3NwsbUXlznLVe5XVOFaoEuUY=
+X-Received: by 2002:a17:902:e803:b0:2bf:13af:b077 with SMTP id d9443c01a7336-2cfdf3f056amr51306515ad.14.1785103933458;
+        Sun, 26 Jul 2026 15:12:13 -0700 (PDT)
 Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-73.dlp.protect.broadcom.com. [144.49.247.73])
-        by smtp-relay.gmail.com with ESMTPS id a1e0cc1a2514c-97774fa1434sm206172241.6.2026.07.26.15.11.07
+        by smtp-relay.gmail.com with ESMTPS id d9443c01a7336-2cfde5be0ddsm5490295ad.21.2026.07.26.15.12.12
         for <brcm80211@lists.linux.dev>
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 26 Jul 2026 15:11:09 -0700 (PDT)
+        Sun, 26 Jul 2026 15:12:13 -0700 (PDT)
 X-Relaying-Domain: broadcom.com
 X-CFilter-Loop: Reflected
-Received: by mail-ed1-f69.google.com with SMTP id 4fb4d7f45d1cf-698af52daa4so2066349a12.0
-        for <brcm80211@lists.linux.dev>; Sun, 26 Jul 2026 15:11:07 -0700 (PDT)
+Received: by mail-ed1-f71.google.com with SMTP id 4fb4d7f45d1cf-69f4a9eaa68so2852213a12.0
+        for <brcm80211@lists.linux.dev>; Sun, 26 Jul 2026 15:12:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1785103867; x=1785708667; darn=lists.linux.dev;
+        d=broadcom.com; s=google; t=1785103931; x=1785708731; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:mime-version:subject
          :user-agent:references:in-reply-to:message-id:date:cc:to:from:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Dz7NlMBaqq6fhbUxmafTBTywhLBIEqhclVZzBK73Jd0=;
-        b=HaOYQTp5915UgXsSh7jkjmHLH1uV+E/dEJj/W5kr2Rx2CtWVaoamkZKoP4TGtZU3Jx
-         fprJxtonaSc8aXW14uztx6LWg2tmYEt8Ea7EYK/pWflkr9+udKAizLwzuKo+sRpNQrBf
-         GaTbCae0dLwWVHMmV35cguJ49yAGUx76OwW7I=
-X-Forwarded-Encrypted: i=1; AHgh+Rr1lr3E4bWW9RlHxDRX7whsjzrfYTWXks45GjMOIyZoVhRroDVP2+gJJhg5r1uHiAXnj7dHY/s734c=@lists.linux.dev
-X-Received: by 2002:a05:6402:2383:b0:698:3eda:1197 with SMTP id 4fb4d7f45d1cf-69fc1160c0fmr1962284a12.20.1785103866788;
-        Sun, 26 Jul 2026 15:11:06 -0700 (PDT)
-X-Received: by 2002:a05:6402:2383:b0:698:3eda:1197 with SMTP id 4fb4d7f45d1cf-69fc1160c0fmr1962276a12.20.1785103866316;
-        Sun, 26 Jul 2026 15:11:06 -0700 (PDT)
+        bh=XirBAzOzE0ihAUqfnuAp2o8HAi5p7wNO+MkVNs1T5Uo=;
+        b=dOS3Jy1U+wcYOxdXQFDfNOa/Ynav3U56tyN5lTYOA8azOYJT7PDxe1j6HS5LlWS+za
+         kmOdxtETy7HEPK9Q5FovFo8MoiS1kj5rHNTyhnaGTgSS/aociR4HWdJlQnA0WOzlNZSG
+         PHNG/gpxWeY0QwjdZAiO267BjLgPPy+H+HNyw=
+X-Forwarded-Encrypted: i=1; AHgh+Rrcf7e6f7NNNmy2iAA2e+mgZZWg0zGrxJtj3v0XLaHBOBRKdugJXxe2QEE4l39ED/eZ9sC1eqvPCjg=@lists.linux.dev
+X-Received: by 2002:a05:6402:5188:b0:69f:4c65:8696 with SMTP id 4fb4d7f45d1cf-69fc100510dmr2460863a12.11.1785103931573;
+        Sun, 26 Jul 2026 15:12:11 -0700 (PDT)
+X-Received: by 2002:a05:6402:5188:b0:69f:4c65:8696 with SMTP id 4fb4d7f45d1cf-69fc100510dmr2460856a12.11.1785103931164;
+        Sun, 26 Jul 2026 15:12:11 -0700 (PDT)
 Received: from [192.168.178.59] (f215227.upc-f.chello.nl. [80.56.215.227])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-69fb50bd467sm1891417a12.1.2026.07.26.15.11.05
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-69fb5958ea0sm1918044a12.31.2026.07.26.15.12.10
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 26 Jul 2026 15:11:05 -0700 (PDT)
+        Sun, 26 Jul 2026 15:12:10 -0700 (PDT)
 From: Arend van Spriel <arend.vanspriel@broadcom.com>
-To: Jeff Johnson <jeff.johnson@oss.qualcomm.com>, Johannes Berg <johannes@sipsolutions.net>
+To: Johannes Berg <johannes@sipsolutions.net>
 CC: <linux-wireless@vger.kernel.org>, <brcm80211@lists.linux.dev>
-Date: Mon, 27 Jul 2026 00:11:04 +0200
-Message-ID: <19fa07b50c0.2873.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
-In-Reply-To: <ded836f0-d683-4469-bae8-d95bb3e3cb63@oss.qualcomm.com>
+Date: Mon, 27 Jul 2026 00:12:09 +0200
+Message-ID: <19fa07c4ea8.2873.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
+In-Reply-To: <78e9e3c667a7e356cfd2f736fd5852c91bd7cbf4.camel@sipsolutions.net>
 References: <20260726192541.2816743-1-arend.vanspriel@broadcom.com>
- <20260726192541.2816743-2-arend.vanspriel@broadcom.com>
- <9b00d432905facbe0f86556eda6c2986df79888d.camel@sipsolutions.net>
- <ded836f0-d683-4469-bae8-d95bb3e3cb63@oss.qualcomm.com>
+ <20260726192541.2816743-11-arend.vanspriel@broadcom.com>
+ (sfid-20260726_212621_952206_40730C54)
+ <78e9e3c667a7e356cfd2f736fd5852c91bd7cbf4.camel@sipsolutions.net>
 User-Agent: AquaMail/1.59.0 (build: 105900627)
-Subject: Re: [PATCH -next 01/10] wifi: cfg80211: pre-assign cookie for remain_on_channel, mgmt_tx, probe_peer and tx_control_port
+Subject: Re: [PATCH -next 10/10] wifi: cfg80211: convert cookie output to input parameter
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -95,56 +95,19 @@ Content-Type: text/plain; format=flowed; charset="us-ascii"
 Content-Transfer-Encoding: 8bit
 X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
 
-Op 26 juli 2026 22:29:09 schreef Jeff Johnson <jeff.johnson@oss.qualcomm.com>:
+Op 26 juli 2026 21:38:03 schreef Johannes Berg <johannes@sipsolutions.net>:
 
-> On 7/26/2026 12:37 PM, Johannes Berg wrote:
->> On Sun, 2026-07-26 at 21:25 +0200, Arend van Spriel wrote:
->>> Having a single place for cookie assignment and keeping that
->>> responsibility in the cfg80211 subsystem is a logical choice as it
->>> handles the userspace nl80211 API. add_nan_func already does this:
->>> cfg80211 calls cfg80211_assign_cookie() before invoking the driver.
->>> Apply the same pattern to remain_on_channel, mgmt_tx, probe_peer and
->>> tx_control_port by pre-assigning the cookie in the nl80211 command
->>> handlers before the rdev_* call. For tx_control_port the cookie is
->>> only pre-assigned when the caller requests an ack (cookie pointer
->>> non-NULL).
->>>
->>> Drivers may still overwrite the value for now; subsequent patches will
->>> remove per-driver cookie generation. Update the cfg80211_ops kerneldoc
->>> to note that the cookie is pre-assigned and drivers must not modify it.
->>>
->>> Assisted-by: Claude:claude-sonnet-4-6
->>
->> Hah, I _knew_ it, just based on the text style, before even reading
->> beyond the cover letter ... I'm starting to even be able to tell the
->> companies apart (not models yet, i.e. you could've told me this was
->> Opus). E.g. "Patch 1 is the enabling change: [...]", "Non-obvious
->> aspects" or "This means the cookie field is threaded through" etc.
->>
->> Fun. What weird times we live in.
+> On Sun, 2026-07-26 at 21:25 +0200, Arend van Spriel wrote:
+>> The tx_control_port op is excluded: its cookie pointer is nullable
+>> (passed as NULL when dont_wait_for_ack is set), so the nullable
+>> pointer semantics are still required.
 >
-> Indeed. And yes, I tend to edit the LLM commit text since the tense is often
-> wrong and the vocabulary often isn't want I'd use.
+> Well, kind of? Since we guarantee non-zero cookies, we could just pass
+> zero for this case, maybe that'd be nicer here?
 
-@Johannes: Glad you can see the fun of it ;-)
-
-Agree that LLM text show some typical choice of words and phrasing. I only 
-edit (or prompt to correct) the text when I do not understand what is 
-written, too much words are used, or missing details I care about.
-
->
->
->>
->> But you forgot S-o-b.
->
-> also wrong branch tag: s/-next/wireless-next/
-
-Patchwork seems to have no problem determining the branch/repo.
-
-Will repost with the S-o-B in place.
+Crossed my mind as well. Will look into it.
 
 Gr. AvS
->
 
 
 
