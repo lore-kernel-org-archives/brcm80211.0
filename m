@@ -1,197 +1,116 @@
-Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
+Received: from mail-ua1-f97.google.com (mail-ua1-f97.google.com [209.85.222.97])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1DCE3B584F
-	for <brcm80211@lists.linux.dev>; Wed, 29 Jul 2026 05:37:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 968F2445AD7
+	for <brcm80211@lists.linux.dev>; Wed, 29 Jul 2026 09:48:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.97
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785303460; cv=none; b=rwhQ8KjdRFRX415WRI6OdL+J5L6+f/dNHPcwSxmeURuIk3vBf1il4k504eZytenbYOEvfC7JvOgApuaTkXnXYTfzsDLTzQXv6XkgT5gJtyFc8zguXr1hR7y710SVYFsyct9JhN9d4Nrw8c7IIV4UxO74WVIk263PUXymSdvyPBw=
+	t=1785318510; cv=none; b=RrrfyBYi8DLd7X0o3Q785yPHM3Pog6UiGPKwt/MbCPkgpWf0WUGlAWjmo0f1V1xbCAtR68xAbDj4AHYIG8rShn2yxsb9OGtw0IWyrb/l1fGZXVSr1OepmKuik81Sl9MD2S165lP0hQOv/YDzkarggF+Hev8GgaERqqSccwb5jrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785303460; c=relaxed/simple;
-	bh=81WsicO1lnWvPSZw1fn2UG+k9M3g0LSPZQa9sgz45IY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=MtfXqDZ7K2Cs84yj3THuRtzXj4aRXSWOvRUySQns+lgf0J97sIa+jj4GtNLxj9LCHbLbd9z8Gy+/rG1SBz8iahzeuTi68xveFjEpLPJpdMJ3HdxBrP+T0DEIHHZPgD29D+ta5DN/6qGIlncHMB6GDVjWKuLl8VmLRTppXTMEE2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PbRv1ZmL; arc=none smtp.client-ip=209.85.167.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1785318510; c=relaxed/simple;
+	bh=H1cxms0cuojPr7jUeGLLOn3L/QZApPoeQCFr1rIY4pw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VQQnMpP3mVJ1QGzYJ9Kv/SDFCPd7+PVlLZBq1ogNjwSqdbWt5gmgsKbEIZWUkgAWxOUD3B8479gGGiscaXoVwqvfYvBwBOhAuj0S8Tdw4A5WIaQRVWVKTF5SEIlRFOAjOu1zixryLUsUPz/k46/+NcXQ9BS6l5MMjqzNEvSfGj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=QgQNSprO; arc=none smtp.client-ip=209.85.222.97
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PbRv1ZmL"
-Received: by mail-oi1-f175.google.com with SMTP id 5614622812f47-495efdede87so8287b6e.2
-        for <brcm80211@lists.linux.dev>; Tue, 28 Jul 2026 22:37:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785303458; x=1785908258; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=LYEwKBiTcuHNpwjMLcTcd5LYOpcHXXSayMJQAf1r+NQ=;
-        b=PbRv1ZmLo/yySgbgFDgYTTCGmhTdZ5EGkMte8u6zSqwrCuLFRkLJU0vpiNlt/F0hnw
-         ce3LE2+uzJWk1jDJlYGUD+QCN1SvgWIETyZGmVTWaoSrxt695sOYI8CaUgUhyyBgf4ge
-         dGlOVq9z+7Wzjlhj/OHQl5SD9MAJwAdWecsu6HJR8qXIAdTH9ODwNrJTwnlWhlhHp3+c
-         xjaQZTQrWNqzz8uig86c6j53HHudDUhhhGU/FHqYNXLj1IMwK+rRz6GfMAOQjMk/1CMM
-         8/tk3iaUCkEqiGgFoGoYLQ6kjcwQ0ktFANEE0yE3hY6ZynCEh8oaz6EbotnJaG8vqM/+
-         sCVw==
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="QgQNSprO"
+Received: by mail-ua1-f97.google.com with SMTP id a1e0cc1a2514c-977bc1cfc6fso82409241.0
+        for <brcm80211@lists.linux.dev>; Wed, 29 Jul 2026 02:48:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785303458; x=1785908258;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=LYEwKBiTcuHNpwjMLcTcd5LYOpcHXXSayMJQAf1r+NQ=;
-        b=k3AddtfkI1P7gw2IuriXnYw53gPUFRpjq/K/9RlzuR7/6nZzjIoYQRuP7rXsxqZhel
-         NGolstp7NYYwRgCrCaQSmbmZfnOk4hqbjf2W3lRxl+auSYeG7Dzo93sLVinDzK94NWbs
-         kz4SE0SFirZTG0Ag0WJ7v3ooCYW5uZ/cza9ZmgcFl3s9EAIiNllOccPLnfhPi1JTO5+v
-         wATNJHMB1xhTM98r+4UDLdrxOxUChC9cS6z4xfW5EduCOWhQdYXPPzpwEQVWqMtzrXzd
-         3VgMyX04tXstDh7Klb8FXZQEVHx7YxYqyyFZNn4vo9I1NTFNKSVd/bvasmeWR3eVIAo+
-         Oa2w==
-X-Forwarded-Encrypted: i=1; AHgh+Rr4auA+2x3cf8+3nJ4VYcJV412BvIhkGkrQSyGjgHL6Gl240lxYpNjAB5ZsofeNvoZu6x0Elblv2BE=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwQ6SfVhQsPiXiTpHlu2ANLn+tcoO0IyWNmS2oN8WyVG8g7+v7i
-	hIXpdOndSd4vAvN/bwb15nQAmTdiK65CxYQxHtvMnNolAQYeX83lAnfd
-X-Gm-Gg: AR+sD10+l/E+ZF4xeje3II7eUidVgJsGHjoaiHdRKJRiagBhJUrIncEamFqkjRbv4gN
-	+FGpBUIkSq0IKqfXMYDQleVRffR1ATPre5U4YadaQM+0vsoTm1Gejht4HqMM2QQtfXukYu49PCZ
-	gkwBbKcn+gWIyfUG6XtilOf5R9nvUeZsjlz7Zz/qfz4KmWcACV9ZX1BXV0jRu1GC1Qo+mfD0IGq
-	ielT0P4KmBSMBxemwDpY0PFofQ25mbG3UPKIQt93DcYPvDPzNlgFbLR/cHtwzzF3+rEzt3/k47I
-	v37h6fFgrGSHVx2nnUZ/tdWthIBj+/rDHIkblMHMRe8XaKTxhDO/isa+9FiXL6z+Bh2q9VKk35X
-	gLB5k17cvrX/iQ7gYKdVgFeAyYBpcI9ws80fqibPk+PROokcStPnG13o/t8k2DH+r+wV8NZRSnh
-	JSEVrTV+XYac+IBmje3A1zwvWtuGwXiRkU+KX9QJ7kG8ebQsIcoaV30h27XuZukr9C0y6/T+zJF
-	cppLHVFgXOCE5VQsT5pC0UwtXQcNlqySG8H7fcb6GqIAOfL1l1RIbubx0kgGZM=
-X-Received: by 2002:a05:6808:1589:b0:497:e695:3423 with SMTP id 5614622812f47-4ad5b5bcfb1mr2048496b6e.0.1785303457731;
-        Tue, 28 Jul 2026 22:37:37 -0700 (PDT)
-Received: from antares ([149.88.25.215])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-4ad6efc6ffcsm986864b6e.15.2026.07.28.22.37.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jul 2026 22:37:36 -0700 (PDT)
-From: Bogdan Nicolae <bogdan.nicolae@gmail.com>
-To: Arend van Spriel <arend.vanspriel@broadcom.com>
-Cc: linux-wireless@vger.kernel.org,
-	brcm80211@lists.linux.dev,
-	brcm80211-dev-list.pdl@broadcom.com,
-	linux-kernel@vger.kernel.org,
-	Bogdan Nicolae <bogdan.nicolae@gmail.com>
-Subject: [PATCH] wifi: brcmfmac: configure SAE PWE method for external SAE AP
-Date: Wed, 29 Jul 2026 00:34:08 -0500
-Message-ID: <20260729053408.13715-1-bogdan.nicolae@gmail.com>
-X-Mailer: git-send-email 2.55.0
+        d=1e100.net; s=20251104; t=1785318507; x=1785923307;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:dkim-signature:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=q+GPA/rLhc1S1DZlerpKKjvy5ROXqBkGhbeqa7Tzmk0=;
+        b=qwrbg1acEdawOl3OlEqb7WW8cHGETsYrlPZrysCujE2hkQJxWhPaIvsgkdDPPkdS9T
+         Q+D8XDQU8T99qHUvSpEI/yQWnlULKJWcdfpZ5qJvETN04CBE1lQRBMlpWLfNC/r2Lcw5
+         I5GMu16d5kOcn1dWTSGpYhhscP3DVfyJquoIbp2EZzQCWXedRy6Stv5Cxc5o4kNqsD9Z
+         m9Ue4FojMaC/IQj4Ar9V4Z2EmgcnhvTqWiuRg+4Xfp2irt2JduXDG3MnUxk1XFojzszF
+         7Wv8uJP8SGJGip6c4K7pH+bHXBY8XK5TA4q1m9/26uWEZCl4w/b/HcbdM3NfIf5E663i
+         V6EQ==
+X-Forwarded-Encrypted: i=1; AHgh+RoVP5Ggu9VrH3gOSirXUY+7eHbIXgwHjUTDCLId//4+aGLq3mjGUkEzLBQi8dGZn6LClYyTWg1IafU=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwtRTETPa0TcQrWXqTs6e6WmH0JC+w78wL7G9gz2wnxck11N8bP
+	8NpyUxI0dfSEApZna34j/56XzA9KPUTgwaZ0BVYYR7tCY24XcfSDjDkA8hS4dahRzIkvLPjEv/t
+	eWDcmOyYiem7KbIBi77WIvP5x3u7EXoo82yIHW6oP8BRh9srzvdp7cKBrjLey0XWGSzGaHm4Xai
+	R3DV+6T3Z/wZ673E71erEvtCazpr1RqY3umHYvDABs6zHYOKZDrCzTNbBr6AI/pM4l+qQjsHl1O
+	9Fv+9SKnV04pyGMSi0OKg==
+X-Gm-Gg: AR+sD12gxtjXnCdPweutG/cdXqdLA0pfNGKNNAYZ982KQ6ZlUO1waDlQptmG6mRzfa5
+	YlBJwMl1v7RdUTXxhccelizdFwg227s9QLk5vdhGNuxMqQmsqtJzpmB12uD2wwMvCnoqP2CNkx9
+	IbmJ2omhQmLiDizLkIcycWXeliO6HpzUNZF9ucNvFxJtgLkHF+9m5nQNXroy6Wa1LMr7tp6z7AV
+	vG+cpYeb9cRylXbiNH0ovjiMYvcfFjdTHyLDGg0yjbI+d6/6yMCCWoeD0Cqf+RChZBlnSjYjFU5
+	wnriLSOZuL7FFdfcgNJ0Vb6aXwOars32H21oXWTvHo56PSRwFz4u46Fg2Wn/Ozru1LXnNajbJGf
+	lLuVhpJg7JrKjxv35ua3yqIv51fVDoDBUkyOvxPTVxsPM9n36Drc7L51yqq6MMi1FO0cmm2Fe7h
+	VGW6iA5mj458d4rmeUHLqx78no8sZsAlHpiTJxGew=
+X-Received: by 2002:a05:6102:8085:b0:745:31e9:f3d9 with SMTP id ada2fe7eead31-7549f35079amr2673775137.1.1785318507023;
+        Wed, 29 Jul 2026 02:48:27 -0700 (PDT)
+Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-25.dlp.protect.broadcom.com. [144.49.247.25])
+        by smtp-relay.gmail.com with ESMTPS id ada2fe7eead31-755a9aa20a2sm173467137.22.2026.07.29.02.48.25
+        for <brcm80211@lists.linux.dev>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 29 Jul 2026 02:48:27 -0700 (PDT)
+X-Relaying-Domain: broadcom.com
+X-CFilter-Loop: Reflected
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-8f0c46bfb6dso14437666d6.1
+        for <brcm80211@lists.linux.dev>; Wed, 29 Jul 2026 02:48:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google; t=1785318505; x=1785923305; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=q+GPA/rLhc1S1DZlerpKKjvy5ROXqBkGhbeqa7Tzmk0=;
+        b=QgQNSprOIrtsIvzxK3Us6kLKmM1QBOfJBWZye/7FnIUGrmK8ivGVPJXoLWftZCoXmB
+         P8vY7gwQcMay41hiw941y1PdDU/C17i90oJWprZrrwBBlfsuxNtOoGHNVWS0ai4YVKdZ
+         nnm+ymJl4toFVBg/7Ye/wkuw70B9WMcvc4+9U=
+X-Forwarded-Encrypted: i=1; AHgh+Ro25WyZmAlA7AlLxew4/CFGClKSDtg5j4Ly0NbAB4xywxyEudETMu91Niz/q1rGtm7Sh2vOZNuGGwY=@lists.linux.dev
+X-Received: by 2002:a05:6214:29eb:b0:8fd:6e32:2bfb with SMTP id 6a1803df08f44-90817376d39mr59183276d6.60.1785318505528;
+        Wed, 29 Jul 2026 02:48:25 -0700 (PDT)
+X-Received: by 2002:a05:6214:29eb:b0:8fd:6e32:2bfb with SMTP id 6a1803df08f44-90817376d39mr59183186d6.60.1785318505096;
+        Wed, 29 Jul 2026 02:48:25 -0700 (PDT)
+Received: from [10.176.3.215] ([192.19.176.250])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-9081dc496f7sm20496196d6.3.2026.07.29.02.48.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 29 Jul 2026 02:48:24 -0700 (PDT)
+Message-ID: <5cf57b2d-2bcc-481c-87bf-3a034d5f99be@broadcom.com>
+Date: Wed, 29 Jul 2026 11:48:22 +0200
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] wifi: brcmfmac: configure SAE PWE method for external SAE
+ AP
+To: Bogdan Nicolae <bogdan.nicolae@gmail.com>
+Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
+ brcm80211-dev-list.pdl@broadcom.com, linux-kernel@vger.kernel.org
+References: <20260729053408.13715-1-bogdan.nicolae@gmail.com>
+Content-Language: en-US
+From: Arend van Spriel <arend.vanspriel@broadcom.com>
+In-Reply-To: <20260729053408.13715-1-bogdan.nicolae@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
 
-When bringing up a WPA3-SAE SoftAP with external (user space) SAE, the
-driver never told the firmware which SAE Password Element (PWE) method to
-accept. The firmware was observed to corrupt its heap over time due to
-this omission, leading to firmware trap (data abort in heap allocator).
+On 29/07/2026 07:34, Bogdan Nicolae wrote:
+> When bringing up a WPA3-SAE SoftAP with external (user space) SAE, the
+> driver never told the firmware which SAE Password Element (PWE) method to
+> accept. The firmware was observed to corrupt its heap over time due to
+> this omission, leading to firmware trap (data abort in heap allocator).
+> 
+> Parse the beacon IEs on start_ap() and set the extsae_pwe iovar
+> accordingly: 2 when the RSNX IE advertises H2E, 1 when an H2E-only
+> membership selector is present, 0 otherwise. This matches the behaviour
+> of the upstream/vendor driver and only applies to SAE-capable APs when
+> external SAE is supported.
 
-Parse the beacon IEs on start_ap() and set the extsae_pwe iovar
-accordingly: 2 when the RSNX IE advertises H2E, 1 when an H2E-only
-membership selector is present, 0 otherwise. This matches the behaviour
-of the upstream/vendor driver and only applies to SAE-capable APs when
-external SAE is supported.
+This makes sense, but may I ask what device do you have? Suspect it is a 
+Cypress/Infineon chip. I could not find the iovar in our (Broadcom bca) 
+code base so I suspect it is vendor specific.
 
-Signed-off-by: Bogdan Nicolae <bogdan.nicolae@gmail.com>
----
- .../broadcom/brcm80211/brcmfmac/cfg80211.c    | 75 +++++++++++++++++++
- 1 file changed, 75 insertions(+)
-
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-index d32b35ce0..335647916 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-@@ -60,6 +60,10 @@
- #define RSN_AKM_SHA256_1X		5	/* SHA256, 802.1X */
- #define RSN_AKM_SHA256_PSK		6	/* SHA256, Pre-shared Key */
- #define RSN_AKM_SAE			8	/* SAE */
-+#define BSS_MEMBERSHIP_SELECTOR_SAE_H2E_ONLY 123
-+#define BSS_MEMBERSHIP_SELECTOR_SET	0x80
-+#define SAE_H2E_ONLY_ENABLE		(BSS_MEMBERSHIP_SELECTOR_SAE_H2E_ONLY | \
-+					 BSS_MEMBERSHIP_SELECTOR_SET)
- #define RSN_CAP_LEN			2	/* Length of RSN capabilities */
- #define RSN_CAP_PTK_REPLAY_CNTR_MASK	(BIT(2) | BIT(3))
- #define RSN_CAP_MFPR_MASK		BIT(6)
-@@ -5091,6 +5095,73 @@ brcmf_config_ap_mgmt_ie(struct brcmf_cfg80211_vif *vif,
- 	return err;
- }
- 
-+static s32
-+brcmf_parse_configure_sae_pwe(struct brcmf_if *ifp,
-+			      struct cfg80211_ap_settings *settings)
-+{
-+	s32 err = 0;
-+	const struct brcmf_tlv *rsnx_ie;
-+	const struct brcmf_tlv *ext_rate_ie;
-+	const struct brcmf_tlv *supp_rate_ie;
-+	u8 ie_len, i;
-+	u32 wpa_auth = 0;
-+	/* SAE PWE method(s) to accept: 0 = Hunting-and-Pecking only,
-+	 * 1 = H2E only, 2 = both.
-+	 */
-+	u32 sae_pwe = 0;
-+
-+	if (!brcmf_feat_is_enabled(ifp, BRCMF_FEAT_SAE_EXT))
-+		return 0;
-+
-+	err = brcmf_fil_bsscfg_int_get(ifp, "wpa_auth", &wpa_auth);
-+	if (err || (wpa_auth & WPA3_AUTH_SAE_PSK) == 0) {
-+		brcmf_dbg(INFO, "wpa_auth is not SAE:0x%x\n", wpa_auth);
-+		return 0;
-+	}
-+
-+	rsnx_ie = brcmf_parse_tlvs((u8 *)settings->beacon.tail,
-+				   settings->beacon.tail_len, WLAN_EID_RSNX);
-+	if (rsnx_ie && rsnx_ie->len &&
-+	    (rsnx_ie->data[0] & WLAN_RSNX_CAPA_SAE_H2E))
-+		sae_pwe = 2;
-+
-+	if (sae_pwe == 2) {
-+		supp_rate_ie = brcmf_parse_tlvs((u8 *)settings->beacon.head,
-+						settings->beacon.head_len,
-+						WLAN_EID_SUPP_RATES);
-+		ext_rate_ie = brcmf_parse_tlvs((u8 *)settings->beacon.tail,
-+					       settings->beacon.tail_len,
-+					       WLAN_EID_EXT_SUPP_RATES);
-+		if (ext_rate_ie) {
-+			ie_len = ext_rate_ie->len;
-+			for (i = 0; i < ie_len; i++) {
-+				if (ext_rate_ie->data[i] == SAE_H2E_ONLY_ENABLE) {
-+					sae_pwe = 1;
-+					break;
-+				}
-+			}
-+		}
-+		if (sae_pwe == 2 && supp_rate_ie) {
-+			ie_len = supp_rate_ie->len;
-+			for (i = 0; i < ie_len; i++) {
-+				if (supp_rate_ie->data[i] == SAE_H2E_ONLY_ENABLE) {
-+					sae_pwe = 1;
-+					break;
-+				}
-+			}
-+		}
-+	}
-+
-+	err = brcmf_fil_iovar_int_set(ifp, "extsae_pwe", sae_pwe);
-+	if (err) {
-+		brcmf_err("extsae_pwe iovar not supported\n");
-+		return -EOPNOTSUPP;
-+	}
-+
-+	brcmf_dbg(INFO, "extsae_pwe=%u\n", sae_pwe);
-+	return 0;
-+}
-+
- static s32
- brcmf_parse_configure_security(struct brcmf_if *ifp,
- 			       struct cfg80211_ap_settings *settings,
-@@ -5124,6 +5195,10 @@ brcmf_parse_configure_security(struct brcmf_if *ifp,
- 			err = brcmf_configure_wpaie(ifp, tmp_ie, true);
- 			if (err < 0)
- 				return err;
-+
-+			err = brcmf_parse_configure_sae_pwe(ifp, settings);
-+			if (err < 0)
-+				return err;
- 		}
- 	} else {
- 		brcmf_dbg(TRACE, "No WPA(2) IEs found\n");
--- 
-2.55.0
-
+Regards,
+Arend
