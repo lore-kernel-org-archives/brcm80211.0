@@ -1,64 +1,63 @@
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6449F468C39
-	for <brcm80211@lists.linux.dev>; Thu, 30 Jul 2026 16:04:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 428293321B1
+	for <brcm80211@lists.linux.dev>; Thu, 30 Jul 2026 16:21:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427495; cv=none; b=FgYrI/YMdD96IXZbMyX1KGBI01dV/z0/kFBha8Gf8WfcVv1bmT11u9mQOeShxHinqgk5LabXW/XIpSYhuwZ2i+UK8jB2hlzCAxRQeNW1kUrwb//OX2QS0yEd9MVVSc6h64/bKb+/IRDyjKCL527CcKjU2YZP5gSwELcQdu5v7Gk=
+	t=1785428503; cv=none; b=PUsvhqo8XUcaR9i4VebtlSSapiGgatVJ3w0cGHzxdTXo7sXeMgfulGwHRXzuEWxpsExJjPwIfaNFtLMQXe+Dbjc8V4kyBKhAPIzYlwZqWhBLbt2+PpmQ8KZel37Bmz3QS2xu9vpLffv3yGardAye4ChzrWqa4DnOqoaGjPiXOHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427495; c=relaxed/simple;
-	bh=p88XlrozqCp0s3F6xoru/MvtjflcfHotb3mOweyKOX4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iZr+6fD5do74z79lhpyTXMP69zg93sBIOmk6DSwE2O+R9FRJubDlZDOEo99cg27FbK8qqjtWybvjjYLkDlqfZ7MXZvRpXYLyrQKH+RKHo2PQ0Pdzm5mPs997OEad6Aj1NFj+bQPfludi/gD2Cvmv3uMZbUzb0q+GPCHzjnjzcw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y3z9vwJe; arc=none smtp.client-ip=209.85.216.41
+	s=arc-20240116; t=1785428503; c=relaxed/simple;
+	bh=bq4PN7BDO0yFKVQsaXHpuXUbJYEn7r0/aMV4I2Qy7bk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=KrnM6BnOHy+sZffbkqa2MwMSRLIhJ1Q2FUqOVnQatffkkMayDtciLCli87Wrpt/LudxOv//2T0xp2ibNGC/qUHCT6p+qGtMxui3fkbf1dVxWgYVtciDrLmPPZVMxmzz57UMqIg7+2n7HziwKZRatZL7xt3L2m4QNw8SSPvlNXPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fJ3kZmBD; arc=none smtp.client-ip=209.85.216.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y3z9vwJe"
-Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-37f9e2642deso6119a91.1
-        for <brcm80211@lists.linux.dev>; Thu, 30 Jul 2026 09:04:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fJ3kZmBD"
+Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-3856d4015e0so8733a91.2
+        for <brcm80211@lists.linux.dev>; Thu, 30 Jul 2026 09:21:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785427494; x=1786032294; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=gTi6VJL4D2x6nJ6t6S27JxQ0hh8cwm7AwOqGNxZS6p4=;
-        b=Y3z9vwJeh9g0oRZO02WVn21HL1O6iTKQteHH2IYnHFGaaUQCzzfo+Nre5fptM+MHN5
-         Id+1puc/mQdQqLgS9dAW51HQpP2iLowQkaYawYNxEImfbYrx0Q21q5xd40yp82sV9aeW
-         naqwXC3mp6d4HiHUcrr0CRVBVMcYexfzhIsDKvGbR+DE+PjGMCjU599ENhAWQ8XtRr6X
-         MrXayb3SQMLULLTxQMVs+23O/AbnLh+1osLIHDw9Ft46yNDgcwNVatPVLmaoMlPVPzO/
-         DJsCsoj0GUkA00zSe8yVZfM4qyQTAngO+hQOAb4M2eKHnEnNgzqTFlS6k5ERrod/m6Ut
-         4fWQ==
+        d=gmail.com; s=20251104; t=1785428502; x=1786033302; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:mime-version:message-id:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=fDjKwH/pLgq11MmSt15oZfyeN0eo31ydS4Xhih3a270=;
+        b=fJ3kZmBDInnTMb+ZDAk7VgO9grhnMiBtznSwMt5UR4MKq4yMKMJnoK/FPw73A3Y3if
+         9jbB6CmjOrEqP9+rnM/SsmXOoKQmiFxfeGC/9bWB0h965o9KF0oBE/2SYgDGvwLVkZJp
+         xSkZBFO3SE8ruWLCt4a/g77AJMyKKJSou5Lt8ksk6xHfzhPkFySWZdFZrTbDzdRX/F2s
+         cud2vnu2Oky8alt7U1m9H8qOR7zIu+aJvdRsxhhietnxjfNEY10b/44lbNEBMQEzR/Uz
+         FdYGx9CCH00A/+cvMlFVx+kUq+Bnn4K3lK1d31768mEUZhTlEuzblpMlRwza+WhQQo+g
+         gAFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785427494; x=1786032294;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=gTi6VJL4D2x6nJ6t6S27JxQ0hh8cwm7AwOqGNxZS6p4=;
-        b=n97scOsnasM/bxgjOyDz8qz4fQAtD00YvoV9ZEcAU1UA3TxPDd03mYJjIZrwm5JOWW
-         Rd6WzfcdU801wD0JBZPZYo/lUPkDYfTULBXOYe4vnWdChZTwk0DFsIKHT4E2SBAr4Dpx
-         BRnSOVIAcPJq4YAbNLs4nmMOkWGRysPtOfYNCr+ZlvsMIpeWjnDz3o/B05uLX7Y/uc53
-         V4jF19B7iZhQ0Ds58kNQbAqNJ5NYtiRSDyEJN9ittMOJvCkFJY0+KAau9BEY317kS+AG
-         Cm2FNgq4NYpRnDBggm4oe6jVr755ZsAfS2LpIME4TkfBPWOIryGeMMfojwnKJapPFbvm
-         A31w==
-X-Forwarded-Encrypted: i=1; AHgh+RptYCzUBsSW3/Wyhr93OWEPzgnwfJoEG06/F7RhlbqETBC2nPzOYZjKK8scEiIOQNcqaBo6Gbl7E8I=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yyx28GSH7pWkH1LhhClzB/GsaTe6JwGyGklkdM6EBfvFUkfij6V
-	+Vj/hEFj8IM/NNktsFNcSc0EPa7jsgGjB6BvmfILKiOk+3DWzg9w1/ep
-X-Gm-Gg: AR+sD10PYBYjsY9BeEdBF61FuNaFQQ8THvGqzsVCXulnKgGTBsFEH5VkPTB8zc099VG
-	rKAQaxECBFVBjeUXiS3hjCli8P2SKQxfmhfPyhUhCnMtZYu6wXprSTcwlC1UjcuoRaHnWOisIOX
-	9vx5xcDEQBEV7dBpBEortUgMHUwHA1Sk0cvWAXKptEIYeqxJ2NzjMpTB2f3jdbKWwyM5Qn/1HqK
-	yWqY/B/mV6LDC/XdJg8F2fS842sKqcB5No0r/+MgNj1KAsjsEHHJbctXJ+hBUuTv/BmGzxACkYr
-	tOW1Q/2HrKYk8JjJ7nAh1EI6g94KvlyF2oh88L5IlySFyCzRxGMNsg/JhOWjeYskqzShGRw/vO2
-	3boe0QONDHQNujER5vTAuwY8lUpezcnu99CRVt92FYd2KV+bw4nU8fqUynKb0UL6Ma+KuiT4gFE
-	t428anDm2w3JxwzCBPViQdbFBfOIFlwmxhP+YHHaVZa41Hh5hDJR1t8KJ0AQQ+Fg6m8tjaybkqr
-	Yk=
-X-Received: by 2002:a17:90b:1dcc:b0:381:bcfb:e710 with SMTP id 98e67ed59e1d1-38fa8041704mr793333a91.3.1785427493649;
-        Thu, 30 Jul 2026 09:04:53 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1785428502; x=1786033302;
+        h=content-transfer-encoding:content-type:mime-version:message-id:date
+         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=fDjKwH/pLgq11MmSt15oZfyeN0eo31ydS4Xhih3a270=;
+        b=WDNjFEV6wxy6i02yehMEX3H8KHXzMnl80APSNkz2qaAtnedFYuj/AdD4458w6NPOym
+         ImGaZhVzHKksneOpCj6kOBb1diliFQ57qjvB90E99GwQqZLgqOtcDuzanliyQhYJvkXr
+         NaeJZwfSoryWINfuA4Kwq6+0zrTwp1zyE4onB6Y03fSXby8/9lZq5dH96G/4d1pn2NN3
+         GocWQ2vDqhLTtMUuN9aHeDe131baJ8Yw2OyImkdk/ADJryw3N+JtaUrVi3AezApImOXP
+         sCMk18eiwVUtxf2MHzjKMzCbI1q28WjHvdI+8gp0kHQ8LhMa6BrX1Rpp3g4WPLBx6tZU
+         9t0A==
+X-Forwarded-Encrypted: i=1; AHgh+Ro4Ix+jIYyEyFGZPG83e7jGsftSUdqR+R4Uyvo569X9BGdgAGx0/YxllF1zLuhCojTpLuaO3VBA0AU=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxwQ93ldDMf3J+zGAMhFw6HFPm0AbpkebY+IL0fR256bbrU7Q5w
+	nFVXrFKP7Tjk9tuf+uL4cMbDAWp5VKvGheSlgADprp/8p/fQUsn7Zzpz
+X-Gm-Gg: AR+sD11lFR4MWOBBRggzp+kYFEwmUNvNRTjVe4lHF9Z47xnCvz87REN4qtLhTEBTKeG
+	CX5WjzU7S7u76JrcSlPHB1qFybyha8sjDcvgQrQM77vOj6RI3GQ3O65WNygRx0d/aGOqLpDX17U
+	lYlH3Gbfp5cFHjM22CSu6yDL8NekNubSEmh8zW5fRbOqTCdndPEkiyXLM68CynTfN8y01p1tKqb
+	5R5K3NijYqX64nYWp6izCwnM2rN4F9w9iB+Woa1HpMV/+nFkDtryBBOPrbLDdcQ2oj8zGEtyt/Z
+	CqHByAalSt76pIg8Pi8OlPmwJz3HwY6mZj9PUC5XPo2tjIyvryu3UgBkE+ALm1oaIQROa4TFUDK
+	DChvkutio4qcgJ8b/+aZURhA3ZsptkJqCdYe6TbUJrsT7ByeJzN75+xXwK4FnGcHCoHBSwUMAhG
+	QshMpnvoILQ8xnYM21CPNcEuF/pHT7qkF5x8nR49S5sqYHsccjWxJ5CI/z+GWsMe1/bxHdsX1Pl
+	nI=
+X-Received: by 2002:a17:90b:4487:b0:38e:ab3f:2c99 with SMTP id 98e67ed59e1d1-38fa8094a00mr759768a91.2.1785428501521;
+        Thu, 30 Jul 2026 09:21:41 -0700 (PDT)
 Received: from Potato.tail66a299.ts.net ([171.76.83.76])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13e72643a12sm35012783c88.5.2026.07.30.09.04.50
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13e7275973dsm19964269c88.15.2026.07.30.09.21.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jul 2026 09:04:53 -0700 (PDT)
+        Thu, 30 Jul 2026 09:21:41 -0700 (PDT)
 From: Shivesh <chanelshivesh@gmail.com>
 X-Google-Original-From: Shivesh <shivesh@example.com>
 To: arend.vanspriel@broadcom.com
@@ -66,51 +65,168 @@ Cc: linux-wireless@vger.kernel.org,
 	brcm80211@lists.linux.dev,
 	brcm80211-dev-list.pdl@broadcom.com,
 	linux-kernel@vger.kernel.org,
-	Shivesh <shivesh@example.com>
-Subject: [PATCH 8/8] wifi: brcmsmac: ampdu: clarify standard compliance on QoS change
-Date: Thu, 30 Jul 2026 16:03:56 +0000
-Message-ID: <20260730160425.11933-8-shivesh@example.com>
+	Shivesh <chanelshivesh@gmail.com>
+Subject: [PATCH v2 1/8] wifi: brcmfmac: flowring: replace O(N) loop with atomic counter
+Date: Thu, 30 Jul 2026 16:21:04 +0000
+Message-ID: <20260730162135.12278-1-shivesh@example.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260730160425.11933-1-shivesh@example.com>
-References: <20260730160425.11933-1-shivesh@example.com>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Updates XXX comment to properly reference IEEE 802.11n requirements
-that all MPDUs in an A-MPDU must share the same TID.
+From: Shivesh <chanelshivesh@gmail.com>
 
-Signed-off-by: Shivesh <shivesh@example.com>
+Optimizes flowring deletion by tracking counter updates with a flag
+instead of an O(N) spinlock walk, fixing a teardown leak.
+
+Signed-off-by: Shivesh <chanelshivesh@gmail.com>
 ---
- .../net/wireless/broadcom/brcm80211/brcmsmac/ampdu.c  | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ .../broadcom/brcm80211/brcmfmac/flowring.c    | 65 ++++++++++++++-----
+ .../broadcom/brcm80211/brcmfmac/flowring.h    | 18 +++++
+ 2 files changed, 66 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/ampdu.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/ampdu.c
-index fc7a5dd2e5d8..3fd8bdbd35e5 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/ampdu.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/ampdu.c
-@@ -516,12 +516,11 @@ int brcms_c_ampdu_add_frame(struct brcms_ampdu_session *session,
- 			return -ENOSPC;
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/flowring.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/flowring.c
+index 35cbcea0abc9..b9c518939f50 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/flowring.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/flowring.c
+@@ -182,10 +182,8 @@ static void brcmf_flowring_block(struct brcmf_flowring *flow, u16 flowid,
+ 	struct brcmf_bus *bus_if;
+ 	struct brcmf_pub *drvr;
+ 	struct brcmf_if *ifp;
+-	bool currently_blocked;
+-	int i;
+-	u8 ifidx;
+ 	unsigned long flags;
++	u8 ifidx;
  
- 		/*
--		 * We aren't really out of space if the new frame is of
--		 * a different priority, but we want the same behaviour
--		 * so return -ENOSPC anyway.
--		 *
--		 * XXX: The old AMPDU code did this, but is it really
--		 * necessary?
-+		 * IEEE 802.11n standard requires that all MPDUs within an
-+		 * A-MPDU belong to the same TID (Traffic Identifier).
-+		 * Since priority maps to TID, a different priority means
-+		 * we must close the current aggregate and start a new one,
-+		 * so we return -ENOSPC here.
- 		 */
- 		first = skb_peek(&session->skb_list);
- 		if (p->priority != first->priority)
+ 	spin_lock_irqsave(&flow->block_lock, flags);
+ 
+@@ -194,23 +192,54 @@ static void brcmf_flowring_block(struct brcmf_flowring *flow, u16 flowid,
+ 		spin_unlock_irqrestore(&flow->block_lock, flags);
+ 		return;
+ 	}
+-	ifidx = brcmf_flowring_ifidx_get(flow, flowid);
+ 
+-	currently_blocked = false;
+-	for (i = 0; i < flow->nrofrings; i++) {
+-		if ((flow->rings[i]) && (i != flowid)) {
+-			ring = flow->rings[i];
+-			if ((ring->status == RING_OPEN) &&
+-			    (brcmf_flowring_ifidx_get(flow, i) == ifidx)) {
+-				if (ring->blocked) {
+-					currently_blocked = true;
+-					break;
+-				}
+-			}
++	ifidx = brcmf_flowring_ifidx_get(flow, flowid);
++	ring->blocked = blocked;
++
++	/*
++	 * Maintain the per-interface blocked-ring counter.
++	 *
++	 * We use ring->counted_in_blocked rather than checking
++	 * ring->status here.  A ring that became blocked while
++	 * RING_OPEN has already been counted (counted_in_blocked=true).
++	 * By the time we unblock it during teardown its status may have
++	 * advanced to RING_CLOSING, so testing RING_OPEN would wrongly
++	 * skip the atomic_dec and permanently leak the counter, leaving
++	 * the netif queue stopped forever.
++	 *
++	 * Rule:
++	 *   block transition  (unblocked→blocked): count only if RING_OPEN,
++	 *                                          set counted_in_blocked.
++	 *   unblock transition (blocked→unblocked): decrement only if we
++	 *                                          previously counted it,
++	 *                                          clear counted_in_blocked.
++	 */
++	if (blocked) {
++		if (ring->status == RING_OPEN) {
++			atomic_inc(&flow->if_blocked_cnt[ifidx]);
++			ring->counted_in_blocked = true;
+ 		}
++	} else {
++		if (ring->counted_in_blocked) {
++			atomic_dec(&flow->if_blocked_cnt[ifidx]);
++			ring->counted_in_blocked = false;
++		}
++	}
++
++	/*
++	 * Only propagate a netif queue-stop/wake when the interface
++	 * transitions between fully-clear and at-least-one-blocked.
++	 * Reading the atomic is safe here: we hold block_lock, so no
++	 * concurrent brcmf_flowring_block() call can race the update
++	 * we just made above.
++	 */
++	if (blocked && atomic_read(&flow->if_blocked_cnt[ifidx]) != 1) {
++		/* Another ring was already blocked; no new queue-stop needed. */
++		spin_unlock_irqrestore(&flow->block_lock, flags);
++		return;
+ 	}
+-	flow->rings[flowid]->blocked = blocked;
+-	if (currently_blocked) {
++	if (!blocked && atomic_read(&flow->if_blocked_cnt[ifidx]) != 0) {
++		/* More rings still blocked; do not wake the queue yet. */
+ 		spin_unlock_irqrestore(&flow->block_lock, flags);
+ 		return;
+ 	}
+@@ -367,6 +396,8 @@ struct brcmf_flowring *brcmf_flowring_attach(struct device *dev, u16 nrofrings)
+ 		spin_lock_init(&flow->block_lock);
+ 		for (i = 0; i < ARRAY_SIZE(flow->addr_mode); i++)
+ 			flow->addr_mode[i] = ADDR_INDIRECT;
++		for (i = 0; i < ARRAY_SIZE(flow->if_blocked_cnt); i++)
++			atomic_set(&flow->if_blocked_cnt[i], 0);
+ 		for (i = 0; i < ARRAY_SIZE(flow->hash); i++)
+ 			flow->hash[i].ifidx = BRCMF_FLOWRING_INVALID_IFIDX;
+ 	}
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/flowring.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/flowring.h
+index f3d511f9a3c9..afdea8b3f8aa 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/flowring.h
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/flowring.h
+@@ -5,6 +5,8 @@
+ #ifndef BRCMFMAC_FLOWRING_H
+ #define BRCMFMAC_FLOWRING_H
+ 
++#include <linux/atomic.h>
++
+ 
+ #define BRCMF_FLOWRING_HASHSIZE		512		/* has to be 2^x */
+ #define BRCMF_FLOWRING_INVALID_ID	0xFFFFFFFF
+@@ -26,6 +28,16 @@ enum ring_status {
+ struct brcmf_flowring_ring {
+ 	u16 hash_id;
+ 	bool blocked;
++	/*
++	 * True when this ring has been counted in the per-interface
++	 * if_blocked_cnt[].  Set to true whenever the ring transitions
++	 * unblocked→blocked while RING_OPEN; cleared on the matching
++	 * blocked→unblocked transition.  Needed so that a ring that
++	 * becomes blocked while RING_OPEN and is later moved to
++	 * RING_CLOSING still correctly decrements the counter at
++	 * teardown, even though its status is no longer RING_OPEN.
++	 */
++	bool counted_in_blocked;
+ 	enum ring_status status;
+ 	struct sk_buff_head skblist;
+ };
+@@ -40,6 +52,12 @@ struct brcmf_flowring {
+ 	struct brcmf_flowring_hash hash[BRCMF_FLOWRING_HASHSIZE];
+ 	spinlock_t block_lock;
+ 	enum proto_addr_mode addr_mode[BRCMF_MAX_IFS];
++	/* Per-interface count of currently blocked open rings.
++	 * Maintained atomically so brcmf_flowring_block() can check
++	 * whether any sibling ring is already blocked in O(1) without
++	 * holding block_lock across an O(nrofrings) walk.
++	 */
++	atomic_t if_blocked_cnt[BRCMF_MAX_IFS];
+ 	u16 nrofrings;
+ 	bool tdls_active;
+ 	struct brcmf_flowring_tdls_entry *tdls_entry;
 -- 
 2.53.0
 
