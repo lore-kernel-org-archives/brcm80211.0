@@ -1,64 +1,65 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08822449B3E
-	for <brcm80211@lists.linux.dev>; Thu, 30 Jul 2026 16:21:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 598F13932E9
+	for <brcm80211@lists.linux.dev>; Thu, 30 Jul 2026 16:21:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785428513; cv=none; b=M79t42C/PshmYLcYGHaUqBFTG3C/NNfXN4DicHrC8xxSrpHeu2tiHMVGUGiBfjoONUIr8J35eGzVSj8zdoNPImDVSuEnPMY6qvcGoSyyfrKsMdpFuIkqUhX6MwcfXwTniS3BAlaiwqatcGkeHE4ckv1gzj5NyhIB30Vfk5m7c9A=
+	t=1785428518; cv=none; b=lP98pr25AeeR8QHKL2tWrtccdDBtvoQH4Ae1JpCR43TfJ4onprPKKVaMiE0VVHniLKglxwvmbOv7dAb3FawRuHJVeRFwWMHskGC+UTbxyFkGqA5weE4s0cvJiMcDfGewI48+2o+10tw5HMBRrfnoNnYyhsU+muBKj3WTSKoduYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785428513; c=relaxed/simple;
-	bh=ubYEXsR4tEV0OYeMr1Q2ItQdS8K2QO1zmn+B8cI/9Bo=;
+	s=arc-20240116; t=1785428518; c=relaxed/simple;
+	bh=bo6GZs5cRhfR+4h6zHzYZY0ne9OWftzWzsm3xWEM+bs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hPezChn8nOU2IkzMh8fWU5rerV9ZrK2oTPwoRVOZaXLNPzAfYT/R2pFDT/VruOCaNdMM66merGAqt6lu+pMLkUemwxorPYHp4vmV/3rxcDlWGuRT6MPyvfJ1MUmUTZYhv3Yidkv3ENXO92DWPwLFlY41q2gRypQnWSf4WlebSEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=sLRC65P/; arc=none smtp.client-ip=209.85.216.43
+	 MIME-Version:Content-Type; b=trIqEIPdFf7PP0+SDbUP/O2cVX1L9vjT36wdwN4RyTXQQyD5k3JpnbcXvgy50qzsdK/siko5WThQqqIxOK3Hv8+FkYeC5h792o1V5jzZO1oEaGi3KLGqoZrXWn5A6qHpIVDKW6NOz/XbH5BoEm2BNuOFHuQXmg2Afe+E23xITKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NPApi9vG; arc=none smtp.client-ip=209.85.216.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sLRC65P/"
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-381f03d7be0so7929a91.1
-        for <brcm80211@lists.linux.dev>; Thu, 30 Jul 2026 09:21:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NPApi9vG"
+Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-384caf7b168so7558a91.1
+        for <brcm80211@lists.linux.dev>; Thu, 30 Jul 2026 09:21:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785428511; x=1786033311; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=NRB/SiR0fGbZN5o58GOzDdPoMAH3MpfMvsmzOVQc0i8=;
-        b=sLRC65P/9RyCuXUqoFH9YchU2RicHKIs+vuloyN+1frFuaPuz/69RMaVNLoYe4YjNp
-         8m2qoFUAFQ4jKqVjAaSAmSE5PibGTjkfSfT9Kf6xTLlc/jLYOpjJC2hHK+7gSYTKMJcB
-         0igjoSCQ/JsS8H3Avw36VhjWe97zKHf7Xa2HHuxjcmTSdpwS5neMR0zlbSo/VeCnnQ2L
-         D3x8gXwPMFi8TDdyrvpz3bBDYyYrZmstA6/BRpKN00ntp1tIfJCAvby2e60eIQ/Vg+RF
-         Ql6s4Ytn0jBudmcwICtTm1ITsbiprhsYm8cn7K7wpA9pOgm3h+nuAsRu6p5CGSFnrGrn
-         PcCg==
+        d=gmail.com; s=20251104; t=1785428515; x=1786033315; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=cjsOjYk7yuXBgbYLc3ZTyWopMFfcMdSI35CR9dqHg6w=;
+        b=NPApi9vGr9MIeon/AdD2mrBCkssvpPf73vcC/27azHFgO53uS189YIqxb7F3KkJWgz
+         2SCBEzcKMMSDIQjWcWN+ohElM2IzCNXDFNY8Bn0rRXKs47NdyO5drJ4MioieUwFhWcTV
+         RVFzDqF4OWsH79zo8T0IGeZ252SfK9xd4rgIxYXSupU60jU9hoix9a9frJVbHTHjzweo
+         HDItMiXgo0r0iS3nW0YY4LLenCs7UaqL/yK2UU/KPT8A5xEIUebznTt2fyNo+WydUY7F
+         ov+52pKKJzCN/4HXeRLNDLZTbUQri7H1dtigW4tJkrcH62nuRWH0V6RqTfnmc12FqbnO
+         w+Gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785428511; x=1786033311;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=NRB/SiR0fGbZN5o58GOzDdPoMAH3MpfMvsmzOVQc0i8=;
-        b=ny+u2ttA0K8lJgndK2J210rnkGFMmnX9kzCtxJcaVdUJm6xDfb5Ty6dRQ/x9jk8dV6
-         raWxTF2fOFuwLxgOA2g9+w0saQzk1qUvpfCljQoQ8m2U6TVBih9mZwDlUx4aS46/bIUt
-         YXdPJ8mwDSW3x6wUPuszAJHehudUYWpgX2EV4ROuzab/01Wc7Uq8PNfhQzFbWXmc60vH
-         K0o27o18kMaRDxMIGLZCMKG6ED8fSG5LKmIUIZhORqvyFB/KBqPFhth0haHBXSE+dLLw
-         bFITxkCnPCWVqSDscCMICWUdMJJEaLpjgD7UXtWHBbYJ+P1iJJMZGj0iJv6jRNZbKrSO
-         nFgA==
-X-Forwarded-Encrypted: i=1; AHgh+Rrj4Xl+P3uF1+sEbOEAp5cVomZ46ekdj2oT5JwWkF289U/V3BIV3dFjEpwdKyaTOpZJmYuRXUaUnSQ=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxhAvFKSiLCoNNsSxBW6owLl1CyEcbpGTZJmEWXdIVHa3hkSHy8
-	24xOXx9kIVLUtgnWuiQC7eDuc2vZjsXcmRzXBBMeK1GuyGtC5rEyezoT
-X-Gm-Gg: AR+sD10qx1KD+EtBmGdhQZqq5Qu+k3ZjZjAz8+mTLDreHaSnTsm/dIcrY9P8V3W6bPs
-	eLEDDOOIvvCAXZD1yfrMboAA/i4dLot4kYVPF09BkfaZ1kSV7YHYCIU8yicYGUblavZbzi3erOs
-	sz1wmf+Qqiaf7l1ev7FJe2Fh+zEcT0Yml/zaUH5MZWO9KsBzSsK1Jrh/BZ05jZiEXxB+AocHX0m
-	BRD/o6mDeXaTdH8UbN9sSbCYSVrrTrQWGeO77lbSa0V5mEI+4eraM8PfN5j8NEy8mZlrevDfVZY
-	LLL3iilC+1dnL7xiGNVPmJ0ve4HH4HDWvfNpkGKs7MRD1xBwHPOIKiiuGl8PTxQlXqkxiK8F5Tz
-	mdwCsGMY/CmNFCSmcxDMl6aQo3i03UpwAFHK9ZbC3ECKwPytRgZbW7YqdIcILuPO7f5WMEWkaYO
-	OZlTs24BSwFGVnC/Gn30MM1cciLml92da0rVwm12asw6yUYCQAqCXz4crzHq0AcxGbTdSlNYCtw
-	Ow=
-X-Received: by 2002:a17:90b:4c0f:b0:38e:91a8:fb85 with SMTP id 98e67ed59e1d1-38fa8200471mr765335a91.3.1785428511324;
-        Thu, 30 Jul 2026 09:21:51 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1785428515; x=1786033315;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=cjsOjYk7yuXBgbYLc3ZTyWopMFfcMdSI35CR9dqHg6w=;
+        b=PT9M4/jzKABFOvaseLJ2rmNwe7pNpcjVp4LGzH0hNbqcq24urN1ibNkr4FKasHZxwV
+         S5ur5qd/Is8sujFxQkiERNmHo4V14uUSeqhWnZXoBUQQji7O6fMw2aNwA1r0kmWNMNGy
+         W2GMgD5gabrRpTnv7wiTnznqvDtsheef51nWOGNtk2RFW/hA4RqDKAfUIrOb7ZGNK3Qh
+         OE/buDWR12bxKxIp/GS+H8RugMEb6Rq0VdKs8VP8O60l8vVyv2/RO9P7OI/9BbhbctYF
+         7aKS8R9DMwAD1LFWcD2tEoroNC43ZOzOPNFOR2Hnqg8/Uw5Jfj477tB/ChVmFp5CHufx
+         7gUw==
+X-Forwarded-Encrypted: i=1; AHgh+RoR0BzkmhEzCvDFMfUW85SrM2JcAXWkyH2pVJhXC5dcabe+G8CGRQ5SLx5bS/hcua+GRwV0ieveIlE=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz7bqkcsjzhfSL9n8VVcFBkmmfzi/qFRY6PAUPe9kVqyleV4y26
+	f4og+qqSwLe0Uhr+0VdOEi/WYotMaUnQ98srbD+e8rsbQRX+Xbg+EWZS
+X-Gm-Gg: AR+sD10peEiQa93YUaRNrJWcVc3Uhm3JLIqj7WRApadxeNAwoKQ1qUU8HCPToi9rSab
+	7FXbcL/Z1qHBqPs8F7fKwRmFgE3Z+khyIyWEvmstBIt0G776MjGNbORUPM6D/6DL5dIWpVU42k7
+	0tRgpH+4NunEi01/y7wHuGdslYOCL/VzbtUJHVmukXoek1avg1COjizFBiyKsVtZ20fBYmT7FOM
+	EDCyxgBnMFQ5OsA4V2V3VpqXgC6SRlwU7uS2fMnROy/YuLy2OfzxSzaSzRuAsON5b/kNISA7xE7
+	5oyhxNMzMckMWAT0jSwAA8L7563so3+DE4s0Ym0PGyx2SfowQARfcmBq9ODMVAN7xE8qyVadwXF
+	ke12m6a+HZPkCMONiYOjMMcrV4uusbobkEa5BzR6KYn5BKMWxPYRZUOsjHsloyXHNds70q3CxUi
+	vfYw+a5rUKDCfJf50XYi0EB/MAok2AwCN9w+HPvbcjCMAYdx0J6TDlRYwl3x99ib682L+ldfu8f
+	J0=
+X-Received: by 2002:a17:90b:2248:b0:38f:57f0:1f51 with SMTP id 98e67ed59e1d1-38fa7c5bfa9mr853748a91.0.1785428514564;
+        Thu, 30 Jul 2026 09:21:54 -0700 (PDT)
 Received: from Potato.tail66a299.ts.net ([171.76.83.76])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13e7275973dsm19964269c88.15.2026.07.30.09.21.48
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13e7275973dsm19964269c88.15.2026.07.30.09.21.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jul 2026 09:21:50 -0700 (PDT)
+        Thu, 30 Jul 2026 09:21:54 -0700 (PDT)
 From: Shivesh <chanelshivesh@gmail.com>
 X-Google-Original-From: Shivesh <shivesh@example.com>
 To: arend.vanspriel@broadcom.com
@@ -67,9 +68,9 @@ Cc: linux-wireless@vger.kernel.org,
 	brcm80211-dev-list.pdl@broadcom.com,
 	linux-kernel@vger.kernel.org,
 	Shivesh <chanelshivesh@gmail.com>
-Subject: [PATCH v2 4/8] wifi: brcmfmac: cfg80211: implement PMKID_V2 and fix delay busy-wait
-Date: Thu, 30 Jul 2026 16:21:07 +0000
-Message-ID: <20260730162135.12278-4-shivesh@example.com>
+Subject: [PATCH v2 5/8] wifi: brcmfmac: msgbuf: tune thresholds and optimize sleep latency
+Date: Thu, 30 Jul 2026 16:21:08 +0000
+Message-ID: <20260730162135.12278-5-shivesh@example.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260730162135.12278-1-shivesh@example.com>
 References: <20260730162135.12278-1-shivesh@example.com>
@@ -79,200 +80,125 @@ List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 From: Shivesh <chanelshivesh@gmail.com>
 
-Implements PMKID_V2 for FILS fast-roaming support instead of falling
-through to the V1 path. Additionally replaces a harmful mdelay() busy-wait
-in brcmf_delay with usleep_range() to prevent CPU stalls.
+Increases tx pktids and tune flush thresholds. Fixes a silent tx stall
+under high load by correctly using test_and_set_bit. Optimizes
+initialization polling latency from msleep(10) to usleep_range.
 
 Signed-off-by: Shivesh <chanelshivesh@gmail.com>
 ---
- .../broadcom/brcm80211/brcmfmac/cfg80211.c    | 118 ++++++++++++++++--
- .../broadcom/brcm80211/brcmfmac/cfg80211.h    |   4 +-
- 2 files changed, 110 insertions(+), 12 deletions(-)
+ .../broadcom/brcm80211/brcmfmac/msgbuf.c      | 69 ++++++++++++++++---
+ 1 file changed, 61 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-index 0b55d445895f..7d7e5ececd22 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-@@ -3989,12 +3989,10 @@ static int brcmf_cfg80211_sched_scan_stop(struct wiphy *wiphy,
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
+index ba1ce1552e0f..8db6167072da 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
+@@ -48,7 +48,19 @@
+ #define MSGBUF_TYPE_LPBK_DMAXFER		0x13
+ #define MSGBUF_TYPE_LPBK_DMAXFER_CMPLT		0x14
  
- static __always_inline void brcmf_delay(u32 ms)
- {
--	if (ms < 1000 / HZ) {
--		cond_resched();
--		mdelay(ms);
--	} else {
-+	if (ms <= 20)
-+		usleep_range(ms * 1000, ms * 1000 + 1000);
-+	else
- 		msleep(ms);
--	}
- }
- 
- static s32 brcmf_config_wowl_pattern(struct brcmf_if *ifp, u8 cmd[4],
-@@ -4364,6 +4362,104 @@ brcmf_pmksa_v3_op(struct brcmf_if *ifp, struct cfg80211_pmksa *pmksa,
- 	return ret;
- }
- 
-+/**
-+ * brcmf_pmksa_v2_op - update firmware PMKSA cache using the V2 list interface.
+-#define NR_TX_PKTIDS				2048
++/*
++ * NR_TX_PKTIDS: number of simultaneously in-flight TX packet IDs.
++ * Each outstanding TX frame consumes one ID until the dongle returns
++ * a TX-status completion.  The original 2048-entry pool exhausted under
++ * ≥4 concurrent iperf3 streams on Wi-Fi 5/6 (802.11ac/ax) devices,
++ * causing "No PKTID available" drops and TCP retransmits.  4096 gives
++ * headroom for high-aggregation scenarios while still fitting in a
++ * modest amount of host memory (~48 KB for the pktid table entries).
 + *
-+ * V2 firmware (revision 12) uses a versioned flat list structure
-+ * (brcmf_pmk_list_v2_le) rather than the per-entry operation model of V3.
-+ * Each entry carries FILS-specific fields (raw PMK material, SSID, and
-+ * fils_cache_id) in addition to the basic BSSID + PMKID pair, enabling
-+ * FILS fast-roaming on devices that do not support V3.
-+ *
-+ * @cfg:   driver config structure holding the shadow V2 PMKSA list
-+ * @ifp:   interface pointer
-+ * @pmksa: the PMKSA to add/remove, or NULL for a flush
-+ * @alive: true = add (set time_left to no-expiry), false = remove/flush
++ * NR_RX_PKTIDS: RX post buffers pre-allocated to the dongle.  1024 is
++ * sufficient for current hardware RX ring depths; leave unchanged.
 + */
-+static s32
-+brcmf_pmksa_v2_op(struct brcmf_cfg80211_info *cfg, struct brcmf_if *ifp,
-+		  struct cfg80211_pmksa *pmksa, bool alive)
-+{
-+	struct brcmf_pub *drvr = cfg->pub;
-+	struct brcmf_pmk_list_v2_le *list = &cfg->pmk_list_v2;
-+	struct brcmf_pmksa_v2 *pmk = list->pmk;
-+	u32 npmk = le16_to_cpu(list->length);
-+	u32 i;
-+
-+	/* npmk here stores the count of valid entries, repurposing the
-+	 * length field of the shadow list as a counter.  We convert to
-+	 * the wire format (byte length) when sending to firmware.
-+	 */
-+	if (!pmksa) {
-+		/* Flush: zero the shadow list and push an empty V2 list. */
-+		memset(list, 0, sizeof(*list));
-+		goto send;
-+	}
-+
-+	if (alive) {
-+		/* Set: search for existing BSSID match first. */
-+		for (i = 0; i < npmk; i++)
-+			if (!memcmp(pmksa->bssid, pmk[i].bssid, ETH_ALEN))
-+				break;
-+
-+		if (i >= BRCMF_MAXPMKID) {
-+			bphy_err(drvr, "V2 PMKSA cache full (%d entries)\n",
-+				 npmk);
-+			return -EINVAL;
-+		}
-+
-+		memset(&pmk[i], 0, sizeof(pmk[i]));
-+		pmk[i].length = cpu_to_le16(sizeof(struct brcmf_pmksa_v2));
-+		if (pmksa->bssid)
-+			memcpy(pmk[i].bssid, pmksa->bssid, ETH_ALEN);
-+		if (pmksa->pmkid)
-+			memcpy(pmk[i].pmkid, pmksa->pmkid, WLAN_PMKID_LEN);
-+		if (pmksa->pmk && pmksa->pmk_len &&
-+		    pmksa->pmk_len <= WLAN_PMK_LEN_SUITE_B_192) {
-+			memcpy(pmk[i].pmk, pmksa->pmk, pmksa->pmk_len);
-+			pmk[i].pmk_len = cpu_to_le16(pmksa->pmk_len);
-+		}
-+		if (pmksa->ssid && pmksa->ssid_len) {
-+			memcpy(pmk[i].ssid.SSID, pmksa->ssid, pmksa->ssid_len);
-+			pmk[i].ssid.SSID_len = pmksa->ssid_len;
-+		}
-+		if (pmksa->fils_cache_id)
-+			pmk[i].fils_cache_id = *pmksa->fils_cache_id;
-+
-+		if (i == npmk)
-+			npmk++;
-+	} else {
-+		/* Delete: find by BSSID and compact the list. */
-+		for (i = 0; i < npmk; i++)
-+			if (!memcmp(pmksa->bssid, pmk[i].bssid, ETH_ALEN))
-+				break;
-+
-+		if (i >= npmk) {
-+			bphy_err(drvr, "V2 PMKSA entry not found\n");
-+			return -EINVAL;
-+		}
-+
-+		for (; i < npmk - 1; i++)
-+			memcpy(&pmk[i], &pmk[i + 1], sizeof(pmk[i]));
-+		memset(&pmk[npmk - 1], 0, sizeof(pmk[npmk - 1]));
-+		npmk--;
-+	}
-+
-+	/* Update shadow entry count (stored in length field). */
-+	list->length = cpu_to_le16(npmk);
-+
-+send:
-+	/* Build the wire-format header and send the full list to firmware.
-+	 * version and length on the wire reflect the actual byte footprint.
-+	 */
-+	list->version = cpu_to_le16(BRCMF_PMKSA_VER_2);
-+	list->length  = cpu_to_le16(offsetof(struct brcmf_pmk_list_v2_le, pmk) +
-+				   npmk * sizeof(struct brcmf_pmksa_v2));
-+
-+	return brcmf_fil_iovar_data_set(ifp, "pmkid_info", list, sizeof(*list));
-+}
-+
-+
- static __used s32
- brcmf_update_pmklist(struct brcmf_cfg80211_info *cfg, struct brcmf_if *ifp)
++#define NR_TX_PKTIDS				4096
+ #define NR_RX_PKTIDS				1024
+ 
+ #define BRCMF_IOCTL_REQ_PKTID			0xFFFE
+@@ -64,8 +76,29 @@
+ #define BRCMF_MSGBUF_PKT_FLAGS_FRAME_MASK	0x07
+ #define BRCMF_MSGBUF_PKT_FLAGS_PRIO_SHIFT	5
+ 
+-#define BRCMF_MSGBUF_TX_FLUSH_CNT1		32
+-#define BRCMF_MSGBUF_TX_FLUSH_CNT2		96
++/*
++ * TX flush / doorbell-ring thresholds.
++ *
++ * CNT1 is the minimum number of frames to accumulate in the commonring
++ * before the first intermediate write_complete() (doorbell ring) is
++ * issued mid-batch.  CNT2 is the hard flush interval: after this many
++ * frames have been written since the last flush, we unconditionally
++ * ring the bell and reset the counter.
++ *
++ * Raising both from the original 32/96 to 64/128 doubles the average
++ * number of TX descriptors committed per MMIO write, halving the PCIe
++ * doorbell rate on sustained throughput workloads.  The tradeoff is a
++ * marginally higher worst-case latency for the last frames in a burst,
++ * which in practice is hidden by the time the dongle DMA engine drains
++ * the previous batch.
++ *
++ * TRICKLE_TXWORKER_THRS governs how often brcmf_msgbuf_tx_queue_data()
++ * forces a workqueue schedule when the queue depth is not a multiple of
++ * this value.  Keeping it at half of CNT1 (32) preserves responsiveness
++ * for low-rate flows (e.g. VoIP, ICMP) that never accumulate 64 frames.
++ */
++#define BRCMF_MSGBUF_TX_FLUSH_CNT1		64
++#define BRCMF_MSGBUF_TX_FLUSH_CNT2		128
+ 
+ #define BRCMF_MSGBUF_DELAY_TXWORKER_THRS	96
+ #define BRCMF_MSGBUF_TRICKLE_TXWORKER_THRS	32
+@@ -787,10 +820,30 @@ static int brcmf_msgbuf_schedule_txdata(struct brcmf_msgbuf *msgbuf, u32 flowid,
  {
-@@ -4402,8 +4498,8 @@ brcmf_cfg80211_set_pmksa(struct wiphy *wiphy, struct net_device *ndev,
+ 	struct brcmf_commonring *commonring;
  
- 	if (brcmf_feat_is_enabled(ifp, BRCMF_FEAT_PMKID_V3))
- 		return brcmf_pmksa_v3_op(ifp, pmksa, true);
--
--	/* TODO: implement PMKID_V2 */
-+	if (brcmf_feat_is_enabled(ifp, BRCMF_FEAT_PMKID_V2))
-+		return brcmf_pmksa_v2_op(cfg, ifp, pmksa, true);
+-	set_bit(flowid, msgbuf->flow_map);
++	/*
++	 * If the bit was already set, a txflow_work item is already
++	 * queued or running for this ring.  In that case the existing
++	 * worker will drain our freshly enqueued frame when it runs,
++	 * so we only need to schedule another work item when the
++	 * force flag is set or the ring is below the delay threshold.
++	 *
++	 * If the bit was NOT set (test_and_set_bit returns false), no
++	 * worker is pending for this ring at all.  We MUST schedule
++	 * one unconditionally, otherwise the frame we just enqueued
++	 * will sit in the flowring unsent until some unrelated event
++	 * triggers the workqueue — causing silent TX stalls under
++	 * high load when outstanding_tx >= DELAY_TXWORKER_THRS.
++	 */
++	if (!test_and_set_bit(flowid, msgbuf->flow_map)) {
++		/* Bit was clear: no worker pending, always schedule. */
++		queue_work(msgbuf->txflow_wq, &msgbuf->txflow_work);
++		return 0;
++	}
++
++	/* Bit was already set: worker pending, apply coalescing heuristic. */
+ 	commonring = msgbuf->flowrings[flowid];
+-	if ((force) || (atomic_read(&commonring->outstanding_tx) <
+-			BRCMF_MSGBUF_DELAY_TXWORKER_THRS))
++	if (force || (atomic_read(&commonring->outstanding_tx) <
++		      BRCMF_MSGBUF_DELAY_TXWORKER_THRS))
+ 		queue_work(msgbuf->txflow_wq, &msgbuf->txflow_work);
  
- 	npmk = le32_to_cpu(cfg->pmk_list.npmk);
- 	for (i = 0; i < npmk; i++)
-@@ -4446,8 +4542,8 @@ brcmf_cfg80211_del_pmksa(struct wiphy *wiphy, struct net_device *ndev,
+ 	return 0;
+@@ -1621,11 +1674,11 @@ int brcmf_proto_msgbuf_attach(struct brcmf_pub *drvr)
+ 	do {
+ 		brcmf_msgbuf_rxbuf_data_fill(msgbuf);
+ 		if (msgbuf->max_rxbufpost != msgbuf->rxbufpost)
+-			msleep(10);
++			usleep_range(1000, 2000);
+ 		else
+ 			break;
+ 		count++;
+-	} while (count < 10);
++	} while (count < 100);
+ 	brcmf_msgbuf_rxbuf_event_post(msgbuf);
+ 	brcmf_msgbuf_rxbuf_ioctlresp_post(msgbuf);
  
- 	if (brcmf_feat_is_enabled(ifp, BRCMF_FEAT_PMKID_V3))
- 		return brcmf_pmksa_v3_op(ifp, pmksa, false);
--
--	/* TODO: implement PMKID_V2 */
-+	if (brcmf_feat_is_enabled(ifp, BRCMF_FEAT_PMKID_V2))
-+		return brcmf_pmksa_v2_op(cfg, ifp, pmksa, false);
- 
- 	npmk = le32_to_cpu(cfg->pmk_list.npmk);
- 	for (i = 0; i < npmk; i++)
-@@ -4487,8 +4583,8 @@ brcmf_cfg80211_flush_pmksa(struct wiphy *wiphy, struct net_device *ndev)
- 
- 	if (brcmf_feat_is_enabled(ifp, BRCMF_FEAT_PMKID_V3))
- 		return brcmf_pmksa_v3_op(ifp, NULL, false);
--
--	/* TODO: implement PMKID_V2 */
-+	if (brcmf_feat_is_enabled(ifp, BRCMF_FEAT_PMKID_V2))
-+		return brcmf_pmksa_v2_op(cfg, ifp, NULL, false);
- 
- 	memset(&cfg->pmk_list, 0, sizeof(cfg->pmk_list));
- 	err = brcmf_update_pmklist(cfg, ifp);
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.h
-index 6ceb30142905..57167fde5ba1 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.h
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.h
-@@ -344,7 +344,8 @@ struct brcmf_cfg80211_wowl {
-  * @bss_list: bss_list holding scanned ap information.
-  * @bss_info: bss information for cfg80211 layer.
-  * @conn_info: association info.
-- * @pmk_list: wpa2 pmk list.
-+ * @pmk_list: wpa2 pmk list (V1 firmware).
-+ * @pmk_list_v2: wpa2 pmk list for V2 firmware (FILS-capable, firmware rev 12).
-  * @scan_status: scan activity on the dongle.
-  * @pub: common driver information.
-  * @channel: current channel.
-@@ -376,6 +377,7 @@ struct brcmf_cfg80211_info {
- 	struct wl_cfg80211_bss_info *bss_info;
- 	struct brcmf_cfg80211_connect_info conn_info;
- 	struct brcmf_pmk_list_le pmk_list;
-+	struct brcmf_pmk_list_v2_le pmk_list_v2;
- 	unsigned long scan_status;
- 	struct brcmf_pub *pub;
- 	u32 channel;
 -- 
 2.53.0
 
