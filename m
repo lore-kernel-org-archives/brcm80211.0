@@ -1,125 +1,142 @@
-Received: from mail-pj1-f99.google.com (mail-pj1-f99.google.com [209.85.216.99])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp11.infineon.com (smtp11.infineon.com [217.10.52.105])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 527943DB336
-	for <brcm80211@lists.linux.dev>; Fri, 31 Jul 2026 12:35:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.99
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03ED130C171
+	for <brcm80211@lists.linux.dev>; Fri, 31 Jul 2026 13:51:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.10.52.105
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785501351; cv=none; b=GsKU6Ya0UimHPsD+xxDehDIsOpLmPqYvq5CUobUK3IwS0x695Ieo1phVsGFEU2POUn4/aiq8PrbVqlGDgICrdZnlGC+8EIesOGKbWA/wnYpJ9LbgrKrpIxPYPRFo70/1UNAMK7xjTVotbdDCO9qmWVAkcnIzBouE1TNT7kbFI40=
+	t=1785505876; cv=none; b=Yy34pVqJngEoXio2R7nRnUq+JxVlY344lwaA18ed3pHDpcae/LdlgyLgku+ZmayBQ0hKPif8O6RJwd8PrIYAeqk60enWiZFKlU/J/iXkdi2eqXpRg0VJiMSmOewejPndBgPmpFLY83emMykn5LO7XI53uq0Uwt66UZVvhFqG0k4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785501351; c=relaxed/simple;
-	bh=1ukQPGZfnGJpH0PCLbtQgHHHM4pWuS0+vY4qQpidol8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XtbSeIFQWj9ShElGaVahLlf1+Qq5oT96xsxRH4six0JQWZaJKzg/jkd3XhUPK1uI+FRy1BRVhyua/sbPRw6RSTio8WyJ4LHUflZUmJSEifRnmQg7cvji/Ydqn1uwMbqFTYQTO9WxjrSU42q7ENb3F03KJDcK9klU0/9DLgLXYIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=hcZLn1sq; arc=none smtp.client-ip=209.85.216.99
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+	s=arc-20240116; t=1785505876; c=relaxed/simple;
+	bh=85HMa1urLda3H4SQPW9fwOAUmAEVpJSRJQ/BJG+jc48=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MC5V8uQURPgkhs08O+SR0u5/K0HAFwzdGcl3thsDW8PUUv0pPQWhB7/vDkJfGPVX7fCrz6qxnLYxpN4/ABegPxUgaHaaKLjzkxtN64fJbClOi7sEtVXHaD0kKarhIpbSOHW31qdYg82fjW714oprToU2vNmwtjBvfuJ/TKKhz0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=infineon.com; spf=pass smtp.mailfrom=infineon.com; dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b=Pg7oTqYB; arc=none smtp.client-ip=217.10.52.105
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=infineon.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infineon.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="hcZLn1sq"
-Received: by mail-pj1-f99.google.com with SMTP id 98e67ed59e1d1-38759bcd877so876792a91.2
-        for <brcm80211@lists.linux.dev>; Fri, 31 Jul 2026 05:35:50 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785501350; x=1786106150;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:dkim-signature:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=6OlePq0hG08Pbp6Rj/6MQSCYKEAeScklhwdBNiR+MvA=;
-        b=p98ulavjTQJjgwYUuF0MbkM5wzrdWs7gl0rW5ldBdnXwp0E+5eczOm5yqIRxNMlnta
-         orHRiAND7I5QzI7qri7b7z+nAK2p/qCH4e03v4e9U6JHxPCgPKv08/FVk0UptsqMqTbh
-         F7+/zi72JnmVv9G1vnyMJ5V4i+fYuM9f9zcQG+Vu3H3apNxTuQkuxWgswQxrEF50CM7P
-         YUznEiY+DpV9HK31S0i98+DJuRiDLPt3rXlUoNMGserFq8P9GB24iI80ezPGs+WdPVCg
-         9WJHj9TyPTyLy4XIrc8KH5tl+FjJrVXgFrvgPyhFJwMS84LJKPrTJbnHgOBbN+fUigN6
-         22kA==
-X-Forwarded-Encrypted: i=1; AHgh+RrnsI86SRqRVSX92Vn3WSl2p5MbMpKYETqcFJFfdHFlDR3ZuhZMx67kb+KWXq5OM8GHwyD+AFjnXtk=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwqA15/U4of/VaphCvR1mA9KCz8I0erarmLqY1vdXAuknREL6iR
-	GuyPaYex4E7goCmBioxu1RHjGKRiDvt/Dufoe2OmEgeqd2+7wtWFVjkXDmAY8bCe7mAitS6GA3q
-	mv+u/Nvfyhue+d0omRXTkgTDUqGWw2LNsMneZCjNtkVQERb841CR2NhV3J8c0LClJaw3On1Ni+M
-	L/9cVNyN50+yOkN6sZSd6vohkHL5n4SJ2EfdLMzMsLhtaO7o46C5g1F/GRwRLLy/gt3hP3YIJt5
-	hFMsgJDv8FYQUFMo2X/Sg==
-X-Gm-Gg: AR+sD10Q0Ren9WUJj0Kv/x9u9M/X6+A2PKKRAxXdzeJcTnSkRwgVKY9ydupT1curRwM
-	LdEQB1xe+0M2t7lYUaFPL7sd0k+yd8ZTfeGr/koaLNfugZp+r5pm/SAoOOKBvG472/lc40gYQ6C
-	K7PPKOnbEyawrZ0+bZbDB9aGN/Nqg0A83pRPVUCWypCSo1ipkZ6qZ/+8zyO1dFJZ9q7Jc267eTB
-	E4Kkjavj2U7FC3/c2fx72JkBGXQ1O6KLswkQ+/rIAR3R7MmDAI+o0gXip9QYXigcNE5/EDT2Ce/
-	k4qfF/cSBq4bgJXn3GZ3VRwWbfmMP7uBKmo5N6tT0bl3h2/79+6VdHQs5apnUDk427kXqq9rFfA
-	WsHMc9RYpq0ptoh5uLffu32gpmj7qKFfwXOhpVfvj3EqTQ1omcsf/8T84R7KZXvDhPY9y85HJOm
-	A1Hc/Nt12YLoZttKFoPLISRfR6xa4DSUKeDi0HJnw=
-X-Received: by 2002:a17:90b:53c5:b0:37f:9ce0:af32 with SMTP id 98e67ed59e1d1-38fb13e12e8mr1791959a91.29.1785501349605;
-        Fri, 31 Jul 2026 05:35:49 -0700 (PDT)
-Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-26.dlp.protect.broadcom.com. [144.49.247.26])
-        by smtp-relay.gmail.com with ESMTPS id 98e67ed59e1d1-38fb2b67408sm110094a91.7.2026.07.31.05.35.49
-        for <brcm80211@lists.linux.dev>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 31 Jul 2026 05:35:49 -0700 (PDT)
-X-Relaying-Domain: broadcom.com
-X-CFilter-Loop: Reflected
-Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-cb11535e6a1so747581a12.0
-        for <brcm80211@lists.linux.dev>; Fri, 31 Jul 2026 05:35:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1785501348; x=1786106148; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=6OlePq0hG08Pbp6Rj/6MQSCYKEAeScklhwdBNiR+MvA=;
-        b=hcZLn1sqqN8B2uO6bjhSJqLqVJl6mIhGmGg8u6nAkmEY3MrVE0tJpYg6FO1+cD05G/
-         unllWQ4laBdxNjNiIvUcx7VinEJ8nt5z33dtHuurngo80hkUFJUagoWYoJeQcDIXTpMc
-         Z3NUlgpVxvSy3Kh6VU9wew7nhcJfOq+mP/m4M=
-X-Forwarded-Encrypted: i=1; AHgh+RqnrcRkPWki0n0VHW7ysSNBEUkALgW7qKVVqG+vhDLXNTgD/iUfjAWk93IAJlPl6Xrg6adQQnvn8KA=@lists.linux.dev
-X-Received: by 2002:a05:6a21:513:b0:3bf:7eb5:9459 with SMTP id adf61e73a8af0-3c91b0b8a45mr1916999637.20.1785501347516;
-        Fri, 31 Jul 2026 05:35:47 -0700 (PDT)
-X-Received: by 2002:a05:6a21:513:b0:3bf:7eb5:9459 with SMTP id adf61e73a8af0-3c91b0b8a45mr1916979637.20.1785501347047;
-        Fri, 31 Jul 2026 05:35:47 -0700 (PDT)
-Received: from bld-bun-02.bun.broadcom.net ([192.19.176.227])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3153dd9be04sm5187041eec.9.2026.07.31.05.35.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 31 Jul 2026 05:35:46 -0700 (PDT)
-From: Arend van Spriel <arend.vanspriel@broadcom.com>
-To: Johannes Berg <johannes@sipsolutions.net>
-Cc: linux-wireless@vger.kernel.org,
-	brcm80211@lists.linux.dev,
-	Arend van Spriel <arend.vanspriel@broadcom.com>
-Subject: [PATCH -next v3 13/13] wifi: nl80211: send frame tx status event only for non-zero cookie
-Date: Fri, 31 Jul 2026 14:35:09 +0200
-Message-ID: <20260731123509.1975281-14-arend.vanspriel@broadcom.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260731123509.1975281-1-arend.vanspriel@broadcom.com>
-References: <20260731123509.1975281-1-arend.vanspriel@broadcom.com>
+	dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b="Pg7oTqYB"
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=infineon.com; i=@infineon.com; q=dns/txt; s=IFXMAIL;
+  t=1785505874; x=1817041874;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=85HMa1urLda3H4SQPW9fwOAUmAEVpJSRJQ/BJG+jc48=;
+  b=Pg7oTqYBhak1Bf4blb7s+VHLw6Lqfu9S2Q18tuSO9kG5C7cXuLTAz2JT
+   Cn7VNraBIpcpu0ZSnQTY3QWVIFGnml9r7mQBfVy4aeW1vsTYgniCK0mYa
+   k+1rBP644UCZ/ah6T3/l9w2yeiRh8+Wck8ZJS6mkmflUAK3vqSOdrVX4g
+   M=;
+X-CSE-ConnectionGUID: pjTlxk6kTnG+t57lGJdSnQ==
+X-CSE-MsgGUID: QYQxC+awQ966qSjpJ5goBQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11861"; a="154010874"
+X-IronPort-AV: E=Sophos;i="6.25,196,1779141600"; 
+   d="scan'208";a="154010874"
+X-Amp-Result: SKIPPED(no attachment in message)
+Received: from unknown (HELO MUCSE814.infineon.com) ([172.23.29.40])
+  by smtp11.infineon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Jul 2026 15:51:06 +0200
+Received: from MUCSE827.infineon.com (172.23.29.20) by MUCSE814.infineon.com
+ (172.23.29.40) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Fri, 31 Jul
+ 2026 15:51:05 +0200
+Received: from ISCN5CG54722ST.infineon.com (10.161.6.196) by
+ MUCSE827.infineon.com (172.23.29.20) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45; Fri, 31 Jul 2026 15:51:02 +0200
+Date: Fri, 31 Jul 2026 13:50:53 +0000
+From: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
+To: Bogdan Nicolae <bogdan.nicolae@gmail.com>
+CC: Arend van Spriel <arend.vanspriel@broadcom.com>,
+	<linux-wireless@vger.kernel.org>, <brcm80211@lists.linux.dev>,
+	<brcm80211-dev-list.pdl@broadcom.com>, <linux-kernel@vger.kernel.org>,
+	<wlan-kernel-dev-list@infineon.com>
+Subject: Re: [PATCH] wifi: brcmfmac: configure SAE PWE method for external
+ SAE AP
+Message-ID: <fn7xsi3b5k6bshyueeybjdb4vzudsdwt6arjn3swj3lszew5nv@v5xtmaxhslbm>
+References: <20260729053408.13715-1-bogdan.nicolae@gmail.com>
+ <5cf57b2d-2bcc-481c-87bf-3a034d5f99be@broadcom.com>
+ <CA+ORkNQntwC4k2arcngGdYB3mwsbJCkCRNTJRJ2GoRxjdGXLzA@mail.gmail.com>
+ <c452116c-6215-4d62-b96b-72ae23a478e1@broadcom.com>
+ <CA+ORkNSsb8Z5eUVH1GRvWtO_he6A+_b67ov2Cm6VJuWciJeKZQ@mail.gmail.com>
+ <CA+ORkNSG45LrTu09AiHNwTZ882Yybq-3E-=enwe+2eA36fEO4g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
+In-Reply-To: <CA+ORkNSG45LrTu09AiHNwTZ882Yybq-3E-=enwe+2eA36fEO4g@mail.gmail.com>
+X-ClientProxiedBy: MUCSE802.infineon.com (172.23.29.28) To
+ MUCSE827.infineon.com (172.23.29.20)
 
-The cookie value assigned by cfg80211_assign_cookie() is guaranteed to be
-non-zero. So the zero cookie value has special use in tx_control_port where
-userspace can indicate dont_wait_for_ack, ie. not interested in status. The
-wil6210 driver also uses the zero cookie when wil_cfg80211_mgmt_tx() is
-invoked from debugfs api the driver provides so the event is also redundant
-in that scenario.
+On 07/29, Bogdan Nicolae wrote:
+> Gokul,
+> 
+> Looks like this is also missing, can you please add it in your patch:
 
-Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
----
- net/wireless/nl80211.c | 4 ++++
- 1 file changed, 4 insertions(+)
+sure, we will include the quoted patch while submitting our "extsae_pwe" patchset
+for community review.
 
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index d12bef11b94f..ac895e02cd41 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -22046,6 +22046,10 @@ static void nl80211_frame_tx_status(struct wireless_dev *wdev,
- 	struct sk_buff *msg;
- 	void *hdr;
- 
-+	/* userspace not interested in zero-cookie status */
-+	if (!status->cookie)
-+		return;
-+
- 	if (command == NL80211_CMD_FRAME_TX_STATUS)
- 		trace_cfg80211_mgmt_tx_status(wdev, status->cookie,
- 					      status->ack);
--- 
-2.54.0
+Kindly avoid top-posting while sending your email replies.
+Need to use interleaved quoting.
+https://en.wikipedia.org/wiki/Posting_style#Interleaved_style
 
+> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+> b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+> index d32b35ce0..455f5619f 100644
+> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+> @@ -77,6 +77,11 @@
+> 
+> #define        DOT11_BCN_PRB_FIXED_LEN         12      /* beacon/probe
+> fixed length */
+> 
+> +#define WL_IOV_OP_BSSCFG_DISABLE               0
+> +#define WL_IOV_OP_BSSCFG_ENABLE                        1
+> +#define WL_IOV_OP_MANUAL_STA_BSSCFG_CREATE     2
+> +#define WL_IOV_OP_MANUAL_AP_BSSCFG_CREATE      3
+> +
+> #define BRCMF_SCAN_JOIN_ACTIVE_DWELL_TIME_MS   320
+> #define BRCMF_SCAN_JOIN_PASSIVE_DWELL_TIME_MS  400
+> #define BRCMF_SCAN_JOIN_PROBE_INTERVAL_MS      20
+> @@ -5260,6 +5265,19 @@ brcmf_cfg80211_start_ap(struct wiphy *wiphy,
+> struct net_device *ndev,
+>                if ((brcmf_feat_is_enabled(ifp, BRCMF_FEAT_MBSS)) && (!mbss))
+>                        brcmf_fil_iovar_int_set(ifp, "mbss", 1);
+> 
+> +               if (!test_bit(BRCMF_VIF_STATUS_AP_CREATED,
+> &ifp->vif->sme_state)) {
+> +                       bss_enable.bsscfgidx = cpu_to_le32(ifp->bsscfgidx);
+> +                       bss_enable.enable =
+> +                               cpu_to_le32(WL_IOV_OP_MANUAL_AP_BSSCFG_CREATE);
+> +                       err = brcmf_fil_iovar_data_set(ifp, "bss", &bss_enable,
+> +                                                      sizeof(bss_enable));
+> +                       if (err < 0) {
+> +                               bphy_err(drvr, "bss_enable config failed %d\n",
+> +                                        err);
+> +                               goto exit;
+> +                       }
+> +               }
+> +
+>                err = brcmf_fil_cmd_int_set(ifp, BRCMF_C_SET_AP, 1);
+>                if (err < 0) {
+>                        bphy_err(drvr, "setting AP mode failed %d\n",
+> 
+> Thanks,
+> Bogdan
+> 
+> On Wed, Jul 29, 2026 at 8:19 AM Bogdan Nicolae <bogdan.nicolae@gmail.com> wrote:
+> >
+> > Gokul,
+> >
+> > Great to hear. Are there any other changes you are planning to submit?
+> > I found this to be the minimal working config at least for WPA3 personal,
+> > but would like to know if I am missing anything else.
+
+Could you help us with the exact version of 43455 firmware, Raspbian distro and
+kernel that you are currently using in your RPi ? 
+
+Regards,
+Gokul
