@@ -1,64 +1,64 @@
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F173544AB93
-	for <brcm80211@lists.linux.dev>; Fri, 31 Jul 2026 16:07:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64EF644E64E
+	for <brcm80211@lists.linux.dev>; Fri, 31 Jul 2026 16:07:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785514037; cv=none; b=KdvuppYXlFCGySkoqS+h4ii0CRiyak39ModfbPGWCv/Xhd0BBNP5fKcl58GGq1U3J06gdQ8xgykEoZMic/sWpZsJPeaXZUGQKaq5CTrjHIKWK53i02eBVGH+2/D6wlSPmEy2DdPL5o/KIAkn5vDxOTWLc0x5g/dZ9gEUB7OlzWo=
+	t=1785514040; cv=none; b=rKRa5tN5AUMP5vffohoZps/E4cXg2SYo3L1d88nl8hoJjSsVl2/i4rhECdoHV/ExQEXweMYFHD+KJPtU9HJh4Etoi9HGFp0oStlgHLEcVD7wnUajSxOHhCk1SH0cPf16jB6s4IIej4Vo6laD9pUJQNcFUVXReq8uRWiGX7Xu19g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785514037; c=relaxed/simple;
-	bh=X64FuFu6MQR0e9YLwzcqtBlBGkOJCZbkezV6SD9jPJQ=;
+	s=arc-20240116; t=1785514040; c=relaxed/simple;
+	bh=DmsA+3I5O345ejfdJMX1ludXGRJbR24/40vzzaBvEHs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P2I2LGEJyNURG+cnpfEoKh4onh0OMRYwr9XdGdlh+63vTZfTCXXbi4aY7Cvl4zHlTnNqUj5HW80UH1ZbF63dV1GkKL3YrjIQYCG3c2qA3/xMiG0UBAi0vQSwy4O8fIrWkdXIkLcNSKkVXjmIKQ+tlwSSo4ZW06iWmnGy6LpeTLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pkWoBRxj; arc=none smtp.client-ip=209.85.216.53
+	 MIME-Version; b=X7dPePy1VRVl7EJkRX7vWVCLunmw/biAUGSqUJrRz7TSDc2X0ei1d3VMgZJipLxrPvVfpRSKifFn6Rnsll6RRXpv3BRbPTbe4m33qRc1sj7ziyCrMk0zwRx4l7+pxICg1BgloTwRFdxL/zoq9qCGZK5wci1o1xtsBCudj8FN3JA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Vpi3MkNR; arc=none smtp.client-ip=209.85.214.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pkWoBRxj"
-Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-38eca09faa2so132552a91.3
-        for <brcm80211@lists.linux.dev>; Fri, 31 Jul 2026 09:07:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vpi3MkNR"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2d027b7c8easo1889955ad.3
+        for <brcm80211@lists.linux.dev>; Fri, 31 Jul 2026 09:07:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785514033; x=1786118833; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1785514036; x=1786118836; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=CVffTg0thpytBoHWaWeNh2vyHkkqNffHnf4NKS93HWw=;
-        b=pkWoBRxjXZBuYw66UE7JKjhX9PJ5d1fz1ZFzvs4DMQPXfomRqFH95JXwsuPrJee3ba
-         zrU124J5RCNFlEKYFpyVvCxPGXxrF11ZD+qnQFHwF6ccoY/gxR6rEctocK5aDiVO5dAM
-         rvvTtkW2DrYnaKylnnpsxku22mN/wJMO/kjfNmrJu+q/lKx3lQAKTF2R+fQ3G83oT+xB
-         SmC+AQ7hu/wdMKm22A34tKINSfVgzvLjuvPHKZcim0obq+SirZ2Qm+tLa3o+WRqHObd5
-         +RWumVXRkljS4lwmj85+5jGywp8BQhjldebv7dkgTa+08t9aQwVvbZ/TiEr4H0sR88ZF
-         whZA==
+        bh=Ha6wWqh8e5w28XKTvBv40AUTfoBMdtclGObPHlJlp0Y=;
+        b=Vpi3MkNRkmowDsGMeuv+3zCoxtMtMYLtSXV5FwOg4y4u8H8zxchMcobFQ2H/Qr6bfs
+         QNHSu5fyfFCshsAXo2sarwTggkyEGiRsxoGagBJUvZA562Gm9Ap3otVgcOMPxSSp8gld
+         TpM+vYUM/GzFJGKwB1//l5xaK9ACjJIwyy03CmtOPg7Q26KJCooQ3dM0FNpt0P3ZNWro
+         aSIulBpxW/QSP4yAltsinYA6S5Cs2qhtoAW1o6jCXSgxiGN4tnYPj/Zs4vlcX8BxMFJk
+         Orc490W1sXIOpfKA/uVEYyoqgJa/ptasn+tFGcmn2+BfKLvpaMagFu7ByKfn57NydJrF
+         Wpaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785514033; x=1786118833;
+        d=1e100.net; s=20251104; t=1785514036; x=1786118836;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=CVffTg0thpytBoHWaWeNh2vyHkkqNffHnf4NKS93HWw=;
-        b=ooMW722rxXk/9QhWXhj4DeRWtm7cPrn1S6nzS6giG70Vleu7mHit5KS8yTeLZYM8Dn
-         GQuBzPilsvtWOtQr9ynpLvwDhpKJaq+snceiRqTTOfoWBjlp1Z+zreEvgqk//Tkt7wcq
-         FBFiEiCua2bL4TnPwCOdoi1vhqWkyoH4C9iLzoKoQs2fyX+DY60L1BIyBuWkRx30zdf8
-         RilK4b0m8dk9MKw5FAjsMYBDdFDO4WI8Z4tgTGy3JMh/dtufXE/SggrKysjDCkPjQQpe
-         5jFigfD1DHlf+VX4L6rysD7c8wxKRwkGzk0bYqdoeHG4xfmNKiNKNv5ic8u5J/241vqn
-         IR2Q==
-X-Forwarded-Encrypted: i=1; AHgh+Rqu3MBKl0ZqpDue+/ufm+oBc85rorQw5mVrd126JfhIkiLzwEiTEIxO4stFh1k7nghFMItA80+Evj0=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw5C500tfCqKmP3e04W/NLgHDqYvovzNuQcaqs+9/mfIa7IyI5c
-	GdiEvbkebhRzYWq+bjBAAQ6aoEbqRAvjWHXB5dogTRdji+LBgMobvtHP
-X-Gm-Gg: AR+sD11v4oe9RKHEP3JxKc6KV4rIuqFkXcerhyDaA7yEr0tRh+nEunj/MRmetku3sJT
-	MZ866u69SmjZ9+RZL7ly4tKjLBdB39VxIDxRWu32W3Zi/0GJ7GViZn+Bn9L0i9jnnGYvwKi/HH7
-	YIF7gx1xy9ZlQo5iE9GuKbZAfiEpWnEuIeQ64dsTxmyTNmfYOwQEOs/xzN7DcMrL0KykV5oieHy
-	z9XrG6qiaWhypBFZ3JTbGskpTsJn9EgWVpWvEkIcyNmN3wgJSf8sdnexhGXoTgJwaOzm41PIcHr
-	u9yL1PxciRLDINR+fzjsWzHSWFSSHjiEs9HdQfxu2YLPcN6Yr7n7p67P8/058UBldJ/0pWr/Xms
-	AMG3PxxGGrjAnYDU8Bpc5e4ZZqgAx6CFYER1063oIvB64PQtQZ83VElcMsX8HdP44zUVm61eEsW
-	CDDeVAbGGyOeHNezX2BIv01ZbXFhzjGkEyaN4udW0lKY2umJ9cEdWVCHZ9dEiDNhR+cjmxhQrY3
-	awsiBgc
-X-Received: by 2002:a17:90b:51c3:b0:38e:6a7c:abbc with SMTP id 98e67ed59e1d1-38fbc5482f1mr684483a91.3.1785514033358;
-        Fri, 31 Jul 2026 09:07:13 -0700 (PDT)
+        bh=Ha6wWqh8e5w28XKTvBv40AUTfoBMdtclGObPHlJlp0Y=;
+        b=q2QXavWGDc8BjKnSKeB61RZFcxJDaAg4DUtX1H7ICv1wHjTT3ZWUeTBm2ieKsWpNla
+         DOw1zvXMTCVw8v7xwn08aKhcEu0yufNgr1ux48OmrLY8LCSpNCicQUEnJv0nGbreSe0R
+         38vMMlmCL0Z0dDaOjHPSUgGUx3rOLN5UO7IewNmrrpge57kWgwc1IRcyROPf8v22bSbq
+         NnsRDZizip7uylAV+LuBN30l/tdBGTN2uEB7OE2mbkTlRn8AMFkNJU+/VRIJcTmmQhq9
+         5JvUdlO+8/YkOlEu+AORqpJdqcArb7JdTgItLw7qjiHoNURaDXDEy13GJCnyC7/45zxd
+         16jA==
+X-Forwarded-Encrypted: i=1; AHgh+Rrgeea5y0Srw+pO45CK9h99au49Gg3Nt5/inj+Ijii1VCA0Ks4sgpU8VqRd7BaDG3t1rFUkxviDZuI=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz2bILjwGMbxXskVTPlezIkiWhaQGgQAE+or2Hf1XcniHtggKRF
+	JOkwiv2iuxAwkiObdRlB6rWDw56w4Iox6iHJzi8Q+17ykv2UvbNaJ40DkgGnT/aZV5w=
+X-Gm-Gg: AR+sD13Eo/jAXggE/1MUt5UEYLRnMpDsD3OQJ5K2etRd9iWDTLKToy2K44/yEw0xa1V
+	5YbfQfNvJspH7z/G4vpWtqJTKZI8RmeKTGpnUETTv8EDsFB87oYnLla8WDg/VUBq8JPRZnZOgbF
+	MG2B/x1cD732FoxMxvLkq7RyizOwSMD7Dvbn1iNwz1kgqgnmEKE337IV5bR7HK5C54RdBilT29g
+	QYfiCEJMjiAIXFOU1ifOrZ7QYc+9BjQtQoIXQGsHrkEbcnRVx+v82DotOkupSGU4wu0Ve1PJ3EF
+	sViIETMhOY/1ub65DpUSyGtBx0d72ib8SKdJAi9vZB4LeQISC19/gy8PwThoc9sSp5gjokfrQOs
+	ogXUSzmJ/IXWN14hnEe/HTH5U6y4p9rIeRf2CUE8keX4fXlAUlLl9JR7Mte3ikBN5jh8EQFocmY
+	ywWity2H4RKvorvUC44ZvzRGGFE9dZ/f7Mg5jAUiMyRqUkbsW7/zerkcotiEN/dYVhrckHTQZAX
+	LYNG8TcTA==
+X-Received: by 2002:a17:903:1450:b0:2c9:d298:6c0a with SMTP id d9443c01a7336-2d05246fbb8mr8606555ad.2.1785514036370;
+        Fri, 31 Jul 2026 09:07:16 -0700 (PDT)
 Received: from Potato.tail66a299.ts.net ([171.76.83.76])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3153dd9c93dsm7881425eec.8.2026.07.31.09.07.10
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3153dd9c93dsm7881425eec.8.2026.07.31.09.07.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 31 Jul 2026 09:07:13 -0700 (PDT)
+        Fri, 31 Jul 2026 09:07:15 -0700 (PDT)
 From: Shivesh <chanelshivesh@gmail.com>
 To: arend.vanspriel@broadcom.com
 Cc: linux-wireless@vger.kernel.org,
@@ -66,9 +66,9 @@ Cc: linux-wireless@vger.kernel.org,
 	brcm80211-dev-list.pdl@broadcom.com,
 	linux-kernel@vger.kernel.org,
 	Shivesh <chanelshivesh@gmail.com>
-Subject: [PATCH v4 7/8] wifi: brcmfmac: fwsignal: document safe no-op for duplicate MAC handle ADD
-Date: Fri, 31 Jul 2026 16:06:24 +0000
-Message-ID: <20260731160646.3812-8-chanelshivesh@gmail.com>
+Subject: [PATCH v4 8/8] wifi: brcmsmac: ampdu: document IEEE 802.11n TID requirement
+Date: Fri, 31 Jul 2026 16:06:25 +0000
+Message-ID: <20260731160646.3812-9-chanelshivesh@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260731160646.3812-1-chanelshivesh@gmail.com>
 References: <20260731160646.3812-1-chanelshivesh@gmail.com>
@@ -80,37 +80,57 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When the firmware sends a MACDESC_ADD event for a MAC address that
-is already registered to the same slot (same mac_handle), the driver
-hit a TODO comment with no documented rationale. Per the firmware
-protocol, retransmitting an ADD for an existing handle is idempotent;
-overwriting the entry or reinitialising it would drop in-flight
-traffic queued in the per-descriptor psq.
+An XXX comment in brcmsmac_ampdu_tx_add() questioned whether it is
+necessary to reject frames whose QoS priority differs from the current
+A-MPDU session. IEEE 802.11n (IEEE Std 802.11-2012, section 9.10.1)
+requires that all MPDUs within an A-MPDU carry the same TID; mixing
+TIDs would violate the Block ACK agreement and cause receiver-side
+reassembly failures.
 
-Replace the TODO with an explanatory comment so the intent is clear
-to future readers and static analysis tools do not flag the empty
-branch as dead code.
+The existing behaviour of returning -ENOSPC to close the current
+aggregate and start a new one is therefore required by the standard.
+Replace the questioning XXX with a comment referencing the standard.
 
 Signed-off-by: Shivesh <chanelshivesh@gmail.com>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwsignal.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ .../wireless/broadcom/brcm80211/brcmfmac/cfg80211.c   |  1 -
+ .../net/wireless/broadcom/brcm80211/brcmsmac/ampdu.c  | 11 +++++------
+ 2 files changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwsignal.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwsignal.c
-index a43f1a38b0e3..3c1ca355e8ee 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwsignal.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwsignal.c
-@@ -1037,7 +1037,9 @@ int brcmf_fws_macdesc_indicate(struct brcmf_fws_info *fws, u8 type, u8 *data)
- 		} else {
- 			brcmf_dbg(TRACE, "use existing\n");
- 			WARN_ON(entry->mac_handle != mac_handle);
--			/* TODO: what should we do here: continue, reinit, .. */
-+			/* Firmware re-sent ADD for the same MAC handle.
-+			 * No action required; it is a safe no-op.
-+			 */
- 		}
- 	}
- 	return 0;
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+index 2375c2f9d97a..dc4228fb31c1 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -4464,7 +4464,6 @@ brcmf_pmksa_v2_op(struct brcmf_cfg80211_info *cfg, struct brcmf_if *ifp,
+ 	return brcmf_fil_iovar_data_set(ifp, "pmkid_info", list, sizeof(*list));
+ }
+ 
+-
+ static __used s32
+ brcmf_update_pmklist(struct brcmf_cfg80211_info *cfg, struct brcmf_if *ifp)
+ {
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/ampdu.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/ampdu.c
+index fc7a5dd2e5d8..3fd8bdbd35e5 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/ampdu.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/ampdu.c
+@@ -516,12 +516,11 @@ int brcms_c_ampdu_add_frame(struct brcms_ampdu_session *session,
+ 			return -ENOSPC;
+ 
+ 		/*
+-		 * We aren't really out of space if the new frame is of
+-		 * a different priority, but we want the same behaviour
+-		 * so return -ENOSPC anyway.
+-		 *
+-		 * XXX: The old AMPDU code did this, but is it really
+-		 * necessary?
++		 * IEEE 802.11n standard requires that all MPDUs within an
++		 * A-MPDU belong to the same TID (Traffic Identifier).
++		 * Since priority maps to TID, a different priority means
++		 * we must close the current aggregate and start a new one,
++		 * so we return -ENOSPC here.
+ 		 */
+ 		first = skb_peek(&session->skb_list);
+ 		if (p->priority != first->priority)
 -- 
 2.53.0
 
