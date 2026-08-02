@@ -1,80 +1,81 @@
-Received: from mail-ot1-f97.google.com (mail-ot1-f97.google.com [209.85.210.97])
+Received: from mail-vs1-f97.google.com (mail-vs1-f97.google.com [209.85.217.97])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68A08399D00
-	for <brcm80211@lists.linux.dev>; Sun,  2 Aug 2026 10:25:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.97
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE7D2D3225
+	for <brcm80211@lists.linux.dev>; Sun,  2 Aug 2026 12:24:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.97
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785666330; cv=none; b=VGrpedmcXToMlxeczEVQZZgMkvRn/hncg9GUZB7qTXSmtwWACfGKvW/gIu7lzJz0ZqeffBOpVnLOClWanSmHJnb5woI1L9zhSODMo7RTrNLJk/fvTnd2ZRbQViJxTgO3umgp0XGBI6zp8NGVUZ147WT8YCiBpFxw+kz1u01SXNA=
+	t=1785673486; cv=none; b=f6lzyjGx8KKhO81xZRDeeH3TcekCwDRAGotWWliyA/PQlz3p90YOSS/mkgtKLbWgAuHMrngy7vCIg5exOSJNoFI3G+rKBjfg4MTX3ycgsWimrnaHCf4lddHqOP48DKVrWEEeH/9M4MYgEK8xsN7/x8dL7E8PUpzuXA9gREahbL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785666330; c=relaxed/simple;
-	bh=pck+pClOKblcqDWxsPRoWg8rfy6K+Grrr1EREHE3oKM=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=sbcQ2q7hD3R6iScaZXbbac4SxyhfbF8xKaetB8t7z40hptO2lO7V+TBT/6weMzO6aglvYnJBXoi6ZOI50nDLl1fVtaOzYc6i01gbyTxGaHciX3peGrFSWeu2BnxyBDa9XvZVhbUAC0PIgkDJbDGgrXqb/tvf4vrT0OpfENfVkWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=XtMkATTF; arc=none smtp.client-ip=209.85.210.97
+	s=arc-20240116; t=1785673486; c=relaxed/simple;
+	bh=IVBACOmNYotUTjgF9C6tiVB81vMoFAfRoriF976EZok=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=GZnJN904CQBuYQAeCwWYFGgXvzewc/EAgUlOECfAQHgkTKfcai+XEfKvwjLpC+aq43C8uigCTwHJtAaMn8j0GgnSVDCf9eYbo6GRgqiHJfOlSWkkEwkthfGTo5T1tMAOHTgcDCdEw5uoF6CjfTY4imS4nwIRAl70hikceT3O7LU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=bdETKT5b; arc=none smtp.client-ip=209.85.217.97
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="XtMkATTF"
-Received: by mail-ot1-f97.google.com with SMTP id 46e09a7af769-7ee125ec926so1698525a34.2
-        for <brcm80211@lists.linux.dev>; Sun, 02 Aug 2026 03:25:25 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="bdETKT5b"
+Received: by mail-vs1-f97.google.com with SMTP id ada2fe7eead31-7473e927969so624287137.3
+        for <brcm80211@lists.linux.dev>; Sun, 02 Aug 2026 05:24:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785666319; x=1786271119;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:from:subject:user-agent:mime-version:date
-         :message-id:dkim-signature:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=U30tOpuVn8qhXLPjIH2/nfOt+KCdmSRNh2hKzUS0a7U=;
-        b=VEbBiRkXy9whMJv/CfrvIpzvCkhoT8u5rBQ5YyVMctCRRzSiaBQtTUfi+MUo5wenY0
-         IDLNu5z8zU3oygO/M9Q8KQ1kN0AuxkPyjkTvQ1TCEn9qx9bOyPnTEK2/rrOSwdLdys1j
-         jbE6ZDDkqImReTWHCet7JHq1d3yB4OFEZ8hzvgea7d760jt2pPhs1jhVLEvX/gjCftgb
-         ri36hDUWgDad9enMlWI+Zrs5XV8chBAiaOflPF5MpIHNjzPKsv6cpexqISaK4PoAPNv/
-         8HYwnFkOKushH6zvxKE00IEK9QFxiultQGGYBMR85DV54E25RftKRT26JfKfF3mLZGLq
-         +cCQ==
-X-Forwarded-Encrypted: i=1; AHgh+RoG0Hdy3LRLq0C0EIqFj939L0LSkD/PyKlXIBPf359IP04DYYkMGGVYy1nRj99DsVigwueJezrWotg=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzpB9fTeG6nQTYZLSoAhAel+PNiHTFxONuNwHbj3LSfv3fwU5+I
-	MaTgGgdNpF0Coy7efHH7QJ4H16VfK/JghNOaiIksxY3tsGSB8ddSwbcCWDvL05wYk7yWNVse05Q
-	0YyDDfCn3L6nPkJN3ecAzYJIQsPyno5yM9K+RsljnVyAnIkacoAxAT7M/QZ6l0nx3Ra1JsJ/tT4
-	5HOT12NuMeNalPOI8C0fov9JJSL2JkGhZ5IaIOXIvqdbiVR5Qa4bkBtoTMNY917LNtUPfFboXv+
-	BsaYz+ATw2bO+ekO0N0qw==
-X-Gm-Gg: AR+sD12wF148yOnVh2HaIglvcjPwcmkLh9J7QRleMR4RSIc5m7HHZK/2hilwFGKEY5n
-	gQ3gwj+B7wuuYN/nZOnKtssDhG1txSa0GS9VW6KnQ5JdZ4mmSDTPl5aP9QiXuwuFoA/ZPUlMnMq
-	kIpGo1g6lxOIGfTKbS1vGh+vLijXw5XWh3BhME7iuFblmePyL+gRInKNy4Kx69XD9+My8lMT059
-	mWeVDKQk4bMdL9oIAJM/w22qK4cdUJsVzp0v+yv2dr2TOvY7YxLugIZt1FiF31mxLP3Bo9Z1wIK
-	aaxn3A17k2TufVZXeZOOgMhiGnME63GUJtOdFg6ngtjCFyatzHZrHy1E69guuInMqWrPGiYQfKl
-	7n3xi6xmXPsHhq7p8qF919ij7uL5e2DF4UxTEFKwtHzl7kSxgfjCRNv3d4YJXmJZufOhd7TpeLT
-	ddmq75bcSLZdxS0WqvNVsfroRr8Ga6sRYk8+HrFvo=
-X-Received: by 2002:a05:6830:608d:b0:7e6:d0ad:5254 with SMTP id 46e09a7af769-7f196d33de0mr11334418a34.8.1785666319495;
-        Sun, 02 Aug 2026 03:25:19 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1785673483; x=1786278283;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:dkim-signature:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=QNXeMyhkpbk8rwnA0O7uBQvIUEYbGICoPWDBw29OKOs=;
+        b=HxkO5uXP8CUUYAIOBYQ7Q6Pb3iW6q5x3juGq5fVZd0AZ5imhZpA+I4A+ubW0od5Y63
+         YdIuOY/mC8uL3ayEYDYh91BM+Z8VwAAm1UNWT2IYp29QVD7AOS/t+iEzsfSo456yB56V
+         DaL2pH09Vt6AUOH/nKVVkCPUxD0oL6ghQQdgRRQfsburn61xhwGye+UlrrB4xoqwp1Nj
+         V9HSKAZZ4YPMGmREs2i9h0qEqbs3St0K4qrVoRLCWucbYn2+7hKVLpUp9t5quvTmxiW/
+         AhTXGpA/q3KZKaHzfWkjhPYz3ixrAcrjNSYpNAtIkpxCWQVa0BrPxGLlrgXJPbcci4EP
+         68KQ==
+X-Forwarded-Encrypted: i=1; AHgh+RojqVuds0AAAW/Qpp4CdC1aESTjGDjb2dc8iRGTSIJHFE9QuSp96M/N02CRKw8HOUVHnpV/TSO8kJE=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw9MmdjU/ULPE64lPYykDiGrajr04/6/YSHgm/DuVqV1UCpi5Si
+	5PSLgc+s+9wKFCyCTeOHTrXWGGC4a6Z7jIChUi0BzUNxNoBkCZxabdcicqq/UsGR8MZMERnl5q5
+	QUZ7n4HJ0JUGFe0C0WOyrY+lmwF8WXBykmR88FZ6Tfmrn54HYbBzkYmOkgKw6PUms5OgOXzp8UE
+	bfMU4e89cPMjUZWFqkxpZUJwjJ26PTSH9ufcnmpyUdxAz4g+B8OTKCz06W/n2Qro/GCWpLw7U75
+	jXhXlycp6ffYbhZM65YLg==
+X-Gm-Gg: AR+sD12t6gP3XfiLf5+rEHqZoITJRKHKge/2Ih8oW5k8A54gkN8PK71ENHdpxQbPgyW
+	9Z2n+SWDPCkXyP+E8HinHq4XZlHQJJzcZdKF3dkb8iggPSmPRFfBSWVrQbBv84DyrdpKeXHmmOc
+	79nqo4curd4G4jakttOYHZTDq28ziCwL4YxSSyp0depqBDCzqVAicJ/ISHsCYSKMKXuglr3GIpb
+	o4z9fSlEfWioB4RvVaSD6bRVI6pmZxn5oIkEb5kqNXTwOX2sCavQa2Xpw44JfgaoCMrchQ+MVLj
+	FOK5qs8JMO/B2+51gXCTU00f91o+PoIyAR6lRViJbnOvNw7CwClua3dTssaaQpUAMSkvJtpsb0V
+	r0gBRVahz9m682dyuTN2HFnBhc/+BlBWGkWOCTmUGcfYPWJDESrCGpf8v5rqBXbrqUyrBf8GyhC
+	ahvzF1qv4Ld+PAQt6wzeKW0s4zBCavPw5rs8XNMAo=
+X-Received: by 2002:a05:6102:1496:b0:737:e354:4092 with SMTP id ada2fe7eead31-75b23a75ebamr4697447137.11.1785673483447;
+        Sun, 02 Aug 2026 05:24:43 -0700 (PDT)
 Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-22.dlp.protect.broadcom.com. [144.49.247.22])
-        by smtp-relay.gmail.com with ESMTPS id 46e09a7af769-7f18ed3259csm418276a34.1.2026.08.02.03.25.18
+        by smtp-relay.gmail.com with ESMTPS id ada2fe7eead31-759c9562314sm569567137.19.2026.08.02.05.24.42
         for <brcm80211@lists.linux.dev>
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 02 Aug 2026 03:25:19 -0700 (PDT)
+        Sun, 02 Aug 2026 05:24:43 -0700 (PDT)
 X-Relaying-Domain: broadcom.com
 X-CFilter-Loop: Reflected
-Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-ca8aee88725so3708245a12.3
-        for <brcm80211@lists.linux.dev>; Sun, 02 Aug 2026 03:25:17 -0700 (PDT)
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-51c0f0a0760so51482451cf.2
+        for <brcm80211@lists.linux.dev>; Sun, 02 Aug 2026 05:24:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1785666317; x=1786271117; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:from:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=U30tOpuVn8qhXLPjIH2/nfOt+KCdmSRNh2hKzUS0a7U=;
-        b=XtMkATTFOUam/08L17QLbD2AuxOnUqeNX67hCoCMA8F6u5hEt3AeS4Bsca8piXPRoU
-         s8N4448e0P4O9x2kXAw2hWSv3NwbCeaammn1LCe0Wq4o+SZpeV/Jiif1rLpZXHp3e4Vc
-         FHQcqWHsyJZD0vBafiwLUoh7r0y/+UkPE2qyM=
-X-Forwarded-Encrypted: i=1; AHgh+RqOhVyANsFRHwRbLP9n8GDofrE00GHa/0OACL8p+JjH613I31CmlkJ/6IxVvo0FLYwL58mAFLHlroM=@lists.linux.dev
-X-Received: by 2002:a05:6a21:3a4a:b0:3c4:14a3:fed4 with SMTP id adf61e73a8af0-3c92a8f5e7fmr6805478637.55.1785666317001;
-        Sun, 02 Aug 2026 03:25:17 -0700 (PDT)
-X-Received: by 2002:a05:6a21:3a4a:b0:3c4:14a3:fed4 with SMTP id adf61e73a8af0-3c92a8f5e7fmr6805451637.55.1785666316514;
-        Sun, 02 Aug 2026 03:25:16 -0700 (PDT)
-Received: from [10.229.42.78] ([192.19.176.227])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13fab1334cfsm22570319c88.1.2026.08.02.03.25.14
+        d=broadcom.com; s=google; t=1785673482; x=1786278282; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=QNXeMyhkpbk8rwnA0O7uBQvIUEYbGICoPWDBw29OKOs=;
+        b=bdETKT5bL3Y3d+V00yW2Y9RPvrwUQQL2OAKLyPlP6/DDvlPc3oJUwrZTgsa3QpUmEu
+         iG4QneoH/vE/X4awG7i0h31nH1VU/CVsN0UMrXY4OiHghYb+j3fI+yybP3g7LIGyDwoR
+         o7aUqcDa2w2lHALyBxh+STZXNsIIFtZZDCQxU=
+X-Forwarded-Encrypted: i=1; AHgh+Rq0ukOVWJpBeIGoeD8rnz/T7cq1FbVd6gWOsJgCwsoZgSnpkI50uQM+feJPcDgOFbwcjA2X7oS8WHI=@lists.linux.dev
+X-Received: by 2002:a05:622a:5906:b0:51c:8439:14e5 with SMTP id d75a77b69052e-52b566951a7mr125476461cf.10.1785673481804;
+        Sun, 02 Aug 2026 05:24:41 -0700 (PDT)
+X-Received: by 2002:a05:622a:5906:b0:51c:8439:14e5 with SMTP id d75a77b69052e-52b566951a7mr125476081cf.10.1785673481411;
+        Sun, 02 Aug 2026 05:24:41 -0700 (PDT)
+Received: from [192.168.178.26] (f215227.upc-f.chello.nl. [80.56.215.227])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-52b4eb6a84csm42125231cf.18.2026.08.02.05.24.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 02 Aug 2026 03:25:15 -0700 (PDT)
-Message-ID: <d5b7a4a8-532f-47c7-a883-036d5cc81a90@broadcom.com>
-Date: Sun, 2 Aug 2026 12:25:09 +0200
+        Sun, 02 Aug 2026 05:24:39 -0700 (PDT)
+Message-ID: <f449500c-74f3-40e0-bbcc-ee560951714d@broadcom.com>
+Date: Sun, 2 Aug 2026 14:24:34 +0200
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -82,58 +83,55 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/8] wifi: brcm80211: performance and stability fixes
-From: Arend van Spriel <arend.vanspriel@broadcom.com>
-To: Shivesh <chanelshivesh@gmail.com>
+Subject: Re: [PATCH wireless] wifi: brcmfmac: validate msgbuf flowring IDs
+ before use
+To: Can Peng <pengcan@kylinos.cn>
 Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
- brcm80211-dev-list.pdl@broadcom.com, linux-kernel@vger.kernel.org
-References: <20260731160646.3812-1-chanelshivesh@gmail.com>
- <20260802101530.4028803-1-arend.vanspriel@broadcom.com>
+ brcm80211-dev-list.pdl@broadcom.com, linux-kernel@vger.kernel.org,
+ stable@vger.kernel.org
+References: <20260723055618.550834-1-pengcan@kylinos.cn>
+ <20260802083905.3819981-3-arend.vanspriel@broadcom.com>
 Content-Language: en-US
-In-Reply-To: <20260802101530.4028803-1-arend.vanspriel@broadcom.com>
+From: Arend van Spriel <arend.vanspriel@broadcom.com>
+In-Reply-To: <20260802083905.3819981-3-arend.vanspriel@broadcom.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
 
-On 02/08/2026 12:15, Arend van Spriel wrote:
-> On Fri, 31 Jul 2026 16:06:17 +0000, Shivesh <chanelshivesh@gmail.com> wrote:
->> This series fixes several performance bottlenecks and correctness
->> issues in both brcmfmac (PCIe/SDIO) and brcmsmac drivers.
+On 02/08/2026 10:39, Arend van Spriel wrote:
+> On Thu, 23 Jul 2026 13:56:17 +0800, Can Peng <pengcan@kylinos.cn> wrote:
+>> Firmware messages carry flow_ring_id values which brcmfmac converts
+>> to an internal flowid by subtracting
+>> BRCMF_H2D_MSGRING_FLOWRING_IDSTART. The resulting value is used as
+>> a bit index in txstatus_done_map and as an array index into
+>> msgbuf->flowrings and the flowring state.
+>>
+>> Validate the firmware supplied flow_ring_id before using it. This
+>> prevents flow_ring_id values below BRCMF_H2D_MSGRING_FLOWRING_IDSTART
+>> from underflowing and rejects values outside msgbuf->max_flowrings.
+>>
+>> In the tx status path, complete the packet with an error after
+>> removing a valid packet id so the skb is not leaked when the flow
+>> ring id is invalid.
+>>
+>> Fixes: 9a1bb60250d2 ("brcmfmac: Adding msgbuf protocol.")
+>> Cc: stable@vger.kernel.org
+>> Signed-off-by: Can Peng <pengcan@kylinos.cn>
+>> ---
+>>   .../wireless/broadcom/brcm80211/brcmfmac/msgbuf.c  | 46 +++++++++++++++++++---
+>>   1 file changed, 40 insertions(+), 6 deletions(-)
 > 
-> Two blockers need to be fixed before any of this can be applied:
+> One nit: there is a double blank line between brcmf_msgbuf_get_flowid()
+> and brcmf_msgbuf_dequeue_work() in the resulting code. This comes from
+> the pre-existing double blank line that was between
+> brcmf_msgbuf_remove_flowring() and brcmf_msgbuf_dequeue_work() -- worth
+> cleaning up to a single blank line.
 > 
-> - 2/8: num++ was dropped from the subframe-parse loop. cnt is always 0
->    on return, so rd->seq_num += cnt - 1 underflows to 255 (u8) on every
->    successful glom receive, corrupting sequence-number tracking for all
->    subsequent packets.
-> 
-> - 4/8: pmksa->fils_cache_id does not exist in struct cfg80211_pmksa;
->    the correct field name is cache_id so this does not compile.
-> 
-> Beyond the blockers, please split the series into separate submissions:
-> 1. Stability and correctness fixes (3/8, 5/8 TX-stall fix, 6/8 Fixes
->     tagged part)
-> 2. Performance improvements (1/8, 2/8, 5/8, 6/8 performance parts)
-> 3. New functionality and comment-only patches (4/8 PMKID_V2,7/8, 8/8)
-> 
-> This makes it easier dealing with fixes that should go to stable trees.
-> For the stability series you can add Cc: stable@vger.kernel.org and a
-> Fixes: tag in the commit message.
-> 
-> Regarding patch 1/8: the patch also fixes a race where a ring state
-> changes RING_OPEN->RING_CLOSING while blocked causes a permanent
-> netif queue stop. The fix relies on the atomic counter so keeping them
-> together is fine, but this change is primarily a potential bug fix so
-> rephrase the subject, e.g. "fix blocked-ring race permanently stopping queue"
-> 
-> Finally, some of the commit messages seem to use LLM lingo so if there
-> was a coding assistent used please add an Assisted-by tag as required by
-> Documentation/process/coding-assistants.rst.
+> Minor enough that I will take care of it while applying if you do not
+> send a v2.
 
-Some additional remarks. Have these patches all been tested and if so 
-please add reference to the platform used. Especially for the 
-performance improvements it would also be good to have some profiling 
-information as to how much performance gain these patches provide.
+As I do not apply anything anywhere maybe Johannes will, but feel free 
+to send that v2.
 
 Regards,
 Arend
