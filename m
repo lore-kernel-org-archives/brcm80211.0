@@ -1,135 +1,153 @@
-Received: from mail-pf1-f228.google.com (mail-pf1-f228.google.com [209.85.210.228])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8FFF344D83
-	for <brcm80211@lists.linux.dev>; Mon,  3 Aug 2026 09:35:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.228
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6042637B021;
+	Mon,  3 Aug 2026 10:17:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785749725; cv=none; b=jNvFD/pmbBnxgr8gwldVmaIeFtaswOtvOriGd2khS7qsTevRlY6H8l/wb/xU207oun2shL4mhZstI69Tc2nS2ZOkarFbCjtN3ArEMGENqSnwu4zeyr4nqpw4XWZUvzNRsvcdlacM2GtZW3OV+30Nxxz891QcRB2ULpfi9STEAqk=
+	t=1785752262; cv=none; b=PSIwJ7S3Ta6MM8QV13OYlZWmWbny4ufsX6+yCDKhF8foEkC2w/5SnjlYZVyoUOe9TIPNR95NzsMQ7iKDwinJfRe6UHL+CxEo459cB2DAl0dc3129AxIngNIlHcecKzzloN/4nndt3bFuOZFPZgwDZ7jqFJFlJKz8xon6MkEstwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785749725; c=relaxed/simple;
-	bh=DoBL7Qly3tk+RGTMaFUJMUuVsP34uQLJMhuVsoEjrbo=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=KtiCV3e7pJF5qaqvQ/nArRtVJwvi4SKeAjU96CSNlAWBBS4zZKqc7Cq6XlGQxW2p2wngCa5B/uu2/HgA/Qe8Te6Jcbb17wgU1M2ZbVd9k6Bxm4F1a+5/eL74oLMnMqipBq2UKL9ELEgoiJlYDYV1CHEISAmMyFaYhHwtthA9KuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=OIv87jSM; arc=none smtp.client-ip=209.85.210.228
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+	s=arc-20240116; t=1785752262; c=relaxed/simple;
+	bh=R2j2jo01yIAtEiNFhUo1msrdmGjaHJaGeQvs/2uWMq0=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Czm95KalKpr7QPK42zbbeHrXuGgsDRalX0rd0t/WmCoFZHQL/h3h2nvK7JeHoIerP4YB6Fn2tv3CvNnd7SR1rYXj7qyjew91wyIgeKj84SGf2Iu2I//4AkfAdraD0Tlq9fMidPV/7WluUg5KdS7bJo8Wkp1xvsaaQUuUOeCQklw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mB9uPx/I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="OIv87jSM"
-Received: by mail-pf1-f228.google.com with SMTP id d2e1a72fcca58-84e27035206so3467189b3a.3
-        for <brcm80211@lists.linux.dev>; Mon, 03 Aug 2026 02:35:18 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785749717; x=1786354517;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:dkim-signature:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=EE8QIzp2YaXHpPmzLAzL2tRMNu4U4ZZi0jVVWshr8xY=;
-        b=gDZUYx39VKqV+b4hlQzH3r7WLwEldRT07vMoJCtEqG90SdJzv5Nik3EaofMO3mCHyh
-         0JHrDvjTYiF7/2jvC6WdfL7Zg0HuryJhTOKxHpDR8KLoum5uCtJs220cpKya+DAPQQeY
-         6+Riyebm2MrSpJTk9jgLogLU0Cbux4TcwrvKGvwxEeI+4rySneZeb01sjB0hzSvuU0ci
-         pcOwH6uHe1sQ6jfPAn7AGBpxBhZ4/aezTlcXXI8kUDpiYmCO9m1xNKYZaR0VZE6KA7Ee
-         N+oKr+3gi06bXapRejt8FmsP19h4G/6jrtUwM3HOpI2egG1OqQCkCIum7oIzumNCSCJS
-         mLqA==
-X-Forwarded-Encrypted: i=1; AHgh+RrqNaUC1TX7yrhk6ac/vMj99IFwhmXtx8kQzsEZpVgEilSoQivdvI/9ohbKNZbNFIiQukyVUq8TbKA=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyByxBHweJep68pCdzr4Q6pkXmwTUBfPNYSIEe2iy56WUYxRrs2
-	EJr2uufKb8Bl2IIsnEgnJMP4LC0o9CNiEadX3jfTbOf0rTi3LcoKV49GLLrNJNqRg8SNOmnByLb
-	giS8VhEWlFk0higxp66uwqaoVoJWF+Mi85fKFA3j3jR461FipRMCffTab91ZH8ZA4KD4EnlrziM
-	z/MrLjE3f+KwQ2/P/CkKMiJr+WFejNWc5yPL/Ng5jl5iQjY1NpP+lc3FcCa5QJle9WJIEEF7yzj
-	lQiGPLu6vzBAPk8H4I=
-X-Gm-Gg: AR+sD10FKqtojMpATXIo0wCivH4LkgXTuzTMDlgRVlEx8xyUAkL0QQ09LP+ElXUi1t4
-	KdO2BLCgo7/waz+rW+vuPq6vHWvsByf/ORT84nTFi6Tj00jcEKQgRBFHaGDaDgBWJ2jw/gVg/B5
-	n9lC9I/6Ud7b5DR/Hv6+cOWPeuekHxS7vVSCq79eJy2u8Q8z3QAzqEjzousoDWlOmkBVzXFKCYP
-	8fOSawIUZTS08jPGuKfzyyOdoGgib6fidMv54mm55TdPifSp+iW5qEhcK3cD8u2ZGBqLeqPc/NX
-	TwsnA+uxvXaOuK0D2Jw1vQmfSCtJCE1HHu+vgJeC7j3atxkqblVayn3bG+YCrw7C1JwVkfzwoPs
-	Y8t4Bs2L35FUg8ipZ1acifj05b0OVZCRL7w7N94gaG8WpzmM4lcpgdOb+tRTa6QHwYZuwA09Khs
-	R7Jlqn+l6jB15pHyHnFT8qdTcWRYREMwvIc+8Ul/o=
-X-Received: by 2002:a05:6a20:a11e:b0:3bf:5b7a:fc8b with SMTP id adf61e73a8af0-3c92a25e0fcmr9088566637.0.1785749717479;
-        Mon, 03 Aug 2026 02:35:17 -0700 (PDT)
-Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-27.dlp.protect.broadcom.com. [144.49.247.27])
-        by smtp-relay.gmail.com with ESMTPS id 5a478bee46e88-3153e2ae9d6sm667384eec.27.2026.08.03.02.35.16
-        for <brcm80211@lists.linux.dev>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 03 Aug 2026 02:35:17 -0700 (PDT)
-X-Relaying-Domain: broadcom.com
-X-CFilter-Loop: Reflected
-Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-cab041eced3so5112108a12.1
-        for <brcm80211@lists.linux.dev>; Mon, 03 Aug 2026 02:35:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1785749715; x=1786354515; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=EE8QIzp2YaXHpPmzLAzL2tRMNu4U4ZZi0jVVWshr8xY=;
-        b=OIv87jSMD1OdlvKCiVVZS8O7clu6Rvwj2Kx5577Rz79S5cuq3mTL1Rk0yQgRUCmmtl
-         FhXy5jB3HM6OAI5xZbDnd3I9hLxF+pF9st0f3gdxc1jFhtxhenW6sY05ZGdWMWLk8Yj+
-         qxOULfybmzbD7btO/BtzdVKLc4QuPeG1zVBcw=
-X-Forwarded-Encrypted: i=1; AHgh+RqjAq+fRRKeILhZAqzxQjDcLOWZ/SJmKU3Oq7Y9DANeE03qtMhDHPZQDDDNcHZPTk5Thp564rvX7Y4=@lists.linux.dev
-X-Received: by 2002:a05:6a21:3390:b0:3c4:3ada:384d with SMTP id adf61e73a8af0-3c92a57baf2mr8170850637.30.1785749715413;
-        Mon, 03 Aug 2026 02:35:15 -0700 (PDT)
-X-Received: by 2002:a05:6a21:3390:b0:3c4:3ada:384d with SMTP id adf61e73a8af0-3c92a57baf2mr8170813637.30.1785749714734;
-        Mon, 03 Aug 2026 02:35:14 -0700 (PDT)
-Received: from bld-bun-02.bun.broadcom.net ([192.19.176.227])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13fab2530c0sm29343644c88.8.2026.08.03.02.35.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Aug 2026 02:35:14 -0700 (PDT)
-From: Arend van Spriel <arend.vanspriel@broadcom.com>
-To: Johannes Berg <johannes@sipsolutions.net>
-Cc: linux-wireless@vger.kernel.org,
-	brcm80211@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	stable@vger.kernel.org,
-	Arend van Spriel <arend.vanspriel@broadcom.com>
-Subject: [PATCH wireless-next] wifi: brcmfmac: Fix memory leak in brcmf_sdio_read_control()
-Date: Mon,  3 Aug 2026 11:35:06 +0200
-Message-ID: <20260803093506.1647790-1-arend.vanspriel@broadcom.com>
-X-Mailer: git-send-email 2.54.0
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mB9uPx/I"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id DE65FC2BCB9;
+	Mon,  3 Aug 2026 10:17:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1785752261;
+	bh=R2j2jo01yIAtEiNFhUo1msrdmGjaHJaGeQvs/2uWMq0=;
+	h=From:Date:Subject:To:Cc:Reply-To:From;
+	b=mB9uPx/IwYOylnqrQ8G/uEcfr9J3OwSD9eBzoJIIXKxVYCpw5dNOQhu1Rg3C85nyb
+	 1urIzal/ssgE0t24tO5GeWAyJxiqs42p4mFk6UEXnZYVQyaAVIsDJS9q9k/ZXYEjHk
+	 hz2wWeaY4zfwoqvRPdo27rLkd4C726FgxwLLOaLNnOG5k4Fmsu/BOetk2zPOQkyAC/
+	 MUKIlfx6xWeoYUjRHGKjPjXMVSbPb+uUJoG/HRUZQKJmp9uvH9tgyb36BEglUqkjat
+	 GE9hYDxvrBtfKVFSZOe4yFzZUX2FYRdc6rmX7k0E0pwjrzovW1Mb7P9hvYZ8h1wpes
+	 q2SGSmbLwjGcg==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA66EC5518F;
+	Mon,  3 Aug 2026 10:17:41 +0000 (UTC)
+From: Markuss Broks via B4 Relay <devnull+markuss.broks.gmail.com@kernel.org>
+Date: Mon, 03 Aug 2026 13:17:41 +0300
+Subject: [PATCH] brcmfmac: Add support for BCM4361 PCIe chipset
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260803-broadcom-staging-v1-1-f6f77e55b72e@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMTQ7CIBBA4as0s5YEaVHxKo0LfgYcE8Ew2DRpe
+ ndRl9/ivQ0YKyHDddig4kJMJXccDwP4u80JBYVuUFKd5EWOwtVigy9Pwc0mykloY8/BRK2Nm6B
+ nr4qR1t9yvv3Nb/dA374f2PcPStFnTHQAAAA=
+X-Change-ID: 20260803-broadcom-staging-59a7d9f559b4
+To: Arend van Spriel <arend.vanspriel@broadcom.com>
+Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev, 
+ brcm80211-dev-list.pdl@broadcom.com, linux-kernel@vger.kernel.org, 
+ Markuss Broks <markuss.broks@gmail.com>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1785752260; l=4130;
+ i=markuss.broks@gmail.com; s=20260803; h=from:subject:message-id;
+ bh=wojphpqxOjYA3sK/i1dqEbMhbU33wHBn+bfOlTOLYLE=;
+ b=3WKR18P/KHGM4Qxj2KwWl1MU0Y1S7/U7XRacy8VELpCWIo7m9S4DtANAPr8kBtUupzpYFpC86
+ FN53afGJxtwA+OFfM2gs1pLo8hoUD4RfcgAwFVkORaow9HUxTq6pqsn
+X-Developer-Key: i=markuss.broks@gmail.com; a=ed25519;
+ pk=oKzGUTm30BCDqinRMpiHQqByOx1mp2mwmhg80Mv7Zg4=
+X-Endpoint-Received: by B4 Relay for markuss.broks@gmail.com/20260803 with
+ auth_id=911
+X-Original-From: Markuss Broks <markuss.broks@gmail.com>
+Reply-To: markuss.broks@gmail.com
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Markuss Broks <markuss.broks@gmail.com>
 
-The memory allocated for buf is not freed in some of the error paths in
-brcmf_sdio_read_control(). Fix that by adding vfree() calls.
+Those are the required changes for the BCM4361 PCIe chipset support.
 
-Cc: stable@vger.kernel.org
-Fixes: dd43a01c5cdb ("brcmfmac: use dynamically allocated control frame buffer")
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-[arend: rework as suggested by Johannes]
-Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Signed-off-by: Markuss Broks <markuss.broks@gmail.com>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c       | 3 +++
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c       | 3 +++
+ drivers/net/wireless/broadcom/brcm80211/include/brcm_hw_ids.h | 2 ++
+ 3 files changed, 8 insertions(+)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-index 9f7ed1d293a0..381801af3ac9 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-@@ -1827,17 +1827,18 @@ brcmf_sdio_read_control(struct brcmf_sdio *bus, u8 *hdr, uint len, uint doff)
- 	if (bus->rxctl) {
- 		brcmf_err("last control frame is being processed.\n");
- 		spin_unlock_bh(&bus->rxctl_lock);
--		vfree(buf);
- 		goto done;
- 	}
- 	bus->rxctl = buf + doff;
- 	bus->rxctl_orig = buf;
- 	bus->rxlen = len - doff;
- 	spin_unlock_bh(&bus->rxctl_lock);
-+	buf = NULL;
- 
- done:
- 	/* Awake any waiters */
- 	brcmf_sdio_dcmd_resp_wake(bus);
-+	vfree(buf);
- }
- 
- /* Pad read to blocksize for efficiency */
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c
+index 4adc0d0e4251..97120a659f8b 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c
+@@ -735,6 +735,8 @@ static u32 brcmf_chip_tcm_rambase(struct brcmf_chip_priv *ci)
+ 	case BRCM_CC_4355_CHIP_ID:
+ 	case BRCM_CC_4359_CHIP_ID:
+ 		return (ci->pub.chiprev < 9) ? 0x180000 : 0x160000;
++	case BRCM_CC_4361_CHIP_ID:
++		return 0x170000;
+ 	case BRCM_CC_4364_CHIP_ID:
+ 	case CY_CC_4373_CHIP_ID:
+ 		return 0x160000;
+@@ -1466,6 +1468,7 @@ bool brcmf_chip_sr_capable(struct brcmf_chip *pub)
+ 		reg = chip->ops->read32(chip->ctx, addr);
+ 		return (reg & CC_SR_CTL0_ENABLE_MASK) != 0;
+ 	case BRCM_CC_4359_CHIP_ID:
++	case BRCM_CC_4361_CHIP_ID:
+ 	case BRCM_CC_43751_CHIP_ID:
+ 	case BRCM_CC_43752_CHIP_ID:
+ 	case CY_CC_43012_CHIP_ID:
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+index 55f4d7b970f2..914ae72a7b74 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+@@ -59,6 +59,7 @@ BRCMF_FW_CLM_DEF(43570, "brcmfmac43570-pcie");
+ BRCMF_FW_DEF(4358, "brcmfmac4358-pcie");
+ BRCMF_FW_DEF(4359, "brcmfmac4359-pcie");
+ BRCMF_FW_DEF(4359C, "brcmfmac4359c-pcie");
++BRCMF_FW_CLM_DEF(4361, "brcmfmac4361-pcie");
+ BRCMF_FW_CLM_DEF(4364B2, "brcmfmac4364b2-pcie");
+ BRCMF_FW_CLM_DEF(4364B3, "brcmfmac4364b3-pcie");
+ BRCMF_FW_DEF(4365B, "brcmfmac4365b-pcie");
+@@ -98,6 +99,7 @@ static const struct brcmf_firmware_mapping brcmf_pcie_fwnames[] = {
+ 	BRCMF_FW_ENTRY(BRCM_CC_4358_CHIP_ID, 0xFFFFFFFF, 4358),
+ 	BRCMF_FW_ENTRY(BRCM_CC_4359_CHIP_ID, 0x000001FF, 4359),
+ 	BRCMF_FW_ENTRY(BRCM_CC_4359_CHIP_ID, 0xFFFFFE00, 4359C),
++	BRCMF_FW_ENTRY(BRCM_CC_4361_CHIP_ID, 0xFFFFFFFF, 4361),
+ 	BRCMF_FW_ENTRY(BRCM_CC_4364_CHIP_ID, 0x0000000F, 4364B2), /* 3 */
+ 	BRCMF_FW_ENTRY(BRCM_CC_4364_CHIP_ID, 0xFFFFFFF0, 4364B3), /* 4 */
+ 	BRCMF_FW_ENTRY(BRCM_CC_4365_CHIP_ID, 0x0000000F, 4365B),
+@@ -2747,6 +2749,7 @@ static const struct pci_device_id brcmf_pcie_devid_table[] = {
+ 	BRCMF_PCIE_DEVICE(BRCM_PCIE_43602_2G_DEVICE_ID, WCC),
+ 	BRCMF_PCIE_DEVICE(BRCM_PCIE_43602_5G_DEVICE_ID, WCC),
+ 	BRCMF_PCIE_DEVICE(BRCM_PCIE_43602_RAW_DEVICE_ID, WCC),
++	BRCMF_PCIE_DEVICE(BRCM_PCIE_4361_DEVICE_ID, WCC),
+ 	BRCMF_PCIE_DEVICE(BRCM_PCIE_4364_DEVICE_ID, WCC_SEED),
+ 	BRCMF_PCIE_DEVICE(BRCM_PCIE_4365_DEVICE_ID, BCA),
+ 	BRCMF_PCIE_DEVICE(BRCM_PCIE_4365_2G_DEVICE_ID, BCA),
+diff --git a/drivers/net/wireless/broadcom/brcm80211/include/brcm_hw_ids.h b/drivers/net/wireless/broadcom/brcm80211/include/brcm_hw_ids.h
+index df3b67ba4db2..b800cbfdece1 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/include/brcm_hw_ids.h
++++ b/drivers/net/wireless/broadcom/brcm80211/include/brcm_hw_ids.h
+@@ -46,6 +46,7 @@
+ #define BRCM_CC_4358_CHIP_ID		0x4358
+ #define BRCM_CC_4359_CHIP_ID		0x4359
+ #define BRCM_CC_43602_CHIP_ID		43602
++#define BRCM_CC_4361_CHIP_ID		0x4361
+ #define BRCM_CC_4364_CHIP_ID		0x4364
+ #define BRCM_CC_4365_CHIP_ID		0x4365
+ #define BRCM_CC_4366_CHIP_ID		0x4366
+@@ -86,6 +87,7 @@
+ #define BRCM_PCIE_43602_2G_DEVICE_ID	0x43bb
+ #define BRCM_PCIE_43602_5G_DEVICE_ID	0x43bc
+ #define BRCM_PCIE_43602_RAW_DEVICE_ID	43602
++#define BRCM_PCIE_4361_DEVICE_ID	0x441f
+ #define BRCM_PCIE_4364_DEVICE_ID	0x4464
+ #define BRCM_PCIE_4365_DEVICE_ID	0x43ca
+ #define BRCM_PCIE_4365_2G_DEVICE_ID	0x43cb
 
-base-commit: 4a0bd262df757b25fc4e2a53c947317c119ced4e
--- 
-2.54.0
+---
+base-commit: 415606a7be939835db9b0d6b711887586646346d
+change-id: 20260803-broadcom-staging-59a7d9f559b4
+
+Best regards,
+--  
+Markuss Broks <markuss.broks@gmail.com>
+
 
