@@ -1,215 +1,295 @@
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from MM0P280CU010.outbound.protection.outlook.com (mail-swedensouthazolkn19012056.outbound.protection.outlook.com [52.103.34.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB8D5389459
-	for <brcm80211@lists.linux.dev>; Wed,  5 Aug 2026 15:20:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785943250; cv=none; b=jkdWCTllZUxhkOHMuJBAg4X9Dy4jut75JAidNN9xEoL6xwdR3VpgiP1BSw5jsQQ3AF88/UBADONz2CU/y662JlPRIY5oPY5PVHeBb6xgAWBiLEVebP9gmT/Y9mx1rdkS81rrt/AQ/DjqYHRPqp6Kc5hGW6CUco8Mbdx9fqU5quw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785943250; c=relaxed/simple;
-	bh=pOsm6FrgunrEy4xg3MPZYoossqKIYDfdKu6pzcmAxos=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bAR0n0/ItVWOU95+52JSvK2Hf05jtZK/g+rsECp2PGjGdskmPQl1HkvFjR9HtglBMfd4TX6wex3bBLKr28Kuhj8zC1tbdw2T1yzwiTDfWyySwTK5yjuOIVzURpn0jakDpevOezy9veJ+FXAWfeH/N2cxlSStYIwc5O2d2Kh6+A4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RwmYSchm; arc=none smtp.client-ip=209.85.218.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23FB044CF59
+	for <brcm80211@lists.linux.dev>; Thu,  6 Aug 2026 11:33:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.34.56
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786016017; cv=fail; b=G7sJbDlWucBbNUSZDIkLS+xZvuQZtIDV4FeSzUbUtIWpfyTgvohQ/kxhfvT9WNcGnX6sJQxmBwo5GivfOYEeBaFuszqzTv2xo8iz267xOsf5+YRr4A0vQciQfxlApVoyBPtJQy0e0TLK5x5TqCNfa3+OC7xlpfxduwEwJpkwFqM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786016017; c=relaxed/simple;
+	bh=C4rkRhyjgB+WhF8/rnGK9vg1YTlPrhrEeRlcXtFopUo=;
+	h=From:To:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=Vx+M5zhTUeXWh7yafAJepHiy0mpRiY/UqqduglgWj3vbHWTQICTTv9w6aNhk8WlBxzLM5WsiZ4IbXoLo3rDzvexl9X/NG6K6BEaFwfvxKOF3mwNAyx6XFF3oT0VUM4OTK4N1E+X1Fy75LOlLDPbtlsoKrpHBlH9QFAd7OjhGYBU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=S3dLSN+f; arc=fail smtp.client-ip=52.103.34.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RwmYSchm"
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-c1c24ec9525so191691066b.1
-        for <brcm80211@lists.linux.dev>; Wed, 05 Aug 2026 08:20:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785943247; x=1786548047; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=v9epO7gQb+z39xQJcQzm+4bGloNLtTUWyXFpKMh1ihQ=;
-        b=RwmYSchmekOR0ruowKkGeZJBaONAYNZs+kZWwdqj1oE/vnYrxi2xdYwoBT20lWCeni
-         vXXUq7gDNe+tLTDJB9L9ncYAPfDmEnxF1TOPecdzI3Zcb7QtkwYyxJl9CrhtcFZJDMUu
-         qat0YxCUXo7mUiN1z4WHexn5OH7ey2KZrDXKvaKj6lpYDQ3bcDjacJW9SO7HfhTKywM/
-         qomrSE7jihsYyxcbeVPvg+vSzg21h1YdAIrmGjJ0P5NbcgkvacRBKzVqFqVzXXGMIM0Y
-         SrIW1dfoDqCIJzP34jjbiPDuRTtX1gtinwiMkivzm3oIzR1hc0bEvej8UGZ2cVvew0wa
-         yMeA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785943247; x=1786548047;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=v9epO7gQb+z39xQJcQzm+4bGloNLtTUWyXFpKMh1ihQ=;
-        b=Vpbn++qNph95mx4qL1ZWvqSFPykkL2ma7xJR6aB3T2gZyb47CztA2YDLhWhlVfxzHx
-         af3cbLCBvGJd6ixyhHjCBE2QPGVeF26XscdJSMRZWEHCa23PBM3lKNlYAOB5ThLmE8vg
-         0Mthk+GW9GNwRJ6iRv/cKUhwZlCeFNoQm9yCdRdmZSScOV9GhH2PlwWoHtGLU4AkB3Zf
-         CErzRj6L/jFk6AqiAhqtECypukn/CUM82iSdfsfjSnoz/IwoMdaVZo4LYix/mVRRgsQU
-         UfrItLHQzshj9GlFFwl37+I/VivcMHwabjnsUU0cUYoOD33apKwSLyVZz9GjQHJVXz3I
-         xtnw==
-X-Forwarded-Encrypted: i=1; AHgh+RqrHk5WWZS23gMyx46KPIqKo5A8puBav3Ml4Y4QEcSm2j/Yu9k+5BVk/mfnzCqJgaximjJzuJDqFRQ=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwUDXg5L75k31hZ52+WwpJ5LczS9I9/QecfTMFq59KmDXWQvsfP
-	ISeV/u0QYjBnsjKllfe+F8VtQgmEe/Ja0RtDkgL9iC3UoO4QBSieTfCN
-X-Gm-Gg: AR+sD13fLRFdlX2JY7Q0UsaZiKoRnCifzyJjyekYUtPfaY5X6ItZzNWFf3Hg+EqXJcA
-	V4MKO374jWyS2+gu68IXe9haebPVT0N9JPDgCyARghXY4fY1Rtt9Goj1s4qwvuVj0MAKyWw1PuP
-	pKnNxKnNPtjIiL+Or2yFm1ZskK1XTA5h60MACWcsst9Dbki7K3D++VKNes8xd0Gr5GsYV+S15oj
-	j9BctMRIUmB2KkBRvXFeZd63ZqzvpeTihBKOGLcHuJNXt4pZ/wiFRMEcCZ3cirD0yRrofIrqV23
-	auP7t+X3fiz6jhp8g5hyfbB2/mhHff3qzsp9YrIRj/lgPRHTHICSc029sRiGYCv2567SCEmzQ6+
-	cpKCXcDIl79T38MW5vDuOc4cm8FKeoEIxkE5HyU0/pT1/v9ihyhqo3cNz110c7Ro8U00zFzd6eG
-	YNvIIxm3raD1PHvsg0Q+akvm62oh33AXqNyND47WadYwCTyjN3ttU1N5vFGXHb7+DV6A==
-X-Received: by 2002:a17:907:ea8c:b0:bf0:b39:dcc8 with SMTP id a640c23a62f3a-c2039cc30d5mr394300766b.26.1785943246679;
-        Wed, 05 Aug 2026 08:20:46 -0700 (PDT)
-Received: from [192.168.68.75] ([95.46.73.2])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c20363e72eesm139084466b.40.2026.08.05.08.20.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Aug 2026 08:20:46 -0700 (PDT)
-Message-ID: <568e2b4c-435b-4258-9137-8c22ba5af427@gmail.com>
-Date: Wed, 5 Aug 2026 18:20:45 +0300
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="S3dLSN+f"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=boTBJc4WlYX4Fc6NxPqH+XxSnfXtFAQlV4B3yw8aejUwh69YfmMlNyG7n/BUnG3+DZqK/cqSPymbt7ZtzIWo5rey4/uT0K5EKxPcQ/t7wL/mkoPqpYwSJ+RTgFAminnJ095ACE9ENlPypS+TJtVHiuV+ieOEUBI1wx96WxLGVrb4xeF7U2JFYzrsDCxfH6mf79ReDJUo/lIYvKkT/zRbTntiubGq1daxMcg/1BZY99v8suYNdUNEjC3TSdkdQxHMR+Hj1CAjM8u8iD8fNx8kHA+E1/1SX8CSoulf3ubKIjXIlzzVDQRvu7SWhdD5btMQqPVlKRX/KA+2yq2/SRiueQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=6AdojZHDmMd3uj+FmunouK/levQ8CA45KQv5vK9vMLI=;
+ b=tDF2ckmVQtJTghLXEFpunJ0U/RQmvt0N/qg5ZkqjHulNeUzGs58cZOj+1Ey/5pWWTYx6/JERoS3w6ed7k61eaKt64aSe2f3n2Fuq+HgK2AHhrKRbzTBPhbFDiVKIgn4R49j0LshJiqmRh8LJRzzXR5Y+w786GgM2YnI5tzelC1PsIGq0kfGGENfrx2bn8zaxACc9m1V6ONN/z758VFTKMBpTlH2NzSspRRinNOuF8u+MIBsAx7172prSqvJEfufu9/HeC/BISNMqIbf5mQ4OvZtWelhhVGerOvvw8kBXx/KeJsgHLt7YatQw6ErkbDy12CnhV+Gw3qv3MPOuB5PLeg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=6AdojZHDmMd3uj+FmunouK/levQ8CA45KQv5vK9vMLI=;
+ b=S3dLSN+fSIrCf/aU3umwD4wo+4nBl3sy5eypJ8QmGuw429QIXKaF2iTb6KFYgotV3A3Du7KbhvgDgEh6L1nWmYE5eV2BeoVS67mDc7k2UuWkcLF6FXriKXBlXJUfyjHZ56Tu63v0CtBkCM8Yfd9QqO6Ytsm4Kj5YwyXhZPZOBpVB9zBjsXUDFuDEJMhTp3X9RL34KvL+rBiKizV0Eflx7iCmV6nTMKOmSPgQQ5m3y0StNGFtE7/T/2pJ7aVWFf+kubgD1ol1tkrfkJ2NBplWLxv0n2bvTfLxJn1lTZfZHCDsqQOSNlrIvLTMWdSOwot6aYsHScw/p+2+SHG3fBVHBQ==
+Received: from GVYP280MB1056.SWEP280.PROD.OUTLOOK.COM (2603:10a6:150:eb::13)
+ by GV5P280MB2187.SWEP280.PROD.OUTLOOK.COM (2603:10a6:150:377::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.21; Thu, 6 Aug
+ 2026 11:33:32 +0000
+Received: from GVYP280MB1056.SWEP280.PROD.OUTLOOK.COM
+ ([fe80::fd2d:3517:f39d:926a]) by GVYP280MB1056.SWEP280.PROD.OUTLOOK.COM
+ ([fe80::fd2d:3517:f39d:926a%3]) with mapi id 15.21.0292.019; Thu, 6 Aug 2026
+ 11:33:32 +0000
+From: Stephen C Goodman <Stephen.C.Goodman2@outlook.com>
+To: "linux-wireless@vger.kernel.org" <linux-wireless@vger.kernel.org>,
+	"brcm80211@lists.linux.dev" <brcm80211@lists.linux.dev>,
+	"arend.vanspriel@broadcom.com" <arend.vanspriel@broadcom.com>,
+	"brcm80211-dev-list.pdl@broadcom.com" <brcm80211-dev-list.pdl@broadcom.com>
+Subject: Re: brcmfmac: multi-BSS fails with arbitrary per-BSS MAC addresses
+Thread-Topic: brcmfmac: multi-BSS fails with arbitrary per-BSS MAC addresses
+Thread-Index: AQHdI21MToUzxZi3FUai5UCQnAbZJLaQ5zV1
+Date: Thu, 6 Aug 2026 11:33:32 +0000
+Message-ID:
+ <GVYP280MB10568E8371572689D15B728C9DD22@GVYP280MB1056.SWEP280.PROD.OUTLOOK.COM>
+References:
+ <GVYP280MB1056B22F060395735F23C20C9DD52@GVYP280MB1056.SWEP280.PROD.OUTLOOK.COM>
+In-Reply-To:
+ <GVYP280MB1056B22F060395735F23C20C9DD52@GVYP280MB1056.SWEP280.PROD.OUTLOOK.COM>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: GVYP280MB1056:EE_|GV5P280MB2187:EE_
+x-ms-office365-filtering-correlation-id: b54656c4-5408-4aa6-d8ba-08def3ae8b89
+x-microsoft-antispam:
+ BCL:0;ARA:14566002|31061999003|15080799012|6012599012|19101099003|8062599012|8060799015|19110799012|25010399006|51005399006|15030799006|41001999006|40105399003|2607281247196008|102099032|3412199025|440099028;
+x-microsoft-antispam-message-info:
+ =?iso-8859-1?Q?lCuAIEvNtEFLto+qcQ3LGzbeDjqSUSmS637OXHityA9bfCOdevhdApiQSS?=
+ =?iso-8859-1?Q?hS3f61kS2swP9TSvFZ13KcuzhYAkARrCIzCFlCruDF2Bt1VhUnQ0w5avy3?=
+ =?iso-8859-1?Q?ljzc6YI0C0eaMyby/QuUQOnyO7TN3fv4SOqBDZGy44OhX+CPjkZKSEwbvl?=
+ =?iso-8859-1?Q?fqzaHL7sAqmcFaK7P1iRITwO6ell4dVLMDKFqUTzS9P1logYoz3yn4coTA?=
+ =?iso-8859-1?Q?FHTfdvfDOyRvF15z7757cblj3ScNlozUZNIZsZrY1M8T+MT7rq4ff1lOyQ?=
+ =?iso-8859-1?Q?OvV/3OnW/0hI9V1GhrNxMnaGg41ELuO2Jt0mmcR0KTOmS1at0DXV6hvTsA?=
+ =?iso-8859-1?Q?4uQXawNqf8eFhbcXPTTZGEFiUfzt3v+1i5nq3MQoGCzvtDm7ESsOYCnXeQ?=
+ =?iso-8859-1?Q?KvufVuH5iGEQMlCnWyo6MAdGtqeM+yzY7nOXhnNyAP2s6b1Z/2Y4LUpNr9?=
+ =?iso-8859-1?Q?AkFqfTDX0fwj7ev1DodeOxKZ9H3BfArKodsesupmD7DfGVwnysA1drZsPU?=
+ =?iso-8859-1?Q?lAjyHCvwG0pFm7KPmpQxPz48sz1U5/yqNwxgR4Mp7rZW544nwW3Qxpyixb?=
+ =?iso-8859-1?Q?fIw9KgCZ8cfsUl3I36lKJT+CRmzhuhn5qtjgxzOa48jHpzy5mRc6nDO/6d?=
+ =?iso-8859-1?Q?GbmRwAnQTUoH/pRfh5rALpEE+fAfmNJTzGwjSnl2rvACO49oJ45u04Ecwg?=
+ =?iso-8859-1?Q?vyABsNqJnrXgA4OghXzhP8lcW31m39/sDv57W1M2hkOkh8XNpUYaswFOvF?=
+ =?iso-8859-1?Q?x9UAdXAxyi1VOtQFHfetdu1dVMgFjX9DJstEClJLYVn088KWviXZvNvx72?=
+ =?iso-8859-1?Q?hR6H/rpnuVZuAKBSPuuy+9anLYnUqz60I1xUZQKaiS9/5aeboB8vXMpK57?=
+ =?iso-8859-1?Q?TjSEduQYuikiHtcoHw61zBv5wa9emD8fsC5/N4MhfLfMNbZxPuayaC4EwB?=
+ =?iso-8859-1?Q?TdjqB/b4V2Weih0iO1ONhhxUTOcYcKZH7DK123TpYCnW/K8h09WTYISqO9?=
+ =?iso-8859-1?Q?ziT7tGLn0KSbaEROqcdZaalCVinlPUHRE8zc3oCaLH6/51tLPP363aFKrE?=
+ =?iso-8859-1?Q?oOZdt26cvNSIdvDKXrCJqYY=3D?=
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?iso-8859-1?Q?EOGdtPkKLYvjUc2auPlZxy6astCYu9SW8IO7QNP1Ku2ALyNuTrmN4q9tPq?=
+ =?iso-8859-1?Q?TWEHIfiuzqrqkcvcN2tywz8SFb+hcHCEYp9gMcO5q2EFH3Fgn0QrTv/mEd?=
+ =?iso-8859-1?Q?9gzCjHuegErRXPNuMyWG+lSgGVPn1U8TcmBxxdpw8NIvX7ey3znxyqA3nF?=
+ =?iso-8859-1?Q?BCNtdyvLbj7y2gsdOOGQcRV8luvssm/e8HCbam9VoOFFPB5ymK3VrL37mO?=
+ =?iso-8859-1?Q?GYfA5DBn3BXqtM35yH45xl7rrbXdKHd4kINtk/rjlsC4TTk5Y2NWLBqjYu?=
+ =?iso-8859-1?Q?vDDRRjmpAsdw7Z5NhbzVifg5/kJoXBeeN/FxlTRI8+VAoQM6EJjinMC/6M?=
+ =?iso-8859-1?Q?NhEZpDaxTms7I3kwbJ0d/d4QFnwzpxHYh2aSrTm4PsW1vH2tYxO5n62AVD?=
+ =?iso-8859-1?Q?fqdd4rzoDVcrSHLpGn5cqTC4i6tiliM+WYFgL37FSE8iHvUm4sM8RCWAKK?=
+ =?iso-8859-1?Q?CiF/NobmDWff4wwmQwJJeVH8MfywhZUuyO1nx66lgVwWbwvVEMQ52njQGW?=
+ =?iso-8859-1?Q?G5j4BHM6Ooe6sFGQkJQmZqimyZEN5v/9Wd3DoMtLIoEJzRCC/WFW9CcwGM?=
+ =?iso-8859-1?Q?9gGePHij44al1kcHBW8c3SV++5NFBmMxeApBNXzNtzD9zWBpbNytPYaFBV?=
+ =?iso-8859-1?Q?SN6p8MCL3AKINulfqzY8Y0HZZ9jLFYv/Mkl+c/myOCQpY32bZ1XrAbMjIR?=
+ =?iso-8859-1?Q?S4qc2VReoVmXXWXeakuguwZGkRKgxS9nt8jxtNCw5jiPTrhlrzZja6t9Im?=
+ =?iso-8859-1?Q?IpstaX6UBgXeu34aGn+fQiBF8R8e1Lvu1boAJ6GIJaeMSqc6WZ1Kvpcsm1?=
+ =?iso-8859-1?Q?l4Sd5Ufozn17BoEhs/5fmuopc0tdKzNHlL6PULT0M1qhOr5Yayi5tbuZ8S?=
+ =?iso-8859-1?Q?OzOTKobdBZtSR2r28N+tuiMCxK0yytp7PKcyW7SOYZHTJW/ckekLvWZluc?=
+ =?iso-8859-1?Q?F6YJ47+964ksf5zJ56TcbMGXxhTKOgW9Q40jQFXAEVx5VtNAUxe9zhQMtS?=
+ =?iso-8859-1?Q?weGXViBMvjhS7Pi+UriGOJ2t7MRfl+/8zZLxTB5pdcT/1H34fId5wkxLSQ?=
+ =?iso-8859-1?Q?masa4Pv31PDRrquqAcvgYvf9OISU0roxXbefoiqIjrDFQ5mouaewJfsofz?=
+ =?iso-8859-1?Q?Otx72KgLf5p238xvEsOos8lsz1Lj81hfg03hUB2j2tyJm9+Mpzlg7PY4tp?=
+ =?iso-8859-1?Q?hlrmdyccJ+tmv1Js0IpNCUeaA1kUqYSBlBcc65V8KhevusjzNoXIR/Yy2Z?=
+ =?iso-8859-1?Q?HWDGBoFESG+NOwbXnj7gAs3LI5X7RtGaH2HFSDtHNZAqULHTbMSsFcQBTh?=
+ =?iso-8859-1?Q?/Rhmliic9P+dQfP1/IegMwe+8gxDn+1wnNvWT4dlceZIn1xCb2uSx3VEeI?=
+ =?iso-8859-1?Q?Y4tEc8TpbdVoq1NKDQmWxN2T5cRKWKkhUfQ26n16Kp1OBkuAL4LyMasjTT?=
+ =?iso-8859-1?Q?eqgI9mCLR7p4wTc+UkiD6U18Elz5VahQN5yL2Q=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH wireless-next v2] wifi: brcmfmac: Add support for BCM4361
- PCIe chipset
-To: Arend van Spriel <arend.vanspriel@broadcom.com>
-Cc: Johannes Berg <johannes@sipsolutions.net>,
- linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
- brcm80211-dev-list.pdl@broadcom.com, linux-kernel@vger.kernel.org
-References: <20260804-broadcom-staging-v2-1-cebdc69e938c@gmail.com>
- <2dc55d93-544f-47ec-b349-c206f5414f22@broadcom.com>
- <15ce55e2-c4cc-4579-811f-4c13e19bc6e5@gmail.com>
- <2ca5662a-4946-4b38-bd1d-adc27f86aa16@broadcom.com>
-Content-Language: en-US
-From: Markuss Broks <markuss.broks@gmail.com>
-In-Reply-To: <2ca5662a-4946-4b38-bd1d-adc27f86aa16@broadcom.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: GVYP280MB1056.SWEP280.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: b54656c4-5408-4aa6-d8ba-08def3ae8b89
+X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Aug 2026 11:33:32.3547
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV5P280MB2187
 
-Hi Arend,
-
-On 8/5/26 6:16 PM, Arend van Spriel wrote:
-> On 05/08/2026 15:56, Markuss Broks wrote:
->> Hi Arend,
->>
->> On 8/5/26 8:46 AM, Arend van Spriel wrote:
->>> On 04/08/2026 16:07, Markuss Broks via B4 Relay wrote:
->>>> From: Markuss Broks <markuss.broks@gmail.com>
->>>>
->>>> Those are the required changes for the BCM4361 PCIe chipset support.
->>>
->>> Hi Markuss,
->>>
->>> That is a brief commit message. Maybe you can provide a bit of 
->>> context for this patch answering these questions: Are you using this 
->>> device in some project? What platform are you using (if any)? What 
->>> works and what does not?
->> I was just looking at similar device additions in brcmfmac, and 
->> noticed they didn't have much of a description, so I decided not to 
->> add much either. Should I add some general info about the BCM4361 
->> into the commit message?
->>
->> BCM4361 is used on the Samsung Galaxy S9 device (samsung-starlte), 
->> based on Exynos9810. There it's connected via PCIe link. Not sure if 
->> perhaps there's SDIO or USB or other variants of this chipset. 
->> Everything "basic" seems to work, seems to connect to both 2.4GHz and 
->> 5GHz networks, download speed looks good. Haven't tried station mode, 
->> but I'm not sure what's the proper way to set it up anyway.
->
-> Mentioning the platform you tested these patches on is sufficient. So 
-> when you say "connect to both 2.4GHz and 5GHz networks" I somehow 
-> suspect you already covered station mode.
-Okay, sure. I guess I kinda mixed up the terminology here, I meant to 
-say that I haven't tested the AP mode, not the station mode, sorry for 
-the confusion.
->  >>
->>>> Signed-off-by: Markuss Broks <markuss.broks@gmail.com>
->>>> ---
->>>> Changes in v2:
->>>> - EDITME: describe what is new in this series revision.
->>>> - EDITME: use bulletpoints and terse descriptions.
->>>
->>> This really does not look very useful. Those EDITME: are for you! As 
->>> the
->>> actual patch did not change you can probably say:
->>>   - fix subject format indicating wifi subsystem and wireless-next 
->>> repo.
->>
->> Oh, sorry, I did not notice that b4 puts the changelog there if it's 
->> not in the cover letter. It's been a while since I last submitted 
->> something :) I will add the changelog there for v2 and v3 once I 
->> submit a v3.
->
-> Sure. No problem.
->
->>>
->>>> - Link to v1: https://patch.msgid.link/20260803-broadcom-staging- 
->>>> v1-1-f6f77e55b72e@gmail.com
->>>> ---
->>>> drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c       | 3 +++
->>>> drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c       | 3 +++
->>>> drivers/net/wireless/broadcom/brcm80211/include/brcm_hw_ids.h | 2 ++
->>>> 3 files changed, 8 insertions(+)
->>>
->>> [...]
->>>
->>>> diff --git 
->>>> a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c 
->>>> b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
->>>> index 55f4d7b970f2..914ae72a7b74 100644
->>>> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
->>>> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
->>>> @@ -59,6 +59,7 @@ BRCMF_FW_CLM_DEF(43570, "brcmfmac43570-pcie");
->>>> BRCMF_FW_DEF(4358, "brcmfmac4358-pcie");
->>>> BRCMF_FW_DEF(4359, "brcmfmac4359-pcie");
->>>> BRCMF_FW_DEF(4359C, "brcmfmac4359c-pcie");
->>>> +BRCMF_FW_CLM_DEF(4361, "brcmfmac4361-pcie");
->>>
->>> Are you sure the CLM blob is required? Can you test without it being 
->>> present in /lib/firmware?
->> I have tried without the CLM blob, it says "no clm blob available, 
->> device might have limited channels available" but seems to at least 
->> somewhat work, I haven't noticed a difference. It's still a good idea 
->> to load it probably, right?
->
-> Right. I was just curious whether it has a working CLM blob compiled 
-> in firmware or not.
->
->>>
->>>> BRCMF_FW_CLM_DEF(4364B2, "brcmfmac4364b2-pcie");
->>>> BRCMF_FW_CLM_DEF(4364B3, "brcmfmac4364b3-pcie");
->>>> BRCMF_FW_DEF(4365B, "brcmfmac4365b-pcie");
->>>
->>> [...]
->>>
->>>> diff --git a/drivers/net/wireless/broadcom/brcm80211/include/ 
->>>> brcm_hw_ids.h b/drivers/net/wireless/broadcom/brcm80211/include/ 
->>>> brcm_hw_ids.h
->>>> index df3b67ba4db2..b800cbfdece1 100644
->>>> --- a/drivers/net/wireless/broadcom/brcm80211/include/brcm_hw_ids.h
->>>> +++ b/drivers/net/wireless/broadcom/brcm80211/include/brcm_hw_ids.h
->>>
->>> [...]
->>>
->>>> @@ -86,6 +87,7 @@
->>>> #define BRCM_PCIE_43602_2G_DEVICE_ID 0x43bb
->>>> #define BRCM_PCIE_43602_5G_DEVICE_ID 0x43bc
->>>> #define BRCM_PCIE_43602_RAW_DEVICE_ID 43602
->>>> +#define BRCM_PCIE_4361_DEVICE_ID 0x441f
->>>
->>> Please add:
->>> +#define BRCM_PCIE_4361_2G_DEVICE_ID 0x4420
->>> +#define BRCM_PCIE_4361_5G_DEVICE_ID 0x4421
->>
->> Are those some special variants of the chipset?
->
-> Not really. The difference is in the radio frontend. 0x441f is a 
-> dual-band. The other two have only a single band so the board gets a 
-> bit cheaper. The device id is programmed in on-chip OTP so firmware 
-> knows what type of board it is running on.
-Okay, I see, thanks for the explanation!
->
-> Regards,
-> Arend
-
--Markuss
-
+Hi,=0A=
+=0A=
+I have obtained additional reproducible results concerning brcmfmac=0A=
+MAC-address handling with multiple AP interfaces.=0A=
+=0A=
+=0A=
+## Summary=0A=
+=0A=
+Runtime MAC reassignment using "ip link" succeeds only on phy1-ap0,=0A=
+which appears to be the primary firmware BSS.=0A=
+=0A=
+The identical operation fails on every secondary AP interface:=0A=
+phy1-ap1, phy1-ap2, and phy1-ap3.=0A=
+=0A=
+The failure is not caused by unrelated randomized addresses or by an=0A=
+invalid address pattern. I tested four valid locally administered=0A=
+unicast addresses which:=0A=
+=0A=
+* have the same first five octets;=0A=
+* differ only in the final octet; and=0A=
+* follow the same sequential pattern with which the four APs can=0A=
+  otherwise operate concurrently.=0A=
+=0A=
+## Test=0A=
+=0A=
+The requested address set was:=0A=
+=0A=
+phy1-ap0  aa:bb:cc:dd:ee:01=0A=
+phy1-ap1  aa:bb:cc:dd:ee:02=0A=
+phy1-ap2  aa:bb:cc:dd:ee:03=0A=
+phy1-ap3  aa:bb:cc:dd:ee:04=0A=
+=0A=
+The first octet, 0xaa, identifies a valid locally administered unicast=0A=
+address.=0A=
+=0A=
+I performed the following operations:=0A=
+=0A=
+ip link set dev phy1-ap0 down=0A=
+ip link set dev phy1-ap0 address aa:bb:cc:dd:ee:01=0A=
+ip link set dev phy1-ap0 up=0A=
+=0A=
+ip link set dev phy1-ap1 down=0A=
+ip link set dev phy1-ap1 address aa:bb:cc:dd:ee:02=0A=
+ip link set dev phy1-ap1 up=0A=
+=0A=
+ip link set dev phy1-ap2 down=0A=
+ip link set dev phy1-ap2 address aa:bb:cc:dd:ee:03=0A=
+ip link set dev phy1-ap2 up=0A=
+=0A=
+ip link set dev phy1-ap3 down=0A=
+ip link set dev phy1-ap3 address aa:bb:cc:dd:ee:04=0A=
+ip link set dev phy1-ap3 up=0A=
+=0A=
+The phy1-ap0 address operation succeeds.=0A=
+=0A=
+The address operation on each secondary AP fails with:=0A=
+=0A=
+ip: SIOCSIFHWADDR: No error information=0A=
+=0A=
+The interfaces were explicitly brought back up after each failed=0A=
+address operation.=0A=
+=0A=
+## Kernel log=0A=
+=0A=
+The corresponding kernel error is:=0A=
+=0A=
+ieee80211 phy1: brcmf_c_set_cur_etheraddr:=0A=
+Setting cur_etheraddr failed, -52=0A=
+=0A=
+Example log excerpt:=0A=
+=0A=
+brcmfmac 0001:01:00.0 phy1-ap2: left promiscuous mode=0A=
+br-lan: port 8(phy1-ap2) entered disabled state=0A=
+ieee80211 phy1: brcmf_c_set_cur_etheraddr:=0A=
+Setting cur_etheraddr failed, -52=0A=
+br-lan: port 8(phy1-ap2) entered blocking state=0A=
+br-lan: port 8(phy1-ap2) entered disabled state=0A=
+brcmfmac 0001:01:00.0 phy1-ap2: entered allmulticast mode=0A=
+brcmfmac 0001:01:00.0 phy1-ap2: entered promiscuous mode=0A=
+=0A=
+brcmfmac 0001:01:00.0 phy1-ap3: left allmulticast mode=0A=
+brcmfmac 0001:01:00.0 phy1-ap3: left promiscuous mode=0A=
+br-lan: port 9(phy1-ap3) entered disabled state=0A=
+ieee80211 phy1: brcmf_c_set_cur_etheraddr:=0A=
+Setting cur_etheraddr failed, -52=0A=
+brcmfmac 0001:01:00.0 phy1-ap3: entered allmulticast mode=0A=
+brcmfmac 0001:01:00.0 phy1-ap3: entered promiscuous mode=0A=
+br-lan: port 9(phy1-ap3) entered forwarding state=0A=
+=0A=
+phy1-ap1 produces the same brcmf_c_set_cur_etheraddr failure; its line=0A=
+was immediately above the displayed tail of the log.=0A=
+=0A=
+The bridge state transitions are expected because I explicitly brought=0A=
+each interface down and up. This test did not produce the previous=0A=
+brcmf_cfg80211_add_iface error or an interface-creation retry loop.=0A=
+=0A=
+## Interpretation=0A=
+=0A=
+All AP netdevices expose the same ndo_set_mac_address operation.=0A=
+=0A=
+brcmf_netdev_set_mac_address() calls:=0A=
+=0A=
+brcmf_c_set_cur_etheraddr(ifp, address)=0A=
+=0A=
+which sends the ordinary "cur_etheraddr" IOVAR using:=0A=
+=0A=
+brcmf_fil_iovar_data_set(ifp, "cur_etheraddr", ...)=0A=
+=0A=
+The same operation succeeds on the primary AP but returns -52 on every=0A=
+secondary AP. The failure therefore correlates with the interface being=0A=
+a secondary BSSCFG, rather than with the requested address format.=0A=
+=0A=
+This does not by itself establish whether:=0A=
+=0A=
+1. the firmware does not permit changing a secondary BSSID after=0A=
+   creation; or=0A=
+=0A=
+2. brcmfmac needs to use a BSSCFG-indexed "cur_etheraddr" operation for=0A=
+   secondary AP interfaces.=0A=
+=0A=
+There may also be a relevant creation-path issue. In=0A=
+brcmf_apsta_add_vif(), params->macaddr is supplied when requesting a=0A=
+station interface, but the AP path calls brcmf_cfg80211_request_ap_if()=0A=
+without passing the requested AP address.=0A=
+=0A=
+If a secondary AP address can only be assigned during firmware=0A=
+interface/BSS creation, the current AP creation path does not appear to=0A=
+provide userspace's requested address.=0A=
+=0A=
+## Expected behavior=0A=
+=0A=
+A valid MAC address supplied for an AP interface should either:=0A=
+=0A=
+1. be applied to the correct firmware BSSCFG; or=0A=
+=0A=
+2. be rejected with an explicit unsupported-operation error if the=0A=
+   firmware does not permit changing that interface's address.=0A=
+=0A=
+The driver should not expose apparently identical runtime MAC-change=0A=
+support on all AP netdevices while the operation succeeds only on the=0A=
+primary AP.=0A=
+=0A=
+## Questions=0A=
+=0A=
+1. Is the ordinary "cur_etheraddr" IOVAR expected to operate on=0A=
+   secondary AP interfaces?=0A=
+=0A=
+2. Should brcmf_netdev_set_mac_address() use=0A=
+   brcmf_fil_bsscfg_data_set() for an interface whose bsscfgidx is not=0A=
+   the primary BSS?=0A=
+=0A=
+3. If secondary AP addresses are immutable after creation, should=0A=
+   brcmf_cfg80211_request_ap_if() accept and pass params->macaddr when=0A=
+   creating the firmware interface?=0A=
+=0A=
+4. If the firmware imposes a BSSID address mask or address pool, should=0A=
+   brcmfmac advertise that restriction through wiphy->addr_mask or=0A=
+   reject incompatible requests before disrupting an active interface?=0A=
+=0A=
+=0A=
+Best regards,=0A=
+=0A=
