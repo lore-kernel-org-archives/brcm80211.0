@@ -1,171 +1,69 @@
-Received: from mail-pj1-f100.google.com (mail-pj1-f100.google.com [209.85.216.100])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sipsolutions.net (s3.sipsolutions.net [168.119.38.16])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46FBC6FC3
-	for <brcm80211@lists.linux.dev>; Fri,  7 Aug 2026 06:47:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2118D3AFCF2;
+	Fri,  7 Aug 2026 07:17:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=168.119.38.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786085232; cv=none; b=X1f4Q3B/8mlJ78D3z8GvefJCArjecomPx0Ohhe4fQCdijeylfIMsxg5jftH36uaPV+SxdteLWhOcJ3Ll63CwcBEReaA+QHtH6dYChtbAlq2pgLRu2JAI3xgnbDjBc1L6yVbwQK7+UgrcqJ937kINq4D30Wdz3WRXUK5SjMZ8auo=
+	t=1786087072; cv=none; b=m7PZZl/2MomQ0u6LbhbqFU1a1vSrKjG1q4AApfv0UZ4gH43dQ1MREe8SJ0nINKCGBriAq6TEnF84Fgc+ORZsWTe4WCXkqDu9ZZeXvHjkqct0eIKHMN9Ki7yLgVf0GBNXgPfTmju+BHHSSPBkowZMvVEBkzdMClM+3YnkUxb5+ok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786085232; c=relaxed/simple;
-	bh=9Y5CiBh9ejoquK6ooJ8B7lLV6zQMZFZZqfxbS+uFVnw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ujyXf3ulQvjuZJJWZMQjohANZWRgSy3e+REUj6yYsAPxE75bEN1GQifl8+hkrHkMxv4fIXMF8fMBlyurey0+zV4r9xBATu2ed5poG1TtB+3rc5qDAyP3Ey7LKDwTNsXhSlzUjJarJNZurzdj79MKHQfLIufABl3KkbUj8802jBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=U4VjNL6o; arc=none smtp.client-ip=209.85.216.100
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+	s=arc-20240116; t=1786087072; c=relaxed/simple;
+	bh=kGLaynbVs0max8n25l5hHvF3hSwFmzk6hhHHal/wTLw=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=QVmBwzgd+Tcy1N7RvUNPIhNm4wTlWJHc9KTl2rMeh1OnyLjKtlDjGMDLSvqgYa1umHLVBvZRQoj6wGRm64Wwy0xuSU3hFT2J6Bmi3tUCwHjPh8XnQndgDTHeHMNfH9dN5oYutPlw+rl9/B39QQZCgbxcV3uNjBnMLURF2KllYYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=permerror header.from=sipsolutions.net; spf=pass smtp.mailfrom=sipsolutions.net; dkim=pass (2048-bit key) header.d=sipsolutions.net header.i=@sipsolutions.net header.b=g3jqUiMz; arc=none smtp.client-ip=168.119.38.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=permerror header.from=sipsolutions.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sipsolutions.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="U4VjNL6o"
-Received: by mail-pj1-f100.google.com with SMTP id 98e67ed59e1d1-384930ca5e2so3283879a91.3
-        for <brcm80211@lists.linux.dev>; Thu, 06 Aug 2026 23:47:11 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786085231; x=1786690031;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:dkim-signature:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=k1nQYGrcGXQu2s20fusPuZGr3riqxpJDJFHLZrZqcfQ=;
-        b=WNia7XW5fs5u83sW0FB6NQ6m0xRTWpruiFSnSfZ3rb0RBP87LLV8ct4k2Ggj/qMEaw
-         XLWCCFFouRrScav1WR79f4XUfe+u6EXLFjPCImdaljjDH8XVTo9yELu1UEYFuIIlrqUt
-         4/YwBbv83rStXKm+kBX28g+eqssVOOLoiZtEEzsngGoCMFgiG/k7CjuEVUt+21SGXGsL
-         O7YXkRAcoWythVZgAA6fLvUYCeMl/AnjLo65ESKOjd1w+jx0uPBOOP7D+xzVudFImVdL
-         tVj375+8NgwduNAdxvNos595Hsb/kzZcxng5Qs/GC+KQHhOVqgZThtgedgBVDMURpyLY
-         gw6Q==
-X-Forwarded-Encrypted: i=1; AHgh+RoXAICDoZX/EsAdZHPOE6666gXu7QAQB4tnHkTiOPhQtL4/2bLVxB/t0uIS56mlPoNZ8izGeQxZNkY=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyeqBkV1u/2dJm/iyF/FPJeNRm4WUSLD/y/QK6+K3Y/HudHvcwO
-	PjYHjWXY2mNRVGhysLXXd7bnshu1nvCqsqGrQNep4UGnrqCSuc78xk35ANoJXoMeVGanNIxaJAM
-	VVBIbVgM2NfTFpGVGvEKuucNxjhMnNuu59HoReUi52MfiAsbor1bIvrnDqmKfY7q6sL2fY+oILX
-	Eoy3lIZI6vc3jYdZO6vApC51mSZ2IJ3sawROtUWapv82ncZpFh1VYEoX8e3lm4wPH5U4ZZRwo2r
-	f2lQxY0cZV7yQ9rnKL9Lg==
-X-Gm-Gg: AR+sD11K6Leo9U9XM8ZSknZDHHw5OHp3diCuIejwFvsZwhhQYlQY33bngmJaHFh8TTB
-	mdTF24SGrlDZwRm5DBS8dEFTQ8Xu9k+2EXRLGV8Fm4tOjV7OJX9Ad8Zz86E/7RZNkQq2eHeo+8b
-	vQ7t9dVSeljgjw0e5I/0mTviNxvbZF0CQmySA7yezB5g1w6ChhPZ4oh944LzvlBNXNsd6oleFje
-	6IoopLhJTZEvVvZmvCpkXKZKv6n3S598JnisO03gcb0xW634eFNr09YfdJMr86R51x77aB1pbuH
-	stM5Cj2g0Ti1F9Mi2IsjLUtqZDrdb3pcoqyfK3asvaoN24H9rrePov26S/avnKkwnLktlCF0m9t
-	sOznEKQSIfKQG4EkutFVucfkg3w3sAzE7mMIamqgfNeP1gxZFwCqhM4vIU18Q/qroorgW/geY+7
-	zlEY3nwpEjn1mMKzEXZo1bqrhWyQhRTScsiVbk
-X-Received: by 2002:a17:90b:274d:b0:38e:fea2:df53 with SMTP id 98e67ed59e1d1-3903c534d46mr23608848a91.4.1786085230479;
-        Thu, 06 Aug 2026 23:47:10 -0700 (PDT)
-Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-0.dlp.protect.broadcom.com. [144.49.247.0])
-        by smtp-relay.gmail.com with ESMTPS id 98e67ed59e1d1-39085f14f23sm1773535a91.5.2026.08.06.23.47.09
-        for <brcm80211@lists.linux.dev>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 06 Aug 2026 23:47:10 -0700 (PDT)
-X-Relaying-Domain: broadcom.com
-X-CFilter-Loop: Reflected
-Received: by mail-ej1-f70.google.com with SMTP id a640c23a62f3a-c15c6a68406so204393366b.3
-        for <brcm80211@lists.linux.dev>; Thu, 06 Aug 2026 23:47:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1786085228; x=1786690028; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=k1nQYGrcGXQu2s20fusPuZGr3riqxpJDJFHLZrZqcfQ=;
-        b=U4VjNL6oKcWva1bAhSHx/XnFp5/pbb+yNlV57Ldnt7IxGDbqazclKLLlLMN21+fG/P
-         30wtbnmTTIqNm7vYyUIxS7nS1s6oFDzLqejDgo9uFN47II2HldBtBI/gkqlflViiRL11
-         S3GG0li4Ij8Ucn2YSB1bILgQPKuxZhhZnSWHQ=
-X-Forwarded-Encrypted: i=1; AHgh+RrGkaizYR05o7blbENHGcHJcRgPDqVO7NZqzI0YN5xH4FgUHt2ZH9E4t1QTxm7DU0u3uelif/CS3Y4=@lists.linux.dev
-X-Received: by 2002:a17:906:ef01:b0:c20:2b23:71cc with SMTP id a640c23a62f3a-c20731e1113mr305062166b.10.1786085227697;
-        Thu, 06 Aug 2026 23:47:07 -0700 (PDT)
-X-Received: by 2002:a17:906:ef01:b0:c20:2b23:71cc with SMTP id a640c23a62f3a-c20731e1113mr305058566b.10.1786085226844;
-        Thu, 06 Aug 2026 23:47:06 -0700 (PDT)
-Received: from [192.168.178.26] (f215227.upc-f.chello.nl. [80.56.215.227])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c2080a29a4csm15686666b.1.2026.08.06.23.47.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Aug 2026 23:47:06 -0700 (PDT)
-Message-ID: <ca791519-5967-4d30-919b-146158432990@broadcom.com>
-Date: Fri, 7 Aug 2026 08:47:08 +0200
+	dkim=pass (2048-bit key) header.d=sipsolutions.net header.i=@sipsolutions.net header.b="g3jqUiMz"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=sipsolutions.net; s=mail; h=MIME-Version:Content-Transfer-Encoding:
+	Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-To:
+	Resent-Cc:Resent-Message-ID; bh=kGLaynbVs0max8n25l5hHvF3hSwFmzk6hhHHal/wTLw=;
+	t=1786087068; x=1787296668; b=g3jqUiMzAEpoCtkDo1EL3IAGnXq/bZNSiJNBMdxFFPczHd0
+	IPjqzKBQ9FiIQdFDvHHDiD0QMkEy5Ou9WCWhQj/Po6nkpEAaDcUZsbh8yRxmap2b2g8q/67nyC69r
+	mVr2pkSME3AayazRGU2CaTon6+qjeDMKOAD8jUJBpnI8xZguuMBBDU7QqB72rL86S8onGLs919e3F
+	Yb9J9T3DQl3C6jREPUxfqt4lW+AoydFZ/pP8MVXxoPIP+Hvg8Xc5jll+fnX5ZU9ctDoDv6qMn1qkc
+	AbwPQkryyDEf7jxfFBBTMJrbjCdThDWou+wi9NwKWJygFPr1f1EMNx2SVpUqBcAg==;
+Received: by sipsolutions.net with esmtpsa (TLS1.3:ECDHE_X25519__ECDSA_SECP256R1_SHA256__AES_256_GCM:256)
+	(Exim 4.98.2)
+	(envelope-from <johannes@sipsolutions.net>)
+	id 1wsEpr-0000000GxLq-0VQi;
+	Fri, 07 Aug 2026 09:17:43 +0200
+Message-ID: <ec0e5426914e9a10466f870f464cab349ca9b6e0.camel@sipsolutions.net>
+Subject: Re: [PATCH v5] wifi: brcmfmac: cyw: pass PMKID to firmware if
+ present
+From: Johannes Berg <johannes@sipsolutions.net>
+To: Arend van Spriel <arend.vanspriel@broadcom.com>, Bogdan Nicolae
+	 <bogdan.nicolae@gmail.com>
+Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev, 
+	brcm80211-dev-list.pdl@broadcom.com, linux-kernel@vger.kernel.org, 
+	stable@vger.kernel.org
+Date: Fri, 07 Aug 2026 09:17:42 +0200
+In-Reply-To: <ca791519-5967-4d30-919b-146158432990@broadcom.com> (sfid-20260807_084714_855076_FDABF219)
+References: <20260807032209.447044-1-bogdan.nicolae@gmail.com>
+	 <ca791519-5967-4d30-919b-146158432990@broadcom.com>
+	 (sfid-20260807_084714_855076_FDABF219)
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.60.2 (3.60.2-1.fc44) 
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5] wifi: brcmfmac: cyw: pass PMKID to firmware if present
-To: Bogdan Nicolae <bogdan.nicolae@gmail.com>,
- Johannes Berg <johannes@sipsolutions.net>
-Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
- brcm80211-dev-list.pdl@broadcom.com, linux-kernel@vger.kernel.org,
- stable@vger.kernel.org
-References: <20260807032209.447044-1-bogdan.nicolae@gmail.com>
-Content-Language: en-US
-From: Arend van Spriel <arend.vanspriel@broadcom.com>
-In-Reply-To: <20260807032209.447044-1-bogdan.nicolae@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
+X-malware-bazaar: not-scanned
 
-On 07/08/2026 05:22, Bogdan Nicolae wrote:
-> Zero out auth_status on initialization. Otherwise, garbage will
-> leak from the stack to the firmware (when ssid is less than 32 bytes
-> and/or when params->pmkid is set). Then, pass the params->pmkid to the
-> firmware (without it, the firmware caches a garbage PMKID on successful
-> authentication and denies a subsequent association request that includes
-> the PMKID).
-> 
-> Fixes: 66f909308a7c ("wifi: brcmfmac: cyw: support external SAE authentication in station mode")
-> Signed-off-by: Bogdan Nicolae <bogdan.nicolae@gmail.com>
-> Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+On Fri, 2026-08-07 at 08:47 +0200, Arend van Spriel wrote:
+>=20
+> It looks like you hand edited the patch but now the number of line is 9=
+=20
+> and not 8. Not sure if Johannes wants to hand edit that, but it does=20
+> apply once fixed.
 
-It looks good, but in patchwork it showed the patch could not be applied 
-so I tried myself:
+Nope. Please send patches that apply, that way also the nipa bot can
+compile test them etc.
 
-$ patch -p1 < 
-~/Downloads/v5-wifi-brcmfmac-cyw-pass-PMKID-to-firmware-if-present.diff
-patching file drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
-/usr/bin/patch: **** malformed patch at line 23:  		bphy_err(drvr, 
-"External authentication failed: status=%d\n",
-
-Been staring at it and not seeing the problem. Also checkpatch is not 
-complaining. Look at the hexdump and the last line was missing a space 
-before the tabs, but that was not the issue. The plot thickens...
-> ---
-> v5: Fixed line length > 80 chars
-> v4: Fixed indentation
-> v3: Added Fixes, Cc: stable, and Acked-by tags
-
-Contrary to this there is no CC: stable tag in this patch.
-
-> v2: Split into a separate patch
-> 
->   drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c | 4 +++-
->   1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
-> index 873754be5..2c59b5e57 100644
-> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
-> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
-> @@ -200,7 +200,7 @@ brcmf_cyw_external_auth(struct wiphy *wiphy, struct net_device *dev,
->   {
->   	struct brcmf_if *ifp;
->   	struct brcmf_pub *drvr;
-> -	struct brcmf_auth_req_status_le auth_status;
-> +	struct brcmf_auth_req_status_le auth_status = {};
->   	int ret = 0;
->   
->   	brcmf_dbg(TRACE, "Enter\n");
-> @@ -208,6 +208,8 @@ brcmf_cyw_external_auth(struct wiphy *wiphy, struct net_device *dev,
-
-It looks like you hand edited the patch but now the number of line is 9 
-and not 8. Not sure if Johannes wants to hand edit that, but it does 
-apply once fixed.
-
-Let's wait for Johannes to reply.
-
-Regards,
-Arend
-
->   	ifp = netdev_priv(dev);
->   	drvr = ifp->drvr;
->   	if (params->status == WLAN_STATUS_SUCCESS) {
-> +		if (params->pmkid)
-> +			memcpy(auth_status.pmkid, params->pmkid,
-> +			       WLAN_PMKID_LEN);
->   		auth_status.flags = cpu_to_le16(BRCMF_EXTAUTH_SUCCESS);
->   	} else {
->   		bphy_err(drvr, "External authentication failed: status=%d\n",
-> --
-> 2.55.0
-
+johannes
