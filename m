@@ -1,295 +1,122 @@
-Received: from MM0P280CU010.outbound.protection.outlook.com (mail-swedensouthazolkn19012056.outbound.protection.outlook.com [52.103.34.56])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23FB044CF59
-	for <brcm80211@lists.linux.dev>; Thu,  6 Aug 2026 11:33:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.34.56
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786016017; cv=fail; b=G7sJbDlWucBbNUSZDIkLS+xZvuQZtIDV4FeSzUbUtIWpfyTgvohQ/kxhfvT9WNcGnX6sJQxmBwo5GivfOYEeBaFuszqzTv2xo8iz267xOsf5+YRr4A0vQciQfxlApVoyBPtJQy0e0TLK5x5TqCNfa3+OC7xlpfxduwEwJpkwFqM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786016017; c=relaxed/simple;
-	bh=C4rkRhyjgB+WhF8/rnGK9vg1YTlPrhrEeRlcXtFopUo=;
-	h=From:To:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=Vx+M5zhTUeXWh7yafAJepHiy0mpRiY/UqqduglgWj3vbHWTQICTTv9w6aNhk8WlBxzLM5WsiZ4IbXoLo3rDzvexl9X/NG6K6BEaFwfvxKOF3mwNAyx6XFF3oT0VUM4OTK4N1E+X1Fy75LOlLDPbtlsoKrpHBlH9QFAd7OjhGYBU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=S3dLSN+f; arc=fail smtp.client-ip=52.103.34.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 020E12F39B5
+	for <brcm80211@lists.linux.dev>; Fri,  7 Aug 2026 03:25:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.50
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786073142; cv=none; b=F59+38Z2CHPaIn0gwII3Er2MCDEsSzvBq5Q2tlJ1Ybc5bREvhuvtfOcsqK9xNQ/aVNCitcyENORHZPdpIRhsKOjICnJsn8+h3OvEO68SZCgKIXHpaZRAwBG0Z9GngnfKUBbyZ0QwXAaKmqYf3qhtfIKNhRPmqZuT77DgxoVutJ4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786073142; c=relaxed/simple;
+	bh=5DWHTyV/pH+3MdDwtmbB7rkHS/t6yPLT6Xj+jVdd9cU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=qpJhGW9jf6FunCaLZoWfijMYUZl5seIOGohprXG1UYIjeLwDZWHIq4GB/G53GCIu/17LbjmkKvs8L9Dd9iWwgWStC2j5qa9ykSSTw/WuFZngLHWCSTt1sS+AzMRaMsAZWJsffknLdxdnHuW0kFiA7htdRSiZg3FU5Z6c9VCjm70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qNdajYYQ; arc=none smtp.client-ip=209.85.210.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="S3dLSN+f"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=boTBJc4WlYX4Fc6NxPqH+XxSnfXtFAQlV4B3yw8aejUwh69YfmMlNyG7n/BUnG3+DZqK/cqSPymbt7ZtzIWo5rey4/uT0K5EKxPcQ/t7wL/mkoPqpYwSJ+RTgFAminnJ095ACE9ENlPypS+TJtVHiuV+ieOEUBI1wx96WxLGVrb4xeF7U2JFYzrsDCxfH6mf79ReDJUo/lIYvKkT/zRbTntiubGq1daxMcg/1BZY99v8suYNdUNEjC3TSdkdQxHMR+Hj1CAjM8u8iD8fNx8kHA+E1/1SX8CSoulf3ubKIjXIlzzVDQRvu7SWhdD5btMQqPVlKRX/KA+2yq2/SRiueQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=6AdojZHDmMd3uj+FmunouK/levQ8CA45KQv5vK9vMLI=;
- b=tDF2ckmVQtJTghLXEFpunJ0U/RQmvt0N/qg5ZkqjHulNeUzGs58cZOj+1Ey/5pWWTYx6/JERoS3w6ed7k61eaKt64aSe2f3n2Fuq+HgK2AHhrKRbzTBPhbFDiVKIgn4R49j0LshJiqmRh8LJRzzXR5Y+w786GgM2YnI5tzelC1PsIGq0kfGGENfrx2bn8zaxACc9m1V6ONN/z758VFTKMBpTlH2NzSspRRinNOuF8u+MIBsAx7172prSqvJEfufu9/HeC/BISNMqIbf5mQ4OvZtWelhhVGerOvvw8kBXx/KeJsgHLt7YatQw6ErkbDy12CnhV+Gw3qv3MPOuB5PLeg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=6AdojZHDmMd3uj+FmunouK/levQ8CA45KQv5vK9vMLI=;
- b=S3dLSN+fSIrCf/aU3umwD4wo+4nBl3sy5eypJ8QmGuw429QIXKaF2iTb6KFYgotV3A3Du7KbhvgDgEh6L1nWmYE5eV2BeoVS67mDc7k2UuWkcLF6FXriKXBlXJUfyjHZ56Tu63v0CtBkCM8Yfd9QqO6Ytsm4Kj5YwyXhZPZOBpVB9zBjsXUDFuDEJMhTp3X9RL34KvL+rBiKizV0Eflx7iCmV6nTMKOmSPgQQ5m3y0StNGFtE7/T/2pJ7aVWFf+kubgD1ol1tkrfkJ2NBplWLxv0n2bvTfLxJn1lTZfZHCDsqQOSNlrIvLTMWdSOwot6aYsHScw/p+2+SHG3fBVHBQ==
-Received: from GVYP280MB1056.SWEP280.PROD.OUTLOOK.COM (2603:10a6:150:eb::13)
- by GV5P280MB2187.SWEP280.PROD.OUTLOOK.COM (2603:10a6:150:377::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.21; Thu, 6 Aug
- 2026 11:33:32 +0000
-Received: from GVYP280MB1056.SWEP280.PROD.OUTLOOK.COM
- ([fe80::fd2d:3517:f39d:926a]) by GVYP280MB1056.SWEP280.PROD.OUTLOOK.COM
- ([fe80::fd2d:3517:f39d:926a%3]) with mapi id 15.21.0292.019; Thu, 6 Aug 2026
- 11:33:32 +0000
-From: Stephen C Goodman <Stephen.C.Goodman2@outlook.com>
-To: "linux-wireless@vger.kernel.org" <linux-wireless@vger.kernel.org>,
-	"brcm80211@lists.linux.dev" <brcm80211@lists.linux.dev>,
-	"arend.vanspriel@broadcom.com" <arend.vanspriel@broadcom.com>,
-	"brcm80211-dev-list.pdl@broadcom.com" <brcm80211-dev-list.pdl@broadcom.com>
-Subject: Re: brcmfmac: multi-BSS fails with arbitrary per-BSS MAC addresses
-Thread-Topic: brcmfmac: multi-BSS fails with arbitrary per-BSS MAC addresses
-Thread-Index: AQHdI21MToUzxZi3FUai5UCQnAbZJLaQ5zV1
-Date: Thu, 6 Aug 2026 11:33:32 +0000
-Message-ID:
- <GVYP280MB10568E8371572689D15B728C9DD22@GVYP280MB1056.SWEP280.PROD.OUTLOOK.COM>
-References:
- <GVYP280MB1056B22F060395735F23C20C9DD52@GVYP280MB1056.SWEP280.PROD.OUTLOOK.COM>
-In-Reply-To:
- <GVYP280MB1056B22F060395735F23C20C9DD52@GVYP280MB1056.SWEP280.PROD.OUTLOOK.COM>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: GVYP280MB1056:EE_|GV5P280MB2187:EE_
-x-ms-office365-filtering-correlation-id: b54656c4-5408-4aa6-d8ba-08def3ae8b89
-x-microsoft-antispam:
- BCL:0;ARA:14566002|31061999003|15080799012|6012599012|19101099003|8062599012|8060799015|19110799012|25010399006|51005399006|15030799006|41001999006|40105399003|2607281247196008|102099032|3412199025|440099028;
-x-microsoft-antispam-message-info:
- =?iso-8859-1?Q?lCuAIEvNtEFLto+qcQ3LGzbeDjqSUSmS637OXHityA9bfCOdevhdApiQSS?=
- =?iso-8859-1?Q?hS3f61kS2swP9TSvFZ13KcuzhYAkARrCIzCFlCruDF2Bt1VhUnQ0w5avy3?=
- =?iso-8859-1?Q?ljzc6YI0C0eaMyby/QuUQOnyO7TN3fv4SOqBDZGy44OhX+CPjkZKSEwbvl?=
- =?iso-8859-1?Q?fqzaHL7sAqmcFaK7P1iRITwO6ell4dVLMDKFqUTzS9P1logYoz3yn4coTA?=
- =?iso-8859-1?Q?FHTfdvfDOyRvF15z7757cblj3ScNlozUZNIZsZrY1M8T+MT7rq4ff1lOyQ?=
- =?iso-8859-1?Q?OvV/3OnW/0hI9V1GhrNxMnaGg41ELuO2Jt0mmcR0KTOmS1at0DXV6hvTsA?=
- =?iso-8859-1?Q?4uQXawNqf8eFhbcXPTTZGEFiUfzt3v+1i5nq3MQoGCzvtDm7ESsOYCnXeQ?=
- =?iso-8859-1?Q?KvufVuH5iGEQMlCnWyo6MAdGtqeM+yzY7nOXhnNyAP2s6b1Z/2Y4LUpNr9?=
- =?iso-8859-1?Q?AkFqfTDX0fwj7ev1DodeOxKZ9H3BfArKodsesupmD7DfGVwnysA1drZsPU?=
- =?iso-8859-1?Q?lAjyHCvwG0pFm7KPmpQxPz48sz1U5/yqNwxgR4Mp7rZW544nwW3Qxpyixb?=
- =?iso-8859-1?Q?fIw9KgCZ8cfsUl3I36lKJT+CRmzhuhn5qtjgxzOa48jHpzy5mRc6nDO/6d?=
- =?iso-8859-1?Q?GbmRwAnQTUoH/pRfh5rALpEE+fAfmNJTzGwjSnl2rvACO49oJ45u04Ecwg?=
- =?iso-8859-1?Q?vyABsNqJnrXgA4OghXzhP8lcW31m39/sDv57W1M2hkOkh8XNpUYaswFOvF?=
- =?iso-8859-1?Q?x9UAdXAxyi1VOtQFHfetdu1dVMgFjX9DJstEClJLYVn088KWviXZvNvx72?=
- =?iso-8859-1?Q?hR6H/rpnuVZuAKBSPuuy+9anLYnUqz60I1xUZQKaiS9/5aeboB8vXMpK57?=
- =?iso-8859-1?Q?TjSEduQYuikiHtcoHw61zBv5wa9emD8fsC5/N4MhfLfMNbZxPuayaC4EwB?=
- =?iso-8859-1?Q?TdjqB/b4V2Weih0iO1ONhhxUTOcYcKZH7DK123TpYCnW/K8h09WTYISqO9?=
- =?iso-8859-1?Q?ziT7tGLn0KSbaEROqcdZaalCVinlPUHRE8zc3oCaLH6/51tLPP363aFKrE?=
- =?iso-8859-1?Q?oOZdt26cvNSIdvDKXrCJqYY=3D?=
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?iso-8859-1?Q?EOGdtPkKLYvjUc2auPlZxy6astCYu9SW8IO7QNP1Ku2ALyNuTrmN4q9tPq?=
- =?iso-8859-1?Q?TWEHIfiuzqrqkcvcN2tywz8SFb+hcHCEYp9gMcO5q2EFH3Fgn0QrTv/mEd?=
- =?iso-8859-1?Q?9gzCjHuegErRXPNuMyWG+lSgGVPn1U8TcmBxxdpw8NIvX7ey3znxyqA3nF?=
- =?iso-8859-1?Q?BCNtdyvLbj7y2gsdOOGQcRV8luvssm/e8HCbam9VoOFFPB5ymK3VrL37mO?=
- =?iso-8859-1?Q?GYfA5DBn3BXqtM35yH45xl7rrbXdKHd4kINtk/rjlsC4TTk5Y2NWLBqjYu?=
- =?iso-8859-1?Q?vDDRRjmpAsdw7Z5NhbzVifg5/kJoXBeeN/FxlTRI8+VAoQM6EJjinMC/6M?=
- =?iso-8859-1?Q?NhEZpDaxTms7I3kwbJ0d/d4QFnwzpxHYh2aSrTm4PsW1vH2tYxO5n62AVD?=
- =?iso-8859-1?Q?fqdd4rzoDVcrSHLpGn5cqTC4i6tiliM+WYFgL37FSE8iHvUm4sM8RCWAKK?=
- =?iso-8859-1?Q?CiF/NobmDWff4wwmQwJJeVH8MfywhZUuyO1nx66lgVwWbwvVEMQ52njQGW?=
- =?iso-8859-1?Q?G5j4BHM6Ooe6sFGQkJQmZqimyZEN5v/9Wd3DoMtLIoEJzRCC/WFW9CcwGM?=
- =?iso-8859-1?Q?9gGePHij44al1kcHBW8c3SV++5NFBmMxeApBNXzNtzD9zWBpbNytPYaFBV?=
- =?iso-8859-1?Q?SN6p8MCL3AKINulfqzY8Y0HZZ9jLFYv/Mkl+c/myOCQpY32bZ1XrAbMjIR?=
- =?iso-8859-1?Q?S4qc2VReoVmXXWXeakuguwZGkRKgxS9nt8jxtNCw5jiPTrhlrzZja6t9Im?=
- =?iso-8859-1?Q?IpstaX6UBgXeu34aGn+fQiBF8R8e1Lvu1boAJ6GIJaeMSqc6WZ1Kvpcsm1?=
- =?iso-8859-1?Q?l4Sd5Ufozn17BoEhs/5fmuopc0tdKzNHlL6PULT0M1qhOr5Yayi5tbuZ8S?=
- =?iso-8859-1?Q?OzOTKobdBZtSR2r28N+tuiMCxK0yytp7PKcyW7SOYZHTJW/ckekLvWZluc?=
- =?iso-8859-1?Q?F6YJ47+964ksf5zJ56TcbMGXxhTKOgW9Q40jQFXAEVx5VtNAUxe9zhQMtS?=
- =?iso-8859-1?Q?weGXViBMvjhS7Pi+UriGOJ2t7MRfl+/8zZLxTB5pdcT/1H34fId5wkxLSQ?=
- =?iso-8859-1?Q?masa4Pv31PDRrquqAcvgYvf9OISU0roxXbefoiqIjrDFQ5mouaewJfsofz?=
- =?iso-8859-1?Q?Otx72KgLf5p238xvEsOos8lsz1Lj81hfg03hUB2j2tyJm9+Mpzlg7PY4tp?=
- =?iso-8859-1?Q?hlrmdyccJ+tmv1Js0IpNCUeaA1kUqYSBlBcc65V8KhevusjzNoXIR/Yy2Z?=
- =?iso-8859-1?Q?HWDGBoFESG+NOwbXnj7gAs3LI5X7RtGaH2HFSDtHNZAqULHTbMSsFcQBTh?=
- =?iso-8859-1?Q?/Rhmliic9P+dQfP1/IegMwe+8gxDn+1wnNvWT4dlceZIn1xCb2uSx3VEeI?=
- =?iso-8859-1?Q?Y4tEc8TpbdVoq1NKDQmWxN2T5cRKWKkhUfQ26n16Kp1OBkuAL4LyMasjTT?=
- =?iso-8859-1?Q?eqgI9mCLR7p4wTc+UkiD6U18Elz5VahQN5yL2Q=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qNdajYYQ"
+Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-7edd6e6a327so368495a34.0
+        for <brcm80211@lists.linux.dev>; Thu, 06 Aug 2026 20:25:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786073140; x=1786677940; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=1+6XE7Yc3wed4LEk38MwpLFA21L8FO91QUtlY5oe2OY=;
+        b=qNdajYYQB8jCUPZEWZB7SFSV6btfltfJirJY3jS4RFk+nyKIug7pz32RQu9bE3EpPF
+         B8ueJeeuPqsjHXynuLRL6f0fnNkw0POhv537lR1OzhEbRO/O6UpQ5/PZa67ZtA2r7lv9
+         027alHoEVDKZAe91AOAB1qBTs+dAx1MHURUkuE+rMtbq8yTr/JITIa9I0wtp/uN+VD3M
+         u+kgchESf5WymK+EMyl/Ifox33VQVm1ZVNhekBT0gbgsGCsDeABVwCSayL0NPziz73SN
+         Hkn5EcBJH8FBhJrKuKfzCtIZ/Q9+6zz/61nM/uVW/Ju+4QN+ceCpukm0fLSe+6oGlQgX
+         7O+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786073140; x=1786677940;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=1+6XE7Yc3wed4LEk38MwpLFA21L8FO91QUtlY5oe2OY=;
+        b=Wpjk/ATB+1/W+zPPmAKMeVDxjAAJMhvf7ThuUSyzvJ7GWaAlxjQcQehycxhRCXoezZ
+         8RSaIaY+0Wk25+Kx1Pw4wNRV/HrVTQeauw7N54B8L7aim3cJyyYxKu4AGl+HpLxUBhrZ
+         eFda0g0rHKEuBqn3k2hNlhkGOXA/n2o7nibxH0hR9qDw9vq4vljFcdDm6fKZpGaa9hqw
+         +H4t7cVxhtJj12bOqrwTbd2C/H+8t88HZd2vyLSFjkObsKo+/cltaT7o3DdV7OgMYyWp
+         qw5y4EvNEvBJNXQYgUsdkEM3i4GCl5ODF/4C6nSrPYbZ5R+EQiTUxICgkMLN93TClq36
+         swug==
+X-Forwarded-Encrypted: i=1; AHgh+RqRq0QlcOB+lBvEM/ZTwr23xHxw20ZhOsGr2CLH1hnLH8f8Fsapd3+UDLvmrIrzPgrDS0WhZl06CaE=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxR77WqUphIHWwZGFs6ydyd1iskX3FwTXODSQenHsbaQ4d6mHT5
+	uZYU/nHZNZUP6dHh6aQDe71F4GtohsdF2OezVydotKHJU3qW9d7teaWe
+X-Gm-Gg: AR+sD1333lUGjTUd3wTWGl2iU2GS88vKO+hgrFnVszzY+jesoAVLqqp0wXOnqUWUsll
+	kVoLtETtcAQOpIR+mU3KY68d+JPyZQ3EvGsvSFMYM0ESqTZGSLCOQfQusfMJwR4+mpA0zno7A43
+	y9tyBkFfSHo5GzvzzSqx93Z3Eow+bT37k94XN4pfq+6xbzywF0Q9HfwdQxsnIdF77GEjvyv4Kt4
+	9ws+cEvHxKmXXSuJ50rVvfCVgyHqqtJS1XW+RnViSC2k4kY5UpteaMChGqE60V2lddH/FroStOk
+	z3P5JbnZhBMmIAeWRVIoewuI+7ZDwrKl8wG/FLf7oXgye+2wC1UWaVadpLfYk7XlTKLdRH4Zc1b
+	vNaXV8fUGeEBmy8POUOSDjSxZvO5zIftQSNR6x5Mvvi28nbwS8Ot8HIg2rEQAGEM0btAbYY3zy3
+	VFAqilj6VGigA3+Of+/khyidYXg9rlD72P/fKCbfGRWACaK55y3xjpusBjQBxaz9InYozwH5PzM
+	abxyxyTnYKTqoWDk0tvu11bf3VOL+3QbrcN4dvW7bTwjSqZixtRAzLpLY6fw365XRCjeMDmSg==
+X-Received: by 2002:a05:6830:8d1:b0:7dc:d6b1:48b7 with SMTP id 46e09a7af769-7f1e5c6e96amr7295657a34.1.1786073139763;
+        Thu, 06 Aug 2026 20:25:39 -0700 (PDT)
+Received: from antares ([149.88.25.215])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7f35b563b04sm405786a34.6.2026.08.06.20.25.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Aug 2026 20:25:39 -0700 (PDT)
+From: Bogdan Nicolae <bogdan.nicolae@gmail.com>
+To: Arend van Spriel <arend.vanspriel@broadcom.com>
+Cc: linux-wireless@vger.kernel.org,
+	brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com,
+	linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Subject: [PATCH v5] wifi: brcmfmac: cyw: pass PMKID to firmware if present
+Date: Thu,  6 Aug 2026 22:22:09 -0500
+Message-ID: <20260807032209.447044-1-bogdan.nicolae@gmail.com>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: GVYP280MB1056.SWEP280.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: b54656c4-5408-4aa6-d8ba-08def3ae8b89
-X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Aug 2026 11:33:32.3547
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV5P280MB2187
+Content-Transfer-Encoding: 8bit
 
-Hi,=0A=
-=0A=
-I have obtained additional reproducible results concerning brcmfmac=0A=
-MAC-address handling with multiple AP interfaces.=0A=
-=0A=
-=0A=
-## Summary=0A=
-=0A=
-Runtime MAC reassignment using "ip link" succeeds only on phy1-ap0,=0A=
-which appears to be the primary firmware BSS.=0A=
-=0A=
-The identical operation fails on every secondary AP interface:=0A=
-phy1-ap1, phy1-ap2, and phy1-ap3.=0A=
-=0A=
-The failure is not caused by unrelated randomized addresses or by an=0A=
-invalid address pattern. I tested four valid locally administered=0A=
-unicast addresses which:=0A=
-=0A=
-* have the same first five octets;=0A=
-* differ only in the final octet; and=0A=
-* follow the same sequential pattern with which the four APs can=0A=
-  otherwise operate concurrently.=0A=
-=0A=
-## Test=0A=
-=0A=
-The requested address set was:=0A=
-=0A=
-phy1-ap0  aa:bb:cc:dd:ee:01=0A=
-phy1-ap1  aa:bb:cc:dd:ee:02=0A=
-phy1-ap2  aa:bb:cc:dd:ee:03=0A=
-phy1-ap3  aa:bb:cc:dd:ee:04=0A=
-=0A=
-The first octet, 0xaa, identifies a valid locally administered unicast=0A=
-address.=0A=
-=0A=
-I performed the following operations:=0A=
-=0A=
-ip link set dev phy1-ap0 down=0A=
-ip link set dev phy1-ap0 address aa:bb:cc:dd:ee:01=0A=
-ip link set dev phy1-ap0 up=0A=
-=0A=
-ip link set dev phy1-ap1 down=0A=
-ip link set dev phy1-ap1 address aa:bb:cc:dd:ee:02=0A=
-ip link set dev phy1-ap1 up=0A=
-=0A=
-ip link set dev phy1-ap2 down=0A=
-ip link set dev phy1-ap2 address aa:bb:cc:dd:ee:03=0A=
-ip link set dev phy1-ap2 up=0A=
-=0A=
-ip link set dev phy1-ap3 down=0A=
-ip link set dev phy1-ap3 address aa:bb:cc:dd:ee:04=0A=
-ip link set dev phy1-ap3 up=0A=
-=0A=
-The phy1-ap0 address operation succeeds.=0A=
-=0A=
-The address operation on each secondary AP fails with:=0A=
-=0A=
-ip: SIOCSIFHWADDR: No error information=0A=
-=0A=
-The interfaces were explicitly brought back up after each failed=0A=
-address operation.=0A=
-=0A=
-## Kernel log=0A=
-=0A=
-The corresponding kernel error is:=0A=
-=0A=
-ieee80211 phy1: brcmf_c_set_cur_etheraddr:=0A=
-Setting cur_etheraddr failed, -52=0A=
-=0A=
-Example log excerpt:=0A=
-=0A=
-brcmfmac 0001:01:00.0 phy1-ap2: left promiscuous mode=0A=
-br-lan: port 8(phy1-ap2) entered disabled state=0A=
-ieee80211 phy1: brcmf_c_set_cur_etheraddr:=0A=
-Setting cur_etheraddr failed, -52=0A=
-br-lan: port 8(phy1-ap2) entered blocking state=0A=
-br-lan: port 8(phy1-ap2) entered disabled state=0A=
-brcmfmac 0001:01:00.0 phy1-ap2: entered allmulticast mode=0A=
-brcmfmac 0001:01:00.0 phy1-ap2: entered promiscuous mode=0A=
-=0A=
-brcmfmac 0001:01:00.0 phy1-ap3: left allmulticast mode=0A=
-brcmfmac 0001:01:00.0 phy1-ap3: left promiscuous mode=0A=
-br-lan: port 9(phy1-ap3) entered disabled state=0A=
-ieee80211 phy1: brcmf_c_set_cur_etheraddr:=0A=
-Setting cur_etheraddr failed, -52=0A=
-brcmfmac 0001:01:00.0 phy1-ap3: entered allmulticast mode=0A=
-brcmfmac 0001:01:00.0 phy1-ap3: entered promiscuous mode=0A=
-br-lan: port 9(phy1-ap3) entered forwarding state=0A=
-=0A=
-phy1-ap1 produces the same brcmf_c_set_cur_etheraddr failure; its line=0A=
-was immediately above the displayed tail of the log.=0A=
-=0A=
-The bridge state transitions are expected because I explicitly brought=0A=
-each interface down and up. This test did not produce the previous=0A=
-brcmf_cfg80211_add_iface error or an interface-creation retry loop.=0A=
-=0A=
-## Interpretation=0A=
-=0A=
-All AP netdevices expose the same ndo_set_mac_address operation.=0A=
-=0A=
-brcmf_netdev_set_mac_address() calls:=0A=
-=0A=
-brcmf_c_set_cur_etheraddr(ifp, address)=0A=
-=0A=
-which sends the ordinary "cur_etheraddr" IOVAR using:=0A=
-=0A=
-brcmf_fil_iovar_data_set(ifp, "cur_etheraddr", ...)=0A=
-=0A=
-The same operation succeeds on the primary AP but returns -52 on every=0A=
-secondary AP. The failure therefore correlates with the interface being=0A=
-a secondary BSSCFG, rather than with the requested address format.=0A=
-=0A=
-This does not by itself establish whether:=0A=
-=0A=
-1. the firmware does not permit changing a secondary BSSID after=0A=
-   creation; or=0A=
-=0A=
-2. brcmfmac needs to use a BSSCFG-indexed "cur_etheraddr" operation for=0A=
-   secondary AP interfaces.=0A=
-=0A=
-There may also be a relevant creation-path issue. In=0A=
-brcmf_apsta_add_vif(), params->macaddr is supplied when requesting a=0A=
-station interface, but the AP path calls brcmf_cfg80211_request_ap_if()=0A=
-without passing the requested AP address.=0A=
-=0A=
-If a secondary AP address can only be assigned during firmware=0A=
-interface/BSS creation, the current AP creation path does not appear to=0A=
-provide userspace's requested address.=0A=
-=0A=
-## Expected behavior=0A=
-=0A=
-A valid MAC address supplied for an AP interface should either:=0A=
-=0A=
-1. be applied to the correct firmware BSSCFG; or=0A=
-=0A=
-2. be rejected with an explicit unsupported-operation error if the=0A=
-   firmware does not permit changing that interface's address.=0A=
-=0A=
-The driver should not expose apparently identical runtime MAC-change=0A=
-support on all AP netdevices while the operation succeeds only on the=0A=
-primary AP.=0A=
-=0A=
-## Questions=0A=
-=0A=
-1. Is the ordinary "cur_etheraddr" IOVAR expected to operate on=0A=
-   secondary AP interfaces?=0A=
-=0A=
-2. Should brcmf_netdev_set_mac_address() use=0A=
-   brcmf_fil_bsscfg_data_set() for an interface whose bsscfgidx is not=0A=
-   the primary BSS?=0A=
-=0A=
-3. If secondary AP addresses are immutable after creation, should=0A=
-   brcmf_cfg80211_request_ap_if() accept and pass params->macaddr when=0A=
-   creating the firmware interface?=0A=
-=0A=
-4. If the firmware imposes a BSSID address mask or address pool, should=0A=
-   brcmfmac advertise that restriction through wiphy->addr_mask or=0A=
-   reject incompatible requests before disrupting an active interface?=0A=
-=0A=
-=0A=
-Best regards,=0A=
-=0A=
+Zero out auth_status on initialization. Otherwise, garbage will
+leak from the stack to the firmware (when ssid is less than 32 bytes
+and/or when params->pmkid is set). Then, pass the params->pmkid to the
+firmware (without it, the firmware caches a garbage PMKID on successful
+authentication and denies a subsequent association request that includes
+the PMKID).
+
+Fixes: 66f909308a7c ("wifi: brcmfmac: cyw: support external SAE authentication in station mode")
+Signed-off-by: Bogdan Nicolae <bogdan.nicolae@gmail.com>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+---
+v5: Fixed line length > 80 chars
+v4: Fixed indentation
+v3: Added Fixes, Cc: stable, and Acked-by tags
+v2: Split into a separate patch
+
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
+index 873754be5..2c59b5e57 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
+@@ -200,7 +200,7 @@ brcmf_cyw_external_auth(struct wiphy *wiphy, struct net_device *dev,
+ {
+ 	struct brcmf_if *ifp;
+ 	struct brcmf_pub *drvr;
+-	struct brcmf_auth_req_status_le auth_status;
++	struct brcmf_auth_req_status_le auth_status = {};
+ 	int ret = 0;
+ 
+ 	brcmf_dbg(TRACE, "Enter\n");
+@@ -208,6 +208,8 @@ brcmf_cyw_external_auth(struct wiphy *wiphy, struct net_device *dev,
+ 	ifp = netdev_priv(dev);
+ 	drvr = ifp->drvr;
+ 	if (params->status == WLAN_STATUS_SUCCESS) {
++		if (params->pmkid)
++			memcpy(auth_status.pmkid, params->pmkid,
++			       WLAN_PMKID_LEN);
+ 		auth_status.flags = cpu_to_le16(BRCMF_EXTAUTH_SUCCESS);
+ 	} else {
+ 		bphy_err(drvr, "External authentication failed: status=%d\n",
+--
+2.55.0
