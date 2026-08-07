@@ -1,142 +1,143 @@
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A7C1274FDF
-	for <brcm80211@lists.linux.dev>; Fri,  7 Aug 2026 17:16:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B6B12857FA
+	for <brcm80211@lists.linux.dev>; Sat,  8 Aug 2026 00:00:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.54
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786123005; cv=pass; b=lcF50IpCsTDR8LvCRp0XxpqInrfwM9fI0G7R+QcGwdvfCjxCQAlv2JqUoZ2ZUkUa+sikML3VKuZAKUadC2P9wGtolz8ZTD1GLLuayetEglCjyqAHIeiefNvVtIe6FOEwKH7bgPag4tZUAvtSP1vq53M+E01RuYrhhtatPjx3gG8=
+	t=1786147225; cv=pass; b=ULRuxINtZL0RNZ3PDgH/e2P5SYkEYXEIzxIhQaeA60a5E/UjBPCpjgnXLjea1dOOa0HsL+AzpMy6sPBiwp6qgPVuk/azv0PSVuBmBUGoiTz/xKZ9YM7AyIKhl2kVmXzKcuY8f90WpyA3Iv0nGUDxkd67zG6uMq6aaz7yBx0OpjI=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786123005; c=relaxed/simple;
-	bh=Rtx8ZmZNm5nMH0poOJXM5HHavD/fWSB/wPvaR1ec6bI=;
+	s=arc-20240116; t=1786147225; c=relaxed/simple;
+	bh=UdR7ZTFIL3V+BnNVq1UDIT4zKuWlbCjD0STBKjhwyC8=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bYL7NkVwqObDtev7BxtnSANbGckb2oKwkTIWaxkh58FUAPVIR9DkuWweowzDzFQQV4ydNZDgg+pmyVp9BMvEJAYdjftaCas6f3+fXefsk1kC3C+XZlEXtLCJU4FjYtKjUf+LD49go0wLYkoYIgC1hbH4KzWLNPhwoykla4eApXY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SvcEGznF; arc=pass smtp.client-ip=209.85.208.50
+	 To:Cc:Content-Type; b=TN4//9ldvZybLb74z66Js93p8zJYsZEbvRcHg4EmR4653jWI+wMcWpOMkYsDMGQiyMv4gzD3sBaPLMfsq10IUVjY2IdC/5cPQB0JTWu7IYxudRCv5jaiCEt/0YD4NxYYOR6Yvazh1lnTlG75/bAUzt4s5kYWn4/Mhvc6qlCNng4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iyTrEHfu; arc=pass smtp.client-ip=209.85.208.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SvcEGznF"
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-69edc72e513so568069a12.3
-        for <brcm80211@lists.linux.dev>; Fri, 07 Aug 2026 10:16:43 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786123002; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iyTrEHfu"
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-6a18af264f9so11814a12.0
+        for <brcm80211@lists.linux.dev>; Fri, 07 Aug 2026 17:00:22 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786147221; cv=none;
         d=google.com; s=arc-20260327;
-        b=V8HT1UFkzIGxHxA3gO3St/2lUf3qOyq9hmvAt7U2ye/gkh6LqXFgsLtBd4OGyDh+VG
-         VVPtXGjXuetOeEEer1gEYhbOETknB4s/rTTeq1EY76+j0QgDwIkKHTUq6oqVwF/n+JNp
-         TlssGjeFoTsL7eAoaxZTKGL0fFNebZPHiVKT+jk66I3OWzZhylVqWwKWyPGrOx9kRtQB
-         AIXAZe86032uryTkVlm0OmiNH4uXtWgayG/7/kLdlt7tCHdocJlAAYi5abOmc4LjKO38
-         LBY/vm3RLZqj8FcEjqQq2UWFwWX9huXg/TSCdwujKI/IUxQi/0BHJFoOHSsvZAfoRBNW
-         vfMQ==
+        b=j1j9cUVfRnvnSDzeK6oIlJU2cIKA7waTLXjfr5Cysd+2nOBvR+9h7PevHxmQnW/9aJ
+         MJ9Ci+bockntxD7aDx57TInxVBj/60lvnfzjNNHEKbg29rASP5rErRKfvpNoI9iD08XB
+         1fXkngegISR0H4wId+ZrxbluxF9jycT4hOlF7sbsB4LEAIUt3WGJvo4cxi4uRgSGmNEX
+         4W0Cn405qyMNkiEYRXZZP+ozEIL4DQGwWFTcl9h2/mBpIPXyUjAUiAmZdFSwkbIV3KoL
+         +APvBzvg9Y9WfvXD6aaZ/NdoM0MADAMFQnIjYXbl85jHHfvCKloRV1rNOaUOuJ3mKnO2
+         2OJA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=Rtx8ZmZNm5nMH0poOJXM5HHavD/fWSB/wPvaR1ec6bI=;
-        fh=yycP+JcXfP1WzPJt1v3UpPI2vfMQLCuKptaaG8OXzDk=;
-        b=QtowAV57nRk7hI28/UNTMLUNFXRm73U8CXm7qx9ql7+2YdK6A1bq4l6l4Jc8UE38d2
-         Hx9cvf99+xnyZWBprEQPFkLMMexFRq3dGROBm+4w29Efi+hhg5LFGAQjPYm/6yqhxeqJ
-         naClqbMjpO+76kVKOpAUgptiaWsHwyf42JgWH/9Jv5GOpqRPY5Y5IwQw0fhterJswX8b
-         OrJD6ghvdD7bu5zz/K9MqR0h5G4hq7NTVaa7gV9jQo6XCK7G8LocoXg2waLYqvq7HdFo
-         RX1XEI+9/mBEiZHCJwv+oxRnbshbWj+Cf0H71S7xPYj30BuOqQetyO9Ssd2JAAsKVo1y
-         lzeg==;
+        bh=v8ZBSWIPrWKHHCg3jurXTVoAiywt7j3Be5iKukh07Cs=;
+        fh=xjpwar9haX6lnqmnoAUNHR7rKGvulgdDtdDO327an1o=;
+        b=RiI7bdpxoBAur4J+VYwOjP1ryaQn0N3SEOqO+Re1k3md2iXvUgGNPtRWsgVYCCwWp+
+         lt9Y55fuVo8mQr4pdKi0UcUBgzqy+YY/rUjIBd1705d+9g2Jch//j7O7Ojat7XwCjaKI
+         FnIyyENL+UjSrujNH7a2+OyVZftvVk3Qag53mMjo5aCw/KoFlfA3/PNe61BTs6ExZIXZ
+         WYbCnFcp86CNtG31/IUwgSPv4VGsSEcZtZkX5zLKj/C41DyPMRbHni9WwrVF6LKdjXic
+         hn/EL4CeU0GC0VKBU5sGcXDtX9Pk+dzC2TzkqHnr7Wp3tk+KIZzmMljDGZgLDN61x26o
+         4arA==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786123002; x=1786727802; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1786147221; x=1786752021; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=Rtx8ZmZNm5nMH0poOJXM5HHavD/fWSB/wPvaR1ec6bI=;
-        b=SvcEGznFaHTv5xyw9oW2sc3Y2ULJrrzEPS8vIDIxLyW3cgOBQhxHh8NhM7L23g7+fL
-         07eAjvPDNup37NJri26KoYrVwnVzUtsJegbIuGYpKdwcG8xNLKpXzYUD9/SFGXnvprVV
-         qCzt1t9B/xB5GZ0wbpvwJQYYDuzseiMz1SeQ630NIiN/fLFP1uSCMLn9qrt3n9rhLGlo
-         s9ZKd14kRrO2gHA0FaXBVvvYOf17Ikelx0eeb8ea30gqmPO1HbLLP3oU5FteLQtIiwNM
-         4TEDu0Q0PTiNkxwdqJA6oXoOL3cUr8hauq/0OLnLu4HM/TWKpO4oLNtlSdrS7yJHvBzP
-         W/oA==
+        bh=v8ZBSWIPrWKHHCg3jurXTVoAiywt7j3Be5iKukh07Cs=;
+        b=iyTrEHfuk88yxAOrlTVK0r1NuJ+Qi5uYeKigk/s65kmI8Vj4AUGvWGUS2gc4zcV0ij
+         tJ+2b5TTiLKVrPvbNa1rDcN9phtSR857kEd0Yo2qWFQzhQjlmOs2MnOXrhD+2rR4fOMC
+         IzjF+cPbrZw+QmvANnraSIgw54+nK6M6XWSMJpntdoo2BdxITwzfASAzKtqCpNU1P3xV
+         usFlIUrhIA5oWTtYkASG/r0kXpegnJg2T7mjgBhlMy9gQ9Krsrh6SSBi87f4pTFjE/oR
+         gSUc4sLlsM9m9tsv41NmtSRom+NlJw5vveni2/8IwXQ1gMRY5Dl/Bx2HL6gDGgX2hli3
+         3Vcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786123002; x=1786727802;
+        d=1e100.net; s=20251104; t=1786147221; x=1786752021;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Rtx8ZmZNm5nMH0poOJXM5HHavD/fWSB/wPvaR1ec6bI=;
-        b=oeEbQ/h94iN1X5xmQHPtCuulTSlgYclFStug8vCOUndDP5bT7HwHJ2AolMI3ZCVgu0
-         5QgVSmvCSkAp2Cnvua49BpUeNurmnz8pjC5qdsNobAP80tDS/cU8LijaHMv73Y2PI2zs
-         mq0NX5kIvHJVBDnPysZbsuk+QEOhBYcLvp4+1ftTgaba1rbjF7vEI1q8WY3duZaEW7k1
-         Yz0rH0ZWarTohpbrvSJtpfTdh+mUZjuQ/6GDG8c6UqRb4Ov7+8yN2UfMm3kcFdYWPnT4
-         xUtioHQDbtgDC4Th1IrpW+6DIbNoBf7Yi9kyXI9G7guf2WTCF8VemOPB9a5PYsmttGFQ
-         XzWA==
-X-Forwarded-Encrypted: i=1; AHgh+Rpdq6Zv1aazZz1jUZiIEK2JmO57/LAxDWkJpqstG0JZFHQUa0I6JedBI00dE9ksTIf0NwpfOYT+q6U=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyUPdQWY9CO0ul6MzddmR0npPMp9pp40EH6y2c/jQJwZ+dCrW92
-	sL5McwKdI0HmkuZUt7dAhc0pZezvPcFp0hkvcr38lb6lSf9yDapbra1n+wFiZNxhRUrSkdJ3kEE
-	9YOUexpLdpOjpk2B39+NIYFs7Us0gReY=
-X-Gm-Gg: AR+sD139gqxLenpNFNcq285NgXZRfiXne2V5R8mzmeDfvKFL1QkcmqMuVqN8YDy6CyN
-	+xDDg8fPH9KKS8H3B7nU+cYOwmnJr29LskS6q4L8d7B4qo/4Xt5lLf6j6hC/wXJvAsk/IE5lZzf
-	ReJqn6b71Aloft49n6A4yuXeg5u8CKqqESE0KHAau/5FD6xSPUzLnki/PTyGzl+wroJNLETcG0+
-	DXyYj5Bxrd/p1c4YDA+4tp53r+NLSGCcStS2cWGNZnaNWwo1EYQJKf14XUZW5H2UvcZeIsELMnB
-	yM/N/DwwpdXefTSsReyj2dbTmkYm5xuY77OYdB3h8kGPID951aBHO3dFbcjCoxHlCDh3OT9p1dN
-	Ka6lbNs/lSQMkt5fflnXlbuLSjre3l9g5CUCHTAWX0zo=
-X-Received: by 2002:a05:6402:1e8e:b0:6a0:a4f4:bca4 with SMTP id
- 4fb4d7f45d1cf-6a14f07c8e2mr6612492a12.1.1786123002218; Fri, 07 Aug 2026
- 10:16:42 -0700 (PDT)
+        bh=v8ZBSWIPrWKHHCg3jurXTVoAiywt7j3Be5iKukh07Cs=;
+        b=Q5DJYffSBLoZ1a1skgRWuv2eMiAQH36bDYog9xuhnwttK9gQFQ1N93GXRhSLB2UnmH
+         T6XLj0zcxL4sRfE/fbBuK3g3k6dX8tS5RmgzP2FhvhnGGr3bQWbTPFeuxmDcmuZlCQu8
+         Nrw5SBFanic1qt0M0b3kPlK/FLdrFUAjU1Cxptlwd0r2EgPF8ykI9ffGWuWEpBREFexv
+         7Cv0Erj+/bLk19rbXlrMaTUTtrNpHyBKCPw32ft+1jkkaCNG6TmXB4NLxgHkmdzKo5oG
+         EGjdWXxPxwCywtS5ZqH2DLqLspyFXY3HUhP8fcYC6cKRDMB5pGWcyWnlLPGn79C4JJzg
+         4OhQ==
+X-Forwarded-Encrypted: i=1; AHgh+RrIzH//OH2+tsIU8DZfvA90KJcwc3I1h8gTr4x/YHG+Xcjo4X4hVC5HNS+0p3SiHpQEq+HtlGkIHBo=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yxk+40me5jw7jqmuKZKEUyia6grqYRKWxIVvQdhmAYBXq2yerJC
+	A1qxVjnuwDnKXnNTJB4kNRSzhdcyObbJzKta6+694JI522c1IOSPzTorUYftJVr8WYYhJ5HVJIm
+	wmE2o0oVBreTLtnz32mokNPf5Q38k4Xw=
+X-Gm-Gg: AR+sD13cQt9Sd8YHQRfhubWyx5fjucN1C+wgyMTiBahnGBRPOJl/loxDkkvPTWF3m3f
+	5ftkL25N6IGFXuZMD3AnLhSceIhdesREiU9wlOoAZ6WMu+4Otyjh1MAgxuWi4v7fpajQ9P4Yi8D
+	jfwSio5NhypXR8zohEJqJNhZkkJVN/XTOtkQcq8+Zwzmt8Pd5G2HfaFBKULye6jRZyoPouSyUo9
+	uYgQSxMzOsZ3qrINmW/GpoIA9IsUgr6IVfB48/r+zuvu0oydbRzdAPM4y3JH+EEkmxuMA6RfHgp
+	tMVxW+7uh6pSW026zO3RMfw3k7d4Sv2bZhrb3MNnV1yFcY5yl57NW5X5AaRcwGq4sEl1/S9RLZ2
+	8/D8OgC6oR9g5CHCBcSvwR6bWfbAnvXuLMOTua+irF08=
+X-Received: by 2002:a05:6402:28cb:b0:6a1:445f:1f3 with SMTP id
+ 4fb4d7f45d1cf-6a14f28502cmr6315290a12.4.1786147221307; Fri, 07 Aug 2026
+ 17:00:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260807163418.487508-1-bogdan.nicolae@gmail.com> <19fdd238f38.2873.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
-In-Reply-To: <19fdd238f38.2873.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
+References: <20260729053408.13715-1-bogdan.nicolae@gmail.com> <20260802083905.3819981-8-arend.vanspriel@broadcom.com>
+In-Reply-To: <20260802083905.3819981-8-arend.vanspriel@broadcom.com>
 From: Bogdan Nicolae <bogdan.nicolae@gmail.com>
-Date: Fri, 7 Aug 2026 12:12:48 -0500
-X-Gm-Features: AUfX_myiUNyTJjYFkszlm8txJvLhnyde7l5fcWYkuiyDB5Q-vCiwqt1JvwI0dCg
-Message-ID: <CA+ORkNRRZ_qES77+12=Cx2rs_ntVqmOB0vzUtTOJddabpMvAyg@mail.gmail.com>
-Subject: Re: [PATCH v6] wifi: brcmfmac: cyw: pass PMKID to firmware if present
+Date: Fri, 7 Aug 2026 18:56:26 -0500
+X-Gm-Features: AUfX_mzX12CQEWUDSZdNypV-f9oJzIXa5Pzlcmj9Okz8ULUQ91VkoAyJ9BvBYCo
+Message-ID: <CA+ORkNSS1dOdUK51B0Q1r2Htc5NpP-=EmE4FO6=4rX5CUU_FpA@mail.gmail.com>
+Subject: Re: [PATCH] wifi: brcmfmac: configure SAE PWE method for external SAE AP
 To: Arend van Spriel <arend.vanspriel@broadcom.com>
 Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev, 
 	brcm80211-dev-list.pdl@broadcom.com, linux-kernel@vger.kernel.org, 
-	stable@vger.kernel.org
+	Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Sure!
+Gokul (representing Infineon) promised he would send a patch a while back.
+This would be a preferred solution as it comes directly from the vendor.
+But it also takes time. I can send a revised patch next week.
 
-Best,
+Regards,
 Bogdan
 
-On Fri, Aug 7, 2026 at 11:52=E2=80=AFAM Arend van Spriel
+On Sun, Aug 2, 2026 at 3:39=E2=80=AFAM Arend van Spriel
 <arend.vanspriel@broadcom.com> wrote:
 >
-> Op 7 augustus 2026 18:37:48 schreef Bogdan Nicolae <bogdan.nicolae@gmail.=
-com>:
->
-> > Zero out auth_status on initialization. Otherwise, garbage will
-> > leak from the stack to the firmware (when ssid is less than 32 bytes
-> > and/or when params->pmkid is set). Then, pass the params->pmkid to the
-> > firmware (without it, the firmware caches a garbage PMKID on successful
-> > authentication and denies a subsequent association request that include=
-s
-> > the PMKID).
+> On Wed, 29 Jul 2026 00:34:08 -0500, Bogdan Nicolae wrote:
+> > When bringing up a WPA3-SAE SoftAP with external (user space) SAE, the
+> > driver never told the firmware which SAE Password Element (PWE) method =
+to
+> > accept. The firmware was observed to corrupt its heap over time due to
+> > this omission, leading to firmware trap (data abort in heap allocator).
 > >
-> > Fixes: 66f909308a7c ("wifi: brcmfmac: cyw: support external SAE
-> > authentication in station mode")
+> > Parse the beacon IEs on start_ap() and set the extsae_pwe iovar
+> > accordingly: 2 when the RSNX IE advertises H2E, 1 when an H2E-only
+> > membership selector is present, 0 otherwise. This matches the behaviour
+> > of the upstream/vendor driver and only applies to SAE-capable APs when
+> > external SAE is supported.
+> >
 > > Signed-off-by: Bogdan Nicolae <bogdan.nicolae@gmail.com>
-> > Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+> > ---
+> >  .../broadcom/brcm80211/brcmfmac/cfg80211.c    | 75 +++++++++++++++++++
+> >  1 file changed, 75 insertions(+)
 >
-> Hi Bogdan,
+> As discussed the extsae_pwe iovar is vendor specific so the fix needs to
+> be gated on the CYW vendor. The cleanest approach would be to add a fwvid
+> hook (following the pattern of set_sae_password in brcmfmac/cyw/) so
+> brcmf_parse_configure_sae_pwe() is only invoked for CYW chipsets.
 >
-> Looks good so my Acked-by: still stands. Thanks for going with the flow.
+> [...]
+>
+> > +#define BSS_MEMBERSHIP_SELECTOR_SAE_H2E_ONLY 123
+>
+> This is already defined as BSS_MEMBERSHIP_SELECTOR_SAE_H2E in
+> <linux/ieee80211.h>. Please reuse the existing constant.
+>
+> [...]
 >
 > Regards,
 > Arend
->
-> > ---
-> > v6: Fixed diff line number
-> > v5: Fixed line length > 80 chars
-> > v4: Fixed indentation
-> > v3: Added Fixes, Cc: stable, and Acked-by tags
-> > v2: Split into a separate patch
-> >
-> > drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c | 4 +++-
-> > 1 file changed, 3 insertions(+), 1 deletion(-)
->
->
->
