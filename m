@@ -1,278 +1,157 @@
-Received: from smtp2.infineon.com (smtp2.infineon.com [217.10.52.18])
+Received: from sirius.syn-flut.de (sirius.syn-flut.de [94.125.25.230])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF1F53B4E9E
-	for <brcm80211@lists.linux.dev>; Mon, 10 Aug 2026 11:41:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.10.52.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2EE4405C35
+	for <brcm80211@lists.linux.dev>; Mon, 10 Aug 2026 15:12:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.125.25.230
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786362087; cv=none; b=hop2/2YFv64bgYJFsXiPVXd1L/orT2cOzsKw3pLs1MHGMMzr/WqA0hMJA1uj4sayBtA6cB8uLwTT9lBQUBghMZlMARqXONInhHePrPVEkYDFTn3WNfO0PW4wC42OWExUc7oLy1Oa79u9iTMZVhx4mbT11WK74zCQyO+MafAiLKI=
+	t=1786374726; cv=none; b=GxWjZNCHDlpuwdkXojNo6fTyLGbRW9nYVdpU6pHQNYA8PFlyBc6bOJoAIrHKi64IXLZfBCHbf1a7kvtSOVs4evZT6T0lf7AL8kfLUkdBWMWFPhiQytMjp8VY1bqqRe/yY4q/3EFTzGnggLNef1YLX1jeGj/G4aHtlXolYIPvF7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786362087; c=relaxed/simple;
-	bh=ENZRZh6U6qmgQu+WzhqkmDn/Bh7aN/I+5oUJn5PUDkI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=evNVZwPxXYri0W0dI+z+E3zUXpAs/LXmO68tZs46yfkG0JxWZwlnomyeXfEPSOFCPPc+tE93bG6oSALQkmVUOnWg43/mHaMUfM17W680+8HN1MMad0ytsoY3ZhhyJdf0iuC19irIRnmOcb6Znu4us7L/FKpAIBEWsmAFsD+A3zk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=infineon.com; spf=pass smtp.mailfrom=infineon.com; dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b=DgMz6Rvr; arc=none smtp.client-ip=217.10.52.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=infineon.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infineon.com
+	s=arc-20240116; t=1786374726; c=relaxed/simple;
+	bh=pNitvX6sM/Opco/VrF8VCOV0XYlw7QRLLFo9vxq4i4U=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=skGPo0kSrOyYiIDGbbP8nfVlr3NWC2FvAkpUEzCDOy73434cVzhmhHbUFFA2tT1BehyoN/As+Bt4kjIVaiNwhMqymU0Vi5xiVDMadDuOtlukLWkqrLmSaBZ2C95zOf6ZeRTgjRJa/CIDFIjequmXvSKS4iO3agzimxj6HX9ncZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fischermail.me; spf=pass smtp.mailfrom=fischermail.me; dkim=pass (1024-bit key) header.d=fischermail.me header.i=@fischermail.me header.b=r9thHnBa; arc=none smtp.client-ip=94.125.25.230
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fischermail.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fischermail.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b="DgMz6Rvr"
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=infineon.com; i=@infineon.com; q=dns/txt; s=IFXMAIL;
-  t=1786362086; x=1817898086;
-  h=from:date:subject:mime-version:content-transfer-encoding:
-   message-id:references:in-reply-to:to:cc;
-  bh=ENZRZh6U6qmgQu+WzhqkmDn/Bh7aN/I+5oUJn5PUDkI=;
-  b=DgMz6RvrvP6/KhEqlja5c84L+z6qp5xfak0i1w1o5UBTuy581K757qXH
-   4qRGJoyn//mPHdzBOrMZOsincNWgqhLBBMql6KdZhgkZUrBOtCNW0IdHF
-   VSKTllCunVx4wvtoIqBJTVyblmHZpYUemfwXm1tIlv8qxdGEs3uAiHTTJ
-   k=;
-X-CSE-ConnectionGUID: 6zhQkBQmTfaOGpUBH5q0dQ==
-X-CSE-MsgGUID: wzuQ+bG3Qzm2zsjvlLpYXA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11870"; a="171856875"
-X-IronPort-AV: E=Sophos;i="6.25,215,1779141600"; 
-   d="scan'208";a="171856875"
-X-Amp-Result: SKIPPED(no attachment in message)
-Received: from unknown (HELO MUCSE819.infineon.com) ([172.23.29.45])
-  by smtp2.infineon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Aug 2026 13:41:17 +0200
-Received: from MUCSE809.infineon.com (172.23.29.35) by MUCSE819.infineon.com
- (172.23.29.45) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Mon, 10 Aug
- 2026 13:41:17 +0200
-Received: from ISCN5CG5251XQT.infineon.com (10.161.6.196) by
- MUCSE809.infineon.com (172.23.29.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45; Mon, 10 Aug 2026 13:41:13 +0200
-From: Jason Huang <Jason.Huang2@infineon.com>
-Date: Mon, 10 Aug 2026 19:40:55 +0800
-Subject: [PATCH v3 3/5] wifi: brcmfmac: add PMK programming for firmware
- roaming offload
+	dkim=pass (1024-bit key) header.d=fischermail.me header.i=@fischermail.me header.b="r9thHnBa"
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id DF4A0140AAA;
+	Mon, 10 Aug 2026 17:05:55 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fischermail.me;
+	s=default; t=1786374356; h=from:subject:date:message-id:to:cc:mime-version:
+	 content-transfer-encoding; bh=7BsuONgPt7lll6yhj7fi/Li4gvxCG5ykrk5pSpjk4r4=;
+	b=r9thHnBaEE2++zhPoHx2yHVRKndZN1Qp76izApNKMgWbLYVnXiAbU5NY302z9ukRPAPXge
+	VOr0qEmDwRsNa6uUjmWGUMSQGxWBENakHjQ5rrYnDRt6mcyLFYidnM3B81AViMPozUGdDa
+	X/M9iIb7Yy+r2SMvDMmDUd3c2eb81q8=
+From: Alexander Fischer <alexander@fischermail.me>
+To: linux-wireless@vger.kernel.org
+Cc: Arend van Spriel <arend.vanspriel@broadcom.com>,
+	brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com,
+	linux-kernel@vger.kernel.org,
+	Andre Eikmeyer <dev@deq.rocks>
+Subject: [PATCH wireless-next] wifi: brcmfmac: allow opting into PM_MAX power management
+Date: Mon, 10 Aug 2026 17:05:52 +0200
+Message-ID: <20260810150552.25375-1-alexander@fischermail.me>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20260810-upstream-wireless-next-main-jason-11r-support-v1-v3-3-bce4f460ae0b@infineon.com>
-References: <20260810-upstream-wireless-next-main-jason-11r-support-v1-v3-0-bce4f460ae0b@infineon.com>
-In-Reply-To: <20260810-upstream-wireless-next-main-jason-11r-support-v1-v3-0-bce4f460ae0b@infineon.com>
-To: <linux-wireless@vger.kernel.org>
-CC: Johannes Berg <johannes@sipsolutions.net>, Arend van Spriel
-	<arend.vanspriel@broadcom.com>, <linux-kernel@vger.kernel.org>,
-	<brcm80211@lists.linux.dev>, <brcm80211-dev-list.pdl@broadcom.com>,
-	<wlan-kernel-dev-list@infineon.com>, <jeff.johnson@oss.qualcomm.com>, "Darren
- Li" <hsin-hung.li@cypress.com>, Chung-Hsien Hsu
-	<Chung-Hsien.Hsu@infineon.com>, Chi-hsien Lin <chi-hsien.lin@cypress.com>,
-	Carella Chen <carella.chen@infineon.com>, Shelley Yang
-	<shelley.yang@infineon.com>, Jason Huang <jason.huang2@infineon.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1786362064; l=7383;
- i=jason.huang2@infineon.com; s=20260810; h=from:subject:message-id;
- bh=Da7kCCpMdDUcYXmzKnXe80r7p60k0ZRO//WetmJgFjA=;
- b=xWMLoDjLx0KXc0BQI3SwJbpjJjtHM848jaCvfYktcRgl4N/ZgSEzgwsuIxxe34GH1L9WE5lX7
- S2WUNaNBCfND44ZtCsi7pfRcUKxHl8WPNH3OelMhVJkXQel8ht8lBFk
-X-Developer-Key: i=jason.huang2@infineon.com; a=ed25519;
- pk=BmqGCssp9w9TsTSVHuzcc6+C1o5uJ0uZK4ZSmrma28M=
-X-ClientProxiedBy: MUCSE815.infineon.com (172.23.29.41) To
- MUCSE809.infineon.com (172.23.29.35)
+Content-Transfer-Encoding: 8bit
+X-Last-TLS-Session-Version: TLSv1.3
 
-From: Darren Li <hsin-hung.li@cypress.com>
+While investigating high idle power consumption on a BCM4364, I found
+that brcmfmac always selects PM_FAST when cfg80211 enables power saving.
+This keeps the device responsive, but on this system it also kept the
+platform latency-tolerance request low enough to prevent deeper package
+idle states for most of the idle time.
 
-FT and OKC roaming offload need PMK material in firmware even when
-the initial 802.1X exchange is handled by userspace. Add a roaming
-firmware-supplicant profile state for those connections and allow PMK
-configuration while firmware FT or OKC state is active.
+PM_MAX is already part of the firmware interface, and brcmfmac uses it
+while configuring WoWLAN. Using it during normal connected operation
+changed the BCM4364 platform latency-tolerance request from 61,440 ns to
+3,145,728 ns. In controlled 45-second idle samples, package C8 residency
+increased from 6.48% to 20.36%. Several days of normal use also showed
+lower battery drain. BCM4364 and BCM4377 have been tested without
+observed connectivity or latency regressions.
 
-Program the OKC PMK through the okc_info_pmk iovar before setting the
-regular PMK when firmware reports OKC state. Only select the roaming
-firmware-supplicant state when firmware advertises FBT or OKC support;
-devices without those capabilities keep the profile in the userspace
-supplicant state and do not issue roaming-offload specific iovars on
-every connect.
+PM_FAST has been selected since brcmfmac first entered staging in 2010,
+and the commit history does not document why it was chosen. Cypress
+carried an opt-in module parameter for PM_MAX downstream in 2018. Since
+additional wake latency may still be undesirable on other devices or
+workloads, changing the existing default would be risky.
 
-For FT-PSK with firmware supplicant support, keep the profile in the
-PSK firmware-supplicant state.
+A read-only max_pm module parameter makes PM_MAX available while leaving
+PM_FAST as the default. PM_OFF remains in use when power saving is
+disabled or the interface is a P2P client.
 
-Assisted-by: GitHub Copilot CLI:gpt-5.5
-Signed-off-by: Darren Li <hsin-hung.li@cypress.com>
-Signed-off-by: Chung-Hsien Hsu <Chung-Hsien.Hsu@infineon.com>
-Signed-off-by: Chi-hsien Lin <chi-hsien.lin@cypress.com>
-Co-developed-by: Carella Chen <carella.chen@infineon.com>
-Signed-off-by: Carella Chen <carella.chen@infineon.com>
-Co-developed-by: Shelley Yang <shelley.yang@infineon.com>
-Signed-off-by: Shelley Yang <shelley.yang@infineon.com>
-Signed-off-by: Jason Huang <jason.huang2@infineon.com>
+Link: https://github.com/RobertCNelson/linux-dev/blob/master/patches/cypress/brcmfmac/0029-brcmfmac-introduce-module-parameter-to-configure-def.patch
+Reviewed-by: Andre Eikmeyer <dev@deq.rocks>
+Tested-by: Andre Eikmeyer <dev@deq.rocks>
+Signed-off-by: Alexander Fischer <alexander@fischermail.me>
 ---
- .../broadcom/brcm80211/brcmfmac/cfg80211.c         | 56 +++++++++++++++++++---
- .../broadcom/brcm80211/brcmfmac/cfg80211.h         |  4 +-
- 2 files changed, 53 insertions(+), 7 deletions(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 4 ++--
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c   | 6 ++++++
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.h   | 2 ++
+ 3 files changed, 10 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-index 872c48806d09..f2916cc9e5fc 100644
+index 872c48806d09..5e5b8bac53dc 100644
 --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
 +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-@@ -2112,9 +2112,11 @@ brcmf_set_key_mgmt(struct net_device *ndev, struct cfg80211_connect_params *sme)
- 	struct brcmf_pub *drvr = ifp->drvr;
- 	s32 val;
- 	s32 err;
-+	s32 okc_enable;
- 	const struct brcmf_tlv *rsn_ie;
- 	const u8 *ie;
- 	u32 ie_len;
-+	bool fwsup_roam;
- 	u32 offset;
- 	u16 rsn_cap;
- 	u32 mfp;
-@@ -2122,6 +2124,9 @@ brcmf_set_key_mgmt(struct net_device *ndev, struct cfg80211_connect_params *sme)
+@@ -3327,7 +3327,7 @@ brcmf_cfg80211_set_power_mgmt(struct wiphy *wiphy, struct net_device *ndev,
+ 		goto done;
+ 	}
  
- 	profile->use_fwsup = BRCMF_PROFILE_FWSUP_NONE;
- 	profile->is_ft = false;
-+	profile->is_okc = false;
-+	fwsup_roam = brcmf_feat_is_enabled(ifp, BRCMF_FEAT_FBT) ||
-+		     brcmf_feat_is_enabled(ifp, BRCMF_FEAT_OKC);
+-	pm = enabled ? PM_FAST : PM_OFF;
++	pm = enabled ? ifp->drvr->settings->default_pm : PM_OFF;
+ 	/* Do not enable the power save after assoc if it is a p2p interface */
+ 	if (ifp->vif->wdev.iftype == NL80211_IFTYPE_P2P_CLIENT) {
+ 		brcmf_dbg(INFO, "Do not enable power save for P2P clients\n");
+@@ -7821,7 +7821,7 @@ static s32 brcmf_config_dongle(struct brcmf_cfg80211_info *cfg)
  
- 	if (!sme->crypto.n_akm_suites)
- 		return 0;
-@@ -2138,6 +2143,8 @@ brcmf_set_key_mgmt(struct net_device *ndev, struct cfg80211_connect_params *sme)
- 			val = WPA_AUTH_UNSPECIFIED;
- 			if (sme->want_1x)
- 				profile->use_fwsup = BRCMF_PROFILE_FWSUP_1X;
-+			else if (fwsup_roam)
-+				profile->use_fwsup = BRCMF_PROFILE_FWSUP_ROAM;
- 			break;
- 		case WLAN_AKM_SUITE_PSK:
- 			val = WPA_AUTH_PSK;
-@@ -2153,11 +2160,15 @@ brcmf_set_key_mgmt(struct net_device *ndev, struct cfg80211_connect_params *sme)
- 			val = WPA2_AUTH_UNSPECIFIED;
- 			if (sme->want_1x)
- 				profile->use_fwsup = BRCMF_PROFILE_FWSUP_1X;
-+			else if (fwsup_roam)
-+				profile->use_fwsup = BRCMF_PROFILE_FWSUP_ROAM;
- 			break;
- 		case WLAN_AKM_SUITE_8021X_SHA256:
- 			val = WPA2_AUTH_1X_SHA256;
- 			if (sme->want_1x)
- 				profile->use_fwsup = BRCMF_PROFILE_FWSUP_1X;
-+			else if (fwsup_roam)
-+				profile->use_fwsup = BRCMF_PROFILE_FWSUP_ROAM;
- 			break;
- 		case WLAN_AKM_SUITE_PSK_SHA256:
- 			val = WPA2_AUTH_PSK_SHA256;
-@@ -2170,10 +2181,16 @@ brcmf_set_key_mgmt(struct net_device *ndev, struct cfg80211_connect_params *sme)
- 			profile->is_ft = true;
- 			if (sme->want_1x)
- 				profile->use_fwsup = BRCMF_PROFILE_FWSUP_1X;
-+			else if (fwsup_roam)
-+				profile->use_fwsup = BRCMF_PROFILE_FWSUP_ROAM;
- 			break;
- 		case WLAN_AKM_SUITE_FT_PSK:
- 			val = WPA2_AUTH_PSK | WPA2_AUTH_FT;
- 			profile->is_ft = true;
-+			if (brcmf_feat_is_enabled(ifp, BRCMF_FEAT_FWSUP))
-+				profile->use_fwsup = BRCMF_PROFILE_FWSUP_PSK;
-+			else if (fwsup_roam)
-+				profile->use_fwsup = BRCMF_PROFILE_FWSUP_ROAM;
- 			break;
- 		case WLAN_AKM_SUITE_WFA_DPP:
- 			val = WFA_AUTH_DPP;
-@@ -2204,8 +2221,22 @@ brcmf_set_key_mgmt(struct net_device *ndev, struct cfg80211_connect_params *sme)
+ 	brcmf_dongle_scantime(ifp);
  
- 	if (profile->use_fwsup == BRCMF_PROFILE_FWSUP_1X)
- 		brcmf_dbg(INFO, "using 1X offload\n");
+-	power_mode = cfg->pwr_save ? PM_FAST : PM_OFF;
++	power_mode = cfg->pwr_save ? ifp->drvr->settings->default_pm : PM_OFF;
+ 	err = brcmf_fil_cmd_int_set(ifp, BRCMF_C_SET_PM, power_mode);
+ 	if (err)
+ 		goto default_conf_out;
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
+index b6027d83e6ab..b2e06abc76f8 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
+@@ -20,6 +20,7 @@
+ #include "of.h"
+ #include "firmware.h"
+ #include "chip.h"
++#include "defs.h"
+ 
+ MODULE_AUTHOR("Broadcom Corporation");
+ MODULE_DESCRIPTION("Broadcom 802.11 wireless LAN fullmac driver.");
+@@ -67,6 +68,10 @@ static int brcmf_iapp_enable;
+ module_param_named(iapp, brcmf_iapp_enable, int, 0);
+ MODULE_PARM_DESC(iapp, "Enable partial support for the obsoleted Inter-Access Point Protocol");
+ 
++static bool brcmf_max_pm;
++module_param_named(max_pm, brcmf_max_pm, bool, 0400);
++MODULE_PARM_DESC(max_pm, "Use PM_MAX instead of PM_FAST for power management");
 +
-+	if (profile->use_fwsup == BRCMF_PROFILE_FWSUP_1X ||
-+	    profile->use_fwsup == BRCMF_PROFILE_FWSUP_ROAM) {
-+		err = brcmf_fil_bsscfg_int_get(ifp, "okc_enable",
-+					       &okc_enable);
-+		if (err) {
-+			bphy_err(drvr, "get okc_enable failed (%d)\n", err);
-+		} else {
-+			brcmf_dbg(INFO, "okc_enable (%d)\n", okc_enable);
-+			profile->is_okc = okc_enable;
-+		}
-+	}
- 	if (profile->use_fwsup == BRCMF_PROFILE_FWSUP_SAE)
- 		brcmf_dbg(INFO, "using SAE offload\n");
-+	if (profile->use_fwsup == BRCMF_PROFILE_FWSUP_ROAM)
-+		brcmf_dbg(INFO, "using roaming offload\n");
- 
- 	if (!brcmf_feat_is_enabled(ifp, BRCMF_FEAT_MFP))
- 		goto skip_mfp_config;
-@@ -2494,13 +2525,14 @@ brcmf_cfg80211_connect(struct wiphy *wiphy, struct net_device *ndev,
- 
- 		if (sme->crypto.psk && !is_sae_akm &&
- 		    profile->use_fwsup != BRCMF_PROFILE_FWSUP_SAE) {
--			if (WARN_ON(profile->use_fwsup !=
--				    BRCMF_PROFILE_FWSUP_NONE)) {
-+			if (profile->use_fwsup == BRCMF_PROFILE_FWSUP_NONE) {
-+				brcmf_dbg(INFO, "using PSK offload\n");
-+				profile->use_fwsup = BRCMF_PROFILE_FWSUP_PSK;
-+			} else if (WARN_ON(profile->use_fwsup !=
-+					   BRCMF_PROFILE_FWSUP_PSK)) {
- 				err = -EINVAL;
- 				goto done;
- 			}
--			brcmf_dbg(INFO, "using PSK offload\n");
--			profile->use_fwsup = BRCMF_PROFILE_FWSUP_PSK;
- 		}
- 		if (profile->use_fwsup != BRCMF_PROFILE_FWSUP_NONE) {
- 			/* enable firmware supplicant for this interface */
-@@ -5953,17 +5985,29 @@ static int brcmf_cfg80211_set_pmk(struct wiphy *wiphy, struct net_device *dev,
- 				  const struct cfg80211_pmk_conf *conf)
- {
- 	struct brcmf_if *ifp;
-+	struct brcmf_pub *drvr;
-+	int ret;
- 
- 	brcmf_dbg(TRACE, "enter\n");
- 
--	/* expect using firmware supplicant for 1X */
- 	ifp = netdev_priv(dev);
--	if (WARN_ON(ifp->vif->profile.use_fwsup != BRCMF_PROFILE_FWSUP_1X))
-+	drvr = ifp->drvr;
-+	if (WARN_ON(ifp->vif->profile.use_fwsup != BRCMF_PROFILE_FWSUP_1X &&
-+		    !ifp->vif->profile.is_ft &&
-+		    !ifp->vif->profile.is_okc))
- 		return -EINVAL;
- 
- 	if (conf->pmk_len > BRCMF_WSEC_MAX_PSK_LEN)
- 		return -ERANGE;
- 
-+	if (ifp->vif->profile.is_okc) {
-+		ret = brcmf_fil_iovar_data_set(ifp, "okc_info_pmk",
-+					       conf->pmk, conf->pmk_len);
-+		if (ret < 0)
-+			bphy_err(drvr, "okc_info_pmk iovar failed: ret=%d\n",
-+				 ret);
-+	}
-+
- 	return brcmf_set_pmk(ifp, conf->pmk, conf->pmk_len);
- }
- 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.h
-index 63e534523f51..58f229489836 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.h
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.h
-@@ -127,7 +127,8 @@ enum brcmf_profile_fwsup {
- 	BRCMF_PROFILE_FWSUP_NONE,
- 	BRCMF_PROFILE_FWSUP_PSK,
- 	BRCMF_PROFILE_FWSUP_1X,
--	BRCMF_PROFILE_FWSUP_SAE
-+	BRCMF_PROFILE_FWSUP_SAE,
-+	BRCMF_PROFILE_FWSUP_ROAM
- };
- 
- /**
-@@ -172,6 +173,7 @@ struct brcmf_cfg80211_profile {
- 	enum brcmf_profile_fwsup use_fwsup;
- 	u16 use_fwauth;
- 	bool is_ft;
-+	bool is_okc;
- };
- 
- /**
+ #ifdef DEBUG
+ /* always succeed brcmf_bus_started() */
+ static int brcmf_ignore_probe_fail;
+@@ -530,6 +535,7 @@ struct brcmf_mp_device *brcmf_get_module_param(struct device *dev,
+ 	settings->fcmode = brcmf_fcmode;
+ 	settings->roamoff = !!brcmf_roamoff;
+ 	settings->iapp = !!brcmf_iapp_enable;
++	settings->default_pm = brcmf_max_pm ? PM_MAX : PM_FAST;
+ #ifdef DEBUG
+ 	settings->ignore_probe_fail = !!brcmf_ignore_probe_fail;
+ #endif
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.h
+index 3bdb6984b2dd..d06c734ea82a 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.h
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.h
+@@ -37,6 +37,7 @@ extern struct brcmf_mp_global_t brcmf_mp_global;
+  * @feature_disable: Feature_disable bitmask.
+  * @fcmode: FWS flow control.
+  * @roamoff: Firmware roaming off?
++ * @default_pm: Default power-management mode.
+  * @ignore_probe_fail: Ignore probe failure.
+  * @trivial_ccode_map: Assume firmware uses ISO3166 country codes with rev 0
+  * @country_codes: If available, pointer to struct for translating country codes
+@@ -48,6 +49,7 @@ struct brcmf_mp_device {
+ 	int		fcmode;
+ 	bool		roamoff;
+ 	bool		iapp;
++	int		default_pm;
+ 	bool		ignore_probe_fail;
+ 	bool		trivial_ccode_map;
+ 	struct brcmfmac_pd_cc *country_codes;
 
+base-commit: ca800a9302764c445de0da0e84d2252400a770ee
 -- 
-2.25.1
+2.55.0
 
