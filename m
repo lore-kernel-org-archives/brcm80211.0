@@ -1,39 +1,78 @@
-Received: from sirius.syn-flut.de (sirius.syn-flut.de [94.125.25.230])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2EE4405C35
-	for <brcm80211@lists.linux.dev>; Mon, 10 Aug 2026 15:12:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.125.25.230
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE2F030C37A
+	for <brcm80211@lists.linux.dev>; Tue, 11 Aug 2026 08:27:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786374726; cv=none; b=GxWjZNCHDlpuwdkXojNo6fTyLGbRW9nYVdpU6pHQNYA8PFlyBc6bOJoAIrHKi64IXLZfBCHbf1a7kvtSOVs4evZT6T0lf7AL8kfLUkdBWMWFPhiQytMjp8VY1bqqRe/yY4q/3EFTzGnggLNef1YLX1jeGj/G4aHtlXolYIPvF7U=
+	t=1786436835; cv=none; b=n9aM9p4Z+s1jV69U06v6oNcDU4a4wmm/zDSHFu8d96waJiRYlZocLUvUYeDukl8lZf0jy5eFr1br0qDg6T2RuukLjRe49oOpPKRumw2qEC3bUK4BpMjrUeXsAKQ/DjWFApSoP1FPwdYY4vSxl5GTeKAJYgPhgCl0YChoaJ4wxpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786374726; c=relaxed/simple;
-	bh=pNitvX6sM/Opco/VrF8VCOV0XYlw7QRLLFo9vxq4i4U=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=skGPo0kSrOyYiIDGbbP8nfVlr3NWC2FvAkpUEzCDOy73434cVzhmhHbUFFA2tT1BehyoN/As+Bt4kjIVaiNwhMqymU0Vi5xiVDMadDuOtlukLWkqrLmSaBZ2C95zOf6ZeRTgjRJa/CIDFIjequmXvSKS4iO3agzimxj6HX9ncZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fischermail.me; spf=pass smtp.mailfrom=fischermail.me; dkim=pass (1024-bit key) header.d=fischermail.me header.i=@fischermail.me header.b=r9thHnBa; arc=none smtp.client-ip=94.125.25.230
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fischermail.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fischermail.me
+	s=arc-20240116; t=1786436835; c=relaxed/simple;
+	bh=ok4xpuQbwDIqZ3qpbUpj7vT70ITusOHkGyK7XwCc8+w=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=SFe1buBZmwuhOFwlVjTTi6w2Uq5w9EjLgr0AK1ziWcXljaSiIhxAjbb1gcoob6Awnje4NE0Ll1K5Q5zhzzPuzUPsVVSwRiVAUQWkDLwLS8wgNACPlv6RXaWEymG1WQuqh4Gy1HMYg67Rk3sGHIjnRJW1Lw2NRqKdTORHVhO+d2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V9hDU6XL; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=fischermail.me header.i=@fischermail.me header.b="r9thHnBa"
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id DF4A0140AAA;
-	Mon, 10 Aug 2026 17:05:55 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fischermail.me;
-	s=default; t=1786374356; h=from:subject:date:message-id:to:cc:mime-version:
-	 content-transfer-encoding; bh=7BsuONgPt7lll6yhj7fi/Li4gvxCG5ykrk5pSpjk4r4=;
-	b=r9thHnBaEE2++zhPoHx2yHVRKndZN1Qp76izApNKMgWbLYVnXiAbU5NY302z9ukRPAPXge
-	VOr0qEmDwRsNa6uUjmWGUMSQGxWBENakHjQ5rrYnDRt6mcyLFYidnM3B81AViMPozUGdDa
-	X/M9iIb7Yy+r2SMvDMmDUd3c2eb81q8=
-From: Alexander Fischer <alexander@fischermail.me>
-To: linux-wireless@vger.kernel.org
-Cc: Arend van Spriel <arend.vanspriel@broadcom.com>,
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V9hDU6XL"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4956242332dso27047155e9.2
+        for <brcm80211@lists.linux.dev>; Tue, 11 Aug 2026 01:27:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786436832; x=1787041632; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=3WNN0jBnqjNkMd8rlfEtTd2nbjLXRpa7uvLdlshlheE=;
+        b=V9hDU6XLc1LHBmWH3OxuToYYoiSeOKw1XxI1q6Y3ZEiZbQtp9xv08B7uMgS4Tz6IJQ
+         Yl94s6Qx3gD3wqPDinrTXYPGqi1hH9J5yuW28EDf5sq7x9C5wI7EYiRicthnzIT66ynx
+         C7VcK6u6gOeqUewxAyuf4xctunATikh9XpqhX7HQVxTP6SyzcnH3GIyFOlruCsc9r7xV
+         hBFHaWAuvy14CBn51oT9hiuGqYIOjtGf80REiT/wBx9gCFKlWjFx8I4qJL6D1+gKmc+k
+         7afGHiY/mHC1uIJbKrJ3b6j/eGj+gPANa+NuvUz/uRaEJCEUwYVJ0GQoXjq7W0zALTiG
+         PTxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786436832; x=1787041632;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=3WNN0jBnqjNkMd8rlfEtTd2nbjLXRpa7uvLdlshlheE=;
+        b=c7lPu3yYAW5wwMuqv3Dq73FFd/MT+bP/asq2Tocw9R3fwAayor3NVDgVP2XdwHURwZ
+         lm3SdbA4ba/voBBwckTm/BqgJP8/umDn4JTK2UGfxtvlk+lJ5uc3qXtghki4vwjEFISk
+         BhC/1qYYv/3yQwGkCZKukWwk/K4K2udb/LeY+Lksdm1k8JVwLMPoRKj0cqynY+iC6RH/
+         wFX+LWKZNeBIGzWaD9riWLUWd02815mcTl+SvDCdgx5Gzie//cJyXxS3yNbqwqsqh//R
+         NJng9QqRANpmoP/srbGeRVsX63BBKLCQZmh1eODGCcVKixWglFR6HQZWKVeFsI188KDG
+         +/Dw==
+X-Forwarded-Encrypted: i=1; AHgh+RogSrYsMfSYdcwEdg/DCOVCnqqSAEZbl1Pm5u4rsXMk8gVQ2+eccdGz07m4utSP/86uJs06VduN1Tc=@lists.linux.dev
+X-Gm-Message-State: AOJu0Ywx7vTGf4EHFgGH1x2oCMLZo+avpAWcAogoL0UXFPzhADgkoADb
+	q5u8SpDHfDxNiuTGSnQNMM6q/aLd0PtQ5g6AfStdCpmwrvTsh8wHTGh8
+X-Gm-Gg: AR+sD12TQUvyEbUPbulEvj742HxidIACp+q1m3Yrt0rHoOLr+Vj/UK9cIOtRd/rEeSz
+	2+uNgFTiwNqCT9ImTDx4ioRrsLisddLo17msWoRPzAQrq1BWqljRRGUJC4pOiE6m2Eb/EuOXA7k
+	teqCNGh2rrFqNStB2su4aTKBwigTi+kg+MXOdHMCRmXT8c7RAqBvRfm+SSOT+yRe6vYVh049r1B
+	62rOQzRk2xo6lLf7iZ24ddr5ZPAknWBss3vT4/bRHXj3b0P9JxFDr2niI6rjJpUgGWRm+p1EqkO
+	bieDexOkHEgKhJ5LyTjV1kbKBIuTgrC2VA5iunqWhrhj2XtEA4MgPOwtKpOsvFZuC4iEPOlmZBI
+	wazYToM8LcL7qWXhe5mxYnT9yagZIXTXoE6I8jqjgXaJKd8IUrmwkiJ1wqweb63+LpuZvxYR78N
+	ZuA96N3DBg+ax28h/cwkVGTUBB3i3qNePC4TJK2UWLFFPB7RhFSwEsqCObJvm+vsxAUb2Ogz+TJ
+	/c+FBPvO88kHsv1P5RIGybY6uEEJU5yekM5FAGJ/JD0yvT/caiygfIgFIWrP1cRFV13wcZUSyzF
+	N/lwLpwwRAGCkW2y839nfrPhqKXANRUdtN6fGpXP9DoFbYW64YxJ6UvV1H3MBKNZKK8A
+X-Received: by 2002:a05:600c:4f49:b0:499:726c:d658 with SMTP id 5b1f17b1804b1-4997913bf43mr15555825e9.19.1786436831868;
+        Tue, 11 Aug 2026 01:27:11 -0700 (PDT)
+Received: from localhost.localdomain (dynamic-2a02-3100-a133-e401-bc8e-d36c-2d08-c5e0.310.pool.telefonica.de. [2a02:3100:a133:e401:bc8e:d36c:2d08:c5e0])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49977e89d68sm21853155e9.3.2026.08.11.01.27.10
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 11 Aug 2026 01:27:11 -0700 (PDT)
+From: Karl Mehltretter <kmehltretter@gmail.com>
+To: Arend van Spriel <arend.vanspriel@broadcom.com>,
+	linux-wireless@vger.kernel.org
+Cc: Karl Mehltretter <kmehltretter@gmail.com>,
+	Hante Meuleman <meuleman@broadcom.com>,
+	"John W. Linville" <linville@tuxdriver.com>,
+	Franky Lin <frankyl@broadcom.com>,
+	Pieter-Paul Giesberts <pieterpg@broadcom.com>,
 	brcm80211@lists.linux.dev,
 	brcm80211-dev-list.pdl@broadcom.com,
-	linux-kernel@vger.kernel.org,
-	Andre Eikmeyer <dev@deq.rocks>
-Subject: [PATCH wireless-next] wifi: brcmfmac: allow opting into PM_MAX power management
-Date: Mon, 10 Aug 2026 17:05:52 +0200
-Message-ID: <20260810150552.25375-1-alexander@fischermail.me>
-X-Mailer: git-send-email 2.55.0
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] wifi: brcmfmac: fix lost 802.1x TX completion wakeup
+Date: Tue, 11 Aug 2026 10:27:02 +0200
+Message-Id: <20260811082702.44521-1-kmehltretter@gmail.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -41,117 +80,63 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Last-TLS-Session-Version: TLSv1.3
 
-While investigating high idle power consumption on a BCM4364, I found
-that brcmfmac always selects PM_FAST when cfg80211 enables power saving.
-This keeps the device responsive, but on this system it also kept the
-platform latency-tolerance request low enough to prevent deeper package
-idle states for most of the idle time.
+brcmf_txfinalize() decrements pend_8021x_cnt before a lockless
+waitqueue_active() check. atomic_dec() does not order the decrement
+against the check.
 
-PM_MAX is already part of the firmware interface, and brcmfmac uses it
-while configuring WoWLAN. Using it during normal connected operation
-changed the BCM4364 platform latency-tolerance request from 61,440 ns to
-3,145,728 ns. In controlled 45-second idle samples, package C8 residency
-increased from 6.48% to 20.36%. Several days of normal use also showed
-lower battery drain. BCM4364 and BCM4377 have been tested without
-observed connectivity or latency regressions.
+The waiter can therefore observe a nonzero count while the waker observes
+an empty queue, losing the final wakeup and delaying key installation
+until the 950 ms timeout.
 
-PM_FAST has been selected since brcmfmac first entered staging in 2010,
-and the commit history does not document why it was chosen. Cypress
-carried an opt-in module parameter for PM_MAX downstream in 2018. Since
-additional wake latency may still be undesirable on other devices or
-workloads, changing the existing default would be risky.
+Add smp_mb__after_atomic() to order the decrement before the queue
+check. wait_event_timeout() provides the matching barrier. LKMM confirms
+that this forbids the lost-wakeup outcome.
 
-A read-only max_pm module parameter makes PM_MAX available while leaving
-PM_FAST as the default. PM_OFF remains in use when power saving is
-disabled or the interface is a P2P client.
-
-Link: https://github.com/RobertCNelson/linux-dev/blob/master/patches/cypress/brcmfmac/0029-brcmfmac-introduce-module-parameter-to-configure-def.patch
-Reviewed-by: Andre Eikmeyer <dev@deq.rocks>
-Tested-by: Andre Eikmeyer <dev@deq.rocks>
-Signed-off-by: Alexander Fischer <alexander@fischermail.me>
+Fixes: 21fff75d2fb6 ("brcmfmac: use wait_event_timeout for 8021x pending count")
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 4 ++--
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c   | 6 ++++++
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.h   | 2 ++
- 3 files changed, 10 insertions(+), 2 deletions(-)
+LKMM results with herdtools7 7.58:
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-index 872c48806d09..5e5b8bac53dc 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-@@ -3327,7 +3327,7 @@ brcmf_cfg80211_set_power_mgmt(struct wiphy *wiphy, struct net_device *ndev,
- 		goto done;
+  C brcmf-wakeup-buggy
+  { atomic_t cnt = ATOMIC_INIT(1); }
+  P0(atomic_t *cnt, int *wq)
+  {
+  	int r0;
+  	atomic_dec(cnt);
+  	r0 = READ_ONCE(*wq);
+  }
+  P1(atomic_t *cnt, int *wq)
+  {
+  	int r1;
+  	WRITE_ONCE(*wq, 1);
+  	smp_mb();
+  	r1 = atomic_read(cnt);
+  }
+  exists (0:r0=0 /\ 1:r1=1)
+
+The fixed variant adds smp_mb__after_atomic() immediately after
+atomic_dec().
+
+  Observation brcmf-wakeup-buggy Sometimes 1 3
+  Observation brcmf-wakeup-fixed Never 0 3
+
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
+index dad6f4563d146..b192947ab4735 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
+@@ -555,6 +555,8 @@ void brcmf_txfinalize(struct brcmf_if *ifp, struct sk_buff *txp, bool success)
+
+ 	if (type == ETH_P_PAE) {
+ 		atomic_dec(&ifp->pend_8021x_cnt);
++		/* Order the decrement before waitqueue_active() */
++		smp_mb__after_atomic();
+ 		if (waitqueue_active(&ifp->pend_8021x_wait))
+ 			wake_up(&ifp->pend_8021x_wait);
  	}
- 
--	pm = enabled ? PM_FAST : PM_OFF;
-+	pm = enabled ? ifp->drvr->settings->default_pm : PM_OFF;
- 	/* Do not enable the power save after assoc if it is a p2p interface */
- 	if (ifp->vif->wdev.iftype == NL80211_IFTYPE_P2P_CLIENT) {
- 		brcmf_dbg(INFO, "Do not enable power save for P2P clients\n");
-@@ -7821,7 +7821,7 @@ static s32 brcmf_config_dongle(struct brcmf_cfg80211_info *cfg)
- 
- 	brcmf_dongle_scantime(ifp);
- 
--	power_mode = cfg->pwr_save ? PM_FAST : PM_OFF;
-+	power_mode = cfg->pwr_save ? ifp->drvr->settings->default_pm : PM_OFF;
- 	err = brcmf_fil_cmd_int_set(ifp, BRCMF_C_SET_PM, power_mode);
- 	if (err)
- 		goto default_conf_out;
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
-index b6027d83e6ab..b2e06abc76f8 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
-@@ -20,6 +20,7 @@
- #include "of.h"
- #include "firmware.h"
- #include "chip.h"
-+#include "defs.h"
- 
- MODULE_AUTHOR("Broadcom Corporation");
- MODULE_DESCRIPTION("Broadcom 802.11 wireless LAN fullmac driver.");
-@@ -67,6 +68,10 @@ static int brcmf_iapp_enable;
- module_param_named(iapp, brcmf_iapp_enable, int, 0);
- MODULE_PARM_DESC(iapp, "Enable partial support for the obsoleted Inter-Access Point Protocol");
- 
-+static bool brcmf_max_pm;
-+module_param_named(max_pm, brcmf_max_pm, bool, 0400);
-+MODULE_PARM_DESC(max_pm, "Use PM_MAX instead of PM_FAST for power management");
-+
- #ifdef DEBUG
- /* always succeed brcmf_bus_started() */
- static int brcmf_ignore_probe_fail;
-@@ -530,6 +535,7 @@ struct brcmf_mp_device *brcmf_get_module_param(struct device *dev,
- 	settings->fcmode = brcmf_fcmode;
- 	settings->roamoff = !!brcmf_roamoff;
- 	settings->iapp = !!brcmf_iapp_enable;
-+	settings->default_pm = brcmf_max_pm ? PM_MAX : PM_FAST;
- #ifdef DEBUG
- 	settings->ignore_probe_fail = !!brcmf_ignore_probe_fail;
- #endif
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.h
-index 3bdb6984b2dd..d06c734ea82a 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.h
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.h
-@@ -37,6 +37,7 @@ extern struct brcmf_mp_global_t brcmf_mp_global;
-  * @feature_disable: Feature_disable bitmask.
-  * @fcmode: FWS flow control.
-  * @roamoff: Firmware roaming off?
-+ * @default_pm: Default power-management mode.
-  * @ignore_probe_fail: Ignore probe failure.
-  * @trivial_ccode_map: Assume firmware uses ISO3166 country codes with rev 0
-  * @country_codes: If available, pointer to struct for translating country codes
-@@ -48,6 +49,7 @@ struct brcmf_mp_device {
- 	int		fcmode;
- 	bool		roamoff;
- 	bool		iapp;
-+	int		default_pm;
- 	bool		ignore_probe_fail;
- 	bool		trivial_ccode_map;
- 	struct brcmfmac_pd_cc *country_codes;
-
-base-commit: ca800a9302764c445de0da0e84d2252400a770ee
--- 
-2.55.0
-
+--
+2.53.0
