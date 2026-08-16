@@ -1,104 +1,124 @@
-Received: from mail-106113.protonmail.ch (mail-106113.protonmail.ch [79.135.106.113])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f100.google.com (mail-pj1-f100.google.com [209.85.216.100])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E879F3CC7D8
-	for <brcm80211@lists.linux.dev>; Sun, 16 Aug 2026 06:25:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.113
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D1B713B58C
+	for <brcm80211@lists.linux.dev>; Sun, 16 Aug 2026 09:27:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.100
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786861536; cv=none; b=fmj3g7z4Q4DZHBVceowZb2wpw4OBxK9d+qhMs5PRowaRVkWuSc0T6cCvqPmdtUaunwDPQ+TIdGhak6a2hv3UPJuKTMeTQ9DL0qINPEM4aiquU55xemTaZqHEAVChsx0J4iR/HXt68GKg/ULsqZkmrgge1EnOd6zBzcj2aLDC1FA=
+	t=1786872453; cv=none; b=Cyb3wOT0Ml9rQ/AEGJTj9okTb0lZc7JJ9nQzmg40J2VO44yTCQdX6/ralRrYoVmtyP3cGjthNtKL4DksoFy53zjD0dzDzx0qJzm0yIRBzY3ZkaF7M02nGEupceI6butzBP/iZMTJCXFv96xyPxkFCDMLr609DKY13GCdqMwDxFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786861536; c=relaxed/simple;
-	bh=2wV8IIgCHWrUm3bq9AvfjyaE3lZ1nFLWkPxf3A5I0KA=;
-	h=From:Date:Message-ID:To:Cc:Subject:Content-Type:MIME-Version; b=po90lYZwHvEV58Tmxw8ZVogd7h8Zq8P0rv0CMwUqY/iDk2T7QolTM8G9KeTY/fp+dwvfDz+EfGkbhpt389BO/CuQAxDGjLIc9gl14LIRsWD6EPBilend9gZOE/YRxnOYFejQyfTsqZ7BAG9q7yGiDcFBXyiezRVsoejpwnzN0WA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=maxengel.com; spf=pass smtp.mailfrom=maxengel.com; dkim=pass (2048-bit key) header.d=maxengel.com header.i=@maxengel.com header.b=pxQp1MTF; arc=none smtp.client-ip=79.135.106.113
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=maxengel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=maxengel.com
+	s=arc-20240116; t=1786872453; c=relaxed/simple;
+	bh=gHaxS2CMGM6ltvdh+vUAj+mhVVXmU1FfTCkmGfYFns0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ReQqabKXRxK1ipCaW96cOyA2HkvswqTxyxYnURjWj20K3LEPyXt4lRw2Kb4J7mcwg8ivf97L1ETd4EdYRR84YW0/luwwOnftloN2XXmadlpRKe2a+4EuGvlAQwe8WOOC7TSs1NmCmJ+GfRUsGWGY7/xwqv6YMAgol9yrO2B6hyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=Y4LituAJ; arc=none smtp.client-ip=209.85.216.100
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=maxengel.com header.i=@maxengel.com header.b="pxQp1MTF"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=maxengel.com;
-	s=protonmail3; t=1786861524; x=1787120724;
-	bh=d10zNDVZ3yGcgDm6yMZneJ6r5uLza/tMnOQK3/ZXxYw=;
-	h=From:Date:Message-ID:To:Cc:Subject:From:To:Cc:Date:Subject:
-	 Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=pxQp1MTFQn3XuutFfyCp66ulZR4DcCHSObvRB4ZJ2xfhir2y3iHZcIx4SOBm5IUaV
-	 XPLb/XWUI0DD8zmD4+od5P8KipbDLMtJ676Iy2Fzp+Rwn2eLHFu+/Jcv/v/TwCfSLV
-	 0bD+V050Drq1zHxWfQD3XcMMmOHl7h0rdIHHMGT6YdqTTR5WBWT0GQOlvdXe54AXQD
-	 nRyxXTxKvXuk2D7cSVVcLmV4IfxWLKTMnkcx53HZktgJB8wCnxOS5Av6VHZ3/JTV44
-	 SC6SOzca2dkMEb2JTy5NOV7Zido5uFQlundRGaaRTsqw/IOtL2Fid4rFTpzhjBXfv+
-	 TbRZt4hYE6EPg==
-X-Pm-Submission-Id: 4hN5YZ4pJTz1DDs6
-From: Max Engel <dev@maxengel.com>
-Date: Sun, 16 Aug 2026 06:25:20 +0000
-Message-ID: <178686152030.336421.12015467912819395181@maxengel.com>
-To: linux-wireless@vger.kernel.org
-Cc: arend.vanspriel@broadcom.com, brcm80211@lists.linux.dev,
- brcm80211-dev-list.pdl@broadcom.com
-Subject: [PATCH] wifi: brcmfmac: schedule bus reset when the device is
- unresponsive after wake
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="Y4LituAJ"
+Received: by mail-pj1-f100.google.com with SMTP id 98e67ed59e1d1-381b831d535so3691676a91.0
+        for <brcm80211@lists.linux.dev>; Sun, 16 Aug 2026 02:27:32 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786872452; x=1787477252;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:dkim-signature:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=6J7Zj/2iLPXHmJLANMYAlHCnCm6alEEBJz8C1vVMkgk=;
+        b=iNvdqPr9zJrfqVixeR+3BEmJIpQsd4JTL4+CJ71u/ojVa9DvPfLcrU10SNtl6h2jXM
+         KHIyj4oIgYBirj84djBB3bQhE1h6TI4mELDY5CykDFDWVDLVTLDi11Zg1Kb+9rrEmqjn
+         UuGyS4fkpV0KzT3Gks6Osyat/8Nc2RzM5aGVtb9V5DlUHUQMjaMOgFhd+6s14BoqwXEA
+         /G4p2mlkg4ObI0eQrC0X19ipXOqanwmILSgeqTyfye9j6p+3jRsS9XAiFm1IWX8z38Xo
+         qtuBXe5TNFp4KfN59OPoskt38jEAQqej3JwJ08ca0wbz2S9xf6Kp2oQv76yOTNMc7to5
+         NC4Q==
+X-Gm-Message-State: AOJu0Yyv1wgxKR0G8bOueFFySg0CXYLAU6GfVDQ2DbPPBchcFm/oPmha
+	2QcNCtuwl4UVctzf8gsxdT58WkZOHkASJF1sBjXM+Yxat9j5ETqovDgjc+RBMab4c6v7YjjklqZ
+	t80ni+YFjDyZHU1PlS9hVMVkAZGnkg/tou0HurcCaDTMiBmb0U2BQegGeNmXh7tNBxsKi4Tbbe1
+	p1g4mXoRnsV5hZK+msXTInKZ7IjWCuFkjLJ53VurQuu78YBjW+muxjXbG9Q5W0cXrDazAcK0c2b
+	CD89nkaRaiUDlx72v+9Qw==
+X-Gm-Gg: AR+sD12BGmjVmwVNyzLbTgdrinUko/Q8LU0vKdqTf43HUdBq2izSrbgZFmmQmj/TQnS
+	/C+mZRq42a+nOXYEWYEjtUQu3k23neYJTzABXLPl06I0kI9Q5GaI9J7vg4NtF9vNxwuzt5lJSRu
+	CYpB7Y5giZfQjuBpaNmDHWoqFcugyE5/0NCEDHspdDdjYX0IOEuv2bH9L2JOywvRZOpnHl/oqrI
+	jGcXa5OZ6Fis04V3P8p7lLY/nyuMnKsp/LD7XS2zHyZ4NsSpu60FuybTI7Iq7MR633N01FG2i4w
+	rTa4gLmVGf2oKzTdyKGE326UqgkP9uiWOaN0HO+/8zaatIvRBC6fmZXgDX8eaVdg7A5GYjieSOT
+	NA4w0YTq8vnI8aBpscAtKOTWjemJVV0/183b+Of7Me6uksMLcWH5S1GmktM9KixINdLNWTvv1bu
+	m7iKnySSGFXlE0153Frcz7qkRURNKGixV/anS2d18=
+X-Received: by 2002:a17:90a:ec83:b0:381:e74f:8a6a with SMTP id 98e67ed59e1d1-3933b8c1041mr19085600a91.16.1786872451770;
+        Sun, 16 Aug 2026 02:27:31 -0700 (PDT)
+Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-20.dlp.protect.broadcom.com. [144.49.247.20])
+        by smtp-relay.gmail.com with ESMTPS id 98e67ed59e1d1-39531c3b13bsm567500a91.0.2026.08.16.02.27.31
+        for <brcm80211@lists.linux.dev>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 16 Aug 2026 02:27:31 -0700 (PDT)
+X-Relaying-Domain: broadcom.com
+X-CFilter-Loop: Reflected
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2caf4173b1cso46614705ad.3
+        for <brcm80211@lists.linux.dev>; Sun, 16 Aug 2026 02:27:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google; t=1786872450; x=1787477250; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=6J7Zj/2iLPXHmJLANMYAlHCnCm6alEEBJz8C1vVMkgk=;
+        b=Y4LituAJIJKM++XlK3fHfi10O7TO60O48NdDDaZ5fnrGplc2LsdcFsZGoXljN/BYpu
+         0aB8vIi1vpXJSWhiBl83oSu7MOqRzvXO8UL8yuUl0y45guM+m/WBAwJhcpfnvmU4vh8M
+         UNnA0e2v8yXUz6K/Zf09E/03GDuyTuLTZvWDQ=
+X-Received: by 2002:a05:6a21:3384:b0:3b2:8685:1473 with SMTP id adf61e73a8af0-3cc719c7356mr23248610637.7.1786872450057;
+        Sun, 16 Aug 2026 02:27:30 -0700 (PDT)
+X-Received: by 2002:a05:6a21:3384:b0:3b2:8685:1473 with SMTP id adf61e73a8af0-3cc719c7356mr23248589637.7.1786872449629;
+        Sun, 16 Aug 2026 02:27:29 -0700 (PDT)
+Received: from [10.229.42.78] ([192.19.176.227])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-141387e49d3sm29196000c88.7.2026.08.16.02.27.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 16 Aug 2026 02:27:29 -0700 (PDT)
+Message-ID: <999f6e0e-8706-479e-a861-be83fb022a62@broadcom.com>
+Date: Sun, 16 Aug 2026 11:27:23 +0200
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH wireless-next] wifi: brcmfmac: allow opting into PM_MAX
+ power management
+To: Alexander Fischer <alexander@fischermail.me>,
+ linux-wireless@vger.kernel.org
+Cc: brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com,
+ linux-kernel@vger.kernel.org, Andre Eikmeyer <dev@deq.rocks>
+References: <20260810150552.25375-1-alexander@fischermail.me>
+ <20260814205115.799977-1-alexander@fischermail.me>
+Content-Language: en-US
+From: Arend van Spriel <arend.vanspriel@broadcom.com>
+In-Reply-To: <20260814205115.799977-1-alexander@fischermail.me>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
 
-On the PINE64 PineNote (CYW43455 / BCM4345C0 on an rk3566 SDIO bus,
-keep-power-in-suspend), the chip intermittently loses all state across a
-system suspend: the suspend-entry KSO write succeeds cleanly, but at the
-first post-resume wake attempt every SLEEPCSR read returns 0xff
-(all-ones, i.e. the device is electrically absent from the bus) and KSO
-retries exhaust with -ETIMEDOUT. From there the driver limps (halting
-operation after repeated backplane failures), the interface never
-recovers, and a module reload fails to re-probe all three SDIO
-functions. The only working in-kernel remedy is the existing bus reset
-worker (mmc_hw_reset -> pwrseq WL_REG_ON power cycle), measured on this
-hardware to recover the device in ~7 s without a reboot.
+On 14/08/2026 22:51, Alexander Fischer wrote:
+> Hello,
+> 
+> I would like to withdraw this patch.
+> 
+> Further testing on BCM4364 showed intermittent latency spikes of about
+> 50-250 ms with PM_MAX. The connection can work normally for extended
+> periods, but the issue is reproducible and disappears after switching
+> back to PM_FAST. This invalidates my earlier statement that I had
+> observed no latency regression.
 
-That worker's only SDIO trigger today is the firmware-halt mailbox
-interrupt (HMB_DATA_FWHALT) - which a chip that is off the bus can never
-deliver. Schedule the same worker from the KSO wake path when the
-failure is conclusive: wake direction, retries exhausted, and the CSR
-reading back all-ones.
+At least thanks for testing.
+> Given this trade-off, I no longer think exposing PM_MAX through this new
+> module parameter is worthwhile, and I do not plan to send a v2. Please
+> drop the patch.
 
-Repeated failures are harmless: schedule_work() on an already-queued
-work item is a no-op, and the reset tears down and re-probes the device.
+Agree.
 
-Field reports of the same class of wedge exist beyond this board
-(PNDeb/pinenote-debian-image#105; openwrt#23069 explicitly requests a
-host-triggered reset path).
+> pw-bot: changes-requested
+> 
+> Sorry for the noise, and thanks for your time.
+No problem. Had only glanced at the patch so far. I did have my doubts 
+about your latency statement, but not fired up my setup with it.
 
-Signed-off-by: Max Engel <dev@maxengel.com>
----
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-@@ -770,6 +770,28 @@
- 	if (try_cnt > MAX_KSO_ATTEMPTS)
- 		brcmf_err("max tries: rd_val=0x%x err=%d\n", rd_val, err);
- 
-+	/* A wake attempt that gives up (whether by exhausting the KSO
-+	 * retries or by bailing out on consecutive access errors) with the
-+	 * sleep CSR reading back all-ones means the device has dropped off
-+	 * the bus entirely, e.g. it lost state across a system suspend
-+	 * despite keep-power-in-suspend (observed on CYW43455/BCM4345C0 on
-+	 * rk3566). No in-band recovery is possible: the interface is gone
-+	 * and a module reload fails to re-probe (-ETIMEDOUT on every
-+	 * function). The bus reset worker already performs the only known
-+	 * remedy (mmc_hw_reset -> pwrseq WL_REG_ON power cycle), but its
-+	 * sole SDIO trigger is the firmware-halt mailbox interrupt, which
-+	 * a chip that is off the bus can never deliver. Schedule it from
-+	 * here instead.
-+	 */
-+	if (on && err && rd_val == 0xff) {
-+		struct brcmf_pub *drvr = bus->sdiodev->bus_if->drvr;
-+
-+		if (drvr && drvr->bus_reset.func) {
-+			brcmf_err("device unresponsive after wake, scheduling bus reset\n");
-+			schedule_work(&drvr->bus_reset);
-+		}
-+	}
-+
- 	if (on)
- 		sdio_retune_release(bus->sdiodev->func1);
- 
+Regards,
+Arend
