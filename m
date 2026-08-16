@@ -1,104 +1,104 @@
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+Received: from mail-106113.protonmail.ch (mail-106113.protonmail.ch [79.135.106.113])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7287737F741
-	for <brcm80211@lists.linux.dev>; Sat, 15 Aug 2026 12:10:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E879F3CC7D8
+	for <brcm80211@lists.linux.dev>; Sun, 16 Aug 2026 06:25:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.113
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786795864; cv=none; b=CjndXd7Q3j9sHgK65GpiyXszE4igu0NOJI7umcJH0MmI+bY6Tv0Kv6sa0uvFssLyGLCJJnze+brvD/dL+BcAcBq98AI+eabOrZfPT1xIx18QIeR9/cc/m9ce8Wx2FphT61MMnGwKDcqOS1bf11sACX9aHM+FB3lvmDgiEyeZodQ=
+	t=1786861536; cv=none; b=fmj3g7z4Q4DZHBVceowZb2wpw4OBxK9d+qhMs5PRowaRVkWuSc0T6cCvqPmdtUaunwDPQ+TIdGhak6a2hv3UPJuKTMeTQ9DL0qINPEM4aiquU55xemTaZqHEAVChsx0J4iR/HXt68GKg/ULsqZkmrgge1EnOd6zBzcj2aLDC1FA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786795864; c=relaxed/simple;
-	bh=3YFgmDkKtlItiMZ5IDSeyNhj9YE1O02xx4YcMU5wXro=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Tfyudm7OQ9LegzWkiN1cKwW6KxwsUHdmotvUK+YFGc+jpIBMd2/twV9B8qWDl3AI7bj/J/SRpAOBm474FaAwl2t24NZf7PUOOJMez3jtGrSENIIZmovwNXm6xSNDz8A/XAiZlS9AsevrCcVG+m+fApZevolADcvjPFL64Ki7PYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: 5a14243098a211f19a56ed5b684f684d-20260815
-X-CTIC-Tags:
-	HR_CC_COUNT, HR_CC_DOMAIN_COUNT, HR_CC_NAME, HR_CC_NO_NAME, HR_CTE_8B
-	HR_CTT_MISS, HR_DATE_H, HR_DATE_WKD, HR_DATE_ZONE, HR_FROM_NAME
-	HR_SJ_LANG, HR_SJ_LEN, HR_SJ_LETTER, HR_SJ_NOR_SYM, HR_SJ_PHRASE
-	HR_SJ_PHRASE_LEN, HR_SJ_WS, HR_TO_COUNT, HR_TO_DOMAIN_COUNT, HR_TO_NO_NAME
-	IP_UNTRUSTED, SRC_UNTRUSTED, IP_UNFAMILIAR, SRC_UNFAMILIAR, DN_TRUSTED
-	SRC_TRUSTED, SA_TRUSTED, SA_EXISTED, SN_TRUSTED, SN_EXISTED
-	SPF_NOPASS, DKIM_NOPASS, DMARC_NOPASS, CIE_GOOD_SPF, CIE_UNKNOWN
-	GTI_FG_BS, GTI_RG_INFO, GTI_C_BU, AMN_GOOD, ABX_MISS_RDNS
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.19,REQID:eab578d0-2198-4700-8916-c71b62019149,IP:15,
-	URL:0,TC:0,Content:-5,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTIO
-	N:release,TS:10
-X-CID-INFO: VERSION:1.3.19,REQID:eab578d0-2198-4700-8916-c71b62019149,IP:15,UR
-	L:0,TC:0,Content:-5,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
-	release,TS:10
-X-CID-META: VersionHash:7db8b62,CLOUDID:f2fe4dfe072218733c81288d86f0e7f5,BulkI
-	D:260815201051QQFJ8BA2,BulkQuantity:0,SF:10|66|78|102|127|865|898,TC:nil,C
-	ontent:0|15|50,EDM:-3,IP:-2,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,
-	COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: 5a14243098a211f19a56ed5b684f684d-20260815
-X-User: yijiangshan@kylinos.cn
-Received: from lazy-pc.www.tendawifi.com [(118.251.48.97)] by mailgw.kylinos.cn
-	(envelope-from <yijiangshan@kylinos.cn>)
-	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
-	with ESMTP id 748041457; Sat, 15 Aug 2026 20:10:48 +0800
-From: Jiangshan Yi <yijiangshan@kylinos.cn>
-To: arend.vanspriel@broadcom.com
-Cc: kees@kernel.org,
-	linville@tuxdriver.com,
-	linux-wireless@vger.kernel.org,
-	brcm80211@lists.linux.dev,
-	brcm80211-dev-list.pdl@broadcom.com,
-	linux-kernel@vger.kernel.org,
-	13667453960@163.com,
-	Jiangshan Yi <yijiangshan@kylinos.cn>,
-	stable@vger.kernel.org
-Subject: [PATCH] wifi: brcmsmac: fix UAF in brcms_free_timer()
-Date: Sat, 15 Aug 2026 20:10:43 +0800
-Message-Id: <20260815121043.938414-1-yijiangshan@kylinos.cn>
-X-Mailer: git-send-email 2.25.1
+	s=arc-20240116; t=1786861536; c=relaxed/simple;
+	bh=2wV8IIgCHWrUm3bq9AvfjyaE3lZ1nFLWkPxf3A5I0KA=;
+	h=From:Date:Message-ID:To:Cc:Subject:Content-Type:MIME-Version; b=po90lYZwHvEV58Tmxw8ZVogd7h8Zq8P0rv0CMwUqY/iDk2T7QolTM8G9KeTY/fp+dwvfDz+EfGkbhpt389BO/CuQAxDGjLIc9gl14LIRsWD6EPBilend9gZOE/YRxnOYFejQyfTsqZ7BAG9q7yGiDcFBXyiezRVsoejpwnzN0WA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=maxengel.com; spf=pass smtp.mailfrom=maxengel.com; dkim=pass (2048-bit key) header.d=maxengel.com header.i=@maxengel.com header.b=pxQp1MTF; arc=none smtp.client-ip=79.135.106.113
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=maxengel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=maxengel.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=maxengel.com header.i=@maxengel.com header.b="pxQp1MTF"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=maxengel.com;
+	s=protonmail3; t=1786861524; x=1787120724;
+	bh=d10zNDVZ3yGcgDm6yMZneJ6r5uLza/tMnOQK3/ZXxYw=;
+	h=From:Date:Message-ID:To:Cc:Subject:From:To:Cc:Date:Subject:
+	 Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=pxQp1MTFQn3XuutFfyCp66ulZR4DcCHSObvRB4ZJ2xfhir2y3iHZcIx4SOBm5IUaV
+	 XPLb/XWUI0DD8zmD4+od5P8KipbDLMtJ676Iy2Fzp+Rwn2eLHFu+/Jcv/v/TwCfSLV
+	 0bD+V050Drq1zHxWfQD3XcMMmOHl7h0rdIHHMGT6YdqTTR5WBWT0GQOlvdXe54AXQD
+	 nRyxXTxKvXuk2D7cSVVcLmV4IfxWLKTMnkcx53HZktgJB8wCnxOS5Av6VHZ3/JTV44
+	 SC6SOzca2dkMEb2JTy5NOV7Zido5uFQlundRGaaRTsqw/IOtL2Fid4rFTpzhjBXfv+
+	 TbRZt4hYE6EPg==
+X-Pm-Submission-Id: 4hN5YZ4pJTz1DDs6
+From: Max Engel <dev@maxengel.com>
+Date: Sun, 16 Aug 2026 06:25:20 +0000
+Message-ID: <178686152030.336421.12015467912819395181@maxengel.com>
+To: linux-wireless@vger.kernel.org
+Cc: arend.vanspriel@broadcom.com, brcm80211@lists.linux.dev,
+ brcm80211-dev-list.pdl@broadcom.com
+Subject: [PATCH] wifi: brcmfmac: schedule bus reset when the device is
+ unresponsive after wake
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-brcms_free_timer() calls brcms_del_timer() which uses the non-synchronous
-cancel_delayed_work() to cancel the timer's underlying delayed work.  If
-the work callback (_brcms_timer) is already running, cancel_delayed_work()
-returns false without waiting, and brcms_free_timer() proceeds to kfree(t)
-while the callback still accesses t through container_of().
+On the PINE64 PineNote (CYW43455 / BCM4345C0 on an rk3566 SDIO bus,
+keep-power-in-suspend), the chip intermittently loses all state across a
+system suspend: the suspend-entry KSO write succeeds cleanly, but at the
+first post-resume wake attempt every SLEEPCSR read returns 0xff
+(all-ones, i.e. the device is electrically absent from the bus) and KSO
+retries exhaust with -ETIMEDOUT. From there the driver limps (halting
+operation after repeated backplane failures), the interface never
+recovers, and a module reload fails to re-probe all three SDIO
+functions. The only working in-kernel remedy is the existing bus reset
+worker (mmc_hw_reset -> pwrseq WL_REG_ON power cycle), measured on this
+hardware to recover the device in ~7 s without a reboot.
 
-Add an explicit cancel_delayed_work_sync() after brcms_del_timer() to
-guarantee that any in-flight callback has completed before the timer
-structure is freed.
+That worker's only SDIO trigger today is the firmware-halt mailbox
+interrupt (HMB_DATA_FWHALT) - which a chip that is off the bus can never
+deliver. Schedule the same worker from the KSO wake path when the
+failure is conclusive: wake direction, retries exhausted, and the CSR
+reading back all-ones.
 
-Fixes: 5b435de0d786 ("net: wireless: add brcm80211 drivers")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
+Repeated failures are harmless: schedule_work() on an already-queued
+work item is a no-op, and the reset tears down and re-probes the device.
+
+Field reports of the same class of wedge exist beyond this board
+(PNDeb/pinenote-debian-image#105; openwrt#23069 explicitly requests a
+host-triggered reset path).
+
+Signed-off-by: Max Engel <dev@maxengel.com>
 ---
- .../net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c    | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
-index 6255d673d2d3..c1a2318d7ea6 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
-@@ -1571,6 +1571,10 @@ void brcms_free_timer(struct brcms_timer *t)
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
+@@ -770,6 +770,28 @@
+ 	if (try_cnt > MAX_KSO_ATTEMPTS)
+ 		brcmf_err("max tries: rd_val=0x%x err=%d\n", rd_val, err);
  
- 	/* delete the timer in case it is active */
- 	brcms_del_timer(t);
-+	/* Ensure the callback has finished before freeing the timer
-+	 * structure, since brcms_del_timer() uses non-synchronous cancel.
++	/* A wake attempt that gives up (whether by exhausting the KSO
++	 * retries or by bailing out on consecutive access errors) with the
++	 * sleep CSR reading back all-ones means the device has dropped off
++	 * the bus entirely, e.g. it lost state across a system suspend
++	 * despite keep-power-in-suspend (observed on CYW43455/BCM4345C0 on
++	 * rk3566). No in-band recovery is possible: the interface is gone
++	 * and a module reload fails to re-probe (-ETIMEDOUT on every
++	 * function). The bus reset worker already performs the only known
++	 * remedy (mmc_hw_reset -> pwrseq WL_REG_ON power cycle), but its
++	 * sole SDIO trigger is the firmware-halt mailbox interrupt, which
++	 * a chip that is off the bus can never deliver. Schedule it from
++	 * here instead.
 +	 */
-+	cancel_delayed_work_sync(&t->dly_wrk);
++	if (on && err && rd_val == 0xff) {
++		struct brcmf_pub *drvr = bus->sdiodev->bus_if->drvr;
++
++		if (drvr && drvr->bus_reset.func) {
++			brcmf_err("device unresponsive after wake, scheduling bus reset\n");
++			schedule_work(&drvr->bus_reset);
++		}
++	}
++
+ 	if (on)
+ 		sdio_retune_release(bus->sdiodev->func1);
  
- 	if (wl->timers == t) {
- 		wl->timers = wl->timers->next;
--- 
-2.25.1
-
