@@ -1,113 +1,98 @@
-Received: from mail-ot1-f99.google.com (mail-ot1-f99.google.com [209.85.210.99])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp11.infineon.com (smtp11.infineon.com [217.10.52.105])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 068741A6800
-	for <brcm80211@lists.linux.dev>; Sat, 22 Aug 2026 18:48:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.99
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C4724A06D
+	for <brcm80211@lists.linux.dev>; Mon, 24 Aug 2026 02:20:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.10.52.105
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787424522; cv=none; b=lOfkCY/7CsdDYByaKgKsccA2C7HQ4MsvNk+0uGvnHPe9dOg8pHSzeHJRWfT3jNqU/ZsiMbfmoyePreN3xoiivShpdXRI/lYTzTJhHaEmENyNZo8FpIhIy5Pv/XzrIVl/3eyVIGiCIuXLLko45m5EWfWSUJO09LAboptjVOXqY7U=
+	t=1787538006; cv=none; b=UzvOSssq4BSo4BDflzk3BSMPhLbK3cDp/d9utiXZMqMRwd4NuwpQozD9AdBiT6xZtzqf6unaCP8m396nyhEwPm1dHq0j7JIxqBDaS1wAg6D6QmTmf5WSWG5zKturHCamnGa5f18Vr4zN/af/RZrnosMC9YhebHFiXh550ptufBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787424522; c=relaxed/simple;
-	bh=6d6rUdI0+Jfdk1co6jNNrUW/hr/DoSlzAd5JsktZzxk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gGzJ3AqIhqHImvxdp6boiZ16CB+yrOEsW5FgEkrMsRWOotC+I8djVusQTgIVp0/AVIGuRA33VuMmCkm/dKtUy9iz6quQn/rid85Mxw0pbNcf3WRT6pZ+3ps4RwXOALP5IVhqRrn7Q2Zl/FXJ1XLnDgJ4LZG2Sq1LGZmp9WDqmwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=iDtIRuAg; arc=none smtp.client-ip=209.85.210.99
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+	s=arc-20240116; t=1787538006; c=relaxed/simple;
+	bh=2orO2X3kae5MZd+KLTJhLBcyE1WmQ7MbZo7jM8M6XHQ=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=eqgfbZR/OD7ng4sgnQaOSFfjXNXJ2sL2SY947rL1+TqIWWNDFg2TsVwpHxIat3/wMKEQFwIXG2msaNZqlRRSr0ma0Un9C0wQjDWhTAan2SG9SzGLaylYIgAQETrSUI+eE9mFs8cGJiIEfecFMSyy29aTY40LlTuATy1TAEcaTug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=infineon.com; spf=pass smtp.mailfrom=infineon.com; dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b=nY2coq4k; arc=none smtp.client-ip=217.10.52.105
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=infineon.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infineon.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="iDtIRuAg"
-Received: by mail-ot1-f99.google.com with SMTP id 46e09a7af769-7eb1dc6bd53so2179242a34.2
-        for <brcm80211@lists.linux.dev>; Sat, 22 Aug 2026 11:48:40 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787424520; x=1788029320;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:dkim-signature:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=cVsBYVWeiY0T5Pykgsxe7u4yfSLey0gL7CPFlINqPqE=;
-        b=QABtlNMFOq4GQI03rZjm6i6b45gS3TYdqAolRxd7C+PyCs8iTxs9jqe702nSqqGGpp
-         7RqPmyO89HGZ8LARsO4aPtL+9khPM7wM2bXc2C0fe3f9Z8xdZHflZbKTLswO5+DeK3cQ
-         civfaPk/dC5RvROBGD6tN2ZoIbqLBgc+9Oqk+YnDdwmAguntO/SASh+ycc9SUBhbStcG
-         hYZJNneYijpK4nZ2XuPz9q7uTb1OhhrEqU5OpzVRwguhqNyGT8E6k7IIvBV1xq5ajIWo
-         LamMCqR+wdEjMgjWY/vy6EqBLErheOPwT2zkJtWxVyt46RewtbOErTf/TzjPoAuXAZ5o
-         DKVA==
-X-Forwarded-Encrypted: i=1; AHgh+Rob93CgpRRGuyHl7R7F7GqO4CqeBIxVoamykOxd0g/L9sT4uHcIo1r91sgr1kpac+zBj21bOlmdzjo=@lists.linux.dev
-X-Gm-Message-State: AFuF++mv3J3vtd1kAmi8WCmGtkW+AlJzh4/0JwoPD7EJYpA8kTKSRHhQ
-	b/VyVbDT7wmvh2qwx72S7O9Z3rGOyFBeU3NBV4bFNHVycEDA/8x0zpVoEAClIQk9fqRJGLVLcKM
-	V2KQKW+R3awt37AuA+/i9AtMz2s4elBA6z2voODF+EMT4wNhPj1bn+6RnoMWI0ScK1KngtDCETc
-	yfdslvAL9/ne/c4zraYs0ntisMT3z3v6yGnCkNTd7GVxDalHA2DnSTq89kFf7WpL8utlmNKQV+4
-	cOSUfcVNXx1YMLlMqsAxw==
-X-Gm-Gg: AR+sD11rieqXLOtjiOd2b4N7kErZlWNjKzUz5/VyJl73ovUjx+07pPVkK0M7OarWH/m
-	nh3AFUnhaOTrGr+ynmm/V3YHkdETJT1od1YwsOmBTNNlVYK3IvU0AIaslPqEAqx0q9IpT1Llp9s
-	Q17pGSHS6HvBNxWpvtRJTJ1fjFbjFiQ/8BTdOV3QYKSYSAnOqevleAJb50yAlZYij94L9WIA/Dr
-	QMPUYWSuueqHe9gVJhTcB9KkE0J+Y3Boe0rBDAtnLoi6VvCsNlmYrn/5dqlm7+S46Aa1lfNlBET
-	g06YaPJzn7VQaI8kFVan3XTqjrtR4mQTF8FFMyxPoLzvauuHxDCUNWnFvvctOdU3bcLKh3c45Lp
-	bdQeSVbnnLbK70mSwPYZYhai4JsGm5V/W5a/vf4LltbzO3/lToJ+TBBgiOw7B4sHsXXQ6jPot/+
-	MThv9XynbJdOO8V8bbuTTe51JQYigvpevdc4MIIF8=
-X-Received: by 2002:a05:6830:3885:b0:7ee:3bdc:9205 with SMTP id 46e09a7af769-7f4619e4e15mr19089285a34.13.1787424519862;
-        Sat, 22 Aug 2026 11:48:39 -0700 (PDT)
-Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-16.dlp.protect.broadcom.com. [144.49.247.16])
-        by smtp-relay.gmail.com with ESMTPS id 46e09a7af769-7f43fe4730csm1905887a34.1.2026.08.22.11.48.39
-        for <brcm80211@lists.linux.dev>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 22 Aug 2026 11:48:39 -0700 (PDT)
-X-Relaying-Domain: broadcom.com
-X-CFilter-Loop: Reflected
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-51c1a97644aso26118471cf.2
-        for <brcm80211@lists.linux.dev>; Sat, 22 Aug 2026 11:48:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1787424519; x=1788029319; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=cVsBYVWeiY0T5Pykgsxe7u4yfSLey0gL7CPFlINqPqE=;
-        b=iDtIRuAgi/4M/ct4gPjGQRbGn/lkO+9uEB8uFBmXTGWygIlOSKHJRskj9IeAq6oOBw
-         wl5SVuYql8/3rE0f1PU9JtkuRhvg8LsFhJkPlKRnTkFco/WnvZh7z20GcB5l5NefCg6j
-         WQaQfsjZdNFLne1fmJF/SUimn7u5+hpGBhlEs=
-X-Forwarded-Encrypted: i=1; AHgh+Rpkhg7VdRGx+eql6ROgnSHxvlCdtgqS2Hj8tzxzp5YpnlfkSxpPpRQzvR8+8sMVuhyJN0+wxE2ZUD0=@lists.linux.dev
-X-Received: by 2002:a05:622a:120e:b0:52d:7c2f:7561 with SMTP id d75a77b69052e-52df5c10d4fmr145141871cf.41.1787424518785;
-        Sat, 22 Aug 2026 11:48:38 -0700 (PDT)
-X-Received: by 2002:a05:622a:120e:b0:52d:7c2f:7561 with SMTP id d75a77b69052e-52df5c10d4fmr145141401cf.41.1787424518308;
-        Sat, 22 Aug 2026 11:48:38 -0700 (PDT)
-Received: from [192.168.178.26] (f215227.upc-f.chello.nl. [80.56.215.227])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-90c93931452sm19438796d6.26.2026.08.22.11.48.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 22 Aug 2026 11:48:37 -0700 (PDT)
-Message-ID: <b97d0ca8-ba9b-4817-939a-ed064507cdd7@broadcom.com>
-Date: Sat, 22 Aug 2026 20:48:36 +0200
+	dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b="nY2coq4k"
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=infineon.com; i=@infineon.com; q=dns/txt; s=IFXMAIL;
+  t=1787538004; x=1819074004;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=2orO2X3kae5MZd+KLTJhLBcyE1WmQ7MbZo7jM8M6XHQ=;
+  b=nY2coq4kemAFPmiabdc8Uy5pIpxW/Wg8Ln9rpab1ZmJhz4JT6DwtUnTW
+   hacTZAxVisEfyFDzNsYd4qVEamInlW82bMhUFXy2JJmPYTKS3ZL0sWKcA
+   Nx5bZVnWGMqs3T5o+k5WwmKIfi15wzkleKKo8juXoIwGBWdC+a8GUqm5j
+   U=;
+X-CSE-ConnectionGUID: jExLCVijTaKeBA4VgYlGOw==
+X-CSE-MsgGUID: IgYz4a3ZTC68cJZE6vjHBw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11884"; a="157225929"
+X-IronPort-AV: E=Sophos;i="6.25,239,1779141600"; 
+   d="scan'208";a="157225929"
+X-Amp-Result: SKIPPED(no attachment in message)
+Received: from unknown (HELO MUCSE812.infineon.com) ([172.23.29.38])
+  by smtp11.infineon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Aug 2026 04:19:56 +0200
+Received: from MUCSE809.infineon.com (172.23.29.35) by MUCSE812.infineon.com
+ (172.23.29.38) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.46; Mon, 24 Aug
+ 2026 04:19:56 +0200
+Received: from ISCN5CG5251XQT.infineon.com (10.161.6.196) by
+ MUCSE809.infineon.com (172.23.29.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46; Mon, 24 Aug 2026 04:19:51 +0200
+From: Jason Huang <Jason.Huang2@infineon.com>
+To: <linux-wireless@vger.kernel.org>
+CC: <johannes.berg@intel.com>, <johannes@sipsolutions.net>,
+	<arend.vanspriel@broadcom.com>, <hsin-hung.li@cypress.com>,
+	<linux-kernel@vger.kernel.org>, <brcm80211@lists.linux.dev>,
+	<brcm80211-dev-list.pdl@broadcom.com>, <wlan-kernel-dev-list@infineon.com>,
+	<jeff.johnson@oss.qualcomm.com>, Carella Chen <carella.chen@infineon.com>,
+	Jason Huang <jason.huang2@infineon.com>
+Subject: [PATCH v5 5/5] wifi: brcmfmac: advertise firmware roam offload support
+Date: Mon, 24 Aug 2026 10:19:42 +0800
+Message-ID: <20260821-upstream-wireless-next-main-jason-11r-support-v1-v5-5-eeab4fda0f31@infineon.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH wireless-next v3] wifi: brcmfmac: Add support for BCM4361
- PCIe chipset
-To: markuss.broks@gmail.com
-Cc: Johannes Berg <johannes@sipsolutions.net>,
- linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
- brcm80211-dev-list.pdl@broadcom.com, linux-kernel@vger.kernel.org
-References: <20260820-broadcom-staging-v3-1-7d5741e37efb@gmail.com>
-Content-Language: en-US
-From: Arend van Spriel <arend.vanspriel@broadcom.com>
-In-Reply-To: <20260820-broadcom-staging-v3-1-7d5741e37efb@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: MUCSE814.infineon.com (172.23.29.40) To
+ MUCSE809.infineon.com (172.23.29.35)
 
-On 20/08/2026 19:59, Markuss Broks via B4 Relay wrote:
-> From: Markuss Broks <markuss.broks@gmail.com>
-> 
-> Those are the required changes for the BCM4361 PCIe chipset support.
-> BCM4361 is a dual band 2.4GHz and 5GHz WiFi + Bluetooth combo chipset,
-> installed on several mobile devices, such as Samsung Galaxy S9.
-> 
-> Tested on Samsung Galaxy S9 (SM-G960F), where it's connected by PCIe link.
+From: Carella Chen <carella.chen@infineon.com>
 
-Could you share the log when the device is bound to brcmfmac driver? I 
-would like to know what the firmware version is which you tested.
+Advertise NL80211_EXT_FEATURE_ROAM_OFFLOAD only when firmware reports
+FBT or OKC support. That lets userspace provide PMK material for
+firmware roaming without enabling the path on devices that cannot
+complete the offloaded roam.
 
-Regards,
-Arend
+Assisted-by: GitHub-Copilot-CLI:gpt-5.5
+Signed-off-by: Carella Chen <carella.chen@infineon.com>
+Signed-off-by: Jason Huang <jason.huang2@infineon.com>
+---
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+index c11b3eac9d47..6a97be3149fc 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -7830,6 +7830,10 @@ static int brcmf_setup_wiphy(struct wiphy *wiphy, struct brcmf_if *ifp)
+ 	}
+ 	if (brcmf_feat_is_enabled(ifp, BRCMF_FEAT_SAE_EXT))
+ 		wiphy->features |= NL80211_FEATURE_SAE;
++	if (brcmf_feat_is_enabled(ifp, BRCMF_FEAT_FBT) ||
++	    brcmf_feat_is_enabled(ifp, BRCMF_FEAT_OKC))
++		wiphy_ext_feature_set(wiphy,
++				      NL80211_EXT_FEATURE_ROAM_OFFLOAD);
+ 	wiphy->mgmt_stypes = brcmf_txrx_stypes;
+ 	wiphy->max_remain_on_channel_duration = 5000;
+ 	if (brcmf_feat_is_enabled(ifp, BRCMF_FEAT_PNO)) {
+
+-- 
+2.25.1
