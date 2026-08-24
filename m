@@ -1,101 +1,87 @@
-Received: from smtp2.infineon.com (smtp2.infineon.com [217.10.52.18])
+Received: from smtp11.infineon.com (smtp11.infineon.com [217.10.52.105])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 426EF35DA64
-	for <brcm80211@lists.linux.dev>; Mon, 24 Aug 2026 02:27:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.10.52.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFC903203B6
+	for <brcm80211@lists.linux.dev>; Mon, 24 Aug 2026 03:08:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.10.52.105
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787538482; cv=none; b=TmwWfGNiXXOEesMkyMHCpXRwxXGBPJSkb1cu4D4K4J7HqV0FQ7pTOiIW7rABVFtBvC4ZQnGxLwGFUt8KQOAqkwCz80PtaXdVS4AIZNPFnZZbXvYjCNZJL4Qa9T2q0HUceLDekCDIUdvYQiaC+H2w4aXJQJZ8b9tu8EL02+evcgU=
+	t=1787540904; cv=none; b=oZqPmwclccWWVNb6v4MfkdCPVO4PEa8Ltom0Sv1X3oKdGz1tARBlS7ksR6IMDTQE8cG1iowwd0Hww4kqg33XPdaUVF6QvVA7S8Ke+2EpnhxoLwc9ZjAGYPgnr4fmJdJB3p53ZYy0Pe5s3pf7M5pMI0V4CiS6++khmBGfnCiP7iw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787538482; c=relaxed/simple;
-	bh=2orO2X3kae5MZd+KLTJhLBcyE1WmQ7MbZo7jM8M6XHQ=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fVlKpeBDf7TUbO/BeiCLl6Pjox3uiGhf0dVe9XY+asGUAInCaOhHaZZVghhAC35SP1U/0rnvr/uEYQnYzOZKNaYMsNW6Oy4dprRDVXFwMlEnIKrquAa+cV/iZ0910vw5fFTFr3UiJzS2MaQ8HverUMAgM8HLip4rwH/PwlSzdWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=infineon.com; spf=pass smtp.mailfrom=infineon.com; dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b=EKxq2hU3; arc=none smtp.client-ip=217.10.52.18
+	s=arc-20240116; t=1787540904; c=relaxed/simple;
+	bh=OU6ZgFXRcEUyBCv+EJJfs2AERU7/oxIMIkQvo+Coby4=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eHKAJOAve+dwNipjBRl3DcMv3vOtdLtZkrkhxSIP8YoMKK9kHfc7rFIhvqK+1zIOzfkjgY18HC7JOW8AwfwWv8JtEcKO9CQTzr+akhT6GC9tWlgFGOjd/IbMn+x0BAi7zwe/tZWBXgL2sliY4oNNNOmqBeDyUQuaMmLEkup/kuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=infineon.com; spf=pass smtp.mailfrom=infineon.com; dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b=PdfFShm5; arc=none smtp.client-ip=217.10.52.105
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=infineon.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infineon.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b="EKxq2hU3"
+	dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b="PdfFShm5"
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
   d=infineon.com; i=@infineon.com; q=dns/txt; s=IFXMAIL;
-  t=1787538481; x=1819074481;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=2orO2X3kae5MZd+KLTJhLBcyE1WmQ7MbZo7jM8M6XHQ=;
-  b=EKxq2hU3xPvXJddnY3nrqEoc3oOIz6zSPD7RXd1+u+UfL+CDYtDxxnxR
-   fZ2xDM6BUeKLOLbJCq62JM1mJI5Tfx0xcSagYqL+ZSwdROAeCrvg/4tLT
-   18FYQDRYiysMDIr/0ZUThkHbN04+XYONnQAz6eqrP1QQXuFrf6Mo5mdMs
-   w=;
-X-CSE-ConnectionGUID: tzJA+TcfTgyJ3/6JDCa49g==
-X-CSE-MsgGUID: GzrBeViJRjWKDmGG+8VFcQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11884"; a="174150362"
+  t=1787540903; x=1819076903;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=OU6ZgFXRcEUyBCv+EJJfs2AERU7/oxIMIkQvo+Coby4=;
+  b=PdfFShm5I1hdhwk+WfI3jTeQkVkKM8og3AcWvnBBp2DcuecoXxmQzTax
+   PMJBuwn2xrE4YGU4avcc8pADFsUj6Urv4Fa6r6qPapnXbGnP5AFLANDD3
+   aGQeeNBoUuqJediPhMD+eH1mW3qbXWn4eSVi8fgJDgbOKUFLDafDAyBZt
+   M=;
+X-CSE-ConnectionGUID: BLTwLGeTTNyhunk0pD+3qg==
+X-CSE-MsgGUID: AG/XS9MWTBS8PQmAcsFnkg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11884"; a="157231319"
 X-IronPort-AV: E=Sophos;i="6.25,239,1779141600"; 
-   d="scan'208";a="174150362"
+   d="scan'208";a="157231319"
 X-Amp-Result: SKIPPED(no attachment in message)
-Received: from unknown (HELO MUCSE812.infineon.com) ([172.23.29.38])
-  by smtp2.infineon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Aug 2026 04:27:52 +0200
-Received: from MUCSE809.infineon.com (172.23.29.35) by MUCSE812.infineon.com
- (172.23.29.38) with Microsoft SMTP Server (version=TLS1_2,
+Received: from unknown (HELO MUCSE819.infineon.com) ([172.23.29.45])
+  by smtp11.infineon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Aug 2026 05:08:20 +0200
+Received: from MUCSE809.infineon.com (172.23.29.35) by MUCSE819.infineon.com
+ (172.23.29.45) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.46; Mon, 24 Aug
- 2026 04:27:51 +0200
+ 2026 05:08:19 +0200
 Received: from ISCN5CG5251XQT.infineon.com (10.161.6.196) by
  MUCSE809.infineon.com (172.23.29.35) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Mon, 24 Aug 2026 04:27:47 +0200
-From: Jason Huang <Jason.Huang2@infineon.com>
-To: <linux-wireless@vger.kernel.org>
-CC: <johannes.berg@intel.com>, <johannes@sipsolutions.net>,
-	<arend.vanspriel@broadcom.com>, <hsin-hung.li@cypress.com>,
+ 15.2.2562.46; Mon, 24 Aug 2026 05:08:15 +0200
+Date: Mon, 24 Aug 2026 11:08:06 +0800
+From: HungTsung Huang <Jason.Huang2@infineon.com>
+To: Arend van Spriel <arend.vanspriel@broadcom.com>
+CC: <linux-wireless@vger.kernel.org>, <johannes.berg@intel.com>,
+	<johannes@sipsolutions.net>, <hsin-hung.li@cypress.com>,
 	<linux-kernel@vger.kernel.org>, <brcm80211@lists.linux.dev>,
 	<brcm80211-dev-list.pdl@broadcom.com>, <wlan-kernel-dev-list@infineon.com>,
-	<jeff.johnson@oss.qualcomm.com>, Carella Chen <carella.chen@infineon.com>,
-	Jason Huang <jason.huang2@infineon.com>
-Subject: [PATCH v5 5/5] wifi: brcmfmac: advertise firmware roam offload support
-Date: Mon, 24 Aug 2026 10:27:35 +0800
-Message-ID: <20260824022735.468599-1-Jason.Huang2@infineon.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20260821-upstream-wireless-next-main-jason-11r-support-v1-v5-0-eeab4fda0f31@infineon.com>
+	<jeff.johnson@oss.qualcomm.com>, Carella Chen <carella.chen@infineon.com>
+Subject: Re: [PATCH v5 0/5] brcmfmac: add FT/OKC roaming offload support
+Message-ID: <20260824030806.GA468784@ISCN5CG5251XQT.infineon.com>
 References: <20260821-upstream-wireless-next-main-jason-11r-support-v1-v5-0-eeab4fda0f31@infineon.com>
+ <71261493-e974-4f5c-a453-b4c2e449baf5@broadcom.com>
+ <cbb4b486-c7db-4687-a08c-1b1486583d32@broadcom.com>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: MUCSE823.infineon.com (172.23.29.54) To
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <cbb4b486-c7db-4687-a08c-1b1486583d32@broadcom.com>
+X-ClientProxiedBy: MUCSE824.infineon.com (172.23.29.55) To
  MUCSE809.infineon.com (172.23.29.35)
 
-From: Carella Chen <carella.chen@infineon.com>
+Hi Arend,
 
-Advertise NL80211_EXT_FEATURE_ROAM_OFFLOAD only when firmware reports
-FBT or OKC support. That lets userspace provide PMK material for
-firmware roaming without enabling the path on devices that cannot
-complete the offloaded roam.
+On Sat, Aug 22, 2026 at 08:26:52PM +0200, Arend van Spriel wrote:
+> > Thanks for the follow-up, but looks like it happened again. Missing
+> > patch 5/5 as happened with v3 series.
+> I do have other comment(s) for v5 series, but feel free to send the
+> missing patch so I can review that in one go.
 
-Assisted-by: GitHub-Copilot-CLI:gpt-5.5
-Signed-off-by: Carella Chen <carella.chen@infineon.com>
-Signed-off-by: Jason Huang <jason.huang2@infineon.com>
----
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 4 ++++
- 1 file changed, 4 insertions(+)
+Thanks for pointing this out, and sorry for the noise.
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-index c11b3eac9d47..6a97be3149fc 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-@@ -7830,6 +7830,10 @@ static int brcmf_setup_wiphy(struct wiphy *wiphy, struct brcmf_if *ifp)
- 	}
- 	if (brcmf_feat_is_enabled(ifp, BRCMF_FEAT_SAE_EXT))
- 		wiphy->features |= NL80211_FEATURE_SAE;
-+	if (brcmf_feat_is_enabled(ifp, BRCMF_FEAT_FBT) ||
-+	    brcmf_feat_is_enabled(ifp, BRCMF_FEAT_OKC))
-+		wiphy_ext_feature_set(wiphy,
-+				      NL80211_EXT_FEATURE_ROAM_OFFLOAD);
- 	wiphy->mgmt_stypes = brcmf_txrx_stypes;
- 	wiphy->max_remain_on_channel_duration = 5000;
- 	if (brcmf_feat_is_enabled(ifp, BRCMF_FEAT_PNO)) {
+This seems to be an issue with our SMTP / mail gateway. I will make sure
+we verify that all patches are successfully received in Patchwork for
+future submissions.
 
--- 
-2.25.1
+I have re-sent patch 5/5, threaded to the original v5 cover letter:
+https://patchwork.kernel.org/project/linux-wireless/patch/20260824022735.468599-1-Jason.Huang2@infineon.com/
+
+Thank you.
