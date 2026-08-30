@@ -1,158 +1,129 @@
-Received: from mail-pj1-f99.google.com (mail-pj1-f99.google.com [209.85.216.99])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2BE238331D
-	for <brcm80211@lists.linux.dev>; Sun, 30 Aug 2026 09:14:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.99
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06DB323394A
+	for <brcm80211@lists.linux.dev>; Sun, 30 Aug 2026 13:53:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788081258; cv=none; b=Dfiq8jyo4LD8CbqXuKkk5HdG3MlRX0scLXJVLYIJdywCjFMco79/HEkttUPmq3t+ShoVPHxbnTKgwmn3DZNjGl4TuXGygCjoCNpu2O3jkcA1oT+x5erwVNqYLALaVD4xcMCrXgfpUNLx9qyTUECBWmQ3hVZmqAN3H2wzAPEHCIo=
+	t=1788098017; cv=none; b=QgTLn9F/3I/ph6SQx03Q8lO13h8wNkUjF8n1sVv3RNZGhY+c9TO/qHLiQhtbf+g0eyKP0EvBgF1vSbNBwaBVP3Gf1rJdJUhmmHCC0k9MJ4OKarMJHjACLi2dDt9T3rUZNF3GM4k5fCBk2nuTQ/qRYGK7bZD8eEZ2Q4bQ08sqVTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788081258; c=relaxed/simple;
-	bh=AqudLIf/iTthiXu19RutYAR2E41lgzFux0xXyzaNkSQ=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=JawHgMGn/No796v3hW+jvy3LwGG5c8wQaNfiII7vdjy0llO6cn3cEzkix41xZ4y6fIcJUZwtltfPIn9bFNLw4l3Wxdcb2SKuL1Ru7FH92WXLlQ0Odq1MpdARtIJQuGIt2n4/PONW/C8SkN02dmB/jR0BRmEE7x7odJvp7enubUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=g/TFkBvZ; arc=none smtp.client-ip=209.85.216.99
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="g/TFkBvZ"
-Received: by mail-pj1-f99.google.com with SMTP id 98e67ed59e1d1-398b1e63c49so636610a91.0
-        for <brcm80211@lists.linux.dev>; Sun, 30 Aug 2026 02:14:16 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788081256; x=1788686056;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:from:subject:user-agent:mime-version:date
-         :message-id:dkim-signature:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=31p2j+a2MROOfrBQh9qdpbaoRZRWKQkLx8FBZclkpJw=;
-        b=okD5ywij91YYzLUOeIUhE+2oeKRlu5FwqF1SdlOuF4WzKxbZh+tStmWzhO0V1tLphz
-         HTwKmV7L8G6LBwrZkDuUgh7rhMw13bzyz5MA296DqHf4jrD3jg+Z4uzPxtHRMO6I+Rqg
-         TkrsHkL9s7UlWQxj6hppQ4UQy0ZoyZCf3qDZ7L0RuvK0Ij/2G8mOBGeavjtgM4k3D7E5
-         Wjj3IG0OmGmKTxr9A3ZnciP1wBgH+gVPuGtbkLKKpFEkryDhDO4FrgCvlwQvHrVieJsA
-         8MxXE+clLLMGGxYk5XvPGq9E2mQ1uTW6yauP40V1FxXejsX5X/z6/TYPFhyOa9+73aKH
-         KnYw==
-X-Forwarded-Encrypted: i=1; AKwUvBy8t8Y5QwmdsZyx+B+1WazMd0tIsHbctH7BsjxfclKpgKfj2KQ2ouKgkZLMGCZtqNEeNPETMJB4qLs=@lists.linux.dev
-X-Gm-Message-State: AFuF++lxlbn+jIrydPqrusTCRI5irS4eDD0V4FSfzV5SjgsJb9Dh5T7M
-	mS1CfnseuDzHSkzYtm79OUWyImxd87CK6dCe4t8gpJ9jWwyUv5lhmIWIM8HwnLN4O1/b7ykmuDX
-	HrWbYRQtV5TBnPiouhePfEbZU2pNxZeVgeRU62YKupt30lRp9NTeaxduUaDF5fWo6T0/zHobYqH
-	FFQdK1a5vdvU+8+pAdZ5aGTBHHIYdDZ3rtHKOAGPA7xb7ga01eJXaItOOwR9sSKew2Ya6ZzUSXl
-	oPFvHHfYDcwNB2x9ho=
-X-Gm-Gg: AYBFou16oWpwMKugrAki/vWERyHFJxzAq3gOGUoQ/KUPfdYn3mUW+wyZSldwbQgH6tu
-	6iy+yEgvZuQGcfXrWLSupsEvJQbLMBuWgBmUy8HNz5W7A0cY3TZTrEKxDqMFZl31ATUCgS1rtMl
-	Dm7zRkAqXk2QA8vm1Emv1FnyDjXIEIxGpueFbIf+Ee0qMgRdNIC5u4Zqz6xjHCnKLAi5uJdYGsm
-	f9BT7P+pl7Wof6RQIyBZwhBc6VjcDp4XJ8r4iL6+YQRS1tJiVsJe/0J2MEjjl8ZZeTvKu69q6jq
-	2g6h+1R9DVa2VwTQgamdrbDgr+SPYiwf78WywqMh+2QDT9DvjciLIhpnuJEQP99huD+vuVDNZ46
-	BUv4ah95AO4hHETlrzPsUuag+6z2r0r7ASTq0qc7kjS+RS8UjEJHXtAUXoURxRVlFbJl8k6Xne0
-	h0PXqUKFr0O3qlum9L3ZNy+29fDYHh6ak+zoPjV/E=
-X-Received: by 2002:a17:90b:1d0d:b0:398:9bd3:d6d1 with SMTP id 98e67ed59e1d1-398da6f3ec3mr940324a91.11.1788081255546;
-        Sun, 30 Aug 2026 02:14:15 -0700 (PDT)
-Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-20.dlp.protect.broadcom.com. [144.49.247.20])
-        by smtp-relay.gmail.com with ESMTPS id 98e67ed59e1d1-396b1832d88sm4627830a91.9.2026.08.30.02.14.15
-        for <brcm80211@lists.linux.dev>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 30 Aug 2026 02:14:15 -0700 (PDT)
-X-Relaying-Domain: broadcom.com
-X-CFilter-Loop: Reflected
-Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-cc1c18c775eso1365760a12.0
-        for <brcm80211@lists.linux.dev>; Sun, 30 Aug 2026 02:14:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1788081254; x=1788686054; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:from:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=31p2j+a2MROOfrBQh9qdpbaoRZRWKQkLx8FBZclkpJw=;
-        b=g/TFkBvZvAXMTm0jMJqvXEiiAb//EvtxnzwSFquSSDheNrdumiKB+4EqCPEEqI7Fn9
-         Sk1B0DB6j5hCufzpzI3rePDVdiQd5zWMvb6W5lEH+xq7ZX5NB9MV7ZB5JKRJ0PVcjjQR
-         KYCxiqKhXyiC1lMxXDPi2weo7D2lsO+9APrdg=
-X-Forwarded-Encrypted: i=1; AKwUvBxSXt+jhWvEmihYyTEy57fkCDWz4Tetnv+ZXfrJsXkbuE4Kb1gPIaxw9Fi5Ly34ye+ywvC07RImDqo=@lists.linux.dev
-X-Received: by 2002:a17:90b:1a87:b0:398:c6e1:dceb with SMTP id 98e67ed59e1d1-398da61d56dmr1054568a91.9.1788081253884;
-        Sun, 30 Aug 2026 02:14:13 -0700 (PDT)
-X-Received: by 2002:a17:90b:1a87:b0:398:c6e1:dceb with SMTP id 98e67ed59e1d1-398da61d56dmr1054548a91.9.1788081253416;
-        Sun, 30 Aug 2026 02:14:13 -0700 (PDT)
-Received: from [192.168.178.26] (f215227.upc-f.chello.nl. [80.56.215.227])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-142e0d2e465sm29855331c88.4.2026.08.30.02.14.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 30 Aug 2026 02:14:12 -0700 (PDT)
-Message-ID: <8a866e2b-8802-4a8e-8421-2732da5f5c8f@broadcom.com>
-Date: Sun, 30 Aug 2026 11:14:09 +0200
+	s=arc-20240116; t=1788098017; c=relaxed/simple;
+	bh=tlIbwTUgkcBAud4kij9O5hh8lWbL8//g9iLDC8472vA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=jfumsAsyRwjJbjtwB6kJhBeNQo+T3qPRP7leS1s0wfsyQGil+39bJ6QqIvZBfnsaAUCzz4gbepUJEt7Vsc7NdDZxY8WePbWqbtt6sw8g/6ZjN5onGjSTeQw74Eda0vqLxt+1DYM7FpM3KQmehhw/wAaPETvOKOhG1ZOLrBibxjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from localhost.localdomain (unknown [111.196.241.250])
+	by APP-03 (Coremail) with SMTP id rQCowABnckDaNZRqyWCbBg--.18164S2;
+	Sun, 30 Aug 2026 21:53:31 +0800 (CST)
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+To: Arend van Spriel <arend.vanspriel@broadcom.com>
+Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	linux-wireless@vger.kernel.org,
+	brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] wifi: brcmfmac: bound NVRAM comment parsing
+Date: Sun, 30 Aug 2026 21:53:28 +0800
+Message-ID: <20260830135328.12321-1-pengpeng@iscas.ac.cn>
+X-Mailer: git-send-email 2.50.1
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/5] wifi: nl80211: add roam offload extended feature
-From: Arend van Spriel <arend.vanspriel@broadcom.com>
-To: Jason Huang <Jason.Huang2@infineon.com>, linux-wireless@vger.kernel.org
-Cc: johannes.berg@intel.com, johannes@sipsolutions.net,
- hsin-hung.li@cypress.com, linux-kernel@vger.kernel.org,
- brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com,
- wlan-kernel-dev-list@infineon.com, jeff.johnson@oss.qualcomm.com,
- Carella Chen <carella.chen@infineon.com>
-References: <20260821-upstream-wireless-next-main-jason-11r-support-v1-v5-0-eeab4fda0f31@infineon.com>
- <20260821-upstream-wireless-next-main-jason-11r-support-v1-v5-1-eeab4fda0f31@infineon.com>
- <382c3dbb-ff32-4e62-9b79-c6e4cc6273ef@broadcom.com>
-Content-Language: en-US
-In-Reply-To: <382c3dbb-ff32-4e62-9b79-c6e4cc6273ef@broadcom.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
+X-CM-TRANSID:rQCowABnckDaNZRqyWCbBg--.18164S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxXw4kCw4Utr4UXF48Kr13CFg_yoW5Jw18pr
+	Z3Wa1j9rs8Ja9ayrW5Kr43Xr9YgFn3K3srKFWrA3WSvFs8Ar1rZw1kKFyS9F4YyFy8Jay7
+	trWDtr98Xw4Dt37anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUvj14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+	1l84ACjcxK6xIIjxv20xvE14v26r4j6ryUM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26F4j
+	6r4UJwA2z4x0Y4vEx4A2jsIE14v26F4UJVW0owA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Cr
+	1j6rxdM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj
+	6xIIjxv20xvE14v26r126r1DMcIj6I8E87Iv67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr
+	0_Gr1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7MxkF7I0En4kS14v2
+	6r126r1DMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrV
+	AFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCI
+	c40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1I6r4UMIIF0xvE2Ix0cI8IcVCY1x0267
+	AKxVWxJVW8Jr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r4j
+	6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr1j6F4UJbIYCTnIWIevJa73UjIFyTuYvjfU08
+	9NUUUUU
+X-CM-SenderInfo: pshqw1xhqjqxpvfd2hldfou0/
 
-On 22/08/2026 20:36, Arend van Spriel wrote:
-> On 21/08/2026 09:56, Jason Huang wrote:
->> From: Carella Chen <carella.chen@infineon.com>
->>
->> Drivers can offload FT or OKC roaming without necessarily
->> advertising full 802.1X 4-way handshake offload. Add an extended
->> feature bit for that capability and allow PMK configuration when it is
->> present.
->>
->> This gives userspace a way to provide PMK or PMK-R0 material needed
->> by firmware roaming implementations while keeping the existing 4-way
->> handshake offload capability unchanged.
->>
->> Assisted-by: GitHub-Copilot-CLI:gpt-5.5
->> Signed-off-by: Carella Chen <carella.chen@infineon.com>
->> Signed-off-by: Jason Huang <jason.huang2@infineon.com>
->> ---
->>   include/uapi/linux/nl80211.h | 4 ++++
->>   net/wireless/nl80211.c       | 7 +++++--
->>   2 files changed, 9 insertions(+), 2 deletions(-)
->>
+The NVRAM parser tracks a length-bounded firmware blob but its comment
+handler uses unbounded strchr() calls. A comment without a newline or NUL
+inside the remaining blob can make the search read beyond the current
+input.
 
-[...]
+Store the bounded input length and use memchr() for comment terminators.
 
->> diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
->> index 44f2bad08670..15731440c57a 100644
->> --- a/net/wireless/nl80211.c
->> +++ b/net/wireless/nl80211.c
->> @@ -18434,6 +18434,7 @@ static int 
->> nl80211_set_multicast_to_unicast(struct sk_buff *skb,
->>   static int nl80211_set_pmk(struct sk_buff *skb, struct genl_info *info)
->>   {
->>       struct cfg80211_registered_device *rdev = info->user_ptr[0];
->> +    struct wiphy *wiphy = &rdev->wiphy;
->>       struct net_device *dev = info->user_ptr[1];
->>       struct wireless_dev *wdev = dev->ieee80211_ptr;
->>       struct cfg80211_pmk_conf pmk_conf = {};
->> @@ -18442,8 +18443,10 @@ static int nl80211_set_pmk(struct sk_buff 
->> *skb, struct genl_info *info)
->>           wdev->iftype != NL80211_IFTYPE_P2P_CLIENT)
->>           return -EOPNOTSUPP;
->> -    if (!wiphy_ext_feature_isset(&rdev->wiphy,
->> -                     NL80211_EXT_FEATURE_4WAY_HANDSHAKE_STA_1X))
->> +    if (!wiphy_ext_feature_isset(wiphy,
->> +                     NL80211_EXT_FEATURE_4WAY_HANDSHAKE_STA_1X) &&
->> +        !wiphy_ext_feature_isset(wiphy,
->> +                     NL80211_EXT_FEATURE_ROAM_OFFLOAD))
-> 
-> Ah. _FAST_ROAM_OFFLOAD is not longer than the other ext_feature checked 
-> here.
+Fixes: 3e99b08ab53c ("brcmfmac: enhance nvram processing")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+---
+ .../net/wireless/broadcom/brcm80211/brcmfmac/firmware.c    | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-Actually there is a checkpatch warning that line with the STA_1X check 
-is 82 characters. So my suggestion please make it FAST_ROAMING instead 
-of ROAM_OFFLOAD and swap the two checks to fix the checkpatch warning.
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
+index 22ff326f1924a..c68dee6d7b344 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
+@@ -37,6 +37,7 @@ enum nvram_parser_state {
+  *
+  * @state: current parser state.
+  * @data: input buffer being parsed.
++ * @data_len: size of the input buffer.
+  * @nvram: output buffer with parse result.
+  * @nvram_len: length of parse result.
+  * @line: current line.
+@@ -51,6 +52,7 @@ enum nvram_parser_state {
+ struct nvram_parser {
+ 	enum nvram_parser_state state;
+ 	const u8 *data;
++	u32 data_len;
+ 	u8 *nvram;
+ 	u32 nvram_len;
+ 	u32 line;
+@@ -171,12 +173,15 @@ brcmf_nvram_handle_value(struct nvram_parser *nvp)
+ static enum nvram_parser_state
+ brcmf_nvram_handle_comment(struct nvram_parser *nvp)
+ {
+-	char *eoc, *sol;
++	char *eoc;
++	char *sol;
++	size_t remaining;
+ 
+ 	sol = (char *)&nvp->data[nvp->pos];
+-	eoc = strchr(sol, '\n');
++	remaining = nvp->data_len - nvp->pos;
++	eoc = memchr(sol, '\n', remaining);
+ 	if (!eoc) {
+-		eoc = strchr(sol, '\0');
++		eoc = memchr(sol, '\0', remaining);
+ 		if (!eoc)
+ 			return END;
+ 	}
+@@ -215,6 +220,7 @@ static int brcmf_init_nvram_parser(struct nvram_parser *nvp,
+ 		size = BRCMF_FW_MAX_NVRAM_SIZE;
+ 	else
+ 		size = data_len;
++	nvp->data_len = size;
+ 	/* Add space for properties we may add */
+ 	size += strlen(BRCMF_FW_DEFAULT_BOARDREV) + 1;
+ 	size += BRCMF_FW_MACADDR_LEN + 1;
+@@ -408,7 +414,7 @@ static void *brcmf_fw_nvram_strip(const u8 *data, size_t data_len,
+ 	if (eth_platform_get_mac_address(dev, mac) == 0)
+ 		nvp.strip_mac = true;
+ 
+-	while (nvp.pos < data_len) {
++	while (nvp.pos < nvp.data_len) {
+ 		nvp.state = nv_parser_states[nvp.state](&nvp);
+ 		if (nvp.state == END)
+ 			break;
 
-Regards,
-Arend
+base-commit: 08dbfad3f5040f5bdb6c529da20d6d4e81fefd72
+-- 
+2.50.1
+
