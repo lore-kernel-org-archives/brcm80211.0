@@ -1,32 +1,56 @@
-Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from smtp2.infineon.com (smtp2.infineon.com [217.10.52.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06DB323394A
-	for <brcm80211@lists.linux.dev>; Sun, 30 Aug 2026 13:53:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B8DC3BBFBB
+	for <brcm80211@lists.linux.dev>; Mon, 31 Aug 2026 06:12:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.10.52.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788098017; cv=none; b=QgTLn9F/3I/ph6SQx03Q8lO13h8wNkUjF8n1sVv3RNZGhY+c9TO/qHLiQhtbf+g0eyKP0EvBgF1vSbNBwaBVP3Gf1rJdJUhmmHCC0k9MJ4OKarMJHjACLi2dDt9T3rUZNF3GM4k5fCBk2nuTQ/qRYGK7bZD8eEZ2Q4bQ08sqVTs=
+	t=1788156766; cv=none; b=CTJYBnCMa0nFynzShFrI3msoaettbXf3du5Y44om0VPm4NpAjHbkGfTfa5xrYAcZRQEb+NN+TlbpJZ+roBSeiQn3N+0aL7zS8RleJBYLDRYjb+fUcKNxjA+MpEolf+EZ4QXg8kav1cuTpeQDYupDstenflOeLIjJrgsIj25dIYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788098017; c=relaxed/simple;
-	bh=tlIbwTUgkcBAud4kij9O5hh8lWbL8//g9iLDC8472vA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=jfumsAsyRwjJbjtwB6kJhBeNQo+T3qPRP7leS1s0wfsyQGil+39bJ6QqIvZBfnsaAUCzz4gbepUJEt7Vsc7NdDZxY8WePbWqbtt6sw8g/6ZjN5onGjSTeQw74Eda0vqLxt+1DYM7FpM3KQmehhw/wAaPETvOKOhG1ZOLrBibxjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from localhost.localdomain (unknown [111.196.241.250])
-	by APP-03 (Coremail) with SMTP id rQCowABnckDaNZRqyWCbBg--.18164S2;
-	Sun, 30 Aug 2026 21:53:31 +0800 (CST)
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
-To: Arend van Spriel <arend.vanspriel@broadcom.com>
-Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	linux-wireless@vger.kernel.org,
-	brcm80211@lists.linux.dev,
-	brcm80211-dev-list.pdl@broadcom.com,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] wifi: brcmfmac: bound NVRAM comment parsing
-Date: Sun, 30 Aug 2026 21:53:28 +0800
-Message-ID: <20260830135328.12321-1-pengpeng@iscas.ac.cn>
-X-Mailer: git-send-email 2.50.1
+	s=arc-20240116; t=1788156766; c=relaxed/simple;
+	bh=uzM5n4W6540Hau1uLgcXyAyd8k+gRB0nI7M45zCAyU8=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=DQD2/iPUlPe6ozzTAAFNXkAGEi/3QGHDUf3MyqBr9vntkMcKrxg10aYcohAx9NkS2jSduon1E9xi8Mkoth/JBeIgxXMV+pPdCmRBJsxFLs3Q3fAGTsgj1hdIWF8yrLf0Jqqv1tsAArOIkyyqItzZ8lZ41hdEQftOe1DzK5fK31E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=infineon.com; spf=pass smtp.mailfrom=infineon.com; dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b=buqag7QV; arc=none smtp.client-ip=217.10.52.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=infineon.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infineon.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b="buqag7QV"
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=infineon.com; i=@infineon.com; q=dns/txt; s=IFXMAIL;
+  t=1788156763; x=1819692763;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=uzM5n4W6540Hau1uLgcXyAyd8k+gRB0nI7M45zCAyU8=;
+  b=buqag7QVkHWo6ijX6YEow8tmUnrTwySzxJ0W5FWveNlAoGyX24Juy5a5
+   AmgJvyJsdG3JiY0IrOwoty3N8SN5g26vcHIe8fCBa7lTaA3+TqJ2BMAt6
+   IuhY8PTSDCDbC+ZoC6l/tANVB+rBaIAfkaLLxo4sgy9uo2bIrl7ZXfwj0
+   A=;
+X-CSE-ConnectionGUID: lD+jiukhQXGEhXL9qCnEHQ==
+X-CSE-MsgGUID: 9+HKW299RjCsCYaDtltSqQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11891"; a="175824537"
+X-IronPort-AV: E=Sophos;i="6.25,252,1779141600"; 
+   d="scan'208";a="175824537"
+X-Amp-Result: SKIPPED(no attachment in message)
+Received: from unknown (HELO MUCSE814.infineon.com) ([172.23.29.40])
+  by smtp2.infineon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Aug 2026 08:12:33 +0200
+Received: from MUCSE829.infineon.com (172.23.29.22) by MUCSE814.infineon.com
+ (172.23.29.40) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.46; Mon, 31 Aug
+ 2026 08:12:32 +0200
+Received: from ISCN5CG6022HSR.infineon.com (10.161.6.196) by
+ MUCSE829.infineon.com (172.23.29.22) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46; Mon, 31 Aug 2026 08:12:31 +0200
+From: GirishBukkasagara.Rudrappa <girishbukkasagara.rudrappa@infineon.com>
+To: <linux-wireless@vger.kernel.org>
+CC: <arend.vanspriel@broadcom.com>, <johannes.berg@intel.com>,
+	<brcm80211@lists.linux.dev>, <wlan-kernel-dev-list@infineon.com>,
+	<bogdan.nicolae@gmail.com>, Girish Rudrappa
+	<girishbukkasagara.rudrappa@infineon.com>
+Subject: [PATCH] wifi: brcmfmac: Set extsae_pwe parameter to Infineon firmware in SAP mode
+Date: Mon, 31 Aug 2026 06:12:13 +0000
+Message-ID: <20260831061213.240270-1-girishbukkasagara.rudrappa@infineon.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -34,96 +58,173 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:rQCowABnckDaNZRqyWCbBg--.18164S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxXw4kCw4Utr4UXF48Kr13CFg_yoW5Jw18pr
-	Z3Wa1j9rs8Ja9ayrW5Kr43Xr9YgFn3K3srKFWrA3WSvFs8Ar1rZw1kKFyS9F4YyFy8Jay7
-	trWDtr98Xw4Dt37anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUvj14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
-	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
-	1l84ACjcxK6xIIjxv20xvE14v26r4j6ryUM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26F4j
-	6r4UJwA2z4x0Y4vEx4A2jsIE14v26F4UJVW0owA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Cr
-	1j6rxdM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj
-	6xIIjxv20xvE14v26r126r1DMcIj6I8E87Iv67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr
-	0_Gr1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7MxkF7I0En4kS14v2
-	6r126r1DMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrV
-	AFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCI
-	c40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1I6r4UMIIF0xvE2Ix0cI8IcVCY1x0267
-	AKxVWxJVW8Jr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r4j
-	6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr1j6F4UJbIYCTnIWIevJa73UjIFyTuYvjfU08
-	9NUUUUU
-X-CM-SenderInfo: pshqw1xhqjqxpvfd2hldfou0/
+Content-Type: text/plain
+X-ClientProxiedBy: MUCSE802.infineon.com (172.23.29.28) To
+ MUCSE829.infineon.com (172.23.29.22)
 
-The NVRAM parser tracks a length-bounded firmware blob but its comment
-handler uses unbounded strchr() calls. A comment without a newline or NUL
-inside the remaining blob can make the search read beyond the current
-input.
+From: Girish Rudrappa <girishbukkasagara.rudrappa@infineon.com>
 
-Store the bounded input length and use memchr() for comment terminators.
+Parse and configure the extsae_pwe according to the information from the
+supported rate/extended support rate and RSNX IE
 
-Fixes: 3e99b08ab53c ("brcmfmac: enhance nvram processing")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Parse the beacon IEs on start_ap() and set the extsae_pwe iovar.
+Set sae_pwe to 2 when the RSNX IE advertises H2E, 1 when an H2E-only
+membership selector is present, 0 otherwise.
+
+The changes are tested with FW Version 7.45.286
+
+Signed-off-by: Girish Rudrappa <girishbukkasagara.rudrappa@infineon.com>
 ---
- .../net/wireless/broadcom/brcm80211/brcmfmac/firmware.c    | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ .../broadcom/brcm80211/brcmfmac/cfg80211.c    | 77 +++++++++++++++++++
+ .../broadcom/brcm80211/brcmfmac/cyw/core.c    |  6 ++
+ .../broadcom/brcm80211/brcmfmac/fwvid.h       | 11 +++
+ 3 files changed, 94 insertions(+)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
-index 22ff326f1924a..c68dee6d7b344 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
-@@ -37,6 +37,7 @@ enum nvram_parser_state {
-  *
-  * @state: current parser state.
-  * @data: input buffer being parsed.
-+ * @data_len: size of the input buffer.
-  * @nvram: output buffer with parse result.
-  * @nvram_len: length of parse result.
-  * @line: current line.
-@@ -51,6 +52,7 @@ enum nvram_parser_state {
- struct nvram_parser {
- 	enum nvram_parser_state state;
- 	const u8 *data;
-+	u32 data_len;
- 	u8 *nvram;
- 	u32 nvram_len;
- 	u32 line;
-@@ -171,12 +173,15 @@ brcmf_nvram_handle_value(struct nvram_parser *nvp)
- static enum nvram_parser_state
- brcmf_nvram_handle_comment(struct nvram_parser *nvp)
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+index 872c48806d09..192ea19b216b 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -5099,6 +5099,79 @@ brcmf_config_ap_mgmt_ie(struct brcmf_cfg80211_vif *vif,
+ 	return err;
+ }
+ 
++static s32
++brcmf_parse_configure_sae_pwe(struct brcmf_if *ifp,
++			      struct cfg80211_ap_settings *settings)
++{
++	const struct brcmf_tlv *rsnx_ie;
++	const struct brcmf_tlv *ext_rate_ie;
++	const struct brcmf_tlv *supp_rate_ie;
++	u8 ie_len, i;
++	u32 wpa_auth = 0;
++	u32 sae_pwe = 0; /* 0 = Hunting-and-Pecking only, 1 = H2E only, 2 = both */
++	s32 err = 0;
++
++	if (!brcmf_feat_is_enabled(ifp, BRCMF_FEAT_SAE_EXT))
++		return 0;
++
++	err = brcmf_fil_bsscfg_int_get(ifp, "wpa_auth", &wpa_auth);
++	if (err || (wpa_auth & WPA3_AUTH_SAE_PSK) == 0) {
++		brcmf_dbg(INFO, "wpa_auth is not SAE:0x%x\n", wpa_auth);
++		return 0;
++	}
++
++	rsnx_ie = brcmf_parse_tlvs((u8 *)settings->beacon.tail,
++				   settings->beacon.tail_len, WLAN_EID_RSNX);
++
++	if (rsnx_ie && rsnx_ie->len &&
++	    (rsnx_ie->data[0] & WLAN_RSNX_CAPA_SAE_H2E))
++		sae_pwe = 2;
++
++	/* Found rsnx_ie with SAE_H2E, check the bss selector to know if it is
++	 * a H2E only.
++	 */
++
++	if (sae_pwe == 2) {
++		supp_rate_ie = brcmf_parse_tlvs((u8 *)settings->beacon.head,
++						settings->beacon.head_len,
++						WLAN_EID_SUPP_RATES);
++		ext_rate_ie = brcmf_parse_tlvs((u8 *)settings->beacon.tail,
++					       settings->beacon.tail_len,
++					       WLAN_EID_EXT_SUPP_RATES);
++		if (ext_rate_ie) {
++			ie_len = ext_rate_ie->len;
++			for (i = 0; i < ie_len; i++) {
++				if ((ext_rate_ie->data[i] & 0x7f) ==
++				    BSS_MEMBERSHIP_SELECTOR_SAE_H2E) {
++					sae_pwe = 1;
++					break;
++				}
++			}
++		}
++
++		/* If we cannot found H2E only selector in ext_supp_rate IE,
++		 * traversal supp_rate IE to make sure it really doesn't exist
++		 */
++		if (sae_pwe == 2 && supp_rate_ie) {
++			ie_len = supp_rate_ie->len;
++			for (i = 0; i < ie_len; i++) {
++				if ((supp_rate_ie->data[i] & 0x7f) ==
++				    BSS_MEMBERSHIP_SELECTOR_SAE_H2E) {
++					sae_pwe = 1;
++					break;
++				}
++			}
++		}
++	}
++
++	err = brcmf_fwvid_configure_sae_pwe(ifp, sae_pwe);
++	if (err == -EOPNOTSUPP)
++		return 0;
++
++	brcmf_dbg(TRACE, "extsae_pwe=%u\n", sae_pwe);
++	return err;
++}
++
+ static s32
+ brcmf_parse_configure_security(struct brcmf_if *ifp,
+ 			       struct cfg80211_ap_settings *settings,
+@@ -5132,6 +5205,10 @@ brcmf_parse_configure_security(struct brcmf_if *ifp,
+ 			err = brcmf_configure_wpaie(ifp, tmp_ie, true);
+ 			if (err < 0)
+ 				return err;
++
++			err = brcmf_parse_configure_sae_pwe(ifp, settings);
++			if (err < 0)
++				return err;
+ 		}
+ 	} else {
+ 		brcmf_dbg(TRACE, "No WPA(2) IEs found\n");
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
+index 545eb9aae966..0443207dfe00 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
+@@ -367,10 +367,16 @@ static void brcmf_cyw_register_event_handlers(struct brcmf_pub *drvr)
+ 			    brcmf_notify_mgmt_tx_status);
+ }
+ 
++static int brcmf_cyw_configure_sae_pwe(struct brcmf_if *ifp, u32 sae_pwe)
++{
++	return brcmf_fil_iovar_int_set(ifp, "extsae_pwe", sae_pwe);
++}
++
+ const struct brcmf_fwvid_ops brcmf_cyw_ops = {
+ 	.set_sae_password = brcmf_cyw_set_sae_pwd,
+ 	.alloc_fweh_info = brcmf_cyw_alloc_fweh_info,
+ 	.activate_events = brcmf_cyw_activate_events,
+ 	.get_cfg80211_ops = brcmf_cyw_get_cfg80211_ops,
+ 	.register_event_handlers = brcmf_cyw_register_event_handlers,
++	.configure_sae_pwe = brcmf_cyw_configure_sae_pwe,
+ };
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h
+index f3e011d090f2..56d341a75a53 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h
+@@ -18,6 +18,7 @@ struct brcmf_fwvid_ops {
+ 	int (*activate_events)(struct brcmf_if *ifp);
+ 	void (*get_cfg80211_ops)(struct brcmf_pub *drvr);
+ 	void (*register_event_handlers)(struct brcmf_pub *drvr);
++	int (*configure_sae_pwe)(struct brcmf_if *ifp, u32 sae_pwe);
+ };
+ 
+ /* exported functions */
+@@ -40,6 +41,16 @@ static inline void brcmf_fwvid_feat_attach(struct brcmf_if *ifp)
+ 	vops->feat_attach(ifp);
+ }
+ 
++static inline int brcmf_fwvid_configure_sae_pwe(struct brcmf_if *ifp, u32 sae_pwe)
++{
++	const struct brcmf_fwvid_ops *vops = ifp->drvr->vops;
++
++	if (!vops || !vops->configure_sae_pwe)
++		return -EOPNOTSUPP;
++
++	return vops->configure_sae_pwe(ifp, sae_pwe);
++}
++
+ static inline int brcmf_fwvid_set_sae_password(struct brcmf_if *ifp,
+ 					       struct cfg80211_crypto_settings *crypto)
  {
--	char *eoc, *sol;
-+	char *eoc;
-+	char *sol;
-+	size_t remaining;
- 
- 	sol = (char *)&nvp->data[nvp->pos];
--	eoc = strchr(sol, '\n');
-+	remaining = nvp->data_len - nvp->pos;
-+	eoc = memchr(sol, '\n', remaining);
- 	if (!eoc) {
--		eoc = strchr(sol, '\0');
-+		eoc = memchr(sol, '\0', remaining);
- 		if (!eoc)
- 			return END;
- 	}
-@@ -215,6 +220,7 @@ static int brcmf_init_nvram_parser(struct nvram_parser *nvp,
- 		size = BRCMF_FW_MAX_NVRAM_SIZE;
- 	else
- 		size = data_len;
-+	nvp->data_len = size;
- 	/* Add space for properties we may add */
- 	size += strlen(BRCMF_FW_DEFAULT_BOARDREV) + 1;
- 	size += BRCMF_FW_MACADDR_LEN + 1;
-@@ -408,7 +414,7 @@ static void *brcmf_fw_nvram_strip(const u8 *data, size_t data_len,
- 	if (eth_platform_get_mac_address(dev, mac) == 0)
- 		nvp.strip_mac = true;
- 
--	while (nvp.pos < data_len) {
-+	while (nvp.pos < nvp.data_len) {
- 		nvp.state = nv_parser_states[nvp.state](&nvp);
- 		if (nvp.state == END)
- 			break;
-
-base-commit: 08dbfad3f5040f5bdb6c529da20d6d4e81fefd72
 -- 
-2.50.1
+2.53.0
 
