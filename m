@@ -1,85 +1,77 @@
-Received: from smtp.forwardemail.net (smtp.forwardemail.net [121.127.44.73])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp14.infineon.com (smtp14.infineon.com [217.10.52.160])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E96ED4EA394
-	for <brcm80211@lists.linux.dev>; Mon,  7 Sep 2026 13:01:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=121.127.44.73
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6B78371065
+	for <brcm80211@lists.linux.dev>; Tue,  8 Sep 2026 05:59:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.10.52.160
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788786080; cv=none; b=DOm2LCYP5z5hNkQeLhrTqZe12C3fNlIL/tn/UDwF7d7tpLkUTIqHp4rsSDNnYjJV766eeRV6tjyqE2xyU3fHZwNEZTvvvPrHVrGsAQEYmR7JwtFYl+3NqLcUB7bso2rZ5iibW9x9R9HBFXyK9BYRIbgDlZE2SfXSoToP0HT5LFw=
+	t=1788847188; cv=none; b=YVzEId3JFsj+rZ6G2LUQp5qP5zZ8yeyWJuylPJO6iemc87Bbr6M6FKXct08ZzbHMR76biDSXMMVo1NXh1wSZJyocG8ILbhAZV9wV/UdcMbqX2naTAJjS6HszxQgNnfH84jsXiS4qCrJHbHg7ELHbCFucmDjBaTp9RdPNlkR3PpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788786080; c=relaxed/simple;
-	bh=XJC28kyFBFHh55MFL9xqSsgO3JBx/Prlq6Tro9Wq2vU=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=A6BuHGkxn1yLGuZQ+0FCds4VpYPJ+ta2adlZIv6sVSF9qgY+jQSIVrorVXtgb/ITJzc+B7TlukCUFe9yUJPJNY9pvf9msN7lG78Jw21PL5j6znEiW5n2hQ/kwv9Gy8BHA3omO2wvPbFziTCiwkUNt8RTKQicNuaCzjBXtnMPb0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ubuntu.com; spf=pass smtp.mailfrom=fe-bounces.ubuntu.com; dkim=pass (2048-bit key) header.d=ubuntu.com header.i=@ubuntu.com header.b=TMwWLqoc; arc=none smtp.client-ip=121.127.44.73
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ubuntu.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fe-bounces.ubuntu.com
+	s=arc-20240116; t=1788847188; c=relaxed/simple;
+	bh=4qe5IV54jyWdaYQxFgoOUHeEcAJEkAxi8lDtTCC33nU=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Q3lzChB5Sbod+gVemXf8/c33uqJFLagerG1A7ij9YGmXbM6j7jvFdEQTp1mDDwllz4g4z8+MvTgWm05+4y/QX5g53oLpife66ym6C/c5bLsHRrOooXqoOUs6NnOXYt62cXxMF1+1CbiClT3chCwwVwy4N12ZnZQZKzHKZ2Oy+4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=infineon.com; spf=pass smtp.mailfrom=infineon.com; dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b=JB61B+sg; arc=none smtp.client-ip=217.10.52.160
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=infineon.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infineon.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ubuntu.com header.i=@ubuntu.com header.b="TMwWLqoc"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ubuntu.com;
- h=In-Reply-To: References: To: From: Subject: Cc: Message-Id: Date:
- Content-Type: Content-Transfer-Encoding: Mime-Version; q=dns/txt;
- s=fe-953a8a3ca9; t=1788786055;
- bh=0Mb9UwR4nTQJB2bRA3Lqm6lyxR/KAuxHEv2Zzy1Jh38=;
- b=TMwWLqoc7D5GJT3dgMzmNwQBwyYRaWTb5Xdo3cW//IojHpzLfK7Tv10jajh/JKmyRaAyA2Qx8
- AqXMGDNw12NaDb26NN6ZQLCkpJECL2YJLL6UDXotOwQXr2oex5jbQwpajlwRuLYNQU1CGXZdndA
- sgLfzrKHnK/OxvtxO++PvVn0bNr4QdioP7JL1FEXWDHPVUHb/wjbkFFlUypXM7hBRFYSZ17eplS
- 2G1dJ649c9cTgZxWZ9VwLQfIZCTyExJGVmSdikQ/7i/OQbxNxof94M9iV5lm89yix6Q7YnzCU53
- vUUKYezhGcIymeYO8a+GOZNeJnYzHKpodtBBRa6ZWOww==
-X-Forward-Email-ID: 6a9eb58316171017b32b9267
-X-Forward-Email-Sender: rfc822; jpeisach@ubuntu.com, smtp.forwardemail.net,
- 121.127.44.73
-X-Forward-Email-Version: 2.14.2
-X-Forward-Email-Website: https://forwardemail.net
-X-Complaints-To: abuse@forwardemail.net
-X-Report-Abuse: abuse@forwardemail.net
-X-Report-Abuse-To: abuse@forwardemail.net
+	dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b="JB61B+sg"
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=infineon.com; i=@infineon.com; q=dns/txt; s=IFXMAIL;
+  t=1788847187; x=1820383187;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=4qe5IV54jyWdaYQxFgoOUHeEcAJEkAxi8lDtTCC33nU=;
+  b=JB61B+sgHrHtPR+3tuxPFmVFM9Bq2kSSPmuIc0Uw5MtJJr/p7snY6AV1
+   gGg27uJWmYwzVG1/VXy9+snBnd3eTAwocxyYh6tOEEYSCS3v2VPC2DwIN
+   EKNBWcrAbLD/kS9UHX8K02zUFZNEAhnYJw7G6i8aph00H7Twywd9FuANO
+   0=;
+X-CSE-ConnectionGUID: xsjTBOtuTzuy/oiTMVyACQ==
+X-CSE-MsgGUID: 1Zj5dLtqR0i4PXTpa/X/IA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11899"; a="146028908"
+X-IronPort-AV: E=Sophos;i="6.25,268,1779141600"; 
+   d="scan'208";a="146028908"
+X-Amp-Result: SKIPPED(no attachment in message)
+Received: from unknown (HELO MUCSE822.infineon.com) ([172.23.29.53])
+  by smtp14.infineon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Sep 2026 07:59:39 +0200
+Received: from MUCSE809.infineon.com (172.23.29.35) by MUCSE822.infineon.com
+ (172.23.29.53) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.46; Tue, 8 Sep
+ 2026 07:59:39 +0200
+Received: from ISCN5CG5251XQT.infineon.com (10.161.6.196) by
+ MUCSE809.infineon.com (172.23.29.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46; Tue, 8 Sep 2026 07:59:36 +0200
+Date: Tue, 8 Sep 2026 13:59:28 +0800
+From: HungTsung Huang <Jason.Huang2@infineon.com>
+To: Johannes Berg <johannes@sipsolutions.net>
+CC: <linux-wireless@vger.kernel.org>, <arend.vanspriel@broadcom.com>,
+	<hsin-hung.li@cypress.com>, <linux-kernel@vger.kernel.org>,
+	<brcm80211@lists.linux.dev>, <brcm80211-dev-list.pdl@broadcom.com>,
+	<wlan-kernel-dev-list@infineon.com>, <jeff.johnson@oss.qualcomm.com>,
+	"Carella Chen" <carella.chen@infineon.com>
+Subject: Re: [PATCH v5 1/5] wifi: nl80211: add roam offload extended feature
+Message-ID: <20260908055928.GA196825@ISCN5CG5251XQT.infineon.com>
+References: <20260821-upstream-wireless-next-main-jason-11r-support-v1-v5-0-eeab4fda0f31@infineon.com>
+ <20260821-upstream-wireless-next-main-jason-11r-support-v1-v5-1-eeab4fda0f31@infineon.com>
+ <94f92252ee873146420ed2a53ac1b86dead1345b.camel@sipsolutions.net>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8; format=Flowed
-Date: Mon, 07 Sep 2026 09:00:49 -0400
-Message-Id: <DL93QEI0KQC8.30Z9WDM35DAK2@ubuntu.com>
-Cc: <linux-kernel@vger.kernel.org>, <linux-wireless@vger.kernel.org>,
- <b43-dev@lists.infradead.org>, <brcm80211@lists.linux.dev>,
- <brcm80211-dev-list.pdl@broadcom.com>, <libertas-dev@lists.infradead.org>
-Subject: Re: [PATCH] wifi: fix typos in comments
-From: "Joshua Peisach" <jpeisach@ubuntu.com>
-To: "Christian Lamparter" <chunkeey@gmail.com>, "Hemanth Selam"
- <hemanth.selam@gmail.com>, "Jeff Johnson" <jjohnson@kernel.org>, "Jiri
- Slaby" <jirislaby@kernel.org>, "Nick Kossifidis" <mickflemm@gmail.com>,
- "Luis Chamberlain" <mcgrof@kernel.org>, "Arend van Spriel"
- <arend.vanspriel@broadcom.com>, "Stanislav Yakovlev"
- <stas.yakovlev@gmail.com>, "Stanislaw Gruszka" <stf_xl@wp.pl>, "Michael
- Buesch" <m@bues.ch>
-X-Mailer: aerc 0.21.0
-References: <20260904124353.6183-1-hemanth.selam@gmail.com>
- <d739eb56-b37d-4056-abf2-c3a4c9ba8662@gmail.com>
-In-Reply-To: <d739eb56-b37d-4056-abf2-c3a4c9ba8662@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <94f92252ee873146420ed2a53ac1b86dead1345b.camel@sipsolutions.net>
+X-ClientProxiedBy: MUCSE804.infineon.com (172.23.29.30) To
+ MUCSE809.infineon.com (172.23.29.35)
 
-On Sun Sep 6, 2026 at 6:44 AM EDT, Christian Lamparter wrote:
-> On 9/4/26 2:43 PM, Hemanth Selam wrote:
->> Fix typos in comments, reported by scripts/checkpatch.pl using the
->> misspelling list in scripts/spelling.txt.  Only touches comments, no cod=
-e
->> changes.
->>=20
->> Assisted-by: Cursor:claude-opus-5
->> Signed-off-by: Hemanth Selam <hemanth.selam@gmail.com>
-> Sure, for the p54 and carl9170 parts:
->
-> Acked-by: Christian Lamparter <chunkeey@gmail.com>
->
-> Does anyone know what ever happened to the trivial-patches?
-> https://www.kernel.org/pub/linux/kernel/people//rusty/trivial/template-in=
-dex.html
-> Is this still going?
+Hi Johannes,
 
-As a kernel newbie, I've never heard of this. I've heard of kernel-
-janitors but even that seems not as active..
+Yes, you're right. nl80211_del_pmk() should allow the same
+ROAM_OFFLOAD-only case as nl80211_set_pmk(); otherwise userspace can
+install PMK material for roaming offload but cannot delete it again.
 
--Josh
+I'll fix this in next version by applying the same feature check to del_pmk().
+Thanks for catching this.
