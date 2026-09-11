@@ -1,214 +1,273 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from smtp2.infineon.com (smtp2.infineon.com [217.10.52.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9034458FD15
-	for <brcm80211@lists.linux.dev>; Thu, 10 Sep 2026 18:55:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 723404503F3
+	for <brcm80211@lists.linux.dev>; Fri, 11 Sep 2026 06:57:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.10.52.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789066547; cv=none; b=iNfbXt60t+mbV9LN98Z2yzU1WeVbpPhR/+k3v4fQPoWrg1xQ1q6H2ImnKslx+wAUXYlvdo08CY1K0AJmLKsh08P6HXYkBboWMhxHEK8QTYmwoejQ4Xw/QRk3PuU00wDx1SVB62jXqTAqOGhv2N4YRqjX/L4KGXAdNaT/b4aVcuo=
+	t=1789109873; cv=none; b=HebCZ7S9hSGzGqHGCr7t5yVwelyIVSNRKC4UOsUvoHaGcY00Y1TSgERsoDJs/41PBoWOg0rbf37kSYHPgixsSvgqmj+r/UgP1x9dwZMeZpGioHuNa8mbDt/vKOBqbuIfKOtKn4PFBy4Dp+QgfFLQjwBm7SjcFV1J/21UEaGlj38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789066547; c=relaxed/simple;
-	bh=jA1OIjMBwv91UuOt5Tn56hy+6IGDF/xyXBVDc+O0W7c=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=ejdxF9sAlQfwOcOJeikDyLlXG/s5yxIqSgL4Q2wjmAIBFjaK8WoMmC80by+hfecnvu4Alvd5HpKtqdiEqMekVzWzUt+13lFS/FH+Mi5Bp8bAsPDi0i68KVIX3NWwIE2/Xzx0in8tdFJ9+A3/ZWgxK5DMaAXqvapUVhSaKc4q+to=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SUzKykjd; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789109873; c=relaxed/simple;
+	bh=xoEYjvplPoovKgqtzw1eqFaZsN5X6CrfJCi8cAzyRck=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=jeyT5A+dYV+vFf1InJRJEDcxjikACcunvRyhirH17na0aILTAvhL8ytpmb/DZiugBHsTpUL+aZfMBv7JmZso9XW7Owh+YKioAcprB/E8IEUMPJj3ri3JQXdJXlGhEtLpVay4KFFNTPXxiyLBqQUa8RsKdKwfZq/INe7Y9gXRUFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=infineon.com; spf=pass smtp.mailfrom=infineon.com; dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b=fMl+SYG3; arc=none smtp.client-ip=217.10.52.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=infineon.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infineon.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SUzKykjd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE43C1F008A7;
-	Thu, 10 Sep 2026 18:55:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789066545;
-	bh=CrpBp6UrC3ldEa5GcKmmPo3oz74G2RAnpQBvJ2o9k1k=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject;
-	b=SUzKykjdvV+5mb7+BixcB80g7+i+u+nBUwfb9eta7h9ErBD3kHVouipLrFNBXHDo7
-	 Uyw4TEjlpn2m6IR6OTAmJKxDBIrJhtxYk9WyN6/cCJECIUZ0OaGP5pFuWeEzz9jfiY
-	 Z8sTU5HwMpjruRlLh9s0Bx+p9piEZO0ceRs4l+vY877XvU3dSiGQlKgiCq1cmrIX5s
-	 jcPDoCtGxJkAPjQjpe/F3DiFGiqirkyyCJA79XjucJKL4pVuQNqMz2IWjOt4PnUT/c
-	 OxOpmwwOjbn3eepxYYTNMlO67QQOAOsXAp4rj/SK5E0QFMKw/iOnkIVWPTUVGKPkKk
-	 g0bNHWFwxKWvw==
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfauth.phl.internal (Postfix) with ESMTP id CFE21F4006C;
-	Thu, 10 Sep 2026 14:55:42 -0400 (EDT)
-Received: from phl-imap-15 ([10.202.2.104])
-  by phl-compute-10.internal (MEProxy); Thu, 10 Sep 2026 14:55:42 -0400
-X-ME-Sender: <xms:Lv2iaplfbQ631YFOzCGpJasjLjWIwQT3JrRVk3LS9MkCgPR1g1eugA>
-    <xme:Lv2iavr9DxNpwTN2WBDYnlnGtcos9ihLSRkWiANMTxQZahPdAPSJkGAMCtQD9uGmu
-    CvlIzaCLaPaXqkiswOybV3mvL_461fEaLOySRiUpr08YCVAogsBrjk>
-X-ME-Proxy-Cause: dmFkZTE4zEfUt91Vh8wMjr6L/WUBy21uDOI31KgY6OiMy0jiDAiO+GFbZriSZgXS8OAWnu
-    /3wZfwktsQy09207CvYDKSXzOlYx9ZdBx1LSo/kQEdWNYp1yKeuEWfRKk9ojXejFncjkBt
-    KckJanJNrOVpIib2/f6VXeIYgIP4I/6znBINkeaBLD8q/h8tTagpKFEVt2qYqixiI7+8ya
-    Qck60jclUtx0SBvHLjTkr0/GBYxsUlspQBzQH7cLVb8Cy4QOwtBOR6sJv/73LrNH/Rr2dG
-    XLu8xXR7kBokf4Hy6yKlXpCqB+DsgyF+8XmuyIzmr/OJYZPyvmv/ip/XfvhUk8ogZaQ3pr
-    hOFjwJEFCJjQ6WJ8p5KgTILYUUvbu+1iKa4pw9oVNnHgKi7hTmmtu7k8vw99W8cd3eu808
-    zZ7dnzk0LARYbX8HAqHV3buYMe4o9iEMKJwKob6lss0LOl/7XhQIypSm7GAf45lexb+g54
-    Xm6bRAfY7SdS7p0rbeG51YU3sEYNWG/Mol7x0fZihE8QLC4ptqicNhJxDtyBLdDEX4yY0L
-    NxeSjxo00rxMp4bke3nbLsmzErPZaLCX6BE+kz3nXYadZaNZFzWiOvWSaxkl2nI1wPMwGu
-    qksNgPs3kj+c5Ft0oAb3U6+T7q0gnx/W3XYreb4vehHpxvHId3daxUMn3wkg
-X-ME-Proxy: <xmx:Lv2iau4uQgwZ5ZSX77NXUK00CupYfPLJ--mL7W6WyoCrnFXJ28AYqg>
-    <xmx:Lv2iaqX7SMcL8hmfn1O5CVsW6yS7vTTV6bHzj9JKszswq-uSObcxfw>
-    <xmx:Lv2iarJEeotBEMJbbVfbMSQaUwMqTvxtXIvy4a3GKPkLyANW62-8MQ>
-    <xmx:Lv2iaqQcxmN0cokbQxX3YL090yzt-HrXiCbr35zWHqVENYQgqslXjg>
-    <xmx:Lv2iauC5ue_eshF6QAwcEWN4h9uxzHMXtUdgP-v3O2VblTSkZDFa_bSI>
-Feedback-ID: ifa6e4810:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 8F75E7811F0; Thu, 10 Sep 2026 14:55:42 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b="fMl+SYG3"
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=infineon.com; i=@infineon.com; q=dns/txt; s=IFXMAIL;
+  t=1789109867; x=1820645867;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=xoEYjvplPoovKgqtzw1eqFaZsN5X6CrfJCi8cAzyRck=;
+  b=fMl+SYG3SpP46KxJZUcSDWMlkDLk4GezTX+DEI3eXjHMXG7pI2SCHknD
+   ERI1ZThFUQMonUqdrgBLWtrU4oK1VOnsQw+kXhZ/tMLHPxAvZZcy1SW4n
+   xPMEdOi+uI0W7YqAMkLH6StbGoJiDA7NgvBy4VtJqd9hJqlJSiJ9cTYM7
+   Y=;
+X-CSE-ConnectionGUID: 84Kyy7d/Qle1K2hV26l7zw==
+X-CSE-MsgGUID: uyFWM7QER4Kz9EmFu7O89g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11901"; a="178082356"
+X-IronPort-AV: E=Sophos;i="6.27,96,1787004000"; 
+   d="scan'208";a="178082356"
+X-Amp-Result: SKIPPED(no attachment in message)
+Received: from unknown (HELO MUCSE819.infineon.com) ([172.23.29.45])
+  by smtp2.infineon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Sep 2026 08:57:41 +0200
+Received: from MUCSE809.infineon.com (172.23.29.35) by MUCSE819.infineon.com
+ (172.23.29.45) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.46; Fri, 11 Sep
+ 2026 08:57:41 +0200
+Received: from ISCN5CG5251XQT.infineon.com (10.161.6.196) by
+ MUCSE809.infineon.com (172.23.29.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46; Fri, 11 Sep 2026 08:57:39 +0200
+From: Jason Huang <Jason.Huang2@infineon.com>
+To: <linux-wireless@vger.kernel.org>
+CC: Johannes Berg <johannes@sipsolutions.net>, Arend van Spriel
+	<arend.vanspriel@broadcom.com>, <brcm80211@lists.linux.dev>,
+	<wlan-kernel-dev-list@infineon.com>
+Subject: [PATCH v6 3/5] wifi: brcmfmac: add PMK programming for firmware roaming offload
+Date: Fri, 11 Sep 2026 14:56:54 +0800
+Message-ID: <20260911065656.1269623-4-Jason.Huang2@infineon.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20260911065656.1269623-1-Jason.Huang2@infineon.com>
+References: <20260821-upstream-wireless-next-main-jason-11r-support-v1-v5-0-eeab4fda0f31@infineon.com>
+ <20260911065656.1269623-1-Jason.Huang2@infineon.com>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-ThreadId: AHIlAaKAQArc
-Date: Thu, 10 Sep 2026 14:55:20 -0400
-From: "Chuck Lever" <cel@kernel.org>
-To: "Fernando Fernandez Mancera" <fmancera@suse.de>, netdev@vger.kernel.org
-Cc: "Simon Horman" <horms@kernel.org>, "Jakub Kicinski" <kuba@kernel.org>,
- "Paolo Abeni" <pabeni@redhat.com>, edumazet@google.com,
- davem@davemloft.net, "Jason Gunthorpe" <jgg@ziepe.ca>,
- "Leon Romanovsky" <leon@kernel.org>,
- "Andrew Lunn" <andrew+netdev@lunn.ch>,
- "Tony Nguyen" <anthony.l.nguyen@intel.com>,
- "Przemek Kitszel" <przemyslaw.kitszel@intel.com>,
- "Elad Nachman" <enachman@marvell.com>,
- "Saeed Mahameed" <saeedm@nvidia.com>, "Tariq Toukan" <tariqt@nvidia.com>,
- "Mark Bloch" <mbloch@nvidia.com>, "Ido Schimmel" <idosch@nvidia.com>,
- "Petr Machata" <petrm@nvidia.com>,
- "Edward Cree" <ecree.xilinx@gmail.com>,
- "Maxime Chevallier" <maxime.chevallier@bootlin.com>,
- "Maxime Coquelin" <mcoquelin.stm32@gmail.com>,
- "Alexandre Torgue" <alexandre.torgue@foss.st.com>,
- "Arend van Spriel" <arend.vanspriel@broadcom.com>,
- "Miri Korenblit" <miriam.rachel.korenblit@intel.com>,
- "Keith Busch" <kbusch@kernel.org>, "Jens Axboe" <axboe@kernel.dk>,
- "Christoph Hellwig" <hch@lst.de>, "Sagi Grimberg" <sagi@grimberg.me>,
- "Chaitanya Kulkarni" <kch@nvidia.com>,
- "Saurav Kashyap" <skashyap@marvell.com>,
- "Javed Hasan" <jhasan@marvell.com>,
- GR-QLogic-Storage-Upstream@marvell.com,
- "James Bottomley" <James.Bottomley@hansenpartnership.com>,
- "Martin K. Petersen" <mkp@kernel.org>,
- "Nilesh Javali" <njavali@marvell.com>,
- "Manish Rangankar" <mrangankar@marvell.com>,
- "Varun Prakash" <varun@chelsio.com>,
- "Alexander Viro" <viro@zeniv.linux.org.uk>,
- "Christian Brauner" <brauner@kernel.org>, "Jan Kara" <jack@suse.cz>,
- "David Howells" <dhowells@redhat.com>,
- "Marc Dionne" <marc.dionne@auristor.com>,
- "Trond Myklebust" <trondmy@kernel.org>,
- "Anna Schumaker" <anna@kernel.org>, "Jeff Layton" <jlayton@kernel.org>,
- NeilBrown <neil@brown.name>, "Olga Kornievskaia" <okorniev@redhat.com>,
- "Dai Ngo" <Dai.Ngo@oracle.com>, "Tom Talpey" <tom@talpey.com>,
- "Marek Lindner" <marek.lindner@mailbox.org>,
- "Simon Wunderlich" <sw@simonwunderlich.de>,
- "Antonio Quartulli" <antonio@mandelbit.com>,
- "Sven Eckelmann" <sven@narfation.org>,
- "Nikolay Aleksandrov" <razor@blackwall.org>,
- "Pablo Neira Ayuso" <pablo@netfilter.org>,
- "Florian Westphal" <fw@strlen.de>, "Phil Sutter" <phil@nwl.cc>,
- "Johannes Berg" <johannes@sipsolutions.net>,
- "Matthieu Baerts" <matttbe@kernel.org>,
- "Mat Martineau" <martineau@kernel.org>,
- "Geliang Tang" <geliang@kernel.org>, "Julian Anastasov" <ja@ssi.bg>,
- "Aaron Conole" <aconole@redhat.com>,
- "Eelco Chaudron" <echaudro@redhat.com>,
- "Ilya Maximets" <i.maximets@ovn.org>,
- "Allison Henderson" <achender@kernel.org>,
- "Jamal Hadi Salim" <jhs@mojatatu.com>, "Jiri Pirko" <jiri@resnulli.us>,
- "Marcelo Ricardo Leitner" <marcelo.leitner@gmail.com>,
- "Xin Long" <lucien.xin@gmail.com>,
- "D. Wythe" <alibuda@linux.alibaba.com>,
- "Dust Li" <dust.li@linux.alibaba.com>,
- "Sidraya Jayagond" <sidraya@linux.ibm.com>,
- "Mahanta Jambigi" <mjambigi@linux.ibm.com>,
- "Tony Lu" <tonylu@linux.alibaba.com>, "Wen Gu" <guwen@linux.alibaba.com>,
- "Jon Maloy" <jmaloy@redhat.com>,
- "Tung Quang Nguyen" <tung.quang.nguyen@est.tech>,
- "Steffen Klassert" <steffen.klassert@secunet.com>,
- "Herbert Xu" <herbert@gondor.apana.org.au>,
- "Casey Schaufler" <casey@schaufler-ca.com>,
- "Paul Moore" <paul@paul-moore.com>, "James Morris" <jmorris@namei.org>,
- "Serge E. Hallyn" <serge@hallyn.com>,
- "Vikas Gupta" <vikas.gupta@broadcom.com>,
- "Bhargava Marreddy" <bhargava.marreddy@broadcom.com>,
- "Rajashekar Hudumula" <rajashekar.hudumula@broadcom.com>,
- "Nicolai Buchwitz" <nb@tipi-net.de>,
- =?UTF-8?Q?Markus_Bl=C3=B6chl?= <markus@blochl.de>,
- "Arnd Bergmann" <arnd@arndb.de>,
- "Heiner Kallweit" <hkallweit1@gmail.com>,
- "Florian Fainelli" <florian.fainelli@broadcom.com>,
- "Krzysztof Kozlowski" <krzk@kernel.org>,
- "Qingfang Deng" <qingfang.deng@linux.dev>,
- "Julian Braha" <julianbraha@gmail.com>,
- "Ethan Nelson-Moore" <enelsonmoore@gmail.com>,
- "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
- "Eric Biggers" <ebiggers@kernel.org>, "Ard Biesheuvel" <ardb@kernel.org>,
- "Neal Cardwell" <ncardwell@google.com>,
- "Kuniyuki Iwashima" <kuniyu@google.com>,
- "Willem de Bruijn" <willemb@google.com>, "Alyssa Ross" <hi@alyssa.is>,
- "Joel Granados" <joel.granados@kernel.org>,
- "Oleg Nesterov" <oleg@redhat.com>, linux-rdma@vger.kernel.org,
- linux-kernel@vger.kernel.org, intel-wired-lan@lists.osuosl.org,
- oss-drivers@corigine.com, linux-net-drivers@amd.com,
- linux-stm32@st-md-mailman.stormreply.com,
- linux-arm-kernel@lists.infradead.org, linux-wireless@vger.kernel.org,
- brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com,
- linux-nvme@lists.infradead.org,
- "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>,
- target-devel@vger.kernel.org, linux-fsdevel@vger.kernel.org,
- linux-afs@lists.infradead.org, linux-nfs@vger.kernel.org,
- b.a.t.m.a.n@lists.open-mesh.org, bridge@lists.linux.dev,
- netfilter-devel@vger.kernel.org, coreteam@netfilter.org,
- mptcp@lists.linux.dev, lvs-devel@vger.kernel.org, dev@openvswitch.org,
- rds-devel@oss.oracle.com, linux-sctp@vger.kernel.org,
- linux-s390@vger.kernel.org, tipc-discussion@lists.sourceforge.net,
- linux-security-module@vger.kernel.org
-Message-Id: <ff6ff699-e942-455f-8816-49af24afb370@app.fastmail.com>
-In-Reply-To: <20260910144914.8025-2-fmancera@suse.de>
-References: <20260910144914.8025-1-fmancera@suse.de>
- <20260910144914.8025-2-fmancera@suse.de>
-Subject: Re: [PATCH 01/13 net-next] net: ipv4: introduce CONFIG_IPV4 to decouple the
- IPv4 stack
+Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MUCSE801.infineon.com (172.23.29.27) To
+ MUCSE809.infineon.com (172.23.29.35)
 
+From: Darren Li <hsin-hung.li@cypress.com>
 
+FT and OKC roaming offload need PMK material in firmware even when
+the initial 802.1X exchange is handled by userspace. Add a roaming
+firmware-supplicant profile state for those connections and allow PMK
+configuration while firmware FT or OKC state is active.
 
-On Thu, Sep 10, 2026, at 10:48 AM, Fernando Fernandez Mancera wrote:
-> Historically, the IPv4 protocol has been linked to the core INET
-> subsystem. Because shared infrastructure like the TCP/UDP engine,
-> routing or INET hashtables live inside net/ipv4/, it has been impossible
-> to compile a kernel with only IPv6 support.
->
-> This patch introduces the CONFIG_IPV4 Kconfig symbol, which is set to
-> 'def_bool y' for now. This does not allow to completely disable the
-> IPv4 stack yet but it lays the necessary build-system work for that
-> goal.
->
-> In addition, multiple subsystems Kconfig symbols across networking
-> features like tunnels, drivers and filesystems have been adjusted to
-> depend on IPv4. Keep on mind that follow-up work is required to convert
-> the Kconfig symbol to bool and remove the dependency on IPv4 where it
-> makes sense.
->
-> Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Program the OKC PMK through the okc_info_pmk iovar before setting the
+regular PMK when firmware reports OKC state. Only select the roaming
+firmware-supplicant state when firmware advertises FBT or OKC support;
+devices without those capabilities keep the profile in the userspace
+supplicant state and do not issue roaming-offload specific iovars on
+every connect.
 
-> diff --git a/net/sunrpc/Kconfig b/net/sunrpc/Kconfig
-> index e7808e5714dc..58e6f6db3100 100644
-> --- a/net/sunrpc/Kconfig
-> +++ b/net/sunrpc/Kconfig
-> @@ -1,7 +1,7 @@
->  # SPDX-License-Identifier: GPL-2.0-only
->  config SUNRPC
->  	tristate
-> -	depends on MULTIUSER
-> +	depends on MULTIUSER && IPV4
-> 
->  config SUNRPC_GSS
->  	tristate
+For FT-PSK with firmware supplicant support, keep the profile in the
+PSK firmware-supplicant state.
 
-Acked-by: Chuck Lever <cel@kernel.org>
+Assisted-by: GitHub-Copilot-CLI:gpt-5.5
+Signed-off-by: Darren Li <hsin-hung.li@cypress.com>
+Signed-off-by: Chung-Hsien Hsu <Chung-Hsien.Hsu@infineon.com>
+Signed-off-by: Chi-hsien Lin <chi-hsien.lin@cypress.com>
+Co-developed-by: Carella Chen <carella.chen@infineon.com>
+Signed-off-by: Carella Chen <carella.chen@infineon.com>
+Co-developed-by: Shelley Yang <shelley.yang@infineon.com>
+Signed-off-by: Shelley Yang <shelley.yang@infineon.com>
+Signed-off-by: Jason Huang <jason.huang2@infineon.com>
+---
+ .../broadcom/brcm80211/brcmfmac/cfg80211.c    | 56 +++++++++++++++++--
+ .../broadcom/brcm80211/brcmfmac/cfg80211.h    |  5 +-
+ 2 files changed, 54 insertions(+), 7 deletions(-)
 
-
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+index 872c48806d09..f2916cc9e5fc 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -2112,9 +2112,11 @@ brcmf_set_key_mgmt(struct net_device *ndev, struct cfg80211_connect_params *sme)
+ 	struct brcmf_pub *drvr = ifp->drvr;
+ 	s32 val;
+ 	s32 err;
++	s32 okc_enable;
+ 	const struct brcmf_tlv *rsn_ie;
+ 	const u8 *ie;
+ 	u32 ie_len;
++	bool fwsup_roam;
+ 	u32 offset;
+ 	u16 rsn_cap;
+ 	u32 mfp;
+@@ -2122,6 +2124,9 @@ brcmf_set_key_mgmt(struct net_device *ndev, struct cfg80211_connect_params *sme)
+ 
+ 	profile->use_fwsup = BRCMF_PROFILE_FWSUP_NONE;
+ 	profile->is_ft = false;
++	profile->is_okc = false;
++	fwsup_roam = brcmf_feat_is_enabled(ifp, BRCMF_FEAT_FBT) ||
++		     brcmf_feat_is_enabled(ifp, BRCMF_FEAT_OKC);
+ 
+ 	if (!sme->crypto.n_akm_suites)
+ 		return 0;
+@@ -2138,6 +2143,8 @@ brcmf_set_key_mgmt(struct net_device *ndev, struct cfg80211_connect_params *sme)
+ 			val = WPA_AUTH_UNSPECIFIED;
+ 			if (sme->want_1x)
+ 				profile->use_fwsup = BRCMF_PROFILE_FWSUP_1X;
++			else if (fwsup_roam)
++				profile->use_fwsup = BRCMF_PROFILE_FWSUP_ROAM;
+ 			break;
+ 		case WLAN_AKM_SUITE_PSK:
+ 			val = WPA_AUTH_PSK;
+@@ -2153,11 +2160,15 @@ brcmf_set_key_mgmt(struct net_device *ndev, struct cfg80211_connect_params *sme)
+ 			val = WPA2_AUTH_UNSPECIFIED;
+ 			if (sme->want_1x)
+ 				profile->use_fwsup = BRCMF_PROFILE_FWSUP_1X;
++			else if (fwsup_roam)
++				profile->use_fwsup = BRCMF_PROFILE_FWSUP_ROAM;
+ 			break;
+ 		case WLAN_AKM_SUITE_8021X_SHA256:
+ 			val = WPA2_AUTH_1X_SHA256;
+ 			if (sme->want_1x)
+ 				profile->use_fwsup = BRCMF_PROFILE_FWSUP_1X;
++			else if (fwsup_roam)
++				profile->use_fwsup = BRCMF_PROFILE_FWSUP_ROAM;
+ 			break;
+ 		case WLAN_AKM_SUITE_PSK_SHA256:
+ 			val = WPA2_AUTH_PSK_SHA256;
+@@ -2170,10 +2181,16 @@ brcmf_set_key_mgmt(struct net_device *ndev, struct cfg80211_connect_params *sme)
+ 			profile->is_ft = true;
+ 			if (sme->want_1x)
+ 				profile->use_fwsup = BRCMF_PROFILE_FWSUP_1X;
++			else if (fwsup_roam)
++				profile->use_fwsup = BRCMF_PROFILE_FWSUP_ROAM;
+ 			break;
+ 		case WLAN_AKM_SUITE_FT_PSK:
+ 			val = WPA2_AUTH_PSK | WPA2_AUTH_FT;
+ 			profile->is_ft = true;
++			if (brcmf_feat_is_enabled(ifp, BRCMF_FEAT_FWSUP))
++				profile->use_fwsup = BRCMF_PROFILE_FWSUP_PSK;
++			else if (fwsup_roam)
++				profile->use_fwsup = BRCMF_PROFILE_FWSUP_ROAM;
+ 			break;
+ 		case WLAN_AKM_SUITE_WFA_DPP:
+ 			val = WFA_AUTH_DPP;
+@@ -2204,8 +2221,22 @@ brcmf_set_key_mgmt(struct net_device *ndev, struct cfg80211_connect_params *sme)
+ 
+ 	if (profile->use_fwsup == BRCMF_PROFILE_FWSUP_1X)
+ 		brcmf_dbg(INFO, "using 1X offload\n");
++
++	if (profile->use_fwsup == BRCMF_PROFILE_FWSUP_1X ||
++	    profile->use_fwsup == BRCMF_PROFILE_FWSUP_ROAM) {
++		err = brcmf_fil_bsscfg_int_get(ifp, "okc_enable",
++					       &okc_enable);
++		if (err) {
++			bphy_err(drvr, "get okc_enable failed (%d)\n", err);
++		} else {
++			brcmf_dbg(INFO, "okc_enable (%d)\n", okc_enable);
++			profile->is_okc = okc_enable;
++		}
++	}
+ 	if (profile->use_fwsup == BRCMF_PROFILE_FWSUP_SAE)
+ 		brcmf_dbg(INFO, "using SAE offload\n");
++	if (profile->use_fwsup == BRCMF_PROFILE_FWSUP_ROAM)
++		brcmf_dbg(INFO, "using roaming offload\n");
+ 
+ 	if (!brcmf_feat_is_enabled(ifp, BRCMF_FEAT_MFP))
+ 		goto skip_mfp_config;
+@@ -2494,13 +2525,14 @@ brcmf_cfg80211_connect(struct wiphy *wiphy, struct net_device *ndev,
+ 
+ 		if (sme->crypto.psk && !is_sae_akm &&
+ 		    profile->use_fwsup != BRCMF_PROFILE_FWSUP_SAE) {
+-			if (WARN_ON(profile->use_fwsup !=
+-				    BRCMF_PROFILE_FWSUP_NONE)) {
++			if (profile->use_fwsup == BRCMF_PROFILE_FWSUP_NONE) {
++				brcmf_dbg(INFO, "using PSK offload\n");
++				profile->use_fwsup = BRCMF_PROFILE_FWSUP_PSK;
++			} else if (WARN_ON(profile->use_fwsup !=
++					   BRCMF_PROFILE_FWSUP_PSK)) {
+ 				err = -EINVAL;
+ 				goto done;
+ 			}
+-			brcmf_dbg(INFO, "using PSK offload\n");
+-			profile->use_fwsup = BRCMF_PROFILE_FWSUP_PSK;
+ 		}
+ 		if (profile->use_fwsup != BRCMF_PROFILE_FWSUP_NONE) {
+ 			/* enable firmware supplicant for this interface */
+@@ -5953,17 +5985,29 @@ static int brcmf_cfg80211_set_pmk(struct wiphy *wiphy, struct net_device *dev,
+ 				  const struct cfg80211_pmk_conf *conf)
+ {
+ 	struct brcmf_if *ifp;
++	struct brcmf_pub *drvr;
++	int ret;
+ 
+ 	brcmf_dbg(TRACE, "enter\n");
+ 
+-	/* expect using firmware supplicant for 1X */
+ 	ifp = netdev_priv(dev);
+-	if (WARN_ON(ifp->vif->profile.use_fwsup != BRCMF_PROFILE_FWSUP_1X))
++	drvr = ifp->drvr;
++	if (WARN_ON(ifp->vif->profile.use_fwsup != BRCMF_PROFILE_FWSUP_1X &&
++		    !ifp->vif->profile.is_ft &&
++		    !ifp->vif->profile.is_okc))
+ 		return -EINVAL;
+ 
+ 	if (conf->pmk_len > BRCMF_WSEC_MAX_PSK_LEN)
+ 		return -ERANGE;
+ 
++	if (ifp->vif->profile.is_okc) {
++		ret = brcmf_fil_iovar_data_set(ifp, "okc_info_pmk",
++					       conf->pmk, conf->pmk_len);
++		if (ret < 0)
++			bphy_err(drvr, "okc_info_pmk iovar failed: ret=%d\n",
++				 ret);
++	}
++
+ 	return brcmf_set_pmk(ifp, conf->pmk, conf->pmk_len);
+ }
+ 
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.h
+index 63e534523f51..1aa99390a951 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.h
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.h
+@@ -127,7 +127,8 @@ enum brcmf_profile_fwsup {
+ 	BRCMF_PROFILE_FWSUP_NONE,
+ 	BRCMF_PROFILE_FWSUP_PSK,
+ 	BRCMF_PROFILE_FWSUP_1X,
+-	BRCMF_PROFILE_FWSUP_SAE
++	BRCMF_PROFILE_FWSUP_SAE,
++	BRCMF_PROFILE_FWSUP_ROAM
+ };
+ 
+ /**
+@@ -164,6 +165,7 @@ enum brcmf_mgmt_tx_status {
+  * @bssid: bssid of joined/joining ibss.
+  * @sec: security information.
+  * @key: key information
++ * @is_okc: OKC is used for current connection.
+  */
+ struct brcmf_cfg80211_profile {
+ 	u8 bssid[ETH_ALEN];
+@@ -172,6 +174,7 @@ struct brcmf_cfg80211_profile {
+ 	enum brcmf_profile_fwsup use_fwsup;
+ 	u16 use_fwauth;
+ 	bool is_ft;
++	bool is_okc;
+ };
+ 
+ /**
 -- 
-Chuck Lever (Come to NFS bake-a-thon! https://nfsv4bat.org)
+2.25.1
+
