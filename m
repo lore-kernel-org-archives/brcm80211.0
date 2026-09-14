@@ -1,72 +1,94 @@
-Received: from mail-pz2-f12.google.com (mail-pz2-f12.google.com [74.125.228.12])
+Received: from mail-vs1-f99.google.com (mail-vs1-f99.google.com [209.85.217.99])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8F55357D07
-	for <brcm80211@lists.linux.dev>; Sun, 13 Sep 2026 16:55:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B9C537BE6E
+	for <brcm80211@lists.linux.dev>; Mon, 14 Sep 2026 18:42:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.99
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789318542; cv=none; b=QEtGr3uaexixTfeX/v7TelyUD2CQ6FKl2hxTzcfTPmL2rvaRM/Jbt1gL5oWS4FVwwzDXL+PYW5zTrbztDksiePMlhP2fDXPZhDAq2ruQJx0qACgiKltzZe90Ixv/dF6WDLHGkY6JBXV7ryTduYWfEnz5ilFwPP7OLS209OpRaOA=
+	t=1789411368; cv=none; b=AHFYOfYnIiO1s693ZdKNWsKZ1yFvzvKyY5KBVlLswrpGR1y+BYHtB6XNLAOWnUgr0N7wPp8jYmgxeq19d3ZrXbbH4sgbI/JYy/SNTOV0owaVhQo+THaoMWRAzRMBqIdiwVod4CxLTOTzdBMReXmNvxp9BQhyux699qmqeRTlCSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789318542; c=relaxed/simple;
-	bh=nzf2EwG7iPP6tj9ibZ/1X/63091RhG8SeD7SXE8+8VM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=brtq56IBhAXElmGaycni4LUi0RyvHLoyc0vjPmraGAgCMhUkbjL/+cTGR1EowZUYa9wLcMRK1lToIjB8QFBXGHLW4xcIddb6hF8nuHvhFXql3sTrgMoT5094gRWw6LnLVTMZ2GDy6nwTLxWJWfaoKeZUuODuMZr8d58OoE/8wQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WD8m9HTk; arc=none smtp.client-ip=74.125.228.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1789411368; c=relaxed/simple;
+	bh=dVM7a9s1TxS2aIq6AXPkZaCie1+K/qRV6xxe5PnGBH8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=fRgVbW03oywmPW5sBsMQ1ygjLe2g2YolSCLxiPXTNkYAcxKYZI3AOwAPBHEKhmKDCfljbtdSbNqWjaH5lUUeg+boYazFHht/fKocCVkx6JBy99SVCGgJoMRp2DukRzN+OENCxSrvqptLdBudUlH94yWLGkZf1Dh+XXJLLeswVuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=dfmjZt4q; arc=none smtp.client-ip=209.85.217.99
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WD8m9HTk"
-Received: by mail-pz2-f12.google.com with SMTP id d2e1a72fcca58-8686f46e4adso1374300b3a.0
-        for <brcm80211@lists.linux.dev>; Sun, 13 Sep 2026 09:55:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789318540; x=1789923340; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=oelscxdULKd6qFzcXaquUXe47LCs3+b2gZyjgR6VSFA=;
-        b=WD8m9HTkdhxkr8NyGCWIBAyPWsFaLCpDlHXfFTCbohCDrqveXpPgYS1s2ekXXI97PI
-         Dr9sRqdiGXJM0gX5K16efhJ+G+Poq3X6STzIrAL6elEdDe1wIYOM3CgWHy7d4VWJwURz
-         UzVK5AqMCYRyu/Rh+DgzDd3aOEypVGYB+lGbgEV5sJaP4OZDLs2BakS9237j1zAsZ3MR
-         fW8k/w8i0Iks5crDxbihaFGbOsLiHOrmXcnUaUznpuLdc8Ooc+bi44ynHUfSoWYs52uC
-         FgnQn1X1sIK2FeKCRimI6bOl6DcTWxSyTaJ7G8m41/3BjUIbAHCRbG+8T1xEh0IZDIjx
-         7hhw==
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="dfmjZt4q"
+Received: by mail-vs1-f99.google.com with SMTP id ada2fe7eead31-782af6c753cso3952344137.3
+        for <brcm80211@lists.linux.dev>; Mon, 14 Sep 2026 11:42:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789318540; x=1789923340;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20251104; t=1789411365; x=1790016165;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:dkim-signature:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=iBKsdBmjCJJD8VrVX2tmAkv65OynoDpaqNBhjTL5Aq4=;
+        b=Al1psIfFi+dALJKyO8GLxecrAHM2zCDFQG9Eg8jpqaDvqg3iZmRFVYrOrEAoGg8XVh
+         7R5yyWSM1cJFEWOGqddj+WPKCXu/LpnG4TdOJ+4l8G+Ib8AfXarXz5m7tqeXVSqEVQy/
+         8iKDOVZJKDeoO98andRqC4uFIbFA0tdhqY9IuGOEW331Ebw2eolvbZYkyTZVvepgNW+c
+         +Kxoq4d6J9wPSv5nIfSQoA2kYT/tqJJ/OLFjDR/ADOrr5sJ4X1de8Z+Ubr1EKwid5WeV
+         nKh+RG99D/v7Y3dedajExRj02wIEQ0uTQJndVuLAZFkKWGQ7j1C20XN7auNAr1o226Iz
+         /Exw==
+X-Forwarded-Encrypted: i=1; AKwUvBzI53knWC/RoxMDOv30DMwJ0vzM3Kftp9qqga/SQHKE6IJzV1sSHPWjWujRD4n5PFe9VNWiOG52aPU=@lists.linux.dev
+X-Gm-Message-State: AFuF++mQFvwZqjt/Tmfng6O0bK+4Kh3fenlb2tLwbuGZi/uMWS9CHSaW
+	XCSYl6QYX1P2KvmsocaGuX3WwHmMPYd/JymWo6fPeLs73l6QG5GDzHv82OkGh9UYpxIfURndTZL
+	TmonjFXrO5/vBvXP4TnWe35BIG0d11Mrp7aY21sl+F16HBA0f44Tf6ni+da/bDYnqXoqNYiHjQT
+	45lbqVedSnYNAOeFX3m7i24x2pcP57Pvq9TjGaZCqXtSSULiL6GVids27p9NKEKROhzqNhQt13B
+	/iprM2blQIDQR7CWP2P4WVP
+X-Gm-Gg: AYBFou3XGlG/YOEEx4qkgRAvJ4qwi2wpvhWvHuoDlarAN0TFUIyc0vnItbkshMPDNU9
+	MNh5ZpCcSMX72aicQ1zhgr3jzIky0qmN0XWSKqUHj0n4DVCMPpJLuHyXzPWFPJSfYYLcEbKrBs9
+	pm4O1KyNyU5UFJrEJ5wTGMKae67rtKR2d7C/usLCCIsZKqbRaeyY5LsuQ5iTnRvR86mGlrDleZk
+	J6NYnBBWLs7HUk1GFT1GE66RStrNOOk/83Rh+m5+E8n/JMoi0Pjm5chey4xVlhOY61X87PspfYn
+	VwpRKXtm+G7r2Z3LdHCN45iLFe0d83qEN5rJnGkYK0Y3YHq4/rnE5OJmy6PzYpEkumGQwmsiPW+
+	PodoxNVSZnC/RZKJT4ZiqV0xxwdqiKC0PJglgWCLz357yNEo7SmxBVzKpHwrg1QL4qlsnTOx0V5
+	pUTD3hExiu0hLw9vN+mz1UeMsUSImayudg8oiBdXg=
+X-Received: by 2002:a05:6102:f81:b0:790:65e9:4f3e with SMTP id ada2fe7eead31-79b5838eca1mr5048848137.4.1789411364849;
+        Mon, 14 Sep 2026 11:42:44 -0700 (PDT)
+Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-25.dlp.protect.broadcom.com. [144.49.247.25])
+        by smtp-relay.gmail.com with ESMTPS id a1e0cc1a2514c-982b9cdf1a6sm3276849241.7.2026.09.14.11.42.44
+        for <brcm80211@lists.linux.dev>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 14 Sep 2026 11:42:44 -0700 (PDT)
+X-Relaying-Domain: broadcom.com
+X-CFilter-Loop: Reflected
+Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-cc42a07d04aso2982989a12.1
+        for <brcm80211@lists.linux.dev>; Mon, 14 Sep 2026 11:42:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google; t=1789411363; x=1790016163; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=oelscxdULKd6qFzcXaquUXe47LCs3+b2gZyjgR6VSFA=;
-        b=UEXUqe5fWSYrs7Em/ydtUvVPL90J80mfSeqD/IFmL0ujgoQNW5fX1z5oypP/RlKfd6
-         KrXQh+iJwsqdjTRPDUFmyViB9FTvyyJGzwmHqn/n7wuL/2BuXLIm+HZo/8ZWKYOTT7hv
-         2VLk1T8z4oHRQtdnkDg3U27HOuPCxaOqOCmy0P1jzVQ/U2YyJsa4HAV+msSqFjrKNq4k
-         hjYMjbN8EC2iILimFhcDbnzsjqrt+qqj19wCeCzmu1CFktIqaTL96IZ+nFfdnpfwu1MR
-         97bZqN7VO0H3w4anB0s5IKV1cuZYM5gTqu+S+mZ3Uy/gPS5aiEbrcQAkOEppaJ7dT9C0
-         HyVw==
-X-Forwarded-Encrypted: i=1; AKwUvByzpPHUz6sWcWOa/Qjex7MJao4zIy3M9xRakQ9eueAIV8A8SDNCCO/iVLMih1da2L9Xo98/HlXL1us=@lists.linux.dev
-X-Gm-Message-State: AFuF++msUdx0B1eoS3o9aHnXWGMNjmCsXSzPk0Eefv6WwzJptwIO8pGA
-	4YsJ2DYduosIFyPvPhoa+QYQTXa3vjhF9fzwY+1PV1kD07RoQud/n9Pu
-X-Gm-Gg: AYBFou2zMGTRlf2ugGoScU4W1HWxP6cQusR05rW9az9T8dnizkB0I6yy3o2gOhX2dHC
-	O7wRJoWXXQ1NUZf81Ee8wGA5dj+8dXDens6FruoUZovTcay301zJtjNPW3o1uM6M9Ym5eV4OSy9
-	5PJJfYBg0O7byFbbhBp3SRQqHlg0Iy7xpPbDrvl+QzKXj0B/Fb2edMw5A/1+kJ9hEsiOIcdkrr9
-	wZgwkoRVyrZsOZFNUHwSgUSPyOK9g3e7ZvXonm5TL98CaLEt6B4gID3ttz0p9Wrd6O0xWhYNrGD
-	srlxrgE1rLHlsBUXujDnGpS3lg9LxYgaqzEU/6uqz3paztUOfr3Hnb8nAJkYKFB5yPm4guYhK5i
-	8z1QUO47J+zUItYXhBl3Tas23syuMgbe+bO+e374aRS0K6p2lCGtDAFKaESyoYBv9cpouilisv0
-	2k4dppdiyn2WJaVOIO6p6M0mYt6EVStrgWWNdq1QPiyGQ5emydaXXmtqR8B65JPrHJLYSOu1VIB
-	H40VPHQH+678T5lDCKr+nMEAvJoIlFYlZ6KBqxPDas4WzvadU/a0aGri5x0p+RnrA==
-X-Received: by 2002:a05:6a00:3a26:b0:868:9662:5137 with SMTP id d2e1a72fcca58-86b31907b6fmr20978554b3a.11.1789318539994;
-        Sun, 13 Sep 2026 09:55:39 -0700 (PDT)
-Received: from localhost.localdomain (59-168-175-18.rev.home.ne.jp. [59.168.175.18])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-86b2a7c7395sm3412760b3a.61.2026.09.13.09.55.38
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sun, 13 Sep 2026 09:55:39 -0700 (PDT)
-From: Ryohei Hashimoto <laurel.medalist12@gmail.com>
-To: linux-wireless@vger.kernel.org
-Cc: arend.vanspriel@broadcom.com,
+        bh=iBKsdBmjCJJD8VrVX2tmAkv65OynoDpaqNBhjTL5Aq4=;
+        b=dfmjZt4qERmg/i4vtUlibgC95xjfsElUuPWxpudyjTfsMyaco84OvbWxEBLKJqe+iD
+         pxE0ZSMxHioSNktp6UPQVzm417hBRObDDNTRvVsLc4GV2WekuChhT9I8PkNHRrnNOwtj
+         WGNKwuhGt6HZ7AHOjht/raButVZ3jKyLsx2PA=
+X-Forwarded-Encrypted: i=1; AKwUvByav6FvH2PGfTsDcNHlPbHU4r6wTHYxQ+Jmqjp39ez+L6r0H4JwEbBSoKESeS1nwes/L6t1nj4IjOk=@lists.linux.dev
+X-Received: by 2002:a17:90b:5785:b0:39d:f725:fb84 with SMTP id 98e67ed59e1d1-39df72615e4mr4353672a91.19.1789411363643;
+        Mon, 14 Sep 2026 11:42:43 -0700 (PDT)
+X-Received: by 2002:a17:90b:5785:b0:39d:f725:fb84 with SMTP id 98e67ed59e1d1-39df72615e4mr4353642a91.19.1789411363179;
+        Mon, 14 Sep 2026 11:42:43 -0700 (PDT)
+Received: from bld-bun-02.bun.broadcom.net ([192.19.176.227])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1438d89556asm364156c88.13.2026.09.14.11.42.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Sep 2026 11:42:42 -0700 (PDT)
+From: Arend van Spriel <arend.vanspriel@broadcom.com>
+To: Karl Mehltretter <kmehltretter@gmail.com>
+Cc: Arend van Spriel <arend.vanspriel@broadcom.com>,
+	linux-wireless@vger.kernel.org,
+	Hante Meuleman <meuleman@broadcom.com>,
+	Franky Lin <frankyl@broadcom.com>,
+	Pieter-Paul Giesberts <pieterpg@broadcom.com>,
 	brcm80211@lists.linux.dev,
 	brcm80211-dev-list.pdl@broadcom.com,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH wireless-next v3] wifi: brcmfmac: log the firmware status when a connect fails
-Date: Mon, 14 Sep 2026 01:55:26 +0900
-Message-ID: <20260913165526.4426-1-laurel.medalist12@gmail.com>
-X-Mailer: git-send-email 2.51.0
+Subject: Re: [PATCH] wifi: brcmfmac: fix lost 802.1x TX completion wakeup
+Date: Mon, 14 Sep 2026 20:42:35 +0200
+Message-ID: <20260914184235.1457622-1-arend.vanspriel@broadcom.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260811082702.44521-1-kmehltretter@gmail.com>
+References: <20260811082702.44521-1-kmehltretter@gmail.com>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -74,97 +96,26 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
 
-brcmf_bss_connect_done() receives the firmware event in @e but discards it
-on the failure path.  Every failed connect is reported to cfg80211 as
-WLAN_STATUS_AUTH_TIMEOUT (16), whatever the firmware actually said, so
-userspace only ever sees:
+On Tue, 11 Aug 2026 10:27:02 +0200, Karl Mehltretter wrote:
+> brcmf_txfinalize() decrements pend_8021x_cnt before a lockless
+> waitqueue_active() check. atomic_dec() does not order the decrement
+> against the check.
+>
+> [...]
+>
+> Fixes: 21fff75d2fb6 ("brcmfmac: use wait_event_timeout for 8021x pending count")
+> Assisted-by: Claude:claude-fable-5
+> Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+> ---
+>  drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c | 2 ++
+>  1 file changed, 2 insertions(+)
 
-  wlan0: CTRL-EVENT-ASSOC-REJECT bssid=00:00:00:00:00:00 status_code=16
+Please add Cc: stable@vger.kernel.org - the Fixes tag references a 2012
+commit so this affects all supported stable branches.
 
-The all-zero BSSID comes from the same place: conn_params is memset to
-zero and profile->bssid has not been filled in when the station never
-associated.
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
 
-status_code=16 therefore carries no information about the cause.  It is not
-an AP response and it does not mean "authentication timed out" - it is the
-only failure value this driver can produce.  This is a recurring source of
-confusion: [1] has been open since 2023 with more than twenty follow-ups
-and no explanation of the code, and covers BCM4345/6, BCM43430 and
-CYW43455 across several kernel versions.  It supersedes [2], filed against
-the firmware repository a day earlier and closed in favour of it.
-
-The firmware's own status (BRCMF_E_STATUS_*) is more specific - FAIL,
-TIMEOUT, NO_NETWORKS, ABORT and so on - and it is already in hand.  Log it
-so the cause can be narrowed down without rebuilding the kernel.
-
-bphy_err() is used rather than brcmf_dbg() or brcmf_info(): it is the form
-the rest of this file uses, and of the three it is the only one that is
-both visible in a distribution kernel and bounded.  brcmf_dbg(CONN)
-expands to no_printk() unless CONFIG_BRCMDBG is set, which is what makes
-the reports in [1] and [2] impossible to act on - the people hitting this
-run stock kernels.  brcmf_info() expands to a plain pr_info() in a
-non-debug build and is not rate limited, and wpa_supplicant retries the
-association every few seconds, so it would flood the log.  bphy_err() is
-guarded by net_ratelimit() there, so a station retrying against an
-unreachable AP prints at most a few lines per second.
-
-All three fields are printed because only some of them are meaningful on
-each path into the failure branch.  brcmf_is_nonetwork() keys off @status,
-so that is the useful field for a join that never associated - the case in
-[1].  brcmf_is_linkdown() keys off @event_code and @flags and does not look
-at @status at all, so @status can read 0 there; on those events it is
-@reason which carries the 802.11 reason code, as the mapping in
-brcmf_map_fw_linkdown_reason() shows.  Printing the three together lets
-the reader tell which path was taken instead of guessing from one number.
-
-The status reported to cfg80211 is left alone; changing it would alter what
-userspace sees.
-
-[1] https://github.com/RPi-Distro/firmware-nonfree/issues/38
-[2] https://github.com/raspberrypi/firmware/issues/1829
-
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Ryohei Hashimoto <laurel.medalist12@gmail.com>
----
-v3:
-  - add the Assisted-by tag required by
-    Documentation/process/coding-assistants.rst.  It was missing from v1
-    and v2; sorry for the omission.
-
-Tooling, as asked for by Documentation/process/generated-content.rst: an
-LLM was used throughout.  It read the driver, proposed the change, and
-drafted this changelog.  The starting point was my own problem - a
-Raspberry Pi in a car that logs status_code=16 on every failed connect -
-and every claim above was checked against the source before being written
-down: that brcmf_is_nonetwork() reads @status, that brcmf_is_linkdown()
-reads @event_code and @flags, that bphy_err() is behind net_ratelimit()
-while brcmf_info() is not, and that bphy_err() is what the rest of
-cfg80211.c uses.  No specialized analysis tool (coccinelle, sparse and
-the like) was involved.
-
-Testing: built against mainline (2f0c1cf72, 2026-09-12) for arm64 with
-W=1; cfg80211.o compiles with no new warnings, and checkpatch.pl
---strict reports no issues.  Not tested on hardware: the affected device
-has a read-only root and lives in a car, so building a module on it is
-impractical and I have not observed the new line firing.
-
-v2: https://lore.kernel.org/linux-wireless/20260909080603.2955-1-laurel.medalist12@gmail.com/
-v1: https://lore.kernel.org/linux-wireless/20260909064125.67844-1-laurel.medalist12@gmail.com/
-
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-index 872c488..114dabb 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-@@ -6522,6 +6522,8 @@ brcmf_bss_connect_done(struct brcmf_cfg80211_info *cfg,
- 			clear_bit(BRCMF_VIF_STATUS_ASSOC_SUCCESS,
- 				  &ifp->vif->sme_state);
- 			conn_params.status = WLAN_STATUS_AUTH_TIMEOUT;
-+			bphy_err(ifp->drvr, "connect failed: event %u status %u reason %u\n",
-+				 e->event_code, e->status, e->reason);
- 		}
- 		conn_params.links[0].bssid = profile->bssid;
- 		conn_params.req_ie = conn_info->req_ie;
+Regards,
+Arend
