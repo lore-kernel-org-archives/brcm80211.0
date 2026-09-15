@@ -1,57 +1,57 @@
 Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86237471CF2
-	for <brcm80211@lists.linux.dev>; Tue, 15 Sep 2026 08:20:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8470B472095
+	for <brcm80211@lists.linux.dev>; Tue, 15 Sep 2026 08:20:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.198
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789460428; cv=none; b=FVK52v7ZEnstsFx6MBmjo145mDZEKaVBnEjMsQOps3g4WtydQG4jzj0fLQbMl/06E+0+5BX0jWCVVxNJLCPbcIBCjL8Iq2m6am6tbLlpkTP6S0TFQFD25O0BIwXxRGNYWMnGHsZPDqDfslt01N/ocjktw+zv003WxpImWr6qnLg=
+	t=1789460433; cv=none; b=rUXXARltCD3vQUI54xq2df8B6xuwu51s1mcK+rXzII9843jgv6SomW3Y1T2Gte41GlyUihlKhv66a+u9Mmgm2bIlAWY/m02toLraCMkTybNHgk7l8qJz0hCd/TohTgqg+vyir50OF0PJBPtTClYkzFbgBuhkN+aye5bq0pcTZnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789460428; c=relaxed/simple;
-	bh=z7dasmw4/Yd5J5NMYLIKQKAVayxIH5dLlb/JPMHBnRA=;
+	s=arc-20240116; t=1789460433; c=relaxed/simple;
+	bh=lI3TjsMof+VUseu3jlc4aD2v6CaqWDV2PaTkxHX+GRE=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=W4ifyGks/BX5QdRLH2ZSp4J34EBN5k7edLdOSmRoiWsKOwmFCgC/s7QtI6wscLULZlYkXxp6zn+msmZuQzoJ7i3/DKxTpU4sjIU1bqufvEgLTvLSbzPSp9SqpgGLP56uzVV1KLVn66iNXmQX76p7OwkqjKMkHwVOTwVjMvLYZjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--morbo.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=jdKUL4X8; arc=none smtp.client-ip=209.85.214.198
+	 To:Cc:Content-Type; b=o6znwCrIP0zhvXKWif2kDez2Uu/62t5o9pDSdJNt47ENvLOoAJIfyL/cs1oKlbAis0bQIvHzCiO+Lc2juZzHc2hAheauCg/UodBkxbU9W8uV9PLxK+WzOdw9pcN7JKzVvGOsuHkH8X/hYhQwOFHQ7x7AjRwRHbIICZpljtHCvNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--morbo.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=DIRwVao/; arc=none smtp.client-ip=209.85.214.198
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--morbo.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="jdKUL4X8"
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2d02df2bf09so40883375ad.0
-        for <brcm80211@lists.linux.dev>; Tue, 15 Sep 2026 01:20:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="DIRwVao/"
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2db87f759c5so73164895ad.1
+        for <brcm80211@lists.linux.dev>; Tue, 15 Sep 2026 01:20:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1789460408; x=1790065208; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1789460409; x=1790065209; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:from:subject
          :message-id:references:mime-version:in-reply-to:date:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=jabuqrMs8PQTYoTuRH1Tce2jM5ZfyHhnXojFxmEofr0=;
-        b=jdKUL4X8rs6dom2maRuppMfoEa1hG8lZs7ztyGFFDIn9AyZtWivabJBUsy/VDZkQMe
-         n1Q4zerUfxeXaW5SKYXCKMf+gqwL8UXBnE0hPY3qPnYFFxVJafm9BJRelcAWcsd8DNVd
-         iVLhVBRQ49kWfpPsLqi98kzSLVuwvHInu75VutCaH9V6G57sRXPgAslpyLwEvqMVihaC
-         hYV61mv0F456XnchxbVulUPVDfm42yJm1qMDGc9paLDF7tkmOLwqBTJnbQ+pM6YlppUj
-         mMBaKyj7lSTMgRSb+sAG2bPb2WN3lymLTtiJm4MleogVEuSg1BdjUD3SQ5+hPwQt6w4H
-         wvjg==
+        bh=jD1fGYdmSfmtHfbCTu69NC0iIcRgu3QWne7aaYuG46g=;
+        b=DIRwVao/Rg2ThWv+0xTz2N1iJsgai/Qc/qWnDbVZah6pzc7JQTxMSnCNNLARzGssD3
+         d3dGXzyjZB++Wb/nyC7iN70x6EY1X4jpRsx2l8ebX5mxbe5rJn+1OlRiKo/KfjbTt0dM
+         tXY0fZItpbUSJnICYZSthbB1CmB09F624eohNMTNdHOO3TGAcY/i0dLGupbaOvXW63zv
+         1baQ3tjgaRK4/mymBCx9PsbRLrEe+NcPHbApeBdh/VZYh275iE7kzmTn8bZv0MWrN5Ff
+         DquWxVCQtTKUvYCChpDrNYYB3ZAw2u3BcAT3n0uzwtyHglAunuH6nrE88WcAA4EGHvtN
+         Phxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789460408; x=1790065208;
+        d=1e100.net; s=20260707; t=1789460409; x=1790065209;
         h=content-transfer-encoding:content-type:cc:to:from:subject
          :message-id:references:mime-version:in-reply-to:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=jabuqrMs8PQTYoTuRH1Tce2jM5ZfyHhnXojFxmEofr0=;
-        b=Up/+aQtGehqOJi31y32oH7QIwpaVP5Zlk7R2SgzL1xtA3QZ7L2DmEKPT6DlYm9UMNL
-         wt5OQSJFeglMsf/9zVwZgJ682D+Mx6JmJXKTtQng9rDf45EvKnqRCk/ea47liZKiJcNg
-         KSsGVjKLcLoTEh9/ZpcDy17Eg+KtbNzyGT9wwxg/JPOgpG1A1BHdPnP2KXrcFHrwokLP
-         cAvyGuMQH1SyR63KlTmAt/xFPV31KQFqJQlePozDYqTn85xDXEGLqjiKITVgmjiRWELY
-         1O9rozioJhVU5z4JcJGDMS4PW59RltctMn7qpbx+8Kx8obQvEVHQvbgqeDLFuYln7Oni
-         akjQ==
-X-Forwarded-Encrypted: i=1; AKwUvByLfpP1+ubdeCGow0VTH+bM03JWhLi2b6RtbV/eL+MBJYhNGKv8QPs6PsmEtcMGgj8Ra8W+H9DzsXo=@lists.linux.dev
-X-Gm-Message-State: AFuF++mTRkNXqZn/RMrrWeGXX2lB9pEaTIzJyu2GXWB9I7EKzspcdvKq
-	j7fTQ82Kj01t1B4oSy3BiipRzlRJHh0IirqfdwvkWTsnVuFy2V4LAK+0Gdlq2qIILKURfOBSlWZ
-	z
-X-Received: from plde9.prod.google.com ([2002:a17:902:d389:b0:2db:820a:9228])
- (user=morbo job=prod-delivery.src-stubby-dispatcher) by 2002:a17:902:f786:b0:2dd:4070:8f5
- with SMTP id d9443c01a7336-2dd6c758602mr148465515ad.21.1789460407562; Tue, 15
- Sep 2026 01:20:07 -0700 (PDT)
-Date: Tue, 15 Sep 2026 08:18:32 +0000
+        bh=jD1fGYdmSfmtHfbCTu69NC0iIcRgu3QWne7aaYuG46g=;
+        b=ThuUhV/hm+OCZuJcSyr5YdVoj2mE5GyUWONBBUJuWIl+egZWf2fExfNFzfnIsQAbW2
+         XHxtfn53nz6UIaX8LRhCE4qVs9s/eCsv8KmSR8i913T/J1sV+58+ZPp0s/Pl7VjNoyJB
+         rCGw1/uEiU3BRQAeID9ioiNqzO3hMvfPbPPsigvYIg2IEb8exDnooDv0CinerjcBSkpL
+         aYDnLnIzEYTqPOL4mEp7FOscubn3+YU14AdUwMFlOIF89I+Yj4V6P12kSNNRzHO21R+4
+         2gxXgDI8IYiSKsANApHENIyDyYbvEzFz5Fu6TLuVdxgyV+BHfQLlooeKKgjYccXs0HcQ
+         TVgg==
+X-Forwarded-Encrypted: i=1; AKwUvBxZ0ppvpn+ZMp2WrOBU9gyatOI3VGepbtmdWn6qonvTdxBMo5IaioC1KgsIhl87UtQhBmpfLVvQOnU=@lists.linux.dev
+X-Gm-Message-State: AFuF++nSstXO+Qh2wEG8X6qzfQCgn5vJPCRNbYotKHZE5BkgfhyfziyE
+	05xcEV4SQxx6JTRFJPuQDEtNoxU4/rxsNSCT8KeHG/D5eyak39DXDwznj/6DKZYTNL05CC5K75y
+	D
+X-Received: from plbkq15.prod.google.com ([2002:a17:903:284f:b0:2dd:1c44:fe2])
+ (user=morbo job=prod-delivery.src-stubby-dispatcher) by 2002:a17:903:1a0c:b0:2d9:464f:d45f
+ with SMTP id d9443c01a7336-2dd6c5ba2f0mr129830935ad.5.1789460408347; Tue, 15
+ Sep 2026 01:20:08 -0700 (PDT)
+Date: Tue, 15 Sep 2026 08:18:33 +0000
 In-Reply-To: <20260915081910.4142719-1-morbo@google.com>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
@@ -61,8 +61,8 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
 References: <20260915081910.4142719-1-morbo@google.com>
 X-Mailer: git-send-email 2.55.0.1032.g73a4cd73de-goog
-Message-ID: <20260915081910.4142719-16-morbo@google.com>
-Subject: [PATCH 15/28] orangefs: Use seq_buf for debug help string generation
+Message-ID: <20260915081910.4142719-17-morbo@google.com>
+Subject: [PATCH 16/28] pinctrl: samsung: Use snprintf() to construct pin bank names
 From: Bill Wendling <morbo@google.com>
 To: linux-kernel@vger.kernel.org
 Cc: Bill Wendling <morbo@google.com>, codemender-patching+linux@google.com, 
@@ -123,23 +123,17 @@ Cc: Bill Wendling <morbo@google.com>, codemender-patching+linux@google.com,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-orangefs_prepare_debugfs_help_string() constructs the debugfs help text in
-a dynamically allocated buffer using repeated strlcat() calls across
-keyword loops, rescanning the buffer on every append.
+samsung_banks_node_get() constructs each pin bank node name by copying
+bank->name with strscpy() and appending the suffix with strlcat().
 
-In preparation for removing the deprecated strlcat() API[1], use struct
-seq_buf to build the help string. This tracks the write position across
-the loops, allows formatting each keyword line with a single
-seq_buf_printf() call, and checks for truncation via
-seq_buf_has_overflowed().
-
-Additionally, replace the final strlcat() call that copies the completed
-string into debug_help_string with strscpy().
+In preparation for removing the deprecated strlcat() API[1], format the
+node name in a single snprintf() call, which preserves the existing
+truncation check against sizeof(node_name).
 
 Link: https://github.com/KSPP/linux/issues/370 [1]
 Cc: codemender-patching+linux@google.com
-Assisted-by: Gemini:gemini-2.0-flash-exp [shell_command_run, editor_update_=
-file]
+Assisted-by: Gemini:Pro [editor_update_file, make_kernel_build_single_file,=
+ checkpatch_run]
 Signed-off-by: Bill Wendling <morbo@google.com>
 ---
 Cc: Russell King <linux@armlinux.org.uk>
@@ -253,97 +247,26 @@ Cc: devel@lists.orangefs.org
 Cc: linux-hardening@vger.kernel.org
 Cc: linux-sound@vger.kernel.org
 ---
- fs/orangefs/orangefs-debugfs.c | 36 +++++++++++++---------------------
- 1 file changed, 14 insertions(+), 22 deletions(-)
+ drivers/pinctrl/samsung/pinctrl-samsung.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/fs/orangefs/orangefs-debugfs.c b/fs/orangefs/orangefs-debugfs.=
-c
-index 9f94919a6bc6..6e2f9887eab4 100644
---- a/fs/orangefs/orangefs-debugfs.c
-+++ b/fs/orangefs/orangefs-debugfs.c
-@@ -37,6 +37,7 @@
-  */
- #include <linux/debugfs.h>
- #include <linux/slab.h>
-+#include <linux/seq_buf.h>
+diff --git a/drivers/pinctrl/samsung/pinctrl-samsung.c b/drivers/pinctrl/sa=
+msung/pinctrl-samsung.c
+index 5ecc9ed4c44d..0d639eec689c 100644
+--- a/drivers/pinctrl/samsung/pinctrl-samsung.c
++++ b/drivers/pinctrl/samsung/pinctrl-samsung.c
+@@ -1155,8 +1155,7 @@ static void samsung_banks_node_get(struct device *dev=
+, struct samsung_pinctrl_dr
 =20
- #include <linux/uaccess.h>
-=20
-@@ -623,10 +624,10 @@ int orangefs_prepare_debugfs_help_string(int at_boot)
- 	char *client_title =3D "Client Debug Keywords:\n";
- 	char *kernel_title =3D "Kernel Debug Keywords:\n";
- 	size_t string_size =3D  DEBUG_HELP_STRING_SIZE;
--	size_t result_size;
- 	size_t i;
- 	char *new;
- 	int rc =3D -EINVAL;
-+	struct seq_buf s;
-=20
- 	gossip_debug(GOSSIP_UTILS_DEBUG, "%s: start\n", __func__);
-=20
-@@ -640,17 +641,14 @@ int orangefs_prepare_debugfs_help_string(int at_boot)
- 		goto out;
- 	}
-=20
-+	seq_buf_init(&s, new, string_size);
-+
- 	/*
--	 * strlcat(dst, src, size) will append at most
--	 * "size - strlen(dst) - 1" bytes of src onto dst,
--	 * null terminating the result, and return the total
--	 * length of the string it tried to create.
--	 *
- 	 * We'll just plow through here building our new debug
--	 * help string and let strlcat take care of assuring that
-+	 * help string and let seq_buf take care of assuring that
- 	 * dst doesn't overflow.
- 	 */
--	strlcat(new, client_title, string_size);
-+	seq_buf_puts(&s, client_title);
-=20
- 	if (!at_boot) {
-=20
-@@ -665,24 +663,18 @@ int orangefs_prepare_debugfs_help_string(int at_boot)
- 			goto out;
- 		}
-=20
--		for (i =3D 0; i < cdm_element_count; i++) {
--			strlcat(new, "\t", string_size);
--			strlcat(new, cdm_array[i].keyword, string_size);
--			strlcat(new, "\n", string_size);
--		}
-+		for (i =3D 0; i < cdm_element_count; i++)
-+			seq_buf_printf(&s, "\t%s\n", cdm_array[i].keyword);
- 	}
-=20
--	strlcat(new, "\n", string_size);
--	strlcat(new, kernel_title, string_size);
-+	seq_buf_puts(&s, "\n");
-+	seq_buf_puts(&s, kernel_title);
-=20
--	for (i =3D 0; i < num_kmod_keyword_mask_map; i++) {
--		strlcat(new, "\t", string_size);
--		strlcat(new, s_kmod_keyword_mask_map[i].keyword, string_size);
--		result_size =3D strlcat(new, "\n", string_size);
--	}
-+	for (i =3D 0; i < num_kmod_keyword_mask_map; i++)
-+		seq_buf_printf(&s, "\t%s\n", s_kmod_keyword_mask_map[i].keyword);
-=20
- 	/* See if we tried to put too many bytes into "new"... */
--	if (result_size >=3D string_size) {
-+	if (seq_buf_has_overflowed(&s)) {
- 		kfree(new);
- 		goto out;
- 	}
-@@ -692,7 +684,7 @@ int orangefs_prepare_debugfs_help_string(int at_boot)
- 	} else {
- 		mutex_lock(&orangefs_help_file_lock);
- 		memset(debug_help_string, 0, DEBUG_HELP_STRING_SIZE);
--		strlcat(debug_help_string, new, string_size);
-+		strscpy(debug_help_string, new, DEBUG_HELP_STRING_SIZE);
- 		mutex_unlock(&orangefs_help_file_lock);
- 		kfree(new);
- 	}
+ 	bank =3D d->pin_banks;
+ 	for (i =3D 0; i < d->nr_banks; ++i, ++bank) {
+-		strscpy(node_name, bank->name, sizeof(node_name));
+-		len =3D strlcat(node_name, suffix, sizeof(node_name));
++		len =3D snprintf(node_name, sizeof(node_name), "%s%s", bank->name, suffi=
+x);
+ 		if (len >=3D sizeof(node_name)) {
+ 			dev_err(dev, "Too long pin bank name '%s', ignoring\n",
+ 				bank->name);
 --=20
 2.55.0.1032.g73a4cd73de-goog
 
