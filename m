@@ -1,57 +1,57 @@
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F5B476044
-	for <brcm80211@lists.linux.dev>; Tue, 15 Sep 2026 08:20:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.72
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 611A8476CF2
+	for <brcm80211@lists.linux.dev>; Tue, 15 Sep 2026 08:20:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789460480; cv=none; b=U/B5N+g96TUjG34rAqB65mLLuB8pqZ0wz0DeIaLbD+HoOwTcAcK8gWTYqeoCvPNPotg9ZJKzkmBC3vh6QMlZUcgdm7NhCW2dxZzMt2ei9jA90QutIXGGs+4cEoHRNW3vIPPSuiLbm4NXS5Dx3FiaqaXa7L6t7vvGrAXkYuImTs4=
+	t=1789460482; cv=none; b=o1YcjlazR8aQGFsO23DlgsDkH8LNJR+E0BG9m4G5AZ/40H9ZkTP3cLqISita1p3szCQ7d4Svatjnoy5ZLxd8jflc5SXYoVsoPrQm2WLL9+v1pXql74GDm89xRgome0DcVrqXERxJhtu/pqP/tGuAlpoBWg9tnqQUhRAOToESkrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789460480; c=relaxed/simple;
-	bh=fIMzPvcr9X2eD4+Ac+cNHBPnvQriFstqx8IX88uxT8g=;
+	s=arc-20240116; t=1789460482; c=relaxed/simple;
+	bh=7ISDVBxGmgeCdxhmRRdB69cX7Bxvnv7xpoH47YwrzBI=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=kV8kO8NHA3dGTvCSm+MlX0gn7ksDCHJRFugnvQE6VSv994nlkk+CF+IAV0EUs8ksD2x60xJFHZFFONw1tY28H9Y0XAVC4MVR7c0p74bwqpd4TgNJVmqb94EHgLjt8cUtzq9Af5MEp3OBF5QExtAoEbvBnKxFDb7hh/w+A44loek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--morbo.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=AMqQVgWd; arc=none smtp.client-ip=209.85.216.72
+	 To:Cc:Content-Type; b=H38yIq92HOePJjJYLxlTR5FdkTh6x0jwNvmpoXV0ZKVo1YUGjjz0wQw/q3Eoq0R/hpQJ2TdOzizOCWHD/sohgM4cOAxcezuylIZO9hfGFhplk4HZ1KzQ15eQOvo3CT7vHOLOnobvFwrLweYkaerNOB83v21qOyCyvb4Vjz6MQJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--morbo.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=raRTeexm; arc=none smtp.client-ip=209.85.214.197
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--morbo.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="AMqQVgWd"
-Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-39b6416441eso8111639a91.1
-        for <brcm80211@lists.linux.dev>; Tue, 15 Sep 2026 01:20:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="raRTeexm"
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2cfa4e4684bso97492055ad.2
+        for <brcm80211@lists.linux.dev>; Tue, 15 Sep 2026 01:20:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1789460414; x=1790065214; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1789460418; x=1790065218; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:from:subject
          :message-id:references:mime-version:in-reply-to:date:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=uYw3XH3TVDlWH5yZkMBbor+NJ9bN2wpB4N7ncSus1u4=;
-        b=AMqQVgWdyrq1AumNF2BAavvEc1IdbNzx8nB62MGYlWr4aHGhkHpu8wktfOzQuRsD/K
-         at7FlmOoyYRHz3jOgIvmIKIeJDM6VR71oPTlRGXBbFC4z9CQf1kMBk3AGHP72iErqZ0b
-         uLRlE3k/yNsx16skBF2K5g2izKYFrjYuAXGmXxlkL8RhF6W/Kw0LWYQswa/aNoxBOn6N
-         JgszjWiNXOEtfPVSacP+ssnXfvUunWkQTNOrflFjCb1AjJ4/BkDGIGPSqcR7E8Zr+0vS
-         YQ5z24LHz3FFV2XxbcdTIzjRcRKrJOIfZlCk84MIkhW4yU3L4Izpz+y/NLo4bYpIRdW5
-         ynGA==
+        bh=Yp7aMeBt5kbv9wDm9MP1w/VhRzf84I2dhiWVAxjsG5I=;
+        b=raRTeexm+IsjFtjHy9BJhJwxbU/NxSs11ENglyNOMPLnxT8ic0UzqXuvUdATTMWYB4
+         xPibosZRBx3szdZILxWEsGumYUiKpiSQmkRHIdnU05aNbPN2flPD1OI7//FiiFCnI0Dv
+         3abxUNg7L+V7BcIDaWYpOWhFW9lvN9vyoA7hp/zw9ozZoPKoDh+Rw/2kWhI58FicPDXk
+         HAE6g5RJ5WngLFW3xN6MlJNwXRvHk0iiokOyxm9fbY8cFwNLFhSIaVolonk0Mln7NeO1
+         VBO3m6iVmNCcfeSClG2rdu7qNpBH32mP5pMWz0fNBL8L52R5o8GkCcc6dKePHOXmyadS
+         PHpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789460414; x=1790065214;
+        d=1e100.net; s=20260707; t=1789460418; x=1790065218;
         h=content-transfer-encoding:content-type:cc:to:from:subject
          :message-id:references:mime-version:in-reply-to:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=uYw3XH3TVDlWH5yZkMBbor+NJ9bN2wpB4N7ncSus1u4=;
-        b=XV75gtf830JnQffa2kue0XKng8yHENjvkSoA8abFbNYP2wGhKpydmkv5DuCM3WtpS6
-         0mnEssHHoSk8aNtg/V6oyAa0JGzrwetXh/XVvbKH/OA30pGwUbFLz/tXtESkot64BtNn
-         86idn6eCOTrQbh8tXrBSKnVUiay7VJcNRubWqECkvaXi/wi2FtVpT47jw+2JbVzMOHyB
-         Xz0lUwo/oPvN8VWILIJ/TDnWSDF6C+OVheqrHvnWbFYtZnLeHCZNpldrvEeSsr/333jZ
-         +fDKQhpEHu8cu8japwbeRIys8+w2In78AP7f5dkZPqNoK3qeS3GnZbobSdb2g8GP5QSi
-         b9yQ==
-X-Forwarded-Encrypted: i=1; AKwUvBzGruipMBLj/mO2pqNgTwYfXTdzUK5TaTExFbGfPISE1rkv1oN+lTX3fMyd0WQSJElcR7HwG41onWg=@lists.linux.dev
-X-Gm-Message-State: AFuF++nuNRXbBf5ykb06cy4i1AclJbHAalPKu2wN2S5BeXBkokXeF2Ll
-	1MFFVVLkWPO2P9mMMG0WD+PqR0bQxpAoN9UmqYx/GOo/FFjb3SNi5B2rNygOg5CkubvLnb16zYF
-	/
-X-Received: from pgap5.prod.google.com ([2002:a63:4205:0:b0:cc4:33fd:a4f7])
- (user=morbo job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a21:6d8a:b0:3db:3e1c:8585
- with SMTP id adf61e73a8af0-3db4063b18fmr14587917637.27.1789460412692; Tue, 15
- Sep 2026 01:20:12 -0700 (PDT)
-Date: Tue, 15 Sep 2026 08:18:38 +0000
+        bh=Yp7aMeBt5kbv9wDm9MP1w/VhRzf84I2dhiWVAxjsG5I=;
+        b=W9fFsh/y6hFduuAvm5lszU9gvfoKZWtupDiuJpzvJVr5P2ga9irLe+tOwL1MUWdry7
+         oQoFEyLVLTU5VArwISgSsIDMllf3Lml3CQSTLJBk69TaKskgyRN5q8gxyI068ij3KQwe
+         sQNyrxUaA+f8AnqrNTmsYmVB8k8xQCiwqQSXnUPH4kqRJUZJhs+Sj1HYgWRgjTUKdKcv
+         g+9wwajKtF56Gk+mv8fqHa7s2tQeGOviGxBt01YEXXH6pKu3fR7bSqfe8dR8IvQmD9wB
+         sPdlwj+g5RmGheWI2jBh8nzrt+mPtLuwlcodXJUwve3bSmqUhCBlHx5v/3cnwYnx9AIn
+         X3Cw==
+X-Forwarded-Encrypted: i=1; AKwUvBx4iu58YbRLtbMHk0J3VNK6I2qdB+B7p7gU3SafGZsh8QqY+yt9XEk/MFlig/ruy78BTPs3t3wEw/M=@lists.linux.dev
+X-Gm-Message-State: AFuF++mCdLNXOOcVZebCxVzVYjhjuhT1Arp3UM0KoLe6gnowXMElYmyi
+	0RpogE2qoK/tSBO+CuseGSqqULgYu+nTDbdYieDc8JoTbpM0yGfGSY3ulEMX11HhpvfAQVh6qZp
+	A
+X-Received: from pltt2.prod.google.com ([2002:a17:902:d142:b0:2dd:5303:f006])
+ (user=morbo job=prod-delivery.src-stubby-dispatcher) by 2002:a17:902:f64f:b0:2dd:278c:5eb
+ with SMTP id d9443c01a7336-2dd83851f4amr602125ad.14.1789460417430; Tue, 15
+ Sep 2026 01:20:17 -0700 (PDT)
+Date: Tue, 15 Sep 2026 08:18:43 +0000
 In-Reply-To: <20260915081910.4142719-1-morbo@google.com>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
@@ -61,8 +61,8 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
 References: <20260915081910.4142719-1-morbo@google.com>
 X-Mailer: git-send-email 2.55.0.1032.g73a4cd73de-goog
-Message-ID: <20260915081910.4142719-22-morbo@google.com>
-Subject: [PATCH 21/28] NFS: nfsroot: Refactor root_nfs_cat() to use snprintf()
+Message-ID: <20260915081910.4142719-27-morbo@google.com>
+Subject: [PATCH 26/28] wifi: wil6210: Refactor resume_triggers2string() to use seq_buf
 From: Bill Wendling <morbo@google.com>
 To: linux-kernel@vger.kernel.org
 Cc: Bill Wendling <morbo@google.com>, codemender-patching+linux@google.com, 
@@ -123,18 +123,16 @@ Cc: Bill Wendling <morbo@google.com>, codemender-patching+linux@google.com,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-root_nfs_cat() computes the length of "dest" with strlen(), but then uses
-up to two strlcat() calls to append a comma separator and "src",
-rescanning "dest" each time.
+resume_triggers2string() builds a space-separated string of active resume
+trigger names using a series of conditional strlcat() calls.
 
-In preparation for removing the deprecated strlcat() API[1], use the
-already-computed length and a single snprintf() call to append the
-optional comma and "src", returning -1 if the result is truncated.
+In preparation for removing the deprecated strlcat() API[1], replace the
+strlcat() calls with struct seq_buf and seq_buf_puts().
 
 Link: https://github.com/KSPP/linux/issues/370 [1]
 Cc: codemender-patching+linux@google.com
-Assisted-by: CoPilot:Claude-3.5-Sonnet [editor_update_file, make_kernel_bui=
-ld_single_file]
+Assisted-by: CoPilot:1.0 [editor_update_file, make_kernel_build_single_file=
+]
 Signed-off-by: Bill Wendling <morbo@google.com>
 ---
 Cc: Russell King <linux@armlinux.org.uk>
@@ -248,34 +246,71 @@ Cc: devel@lists.orangefs.org
 Cc: linux-hardening@vger.kernel.org
 Cc: linux-sound@vger.kernel.org
 ---
- fs/nfs/nfsroot.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/net/wireless/ath/wil6210/wmi.c | 38 ++++++++++++++------------
+ 1 file changed, 21 insertions(+), 17 deletions(-)
 
-diff --git a/fs/nfs/nfsroot.c b/fs/nfs/nfsroot.c
-index 432612d22437..a28208414aec 100644
---- a/fs/nfs/nfsroot.c
-+++ b/fs/nfs/nfsroot.c
-@@ -173,12 +173,15 @@ static int __init root_nfs_cat(char *dest, const char=
- *src,
- 			       const size_t destlen)
+diff --git a/drivers/net/wireless/ath/wil6210/wmi.c b/drivers/net/wireless/=
+ath/wil6210/wmi.c
+index 479b2418ca34..fcc9e9eb5732 100644
+--- a/drivers/net/wireless/ath/wil6210/wmi.c
++++ b/drivers/net/wireless/ath/wil6210/wmi.c
+@@ -7,6 +7,7 @@
+ #include <linux/moduleparam.h>
+ #include <linux/etherdevice.h>
+ #include <linux/if_arp.h>
++#include <linux/seq_buf.h>
+=20
+ #include "wil6210.h"
+ #include "txrx.h"
+@@ -3162,27 +3163,30 @@ int wmi_suspend(struct wil6210_priv *wil)
+=20
+ static void resume_triggers2string(u32 triggers, char *string, int str_siz=
+e)
  {
- 	size_t len =3D strlen(dest);
-+	int ret;
-=20
--	if (len && dest[len - 1] !=3D ',')
--		if (strlcat(dest, ",", destlen) >=3D destlen)
--			return -1;
-+	if (len >=3D destlen)
-+		return -1;
-=20
--	if (strlcat(dest, src, destlen) >=3D destlen)
-+	ret =3D snprintf(dest + len, destlen - len, "%s%s",
-+		       (len && dest[len - 1] !=3D ',') ? "," : "", src);
+-	string[0] =3D '\0';
++	struct seq_buf s;
 +
-+	if (ret < 0 || ret >=3D destlen - len)
- 		return -1;
- 	return 0;
++	seq_buf_init(&s, string, str_size);
+=20
+ 	if (!triggers) {
+-		strlcat(string, " UNKNOWN", str_size);
+-		return;
++		seq_buf_puts(&s, " UNKNOWN");
++	} else {
++		if (triggers & WMI_RESUME_TRIGGER_HOST)
++			seq_buf_puts(&s, " HOST");
++
++		if (triggers & WMI_RESUME_TRIGGER_UCAST_RX)
++			seq_buf_puts(&s, " UCAST_RX");
++
++		if (triggers & WMI_RESUME_TRIGGER_BCAST_RX)
++			seq_buf_puts(&s, " BCAST_RX");
++
++		if (triggers & WMI_RESUME_TRIGGER_WMI_EVT)
++			seq_buf_puts(&s, " WMI_EVT");
++
++		if (triggers & WMI_RESUME_TRIGGER_DISCONNECT)
++			seq_buf_puts(&s, " DISCONNECT");
+ 	}
+=20
+-	if (triggers & WMI_RESUME_TRIGGER_HOST)
+-		strlcat(string, " HOST", str_size);
+-
+-	if (triggers & WMI_RESUME_TRIGGER_UCAST_RX)
+-		strlcat(string, " UCAST_RX", str_size);
+-
+-	if (triggers & WMI_RESUME_TRIGGER_BCAST_RX)
+-		strlcat(string, " BCAST_RX", str_size);
+-
+-	if (triggers & WMI_RESUME_TRIGGER_WMI_EVT)
+-		strlcat(string, " WMI_EVT", str_size);
+-
+-	if (triggers & WMI_RESUME_TRIGGER_DISCONNECT)
+-		strlcat(string, " DISCONNECT", str_size);
++	seq_buf_str(&s);
  }
+=20
+ int wmi_resume(struct wil6210_priv *wil)
 --=20
 2.55.0.1032.g73a4cd73de-goog
 
