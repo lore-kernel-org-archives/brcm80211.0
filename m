@@ -1,76 +1,113 @@
-Received: from sipsolutions.net (s3.sipsolutions.net [168.119.38.16])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pz2-f12.google.com (mail-pz2-f12.google.com [74.125.228.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 758414AF687;
-	Tue, 15 Sep 2026 16:40:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=168.119.38.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FAC42D97B7
+	for <brcm80211@lists.linux.dev>; Tue, 15 Sep 2026 17:47:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789490423; cv=none; b=N7vOEVHTEBN0f0DZFJnAcCmuiWmuaFALnoiK7TeZaFDKVYmqtARpuDNDxak65xzQfu1b046HZCeYmL60D/+LaPnh4gWyPnAIRVqt7FhqqPllQrGL7c2Yr4RUb3e5aFUw3GRVfB0TpeTUojAR44WzQjXhkE9vtfHoeIBmkzCqbhY=
+	t=1789494443; cv=none; b=mPRwLAqNXV4abrlOWIcDQyPMAHrZqhIO70r6NFZofnmUC/3jI6X53xkns1kZNzLT89yMpPWob+z+LjvBSk0VBJP5ukji7TfSVgqX/3qL2RC032xdHeUIbVFQdrz7DEIE8X4/4/fl4JjrAqtxQK+4/FcZRURkX4Yq9HRP5ObbOWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789490423; c=relaxed/simple;
-	bh=xXAr4gOumFXBHNqcbDK7LbEB0VjhfaPCnte+SDnxthY=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=VzQXy79w5gdpCHonzIiHliCSFwWqv14BEYGf7jX0LXu7qsu65kX/Wtalj7DqQ51d4K5SCEYnNcxR20ed9Exe6HPrwaWKd9JW9nfEqMvfXSSD5QEG5a12LyggUAkZqJqmVdZTLrimF4FYwFCXBUprVLCeQcSfnUptQydBT/0JaWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=permerror header.from=sipsolutions.net; spf=pass smtp.mailfrom=sipsolutions.net; dkim=pass (2048-bit key) header.d=sipsolutions.net header.i=@sipsolutions.net header.b=j7N4fD6I; arc=none smtp.client-ip=168.119.38.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=permerror header.from=sipsolutions.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sipsolutions.net
+	s=arc-20240116; t=1789494443; c=relaxed/simple;
+	bh=I4KI1aweFFig+SZlrBdaO4mP05yecfWNr+LbmApZG/c=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=qi2/FjfgHtz/J6EVB/mBBdDz+XW7dUs9RYIh4snPS3qgzoqnjQirnFdJXiLWthWcKwwtSHgXcTrvi6M6bpILyLrOGxPxKcspTt8TvbPBhFUsSyZngTdvMnmXy+YcGnkOB3gDJ7U8ohmybuMXCj6DWO3h6+Uv/S3guL/mWgw1/iA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pkx5H5PJ; arc=none smtp.client-ip=74.125.228.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sipsolutions.net header.i=@sipsolutions.net header.b="j7N4fD6I"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=sipsolutions.net; s=mail; h=MIME-Version:Content-Transfer-Encoding:
-	Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-To:
-	Resent-Cc:Resent-Message-ID; bh=xXAr4gOumFXBHNqcbDK7LbEB0VjhfaPCnte+SDnxthY=;
-	t=1789490421; x=1790700021; b=j7N4fD6IFlFg/1yxIM2hUAGPj6/UyVhxcyrzQTaSU15p2co
-	K7NlYN0b294QWx914igofeEoU5YF89jRX45URY/TmINGtcEaN+fojuK/3r946MEPPOVqmDWKlSwGa
-	+TulcN5rG8XalesxwgYsU9sEJfhGUL5jtj1SAwTmSVXHqHFcOqjw7/sM+7nDyOK0cNhhV/IcMQisZ
-	o1UJFg4kTaUHKe0rNXDYG/iglNITi/pLl8vY/c5I+lzJUWcVcF6dhK0ZT0Uoh6rzS4RYJGRadVlVt
-	jaTfwvmtEU8Ewj4jEI3uHz+t2+DxQ/Now3r8clPqOvicbHZdDk8PPdhpbzfFltvg==;
-Received: by sipsolutions.net with esmtpsa (TLS1.3:ECDHE_X25519__ECDSA_SECP256R1_SHA256__AES_256_GCM:256)
-	(Exim 4.98.2)
-	(envelope-from <johannes@sipsolutions.net>)
-	id 1x6WCg-0000000HEnP-08Ek;
-	Tue, 15 Sep 2026 18:40:18 +0200
-Message-ID: <5fd439ca0defb993d3b9ae199b2c2b85b13bd7de.camel@sipsolutions.net>
-Subject: Re: [PATCH] wifi: brcmfmac: Set extsae_pwe parameter to Infineon
- firmware in SAP mode
-From: Johannes Berg <johannes@sipsolutions.net>
-To: Arend van Spriel <arend.vanspriel@broadcom.com>, Girish Rudrappa
-	 <girishbukkasagara.rudrappa@infineon.com>
-Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev, 
-	wlan-kernel-dev-list@infineon.com, bogdan.nicolae@gmail.com
-Date: Tue, 15 Sep 2026 18:40:17 +0200
-In-Reply-To: <20260914200347.1743016-1-arend.vanspriel@broadcom.com>
-References: 
-	<20260831061213.240270-1-girishbukkasagara.rudrappa@infineon.com>
-	 <20260914200347.1743016-1-arend.vanspriel@broadcom.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.60.2 (3.60.2-2.fc44) 
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pkx5H5PJ"
+Received: by mail-pz2-f12.google.com with SMTP id 41be03b00d2f7-cc1cea48edcso34425a12.2
+        for <brcm80211@lists.linux.dev>; Tue, 15 Sep 2026 10:47:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789494441; x=1790099241; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=XpMG1qjPop6FoZkaj0fsmzVch6Tcbe08TjxPfHV5ihU=;
+        b=pkx5H5PJu6AVll+P6JLnQDjOyQTRrGYR705qAHSV/webSdQyFmJwGTkdQiEd45EJe9
+         SRr1A7v2XSZPAowuf4Ot424/UQiCy8WZWDLXqXWCZ1CLkSLf0kbej7hXYTl5msGOjlM0
+         w7qrveZzwXxarqnTI+AXYWGuDW3g5y4feV9f5XhTKGJy4bAPtClBaytShYDWkl18KYtt
+         DmA+hpR63LecBMAadjUgFSAB2OE1frPzE+ZDSQ4Xptvu0uVwYij+Q1z0HrWKt4Q1nRVX
+         Yrvz3LAwjeUKQaAlHAWIHfRA/ai1sqkJHbfhwTUPtamTREBS2b/EogRJT7VX65zthHks
+         kQmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789494441; x=1790099241;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=XpMG1qjPop6FoZkaj0fsmzVch6Tcbe08TjxPfHV5ihU=;
+        b=GSBi1QFItP6XQgJwIuFY4sKf9iZS9TPBZiUwvcGKAS46yL67AzGX8YW1oR+s1bLL1X
+         VUiFrIljEWT6lzj9nvrCQnB7QJfRaDj5swQZJzyg97UFrwW/cHK9kMqz0p2JaRvidF0x
+         hiWPGzokpjRtb1DnjLwRVLo1LZyhrIqc4lbzLfHpWJHLewQRfK0iw/6LuJJxQiRtu18q
+         6sKT8X9HUaGS/7Y358JhITIX41cOX/Aq8DbqC9kS4QVokrsaYB+wpLaiJo8eDUKJqgKF
+         5whpNE385cnDZLCJlJ+t4f/Lz/vq1SBPGvI0Te5hY8ORSsLCh96yNPm8iTm9Xs2pCG84
+         WyBA==
+X-Forwarded-Encrypted: i=1; AKwUvBys1G4h1+WIq2u1cjI8WlDbOP8daXNJz5GZJKlWXUcOMX4JNa+GUJIAxxc6k4ESCuVk18NU3e4oWRQ=@lists.linux.dev
+X-Gm-Message-State: AFuF++lvI2aD5QldoqIP3pXMfvKG2r5rrAGaf7KHplbqVoLeBmq1vxG8
+	RK6BsvlXMCAk4QYSe3WgnK0bCfOx1UlGFyp5cKuyO4cq7NuKpjN1JMKf
+X-Gm-Gg: AYBFou3tUhVyxtOQBFiC2lSP3LGKoFlWdKjckRR7ApBObUG8Hw6cYVL1lAIztOqkW4O
+	r0LkXJI9DCHAV1GqyPgG8CmXOXblc6juTN2sDRaAG8sFQDJ7XZ/Oz124+v0vb92+1z547X90B1R
+	83FOdAd1fcyMG0LM5mtvWz65mEL4o6j3oqbehlv8e7z45pDIBA5uBdF9GStq2qAk5sHNygwbNhZ
+	wKT9oKELZocdpkgHUnf5fyOMx2SsmkiEo712yThOLntKjH7WxYcGODtQpZZK2QY7SJForPJI+u2
+	pn4Y/JzWQtGTmNIubAUYeljU9+HV0AOOquYp0quLM8HZnHJRsAqwcqmpx5je21I1iLDLv7KmM2a
+	yy9Q6MdyT828f0KDwubujq2K/WZ+p0C3vIPWGKW3v/V+R+tmrxVf9i8QG6TkPnVTAkCVTZTBTlf
+	GH2tFu8FWgDCjcIvy/GYoMrPpk+7LkOhYdE9IrgM1eq4xW4DeB9GkrwPpWPHOMA7Ob1go1298od
+	fmD+sUkxJlGE3W1w0dzDJCrBIN7IgKfGg==
+X-Received: by 2002:a05:6a20:6a11:b0:3d0:ba81:79b1 with SMTP id adf61e73a8af0-3db400361e3mr16492369637.0.1789494440774;
+        Tue, 15 Sep 2026 10:47:20 -0700 (PDT)
+Received: from macpro17.tail61d16e.ts.net ([2804:14c:7bd0:701b:a9d3:4f15:11fc:30f5])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-33bf5aca3fbsm545337eec.20.2026.09.15.10.47.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Sep 2026 10:47:20 -0700 (PDT)
+From: =?UTF-8?q?Vin=C3=ADcius=20Ramon=20Fontanela?= <vfontanela@gmail.com>
+To: linux-wireless@vger.kernel.org
+Cc: arend.vanspriel@broadcom.com,
+	brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com,
+	=?UTF-8?q?Vin=C3=ADcius=20Ramon=20Fontanela?= <vfontanela@gmail.com>
+Subject: [PATCH v2] wifi: brcmfmac: allow ISO3166 fallback for BCM4350
+Date: Tue, 15 Sep 2026 14:43:00 -0300
+Message-ID: <20260915174300.28363-1-vfontanela@gmail.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260914200357.1743468-1-arend.vanspriel@broadcom.com>
+References: <20260914200357.1743468-1-arend.vanspriel@broadcom.com>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-malware-bazaar: not-scanned
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Mon, 2026-09-14 at 22:03 +0200, Arend van Spriel wrote:
-> On Mon, 31 Aug 2026 06:12:13 +0000, Girish Rudrappa wrote:
-> > Parse and configure the extsae_pwe according to the information from th=
-e
-> > supported rate/extended support rate and RSNX IE
-> >=20
-> > Parse the beacon IEs on start_ap() and set the extsae_pwe iovar.
-> > Set sae_pwe to 2 when the RSNX IE advertises H2E, 1 when an H2E-only
-> > membership selector is present, 0 otherwise.
-> >=20
-> > The changes are tested with FW Version 7.45.286
->=20
-> Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
->=20
+BCM4350 devices using brcmfmac on x86/PCIe may have no platform-provided
+country code map. In that case brcmf_translate_country_code() falls back to
+ISO3166 codes only for chips accepted by
+brmcf_use_iso3166_ccode_fallback().
 
-This is one of the patches the bot couldn't pick up (per my earlier
-mail) - please resend.
+BCM4350 is currently missing from that list, despite the adjacent BCM4345
+and BCM4356 being present. Add BCM4350 so these devices can use the ISO3166
+country code with revision 0.
 
-johannes
+Signed-off-by: Vinícius Ramon Fontanela <vfontanela@gmail.com>
+---
+v2: resend using git send-email to avoid line wrapping/corruption in v1.
+
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+index 9d8ce7bb0..2b819dbe6 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -8076,6 +8076,7 @@ static bool brmcf_use_iso3166_ccode_fallback(struct brcmf_pub *drvr)
+ 	switch (drvr->bus_if->chip) {
+ 	case BRCM_CC_43430_CHIP_ID:
+ 	case BRCM_CC_4345_CHIP_ID:
++	case BRCM_CC_4350_CHIP_ID:
+ 	case BRCM_CC_4356_CHIP_ID:
+ 	case BRCM_CC_43602_CHIP_ID:
+ 		return true;
+-- 
+2.55.0
