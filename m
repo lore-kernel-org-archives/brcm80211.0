@@ -1,57 +1,57 @@
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DBC43E5A29
-	for <brcm80211@lists.linux.dev>; Tue, 15 Sep 2026 08:19:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77BB43F482B
+	for <brcm80211@lists.linux.dev>; Tue, 15 Sep 2026 08:19:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.198
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789460412; cv=none; b=IwgOQrFUNJW09v/XPz7Zx6UqPEyKJQcbWv9SMBd4htMV+wqwXk8JF+R/eK5iYz5acUupR3HDi6GpxGlEt47Hb9cfDhM+IpnBqOdY+kptkgG39aOd/TXb/sy8ppltAuLdBz0rURZ4+rShtg4n1E04VXpzgS4wUcGts1/fgqz8Nwc=
+	t=1789460423; cv=none; b=IxNXlx36E8EtH1b1xP2RlKDdCb+9t88Mj3WexJdZaVPHC7hO0p9jO5wLhCYbwNV7vp/ma57JJRJPw08agOorFfgcSZxjZ5/2/0zobvwDl4CNafc2MZC6oh0m5m2nzN2Edjj+pTnfOZ5ft/iuCp0lZSu/5EJkUPK4cIgDJfcsSqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789460412; c=relaxed/simple;
-	bh=IWKQ4COf9lXb2aWQAfm5Y+7WKwIMngPQWy99kbv9mag=;
+	s=arc-20240116; t=1789460423; c=relaxed/simple;
+	bh=AdZQZFBZ+Sq+Xs3+ioKoxuNwDqkD/CEsMpiPWsVgYCg=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=Ebafv8G1K5qeu5utwk6dx/vK36ZN5FgsOOHv66sNkbMgk50YnfNYhIiWR8iaX5pnjlgspjiB3l/hqOHKsCv5v4XfS/MlW6g8u2K4iXf+sKa28BmNydHSo6vuzHwFvH9Zf9bfa6VG35S3oPdqnYHrb6gm4aFCwZcp5+oszX//FQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--morbo.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ZwXFixqb; arc=none smtp.client-ip=209.85.214.200
+	 To:Cc:Content-Type; b=ic7Qd/U8XX54xk5Ae+ljMQvxJ8UqavBIY2wqjtvpNXQWhkf1QMnzdU3FB0+AREMe96V8/2zN+AeLFOLemzTPVbkwvci1kU2Yvv2IL+zxpEP790YQVCERai2VbFOYpXHLsSE6adD00Rai4V//toF+hBnbpmDJXvVOXki0kBCzM60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--morbo.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=trGwKZ9H; arc=none smtp.client-ip=209.85.214.198
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--morbo.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ZwXFixqb"
-Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2d6f75c1219so88122955ad.3
-        for <brcm80211@lists.linux.dev>; Tue, 15 Sep 2026 01:19:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="trGwKZ9H"
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2dcfed75f77so62046045ad.2
+        for <brcm80211@lists.linux.dev>; Tue, 15 Sep 2026 01:19:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1789460396; x=1790065196; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1789460391; x=1790065191; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:from:subject
          :message-id:references:mime-version:in-reply-to:date:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=su2v7itwh4re1nYnX3JAIlBIidMghtZfDu1F4zgeEKU=;
-        b=ZwXFixqbZPYgHXs2Z+Qc1CDd9Xhf1IQlLVjR7stZzPL0pzgZ8BE7aGA9iERoELI4oy
-         6loTN++RXal/RnG6UyMR2csz65kULM68an3o+7ZlQ61MD/BamAt057SYEv19eGjJ8BlL
-         vc8Tx0eVxwx//0ZW0eyzpl9dsMIeSpWKdmod1AXYwWLG0EWmHpt+x+suEZTA3TaudkeQ
-         Oiz95FhUPM2uGtohyGE/cy4oAw97tDaZSzTfvI6MixTSNDQv+nf9maqTLccRa+ZejmBb
-         +jUJdya8swypDRynFuvH6D12oWuxLmmQPQVVLnsZVIn0UMoW5nhPQwFIFhM8ORkj+j5G
-         uGrw==
+        bh=i189Z1372pvpafDRMVnLFn5IBf8O4Z3ONLFW1RCweBo=;
+        b=trGwKZ9H3aEdfIruFRK5bthfhzzN8eDMYTBZ6ixkLGAiaGS5e9nNgbvYYL19YFOVNg
+         cWoNKDm+3HGMAbr8ayC/b+X1ivPGMPMWspE4NQLvrJUYKDAjECzkrI2oWrRrNLTU75C9
+         DkbDH7wsj0B6+niVldBTMMF5+25VE/SZCqDW5oY07dTrh3o+pDTUuuk0rr8mgbooMdF5
+         MNOtrflYWePSHzMh0EFfnhdg0KWx21H2kXKE8CkK64xO0PgkMwMYYhaptKSK7DzCbS2a
+         Knhjy5GMmVy+7L9zmM7ypMlJE4uddVQF91aqWODA8B9ICk3vlD4WNatrtj0ivYXtF45m
+         YNvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789460396; x=1790065196;
+        d=1e100.net; s=20260707; t=1789460391; x=1790065191;
         h=content-transfer-encoding:content-type:cc:to:from:subject
          :message-id:references:mime-version:in-reply-to:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=su2v7itwh4re1nYnX3JAIlBIidMghtZfDu1F4zgeEKU=;
-        b=hvmsQXGj9s3te7ImppvJwyWQYgdACzVsNEePGpJI38ILOnl0zifPq/yWSogxW7GDKF
-         b6Kk1QO8lTsxvl1gj3hvUOLJ4jPvDI0S1IKzGvpNWz0+1pzkz8PciahVGi5lVVd/mCpv
-         MbfTjKhXxtPZP/nK8BE5Uu1LHpxrRDE6xkGqKVkOzEy6CMbvmchDEmO3EJ4AR+KB/mLj
-         v1eUswtEP2ANWg3AjOk9MgAng0jadc2H2hmtTnYcyZWSwEzZbW0jFve0BWxTMWvanWXY
-         0YpTjf2NVDLjAZoIxRCd0TH1r8op5TY28NlVsjlqYSF1as3Kf9FUxtowMDUMoqubWAvk
-         B0pg==
-X-Forwarded-Encrypted: i=1; AKwUvBygC0rGPwwPjVYqMmZ7ZzXv8PkSDbUALXETqZwcxRN9sQ9sACb7MHk4BvIKmThKPMzNbikc8Q2B8sE=@lists.linux.dev
-X-Gm-Message-State: AFuF++n83AsAyOczYoDAZV309Fr5sycsRcw/BMnlzisvKN9+B4dvor2Z
-	eWPX1SQdeGnDw4pM/gPGnfaDHHO/rfCGmYb0qcbgUfb6PIURmVIGxsCaOSa9nFLrpJSD4CzpK7y
-	A
-X-Received: from plpo14.prod.google.com ([2002:a17:903:3e0e:b0:2cc:e407:8fef])
- (user=morbo job=prod-delivery.src-stubby-dispatcher) by 2002:a17:903:3508:b0:2dd:8b2:6e64
- with SMTP id d9443c01a7336-2dd83851cd5mr695675ad.12.1789460395589; Tue, 15
- Sep 2026 01:19:55 -0700 (PDT)
-Date: Tue, 15 Sep 2026 08:18:25 +0000
+        bh=i189Z1372pvpafDRMVnLFn5IBf8O4Z3ONLFW1RCweBo=;
+        b=dx6YFBdfVePgwzJFeSmDK/jXXV4gk6zkWQeo9CApwiOH1NWAbKqyEUG9OoAln1jWWD
+         KhMF4dafMzh2qda/Jdft+/sjPbErYd/39hcqRnxS3UqC4Uyc8SUWF39opJ6o8qVairdC
+         QfhSlKnPyWV/6sbzwJulDmIHVR0fKySaf/7ik23y8okrbtryOHR9dzXHGcGAnGMfGG3c
+         ZkUFwIPP8kiz9uZbTg9OIs36QF4872DcsDmMSvZCqQt+w2mI6UDdcB3NJ+80p81wtQgE
+         0Zhp0zcpaSflN6kixbj42OS8vxWyJSSt+sQbvOzGttt1kKu330N3DwMkoQC2cOVowjFn
+         EHWQ==
+X-Forwarded-Encrypted: i=1; AKwUvBy7cg+HNZUllfPr7X6WTsWILnYJLdtmNKzu+dDMEZnnjQZdJRS+NQNnD3qixRll8cP+qxxKrFuhTmA=@lists.linux.dev
+X-Gm-Message-State: AFuF++kDR1jEpgmEmkWs/k4fjx9FEEHaYlUD0JUyS26wxjNlNLxjfImb
+	M32x5MPkPKXm//nocdGWp7rGzgXDvnPjV1Tfe49wcNu8mxOLjd7FdB8HEhRaxpRj6oa5BqnU98F
+	+
+X-Received: from plrd12.prod.google.com ([2002:a17:902:aa8c:b0:2db:8b6a:31a7])
+ (user=morbo job=prod-delivery.src-stubby-dispatcher) by 2002:a17:903:388d:b0:2dd:143:d5
+ with SMTP id d9443c01a7336-2dd6c75a396mr155065525ad.22.1789460390543; Tue, 15
+ Sep 2026 01:19:50 -0700 (PDT)
+Date: Tue, 15 Sep 2026 08:18:19 +0000
 In-Reply-To: <20260915081910.4142719-1-morbo@google.com>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
@@ -61,8 +61,9 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
 References: <20260915081910.4142719-1-morbo@google.com>
 X-Mailer: git-send-email 2.55.0.1032.g73a4cd73de-goog
-Message-ID: <20260915081910.4142719-9-morbo@google.com>
-Subject: [PATCH 08/28] devlink: Refactor strlcat() to seq_buf in __devlink_compat_running_version()
+Message-ID: <20260915081910.4142719-3-morbo@google.com>
+Subject: [PATCH 02/28] sunrpc: Refactor rpc_sockaddr2uaddr() to use snprintf()
+ instead of strlcat()
 From: Bill Wendling <morbo@google.com>
 To: linux-kernel@vger.kernel.org
 Cc: Bill Wendling <morbo@google.com>, codemender-patching+linux@google.com, 
@@ -123,17 +124,18 @@ Cc: Bill Wendling <morbo@google.com>, codemender-patching+linux@google.com,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-__devlink_compat_running_version() appends running firmware version
-strings and spaces to "buf" inside nested netlink attribute loops using
-strlcat(), rescanning "buf" on every iteration.
+rpc_sockaddr2uaddr() formats the IP address into "addrbuf", formats the
+port into a temporary "portbuf" buffer with snprintf(), and then appends
+"portbuf" to "addrbuf" using strlcat().
 
-In preparation for removing the deprecated strlcat() API[1], use struct
-seq_buf anchored at the current length of "buf" and append each version
-entry with seq_buf_printf().
+In preparation for removing the deprecated strlcat() API[1], capture the
+length returned by rpc_ntop4() and rpc_ntop6_noscopeid() and format the
+port directly onto the end of "addrbuf" with snprintf(). This eliminates
+the strlcat() call and the temporary "portbuf" buffer.
 
 Link: https://github.com/KSPP/linux/issues/370 [1]
 Cc: codemender-patching+linux@google.com
-Assisted-by: CoPilot:v1 [editor_update_file, shell_command_run]
+Assisted-by: CoPilot:3.5-sonnet [editor_update_file, shell_command_run]
 Signed-off-by: Bill Wendling <morbo@google.com>
 ---
 Cc: Russell King <linux@armlinux.org.uk>
@@ -247,52 +249,58 @@ Cc: devel@lists.orangefs.org
 Cc: linux-hardening@vger.kernel.org
 Cc: linux-sound@vger.kernel.org
 ---
- net/devlink/dev.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ net/sunrpc/addr.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/net/devlink/dev.c b/net/devlink/dev.c
-index 55959b0ff5ab..987b071345c4 100644
---- a/net/devlink/dev.c
-+++ b/net/devlink/dev.c
-@@ -5,6 +5,7 @@
+diff --git a/net/sunrpc/addr.c b/net/sunrpc/addr.c
+index 97ff11973c49..a1e4173e5a53 100644
+--- a/net/sunrpc/addr.c
++++ b/net/sunrpc/addr.c
+@@ -264,18 +264,20 @@ EXPORT_SYMBOL_GPL(rpc_pton);
   */
-=20
- #include <linux/device.h>
-+#include <linux/seq_buf.h>
- #include <net/genetlink.h>
- #include <net/sock.h>
- #include "devl_internal.h"
-@@ -1190,6 +1191,7 @@ static void __devlink_compat_running_version(struct d=
-evlink *devlink,
+ char *rpc_sockaddr2uaddr(const struct sockaddr *sap, gfp_t gfp_flags)
  {
- 	struct devlink_info_req req =3D {};
- 	const struct nlattr *nlattr;
-+	struct seq_buf s;
- 	struct sk_buff *msg;
- 	int rem, err;
+-	char portbuf[RPCBIND_MAXUADDRPLEN];
+ 	char addrbuf[RPCBIND_MAXUADDRLEN];
+ 	unsigned short port;
++	size_t len;
 =20
-@@ -1202,6 +1204,9 @@ static void __devlink_compat_running_version(struct d=
-evlink *devlink,
- 	if (err)
- 		goto free_msg;
-=20
-+	seq_buf_init(&s, buf, len);
-+	s.len =3D strnlen(buf, len);
-+
- 	nla_for_each_attr_type(nlattr, DEVLINK_ATTR_INFO_VERSION_RUNNING,
- 			       (void *)msg->data, msg->len, rem) {
- 		const struct nlattr *kv;
-@@ -1209,8 +1214,7 @@ static void __devlink_compat_running_version(struct d=
-evlink *devlink,
-=20
- 		nla_for_each_nested_type(kv, DEVLINK_ATTR_INFO_VERSION_VALUE,
- 					 nlattr, rem_kv) {
--			strlcat(buf, nla_data(kv), len);
--			strlcat(buf, " ", len);
-+			seq_buf_printf(&s, "%s ", (const char *)nla_data(kv));
- 		}
+ 	switch (sap->sa_family) {
+ 	case AF_INET:
+-		if (rpc_ntop4(sap, addrbuf, sizeof(addrbuf)) =3D=3D 0)
++		len =3D rpc_ntop4(sap, addrbuf, sizeof(addrbuf));
++		if (len =3D=3D 0 || len >=3D sizeof(addrbuf))
+ 			return NULL;
+ 		port =3D ntohs(((struct sockaddr_in *)sap)->sin_port);
+ 		break;
+ 	case AF_INET6:
+-		if (rpc_ntop6_noscopeid(sap, addrbuf, sizeof(addrbuf)) =3D=3D 0)
++		len =3D rpc_ntop6_noscopeid(sap, addrbuf, sizeof(addrbuf));
++		if (len =3D=3D 0 || len >=3D sizeof(addrbuf))
+ 			return NULL;
+ 		port =3D ntohs(((struct sockaddr_in6 *)sap)->sin6_port);
+ 		break;
+@@ -283,11 +285,8 @@ char *rpc_sockaddr2uaddr(const struct sockaddr *sap, g=
+fp_t gfp_flags)
+ 		return NULL;
  	}
- free_msg:
+=20
+-	if (snprintf(portbuf, sizeof(portbuf),
+-		     ".%u.%u", port >> 8, port & 0xff) >=3D (int)sizeof(portbuf))
+-		return NULL;
+-
+-	if (strlcat(addrbuf, portbuf, sizeof(addrbuf)) >=3D sizeof(addrbuf))
++	if (snprintf(addrbuf + len, sizeof(addrbuf) - len,
++		     ".%u.%u", port >> 8, port & 0xff) >=3D sizeof(addrbuf) - len)
+ 		return NULL;
+=20
+ 	return kstrdup(addrbuf, gfp_flags);
+@@ -352,3 +351,4 @@ size_t rpc_uaddr2sockaddr(struct net *net, const char *=
+uaddr,
+ 	return 0;
+ }
+ EXPORT_SYMBOL_GPL(rpc_uaddr2sockaddr);
++
 --=20
 2.55.0.1032.g73a4cd73de-goog
 
