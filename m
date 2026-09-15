@@ -1,187 +1,179 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs2-f12.google.com (mail-vs2-f12.google.com [74.125.227.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4271A4ACC72;
-	Tue, 15 Sep 2026 19:17:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789499874; cv=none; b=kUQA2aB4j/g1DrMwQbLPjr7CJuqb6V4uU822S3R2b89weGeTpPPj+IYtAG9XFRkInJWEhAZbIloyW65scvOIO6dSrEn0lp2ykXQrwVnaFCHOWrce799UJ4IEZdr3eVNMfM1HFGfn4aNyd/3tdhUmCrFIgoRBAjd7wMetWy+dHrE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789499874; c=relaxed/simple;
-	bh=HEtmDRA5zLwWEp9h+ExDYWp/QYt/+gtoTBpm1+CZoh0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=SAH5yD66KUEldaVfkpuSCLlQdezL9pqrgj/aWdj2t9Ot7v37ProNddF6JyLU40VSpZxIdZbZGioEP2tw7QGaqQS7WnSjN7jbgEX7tnbtcOJ3e3B5zHBZFCg/AMwlzS9o0YnLi/vBUI/CvoAvFpHy0t7kIy0I2laBdAMBweOtua0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jannau.net; spf=pass smtp.mailfrom=jannau.net; dkim=pass (2048-bit key) header.d=jannau.net header.i=@jannau.net header.b=IqhrVPRM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qN1nSiAS; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jannau.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jannau.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C13F43E095
+	for <brcm80211@lists.linux.dev>; Tue, 15 Sep 2026 19:30:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.227.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789500653; cv=pass; b=TRbO8DDgwZnMmY75JkJeMnHJVP5lSJxAU8Iv4Ul9FJCuFEdBV3mipudk26DAOIL7EarEDFfYWb9xme6LDYN1RLa604Jvr0rR3qTmDl8WNgEpj0+5m91sBVFlCDgTdt5BBSEtNTLRHtQkgWu3gIfPPqM+tcK5p+JeXaYiYc8BC+c=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789500653; c=relaxed/simple;
+	bh=RfxsKW+gWzHzPnl0VGV4sp1JrOew5XduTAso8G35GXs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=PO6XK3Z2rpMA1H6rvEu882ZnM88avKun2Una91Gj2dirs3UfLwW/FawkJRXqtfGyNLowBJSUuiZ+SjBW6Q2Akf26t4Tf9Xymn72tsJv7Flk4daBA+UXyWqxOz+LaoTUVFTx/bQs1PJbK5WnBKZx1dwv6sTEDXl70S4SxlqohGBE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=FKWJYui/; arc=pass smtp.client-ip=74.125.227.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jannau.net header.i=@jannau.net header.b="IqhrVPRM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qN1nSiAS"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 259111D0023F;
-	Tue, 15 Sep 2026 15:17:51 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Tue, 15 Sep 2026 15:17:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jannau.net; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:message-id:mime-version:reply-to
-	:subject:subject:to:to; s=fm3; t=1789499871; x=1789586271; bh=kL
-	/93JevXkseqtHR2MRALLG4tXbZXprR3whdNg3lJ4k=; b=IqhrVPRMICzHldDB35
-	sPkPJfIzZfVfzBo8KKU2iLP8ndoysnCyHR2oR6WJis6ieQ2hnez+9gGoX422awdN
-	ji7POEcBX2nhqhG4h5/miZ6TCOlGtDhD3vyiJdEranMDrHI32nNE5SHd97aSXDdC
-	5idqVJYWezRdcameM6aDgcLmHWxGvzNJ4Ucb1XbHSglykVDy6KlD3931lRU84+4Y
-	7xGQnoir9Mzq/8dWu00nC7xhkg+o35BqOhLifzI4EGs326bNshKdmi4PMjJTX3hY
-	eHbYDKrpAfK6iBYT5gV+xiJeoOAk7yagFN/Vrhn95JmCfgtAHgdgMF/2E176x8sM
-	BaJA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1789499871; x=1789586271; bh=kL/93JevXkseqtHR2MRALLG4tXbZ
-	XprR3whdNg3lJ4k=; b=qN1nSiASNoqxTvB7BhyEazqHfp32sc0fId/u1skHYZ73
-	6fnw/ftkFxGXcPXpxrS6FMpWlzAYel8FVEF38tN2bTWO+oRdrzKf7bPfK7pbp+bK
-	fLqSQAGgeAsGVDZoCmmuJO3HAMs4GiVUsJjdazt7LBRQI2Tgp0RGz37gB/+blZwj
-	NIKJZcNCddPjSVNH8aY+nNGIqywlMWWcgeBrjvV+EH62pxba0OEXVGeewePsGoXU
-	rxOuzjFOYZfdKuZR2PxvRRGKSIacNTPXPoAfg3dnTzjVCe8m3E9srnCxiKUqrKYK
-	YvK/JlM/nXA1WxgEIQ4c/EeGD6PvuV0Z7J8AIAtkng==
-X-ME-Sender: <xms:3pmpan_DEGd0aoeceElQv-n_DiwmN27aNSGC8zKT-u2U1SVdBhjlqA>
-    <xme:3pmpao6eW33OjKW2F0o_Oc_kxetMwSqcUNz9k8UaVrODUQgkKW1DP2CfmIN0mhIoO
-    huBQUWnKbL6B3rrEukRnjHnFPnh6UWkYt33WHJigyUvpiETk12v_d5DtQ>
-X-ME-Received: <xmr:3pmpaoaeyB7TwaUczkI37cwV-PCvOjn7bPOi6Zp2mHta2Df-9psjctHKbm3Muz3BGek7NLLYLp3lZYWlDznvohW3NlJy0JD7r-XGUQ>
-X-ME-Proxy-Cause: dmFkZTFPD9DIFWH4dBf0RmdbyhFybkdA8aSAEjOnCr4cOVYtmYr/XFuP3pekHMdjZ5wbpC
-    I4qxZ/mpuPPCjf/zeb+CTBzTq7wtaSDN7kM+yLUzrKW0CdFRuMI2KeQ6snZ2DwZ0Vzcdkf
-    vwO3+RwcpitGHq31KTcE07LqhURP2LEjcX9fmL9UAkqiBR1qNbyxm6rzWf/xlSkf/N3DQu
-    ehnua/DspimpK/JTsPdSDF4dXRntQbm18Ku6UJSyJAPESO0t6+3e5PLTtOuqIVaRAgbQ5b
-    OMa7152K53zxutCS9hboXS63VArSIGQVCaIEjxFdZiUZRFlPDanDKme6BT92x3AsXvpnXj
-    yY0IO6GDiQn15HQJ+vrtg2bjiEfYy0UaDGod+vSpLdVH0P54g8eCgmmcN9tLULO/Q5UUkc
-    w+u/Cxz688JIAulmDAWHnKj76eI79FFGw6xeFKSMijCDSsgQHXdUuqEr8g+XolKKM87pE2
-    Nr5zbXoDZVM5dCPIJlbjgVmuINHt/LXtB7/NveGBdt7grL/yOPkfbFunkCnQ7L5szjh1L6
-    NNVhlaKa9wYgOzZbu5qVDYvVIPl7opPPCb2PTd5aIeqcXKtCZdTR5L2IdPyU9xk/PoThdG
-    mOfLj91shtgGECImskNishxYDbg78BxIw2C+TciKx6kkNWbvqJF3FTv85gdg
-X-ME-Proxy: <xmx:3pmpai8ifk_QwryZd_zx8wy1ogiNryBWQ8BaJdZcDT67uYNoitDHVA>
-    <xmx:3pmpanRbOlOVhldM-cdHlH6JNshGtAlI4oRjVFefRVIZHyVUTObGvg>
-    <xmx:3pmpalKo0wVpqtaIuSAjU4QWiADuzKtOVDIIW3Wq_Q9gAeYWx-thCQ>
-    <xmx:3pmpahToqy7LcETtazZ1L-LyBq5jmfYlBLHWz7tPsequ79XxBeej9A>
-    <xmx:35mpatVFyxMYKNZQTULrr_jLQbDS5nD9zO-eoM3MCeqG2LXWWL2ppbUA>
-Feedback-ID: i47b949f6:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 15 Sep 2026 15:17:50 -0400 (EDT)
-From: Janne Grunau <j@jannau.net>
-Date: Tue, 15 Sep 2026 21:17:38 +0200
-Subject: [PATCH v2] wifi: brcmfmac: cfg80211: Report port_authorized for
- 4-way HS offload
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="FKWJYui/"
+Received: by mail-vs2-f12.google.com with SMTP id 71dfb90a1353d-5c67e504d59so53869e0c.1
+        for <brcm80211@lists.linux.dev>; Tue, 15 Sep 2026 12:30:50 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789500649; cv=none;
+        d=google.com; s=arc-20260327;
+        b=ie6CMohY0fWmae6RG0NNVS4DNw6HiTz/SrwQ3pgdQP9KtFTyNUBgZdf9U2WJeter5s
+         s5tE/jhBofop0Og7uhSFpM/yykNvimXW/Aj72mc9iVJWlWWd6lpXP+wj0kQCqltU+mIM
+         KMlbgD1nHSmKnbdIYEsDwy+sDB/FT6IicyNb9+DCcwC/bmu45gmzFj5PaAliTG7se+Wf
+         NCYxFL0w9K3QDbIx6hRNIjUIXwGWO4wSGw3law1eY/X8se3qGC0zVBquSBuW1qQy/EcE
+         zgDBaaK1xoNNcMgFlVW292aWJwSeBdohufY3L7W1g4hRovAPDz9ruIGZOw/GgT0DsuMf
+         QowQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=bRLtXj28C7ZetbPCXePmHpMel3/nm53ij0hFxwsbjIQ=;
+        fh=nXZNsnA6fTPmtxBVg1idHdvj7wSAh0HS3qhuOMD2b/Q=;
+        b=VbpgqoHUvS/Uk7Ckthouf43k+cYk5AzCLYqc1ZQ0SY7lj10BCXUZa2EXY4i4CN+ccL
+         UFEr4asgbttyJlYF1bjVRxfHrPDfnZil2VkH7xNd+EMVzfU7SaQDfQ1Apc1zc1yWjSa+
+         gEB/bELHt3HxYH/2n9s+TGJ7wkWlOxQOO6TeomHAmbhmqE5Cj5HL35qRPZAJFJCHmFX+
+         guxOSiRQgbM+/9xbFrJNkG+ZhXikmLKvkoszb+b8SiH42l44QmM7oY5Assl/ULdmK0eM
+         HH9Fkgaze1ptlaKnOqEEiIrDzHPU6hgJxSEjRfI1uzR/ScDbOoGQC3ZbsYzhfA4ybgTT
+         m/SQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1789500649; x=1790105449; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=bRLtXj28C7ZetbPCXePmHpMel3/nm53ij0hFxwsbjIQ=;
+        b=FKWJYui/jdkYj5Ij4Nn9iE0ZZnWyIEQeO0Wl4EXnCzg8xo+4cG7fIPU3RkCgu6ucxz
+         4Qdv/SX3XVoQsB6twYCr8ufqNh4E3BWAwnLifeO/0ictp7n/YWwcm5LGsyyek/3yY8DW
+         jg8Hm8M4v3PPlP5tlZhLQZkuVaTZfIGyoBflmVOomneUhmMiiRzXB2hVfySxaZKkkOJh
+         L67T7rbqfnOrviZD4m88M13bOVf2/F3DG1JPKX2/+VoOl7gB9EfqvSu/jPOfQReIJTH6
+         KjetfAjEilBaLICZplkTJ+XuQ/XPWBQIbNAdM9p2VHEo5BP8g7aU17HivAVsdbwNkESu
+         jxeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789500649; x=1790105449;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=bRLtXj28C7ZetbPCXePmHpMel3/nm53ij0hFxwsbjIQ=;
+        b=bLr7PhIY2pLp/bcujeqHB9g/CEXPuaO36jBCbg3pLYe+EOaF4pBYloAuA7LozScHJY
+         LsIaQyzV5ud4u0+wTTyZMKLvPys4m1Gbv6yrRU1F1vPrCNc3yH0NzMa3w3zpNTLKyiqE
+         nw9Mvh3db8fw+KgArTIGVwCAcOZIxSYkbEkmUc0I1jRp565WPeIAM9juad5j/NhChFwc
+         tlPCMxSz/A/NuPj7abdNhXcxuJdsimQvG1Tme5HEHBMQ2RUYll8ogMdvd/ePgxPyd6UN
+         IwZHOuCysob02S1krR6Olf+o23by+0aCP8dlSgzYiHXNu04vKMuHJdpdgFATFFk5We0d
+         w3zA==
+X-Forwarded-Encrypted: i=1; AKwUvByJK5N7ukfR2XXUyW+IrL//hfRbg4g6hiNQ6l4X2ky6wKN6WUWWW/XVbiGD0+JNb8ATNE3IT1JPVZU=@lists.linux.dev
+X-Gm-Message-State: AFuF++kvHSAwnnCHyR8dqjUZpVhtDE0cz8DSP4vnPg9a++yJPpjG/k2S
+	RWBLV1Ye5+k7RrxgWSPh8GWrqNNfEGkd5b7dxtOd33V9vdftAJoPie0RHMc6Oj8iEcr9XE/g5zA
+	F2bvigsnlPiYlTgZwWTavl6FSOFPbXPxaQafbsBw=
+X-Gm-Gg: AYBFou0telKg8t7DH0kpu40yVN/cY4V4IR572XsNTxVD35KMbJnCmGAWuCMJ9GBZEEx
+	zz7XvduV9k9nzYAlngMVsnXuEP9Amu5d5MhqIh3hwiYcCXyNItJ4Xzy07/ThUgx7lRsds8VSEOP
+	2RQ4sbtW1ZBPTDbgb79HcTB1v8v1EgDKIWXsrG26/snQp5RR2b+XpXOGPj6iJwnxgkJG6thw1/6
+	wmR/j5eFn/0q2Y1p34IAL3kQXA4aDaqafn8P5vv+L0FGJMkVBS8wVkPxQ3rM8/egNuoD+vWPfEn
+	p0/unRsNodboAc9F80EWmFUd8gN1Beeku/ucqFZAQLDkoOgMTThInSNmDCIVhK0cPbWvjSRmHNG
+	EjUK7A2UZcTodZii1ogha2xxlu8WTwVUnfERw2YZJWz0QIZmFYetaC04R0jHPc4Q=
+X-Received: by 2002:a05:6122:8d4:b0:5c8:3697:9289 with SMTP id
+ 71dfb90a1353d-5c993b49b7cmr4231155e0c.8.1789500648289; Tue, 15 Sep 2026
+ 12:30:48 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260915-brcmfmac-4way-handshake-offload-authenticated-event-v2-1-fbb9cc7ac177@jannau.net>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/6WOTQ7CIBSEr2JY+0yhP6muvIfp4gkPQS0YoGjT9
- O5ir+BuvslkZhYWKViK7LRbWKBso/WugNjvmDTobgRWFWaiEl115AKuQY56RAnNG2coERUNPgi
- 81k+PCnBKhlyyEhMpoFw09G2t2x5JVDWx0vwKpO1nW70MhY2NyYd5O5H5z/1vL3PgQA3HDnvRc
- xTnOzqH08FRYsO6rl9AmooQ9wAAAA==
-X-Change-ID: 20260912-brcmfmac-4way-handshake-offload-authenticated-event-853f58ae203e
-To: Arend van Spriel <arend.vanspriel@broadcom.com>, 
- Hante Meuleman <meuleman@broadcom.com>, Kalle Valo <kvalo@kernel.org>, 
- Pieter-Paul Giesberts <pieterpg@broadcom.com>
-Cc: Jason Huang <jason.huang2@infineon.com>, linux-wireless@vger.kernel.org, 
- brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com, 
- asahi@lists.linux.dev, linux-kernel@vger.kernel.org, 
- Arend van Spriel <arend@broadcom.com>, stable@vger.kernel.org, 
- Janne Grunau <j@jannau.net>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3825; i=j@jannau.net;
- s=yk2025; h=from:subject:message-id;
- bh=HEtmDRA5zLwWEp9h+ExDYWp/QYt/+gtoTBpm1+CZoh0=;
- b=owGbwMvMwCW2UNrmdq9+ahrjabUkhqyVM+9+U1vZ0ncx5kukiGfEpHVZR/pjnsZqKXjGHKy9U
- asrdT+9o5SFQYyLQVZMkSVJ+2UHw+oaxZjaB2Ewc1iZQIYwcHEKwER8eRn+B/DPqvn/YMm7v+L7
- 5sh9us52Ij/7rm/mpY6PJ0pKV7dfEGf473aTOfq/7qXAuDiHTX4vTGZInpmeeS31/7UZTDcNT6b
- M5wMA
-X-Developer-Key: i=j@jannau.net; a=openpgp;
- fpr=8B336A6BE4E5695E89B8532B81E806F586338419
+References: <20260915081910.4142719-1-morbo@google.com> <20260915081910.4142719-22-morbo@google.com>
+ <202609151147.C5B45CB@keescook>
+In-Reply-To: <202609151147.C5B45CB@keescook>
+From: Bill Wendling <morbo@google.com>
+Date: Tue, 15 Sep 2026 12:30:31 -0700
+X-Gm-Features: AcwNN1W7vYosDgc2DMy2_OinBNj1qeEQ35WOY6PL8-NHlzjaHMOKmE1leyIGWNs
+Message-ID: <CAGG=3QXYtmJqE5oy5ZD0-G0=GNxK71KKYurusNJvLQNqR-o6+A@mail.gmail.com>
+Subject: Re: [PATCH 21/28] NFS: nfsroot: Refactor root_nfs_cat() to use snprintf()
+To: Kees Cook <kees@kernel.org>
+Cc: nikitash.mariiaw@gmail.com, linux-kernel@vger.kernel.org, 
+	codemender-patching+linux@google.com, Russell King <linux@armlinux.org.uk>, 
+	Huacai Chen <chenhuacai@kernel.org>, WANG Xuerui <kernel@xen0n.name>, 
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>, 
+	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>, Helge Deller <deller@gmx.de>, 
+	Thomas Gleixner <tglx@kernel.org>, Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>, 
+	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org, 
+	"H. Peter Anvin" <hpa@zytor.com>, Ian Abbott <abbotti@mev.co.uk>, 
+	H Hartley Sweeten <hsweeten@visionengravers.com>, Tony Luck <tony.luck@intel.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Matthew Brost <matthew.brost@intel.com>, 
+	=?UTF-8?Q?Thomas_Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>, 
+	Rodrigo Vivi <rodrigo.vivi@intel.com>, Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
+	Matthias Schwarzott <zzam@gentoo.org>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
+	Tony Nguyen <anthony.l.nguyen@intel.com>, Przemek Kitszel <przemyslaw.kitszel@intel.com>, 
+	Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller" <davem@davemloft.net>, 
+	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+	Arend van Spriel <arend.vanspriel@broadcom.com>, Rob Herring <robh@kernel.org>, 
+	Saravana Kannan <saravanak@kernel.org>, Krzysztof Kozlowski <krzk@kernel.org>, 
+	Sylwester Nawrocki <s.nawrocki@samsung.com>, Peter Griffin <peter.griffin@linaro.org>, 
+	Alim Akhtar <alim.akhtar@samsung.com>, Linus Walleij <linusw@kernel.org>, 
+	Anil Gurumurthy <anil.gurumurthy@qlogic.com>, 
+	Sudarsana Kalluru <sudarsana.kalluru@qlogic.com>, "Martin K. Petersen" <mkp@kernel.org>, 
+	Trond Myklebust <trondmy@kernel.org>, Anna Schumaker <anna@kernel.org>, 
+	Mike Marshall <hubcap@omnibond.com>, Martin Brandenburg <martin@omnibond.com>, Jiri Pirko <jiri@resnulli.us>, 
+	Simon Horman <horms@kernel.org>, Chuck Lever <cel@kernel.org>, Jeff Layton <jlayton@kernel.org>, 
+	NeilBrown <neil@brown.name>, Olga Kornievskaia <okorniev@redhat.com>, Dai Ngo <Dai.Ngo@oracle.com>, 
+	Tom Talpey <tom@talpey.com>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
+	Andrew Morton <akpm@linux-foundation.org>, "Mike Rapoport (Microsoft)" <rppt@kernel.org>, 
+	Kanglong Wang <wangkanglong@loongson.cn>, Tiezhu Yang <yangtiezhu@loongson.cn>, 
+	Qiang Ma <maqianga@uniontech.com>, Randy Dunlap <rdunlap@infradead.org>, 
+	Pengpeng Hou <pengpeng@iscas.ac.cn>, Ard Biesheuvel <ardb@kernel.org>, Breno Leitao <leitao@debian.org>, 
+	Thorsten Blum <blum@kernel.org>, Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Lyude Paul <lyude@redhat.com>, 
+	Ashutosh Desai <ashutoshdesai993@gmail.com>, Imre Deak <imre.deak@intel.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, Johan Hovold <johan@kernel.org>, 
+	Johannes Berg <johannes.berg@intel.com>, 
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>, 
+	Alexander Stein <alexander.stein@ew.tq-group.com>, 
+	Cryolitia PukNgae <cryolitia@uniontech.com>, Jiaming Zhang <r772577952@gmail.com>, 
+	Will Porter <mrwillporter@gmail.com>, Cen Zhang <zzzccc427@gmail.com>, 
+	=?UTF-8?Q?C=C3=A1ssio_Gabriel?= <cassiogabrielcontato@gmail.com>, 
+	Rong Zhang <i@rong.moe>, Arun Raghavan <arunr@valvesoftware.com>, 
+	linux-arm-kernel@lists.infradead.org, loongarch@lists.linux.dev, 
+	linux-mips@vger.kernel.org, linux-parisc@vger.kernel.org, 
+	linux-edac@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	intel-xe@lists.freedesktop.org, linux-input@vger.kernel.org, 
+	linux-media@vger.kernel.org, intel-wired-lan@lists.osuosl.org, 
+	netdev@vger.kernel.org, linux-wireless@vger.kernel.org, 
+	brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com, 
+	devicetree@vger.kernel.org, linux-samsung-soc@vger.kernel.org, 
+	linux-gpio@vger.kernel.org, linux-scsi@vger.kernel.org, 
+	linux-nfs@vger.kernel.org, devel@lists.orangefs.org, 
+	linux-hardening@vger.kernel.org, linux-sound@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Since commit 416386060 ("Mark authorization completed on driver
-indication during 4-way HS offload") [0] wpa_supplicant expects
-NL80211_CMD_PORT_AUTHORIZED to complete the authentication when the
-driver supports 4-way handshake offload.
-This was apparently never tested with the upstream brcmfmac driver as it
-does not report this. This broke authentication on Apple silicon devices
-(BRCM4378, BRMC4387, BRMC4388) and other devices when wpa_supplicant
-2.11 was released [1]. This was initially dealt with by reverting the
-commit in Fedora [2] and other Linux distributions.
-Instead of carrying the revert over to wpa_supplicant 2.12 add the
-expected NL80211_CMD_PORT_AUTHORIZED when the connection is established.
+On Tue, Sep 15, 2026 at 11:52=E2=80=AFAM Kees Cook <kees@kernel.org> wrote:
+>
+> On Tue, Sep 15, 2026 at 08:18:38AM +0000, Bill Wendling wrote:
+> >  fs/nfs/nfsroot.c | 11 +++++++----
+> >  1 file changed, 7 insertions(+), 4 deletions(-)
+>
+> This collides with:
+> https://lore.kernel.org/all/27956255dde39f58d73a7b51cb53cbe3d7804f54.1786=
+411026.git.mariianikitash@google.com/
+>
+> > +     ret =3D snprintf(dest + len, destlen - len, "%s%s",
+> > +                    (len && dest[len - 1] !=3D ',') ? "," : "", src);
+>
+> I prefer Mariia's version because this inline ternary is difficult
+> to read.
+>
+Agreed. I was trying to not stomp on her work. Please ignore this patch.
 
-The "Fixes:" tag is not fully accurate as this has only became an issue
-after userspace changes years after the change. Since the change is
-expected to be required in all active stable branches for wpa_supplicant
-2.11 / 2.12 compatibility it is helpful even though
-BRCMF_PROFILE_FWSUP_SAE did not exists then.
+-bw
 
-Link: https://github.com/zephyrproject-rtos/hostap/commit/41638606054a09867fe3f9a2b5523aa4678cbfa5 [0]
-Link: https://lists.infradead.org/pipermail/hostap/2024-August/042893.html [1]
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2302577 [2]
-Link: https://lore.kernel.org/linux-wireless/20260911065656.1269623-5-Jason.Huang2@infineon.com/ [3]
-Cc: stable@vger.kernel.org
-Fixes: b8a64f0e96c2 ("brcmfmac: support 4-way handshake offloading for WPA/WPA2-PSK")
-Signed-off-by: Janne Grunau <j@jannau.net>
----
-Changes in v2:
-- rebased on wireless-next with "brcmfmac: add FT/OKC roaming offload
-  support" applied
-- updated commit message
-- Link to v1: https://lore.kernel.org/r/20260912-brcmfmac-4way-handshake-offload-authenticated-event-v1-1-e41a6a8281a2@jannau.net
----
- .../wireless/broadcom/brcm80211/brcmfmac/cfg80211.c  | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-index 9d8ce7bb046e..3e30d84835a2 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-@@ -6585,6 +6585,21 @@ brcmf_bss_roaming_done(struct brcmf_cfg80211_info *cfg,
- 	return err;
- }
- 
-+static bool
-+brcmf_fwsup_is_authorized(struct brcmf_cfg80211_profile *profile,
-+			  struct cfg80211_connect_resp_params *conn_params)
-+{
-+	if ((profile->use_fwsup == BRCMF_PROFILE_FWSUP_1X ||
-+	     profile->use_fwsup == BRCMF_PROFILE_FWSUP_ROAM) &&
-+	    brcmf_has_pmkid(conn_params->req_ie, conn_params->req_ie_len))
-+		return true;
-+	if (profile->use_fwsup == BRCMF_PROFILE_FWSUP_SAE ||
-+	    profile->use_fwsup == BRCMF_PROFILE_FWSUP_PSK)
-+		return true;
-+
-+	return false;
-+}
-+
- static s32
- brcmf_bss_connect_done(struct brcmf_cfg80211_info *cfg,
- 		       struct net_device *ndev, const struct brcmf_event_msg *e,
-@@ -6622,10 +6637,7 @@ brcmf_bss_connect_done(struct brcmf_cfg80211_info *cfg,
- 		conn_params.resp_ie = conn_info->resp_ie;
- 		conn_params.resp_ie_len = conn_info->resp_ie_len;
- 		authorized = completed &&
--			     (profile->use_fwsup == BRCMF_PROFILE_FWSUP_1X ||
--			      profile->use_fwsup == BRCMF_PROFILE_FWSUP_ROAM) &&
--			     brcmf_has_pmkid(conn_params.req_ie,
--					     conn_params.req_ie_len);
-+			     brcmf_fwsup_is_authorized(profile, &conn_params);
- 		cfg80211_connect_done(ndev, &conn_params, GFP_KERNEL);
- 		if (authorized)
- 			cfg80211_port_authorized(ndev, profile->bssid, NULL, 0,
-
----
-base-commit: 42aa76b3fd9278a8504dbfaf0a449993104d2a48
-change-id: 20260912-brcmfmac-4way-handshake-offload-authenticated-event-853f58ae203e
-
-Best regards,
--- 
-Janne Grunau <j@jannau.net>
-
+> I was expecting to land hers soon if the NFS folks don't pipe up. It is
+> one of the rare cases of still being open-coded, but the strlen() usage
+> was pre-existing to check for the trailing comma, so it's not a clean
+> seq_buf() conversion candidate...
+>
+> --
+> Kees Cook
