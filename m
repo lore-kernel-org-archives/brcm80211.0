@@ -1,57 +1,57 @@
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77BB43F482B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AECBE42C4F0
 	for <brcm80211@lists.linux.dev>; Tue, 15 Sep 2026 08:19:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.198
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.200
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789460423; cv=none; b=IxNXlx36E8EtH1b1xP2RlKDdCb+9t88Mj3WexJdZaVPHC7hO0p9jO5wLhCYbwNV7vp/ma57JJRJPw08agOorFfgcSZxjZ5/2/0zobvwDl4CNafc2MZC6oh0m5m2nzN2Edjj+pTnfOZ5ft/iuCp0lZSu/5EJkUPK4cIgDJfcsSqU=
+	t=1789460423; cv=none; b=XliUpSQmsd/QJNjfhImACnoNKf054lYJ743OiDUHaeZ8TjmXtPlUATNVB4K5jDK13fZ6zxAUR2Jhbgmaj+YQtE2VIn0uCmbQpMXjnLXIUB6FR3sUJZR3OzSODhdclBTVOFegIjxsl6YAlYtzSiFoZxsZ/3+PHesPENuIppRkagc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789460423; c=relaxed/simple;
-	bh=AdZQZFBZ+Sq+Xs3+ioKoxuNwDqkD/CEsMpiPWsVgYCg=;
+	bh=NfZ3UTUNDbDjVdxNaJ9EQv1Rzk566CEKZbIH1K+eaM8=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=ic7Qd/U8XX54xk5Ae+ljMQvxJ8UqavBIY2wqjtvpNXQWhkf1QMnzdU3FB0+AREMe96V8/2zN+AeLFOLemzTPVbkwvci1kU2Yvv2IL+zxpEP790YQVCERai2VbFOYpXHLsSE6adD00Rai4V//toF+hBnbpmDJXvVOXki0kBCzM60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--morbo.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=trGwKZ9H; arc=none smtp.client-ip=209.85.214.198
+	 To:Cc:Content-Type; b=S9pgC9G24fHgsmB3kVZP73/0P49J2Gtxh0mbDE/FwGaxwx1Zx8WvFaUvMcEcHKlPhSPcnV/miTkfgUpSjkPuV8RwJ0d8PXAKVu1ddcZz/jocTaYBSlmmMhKKPTJisoC+irA+jxXqia3E84PUFfdxL6zkTz7iE5cycT/VYPCHhrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--morbo.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=qCDtu2S+; arc=none smtp.client-ip=209.85.214.200
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--morbo.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="trGwKZ9H"
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2dcfed75f77so62046045ad.2
-        for <brcm80211@lists.linux.dev>; Tue, 15 Sep 2026 01:19:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="qCDtu2S+"
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2d94f086fedso58928385ad.1
+        for <brcm80211@lists.linux.dev>; Tue, 15 Sep 2026 01:19:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1789460391; x=1790065191; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1789460394; x=1790065194; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:from:subject
          :message-id:references:mime-version:in-reply-to:date:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=i189Z1372pvpafDRMVnLFn5IBf8O4Z3ONLFW1RCweBo=;
-        b=trGwKZ9H3aEdfIruFRK5bthfhzzN8eDMYTBZ6ixkLGAiaGS5e9nNgbvYYL19YFOVNg
-         cWoNKDm+3HGMAbr8ayC/b+X1ivPGMPMWspE4NQLvrJUYKDAjECzkrI2oWrRrNLTU75C9
-         DkbDH7wsj0B6+niVldBTMMF5+25VE/SZCqDW5oY07dTrh3o+pDTUuuk0rr8mgbooMdF5
-         MNOtrflYWePSHzMh0EFfnhdg0KWx21H2kXKE8CkK64xO0PgkMwMYYhaptKSK7DzCbS2a
-         Knhjy5GMmVy+7L9zmM7ypMlJE4uddVQF91aqWODA8B9ICk3vlD4WNatrtj0ivYXtF45m
-         YNvQ==
+        bh=fp8wJxWuumatGVjI+YCt9Q6O6hUP8tXGtI5nMGsUbio=;
+        b=qCDtu2S+bjhWRkzYSmRuPcY7PUB8BMXC4ANnPUoEg1QZVsQlzQ/OKh8U1wK3sG7hVp
+         SXaokw9Fq+IjM3bCFxugfp4jXXrDZUoK7qsNIi1tKxraezot35F3a6yjoIELOlvOsP3c
+         koFERwOVZpnJcQ3ofzygX03K0Q7K7IuXfaydkpUh6SvBPIdirSfmBNN+Hc+mNwSpqlcB
+         G9SDC/9PddQQSHobGvuzR52/bVFfAMYNKwUEzt3E7k5umueYJikUWbULdPn9hCfd9wLE
+         yf4XxBiDzthjRYP4sr15A4C+uTv/zvJGRtNQCtMXEp2jlM85j4oUHPwGymiyOn4U5c5i
+         Zubw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789460391; x=1790065191;
+        d=1e100.net; s=20260707; t=1789460394; x=1790065194;
         h=content-transfer-encoding:content-type:cc:to:from:subject
          :message-id:references:mime-version:in-reply-to:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=i189Z1372pvpafDRMVnLFn5IBf8O4Z3ONLFW1RCweBo=;
-        b=dx6YFBdfVePgwzJFeSmDK/jXXV4gk6zkWQeo9CApwiOH1NWAbKqyEUG9OoAln1jWWD
-         KhMF4dafMzh2qda/Jdft+/sjPbErYd/39hcqRnxS3UqC4Uyc8SUWF39opJ6o8qVairdC
-         QfhSlKnPyWV/6sbzwJulDmIHVR0fKySaf/7ik23y8okrbtryOHR9dzXHGcGAnGMfGG3c
-         ZkUFwIPP8kiz9uZbTg9OIs36QF4872DcsDmMSvZCqQt+w2mI6UDdcB3NJ+80p81wtQgE
-         0Zhp0zcpaSflN6kixbj42OS8vxWyJSSt+sQbvOzGttt1kKu330N3DwMkoQC2cOVowjFn
-         EHWQ==
-X-Forwarded-Encrypted: i=1; AKwUvBy7cg+HNZUllfPr7X6WTsWILnYJLdtmNKzu+dDMEZnnjQZdJRS+NQNnD3qixRll8cP+qxxKrFuhTmA=@lists.linux.dev
-X-Gm-Message-State: AFuF++kDR1jEpgmEmkWs/k4fjx9FEEHaYlUD0JUyS26wxjNlNLxjfImb
-	M32x5MPkPKXm//nocdGWp7rGzgXDvnPjV1Tfe49wcNu8mxOLjd7FdB8HEhRaxpRj6oa5BqnU98F
-	+
-X-Received: from plrd12.prod.google.com ([2002:a17:902:aa8c:b0:2db:8b6a:31a7])
- (user=morbo job=prod-delivery.src-stubby-dispatcher) by 2002:a17:903:388d:b0:2dd:143:d5
- with SMTP id d9443c01a7336-2dd6c75a396mr155065525ad.22.1789460390543; Tue, 15
- Sep 2026 01:19:50 -0700 (PDT)
-Date: Tue, 15 Sep 2026 08:18:19 +0000
+        bh=fp8wJxWuumatGVjI+YCt9Q6O6hUP8tXGtI5nMGsUbio=;
+        b=aqMtrKxRwlu210dUFbjQCZ0SE8t57TdIcqLEs/MxpkYmPeg0Rf5/FI8VFAVFZtQgcT
+         eR8h4u1A91TlQEgDsqCud9v0tin9sim9wg1QAmrw/HmAA1wGO3nlVINKS0D9Ze5+nVxC
+         bqZy25r40C5VHeReeNhFbnddW7e685Pg+vGpK7ZOCs4+wR4JnMas/ye15Uq18/o7JWqG
+         5kzsm2nn6DaD+ytg0w9GQTHCaFC2uY6fLkjx1FYGUe13Bhjah0p+nS7TzJZ63JWvsxvJ
+         Io1tY+y+G+yZGRrjZZdb/NhfM1koNU4C6taG+j0JX2LHZUCmmF94pfeYFlGJzAXA869O
+         Ag9Q==
+X-Forwarded-Encrypted: i=1; AKwUvBw5Do0D9Olie1EuS31D8an+wmcciWyQMcL2Cb7OcVGUyFYidHPhyk1c95z0yxg1wtiSQie+SYSSg4w=@lists.linux.dev
+X-Gm-Message-State: AFuF++nkJd3e4hMxYVxMTUpCianlfnIIisoxSZfLFQCdbnjols1KqR5r
+	cce3tlYZeTsi7fzIVcvwADHz55JGAe5O2g3aD6yH9yDh/s1QbU2jtP6d8otPtJTa/XbBsXdf8yl
+	N
+X-Received: from plbkw15.prod.google.com ([2002:a17:902:f90f:b0:2db:5cac:a627])
+ (user=morbo job=prod-delivery.src-stubby-dispatcher) by 2002:a17:902:ffd0:b0:2bf:27b2:4b80
+ with SMTP id d9443c01a7336-2dd8384ce53mr639785ad.14.1789460393875; Tue, 15
+ Sep 2026 01:19:53 -0700 (PDT)
+Date: Tue, 15 Sep 2026 08:18:23 +0000
 In-Reply-To: <20260915081910.4142719-1-morbo@google.com>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
@@ -61,9 +61,8 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
 References: <20260915081910.4142719-1-morbo@google.com>
 X-Mailer: git-send-email 2.55.0.1032.g73a4cd73de-goog
-Message-ID: <20260915081910.4142719-3-morbo@google.com>
-Subject: [PATCH 02/28] sunrpc: Refactor rpc_sockaddr2uaddr() to use snprintf()
- instead of strlcat()
+Message-ID: <20260915081910.4142719-7-morbo@google.com>
+Subject: [PATCH 06/28] comedi: comedi_bond: Refactor strlcat() to seq_buf in do_dev_config()
 From: Bill Wendling <morbo@google.com>
 To: linux-kernel@vger.kernel.org
 Cc: Bill Wendling <morbo@google.com>, codemender-patching+linux@google.com, 
@@ -124,18 +123,19 @@ Cc: Bill Wendling <morbo@google.com>, codemender-patching+linux@google.com,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-rpc_sockaddr2uaddr() formats the IP address into "addrbuf", formats the
-port into a temporary "portbuf" buffer with snprintf(), and then appends
-"portbuf" to "addrbuf" using strlcat().
+do_dev_config() builds a space-separated list of bonded devices in
+devpriv->name by formatting each "minor:subdev " pair into a temporary
+stack buffer with snprintf() and appending it with strlcat() in a loop.
 
-In preparation for removing the deprecated strlcat() API[1], capture the
-length returned by rpc_ntop4() and rpc_ntop6_noscopeid() and format the
-port directly onto the end of "addrbuf" with snprintf(). This eliminates
-the strlcat() call and the temporary "portbuf" buffer.
+In preparation for removing the deprecated strlcat() API[1], use struct
+seq_buf and seq_buf_printf() to format each entry directly into
+devpriv->name. This avoids repeated rescanning of devpriv->name and
+eliminates the temporary buffer.
 
 Link: https://github.com/KSPP/linux/issues/370 [1]
 Cc: codemender-patching+linux@google.com
-Assisted-by: CoPilot:3.5-sonnet [editor_update_file, shell_command_run]
+Assisted-by: SecurityEngineerAgent:Gemini2.5 [editor_update_file, make_kern=
+el_build_single_file]
 Signed-off-by: Bill Wendling <morbo@google.com>
 ---
 Cc: Russell King <linux@armlinux.org.uk>
@@ -249,58 +249,65 @@ Cc: devel@lists.orangefs.org
 Cc: linux-hardening@vger.kernel.org
 Cc: linux-sound@vger.kernel.org
 ---
- net/sunrpc/addr.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/comedi/drivers/comedi_bond.c | 16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
 
-diff --git a/net/sunrpc/addr.c b/net/sunrpc/addr.c
-index 97ff11973c49..a1e4173e5a53 100644
---- a/net/sunrpc/addr.c
-+++ b/net/sunrpc/addr.c
-@@ -264,18 +264,20 @@ EXPORT_SYMBOL_GPL(rpc_pton);
-  */
- char *rpc_sockaddr2uaddr(const struct sockaddr *sap, gfp_t gfp_flags)
- {
--	char portbuf[RPCBIND_MAXUADDRPLEN];
- 	char addrbuf[RPCBIND_MAXUADDRLEN];
- 	unsigned short port;
-+	size_t len;
+diff --git a/drivers/comedi/drivers/comedi_bond.c b/drivers/comedi/drivers/=
+comedi_bond.c
+index 8e10ecab4f0d..a10cfbd04c72 100644
+--- a/drivers/comedi/drivers/comedi_bond.c
++++ b/drivers/comedi/drivers/comedi_bond.c
+@@ -39,6 +39,7 @@
 =20
- 	switch (sap->sa_family) {
- 	case AF_INET:
--		if (rpc_ntop4(sap, addrbuf, sizeof(addrbuf)) =3D=3D 0)
-+		len =3D rpc_ntop4(sap, addrbuf, sizeof(addrbuf));
-+		if (len =3D=3D 0 || len >=3D sizeof(addrbuf))
- 			return NULL;
- 		port =3D ntohs(((struct sockaddr_in *)sap)->sin_port);
- 		break;
- 	case AF_INET6:
--		if (rpc_ntop6_noscopeid(sap, addrbuf, sizeof(addrbuf)) =3D=3D 0)
-+		len =3D rpc_ntop6_noscopeid(sap, addrbuf, sizeof(addrbuf));
-+		if (len =3D=3D 0 || len >=3D sizeof(addrbuf))
- 			return NULL;
- 		port =3D ntohs(((struct sockaddr_in6 *)sap)->sin6_port);
- 		break;
-@@ -283,11 +285,8 @@ char *rpc_sockaddr2uaddr(const struct sockaddr *sap, g=
-fp_t gfp_flags)
- 		return NULL;
+ #include <linux/module.h>
+ #include <linux/string.h>
++#include <linux/seq_buf.h>
+ #include <linux/slab.h>
+ #include <linux/comedi.h>
+ #include <linux/comedi/comedilib.h>
+@@ -170,10 +171,11 @@ static int do_dev_config(struct comedi_device *dev, s=
+truct comedi_devconfig *it)
+ {
+ 	struct comedi_bond_private *devpriv =3D dev->private;
+ 	DECLARE_BITMAP(devs_opened, COMEDI_NUM_BOARD_MINORS);
++	struct seq_buf s;
+ 	int i;
+=20
+ 	memset(&devs_opened, 0, sizeof(devs_opened));
+-	devpriv->name[0] =3D 0;
++	seq_buf_init(&s, devpriv->name, sizeof(devpriv->name));
+ 	/*
+ 	 * Loop through all comedi devices specified on the command-line,
+ 	 * building our device list.
+@@ -250,15 +252,9 @@ static int do_dev_config(struct comedi_device *dev, st=
+ruct comedi_devconfig *it)
+ 			}
+ 			devpriv->devs =3D devs;
+ 			devpriv->devs[devpriv->ndevs++] =3D bdev;
+-			{
+-				/* Append dev:subdev to devpriv->name */
+-				char buf[20];
+=20
+-				snprintf(buf, sizeof(buf), "%u:%u ",
+-					 bdev->minor, bdev->subdev);
+-				strlcat(devpriv->name, buf,
+-					sizeof(devpriv->name));
+-			}
++			/* Append dev:subdev to devpriv->name */
++			seq_buf_printf(&s, "%u:%u ", bdev->minor, bdev->subdev);
+ 		}
  	}
 =20
--	if (snprintf(portbuf, sizeof(portbuf),
--		     ".%u.%u", port >> 8, port & 0xff) >=3D (int)sizeof(portbuf))
--		return NULL;
--
--	if (strlcat(addrbuf, portbuf, sizeof(addrbuf)) >=3D sizeof(addrbuf))
-+	if (snprintf(addrbuf + len, sizeof(addrbuf) - len,
-+		     ".%u.%u", port >> 8, port & 0xff) >=3D sizeof(addrbuf) - len)
- 		return NULL;
+@@ -267,6 +263,8 @@ static int do_dev_config(struct comedi_device *dev, str=
+uct comedi_devconfig *it)
+ 		return -EINVAL;
+ 	}
 =20
- 	return kstrdup(addrbuf, gfp_flags);
-@@ -352,3 +351,4 @@ size_t rpc_uaddr2sockaddr(struct net *net, const char *=
-uaddr,
++	seq_buf_str(&s);
++
  	return 0;
  }
- EXPORT_SYMBOL_GPL(rpc_uaddr2sockaddr);
-+
+=20
 --=20
 2.55.0.1032.g73a4cd73de-goog
 
