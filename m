@@ -1,124 +1,146 @@
-Received: from mail-pg1-f227.google.com (mail-pg1-f227.google.com [209.85.215.227])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C725E49B5B1
-	for <brcm80211@lists.linux.dev>; Mon, 14 Sep 2026 20:05:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.227
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF39B29A9C3
+	for <brcm80211@lists.linux.dev>; Tue, 15 Sep 2026 00:50:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789416310; cv=none; b=uDpLKQw+ez1ZnaAUObKAdbSKcm3qF4Un1OpjtN/l5iJ70FohNpcHcv4ZWGYVgiw+to7fUzJZmgML9K+WMP0POvI3/16AyyA29EdFyPC9lytXXBzo/dqauEafaTOiHBp+72SmZFf7/OTOf5tkarRkPWBu/2MdPtUnsfqm8Yij9MI=
+	t=1789433452; cv=none; b=u8VRCbmy1s6r5AHNh+zKVRgQTQdYzXrjHb14QpTQ+jrM2gLl/avjrIPeIrgLXSPxkHKwb5FVrV8r5q3q044oG7dIn1viR7QyQV3ttY/5+N/MJSZc9v8k+YjL1/2WaGOcrRCGDlNr8RA3nTTk25kCiMYWMHVMY+voKsg8ROyIrAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789416310; c=relaxed/simple;
-	bh=AzKSoRwvTjlokWKwNtPUDkmp7fh7XU/ixZUbBOqey1Y=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sww9erkCxzaiqGjkRbYbZGlPJaL/1JIdBfgbAgULcKaVRPoI3YbtHjJpBUWOp+KYWLRca8CqxD+tx/0XE8P8y1ekqBU6frJ2m8hcg48enPGCpZ1qzT043Jtxm2Zr+0I4z91P9+w9Lcz2AJPvIifk8Ks4ogr1Sjm7LMbIxkgzP0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=cBUXtZig; arc=none smtp.client-ip=209.85.215.227
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+	s=arc-20240116; t=1789433452; c=relaxed/simple;
+	bh=RyxyZU6tvGVK3Cpsto128QhecmW8cGT4ht7LtYUq96k=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=I7+JtEWH44sSAF1wu53b86FV9u3Ms4em1BpPWkhBUy/DjEanDEF5bjrXSIUtPGP6XMpxk5HbUgCiJD2H46yF9BlwT+TuQLVEb8CB9TjsI7vvLMbmbmRIxpuBZiRfMxNI3wMjFuCHAdkyr96fnqVS9nvenIsdizrDMyx0PilbNN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=OubUc28K; arc=none smtp.client-ip=148.251.105.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="cBUXtZig"
-Received: by mail-pg1-f227.google.com with SMTP id 41be03b00d2f7-cc4dbcf2b85so1797396a12.3
-        for <brcm80211@lists.linux.dev>; Mon, 14 Sep 2026 13:05:08 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789416308; x=1790021108;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:dkim-signature:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=OIidc7nfo4IBJ7tzqZdeeXEx50mWtljjao4fEGgMHU8=;
-        b=CFrXqL0OlipqNmknh4gXJ8DaK0LnvqCqRJgfRD4QzxX1nz67ULKTsEQ+rWSUrIZBwe
-         7CaTNPxr1ABfvBVprGSZC0U/BOK9yQOaQ/iqytvPk/rNBTmlQWo+0+o2kRFepZjpGZI/
-         v5d1WAWEAxGGLH52e2E4wf5lGXC++f6NPS8vipdB+7iiGRHdYyNUe3Mg2+wUranP9JL4
-         /Nu2CDr8OF8FUMXh/RKAG+Ik0nE4t6732YWQiuhQTul+Q/aXfYMePQK7wZlw4eETbYQI
-         oTSXE9jM2guf+Egw+18VP3G0AgyiMvT0g+yCgcCfYXPD25DKjyJNcpiruoywo9pCRIn5
-         5+Fw==
-X-Forwarded-Encrypted: i=1; AKwUvBybTw2U2OOZyeg0CJL6UKWDvULMvM5vGdqCbRUfB3dq5dd/Y2+saB+fEZFcZ7xlFHUqBS9QPAJDejU=@lists.linux.dev
-X-Gm-Message-State: AFuF++l2qXzn9kVoxOieDnJ6gE+DnHeBRCbaYxJHu7cF0BWWlgdvKEVU
-	L9+UmIb5MSsh2NgTvEg1Oxjw6t4L1jL5MLeiyxSYVVo9zQfUBt5b24YoyNWMDi2RkBNRyOfmh/h
-	0bXc9EBHlEwjL9uN2/71ebanKpdNwftgklqP9vZW7U1UX+f+LAmksuGCeJSwetLcZeCr9xX6kET
-	jmLq+LxyFlx/c+QvA5jtTpHLjANYpAg/qjuvY4SCqkP6gjG/m53E8h5Gf/6wPs8ZONIuYgZEI1U
-	6DLeUxt2fknwlfj9wBJww==
-X-Gm-Gg: AYBFou0r8Yb/fXt+eXYdK/zBX10stDG0STR8v9BOg4h4sxAcMtnGHQ3xSdQAY8ZE9xI
-	6Fhxmv+8Qwjt9vXjvX3vCmcDeU2XVsmFH408b5mZ7HZK+Pc+yGeFt1mnic9drK52rfaBSExo3+i
-	72/uy3YYMPRrP5wlh9T2CIXZsTnzfq+ARrqVNbWWNekzI58xcZmRyCu5+93D6n33Y9HiL4efcpu
-	O3cvFETliDVgLp4knLZtbeU2Y7hM+cwXjVRvXlaiEqSuJfd92T5U3eaIycZb7PPpO/d0gE28A04
-	pWuZyHHmGrwhIt/QRKrMwXr81lWcFiBqaU78YL/in8KgbrbqLyEDLca8UQF4j6zst6LlCHDB6+W
-	VfeCt1JXCSQrrPcXKO5LfM/U+ZBZekGYzySlPiWVknECukMI1aSRgfDd9JD6xBtdhR29lR2JV96
-	r1I8jN1UsmysQC4x9XK8wytl73lG6eBNYzWYG94qY=
-X-Received: by 2002:a05:6a20:72a6:b0:3d1:60d3:99f8 with SMTP id adf61e73a8af0-3db4037d7e3mr8136267637.5.1789416307932;
-        Mon, 14 Sep 2026 13:05:07 -0700 (PDT)
-Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-25.dlp.protect.broadcom.com. [144.49.247.25])
-        by smtp-relay.gmail.com with ESMTPS id 5a478bee46e88-33ba4eba4bbsm184308eec.15.2026.09.14.13.05.07
-        for <brcm80211@lists.linux.dev>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 14 Sep 2026 13:05:07 -0700 (PDT)
-X-Relaying-Domain: broadcom.com
-X-CFilter-Loop: Reflected
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-90e80ce3597so86582046d6.1
-        for <brcm80211@lists.linux.dev>; Mon, 14 Sep 2026 13:05:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1789416306; x=1790021106; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=OIidc7nfo4IBJ7tzqZdeeXEx50mWtljjao4fEGgMHU8=;
-        b=cBUXtZigzfBXN3O+J5zhFVAVzwoC9pYuZn9BlZHnO+oQIcdOkmkx23pVisZtLZbZW9
-         kHoCg1yVAH52U9CgMrQgs8acmaIBpcdmVbTQAiIuzrJ5JbGKNvMpgAqwoisbe03urbtb
-         wtoQ+Zvs79npSLNR4moeVDVU3XAToOVPOmyfY=
-X-Forwarded-Encrypted: i=1; AKwUvByymF1lzlnJ74Od8dz0kxlOzn7D75d32wqZzwjAxawJRz3x78PvwKZN37gIuKAls+7p61XcWS926+Y=@lists.linux.dev
-X-Received: by 2002:a05:6214:5003:b0:90c:e613:4e33 with SMTP id 6a1803df08f44-9122e52e2a2mr65468076d6.23.1789416306073;
-        Mon, 14 Sep 2026 13:05:06 -0700 (PDT)
-X-Received: by 2002:a05:6214:5003:b0:90c:e613:4e33 with SMTP id 6a1803df08f44-9122e52e2a2mr65467406d6.23.1789416305608;
-        Mon, 14 Sep 2026 13:05:05 -0700 (PDT)
-Received: from bld-bun-02.bun.broadcom.net ([192.19.176.227])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-9120f47a6ebsm103081106d6.22.2026.09.14.13.05.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Sep 2026 13:05:05 -0700 (PDT)
-From: Arend van Spriel <arend.vanspriel@broadcom.com>
-To: Ryohei Hashimoto <laurel.medalist12@gmail.com>
-Cc: linux-wireless@vger.kernel.org,
-	brcm80211@lists.linux.dev,
-	brcm80211-dev-list.pdl@broadcom.com,
-	linux-kernel@vger.kernel.org,
-	Arend van Spriel <arend.vanspriel@broadcom.com>
-Subject: Re: [PATCH wireless-next v3] wifi: brcmfmac: log the firmware status when a connect fails
-Date: Mon, 14 Sep 2026 22:05:02 +0200
-Message-ID: <20260914200502.1747715-1-arend.vanspriel@broadcom.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260913165526.4426-1-laurel.medalist12@gmail.com>
-References: <20260913165526.4426-1-laurel.medalist12@gmail.com>
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="OubUc28K"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1789433447;
+	bh=RyxyZU6tvGVK3Cpsto128QhecmW8cGT4ht7LtYUq96k=;
+	h=From:Date:Subject:To:Cc:From;
+	b=OubUc28KqQgzJdCmtM+mgjdyWdAfjd09wXdR5s/dEr2kE466GPU6evpleWbaXF9zS
+	 VrKHFk9oOKn7tBSsYYkQ85TD2Ie95HAZuvcJ0r+xrd6DS+iVwfdmbJQpVECmnzTEtp
+	 FREi8Wa8H2PxPxG4hYVMm8H7gFcSvKjhsuy1D0xv+qvJbrT/xuaRg/sUZY5VKJu/Yz
+	 eAJXB3GVf0m4cRGVu5QdOb9QbzPIWYJWm5YruRBlZigiHqqsD/UzcyzyUUVPKGcYMN
+	 Qsod3qDrcDzJlxcocdeNJF3aS4lARFjPl42o2cHvEaOpmXtEnYMd6+Mar1k9jkOwzO
+	 Dla32fMuFSiGw==
+Received: from jupiter.universe (unknown [100.64.1.62])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: sre)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id D11D517E020C;
+	Tue, 15 Sep 2026 02:50:47 +0200 (CEST)
+Received: by jupiter.universe (Postfix, from userid 1000)
+	id 8733A48002B; Tue, 15 Sep 2026 02:50:47 +0200 (CEST)
+From: Sebastian Reichel <sebastian.reichel@collabora.com>
+Date: Tue, 15 Sep 2026 02:50:39 +0200
+Subject: [PATCH wireless-next v2] wifi: brcmfmac: Improve D3 substate
+ entering timeout handling
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260915-brcmfmac-bcm43752-suspend-fix-v2-1-1bd84914998b@collabora.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/42OzQ6CMBCEX8Xs2TXQyp8n38NwKO0iNdCSLiCG8
+ O4CvoDHmck3MwswBUsMt9MCgSbL1rtNiPMJdKPck9CaTYOIRBoVUY5V0F3dKY2V7q4ySwTyyD0
+ 5g7WdsU4TWZBRMUUGto4+0GYf/Q9420AtMaOjeYDyF/NYvUgP+8YONJYHHz7Hnyk+sD+npxhjl
+ CLJk1QWJkvlXfu2VZUP6qJ9B+W6rl/2g1IJ7wAAAA==
+X-Change-ID: 20260908-brcmfmac-bcm43752-suspend-fix-f6539eda1e0d
+To: Arend van Spriel <arend.vanspriel@broadcom.com>, 
+ Heiko Stuebner <heiko@sntech.de>
+Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev, 
+ brcm80211-dev-list.pdl@broadcom.com, linux-rockchip@lists.infradead.org, 
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
+ kernel@collabora.com, Sebastian Reichel <sebastian.reichel@collabora.com>
+X-Mailer: b4 0.16.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2977;
+ i=sebastian.reichel@collabora.com; h=from:subject:message-id;
+ bh=RyxyZU6tvGVK3Cpsto128QhecmW8cGT4ht7LtYUq96k=;
+ b=owJ4nAFtApL9kA0DAAoB2O7X88g7+poByyZiAGqolme4nuHWmpgOjksw+iy1a4fJGq0ufmzc0
+ PdYynyZ531Lk4kCMwQAAQoAHRYhBO9mDQdGP4tyanlUE9ju1/PIO/qaBQJqqJZnAAoJENju1/PI
+ O/qaO9QP+gJfY+1klvAccg/4UQb9UdDoh7tto9tPNQafA1WQkAP19eYYRIqItzjK/CfE59NB6NZ
+ c7rLGMMrbBx3+/I6jC51uCJM/GTaaDAwH9Njk6mPYpLxtANleGpT82PJeTwjCB/y1dnNdD+DDFY
+ hMTyCkrSwYzAsY+sZ/WFvsYGY76UxBePB2GQUDOR/Cr80LQNFe3SIh0FWSONwVX+xtKlEr5i9y4
+ 5ZBpJ5SSO6C+yNYQzcft6gJhMngKwAuAujK9FH7NynacgGRMBi67goZ0uVHJhCeQhCw22mFm4bf
+ 43mJLVzhA0R/vcpQByazUWJen24LWPjJJshyea3O/noUTz0Lhh+heYHSopB+V0ZzTOQQ4sO/LTT
+ E2zDdRCNtgdmhSp1saVvKtr3DvaGd31ccieX+nCJrCZQAbYRmbaSRm8lOiHRerL84ZwUJGP/pBS
+ psiTZfb7fxhTkYxxhyguYdfxv0wYPuxev5ylFudR0TP6QFIb6muw1PRW7FlJ7yjjxF6Zop/W39y
+ 6X3HVKMl1KdLqpJwJ++PnV4iWYOLPlBFFt7fQq6xLteXZYEXTH4vWmt4aj6e8eXdSixmCg7/+hS
+ 0gLFrUsqHVcoCOfFgM+97eSrwy+0cCo2cqu6pEHo/624pM7A6eYuuvjELa+BAaUiqLxTl1rE8jo
+ NjkBBSOMrxGVj+36jEZswzA==
+X-Developer-Key: i=sebastian.reichel@collabora.com; a=openpgp;
+ fpr=EF660D07463F8B726A795413D8EED7F3C83BFA9A
 
-On Mon, 14 Sep 2026 01:55:26 +0900, Ryohei Hashimoto wrote:
-> brcmf_bss_connect_done() receives the firmware event in @e but discards it
-> on the failure path.  Every failed connect is reported to cfg80211 as
-> WLAN_STATUS_AUTH_TIMEOUT (16), whatever the firmware actually said, so
-> userspace only ever sees:
-> 
->   wlan0: CTRL-EVENT-ASSOC-REJECT bssid=00:00:00:00:00:00 status_code=16
+Some firmwares (e.g. BCM43752) do not service the D3_INFORM mailbox
+handshake when idle, so the D3 ACK never arrives. If WoWL is not armed
+the device is going to be powered off during system suspend and
+re-probed on resume anyway (brcmf_pcie_pm_leave_D3() handles that), so
+the missing ACK is harmless and must not abort the whole system suspend.
+When WoWL is active the device has to stay powered with its state
+preserved, so keep treating the timeout as fatal.
 
-[...]
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+---
+This was tested with Rockchip RK3588 EVB1, which has a BCM43752 based
+WLAN card (AP6275P). This card is also used by a few other Rockchip
+boards (at least Khadas Edge2, RK3576 EVB1). Unfortunately
+linux-firmware does not contain any firmware files for this chip,
+so I used the files available from Armbian [0]:
+
+3779bd4f629961cf060a83cc5047a3b9b2d23c9d  brcmfmac43752-pcie.bin
+a471651d580b51da2a681e53c0cc3258eaa70e10  brcmfmac43752-pcie.clm_blob
+87294b22f4bf7b7f718cf24076f102df07e3c414  brcmfmac43752-pcie.txt
+
+[0] https://github.com/armbian/firmware/tree/master/brcm
+
+At least with that firmware the suspend command times out blocking
+system suspend. Testing on the Rockchip platform requires PCIe
+suspend support for it, which has been send separately.
+
+The patch is based on v7.3-rc1 and can go via -next as system suspend
+with mainline kernel needs quite some work on Rockchip anyways.
+
+Changes in v2:
+- Link to v1: https://patch.msgid.link/20260908-brcmfmac-bcm43752-suspend-fix-v1-1-32585639d763@collabora.com
+- Set prefix to wireless-next instead of net-next
+- Do not print error if the timeout is ignored
+---
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+index 55f4d7b970f2..17bae04c14b0 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+@@ -2652,9 +2652,13 @@ static int brcmf_pcie_pm_enter_D3(struct device *dev)
+ 	wait_event_timeout(devinfo->mbdata_resp_wait, devinfo->mbdata_completed,
+ 			   BRCMF_PCIE_MBDATA_TIMEOUT);
+ 	if (!devinfo->mbdata_completed) {
+-		brcmf_err(bus, "Timeout on response for entering D3 substate\n");
+-		brcmf_bus_change_state(bus, BRCMF_BUS_UP);
+-		return -EIO;
++		if (devinfo->wowl_enabled) {
++			brcmf_err(bus, "Timeout on response for entering D3 substate\n");
++			brcmf_bus_change_state(bus, BRCMF_BUS_UP);
++			return -EIO;
++		}
++
++		brcmf_dbg(PCIE, "No D3 ACK, continuing to power the device off\n");
+ 	}
  
-> The status reported to cfg80211 is left alone; changing it would alter what
-> userspace sees.
-> 
-> [1] https://github.com/RPi-Distro/firmware-nonfree/issues/38
-> [2] https://github.com/raspberrypi/firmware/issues/1829
-> 
-> Assisted-by: Claude:claude-opus-5
+ 	devinfo->state = BRCMFMAC_PCIE_STATE_DOWN;
 
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+---
+base-commit: cee9395acd8043be0644b25c34bfa86623f2b935
+change-id: 20260908-brcmfmac-bcm43752-suspend-fix-f6539eda1e0d
 
-Regards,
-Arend
+Best regards,
+--  
+Sebastian Reichel <sebastian.reichel@collabora.com>
 
-> Signed-off-by: Ryohei Hashimoto <laurel.medalist12@gmail.com>
-> ---
->  drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 2 ++
->  1 file changed, 2 insertions(+)
