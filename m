@@ -1,57 +1,57 @@
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AECBE42C4F0
-	for <brcm80211@lists.linux.dev>; Tue, 15 Sep 2026 08:19:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86237471CF2
+	for <brcm80211@lists.linux.dev>; Tue, 15 Sep 2026 08:20:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.198
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789460423; cv=none; b=XliUpSQmsd/QJNjfhImACnoNKf054lYJ743OiDUHaeZ8TjmXtPlUATNVB4K5jDK13fZ6zxAUR2Jhbgmaj+YQtE2VIn0uCmbQpMXjnLXIUB6FR3sUJZR3OzSODhdclBTVOFegIjxsl6YAlYtzSiFoZxsZ/3+PHesPENuIppRkagc=
+	t=1789460428; cv=none; b=FVK52v7ZEnstsFx6MBmjo145mDZEKaVBnEjMsQOps3g4WtydQG4jzj0fLQbMl/06E+0+5BX0jWCVVxNJLCPbcIBCjL8Iq2m6am6tbLlpkTP6S0TFQFD25O0BIwXxRGNYWMnGHsZPDqDfslt01N/ocjktw+zv003WxpImWr6qnLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789460423; c=relaxed/simple;
-	bh=NfZ3UTUNDbDjVdxNaJ9EQv1Rzk566CEKZbIH1K+eaM8=;
+	s=arc-20240116; t=1789460428; c=relaxed/simple;
+	bh=z7dasmw4/Yd5J5NMYLIKQKAVayxIH5dLlb/JPMHBnRA=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=S9pgC9G24fHgsmB3kVZP73/0P49J2Gtxh0mbDE/FwGaxwx1Zx8WvFaUvMcEcHKlPhSPcnV/miTkfgUpSjkPuV8RwJ0d8PXAKVu1ddcZz/jocTaYBSlmmMhKKPTJisoC+irA+jxXqia3E84PUFfdxL6zkTz7iE5cycT/VYPCHhrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--morbo.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=qCDtu2S+; arc=none smtp.client-ip=209.85.214.200
+	 To:Cc:Content-Type; b=W4ifyGks/BX5QdRLH2ZSp4J34EBN5k7edLdOSmRoiWsKOwmFCgC/s7QtI6wscLULZlYkXxp6zn+msmZuQzoJ7i3/DKxTpU4sjIU1bqufvEgLTvLSbzPSp9SqpgGLP56uzVV1KLVn66iNXmQX76p7OwkqjKMkHwVOTwVjMvLYZjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--morbo.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=jdKUL4X8; arc=none smtp.client-ip=209.85.214.198
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--morbo.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="qCDtu2S+"
-Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2d94f086fedso58928385ad.1
-        for <brcm80211@lists.linux.dev>; Tue, 15 Sep 2026 01:19:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="jdKUL4X8"
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2d02df2bf09so40883375ad.0
+        for <brcm80211@lists.linux.dev>; Tue, 15 Sep 2026 01:20:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1789460394; x=1790065194; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1789460408; x=1790065208; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:from:subject
          :message-id:references:mime-version:in-reply-to:date:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=fp8wJxWuumatGVjI+YCt9Q6O6hUP8tXGtI5nMGsUbio=;
-        b=qCDtu2S+bjhWRkzYSmRuPcY7PUB8BMXC4ANnPUoEg1QZVsQlzQ/OKh8U1wK3sG7hVp
-         SXaokw9Fq+IjM3bCFxugfp4jXXrDZUoK7qsNIi1tKxraezot35F3a6yjoIELOlvOsP3c
-         koFERwOVZpnJcQ3ofzygX03K0Q7K7IuXfaydkpUh6SvBPIdirSfmBNN+Hc+mNwSpqlcB
-         G9SDC/9PddQQSHobGvuzR52/bVFfAMYNKwUEzt3E7k5umueYJikUWbULdPn9hCfd9wLE
-         yf4XxBiDzthjRYP4sr15A4C+uTv/zvJGRtNQCtMXEp2jlM85j4oUHPwGymiyOn4U5c5i
-         Zubw==
+        bh=jabuqrMs8PQTYoTuRH1Tce2jM5ZfyHhnXojFxmEofr0=;
+        b=jdKUL4X8rs6dom2maRuppMfoEa1hG8lZs7ztyGFFDIn9AyZtWivabJBUsy/VDZkQMe
+         n1Q4zerUfxeXaW5SKYXCKMf+gqwL8UXBnE0hPY3qPnYFFxVJafm9BJRelcAWcsd8DNVd
+         iVLhVBRQ49kWfpPsLqi98kzSLVuwvHInu75VutCaH9V6G57sRXPgAslpyLwEvqMVihaC
+         hYV61mv0F456XnchxbVulUPVDfm42yJm1qMDGc9paLDF7tkmOLwqBTJnbQ+pM6YlppUj
+         mMBaKyj7lSTMgRSb+sAG2bPb2WN3lymLTtiJm4MleogVEuSg1BdjUD3SQ5+hPwQt6w4H
+         wvjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789460394; x=1790065194;
+        d=1e100.net; s=20260707; t=1789460408; x=1790065208;
         h=content-transfer-encoding:content-type:cc:to:from:subject
          :message-id:references:mime-version:in-reply-to:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=fp8wJxWuumatGVjI+YCt9Q6O6hUP8tXGtI5nMGsUbio=;
-        b=aqMtrKxRwlu210dUFbjQCZ0SE8t57TdIcqLEs/MxpkYmPeg0Rf5/FI8VFAVFZtQgcT
-         eR8h4u1A91TlQEgDsqCud9v0tin9sim9wg1QAmrw/HmAA1wGO3nlVINKS0D9Ze5+nVxC
-         bqZy25r40C5VHeReeNhFbnddW7e685Pg+vGpK7ZOCs4+wR4JnMas/ye15Uq18/o7JWqG
-         5kzsm2nn6DaD+ytg0w9GQTHCaFC2uY6fLkjx1FYGUe13Bhjah0p+nS7TzJZ63JWvsxvJ
-         Io1tY+y+G+yZGRrjZZdb/NhfM1koNU4C6taG+j0JX2LHZUCmmF94pfeYFlGJzAXA869O
-         Ag9Q==
-X-Forwarded-Encrypted: i=1; AKwUvBw5Do0D9Olie1EuS31D8an+wmcciWyQMcL2Cb7OcVGUyFYidHPhyk1c95z0yxg1wtiSQie+SYSSg4w=@lists.linux.dev
-X-Gm-Message-State: AFuF++nkJd3e4hMxYVxMTUpCianlfnIIisoxSZfLFQCdbnjols1KqR5r
-	cce3tlYZeTsi7fzIVcvwADHz55JGAe5O2g3aD6yH9yDh/s1QbU2jtP6d8otPtJTa/XbBsXdf8yl
-	N
-X-Received: from plbkw15.prod.google.com ([2002:a17:902:f90f:b0:2db:5cac:a627])
- (user=morbo job=prod-delivery.src-stubby-dispatcher) by 2002:a17:902:ffd0:b0:2bf:27b2:4b80
- with SMTP id d9443c01a7336-2dd8384ce53mr639785ad.14.1789460393875; Tue, 15
- Sep 2026 01:19:53 -0700 (PDT)
-Date: Tue, 15 Sep 2026 08:18:23 +0000
+        bh=jabuqrMs8PQTYoTuRH1Tce2jM5ZfyHhnXojFxmEofr0=;
+        b=Up/+aQtGehqOJi31y32oH7QIwpaVP5Zlk7R2SgzL1xtA3QZ7L2DmEKPT6DlYm9UMNL
+         wt5OQSJFeglMsf/9zVwZgJ682D+Mx6JmJXKTtQng9rDf45EvKnqRCk/ea47liZKiJcNg
+         KSsGVjKLcLoTEh9/ZpcDy17Eg+KtbNzyGT9wwxg/JPOgpG1A1BHdPnP2KXrcFHrwokLP
+         cAvyGuMQH1SyR63KlTmAt/xFPV31KQFqJQlePozDYqTn85xDXEGLqjiKITVgmjiRWELY
+         1O9rozioJhVU5z4JcJGDMS4PW59RltctMn7qpbx+8Kx8obQvEVHQvbgqeDLFuYln7Oni
+         akjQ==
+X-Forwarded-Encrypted: i=1; AKwUvByLfpP1+ubdeCGow0VTH+bM03JWhLi2b6RtbV/eL+MBJYhNGKv8QPs6PsmEtcMGgj8Ra8W+H9DzsXo=@lists.linux.dev
+X-Gm-Message-State: AFuF++mTRkNXqZn/RMrrWeGXX2lB9pEaTIzJyu2GXWB9I7EKzspcdvKq
+	j7fTQ82Kj01t1B4oSy3BiipRzlRJHh0IirqfdwvkWTsnVuFy2V4LAK+0Gdlq2qIILKURfOBSlWZ
+	z
+X-Received: from plde9.prod.google.com ([2002:a17:902:d389:b0:2db:820a:9228])
+ (user=morbo job=prod-delivery.src-stubby-dispatcher) by 2002:a17:902:f786:b0:2dd:4070:8f5
+ with SMTP id d9443c01a7336-2dd6c758602mr148465515ad.21.1789460407562; Tue, 15
+ Sep 2026 01:20:07 -0700 (PDT)
+Date: Tue, 15 Sep 2026 08:18:32 +0000
 In-Reply-To: <20260915081910.4142719-1-morbo@google.com>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
@@ -61,8 +61,8 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
 References: <20260915081910.4142719-1-morbo@google.com>
 X-Mailer: git-send-email 2.55.0.1032.g73a4cd73de-goog
-Message-ID: <20260915081910.4142719-7-morbo@google.com>
-Subject: [PATCH 06/28] comedi: comedi_bond: Refactor strlcat() to seq_buf in do_dev_config()
+Message-ID: <20260915081910.4142719-16-morbo@google.com>
+Subject: [PATCH 15/28] orangefs: Use seq_buf for debug help string generation
 From: Bill Wendling <morbo@google.com>
 To: linux-kernel@vger.kernel.org
 Cc: Bill Wendling <morbo@google.com>, codemender-patching+linux@google.com, 
@@ -123,19 +123,23 @@ Cc: Bill Wendling <morbo@google.com>, codemender-patching+linux@google.com,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-do_dev_config() builds a space-separated list of bonded devices in
-devpriv->name by formatting each "minor:subdev " pair into a temporary
-stack buffer with snprintf() and appending it with strlcat() in a loop.
+orangefs_prepare_debugfs_help_string() constructs the debugfs help text in
+a dynamically allocated buffer using repeated strlcat() calls across
+keyword loops, rescanning the buffer on every append.
 
 In preparation for removing the deprecated strlcat() API[1], use struct
-seq_buf and seq_buf_printf() to format each entry directly into
-devpriv->name. This avoids repeated rescanning of devpriv->name and
-eliminates the temporary buffer.
+seq_buf to build the help string. This tracks the write position across
+the loops, allows formatting each keyword line with a single
+seq_buf_printf() call, and checks for truncation via
+seq_buf_has_overflowed().
+
+Additionally, replace the final strlcat() call that copies the completed
+string into debug_help_string with strscpy().
 
 Link: https://github.com/KSPP/linux/issues/370 [1]
 Cc: codemender-patching+linux@google.com
-Assisted-by: SecurityEngineerAgent:Gemini2.5 [editor_update_file, make_kern=
-el_build_single_file]
+Assisted-by: Gemini:gemini-2.0-flash-exp [shell_command_run, editor_update_=
+file]
 Signed-off-by: Bill Wendling <morbo@google.com>
 ---
 Cc: Russell King <linux@armlinux.org.uk>
@@ -249,65 +253,97 @@ Cc: devel@lists.orangefs.org
 Cc: linux-hardening@vger.kernel.org
 Cc: linux-sound@vger.kernel.org
 ---
- drivers/comedi/drivers/comedi_bond.c | 16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
+ fs/orangefs/orangefs-debugfs.c | 36 +++++++++++++---------------------
+ 1 file changed, 14 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/comedi/drivers/comedi_bond.c b/drivers/comedi/drivers/=
-comedi_bond.c
-index 8e10ecab4f0d..a10cfbd04c72 100644
---- a/drivers/comedi/drivers/comedi_bond.c
-+++ b/drivers/comedi/drivers/comedi_bond.c
-@@ -39,6 +39,7 @@
-=20
- #include <linux/module.h>
- #include <linux/string.h>
-+#include <linux/seq_buf.h>
+diff --git a/fs/orangefs/orangefs-debugfs.c b/fs/orangefs/orangefs-debugfs.=
+c
+index 9f94919a6bc6..6e2f9887eab4 100644
+--- a/fs/orangefs/orangefs-debugfs.c
++++ b/fs/orangefs/orangefs-debugfs.c
+@@ -37,6 +37,7 @@
+  */
+ #include <linux/debugfs.h>
  #include <linux/slab.h>
- #include <linux/comedi.h>
- #include <linux/comedi/comedilib.h>
-@@ -170,10 +171,11 @@ static int do_dev_config(struct comedi_device *dev, s=
-truct comedi_devconfig *it)
- {
- 	struct comedi_bond_private *devpriv =3D dev->private;
- 	DECLARE_BITMAP(devs_opened, COMEDI_NUM_BOARD_MINORS);
++#include <linux/seq_buf.h>
+=20
+ #include <linux/uaccess.h>
+=20
+@@ -623,10 +624,10 @@ int orangefs_prepare_debugfs_help_string(int at_boot)
+ 	char *client_title =3D "Client Debug Keywords:\n";
+ 	char *kernel_title =3D "Kernel Debug Keywords:\n";
+ 	size_t string_size =3D  DEBUG_HELP_STRING_SIZE;
+-	size_t result_size;
+ 	size_t i;
+ 	char *new;
+ 	int rc =3D -EINVAL;
 +	struct seq_buf s;
- 	int i;
 =20
- 	memset(&devs_opened, 0, sizeof(devs_opened));
--	devpriv->name[0] =3D 0;
-+	seq_buf_init(&s, devpriv->name, sizeof(devpriv->name));
- 	/*
- 	 * Loop through all comedi devices specified on the command-line,
- 	 * building our device list.
-@@ -250,15 +252,9 @@ static int do_dev_config(struct comedi_device *dev, st=
-ruct comedi_devconfig *it)
- 			}
- 			devpriv->devs =3D devs;
- 			devpriv->devs[devpriv->ndevs++] =3D bdev;
--			{
--				/* Append dev:subdev to devpriv->name */
--				char buf[20];
+ 	gossip_debug(GOSSIP_UTILS_DEBUG, "%s: start\n", __func__);
 =20
--				snprintf(buf, sizeof(buf), "%u:%u ",
--					 bdev->minor, bdev->subdev);
--				strlcat(devpriv->name, buf,
--					sizeof(devpriv->name));
--			}
-+			/* Append dev:subdev to devpriv->name */
-+			seq_buf_printf(&s, "%u:%u ", bdev->minor, bdev->subdev);
- 		}
+@@ -640,17 +641,14 @@ int orangefs_prepare_debugfs_help_string(int at_boot)
+ 		goto out;
  	}
 =20
-@@ -267,6 +263,8 @@ static int do_dev_config(struct comedi_device *dev, str=
-uct comedi_devconfig *it)
- 		return -EINVAL;
- 	}
-=20
-+	seq_buf_str(&s);
++	seq_buf_init(&s, new, string_size);
 +
- 	return 0;
- }
+ 	/*
+-	 * strlcat(dst, src, size) will append at most
+-	 * "size - strlen(dst) - 1" bytes of src onto dst,
+-	 * null terminating the result, and return the total
+-	 * length of the string it tried to create.
+-	 *
+ 	 * We'll just plow through here building our new debug
+-	 * help string and let strlcat take care of assuring that
++	 * help string and let seq_buf take care of assuring that
+ 	 * dst doesn't overflow.
+ 	 */
+-	strlcat(new, client_title, string_size);
++	seq_buf_puts(&s, client_title);
 =20
+ 	if (!at_boot) {
+=20
+@@ -665,24 +663,18 @@ int orangefs_prepare_debugfs_help_string(int at_boot)
+ 			goto out;
+ 		}
+=20
+-		for (i =3D 0; i < cdm_element_count; i++) {
+-			strlcat(new, "\t", string_size);
+-			strlcat(new, cdm_array[i].keyword, string_size);
+-			strlcat(new, "\n", string_size);
+-		}
++		for (i =3D 0; i < cdm_element_count; i++)
++			seq_buf_printf(&s, "\t%s\n", cdm_array[i].keyword);
+ 	}
+=20
+-	strlcat(new, "\n", string_size);
+-	strlcat(new, kernel_title, string_size);
++	seq_buf_puts(&s, "\n");
++	seq_buf_puts(&s, kernel_title);
+=20
+-	for (i =3D 0; i < num_kmod_keyword_mask_map; i++) {
+-		strlcat(new, "\t", string_size);
+-		strlcat(new, s_kmod_keyword_mask_map[i].keyword, string_size);
+-		result_size =3D strlcat(new, "\n", string_size);
+-	}
++	for (i =3D 0; i < num_kmod_keyword_mask_map; i++)
++		seq_buf_printf(&s, "\t%s\n", s_kmod_keyword_mask_map[i].keyword);
+=20
+ 	/* See if we tried to put too many bytes into "new"... */
+-	if (result_size >=3D string_size) {
++	if (seq_buf_has_overflowed(&s)) {
+ 		kfree(new);
+ 		goto out;
+ 	}
+@@ -692,7 +684,7 @@ int orangefs_prepare_debugfs_help_string(int at_boot)
+ 	} else {
+ 		mutex_lock(&orangefs_help_file_lock);
+ 		memset(debug_help_string, 0, DEBUG_HELP_STRING_SIZE);
+-		strlcat(debug_help_string, new, string_size);
++		strscpy(debug_help_string, new, DEBUG_HELP_STRING_SIZE);
+ 		mutex_unlock(&orangefs_help_file_lock);
+ 		kfree(new);
+ 	}
 --=20
 2.55.0.1032.g73a4cd73de-goog
 
