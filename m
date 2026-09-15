@@ -1,57 +1,57 @@
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4117A46DFF0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD4F46C821
 	for <brcm80211@lists.linux.dev>; Tue, 15 Sep 2026 08:20:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.197
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789460445; cv=none; b=RnPsXZzBbUkeGhgaM03l6VsYlZMwI0p1TiET+P7uzOC8I7B65BlV8VTli7gY+8uUjxpv8k4Kh2+Z+x05EZwKC0b9rc//SwVB3qfwVwC6zPDT1lJMjA8XOoYFWyKpvCKRCAip7BAhlHhm0T0g7TtWI+n4qEn7smWHl0XTcP/rWrM=
+	t=1789460448; cv=none; b=jbKp1YNeqCRE4pjzTxyEyLrr7sRYZRGxboj7qWi1SYShhl2wP65/qWJIjXaQ/95kFWroSS0kaSgkZk8V8uMUy2+laXZ2YbXYn3oBLXD4mH63sM0rFbxnGD6e7AsqFXdXq6Xr9eOBmSEkCOlokVTTtF5joRctZwrLky/BFAF8e8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789460445; c=relaxed/simple;
-	bh=Hf8Hcf3/GVCrKP3bnfnvDYzjoz8pInTEuZeXHBnhpZg=;
+	s=arc-20240116; t=1789460448; c=relaxed/simple;
+	bh=OaAwr1sBjpntRvDMR8Yr1mj2+C2DlJcpETypf5U3EWo=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=qcSw6Z0Cw575TgwMaZVziwBsfxqwcyd7Asbn+DSctvikQdmUOUo2AOpkIj4h3F+aSd99XzcMtkjmtEkNmv7lh9t9C/sX6nkwMb+mAWTBn5mz2bCNDUgJgFTVb6oBGTkcy8eq2ZwYa8B8Y8JKZSYJgBNPtaWCQnirTm7IoNV+qFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--morbo.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Z1x08xHh; arc=none smtp.client-ip=209.85.214.197
+	 To:Cc:Content-Type; b=mS1X7Eo8sN/CopLNWvOrfH1ci/Adgk/P+8pjdirUw03R2BYOWhSLE3vfYHooRaH2zNm+5UBvkJ1co4RqfFfK1tvtbsYpl6272zmIxo123Cp4ATfOpBfcTwxYH+ZVAn63RTJzJspZKHXDZbTACOJfz8eVh3O7cloYRPE7rgVsmaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--morbo.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=sO9jykEa; arc=none smtp.client-ip=209.85.216.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--morbo.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Z1x08xHh"
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2cfc52ddc55so61784065ad.3
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="sO9jykEa"
+Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-38ec0f510a9so8327543a91.2
         for <brcm80211@lists.linux.dev>; Tue, 15 Sep 2026 01:20:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1789460398; x=1790065198; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1789460399; x=1790065199; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:from:subject
          :message-id:references:mime-version:in-reply-to:date:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=q9qHU7CDEu6zWWmniYe9q2ucwWYfoa3UieeTJM1aJto=;
-        b=Z1x08xHhmbuu6TEbZvI3zUNc995GOKdY7a7yzQ09RXa/cv15C0Y5986vE8kJdWN7it
-         12WBjXYkv08AaAIHcajqg08oeYhlald3+j7dPAgBuSkgUvXLRwBr3ylZTgcufl1tnLBU
-         C/eBf+xQ6koJ9lynb953Iv1TSsxP2A6k3tki5HezOivS7SjTQq3H/c/eBqK9AV5mqrkh
-         3T2+egPAcMdqjLfHvxebET+zEMXhBGp9PYKD/4kcdbAElGvhvWnMmAIzeG8YT82WZGsy
-         dfqSxZOjKu37hHHhYSpNOrrwy1jIt+V/etaCzzSBDbyHHz6zeKRGDtX9tStbsa3t7v6y
-         0S1w==
+        bh=ANECGYJQk2+Ya+FPrAm+IsCBeyM6Er0meffRIzFfkVU=;
+        b=sO9jykEaDb+3nNG78ZyxtEsps7iLY10x4V+iey+hfFjYWmhgI0w9ozgFuhfAPx8Rpa
+         43GhHcXtyprZgMVoB2ybJnIS25FU8WZwGve9R24alVRTyYKW+aWSxnnChb52q8Jd0A1Y
+         aALvCu0XupY9jSWWeiHehjRs8UJm0seBRmQ0hUSjy2SrXoCHDMM89oxS3knFlRGwOnjp
+         ekBbd7GI71VpKf7FCoOVFFKuZ13QTfEUe1tI0a6Jl2gTX7FQ4sQijmzOv6t6j0QSymWs
+         Pldj+SttyY6iEqraNglnvuRzt7BPgSMoHVXZ33gKgR11A1npIPjYbBAsUd2tEKW45h1I
+         7hng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789460398; x=1790065198;
+        d=1e100.net; s=20260707; t=1789460399; x=1790065199;
         h=content-transfer-encoding:content-type:cc:to:from:subject
          :message-id:references:mime-version:in-reply-to:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=q9qHU7CDEu6zWWmniYe9q2ucwWYfoa3UieeTJM1aJto=;
-        b=1Zq6ijp17D8XBC88C2kmUMEtUtumHVCuzJg3pTP6ayfXA56RYMkWGKfjsGIRek4xRK
-         HaFW+O8hQjvmXYt0a2bm5PRU3pMvRsN7pirIz611uVPf7yWjlGJebQS3W1KA9ne4JCEA
-         gjsG5ibxD/BnXCQDoNuh0Py54SAQwtUhzDWUakTaufCQqHkbfj++aQgODtuEF9iu6wVk
-         +X+fBidjtpkgHsta7qMeYuY9FLWGT1JjFD4AYQ0Oo1WB8NFogyItSMOgWvjh4Pc6OmyT
-         9W/yhB4FBi7gxPtO4ki1XNdVQ9jYgmXjItCEMemZEqi3xSWuRFIZfGODHWYVpelSMtT9
-         4Isg==
-X-Forwarded-Encrypted: i=1; AKwUvBzaK9EHNm+Sw2zONmE77tWuRMbHx1vWRsZBYbR3VE/fgsPCbHQBIcAIPLhjeoQwVKixQOHECjG4vqA=@lists.linux.dev
-X-Gm-Message-State: AFuF++lIJZNhp2JWi4efdvO3P/qa4fd7XsVXKITfizx0fn2AxfnG9F4q
-	csnnL1XOcfhGe8MCTrwokfiBzSZGdctir94sfWJChqqsxtUOGEW0RAqXhtfU9m8GQGm9vuMuOvz
-	d
-X-Received: from plhc17.prod.google.com ([2002:a17:903:2351:b0:2cf:ca4d:25e3])
- (user=morbo job=prod-delivery.src-stubby-dispatcher) by 2002:a17:903:2408:b0:2d8:d4ce:9f32
- with SMTP id d9443c01a7336-2dd83869ae3mr512075ad.16.1789460397125; Tue, 15
- Sep 2026 01:19:57 -0700 (PDT)
-Date: Tue, 15 Sep 2026 08:18:27 +0000
+        bh=ANECGYJQk2+Ya+FPrAm+IsCBeyM6Er0meffRIzFfkVU=;
+        b=q1dCxcw/7sRGnr5qr9NJEW1caOdF7CnPDqNdbZ5juZ8TaGFZvXYibrzLVwW7Yr1jEb
+         89FAa4i95nBJyv3vA9lmeGEv9TSbq3AJ4nXE/tIXJ5fH+5jZNUqyER7+57Xt/OIQQpu7
+         jx4f3AYvlbYNUdvaF0hGUQeIFQaW7EO7g/t3aDTPgkuuX8+dWhSqZ7yHhBIzm6KrfN/4
+         95NzEeRoMEP1Rw9BHW/tdP+487rV6+Oyd5WS8N4SYjyckNy0NcLpU3vVp0EX1k5ARyC0
+         jadk2V4KU3eNMdwZikO/eiZqmdGs0Sbcc8ZlgOHQX3/xAmZXz7ZY/9tPtQ+Z6gVHNCl6
+         LF7Q==
+X-Forwarded-Encrypted: i=1; AKwUvBxt0U2DPCiddcYmomffHf/QYxQl2+l8rKvg7UkE1qXKwoIZVJwSFLxdJVliQnrpjG0MHRhF+FznBjk=@lists.linux.dev
+X-Gm-Message-State: AFuF++nDnpcH75knjPyQeC/ehg83CxXryMuGZyFVA7TOwAahLsXZ+gna
+	Q0hoSAXQ8iwhk7Mx5x9g7VPFS6UaGCMW739ICf6qAPe05sWlN0WN4ukGWPQyygohe087BoqMt7W
+	q
+X-Received: from pllj10.prod.google.com ([2002:a17:902:758a:b0:2dd:63c:daa3])
+ (user=morbo job=prod-delivery.src-stubby-dispatcher) by 2002:a17:902:ccd1:b0:2dd:40cb:a04c
+ with SMTP id d9443c01a7336-2dd8386925cmr476775ad.19.1789460398847; Tue, 15
+ Sep 2026 01:19:58 -0700 (PDT)
+Date: Tue, 15 Sep 2026 08:18:29 +0000
 In-Reply-To: <20260915081910.4142719-1-morbo@google.com>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
@@ -61,8 +61,8 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
 References: <20260915081910.4142719-1-morbo@google.com>
 X-Mailer: git-send-email 2.55.0.1032.g73a4cd73de-goog
-Message-ID: <20260915081910.4142719-11-morbo@google.com>
-Subject: [PATCH 10/28] of/fdt: Replace strlcat() with snprintf() in early_init_dt_scan_chosen()
+Message-ID: <20260915081910.4142719-13-morbo@google.com>
+Subject: [PATCH 12/28] fortify: Convert strlcat() to snprintf() in strcat()
 From: Bill Wendling <morbo@google.com>
 To: linux-kernel@vger.kernel.org
 Cc: Bill Wendling <morbo@google.com>, codemender-patching+linux@google.com, 
@@ -123,22 +123,21 @@ Cc: Bill Wendling <morbo@google.com>, codemender-patching+linux@google.com,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-When CONFIG_CMDLINE_EXTEND is enabled, early_init_dt_scan_chosen() uses
-two strlcat() calls to append a space and CONFIG_CMDLINE to the command
-line buffer.
+The fortified implementation of strcat() in include/linux/fortify-string.h
+currently relies on strlcat() to perform bounded concatenation and detect
+buffer overflows.
 
 In preparation for removing the deprecated strlcat() API[1], replace the
-strlcat() calls with a single snprintf() call using the existing string
-length.
-
-Additionally, check for a NULL initial_boot_params pointer and jump to
-"handle_cmdline" so that CONFIG_CMDLINE handling still occurs without
-dereferencing a NULL FDT pointer in fdt_path_offset().
+strlcat() call in strcat(). When the destination buffer size is unknown
+(SIZE_MAX), call __underlying_strcat() directly. Otherwise, determine the
+destination length with __fortify_strlen() and append the source string
+using __builtin_snprintf(), preserving the existing fortify_panic() check
+on overflow.
 
 Link: https://github.com/KSPP/linux/issues/370 [1]
 Cc: codemender-patching+linux@google.com
-Assisted-by: Assistant:Claude-3.5-Sonnet [editor_update_file, shell_command=
-_run]
+Assisted-by: SecurityEngineer:Gemini1.5Pro [editor_update_file, shell_comma=
+nd_run, test_runner_run_kunit_test]
 Signed-off-by: Bill Wendling <morbo@google.com>
 ---
 Cc: Russell King <linux@armlinux.org.uk>
@@ -252,39 +251,30 @@ Cc: devel@lists.orangefs.org
 Cc: linux-hardening@vger.kernel.org
 Cc: linux-sound@vger.kernel.org
 ---
- drivers/of/fdt.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ include/linux/fortify-string.h | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/of/fdt.c b/drivers/of/fdt.c
-index a64afc3ded3d..311021a83f03 100644
---- a/drivers/of/fdt.c
-+++ b/drivers/of/fdt.c
-@@ -1095,6 +1095,9 @@ int __init early_init_dt_scan_chosen(char *cmdline)
- 	const void *rng_seed;
- 	const void *fdt =3D initial_boot_params;
+diff --git a/include/linux/fortify-string.h b/include/linux/fortify-string.=
+h
+index cf841dc71fef..0b489124bfcb 100644
+--- a/include/linux/fortify-string.h
++++ b/include/linux/fortify-string.h
+@@ -363,7 +363,12 @@ __FORTIFY_INLINE __diagnose_as(__builtin_strcat, 1, 2)
+ char *strcat(char * const POS p, const char *q)
+ {
+ 	const size_t p_size =3D __member_size(p);
+-	const size_t wanted =3D strlcat(p, q, p_size);
++
++	if (p_size =3D=3D SIZE_MAX)
++		return __underlying_strcat(p, q);
++
++	const size_t p_len =3D __fortify_strlen(p);
++	const size_t wanted =3D p_len + __builtin_snprintf(p + p_len, p_size - p_=
+len, "%s", q);
 =20
-+	if (!fdt)
-+		goto handle_cmdline;
-+
- 	node =3D fdt_path_offset(fdt, "/chosen");
- 	if (node < 0)
- 		node =3D fdt_path_offset(fdt, "/chosen@0");
-@@ -1133,8 +1136,12 @@ int __init early_init_dt_scan_chosen(char *cmdline)
- 	 */
- #ifdef CONFIG_CMDLINE
- #if defined(CONFIG_CMDLINE_EXTEND)
--	strlcat(cmdline, " ", COMMAND_LINE_SIZE);
--	strlcat(cmdline, CONFIG_CMDLINE, COMMAND_LINE_SIZE);
-+	{
-+		size_t len =3D strlen(cmdline);
-+
-+		if (len < COMMAND_LINE_SIZE)
-+			snprintf(cmdline + len, COMMAND_LINE_SIZE - len, " %s", CONFIG_CMDLINE)=
+ 	if (p_size <=3D wanted)
+ 		fortify_panic(FORTIFY_FUNC_strcat, FORTIFY_WRITE, p_size, wanted + 1, p)=
 ;
-+	}
- #elif defined(CONFIG_CMDLINE_FORCE)
- 	strscpy(cmdline, CONFIG_CMDLINE, COMMAND_LINE_SIZE);
- #else
 --=20
 2.55.0.1032.g73a4cd73de-goog
 
