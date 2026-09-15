@@ -1,57 +1,57 @@
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DDAD471431
-	for <brcm80211@lists.linux.dev>; Tue, 15 Sep 2026 08:20:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F125746EF69
+	for <brcm80211@lists.linux.dev>; Tue, 15 Sep 2026 08:20:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.200
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789460456; cv=none; b=C9OZCNFqZYvK0wWZ8qAVrtFv0r49lJvx/jBmsZdWIH531ZF7BdjRt2kLxDGqGh7vPiIdFsFZHTMVozxXAgbmbeYPt2QFHE2g1sbbjPO+i5OvtkFi7nMVEG4yNwxo/k01/8oS2g5DYtdW/4kXhIpIKTsD/LAwrHlKYvJd5VqMg6Y=
+	t=1789460460; cv=none; b=cPyvWKxdV5/C/ZJpIA7UEg/6RLbIM01Vs7dZndmBUWJ+MpU5JPFQ9jyIMjCl0ZyZxYG2clP6XtGJb5xKxHmpM8/kjagY//y4btWFbAhCJ6a7BT6dpWF4d2TbrZGs52+sblM1fdM15v2nGJVkoPjisIfu/1n8i2eHVGjdr13Oc6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789460456; c=relaxed/simple;
-	bh=gmsmGVxkrCC0joHW7g2qwHGDO+picAoXZWIoiOn43qE=;
+	s=arc-20240116; t=1789460460; c=relaxed/simple;
+	bh=zW9p0CztRSiZVUTiJTuEFyMkjkuMAZaOn1FMnzhmj88=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=DkRG/lC12grh+WLajciiDk7qmv+Zpmcbt7iCgEs1aqA120NPjSA54lAiXDFFxer5tq4Rg0LXBoJevFi3BI8w8fPpU4va2+0R9q67EdRPy/ORaxFe2MqHOYAdVlA4H61Xjw8WrHQxtaz3ZRSlxPX/BXlQndKoWyX2yVZTj7Aa81g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--morbo.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=oFMx6L32; arc=none smtp.client-ip=209.85.216.70
+	 To:Cc:Content-Type; b=BU90o8mXuyeKivKxAOeYYG9MKGZXGbaSewBCU4ycmONxtS5PTWCyLqDxKNTDYq7wfACoGOZppd87yOJLdIRcUvKy2TmhO/jCieb2MURyTS+iULt7F1kPk5l+/Q+tEbC1Z286hHlmkcAHdzux5O5pZsGKqTRlw9WqT9JiNxs8Rps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--morbo.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=iPEh4lbh; arc=none smtp.client-ip=209.85.214.200
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--morbo.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="oFMx6L32"
-Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-39512608fb1so9970945a91.1
-        for <brcm80211@lists.linux.dev>; Tue, 15 Sep 2026 01:20:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="iPEh4lbh"
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2dc92350888so72280935ad.3
+        for <brcm80211@lists.linux.dev>; Tue, 15 Sep 2026 01:20:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1789460406; x=1790065206; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1789460408; x=1790065208; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:from:subject
          :message-id:references:mime-version:in-reply-to:date:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=YdNQWB21luiE9Gdv0Q1IFwuCzs7Lvdhhb2Hfuit5b6U=;
-        b=oFMx6L32xYNZZk+VSinJQJY9TW0eF3JekNZ8zXlJulxUNFa/46ri49qTQmtNnC16bE
-         ROc+saOObNKtOSl+3dGBRBfYbLyUUGDi8wxUVqwSREQ/sP/603zQvGttISJEaYnfuoTi
-         qx6W3LHgb7S3tNwxJjgfHLZdwcKZi27adN6qouhH1ELucvJQyd4uC+41r9fzdtAjpvv6
-         bVil35hChb25Rjd879eZGlSUULUedQ9MapvY1XkhJyWLr+M4CHa4ovwfG1T4d9Z9x+7a
-         K2bb28ys1G65ywtrIIcaJItaUqx1jJOKlmx0eMjoNRlg+E1KafKjq4PETaZ1i8HsnM2v
-         9I7w==
+        bh=y5tFxAHb/e8uKrTICVzoygvHAjZ6k748iiDqUmGJfRE=;
+        b=iPEh4lbhm8A82jRVI5Vg2V9jcNsGbqZBNS9J0OAQJ02s08uCpDh0viInlkYVOxwg0N
+         z1k4Q0TrrkAO1IiZjovW8Sa7/s843+2PrNz0J1bY3F2kPlH+N8wVE0YLOc3A5LW2vyhk
+         93Q/eWXJ5MtbnHiysXRwbDVVXPFNQ7MkGwXjqjQL6GxeV/m1JRVAX3P5qHKJ+gGN6UAu
+         yhfrrbtL5ZALcOmlBv8dICv0tBcqhSCaCzx+qT7Y0Sf9A9SROuBtAnPMIImgf5toSc/k
+         Ifdi+dhfwrubIaDn4P5WdIwRHNqT29bGZ2HVZJPWsz/X1o4l4t8I7J9EwYzZ2uSQEGts
+         DyCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789460406; x=1790065206;
+        d=1e100.net; s=20260707; t=1789460408; x=1790065208;
         h=content-transfer-encoding:content-type:cc:to:from:subject
          :message-id:references:mime-version:in-reply-to:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=YdNQWB21luiE9Gdv0Q1IFwuCzs7Lvdhhb2Hfuit5b6U=;
-        b=VKzc2BcekHMJCXHg8zw+k6PCMb3N590ADDLqPJYdZMRAivScR2oTiDdQoYw1Zhu3Bz
-         tqdhr79xh4Aw4jp7pP3qwJ9UxmsikqYGC55tolmMskRBnDWIwIRMJlsreqHqKA5x7IbQ
-         r73L1T8a4NCFBweBlld/M103yFXVWu3afkill0vaAiic/MF5meVjBzl7RUaSamKdhxrP
-         fli1nXuqbq4IgiQ42fbwYZub7x9QFWd5auYQPT3llGDpzQFVdFVRjDk5l2fyqE/lvjfM
-         q4OeL9yllqteE1FbrzyCmrwiRvKHtvQCRlhNpmM2Sy6DuGEqrmN4jrjfXko6YxbbnuyE
-         KUKA==
-X-Forwarded-Encrypted: i=1; AKwUvByDJ/LemIPsEIT/JPKhZ/uU/7QC7QBE1y3stq20UUkfrVjWGCQUFfPLjfjVaDzdMq43VQAMzkaPZKM=@lists.linux.dev
-X-Gm-Message-State: AFuF++ndN3M/Y1kx+xKZrP3qedl9IYBQnTYLN6VwTJ27zkm4yqBIemFt
-	pmBWvM6FEZzDbehwv1Dkk5IQWdINBh6Pp3sJ7wv/xy5F541hjd5D+9iTSesL5dopTOc6GrdObPo
-	L
-X-Received: from plld7.prod.google.com ([2002:a17:902:7287:b0:2db:142b:72cc])
- (user=morbo job=prod-delivery.src-stubby-dispatcher) by 2002:a17:903:238b:b0:2d8:d4cc:5bb1
- with SMTP id d9443c01a7336-2dd83867c8amr573655ad.17.1789460405925; Tue, 15
- Sep 2026 01:20:05 -0700 (PDT)
-Date: Tue, 15 Sep 2026 08:18:30 +0000
+        bh=y5tFxAHb/e8uKrTICVzoygvHAjZ6k748iiDqUmGJfRE=;
+        b=QVwZNrLnieIqSfskRYRQZ8d7mhmXtrryJ8GABbO4hR7kVd4CDp7ENnMd+Rwkel7JUM
+         kaKdsDsolHOHPJPGSB1+C7PnVzyNAwR15Fkp7/Z4I2jSwuz0a8IXcIFBLymzsvs4zmUS
+         CDR7tvwcg530tpwvzk8a9y0cbjuWDUWZHjqehfnRxVb94DKaz/6Lt/2WhfslaaoavDVO
+         9ATqOCadWTNSiB49kGBp4rLtGvO2o8I0sbFIicUwYKJyt/NSFjK3Y7xTsfNuPijK2vVk
+         pjSvMxYMUQaEXBKcoS317MkKViTmxe+EdcETFxzGIag9FY8vtU2jfNLAyD0cd+oXTcKT
+         2J4w==
+X-Forwarded-Encrypted: i=1; AKwUvBzOiKZBIYlZQHdb/mHbMlkgN4dk+LvfQVdLkW3mC0p4+IxVVA7lpz1C7m/68DIxSr5Q3zmNmQBJlWw=@lists.linux.dev
+X-Gm-Message-State: AFuF++nLOsigQAPvXZgRlOWv9uTHTY2o9v4id8w+GxvZkXU6YamSJUnU
+	byu/L4W9/OJ4EMO/psFYHGSpixgVUhhYxef7G+iQvGX/U8O+CMCAMZYH9QLs7v4uL3XwSd/Zwd6
+	a
+X-Received: from plav12.prod.google.com ([2002:a17:902:f0cc:b0:2dd:3949:eb03])
+ (user=morbo job=prod-delivery.src-stubby-dispatcher) by 2002:a17:902:c40d:b0:2db:5c0a:f184
+ with SMTP id d9443c01a7336-2dd6c6fc4f3mr121827545ad.17.1789460406752; Tue, 15
+ Sep 2026 01:20:06 -0700 (PDT)
+Date: Tue, 15 Sep 2026 08:18:31 +0000
 In-Reply-To: <20260915081910.4142719-1-morbo@google.com>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
@@ -61,8 +61,8 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
 References: <20260915081910.4142719-1-morbo@google.com>
 X-Mailer: git-send-email 2.55.0.1032.g73a4cd73de-goog
-Message-ID: <20260915081910.4142719-14-morbo@google.com>
-Subject: [PATCH 13/28] i40e: Replace strlcat() with snprintf() in i40e_nvm_version_str()
+Message-ID: <20260915081910.4142719-15-morbo@google.com>
+Subject: [PATCH 14/28] ALSA: usb-audio: Refactor append_ctl_name() to use snprintf()
 From: Bill Wendling <morbo@google.com>
 To: linux-kernel@vger.kernel.org
 Cc: Bill Wendling <morbo@google.com>, codemender-patching+linux@google.com, 
@@ -123,16 +123,18 @@ Cc: Bill Wendling <morbo@google.com>, codemender-patching+linux@google.com,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-i40e_nvm_version_str() uses strlcat() to optionally append the EETrackID
-and combo image version strings to the NVM version buffer.
+In preparation for removing the deprecated strlcat() API[1], replace the
+strlcat() call in append_ctl_name() with strlen() and snprintf(),
+preserving its return value semantics (the total length of the string it
+attempted to create).
 
-In preparation for removing the deprecated strlcat() API[1], replace these
-strlcat() calls with bounded snprintf() calls at the current end of the
-buffer.
+Also replace an open-coded strlcat() call in build_connector_control()
+with append_ctl_name().
 
 Link: https://github.com/KSPP/linux/issues/370 [1]
 Cc: codemender-patching+linux@google.com
-Assisted-by: CoPilot:r1-preview [editor_update_file, shell_command_run]
+Assisted-by: CoPilot:Claude-3-5-Sonnet [editor_update_file, shell_command_r=
+un]
 Signed-off-by: Bill Wendling <morbo@google.com>
 ---
 Cc: Russell King <linux@armlinux.org.uk>
@@ -246,46 +248,38 @@ Cc: devel@lists.orangefs.org
 Cc: linux-hardening@vger.kernel.org
 Cc: linux-sound@vger.kernel.org
 ---
- drivers/net/ethernet/intel/i40e/i40e.h | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ sound/usb/mixer.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e.h b/drivers/net/ethernet/=
-intel/i40e/i40e.h
-index 1b6a8fbaa648..9f792128a0ef 100644
---- a/drivers/net/ethernet/intel/i40e/i40e.h
-+++ b/drivers/net/ethernet/intel/i40e/i40e.h
-@@ -1059,19 +1059,26 @@ static inline char *i40e_nvm_version_str(struct i40=
-e_hw *hw, char *buf,
- 					 size_t len)
+diff --git a/sound/usb/mixer.c b/sound/usb/mixer.c
+index ecaa8bc08d7c..f64ecad4e77e 100644
+--- a/sound/usb/mixer.c
++++ b/sound/usb/mixer.c
+@@ -1722,7 +1722,11 @@ const struct snd_kcontrol_new *snd_usb_feature_unit_=
+ctl =3D &usb_feature_unit_ctl;
+  */
+ static size_t append_ctl_name(struct snd_kcontrol *kctl, const char *str)
  {
- 	char ver[16] =3D " ";
-+	size_t offset;
-=20
- 	/* Get NVM version */
- 	i40e_info_nvm_ver(hw, buf, len);
-=20
- 	/* Append EETrackID if provided */
- 	i40e_info_eetrack(hw, &ver[1], sizeof(ver) - 1);
--	if (strlen(ver) > 1)
--		strlcat(buf, ver, len);
-+	if (strlen(ver) > 1) {
-+		offset =3D strlen(buf);
-+		if (offset < len)
-+			snprintf(buf + offset, len - offset, "%s", ver);
-+	}
-=20
- 	/* Append combo image version if provided */
- 	i40e_info_civd_ver(hw, &ver[1], sizeof(ver) - 1);
--	if (strlen(ver) > 1)
--		strlcat(buf, ver, len);
-+	if (strlen(ver) > 1) {
-+		offset =3D strlen(buf);
-+		if (offset < len)
-+			snprintf(buf + offset, len - offset, "%s", ver);
-+	}
-=20
- 	return buf;
+-	return strlcat(kctl->id.name, str, sizeof(kctl->id.name));
++	size_t len =3D strlen(kctl->id.name);
++
++	if (len >=3D sizeof(kctl->id.name))
++		return len + strlen(str);
++	return len + snprintf(kctl->id.name + len, sizeof(kctl->id.name) - len, "=
+%s", str);
  }
+=20
+ /*
+@@ -2090,7 +2094,7 @@ static void build_connector_control(struct usb_mixer_=
+interface *mixer,
+ 	}
+=20
+ 	if (check_mapped_name(map, kctl->id.name, sizeof(kctl->id.name)))
+-		strlcat(kctl->id.name, " Jack", sizeof(kctl->id.name));
++		append_ctl_name(kctl, " Jack");
+ 	else
+ 		get_connector_control_name(mixer, term, is_input, kctl->id.name,
+ 					   sizeof(kctl->id.name));
 --=20
 2.55.0.1032.g73a4cd73de-goog
 
