@@ -1,174 +1,233 @@
-Received: from mail-ua2-f12.google.com (mail-ua2-f12.google.com [74.125.226.204])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp14.infineon.com (smtp14.infineon.com [217.10.52.160])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A36F94A498E
-	for <brcm80211@lists.linux.dev>; Wed, 16 Sep 2026 21:44:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.226.204
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789595075; cv=pass; b=EmqVyHReytOy7Mk4FVsoznsz5hTstR2VJ/g8Y/jVtJwIKYjhypuN74xokwBAnVTH0d+R8R3n+XzyPGdfjq7U3YLWh7Hkgcy/pNV0De4unoirWs4DqFo/L+aDw4Hu0SKGVzQ84hw0ESWfkt/ovEUuOxj0zon5yDRbKt4pmAtuu4A=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789595075; c=relaxed/simple;
-	bh=+TMWi8xF1c/GpLGSJWBDMGttEHh102/5Ofx0+5TAWdU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=EbbHeT+/J7J2nYnylXzJtFiEmr5dIs83SUndIvgZgcs1Vnsmwgv4/4tkGjMlkQT4UKwJyVsHyvi864wzEmbLOwBuX/diMmv5SQqUA43VMt6r07xegrPz+IHFIasxJF6WHqX72A2QWYQwt5mdxcGlIDGpcMLEnOqhksEBQCSUkZ8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=iWpLMWup; arc=pass smtp.client-ip=74.125.226.204
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD49F4D17A9
+	for <brcm80211@lists.linux.dev>; Thu, 17 Sep 2026 17:39:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.10.52.160
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789666747; cv=none; b=V3oXQ31PRqmc60rvq9GWvMrmf+9TnM1w/J5n3iew9BejZqAMiozGSC9KxBsBpl2KKfu+BtHBYjz0hqZPb9laOm/p8/ZYFe02iMs6iBoafBfBZNGxQlsE2JSMaCnbSFBCmQ3VuRmTJVJsjxN+/QvDPk3s2Fzdw2211aW8ZacT0Lk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789666747; c=relaxed/simple;
+	bh=KapTej4C0o3i0JdDWH+OS3TmSnMl8SsuYylwDN7IbX4=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Ddd2S57yK//UYQ0C3wUCzxV5A6qSyMRPzZ1tY8wK5L1m2yr9I53HiQ5AyBlyBc+00toFldw222x1ZquaWW68/o8rMKKreKCoTLZGn9bKa4k+NGQEqdXHnogWG5PVmq3tEC0LMTrmqXUyd2eHHaP0pp4+FOlzBnPR/17NHSSU63M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=infineon.com; spf=pass smtp.mailfrom=infineon.com; dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b=C+to8sQw; arc=none smtp.client-ip=217.10.52.160
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=infineon.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infineon.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="iWpLMWup"
-Received: by mail-ua2-f12.google.com with SMTP id a1e0cc1a2514c-97e7c7bc5bfso48146241.2
-        for <brcm80211@lists.linux.dev>; Wed, 16 Sep 2026 14:44:18 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789595057; cv=none;
-        d=google.com; s=arc-20260327;
-        b=ilH9RCYBBKMJN8rCtY34AfL0h1O+w6lH7s34tg3Ks49HedtMlvYUR6OagcoObDiXbw
-         TGQxdmZBe0wtReYDtOfWluuKxkOLPGzszfzNjiJVLU6IShEmIsRIoMdbIgjt7e3pI9y2
-         MyZ9Ytynqbc9JdjXOaJF4GxXdgMU8i12T0o9TaPJMMMlIBzPocRgsYImLhuOcoLvb+kA
-         ZrRXCSXZHBkpGeV87cGAmAiSgZwxLLhBBldKvtOFHLZSFRsCOxYoSn7bKbn521ZBfVHg
-         zE10SqsxV9vqN+qJ0x9VkpELFjxz+w6i81s2wdL1i0KYKu474nzGAtYJjnL1P+flJ4cJ
-         973Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=+TMWi8xF1c/GpLGSJWBDMGttEHh102/5Ofx0+5TAWdU=;
-        fh=HwY3ZoMJ6esIaPA4Twg3JHRD9gxcWVE4jRWJK21kzyA=;
-        b=bJXxllDpaOYGDMdHdFr57lt/xgWRsQ+sm4Wzj4jZVMtEuTNrbntUH93bwLdBIJoL0b
-         yCjz7tOtAy5kP7bqZTp0x4DKEA5jCC44sNa+oIu/UoewEHz8ghDwZS6iKVkcWRNNF8sx
-         a+i0BKV0NGW2Vr2dWxZGil0Dah3EUFEb2U9QSpceb6rW5Zr4XQARMvNNSeYDCIXhorAh
-         vzaGCsjhXgKY/RFnviP2KLJQzHDBeog36vgo7WdGIlo+hQOhqSW1k60N8eqwtJ+kRYlO
-         xYlxlvKq2NGjne47i9Mf/U2+rOHqyR7M/0RqP9gPuKlm6NARQ8l23Vug8ci9hUUFwh0a
-         wqVw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1789595057; x=1790199857; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=+TMWi8xF1c/GpLGSJWBDMGttEHh102/5Ofx0+5TAWdU=;
-        b=iWpLMWupYJ/DHhX0qDMyIzfKZssJ0dLfJRXwHGOEHVNqJJIQrVcOTFu3LC1Sfxh9t7
-         +bdU6XG6L2kpsvneGiQ9sSDXstNRr/7wz1MPT4wIPuBmz1Uc9Ct13ZutZSagRfc73OAa
-         EexuSKA3bvCbyGfXESfZ2SfYpYgM2ZCmxYPZMYbsb2gBTbibDF/YBfoQXjFeZe03d4uo
-         aUgiGV1divl1QZZl0BWBvuB+mUTQS6oNQCpmDIrx6rp1C7CjubsyH5kIUDYhetiyTEfM
-         gn9gFIvjNzVVgHF4sgbJWWqsgWCPwxJJVgchtOAgyaiTnt5jNpzPOEM8VPpeDVKer+ID
-         zOxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789595057; x=1790199857;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=+TMWi8xF1c/GpLGSJWBDMGttEHh102/5Ofx0+5TAWdU=;
-        b=vfM8DzEZbUdaHVTL0kXo1iflNl1ouuoIgTsGPs/fixBgq/ihWbRkN8FZdCM1tw32KK
-         RoG36aRWtjCCHqYF53Dn+FglUf5I2MQhyVIUXkDQuDimtp2i18dpbz+zC0I7iSiFkaBh
-         OHleVR+5+cK1A2zqI43St956YZQfucKBQ7RrKwurHpEkdGt4anwNh6JKle8ZZzXMl3mN
-         1VBwjQjzbuxw9C6ruFUhYHPBjWPLO21WHK1gl5IxDI6lDB2hkT894BQc+bNB965gqnrL
-         AdCLj4G3AtcIGkyw9udntEvFV/z3f4pTpj/7miB+JchLQbeJVsXUmISOU7nhQ8qtEchz
-         jd8g==
-X-Forwarded-Encrypted: i=1; AKwUvBwVcKrnlq3+tmQoXF0NbE/WQYdTt3iup063SPAji6wpvAHUfDXFus89R84PyfQy27tf8w5vEihGSx4=@lists.linux.dev
-X-Gm-Message-State: AFuF++k6bz9CW+5sPH9bcPfsNgdsd2msMW0CgbKeK/IGjlM3nKdF8cmT
-	GZPbl6uH/ULxPDuzOFJ1k89Xs0D/MvImHemKCY1tDS4NVp9Q1gIbqo+2LxS4fbBiZTt9ENsluFC
-	BF6d29tg9OTck1q/IA7tLF7spC8lPPe3DFQd0Aig=
-X-Gm-Gg: AYBFou3A3zueJ9abUkV7TrXJwH13tlGoBhpGMCqAbPFJw4oS6GwoOwJIBqkhJcPFakR
-	5PJYUfI97R3GR2qR41mW9pvllyT0FZVSKKIIYh9mHhJ3dIKQlva9kH/e3pP7tLbazJW3X+Jscox
-	IL0oFPC4i4m7/KWjZkmtIJj5c6ly86qt7H/tLpmC9BAkuP30SJe8mHEvfSaO5T3RCXzbUcPipTM
-	lfnlmY8/xK0E/UV9mpSGFqYYdkC2u2H4+doi+BsD/0A6WMWdyQKdRfOqH/drt6upOlDpIVjtCpa
-	YadQs+rvVMllDZcgXpifuQJ+WzCPZPE6bOrpQ10Y23ZwCBJxTexgHq4mgCah4yF2ChenvQ31n1z
-	nudmuIUTb12tNrCGIYpr6
-X-Received: by 2002:a05:6102:a85:b0:7a2:2a6b:e7b4 with SMTP id
- ada2fe7eead31-7a22a6be8efmr62586137.2.1789595055938; Wed, 16 Sep 2026
- 14:44:15 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b="C+to8sQw"
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=infineon.com; i=@infineon.com; q=dns/txt; s=IFXMAIL;
+  t=1789666744; x=1821202744;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=KapTej4C0o3i0JdDWH+OS3TmSnMl8SsuYylwDN7IbX4=;
+  b=C+to8sQwLw28/5FWmjBSFHptTyc1YSql3DN6+Ql7caS5O7F3kgdWIPuv
+   I1AWqZSLt9oTlYbJufCYpYfcSHcOMfyUhxPda6+mxhTb2pK1pDNeXUy34
+   ynu1Plxq8iSWSUsth9s+p0/fKHeq7tlvhaSDIH3LwgkqC2F8th/Bameud
+   E=;
+X-CSE-ConnectionGUID: bvsiXLsXQ72J5zlx5QdBiQ==
+X-CSE-MsgGUID: I8OtGan+RaiF0zoUZ+yl4g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11905"; a="147568511"
+X-IronPort-AV: E=Sophos;i="6.27,103,1787004000"; 
+   d="scan'208";a="147568511"
+X-Amp-Result: SKIPPED(no attachment in message)
+Received: from unknown (HELO MUCSE812.infineon.com) ([172.23.29.38])
+  by smtp14.infineon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Sep 2026 19:38:54 +0200
+Received: from MUCSE829.infineon.com (172.23.29.22) by MUCSE812.infineon.com
+ (172.23.29.38) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.46; Thu, 17 Sep
+ 2026 19:38:54 +0200
+Received: from ISCN5CG6022HSR.infineon.com (10.161.6.196) by
+ MUCSE829.infineon.com (172.23.29.22) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46; Thu, 17 Sep 2026 19:38:52 +0200
+From: GirishBukkasagara.Rudrappa <girishbukkasagara.rudrappa@infineon.com>
+To: <linux-wireless@vger.kernel.org>
+CC: <arend.vanspriel@broadcom.com>, <johannes.berg@intel.com>,
+	<brcm80211@lists.linux.dev>, <wlan-kernel-dev-list@infineon.com>,
+	<bogdan.nicolae@gmail.com>, Girish Rudrappa
+	<girishbukkasagara.rudrappa@infineon.com>
+Subject: [PATCH v2] wifi: brcmfmac: Set extsae_pwe parameter to Infineon firmware in SAP mode
+Date: Thu, 17 Sep 2026 17:37:04 +0000
+Message-ID: <20260917173704.6356-1-girishbukkasagara.rudrappa@infineon.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260831061213.240270-1-girishbukkasagara.rudrappa@infineon.com>
+References: <20260831061213.240270-1-girishbukkasagara.rudrappa@infineon.com>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260915081910.4142719-1-morbo@google.com> <20260915081910.4142719-26-morbo@google.com>
- <202609151258.5FC01072@keescook> <20260916010945.GEaqnsWSZ-DTMyTO25@fat_crate.local>
-In-Reply-To: <20260916010945.GEaqnsWSZ-DTMyTO25@fat_crate.local>
-From: Bill Wendling <morbo@google.com>
-Date: Wed, 16 Sep 2026 14:43:59 -0700
-X-Gm-Features: AcwNN1XbboPOY3deKY79Gty15vkSErYIT9HTgeQdVXaDzFhBvm8_kiOA449bIqU
-Message-ID: <CAGG=3QVZRCJ94+DOfSsSDhsrXVYf-ec01NZBy299nYiCAYfXKg@mail.gmail.com>
-Subject: Re: [PATCH 25/28] EDAC/thunderx: Replace strlcat() with seq_buf
-To: Borislav Petkov <bp@alien8.de>
-Cc: Kees Cook <kees@kernel.org>, linux-kernel@vger.kernel.org, 
-	codemender-patching+linux@google.com, Russell King <linux@armlinux.org.uk>, 
-	Huacai Chen <chenhuacai@kernel.org>, WANG Xuerui <kernel@xen0n.name>, 
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>, 
-	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>, Helge Deller <deller@gmx.de>, 
-	Thomas Gleixner <tglx@kernel.org>, Ingo Molnar <mingo@redhat.com>, 
-	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org, 
-	"H. Peter Anvin" <hpa@zytor.com>, Ian Abbott <abbotti@mev.co.uk>, 
-	H Hartley Sweeten <hsweeten@visionengravers.com>, Tony Luck <tony.luck@intel.com>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Matthew Brost <matthew.brost@intel.com>, 
-	=?UTF-8?Q?Thomas_Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>, 
-	Rodrigo Vivi <rodrigo.vivi@intel.com>, Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
-	Matthias Schwarzott <zzam@gentoo.org>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
-	Tony Nguyen <anthony.l.nguyen@intel.com>, Przemek Kitszel <przemyslaw.kitszel@intel.com>, 
-	Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller" <davem@davemloft.net>, 
-	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
-	Arend van Spriel <arend.vanspriel@broadcom.com>, Rob Herring <robh@kernel.org>, 
-	Saravana Kannan <saravanak@kernel.org>, Krzysztof Kozlowski <krzk@kernel.org>, 
-	Sylwester Nawrocki <s.nawrocki@samsung.com>, Peter Griffin <peter.griffin@linaro.org>, 
-	Alim Akhtar <alim.akhtar@samsung.com>, Linus Walleij <linusw@kernel.org>, 
-	Anil Gurumurthy <anil.gurumurthy@qlogic.com>, 
-	Sudarsana Kalluru <sudarsana.kalluru@qlogic.com>, "Martin K. Petersen" <mkp@kernel.org>, 
-	Trond Myklebust <trondmy@kernel.org>, Anna Schumaker <anna@kernel.org>, 
-	Mike Marshall <hubcap@omnibond.com>, Martin Brandenburg <martin@omnibond.com>, Jiri Pirko <jiri@resnulli.us>, 
-	Simon Horman <horms@kernel.org>, Chuck Lever <cel@kernel.org>, Jeff Layton <jlayton@kernel.org>, 
-	NeilBrown <neil@brown.name>, Olga Kornievskaia <okorniev@redhat.com>, Dai Ngo <Dai.Ngo@oracle.com>, 
-	Tom Talpey <tom@talpey.com>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
-	Andrew Morton <akpm@linux-foundation.org>, "Mike Rapoport (Microsoft)" <rppt@kernel.org>, 
-	Kanglong Wang <wangkanglong@loongson.cn>, Tiezhu Yang <yangtiezhu@loongson.cn>, 
-	Qiang Ma <maqianga@uniontech.com>, Randy Dunlap <rdunlap@infradead.org>, 
-	Pengpeng Hou <pengpeng@iscas.ac.cn>, Ard Biesheuvel <ardb@kernel.org>, Breno Leitao <leitao@debian.org>, 
-	Thorsten Blum <blum@kernel.org>, Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Lyude Paul <lyude@redhat.com>, 
-	Ashutosh Desai <ashutoshdesai993@gmail.com>, Imre Deak <imre.deak@intel.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, Johan Hovold <johan@kernel.org>, 
-	Johannes Berg <johannes.berg@intel.com>, 
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>, 
-	Alexander Stein <alexander.stein@ew.tq-group.com>, 
-	Cryolitia PukNgae <cryolitia@uniontech.com>, Jiaming Zhang <r772577952@gmail.com>, 
-	Will Porter <mrwillporter@gmail.com>, Cen Zhang <zzzccc427@gmail.com>, 
-	=?UTF-8?Q?C=C3=A1ssio_Gabriel?= <cassiogabrielcontato@gmail.com>, 
-	Rong Zhang <i@rong.moe>, Arun Raghavan <arunr@valvesoftware.com>, 
-	linux-arm-kernel@lists.infradead.org, loongarch@lists.linux.dev, 
-	linux-mips@vger.kernel.org, linux-parisc@vger.kernel.org, 
-	linux-edac@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	intel-xe@lists.freedesktop.org, linux-input@vger.kernel.org, 
-	linux-media@vger.kernel.org, intel-wired-lan@lists.osuosl.org, 
-	netdev@vger.kernel.org, linux-wireless@vger.kernel.org, 
-	brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com, 
-	devicetree@vger.kernel.org, linux-samsung-soc@vger.kernel.org, 
-	linux-gpio@vger.kernel.org, linux-scsi@vger.kernel.org, 
-	linux-nfs@vger.kernel.org, devel@lists.orangefs.org, 
-	linux-hardening@vger.kernel.org, linux-sound@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: MUCSE817.infineon.com (172.23.29.43) To
+ MUCSE829.infineon.com (172.23.29.22)
 
-On Tue, Sep 15, 2026 at 6:11=E2=80=AFPM Borislav Petkov <bp@alien8.de> wrot=
-e:
->
-> On Tue, Sep 15, 2026 at 01:00:00PM -0700, Kees Cook wrote:
-> > Seems like seq_buf would be better her? But yes, at the very least, thi=
-s
-> > needs to be scnprintf, not snprintf (or add the checks as you have
-> > here).
-> >
-> > The rest of the seq_buf conversions look right.
->
-> This driver has been an orphan for a while now (we just made it official)=
- so
-> I'd prefer it if we don't do anything here.
->
-I'll remove those changes from future emails.
+From: Girish Rudrappa <girishbukkasagara.rudrappa@infineon.com>
 
-> And yes, that mega CC list is just gross.
->
-Apologies. :-(
+Parse and configure the extsae_pwe according to the information from the
+supported rate/extended support rate and RSNX IE
 
--bw
+Parse the beacon IEs on start_ap() and set the extsae_pwe iovar.
+Set sae_pwe to 2 when the RSNX IE advertises H2E, 1 when an H2E-only
+membership selector is present, 0 otherwise.
+
+The changes are tested with FW Version 7.45.286
+
+Signed-off-by: Girish Rudrappa <girishbukkasagara.rudrappa@infineon.com>
+---
+ .../broadcom/brcm80211/brcmfmac/cfg80211.c    | 77 +++++++++++++++++++
+ .../broadcom/brcm80211/brcmfmac/cyw/core.c    |  6 ++
+ .../broadcom/brcm80211/brcmfmac/fwvid.h       | 11 +++
+ 3 files changed, 94 insertions(+)
+
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+index 9d8ce7bb046e..a9e5ab5ea292 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -5131,6 +5131,79 @@ brcmf_config_ap_mgmt_ie(struct brcmf_cfg80211_vif *vif,
+ 	return err;
+ }
+ 
++static s32
++brcmf_parse_configure_sae_pwe(struct brcmf_if *ifp,
++			      struct cfg80211_ap_settings *settings)
++{
++	const struct brcmf_tlv *rsnx_ie;
++	const struct brcmf_tlv *ext_rate_ie;
++	const struct brcmf_tlv *supp_rate_ie;
++	u8 ie_len, i;
++	u32 wpa_auth = 0;
++	u32 sae_pwe = 0; /* 0 = Hunting-and-Pecking only, 1 = H2E only, 2 = both */
++	s32 err = 0;
++
++	if (!brcmf_feat_is_enabled(ifp, BRCMF_FEAT_SAE_EXT))
++		return 0;
++
++	err = brcmf_fil_bsscfg_int_get(ifp, "wpa_auth", &wpa_auth);
++	if (err || (wpa_auth & WPA3_AUTH_SAE_PSK) == 0) {
++		brcmf_dbg(INFO, "wpa_auth is not SAE:0x%x\n", wpa_auth);
++		return 0;
++	}
++
++	rsnx_ie = brcmf_parse_tlvs((u8 *)settings->beacon.tail,
++				   settings->beacon.tail_len, WLAN_EID_RSNX);
++
++	if (rsnx_ie && rsnx_ie->len &&
++	    (rsnx_ie->data[0] & WLAN_RSNX_CAPA_SAE_H2E))
++		sae_pwe = 2;
++
++	/* Found rsnx_ie with SAE_H2E, check the bss selector to know if it is
++	 * a H2E only.
++	 */
++
++	if (sae_pwe == 2) {
++		supp_rate_ie = brcmf_parse_tlvs((u8 *)settings->beacon.head,
++						settings->beacon.head_len,
++						WLAN_EID_SUPP_RATES);
++		ext_rate_ie = brcmf_parse_tlvs((u8 *)settings->beacon.tail,
++					       settings->beacon.tail_len,
++					       WLAN_EID_EXT_SUPP_RATES);
++		if (ext_rate_ie) {
++			ie_len = ext_rate_ie->len;
++			for (i = 0; i < ie_len; i++) {
++				if ((ext_rate_ie->data[i] & 0x7f) ==
++				    BSS_MEMBERSHIP_SELECTOR_SAE_H2E) {
++					sae_pwe = 1;
++					break;
++				}
++			}
++		}
++
++		/* If we cannot found H2E only selector in ext_supp_rate IE,
++		 * traversal supp_rate IE to make sure it really doesn't exist
++		 */
++		if (sae_pwe == 2 && supp_rate_ie) {
++			ie_len = supp_rate_ie->len;
++			for (i = 0; i < ie_len; i++) {
++				if ((supp_rate_ie->data[i] & 0x7f) ==
++				    BSS_MEMBERSHIP_SELECTOR_SAE_H2E) {
++					sae_pwe = 1;
++					break;
++				}
++			}
++		}
++	}
++
++	err = brcmf_fwvid_configure_sae_pwe(ifp, sae_pwe);
++	if (err == -EOPNOTSUPP)
++		return 0;
++
++	brcmf_dbg(TRACE, "extsae_pwe=%u\n", sae_pwe);
++	return err;
++}
++
+ static s32
+ brcmf_parse_configure_security(struct brcmf_if *ifp,
+ 			       struct cfg80211_ap_settings *settings,
+@@ -5164,6 +5237,10 @@ brcmf_parse_configure_security(struct brcmf_if *ifp,
+ 			err = brcmf_configure_wpaie(ifp, tmp_ie, true);
+ 			if (err < 0)
+ 				return err;
++
++			err = brcmf_parse_configure_sae_pwe(ifp, settings);
++			if (err < 0)
++				return err;
+ 		}
+ 	} else {
+ 		brcmf_dbg(TRACE, "No WPA(2) IEs found\n");
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
+index 545eb9aae966..0443207dfe00 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
+@@ -367,10 +367,16 @@ static void brcmf_cyw_register_event_handlers(struct brcmf_pub *drvr)
+ 			    brcmf_notify_mgmt_tx_status);
+ }
+ 
++static int brcmf_cyw_configure_sae_pwe(struct brcmf_if *ifp, u32 sae_pwe)
++{
++	return brcmf_fil_iovar_int_set(ifp, "extsae_pwe", sae_pwe);
++}
++
+ const struct brcmf_fwvid_ops brcmf_cyw_ops = {
+ 	.set_sae_password = brcmf_cyw_set_sae_pwd,
+ 	.alloc_fweh_info = brcmf_cyw_alloc_fweh_info,
+ 	.activate_events = brcmf_cyw_activate_events,
+ 	.get_cfg80211_ops = brcmf_cyw_get_cfg80211_ops,
+ 	.register_event_handlers = brcmf_cyw_register_event_handlers,
++	.configure_sae_pwe = brcmf_cyw_configure_sae_pwe,
+ };
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h
+index f3e011d090f2..56d341a75a53 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h
+@@ -18,6 +18,7 @@ struct brcmf_fwvid_ops {
+ 	int (*activate_events)(struct brcmf_if *ifp);
+ 	void (*get_cfg80211_ops)(struct brcmf_pub *drvr);
+ 	void (*register_event_handlers)(struct brcmf_pub *drvr);
++	int (*configure_sae_pwe)(struct brcmf_if *ifp, u32 sae_pwe);
+ };
+ 
+ /* exported functions */
+@@ -40,6 +41,16 @@ static inline void brcmf_fwvid_feat_attach(struct brcmf_if *ifp)
+ 	vops->feat_attach(ifp);
+ }
+ 
++static inline int brcmf_fwvid_configure_sae_pwe(struct brcmf_if *ifp, u32 sae_pwe)
++{
++	const struct brcmf_fwvid_ops *vops = ifp->drvr->vops;
++
++	if (!vops || !vops->configure_sae_pwe)
++		return -EOPNOTSUPP;
++
++	return vops->configure_sae_pwe(ifp, sae_pwe);
++}
++
+ static inline int brcmf_fwvid_set_sae_password(struct brcmf_if *ifp,
+ 					       struct cfg80211_crypto_settings *crypto)
+ {
+-- 
+2.53.0
+
