@@ -1,59 +1,42 @@
-Received: from smtp14.infineon.com (smtp14.infineon.com [217.10.52.160])
+Received: from mx5.mail-out.lima-city.de (mx5.mail-out.lima-city.de [91.216.248.207])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD49F4D17A9
-	for <brcm80211@lists.linux.dev>; Thu, 17 Sep 2026 17:39:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.10.52.160
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF6B52F0C74
+	for <brcm80211@lists.linux.dev>; Fri, 18 Sep 2026 21:38:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.216.248.207
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666747; cv=none; b=V3oXQ31PRqmc60rvq9GWvMrmf+9TnM1w/J5n3iew9BejZqAMiozGSC9KxBsBpl2KKfu+BtHBYjz0hqZPb9laOm/p8/ZYFe02iMs6iBoafBfBZNGxQlsE2JSMaCnbSFBCmQ3VuRmTJVJsjxN+/QvDPk3s2Fzdw2211aW8ZacT0Lk=
+	t=1789767535; cv=none; b=MvL5Ow0MfLsNdCj0bd0KujghG7ioKX/+z4Z+cBYc11CxSZFd46nlA0qlgq00n1m5hzL3bxHUSaI0AXutCNyZ5wxYBaG8/Jt8A7M/AuBs878px3qO2WSb9/R2iOYU/bZnkEcX6+el1GvQ8EcxXQQPP57WSsoIlJivXZXVgB0U7Q0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666747; c=relaxed/simple;
-	bh=KapTej4C0o3i0JdDWH+OS3TmSnMl8SsuYylwDN7IbX4=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ddd2S57yK//UYQ0C3wUCzxV5A6qSyMRPzZ1tY8wK5L1m2yr9I53HiQ5AyBlyBc+00toFldw222x1ZquaWW68/o8rMKKreKCoTLZGn9bKa4k+NGQEqdXHnogWG5PVmq3tEC0LMTrmqXUyd2eHHaP0pp4+FOlzBnPR/17NHSSU63M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=infineon.com; spf=pass smtp.mailfrom=infineon.com; dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b=C+to8sQw; arc=none smtp.client-ip=217.10.52.160
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=infineon.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infineon.com
+	s=arc-20240116; t=1789767535; c=relaxed/simple;
+	bh=4/z9WauPBe59K8RqhZ3KZ0qYmtFmuafoiXwQvkcjw4U=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=q+L6FXwnIq1y+QHdxjfZKs/FFtjcJz1uODF95ocXEn9Hyc38LdERHWIIaGszKQp4xPzOG2V1gVA7jmAL4/pCra3ndV1WRqX+P2acBQEnhsKcQcljxyqLWVgI/jrHSJgpMwo7fxWkmqZAWcaEmIPf0zehgNV5lB+ep0c3qhWIjEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=deq.rocks; spf=none smtp.mailfrom=deq.rocks; dkim=pass (2048-bit key) header.d=deq.rocks header.i=@deq.rocks header.b=ehFk8qQl; arc=none smtp.client-ip=91.216.248.207
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=deq.rocks
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=deq.rocks
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b="C+to8sQw"
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=infineon.com; i=@infineon.com; q=dns/txt; s=IFXMAIL;
-  t=1789666744; x=1821202744;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=KapTej4C0o3i0JdDWH+OS3TmSnMl8SsuYylwDN7IbX4=;
-  b=C+to8sQwLw28/5FWmjBSFHptTyc1YSql3DN6+Ql7caS5O7F3kgdWIPuv
-   I1AWqZSLt9oTlYbJufCYpYfcSHcOMfyUhxPda6+mxhTb2pK1pDNeXUy34
-   ynu1Plxq8iSWSUsth9s+p0/fKHeq7tlvhaSDIH3LwgkqC2F8th/Bameud
-   E=;
-X-CSE-ConnectionGUID: bvsiXLsXQ72J5zlx5QdBiQ==
-X-CSE-MsgGUID: I8OtGan+RaiF0zoUZ+yl4g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11905"; a="147568511"
-X-IronPort-AV: E=Sophos;i="6.27,103,1787004000"; 
-   d="scan'208";a="147568511"
-X-Amp-Result: SKIPPED(no attachment in message)
-Received: from unknown (HELO MUCSE812.infineon.com) ([172.23.29.38])
-  by smtp14.infineon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Sep 2026 19:38:54 +0200
-Received: from MUCSE829.infineon.com (172.23.29.22) by MUCSE812.infineon.com
- (172.23.29.38) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.46; Thu, 17 Sep
- 2026 19:38:54 +0200
-Received: from ISCN5CG6022HSR.infineon.com (10.161.6.196) by
- MUCSE829.infineon.com (172.23.29.22) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Thu, 17 Sep 2026 19:38:52 +0200
-From: GirishBukkasagara.Rudrappa <girishbukkasagara.rudrappa@infineon.com>
-To: <linux-wireless@vger.kernel.org>
-CC: <arend.vanspriel@broadcom.com>, <johannes.berg@intel.com>,
-	<brcm80211@lists.linux.dev>, <wlan-kernel-dev-list@infineon.com>,
-	<bogdan.nicolae@gmail.com>, Girish Rudrappa
-	<girishbukkasagara.rudrappa@infineon.com>
-Subject: [PATCH v2] wifi: brcmfmac: Set extsae_pwe parameter to Infineon firmware in SAP mode
-Date: Thu, 17 Sep 2026 17:37:04 +0000
-Message-ID: <20260917173704.6356-1-girishbukkasagara.rudrappa@infineon.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831061213.240270-1-girishbukkasagara.rudrappa@infineon.com>
-References: <20260831061213.240270-1-girishbukkasagara.rudrappa@infineon.com>
+	dkim=pass (2048-bit key) header.d=deq.rocks header.i=@deq.rocks header.b="ehFk8qQl"
+From: Andre Eikmeyer <dev@deq.rocks>
+X-Lima-ML-UUID: a6bea56f-ef01-4d5d-83e1-8baf45dd6bb0
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=deq.rocks;
+	s=securedbylima-20251205; t=1789767016;
+	bh=4/z9WauPBe59K8RqhZ3KZ0qYmtFmuafoiXwQvkcjw4U=;
+	h=From:To:Cc:Subject:Date:From;
+	b=ehFk8qQlvhKOzrF2puRnaLR3PyqhYSycNJHLDlnnwoyvajvhk6w84hvcr/4nJyihq
+	 synvHZP0xO/+e+qWMT0wa3AWFk6GsjiSP+KUZo9SB4vbagA4yqHewcFqbDnx7kpK6s
+	 YbNsjZj33rP6nYgybVSF/FIvtT8Jddxu1jMF8OqlBbxUT81CUP6c5uDeh7XDbjW1pp
+	 sqOqzS3BLz0kyDMD26+u+UnCTLT5aVV7FrZSaliaP7a581xHga1EV1W+naGDtG5bNk
+	 bLYz8qVtTHR0K84sqvTpzblFGr//t6rwIRzly69dC5P6B7s99uIC/p0ggI6Nu9j0xy
+	 xZxUhkFe9XU5A==
+To: Arend van Spriel <arend.vanspriel@broadcom.com>
+Cc: linux-wireless@vger.kernel.org,
+	brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com,
+	linux-kernel@vger.kernel.org,
+	Andre Eikmeyer <dev@deq.rocks>
+Subject: [PATCH] wifi: brcmfmac: handle missing D3 ACK on BCM4377 T2 Macs
+Date: Fri, 18 Sep 2026 23:30:14 +0200
+Message-ID: <20260918213014.1890677-1-dev@deq.rocks>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -61,173 +44,93 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: MUCSE817.infineon.com (172.23.29.43) To
- MUCSE829.infineon.com (172.23.29.22)
 
-From: Girish Rudrappa <girishbukkasagara.rudrappa@infineon.com>
+BCM4377 on the affected T2 Macs does not acknowledge HOST_D3_INFORM.
+The current PCIe suspend callback treats this as fatal and aborts system
+suspend.
 
-Parse and configure the extsae_pwe according to the information from the
-supported rate/extended support rate and RSNX IE
+On the affected PCI and DMI combinations, mask the mailbox interrupt,
+preserve the bus-down state, and let generic PCI/ACPI suspend proceed. On
+resume the existing recovery path tears down and probes the device again
+instead of relying on a D0 mailbox transaction.
 
-Parse the beacon IEs on start_ap() and set the extsae_pwe iovar.
-Set sae_pwe to 2 when the RSNX IE advertises H2E, 1 when an H2E-only
-membership selector is present, 0 otherwise.
-
-The changes are tested with FW Version 7.45.286
-
-Signed-off-by: Girish Rudrappa <girishbukkasagara.rudrappa@infineon.com>
+Tested-on: MacBookAir9,1, MacBookPro15,4, MacBookPro16,3
+Signed-off-by: Andre Eikmeyer <dev@deq.rocks>
 ---
- .../broadcom/brcm80211/brcmfmac/cfg80211.c    | 77 +++++++++++++++++++
- .../broadcom/brcm80211/brcmfmac/cyw/core.c    |  6 ++
- .../broadcom/brcm80211/brcmfmac/fwvid.h       | 11 +++
- 3 files changed, 94 insertions(+)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c | 42 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 42 insertions(+)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-index 9d8ce7bb046e..a9e5ab5ea292 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-@@ -5131,6 +5131,79 @@ brcmf_config_ap_mgmt_ie(struct brcmf_cfg80211_vif *vif,
- 	return err;
- }
- 
-+static s32
-+brcmf_parse_configure_sae_pwe(struct brcmf_if *ifp,
-+			      struct cfg80211_ap_settings *settings)
-+{
-+	const struct brcmf_tlv *rsnx_ie;
-+	const struct brcmf_tlv *ext_rate_ie;
-+	const struct brcmf_tlv *supp_rate_ie;
-+	u8 ie_len, i;
-+	u32 wpa_auth = 0;
-+	u32 sae_pwe = 0; /* 0 = Hunting-and-Pecking only, 1 = H2E only, 2 = both */
-+	s32 err = 0;
-+
-+	if (!brcmf_feat_is_enabled(ifp, BRCMF_FEAT_SAE_EXT))
-+		return 0;
-+
-+	err = brcmf_fil_bsscfg_int_get(ifp, "wpa_auth", &wpa_auth);
-+	if (err || (wpa_auth & WPA3_AUTH_SAE_PSK) == 0) {
-+		brcmf_dbg(INFO, "wpa_auth is not SAE:0x%x\n", wpa_auth);
-+		return 0;
-+	}
-+
-+	rsnx_ie = brcmf_parse_tlvs((u8 *)settings->beacon.tail,
-+				   settings->beacon.tail_len, WLAN_EID_RSNX);
-+
-+	if (rsnx_ie && rsnx_ie->len &&
-+	    (rsnx_ie->data[0] & WLAN_RSNX_CAPA_SAE_H2E))
-+		sae_pwe = 2;
-+
-+	/* Found rsnx_ie with SAE_H2E, check the bss selector to know if it is
-+	 * a H2E only.
-+	 */
-+
-+	if (sae_pwe == 2) {
-+		supp_rate_ie = brcmf_parse_tlvs((u8 *)settings->beacon.head,
-+						settings->beacon.head_len,
-+						WLAN_EID_SUPP_RATES);
-+		ext_rate_ie = brcmf_parse_tlvs((u8 *)settings->beacon.tail,
-+					       settings->beacon.tail_len,
-+					       WLAN_EID_EXT_SUPP_RATES);
-+		if (ext_rate_ie) {
-+			ie_len = ext_rate_ie->len;
-+			for (i = 0; i < ie_len; i++) {
-+				if ((ext_rate_ie->data[i] & 0x7f) ==
-+				    BSS_MEMBERSHIP_SELECTOR_SAE_H2E) {
-+					sae_pwe = 1;
-+					break;
-+				}
-+			}
-+		}
-+
-+		/* If we cannot found H2E only selector in ext_supp_rate IE,
-+		 * traversal supp_rate IE to make sure it really doesn't exist
-+		 */
-+		if (sae_pwe == 2 && supp_rate_ie) {
-+			ie_len = supp_rate_ie->len;
-+			for (i = 0; i < ie_len; i++) {
-+				if ((supp_rate_ie->data[i] & 0x7f) ==
-+				    BSS_MEMBERSHIP_SELECTOR_SAE_H2E) {
-+					sae_pwe = 1;
-+					break;
-+				}
-+			}
-+		}
-+	}
-+
-+	err = brcmf_fwvid_configure_sae_pwe(ifp, sae_pwe);
-+	if (err == -EOPNOTSUPP)
-+		return 0;
-+
-+	brcmf_dbg(TRACE, "extsae_pwe=%u\n", sae_pwe);
-+	return err;
-+}
-+
- static s32
- brcmf_parse_configure_security(struct brcmf_if *ifp,
- 			       struct cfg80211_ap_settings *settings,
-@@ -5164,6 +5237,10 @@ brcmf_parse_configure_security(struct brcmf_if *ifp,
- 			err = brcmf_configure_wpaie(ifp, tmp_ie, true);
- 			if (err < 0)
- 				return err;
-+
-+			err = brcmf_parse_configure_sae_pwe(ifp, settings);
-+			if (err < 0)
-+				return err;
- 		}
- 	} else {
- 		brcmf_dbg(TRACE, "No WPA(2) IEs found\n");
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
-index 545eb9aae966..0443207dfe00 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
-@@ -367,10 +367,16 @@ static void brcmf_cyw_register_event_handlers(struct brcmf_pub *drvr)
- 			    brcmf_notify_mgmt_tx_status);
- }
- 
-+static int brcmf_cyw_configure_sae_pwe(struct brcmf_if *ifp, u32 sae_pwe)
-+{
-+	return brcmf_fil_iovar_int_set(ifp, "extsae_pwe", sae_pwe);
-+}
-+
- const struct brcmf_fwvid_ops brcmf_cyw_ops = {
- 	.set_sae_password = brcmf_cyw_set_sae_pwd,
- 	.alloc_fweh_info = brcmf_cyw_alloc_fweh_info,
- 	.activate_events = brcmf_cyw_activate_events,
- 	.get_cfg80211_ops = brcmf_cyw_get_cfg80211_ops,
- 	.register_event_handlers = brcmf_cyw_register_event_handlers,
-+	.configure_sae_pwe = brcmf_cyw_configure_sae_pwe,
- };
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h
-index f3e011d090f2..56d341a75a53 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h
-@@ -18,6 +18,7 @@ struct brcmf_fwvid_ops {
- 	int (*activate_events)(struct brcmf_if *ifp);
- 	void (*get_cfg80211_ops)(struct brcmf_pub *drvr);
- 	void (*register_event_handlers)(struct brcmf_pub *drvr);
-+	int (*configure_sae_pwe)(struct brcmf_if *ifp, u32 sae_pwe);
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+index 55f4d7b..57bbac1 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+@@ -9,6 +9,7 @@
+ #include <linux/pci.h>
+ #include <linux/vmalloc.h>
+ #include <linux/delay.h>
++#include <linux/dmi.h>
+ #include <linux/interrupt.h>
+ #include <linux/bcma/bcma.h>
+ #include <linux/sched.h>
+@@ -49,6 +50,40 @@ enum brcmf_pcie_state {
+ 	BRCMFMAC_PCIE_STATE_UP
  };
  
- /* exported functions */
-@@ -40,6 +41,16 @@ static inline void brcmf_fwvid_feat_attach(struct brcmf_if *ifp)
- 	vops->feat_attach(ifp);
- }
- 
-+static inline int brcmf_fwvid_configure_sae_pwe(struct brcmf_if *ifp, u32 sae_pwe)
++/*
++ * BCM4377 on these T2 Macs never acknowledges HOST_D3_INFORM. The platform
++ * can nevertheless enter and leave system suspend if the PCIe mailbox
++ * interrupt is masked and resume takes the existing cold-reprobe path.
++ */
++static const struct dmi_system_id brcmf_pcie_no_d3_ack_quirk[] = {
++	{
++		.matches = {
++			DMI_EXACT_MATCH(DMI_BOARD_VENDOR, "Apple Inc."),
++			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "MacBookAir9,1"),
++		},
++	},
++	{
++		.matches = {
++			DMI_EXACT_MATCH(DMI_BOARD_VENDOR, "Apple Inc."),
++			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "MacBookPro15,4"),
++		},
++	},
++	{
++		.matches = {
++			DMI_EXACT_MATCH(DMI_BOARD_VENDOR, "Apple Inc."),
++			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "MacBookPro16,3"),
++		},
++	},
++	{}
++};
++
++static bool brcmf_pcie_quirk_no_d3_ack(struct pci_dev *pdev)
 +{
-+	const struct brcmf_fwvid_ops *vops = ifp->drvr->vops;
-+
-+	if (!vops || !vops->configure_sae_pwe)
-+		return -EOPNOTSUPP;
-+
-+	return vops->configure_sae_pwe(ifp, sae_pwe);
++	return pdev->vendor == PCI_VENDOR_ID_BROADCOM &&
++	       pdev->device == BRCM_PCIE_4377_DEVICE_ID &&
++	       dmi_check_system(brcmf_pcie_no_d3_ack_quirk);
 +}
 +
- static inline int brcmf_fwvid_set_sae_password(struct brcmf_if *ifp,
- 					       struct cfg80211_crypto_settings *crypto)
- {
+ BRCMF_FW_DEF(43602, "brcmfmac43602-pcie");
+ BRCMF_FW_DEF(4350, "brcmfmac4350-pcie");
+ BRCMF_FW_DEF(4350C, "brcmfmac4350c2-pcie");
+@@ -2652,11 +2687,18 @@ static int brcmf_pcie_pm_enter_D3(struct device *dev)
+ 	wait_event_timeout(devinfo->mbdata_resp_wait, devinfo->mbdata_completed,
+ 			   BRCMF_PCIE_MBDATA_TIMEOUT);
+ 	if (!devinfo->mbdata_completed) {
++		if (brcmf_pcie_quirk_no_d3_ack(devinfo->pdev)) {
++			dev_info(dev, "D3 ACK missing; masking PCIe mailbox interrupt\n");
++			brcmf_pcie_intr_disable(devinfo);
++			goto done;
++		}
++
+ 		brcmf_err(bus, "Timeout on response for entering D3 substate\n");
+ 		brcmf_bus_change_state(bus, BRCMF_BUS_UP);
+ 		return -EIO;
+ 	}
+ 
++done:
+ 	devinfo->state = BRCMFMAC_PCIE_STATE_DOWN;
+ 
+ 	return 0;
 -- 
-2.53.0
-
+2.55.0
