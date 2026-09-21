@@ -1,41 +1,56 @@
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.4])
+Received: from sipsolutions.net (s3.sipsolutions.net [168.119.38.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C4E33BB9ED
-	for <brcm80211@lists.linux.dev>; Sun, 20 Sep 2026 03:44:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 382BD4949F0;
+	Mon, 21 Sep 2026 12:41:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=168.119.38.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789875892; cv=none; b=AgkpuQagr4cOTR3WZNm+PV1SfstI3gO8KxoPOrzET2+/Mamtryoi2pTUbLBL1a4IN8JjVmx+OPbgAAgeogObDdtMR12npVjLhKHwj7L7srQLLFDIVLnudN8lrCAkVt/TNs/eXS8SZ1kg+Ohp6shqi6h9OnSGfpHBiMvMfkabVBo=
+	t=1789994478; cv=none; b=qR5S1zW+CKY9D7tlN6fxfiT0DgYuwwm+Koh/zBnGbVloYk5TIr+R/t03i5FUXQUgDjDT57XmcKnKkuME/2bXkZnjP6bQuA1efz51vG+urKV23plOeLuHroR4UF8NByXaGb3iFYDapbmFO3zrRSTyrA4UN+m6G46reI5g51gbmAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789875892; c=relaxed/simple;
-	bh=v/ryXX14uxu441FylU9bkqvTa+aB551HhVV58EKBz/k=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=siE6FKiDp+KHEoaOvKEsD+PuCfUxOB8F2uuV46A9noCK8fQ0rnsaBzyVMBFG8q2aJHMzs3bY25K8MfiYx0ubw2ATC78JhWoN/pdy7WM/ND2MGl4tpbJ3lQfQbRDsg5d7Juq2cVGZLubzVybKPnAlYcH52KZAcuGu3QoHDknK44w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=YKJ01d0L; arc=none smtp.client-ip=117.135.210.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1789994478; c=relaxed/simple;
+	bh=4xC/ANbmNRhRf8JbGa9zVRkQ15ZiLiGdGeXDx6MQtnk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=eS8+bW5N0pOvVH8OmeBGbv+KUaT6DoRs3fnB4DqWbfz+JHYmbWJEY4Dh8yw8T/VzOo4jzr11+6CfigP8Z1izGVFCJnTzrXkMIIt0x11nOsjQSbI+zZ4SFx8WOQ5wSMiLcPYVdCo/F1Mj0LyCullrPXZgHb8ekjwqxFe0E6pOzoI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=permerror header.from=sipsolutions.net; spf=pass smtp.mailfrom=sipsolutions.net; dkim=pass (2048-bit key) header.d=sipsolutions.net header.i=@sipsolutions.net header.b=p+5iydgD; arc=none smtp.client-ip=168.119.38.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=permerror header.from=sipsolutions.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sipsolutions.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="YKJ01d0L"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=iw
-	W17lpQbLLbRPGN1g79TKomNjjKcvqflnJ75C8Wfic=; b=YKJ01d0Liuhbgtb+uX
-	M+4Q05TLxS/DsBbTBczeAQVwSctfQstBIx3iUOrtJleo6Hu6yllaFdWVI7PbXqlI
-	NAgfNqq7C4HT+uT6uajta6hhAbzPkYwl/Hk1baahZn1oQPNbiy0TLubXYIvhXfRU
-	z9+qjtvkVDzY623yhJ44fmnFE=
-Received: from localhost.localdomain (unknown [])
-	by gzga-smtp-mtada-g1-2 (Coremail) with SMTP id _____wD3F7aQVq9q_LsDBw--.15248S2;
-	Sun, 20 Sep 2026 11:44:16 +0800 (CST)
-From: Pengpeng Hou <hppiscas@163.com>
-To: arend.vanspriel@broadcom.com
-Cc: linux-wireless@vger.kernel.org,
+	dkim=pass (2048-bit key) header.d=sipsolutions.net header.i=@sipsolutions.net header.b="p+5iydgD"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=sipsolutions.net; s=mail; h=Content-Transfer-Encoding:MIME-Version:
+	Message-ID:Date:Subject:Cc:To:From:Content-Type:Sender:Reply-To:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+	Resent-Message-ID:In-Reply-To:References;
+	bh=0SKbgr9jwGrWUR95ZFlXK6kY4Bb/E+TkmfJXmQCfUP0=; t=1789994477; x=1791204077; 
+	b=p+5iydgD/z+rm6YXhUrP3lMlv9bdDrafiXMGRjENyYRA6RYaTzMXaAH4ZxxYua8wbxxlBF+5+bo
+	oWu8yf+P6UiNnfGSgdG919Tb9jwqHZpzAJTJWewCRowtgbHAFh6qFYx1+byBmgBlV4PyWMwM9l8uY
+	540szu+viLtYP/rDvXtygVfWr4M9jtLb4NWJ0yGpGKPm564HvH/1S6kfRycF9LdKrD8/u4DisTxR3
+	/nfwYLBwS5TrQBJyo0CKip4YrtmKcPktvhWnzSAElU8SWko91pXyAtlfofWE8QbCmfYLg4HGi2t6N
+	3HG4z8DrbpaDH3Toh7V14/VzxogKRyKgNbaA==;
+Received: by sipsolutions.net with esmtpsa (TLS1.3:ECDHE_X25519__ECDSA_SECP256R1_SHA256__AES_256_GCM:256)
+	(Exim 4.98.2)
+	(envelope-from <benjamin@sipsolutions.net>)
+	id 1x8dKY-00000005oVO-05ew;
+	Mon, 21 Sep 2026 14:41:10 +0200
+From: Benjamin Berg <benjamin@sipsolutions.net>
+To: linux-wireless@vger.kernel.org
+Cc: Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Brian Norris <briannorris@chromium.org>,
+	Francesco Dolcini <francesco@dolcini.it>,
+	Ajay Singh <ajay.kathat@microchip.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Jeff Chen <jeff.chen_1@nxp.com>,
+	Igor Mitsyanko <imitsyanko@quantenna.com>,
+	Sergey Matyukevich <geomatsi@gmail.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	brcm80211@lists.linux.dev,
-	brcm80211-dev-list.pdl@broadcom.com,
-	linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org,
-	hppiscas@163.com
-Subject: [PATCH v2] wifi: brcmfmac: bound NVRAM comment parsing
-Date: Sun, 20 Sep 2026 11:44:14 +0800
-Message-ID: <20260920034414.16948-1-hppiscas@163.com>
-X-Mailer: git-send-email 2.50.1
+	libertas-dev@lists.infradead.org,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Benjamin Berg <benjamin.berg@intel.com>
+Subject: [PATCH wireless-next v3 0/7] Add support for Control Integrity Protocol (CIP)
+Date: Mon, 21 Sep 2026 14:40:49 +0200
+Message-ID: <20260921124048.4146576-9-benjamin@sipsolutions.net>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -43,88 +58,68 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:_____wD3F7aQVq9q_LsDBw--.15248S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxGFy3XrWrAr4DCw13tryrZwb_yoW5WrWxpr
-	Z3GFyj9r4DJan7CrWUKr43ZFyFg3Z3G3yUKa98A3WSvF4Dur18uw18KFya9r4YyFy8Ja12
-	yrWDtr90vF4DJ37anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRJkuxUUUUU=
-X-CM-SenderInfo: 5kssx2xfdvqiywtou0bp/xtbC7RJACWqvVpKrgAAA3c
 
-The NVRAM comment handler searches for a newline with strchr() even
-though its input is a firmware buffer with an explicit length. A comment
-at the end of an unterminated buffer can make the search read past that
-input.
+From: Benjamin Berg <benjamin.berg@intel.com>
 
-Keep the input extent in the parser and use bounded searches for newline
-and NUL. Preserve the full input length: the capped size used to
-allocate the output is not a bound on the input, which may contain more
-than 64KiB of comments. Leave the outer parsing limit unchanged.
+This adds the mac80211 support for the new key type and using the
+pairwise key for control frame protection (CFP).
 
-The issue was found by our static-analysis tool.
+v3:
+- Add debugfs patches for hwsim testing
+- Update for REVmf D3.0
+- Configure CIP in hwsim for further interface types
 
-Fixes: 3e99b08ab53c ("brcmfmac: enhance nvram processing")
-Cc: stable@vger.kernel.org
-Assisted-by: gpt 5
-Signed-off-by: Pengpeng Hou <hppiscas@163.com>
----
-Changes since v1:
-https://lore.kernel.org/all/20260830135328.12321-1-pengpeng@iscas.ac.cn/
-Store data_len, not the capped output allocation size, as Arend
-requested. Use size_t for the input extent and add the stable Cc
-trailer.
+v2:
+- adjust rtl8723bs stating driver
+- fix nl80211 attribute insertion
 
- .../broadcom/brcm80211/brcmfmac/firmware.c         |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+Benjamin Berg (6):
+  wifi: mac80211: add key link_id to debugfs
+  wifi: cfg80211: add Control Integrity Protocol (CIP) APIs
+  wifi: mac80211: add cigtk parameter to ieee80211_gtk_rekey_add
+  wifi: mac80211: add helpers to parse/generate CIP Capabilities
+  wifi: mac80211: add Control Integrity Protocol handling
+  wifi: mac80211_hwsim: claim support for Control Integrity Protocol
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
-index 22ff326f1924..a2ee7b43aa21 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
-@@ -37,6 +37,7 @@ enum nvram_parser_state {
-  *
-  * @state: current parser state.
-  * @data: input buffer being parsed.
-+ * @data_len: size of the input buffer, including comments.
-  * @nvram: output buffer with parse result.
-  * @nvram_len: length of parse result.
-  * @line: current line.
-@@ -51,6 +52,7 @@ enum nvram_parser_state {
- struct nvram_parser {
- 	enum nvram_parser_state state;
- 	const u8 *data;
-+	size_t data_len;
- 	u8 *nvram;
- 	u32 nvram_len;
- 	u32 line;
-@@ -171,12 +173,14 @@ brcmf_nvram_handle_value(struct nvram_parser *nvp)
- static enum nvram_parser_state
- brcmf_nvram_handle_comment(struct nvram_parser *nvp)
- {
--	char *eoc, *sol;
-+	const char *eoc, *sol;
-+	size_t remaining;
- 
--	sol = (char *)&nvp->data[nvp->pos];
--	eoc = strchr(sol, '\n');
-+	sol = (const char *)&nvp->data[nvp->pos];
-+	remaining = nvp->data_len - nvp->pos;
-+	eoc = strnchr(sol, remaining, '\n');
- 	if (!eoc) {
--		eoc = strchr(sol, '\0');
-+		eoc = memchr(sol, '\0', remaining);
- 		if (!eoc)
- 			return END;
- 	}
-@@ -210,6 +214,7 @@ static int brcmf_init_nvram_parser(struct nvram_parser *nvp,
- 
- 	memset(nvp, 0, sizeof(*nvp));
- 	nvp->data = data;
-+	nvp->data_len = data_len;
- 	/* Limit size to MAX_NVRAM_SIZE, some files contain lot of comment */
- 	if (data_len > BRCMF_FW_MAX_NVRAM_SIZE)
- 		size = BRCMF_FW_MAX_NVRAM_SIZE;
+Johannes Berg (1):
+  wifi: mac80211: add key flags to debugfs
 
-base-commit: 518e5b794c06c0f0eb40df3e202274a66202c137
+ drivers/net/wireless/ath/ath6kl/cfg80211.c    |  10 +-
+ drivers/net/wireless/ath/wil6210/cfg80211.c   |  13 +-
+ .../broadcom/brcm80211/brcmfmac/cfg80211.c    |  11 +-
+ drivers/net/wireless/intel/iwlwifi/mld/d3.c   |   6 +-
+ drivers/net/wireless/intel/iwlwifi/mvm/d3.c   |   6 +-
+ drivers/net/wireless/marvell/libertas/cfg.c   |   6 +-
+ .../net/wireless/marvell/mwifiex/cfg80211.c   |  12 +-
+ .../wireless/microchip/wilc1000/cfg80211.c    |  13 +-
+ drivers/net/wireless/nxp/nxpwifi/cfg80211.c   |  11 +-
+ .../net/wireless/quantenna/qtnfmac/cfg80211.c |   8 +-
+ drivers/net/wireless/realtek/rtw89/wow.c      |   6 +-
+ .../wireless/virtual/mac80211_hwsim_main.c    |  35 +++++
+ .../staging/rtl8723bs/os_dep/ioctl_cfg80211.c |   9 +-
+ include/linux/ieee80211.h                     |  22 ++++
+ include/net/cfg80211.h                        |  19 ++-
+ include/net/mac80211.h                        |  11 +-
+ include/uapi/linux/nl80211.h                  |  14 ++
+ net/mac80211/cfg.c                            |  41 ++++--
+ net/mac80211/debugfs_key.c                    |  18 ++-
+ net/mac80211/ieee80211_i.h                    |   5 +
+ net/mac80211/key.c                            |  96 ++++++++++----
+ net/mac80211/key.h                            |   3 +-
+ net/mac80211/mlme.c                           |  20 ++-
+ net/mac80211/parse.c                          |   4 +
+ net/mac80211/sta_info.h                       |   2 +
+ net/mac80211/util.c                           |  19 +++
+ net/wireless/core.h                           |   7 +-
+ net/wireless/ibss.c                           |   3 +-
+ net/wireless/nl80211.c                        | 124 ++++++++++++++----
+ net/wireless/rdev-ops.h                       |  23 ++--
+ net/wireless/sme.c                            |  10 +-
+ net/wireless/trace.h                          |  37 +++---
+ net/wireless/util.c                           |  40 +++++-
+ net/wireless/wext-compat.c                    |   8 +-
+ 34 files changed, 532 insertions(+), 140 deletions(-)
+
 -- 
-2.50.1 (Apple Git-155)
+2.55.0
 
