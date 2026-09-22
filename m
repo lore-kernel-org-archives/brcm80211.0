@@ -1,240 +1,192 @@
-Received: from smtp11.infineon.com (smtp11.infineon.com [217.10.52.105])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C88EB4CEE4F
-	for <brcm80211@lists.linux.dev>; Tue, 22 Sep 2026 06:26:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.10.52.105
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93EFE3264EF;
+	Tue, 22 Sep 2026 07:23:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790058390; cv=none; b=mFLCtNf1/KEMoYEUkkoBWqCsNr0d882kAWQi4JIW6yJU2tlxJZRo+pAD+nDPb4QNvPQGmhcPyHHGNuRZRvVCgrtGirm7RE3zO3glneKNxncFx9bmT6yNABPDvBu0x/AvnsfEDe++pUz6jPHznUxMqDfVr9DsgpKhqMQkDiP65QQ=
+	t=1790061794; cv=none; b=BwE7E7Yr+tcQyrlASXjU9XVr5w/PeRMNjtm4RxsnZf5LHRYOYxz0KWD9cLz5zUaObdqT72EO474kixfSzWmISxabM3XFO3KFcEToqJ8YHx96J7uC2jmy59JqSCs5+TkDQ/2R+UHH2ayyK7JGLUxXI3/7r4eFpu2YWmijTCqWXLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790058390; c=relaxed/simple;
-	bh=+62T9jmNqk2KD4MV3zERXImcCCd0Joj/18PLd167CqQ=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=u7ddbDdzFNDAvccxLkgeAnH9ZRWtuNVNRmrGcTeYfbATcp0xWdjL8mdEeiInkQBPzJ4v2D/KAhwu2EpyEZ2SzrXjetuyzJ3b431QvERCW2r4y6ZkaLBSvKUteQiKXIEMJ2swkc6/h3SpzB0g+ho10uXK//Irv7Kfr8fo5pG5Zb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=infineon.com; spf=pass smtp.mailfrom=infineon.com; dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b=UpHAhp9F; arc=none smtp.client-ip=217.10.52.105
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=infineon.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infineon.com
+	s=arc-20240116; t=1790061794; c=relaxed/simple;
+	bh=oG0xvub+pWhjgDDUHqMEF75UKWqTKLX50Voi38p/N0k=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=jXzZIlNLvdA8v5ojrpbKSbPvYJAl6hU3zB6oBPCFn/bZazMdNr+ZMeGfR/uRNFrhXLvHY4n/Zf2W66rr+dg0SXGYCLWUVF5nkxsZ3a5j6YCZprSDRBn/ymI6XzQs2shBrp45pOgmCChIinVFPrnoFnqwvx3wRsYhYa/ePqg4exY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=nkSLojwn; arc=none smtp.client-ip=192.198.163.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=infineon.com header.i=@infineon.com header.b="UpHAhp9F"
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=infineon.com; i=@infineon.com; q=dns/txt; s=IFXMAIL;
-  t=1790058387; x=1821594387;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=+62T9jmNqk2KD4MV3zERXImcCCd0Joj/18PLd167CqQ=;
-  b=UpHAhp9FYwof3/yujS7rMSSQQx4ehcIEpGPjpTpDSDRi+WZ8bkhwStI8
-   ikktYTkYZ/p6lrk77fBlrIVWsuzaOOXYIC8ps3x4wOFrNGaXg4rlzUUie
-   3qihJ4GOuaiQ0tcXskJhXIhv+i8E5vpmkbCn8Sha8YCnS9jhAXh2sW32v
-   s=;
-X-CSE-ConnectionGUID: uXBTIKZOSoaWEEl+flOAiQ==
-X-CSE-MsgGUID: gQS0L9FIQeuokVrZwFwH+Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11912"; a="162168679"
-X-IronPort-AV: E=Sophos;i="6.27,115,1787004000"; 
-   d="scan'208";a="162168679"
-X-Amp-Result: SKIPPED(no attachment in message)
-Received: from unknown (HELO MUCSE814.infineon.com) ([172.23.29.40])
-  by smtp11.infineon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Sep 2026 08:25:15 +0200
-Received: from MUCSE829.infineon.com (172.23.29.22) by MUCSE814.infineon.com
- (172.23.29.40) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.49; Tue, 22 Sep
- 2026 08:25:14 +0200
-Received: from ISCN5CG6022HSR.infineon.com (10.161.6.196) by
- MUCSE829.infineon.com (172.23.29.22) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49; Tue, 22 Sep 2026 08:25:12 +0200
-From: GirishBukkasagara.Rudrappa <girishbukkasagara.rudrappa@infineon.com>
-To: <linux-wireless@vger.kernel.org>
-CC: <arend.vanspriel@broadcom.com>, <johannes.berg@intel.com>,
-	<brcm80211@lists.linux.dev>, <wlan-kernel-dev-list@infineon.com>,
-	<bogdan.nicolae@gmail.com>, Girish Rudrappa
-	<girishbukkasagara.rudrappa@infineon.com>
-Subject: [PATCH RESEND wireless-next v2] wifi: brcmfmac: Set extsae_pwe parameter to Infineon firmware in SAP mode
-Date: Tue, 22 Sep 2026 06:24:58 +0000
-Message-ID: <20260922062458.3550-1-girishbukkasagara.rudrappa@infineon.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260917173704.6356-1-girishbukkasagara.rudrappa@infineon.com>
-References: <20260917173704.6356-1-girishbukkasagara.rudrappa@infineon.com>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="nkSLojwn"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1790061791; x=1821597791;
+  h=date:from:to:cc:subject:message-id:mime-version;
+  bh=oG0xvub+pWhjgDDUHqMEF75UKWqTKLX50Voi38p/N0k=;
+  b=nkSLojwnj8RN7U17+9aEYhw5GHQppC1bAqivcSeg2S3FBoY/5o6nT0bJ
+   aGg1o+9S0agbW6fTsXNXuFUY+7o5zrxxsZJOnNo2+kB/fx4L3bgo7WFh+
+   MLX8gBKjIokpJVWibnFnCuy/dyVfEz9xNOcrWV25ZD1jsGKBTbFWkgi8U
+   dzFBxxocsWiowrJHR+qfSlx+nSyeoweB9DIm6GoOwEodL2vTwDzZv7joZ
+   0F6r4RHLsILTWokT036HNp8JZIl6x5ME+HICuV7ghuBYDegjneHJj8QyI
+   OxmJlUy2aSYbr9DmmeClHun2ncatl3FrX28zBkxFuhKoYmDR95dwwckWP
+   Q==;
+X-CSE-ConnectionGUID: s6ShITLcSu6GP30s/ditig==
+X-CSE-MsgGUID: Y6yjAO1sSz+fv1MI7rWMlQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11912"; a="101230207"
+X-IronPort-AV: E=Sophos;i="6.27,116,1787036400"; 
+   d="scan'208";a="101230207"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Sep 2026 00:23:11 -0700
+X-CSE-ConnectionGUID: cH0olBJBTGy/6woawrGjpQ==
+X-CSE-MsgGUID: 5kYOOCXET7GNklhLXKQ4dg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,116,1787036400"; 
+   d="scan'208";a="300941614"
+Received: from ly-workstation.sh.intel.com (HELO ly-workstation) ([10.239.182.64])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Sep 2026 00:23:08 -0700
+Date: Tue, 22 Sep 2026 15:23:00 +0800
+From: kernel test robot <yi1.lai@intel.com>
+To: Arnd Bergmann <arnd@arndb.de>
+Cc: oe-lkp@lists.linux.dev, lkp@intel.com,
+	linux-arm-kernel@lists.infradead.org, arm@kernel.org,
+	linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org,
+	brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com,
+	yi1.lai@intel.com
+Subject: [soc:board-remove-7.3] [net]  8d91a5ecce:
+ EIP:kernfs_remove_by_name_ns
+Message-ID: <202609221423.71fce5fb-lkp@intel.com>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: MUCSE805.infineon.com (172.23.29.31) To
- MUCSE829.infineon.com (172.23.29.22)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-From: Girish Rudrappa <girishbukkasagara.rudrappa@infineon.com>
 
-Parse and configure the extsae_pwe according to the information from the
-supported rate/extended support rate and RSNX IE
 
-Parse the beacon IEs on start_ap() and set the extsae_pwe iovar.
-Set sae_pwe to 2 when the RSNX IE advertises H2E, 1 when an H2E-only
-membership selector is present, 0 otherwise.
+Hello,
 
-The changes are tested with FW Version 7.45.286
+kernel test robot noticed "EIP:kernfs_remove_by_name_ns" on:
 
-Signed-off-by: Girish Rudrappa <girishbukkasagara.rudrappa@infineon.com>
----
-Resending v2 after updating subject prefix with target tree name
+commit: 8d91a5ecce11412c646ad1f1637334ef9546ea90 ("net: wireless: brcmfmac: remove platform data based probe") https://git.kernel.org/cgit/linux/kernel/git/soc/soc.git board-remove-7.3
 
-Changes in v2:
-Rebased the code. No functionality changes
+in testcase: boot
 
- .../broadcom/brcm80211/brcmfmac/cfg80211.c    | 77 +++++++++++++++++++
- .../broadcom/brcm80211/brcmfmac/cyw/core.c    |  6 ++
- .../broadcom/brcm80211/brcmfmac/fwvid.h       | 11 +++
- 3 files changed, 94 insertions(+)
+config: i386-randconfig-011-20260914
+compiler: clang-22
+test machine: qemu-system-i386 -enable-kvm -cpu SandyBridge -smp 4 -m 4G
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-index 9d8ce7bb046e..a9e5ab5ea292 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-@@ -5131,6 +5131,79 @@ brcmf_config_ap_mgmt_ie(struct brcmf_cfg80211_vif *vif,
- 	return err;
- }
- 
-+static s32
-+brcmf_parse_configure_sae_pwe(struct brcmf_if *ifp,
-+			      struct cfg80211_ap_settings *settings)
-+{
-+	const struct brcmf_tlv *rsnx_ie;
-+	const struct brcmf_tlv *ext_rate_ie;
-+	const struct brcmf_tlv *supp_rate_ie;
-+	u8 ie_len, i;
-+	u32 wpa_auth = 0;
-+	u32 sae_pwe = 0; /* 0 = Hunting-and-Pecking only, 1 = H2E only, 2 = both */
-+	s32 err = 0;
-+
-+	if (!brcmf_feat_is_enabled(ifp, BRCMF_FEAT_SAE_EXT))
-+		return 0;
-+
-+	err = brcmf_fil_bsscfg_int_get(ifp, "wpa_auth", &wpa_auth);
-+	if (err || (wpa_auth & WPA3_AUTH_SAE_PSK) == 0) {
-+		brcmf_dbg(INFO, "wpa_auth is not SAE:0x%x\n", wpa_auth);
-+		return 0;
-+	}
-+
-+	rsnx_ie = brcmf_parse_tlvs((u8 *)settings->beacon.tail,
-+				   settings->beacon.tail_len, WLAN_EID_RSNX);
-+
-+	if (rsnx_ie && rsnx_ie->len &&
-+	    (rsnx_ie->data[0] & WLAN_RSNX_CAPA_SAE_H2E))
-+		sae_pwe = 2;
-+
-+	/* Found rsnx_ie with SAE_H2E, check the bss selector to know if it is
-+	 * a H2E only.
-+	 */
-+
-+	if (sae_pwe == 2) {
-+		supp_rate_ie = brcmf_parse_tlvs((u8 *)settings->beacon.head,
-+						settings->beacon.head_len,
-+						WLAN_EID_SUPP_RATES);
-+		ext_rate_ie = brcmf_parse_tlvs((u8 *)settings->beacon.tail,
-+					       settings->beacon.tail_len,
-+					       WLAN_EID_EXT_SUPP_RATES);
-+		if (ext_rate_ie) {
-+			ie_len = ext_rate_ie->len;
-+			for (i = 0; i < ie_len; i++) {
-+				if ((ext_rate_ie->data[i] & 0x7f) ==
-+				    BSS_MEMBERSHIP_SELECTOR_SAE_H2E) {
-+					sae_pwe = 1;
-+					break;
-+				}
-+			}
-+		}
-+
-+		/* If we cannot found H2E only selector in ext_supp_rate IE,
-+		 * traversal supp_rate IE to make sure it really doesn't exist
-+		 */
-+		if (sae_pwe == 2 && supp_rate_ie) {
-+			ie_len = supp_rate_ie->len;
-+			for (i = 0; i < ie_len; i++) {
-+				if ((supp_rate_ie->data[i] & 0x7f) ==
-+				    BSS_MEMBERSHIP_SELECTOR_SAE_H2E) {
-+					sae_pwe = 1;
-+					break;
-+				}
-+			}
-+		}
-+	}
-+
-+	err = brcmf_fwvid_configure_sae_pwe(ifp, sae_pwe);
-+	if (err == -EOPNOTSUPP)
-+		return 0;
-+
-+	brcmf_dbg(TRACE, "extsae_pwe=%u\n", sae_pwe);
-+	return err;
-+}
-+
- static s32
- brcmf_parse_configure_security(struct brcmf_if *ifp,
- 			       struct cfg80211_ap_settings *settings,
-@@ -5164,6 +5237,10 @@ brcmf_parse_configure_security(struct brcmf_if *ifp,
- 			err = brcmf_configure_wpaie(ifp, tmp_ie, true);
- 			if (err < 0)
- 				return err;
-+
-+			err = brcmf_parse_configure_sae_pwe(ifp, settings);
-+			if (err < 0)
-+				return err;
- 		}
- 	} else {
- 		brcmf_dbg(TRACE, "No WPA(2) IEs found\n");
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
-index 545eb9aae966..0443207dfe00 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cyw/core.c
-@@ -367,10 +367,16 @@ static void brcmf_cyw_register_event_handlers(struct brcmf_pub *drvr)
- 			    brcmf_notify_mgmt_tx_status);
- }
- 
-+static int brcmf_cyw_configure_sae_pwe(struct brcmf_if *ifp, u32 sae_pwe)
-+{
-+	return brcmf_fil_iovar_int_set(ifp, "extsae_pwe", sae_pwe);
-+}
-+
- const struct brcmf_fwvid_ops brcmf_cyw_ops = {
- 	.set_sae_password = brcmf_cyw_set_sae_pwd,
- 	.alloc_fweh_info = brcmf_cyw_alloc_fweh_info,
- 	.activate_events = brcmf_cyw_activate_events,
- 	.get_cfg80211_ops = brcmf_cyw_get_cfg80211_ops,
- 	.register_event_handlers = brcmf_cyw_register_event_handlers,
-+	.configure_sae_pwe = brcmf_cyw_configure_sae_pwe,
- };
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h
-index f3e011d090f2..56d341a75a53 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwvid.h
-@@ -18,6 +18,7 @@ struct brcmf_fwvid_ops {
- 	int (*activate_events)(struct brcmf_if *ifp);
- 	void (*get_cfg80211_ops)(struct brcmf_pub *drvr);
- 	void (*register_event_handlers)(struct brcmf_pub *drvr);
-+	int (*configure_sae_pwe)(struct brcmf_if *ifp, u32 sae_pwe);
- };
- 
- /* exported functions */
-@@ -40,6 +41,16 @@ static inline void brcmf_fwvid_feat_attach(struct brcmf_if *ifp)
- 	vops->feat_attach(ifp);
- }
- 
-+static inline int brcmf_fwvid_configure_sae_pwe(struct brcmf_if *ifp, u32 sae_pwe)
-+{
-+	const struct brcmf_fwvid_ops *vops = ifp->drvr->vops;
-+
-+	if (!vops || !vops->configure_sae_pwe)
-+		return -EOPNOTSUPP;
-+
-+	return vops->configure_sae_pwe(ifp, sae_pwe);
-+}
-+
- static inline int brcmf_fwvid_set_sae_password(struct brcmf_if *ifp,
- 					       struct cfg80211_crypto_settings *crypto)
- {
+If you fix the issue in a separate patch/commit (i.e. not just a new version of the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <yi1.lai@intel.com>
+| Closes: https://lore.kernel.org/oe-lkp/202609221423.71fce5fb-lkp@intel.com
 
-base-commit: 6c0b7357e3c7f365ec51dd8d2b626130ee983ce1
--- 
-2.53.0
+
+[    5.486950][    T1] ------------[ cut here ]------------
+[    5.488426][    T1] kernfs: can not remove 'uevent', no directory
+[    5.489919][    T1] WARNING: fs/kernfs/dir.c:1786 at kernfs_remove_by_name_ns+0x7b/0xc0, CPU#0: swapper/0/1
+[    5.492378][    T1] Modules linked in:
+[    5.493281][    T1] CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted 7.3.0-rc2-00073-g8d91a5ecce11 #1 PREEMPTLAZY
+[    5.495837][    T1] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[    5.498316][    T1] EIP: kernfs_remove_by_name_ns (kernfs/dir.c:1785)
+[    5.499706][    T1] Code: 74 5a a8 03 75 5c ff 00 89 c1 89 c6 e8 5e f9 ff ff 89 f0 e8 d7 d8 ff ff 31 f6 eb 1c 53 68 30 84 07 c3 e8 08 1b d4 ff 83 c4 08 <0f> 0b be fe ff ff ff eb 14 be fe ff ff ff 89 f8 e8 70 da da ff 8b
+All code
+========
+   0:	74 5a                	je     0x5c
+   2:	a8 03                	test   $0x3,%al
+   4:	75 5c                	jne    0x62
+   6:	ff 00                	incl   (%rax)
+   8:	89 c1                	mov    %eax,%ecx
+   a:	89 c6                	mov    %eax,%esi
+   c:	e8 5e f9 ff ff       	call   0xfffffffffffff96f
+  11:	89 f0                	mov    %esi,%eax
+  13:	e8 d7 d8 ff ff       	call   0xffffffffffffd8ef
+  18:	31 f6                	xor    %esi,%esi
+  1a:	eb 1c                	jmp    0x38
+  1c:	53                   	push   %rbx
+  1d:	68 30 84 07 c3       	push   $0xffffffffc3078430
+  22:	e8 08 1b d4 ff       	call   0xffffffffffd41b2f
+  27:	83 c4 08             	add    $0x8,%esp
+  2a:*	0f 0b                	ud2		<-- trapping instruction
+  2c:	be fe ff ff ff       	mov    $0xfffffffe,%esi
+  31:	eb 14                	jmp    0x47
+  33:	be fe ff ff ff       	mov    $0xfffffffe,%esi
+  38:	89 f8                	mov    %edi,%eax
+  3a:	e8 70 da da ff       	call   0xffffffffffdadaaf
+  3f:	8b                   	.byte 0x8b
+
+Code starting with the faulting instruction ===========================================
+   0:	0f 0b                	ud2
+   2:	be fe ff ff ff       	mov    $0xfffffffe,%esi
+   7:	eb 14                	jmp    0x1d
+   9:	be fe ff ff ff       	mov    $0xfffffffe,%esi
+   e:	89 f8                	mov    %edi,%eax
+  10:	e8 70 da da ff       	call   0xffffffffffdada85
+  15:	8b                   	.byte 0x8b
+[    5.504411][    T1] EAX: 00000000 EBX: c3095d8c ECX: 00000000 EDX: 00000000
+[    5.506084][    T1] ESI: c35f2608 EDI: c01dd42c EBP: c0245c1c ESP: c0245c08
+[    5.507830][    T1] DS: 007b ES: 007b FS: 0000 GS: 0000 SS: 0068 EFLAGS: 00010282
+[    5.509606][    T1] CR0: 80050033 CR2: ffd97000 CR3: 0386e000 CR4: 000406d0
+[    5.511412][    T1] Call Trace:
+[    5.512419][    T1]  driver_remove_file (sysfs/file.c:515 linux/sysfs.h:780 base/driver.c:126)
+[    5.513635][    T1]  bus_remove_driver (base/bus.c:830)
+[    5.514785][    T1]  driver_unregister (base/driver.c:202)
+[    5.515927][    T1]  brcmfmac_module_init (base/platform.c:1005 net/wireless/broadcom/brcm80211/brcmfmac/common.c:580)
+[    5.517104][    T1]  __initstub__kmod_brcmfmac__510_591_brcmfmac_module_init6 (net/wireless/broadcom/brcm80211/brcmfmac/common.c:591)
+[    5.519013][    T1]  do_one_initcall (main.c:1357)
+[    5.520164][    T1]  ? __initstub__kmod_ath6kl_sdio__508_1430_ath6kl_sdio_driver_init6 (usercopy_32.c:?)
+[    5.522289][    T1]  ? __lock_acquire (locking/lockdep.c:4718)
+[    5.523491][    T1]  ? __lock_acquire (locking/lockdep.c:4718)
+[    5.525180][    T1]  ? lock_acquire (locking/lockdep.c:5942)
+[    5.526824][    T1]  ? __lock_acquire (locking/lockdep.c:4718)
+[    5.530956][    T1]  ? __lock_acquire (locking/lockdep.c:4718)
+[    5.532755][    T1]  ? lock_acquire (locking/lockdep.c:5942)
+[    5.534332][    T1]  ? lock_acquire (locking/lockdep.c:5942)
+[    5.536001][    T1]  ? __this_cpu_preempt_check (smp_processor_id.c:64)
+[    5.537894][    T1]  ? __this_cpu_preempt_check (smp_processor_id.c:64)
+[    5.539914][    T1]  ? ktime_get (time/timekeeping.c:1002)
+[    5.541408][    T1]  ? ktime_get (time/timekeeping.c:1002)
+[    5.542911][    T1]  ? ktime_get (time/timekeeping.c:321 time/timekeeping.c:482 time/timekeeping.c:1004)
+[    5.544554][    T1]  ? clockevents_program_event (time/clockevents.c:372)
+[    5.546602][    T1]  ? irqentry_exit (linux/irq-entry-common.h:507)
+[    5.548377][    T1]  ? __this_cpu_preempt_check (smp_processor_id.c:64)
+[    5.550315][    T1]  ? lockdep_hardirqs_on (locking/lockdep.c:4516)
+[    5.552128][    T1]  ? irqentry_exit (linux/irq-entry-common.h:507)
+[    5.553774][    T1]  ? sysvec_apic_timer_interrupt (x86/kernel/apic/apic.c:1062)
+[    5.559179][    T1]  ? trace_hardirqs_on (trace/trace_preemptirq.c:79)
+[    5.560942][    T1]  ? vmware_sched_clock (vmware.c:?)
+[    5.562784][    T1]  ? irqentry_exit (linux/irq-entry-common.h:507)
+[    5.564594][    T1]  ? vmware_sched_clock (vmware.c:?)
+[    5.566492][    T1]  ? sysvec_apic_timer_interrupt (x86/kernel/apic/apic.c:1062)
+[    5.568555][    T1]  ? handle_exception (x86/entry/entry_32.S:1044)
+[    5.570285][    T1]  ? parameq (params.c:98)
+[    5.571797][    T1]  ? next_arg (cmdline.c:283)
+[    5.573381][    T1]  ? parameq (linux/fortify-string.h:218 params.c:99)
+[    5.574711][    T1]  ? parse_args (params.c:153)
+[    5.579714][    T1]  do_initcall_level (main.c:1419)
+[    5.581382][    T1]  do_initcalls (main.c:1435)
+[    5.582841][    T1]  ? rest_init (main.c:?)
+[    5.584478][    T1]  do_basic_setup (main.c:1455)
+[    5.586016][    T1]  kernel_init_freeable (main.c:1670)
+[    5.587875][    T1]  ? rest_init (main.c:?)
+[    5.589472][    T1]  kernel_init (main.c:1560)
+[    5.590987][    T1]  ret_from_fork (x86/kernel/process.c:158)
+[    5.592643][    T1]  ? rest_init (main.c:?)
+[    5.594157][    T1]  ret_from_fork_asm (x86/entry/entry_32.S:736)
+[    5.595882][    T1]  entry_INT80_32 (x86/entry/entry_32.S:940)
+[    5.597546][    T1] irq event stamp: 90237
+[    5.598888][    T1] hardirqs last  enabled at (90251): __console_unlock (printk/printk.c:347)
+[    5.600980][    T1] hardirqs last disabled at (90266): __console_unlock (printk/printk.c:345)
+[    5.603033][    T1] softirqs last  enabled at (90070): __do_softirq (softirq.c:679)
+[    5.604968][    T1] softirqs last disabled at (90061): __do_softirq (softirq.c:679)
+[    5.606947][    T1] ---[ end trace 0000000000000000 ]---
+
+
+The kernel config and materials to reproduce are available at:
+https://download.01.org/0day-ci/archive/20260922/202609221423.71fce5fb-lkp@intel.com
+
+
+
+--
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
