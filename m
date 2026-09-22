@@ -1,192 +1,395 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk2-f12.google.com (mail-qk2-f12.google.com [74.125.230.204])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93EFE3264EF;
-	Tue, 22 Sep 2026 07:23:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 689DF53CA9A
+	for <brcm80211@lists.linux.dev>; Tue, 22 Sep 2026 13:34:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.230.204
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790061794; cv=none; b=BwE7E7Yr+tcQyrlASXjU9XVr5w/PeRMNjtm4RxsnZf5LHRYOYxz0KWD9cLz5zUaObdqT72EO474kixfSzWmISxabM3XFO3KFcEToqJ8YHx96J7uC2jmy59JqSCs5+TkDQ/2R+UHH2ayyK7JGLUxXI3/7r4eFpu2YWmijTCqWXLw=
+	t=1790084046; cv=none; b=CYSe99sRKrS315QrHO4FO6RJg+zWlYsOqbJS9LaGxnk3GIMPkop+x0aA8La2rC821tAGaPvJ8cwdBIBPaDA+31UUHeCuzZi21dkgz+o6DUDccDPF/QCA4Mlp5AgoT7ym94frqiJ5QCPrqo9Or5920OKrkU9CGyhv7ZUoHhwCGB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790061794; c=relaxed/simple;
-	bh=oG0xvub+pWhjgDDUHqMEF75UKWqTKLX50Voi38p/N0k=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=jXzZIlNLvdA8v5ojrpbKSbPvYJAl6hU3zB6oBPCFn/bZazMdNr+ZMeGfR/uRNFrhXLvHY4n/Zf2W66rr+dg0SXGYCLWUVF5nkxsZ3a5j6YCZprSDRBn/ymI6XzQs2shBrp45pOgmCChIinVFPrnoFnqwvx3wRsYhYa/ePqg4exY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=nkSLojwn; arc=none smtp.client-ip=192.198.163.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1790084046; c=relaxed/simple;
+	bh=XqJp51axDbzjgUmwTrSA+C0IjWyREkj8qWU3tTNRHtM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=q0hGYULW21OSg+hBKEkWAbteMu5BdXiwXxbp5N7uK+Nt03M9GatKSlVIr/onR4cFP6zHa8PoKEnr+UxtdtL89Bo4XOa/lA5KZVkw8yZXLBOkJD/nsMP+Eu/gbD39aeXrBeGhMxAkAf0sHpvaalWPhK2rJtV+3RcymnOoEASoYak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=brivo.com; spf=pass smtp.mailfrom=brivo.com; dkim=pass (2048-bit key) header.d=brivo.com header.i=@brivo.com header.b=znHDy8M2; arc=none smtp.client-ip=74.125.230.204
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=brivo.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=brivo.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="nkSLojwn"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1790061791; x=1821597791;
-  h=date:from:to:cc:subject:message-id:mime-version;
-  bh=oG0xvub+pWhjgDDUHqMEF75UKWqTKLX50Voi38p/N0k=;
-  b=nkSLojwnj8RN7U17+9aEYhw5GHQppC1bAqivcSeg2S3FBoY/5o6nT0bJ
-   aGg1o+9S0agbW6fTsXNXuFUY+7o5zrxxsZJOnNo2+kB/fx4L3bgo7WFh+
-   MLX8gBKjIokpJVWibnFnCuy/dyVfEz9xNOcrWV25ZD1jsGKBTbFWkgi8U
-   dzFBxxocsWiowrJHR+qfSlx+nSyeoweB9DIm6GoOwEodL2vTwDzZv7joZ
-   0F6r4RHLsILTWokT036HNp8JZIl6x5ME+HICuV7ghuBYDegjneHJj8QyI
-   OxmJlUy2aSYbr9DmmeClHun2ncatl3FrX28zBkxFuhKoYmDR95dwwckWP
-   Q==;
-X-CSE-ConnectionGUID: s6ShITLcSu6GP30s/ditig==
-X-CSE-MsgGUID: Y6yjAO1sSz+fv1MI7rWMlQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11912"; a="101230207"
-X-IronPort-AV: E=Sophos;i="6.27,116,1787036400"; 
-   d="scan'208";a="101230207"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Sep 2026 00:23:11 -0700
-X-CSE-ConnectionGUID: cH0olBJBTGy/6woawrGjpQ==
-X-CSE-MsgGUID: 5kYOOCXET7GNklhLXKQ4dg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,116,1787036400"; 
-   d="scan'208";a="300941614"
-Received: from ly-workstation.sh.intel.com (HELO ly-workstation) ([10.239.182.64])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Sep 2026 00:23:08 -0700
-Date: Tue, 22 Sep 2026 15:23:00 +0800
-From: kernel test robot <yi1.lai@intel.com>
-To: Arnd Bergmann <arnd@arndb.de>
-Cc: oe-lkp@lists.linux.dev, lkp@intel.com,
-	linux-arm-kernel@lists.infradead.org, arm@kernel.org,
-	linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org,
-	brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com,
-	yi1.lai@intel.com
-Subject: [soc:board-remove-7.3] [net]  8d91a5ecce:
- EIP:kernfs_remove_by_name_ns
-Message-ID: <202609221423.71fce5fb-lkp@intel.com>
+	dkim=pass (2048-bit key) header.d=brivo.com header.i=@brivo.com header.b="znHDy8M2"
+Received: by mail-qk2-f12.google.com with SMTP id d75a77b69052e-530c602630bso50609231cf.3
+        for <brcm80211@lists.linux.dev>; Tue, 22 Sep 2026 06:34:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=brivo.com; s=google; t=1790084040; x=1790688840; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=hPazgcC6xiRmlEG//kVU4rPb8z2E1Fxa+1KGjyuQV8s=;
+        b=znHDy8M2K5oN8kbDuBopLRTZb8nyFqamEVI5kAIKJ8XYRNwVSjSaueZB9tjfHwHUKh
+         m91eeXya1c6eoEpSs52g/EDoYuiTS1Y2hGgPbkyhBWL3BkFPvrJ8v8NMLG2rj92kNgzQ
+         Zz4Uup90BYVTUdSoc5ba/heJTrpsMKqcVGdKsb33tQ1H8iW8wDk2NJM5AKkp0OaJUR7t
+         y8+07jynzkrazzoe9IEEiuDE3sgcn5pK1jF51uN6pCWdMolibFbGVyIlbIBDm3Zcclbx
+         xlGrPYtCp92ykVgKjH/bnPA98/nbZr7J0evR3PzL3MkPcUuyUnptxVmviiwr23wYK6lk
+         oWpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790084040; x=1790688840;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=hPazgcC6xiRmlEG//kVU4rPb8z2E1Fxa+1KGjyuQV8s=;
+        b=sBFT4Xi2upPqde2Bl+1SllRw9DtdYWmB4ijVPqsdLilEdNhbKyuywSSwUFCp9JBDHI
+         biEI6lnwrL/0sMmHOl9MrWqzaZFRr9PYwRjquUsIvG4CFEewA2NOjhxwVDdNU2smYySz
+         LljNMRjnWMW6aJlprpIQOV1uU7YfYoc1G5heUWq9OwTQlBcR0BaDkvdRDEkkP/pQ5CPs
+         EGYiY++5qRHwBWw7lEUudepqz/QrCeVYGIdeztDQH6n/PZIBKKhXOPTBpYZ4x2fTSJE2
+         8XK2te8gnJhk8BnzqgY1H4UCTDldg0Cdd2+MLhkeooZFZmxfq+Tqziam8RjMWSmwwDZm
+         dgBA==
+X-Forwarded-Encrypted: i=1; AKwUvBwfhyA/LurHlK4pEvYjasS6ueW/4TyDjeaIX/K55jfc7CvJhYsQ6srUQczxSM/NfxtdRZAjvYxXb4A=@lists.linux.dev
+X-Gm-Message-State: AFuF++mQrzhhwF9GUZJOD6q4ZDGH5hvYnSJQ0AOc0DjHu/h6UcBdOdxh
+	V00ohq59vbKA3YaME6xFSENYii95x30Yx0D7MQaVsbyV1Py8GJwrDEfG6P2nOXlo8klY+7RzPsq
+	Ln3Q36j3V2b145HHgI0gQjzZlOgbmnMnkqiORmBl+A5LkYU48uuu2SmI=
+X-Gm-Gg: AYBFou2Zx680o1ZMccqXEXjDo26/w9ZqdipOwZ8Q9fGdNOIMGeDPULrQmNL6Q87hU62
+	z9faYqb8jjh9UJme3BtpLQjtbi4sNu7RvGAQPfa+tBtZS4PrGCLk64tnpw4XZ1VUB/wJojqi87e
+	MLM0skHLNEgQ0vx256yFQZ3xsiq9na94JttIfZDuptKscqJXCYcRX2XZsmJDxWTcDINpJGiAbU/
+	oTUiWzWvbagQ5EkKOb/QY8opx0vG/rHy/HGYU2T9jJSzNh6I/zi8mSLS254s5BW3RtKPyu5Sy8l
+	iyiPI57tBDuyIA7TBwbULhgvXwyopb0JxFp9KNipj1WHLC9jMkkOIOf7DP64b8j+LHTUESRVVYE
+	x5NBhRAJch07N7iV2Ua/d84va9w5Mm9rdNf6TlmaNtLam8wwIsB+VwS4Aw23uI+oQYgNMsFjnUd
+	WuL546e/0lCoenUSCATSEezGtdCor8cI0y9tt7QVJXu6JhmkR7tK2x1ZM9G/RUVnF2v/hpfG+r1
+	wdm
+X-Received: by 2002:a05:622a:413:b0:532:9add:cddc with SMTP id d75a77b69052e-532dd58e04cmr36179231cf.65.1790084038986;
+        Tue, 22 Sep 2026 06:33:58 -0700 (PDT)
+Received: from [10.200.233.210] ([71.163.254.246])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-532e1995f8esm12967981cf.31.2026.09.22.06.33.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 22 Sep 2026 06:33:58 -0700 (PDT)
+Message-ID: <9eaaf97f-1a1c-4059-b77b-0ce6e399b691@brivo.com>
+Date: Tue, 22 Sep 2026 09:33:53 -0400
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/4] wifi: brcmfmac: Fix firmware requests racing against
+ SDIO removal
+To: Arend van Spriel <arend.vanspriel@broadcom.com>,
+ linux-wireless@vger.kernel.org
+Cc: Johannes Berg <johannes.berg@intel.com>, brcm80211@lists.linux.dev,
+ linux-kernel@vger.kernel.org, brcm80211-dev-list.pdl@broadcom.com,
+ Franky Lin <franky.lin@broadcom.com>,
+ "John W. Linville" <linville@tuxdriver.com>
+References: <20260921211817.2432341-1-sanderson@brivo.com>
+ <20260921211817.2432341-5-sanderson@brivo.com>
+Content-Language: en-US
+From: Sean Anderson <sanderson@brivo.com>
+In-Reply-To: <20260921211817.2432341-5-sanderson@brivo.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
 
 
-Hello,
+On 9/21/26 5:18 PM, Sean Anderson wrote:
+> brcmf_sdio_firmware_callback can race with device removal. If this
+> happens it can re-register IRQs, dereference NULL pointers, and cause
+> all sorts of havoc. Prevent this by canceling any outstanding firmware
+> request as the first step of the removal process.
+> 
+> When canceling the firmware request, we primarily need to ensure fwctx
+> remains valid for all our calls to request_firmware_nowait_cancel. If we
+> let it get free'd early then it could get re-used for some unrelated
+> firmware request. To avoid this, we follow the same pattern that
+> firmware_loader does. But while firmware_loader needs a spinlock, we can
+> get away with a single pointer:
+> 
+> - When ctxp is NULL, then we can't be canceled
+> - When *ctxp == fwctx, we're still alive
+> - When *ctxp == NULL, someone else has canceled the request (or we have
+>    run our natural course).
+> - Whoever clears ctxp is responsible for freeing fwctx.
+> 
+> There can be up to NR_CPUS requests in-flight at any given time, as each
+> (alt) firmware request can create a new firmware request. Eventually,
+> one of them will see that ctxp is cleared and stop spawning additional
+> requests.
+> 
+> If the firmware load fails while we are removing the device, we can no
+> longer attempt to call device_release_driver. This will deadlock. We
+> can't do this asynchronously either since we run the risk of releasing a
+> totally different driver/device combo. We could techincally do this by
+> dropping device_lock before waiting for the firmware to cancel, but that
+> seems like a major headache (we would need to make ctxp a separate
+> reference-counted allocation).
+> 
+> I also implemented this fix for PCIe but I have only build-tested it.
+> I didn't touch USB as it already uses a completion-based system to
+> determine when it's OK to remove the driver. I didn't go with this
+> approach because we could wait indefinitely for the firmware request to
+> complete (such as if the firmware is on a slow device or loaded by
+> userspace).
+> 
+> Fixes: bd0e1b1d380e ("brcmfmac: use asynchronous firmware request in SDIO")
+> Signed-off-by: Sean Anderson <sanderson@brivo.com>
+> ---
+> 
+>   .../broadcom/brcm80211/brcmfmac/bcmsdh.c      |  7 ++++-
+>   .../broadcom/brcm80211/brcmfmac/bus.h         |  2 ++
+>   .../broadcom/brcm80211/brcmfmac/firmware.c    | 26 ++++++++++++++++---
+>   .../broadcom/brcm80211/brcmfmac/firmware.h    | 16 +++++++++++-
+>   .../broadcom/brcm80211/brcmfmac/pcie.c        | 11 +++++---
+>   .../broadcom/brcm80211/brcmfmac/sdio.c        |  8 +++---
+>   .../broadcom/brcm80211/brcmfmac/usb.c         |  6 +++--
+>   7 files changed, 63 insertions(+), 13 deletions(-)
+> 
+> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
+> index 71c2f99cdb711..39916f5a699dd 100644
+> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
+> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
+> @@ -1126,7 +1126,12 @@ static void brcmf_ops_sdio_remove(struct sdio_func *func)
+>   	if (bus_if) {
+>   		sdiodev = bus_if->bus_priv.sdio;
+>   
+> -		/* start by unregistering irqs */
+> +		/* Cancel any outstanding firmware request, as it may try to
+> +		 * call brcmf_sdiod_intr_register.
+> +		 */
+> +		brcmf_fw_cancel(sdiodev->dev, &bus_if->fwctx);
+> +
+> +		/* Now we can unregister irqs */
+>   		brcmf_sdiod_intr_unregister(sdiodev);
+>   
+>   		if (func->num != 1)
+> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bus.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bus.h
+> index 9371c1489948c..81c17a8c235cc 100644
+> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bus.h
+> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bus.h
+> @@ -157,6 +157,7 @@ struct brcmf_bus_stats {
+>    * @chip: device identifier of the dongle chip.
+>    * @chiprev: revision of the dongle chip.
+>    * @fwvid: firmware vendor-support identifier of the device.
+> + * @fwctx: firmware request cancellation context
+>    * @always_use_fws_queue: bus wants use queue also when fwsignal is inactive.
+>    * @wowl_supported: is wowl supported by bus driver.
+>    * @ops: callbacks for this bus instance.
+> @@ -178,6 +179,7 @@ struct brcmf_bus {
+>   	u32 chip;
+>   	u32 chiprev;
+>   	enum brcmf_fwvendor fwvid;
+> +	void *fwctx;
+>   	bool always_use_fws_queue;
+>   	bool wowl_supported;
+>   	bool removing;		/* device removal in progress; quiesce async work */
+> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
+> index 22ff326f1924a..d1da65155e544 100644
+> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
+> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
+> @@ -459,6 +459,7 @@ struct brcmf_fw {
+>   	u32 curpos;
+>   	unsigned int board_index;
+>   	void (*done)(struct device *dev, int err, struct brcmf_fw_request *req);
+> +	void **ctxp;
+>   };
+>   
+>   #ifdef CONFIG_EFI
+> @@ -693,7 +694,7 @@ static void brcmf_fw_request_done(const struct firmware *fw, void *ctx)
+>   		fwctx->req = NULL;
+>   	}
+>   	fwctx->done(fwctx->dev, ret, fwctx->req);
+> -	kfree(fwctx);
+> +	kfree(xchg(fwctx->ctxp, NULL));
+>   }
+>   
+>   static void brcmf_fw_request_done_alt_path(const struct firmware *fw, void *ctx)
+> @@ -703,7 +704,7 @@ static void brcmf_fw_request_done_alt_path(const struct firmware *fw, void *ctx)
+>   	const char *board_type, *alt_path;
+>   	int ret = 0;
+>   
+> -	if (fw) {
+> +	if (fw || !READ_ONCE(*fwctx->ctxp)) {
+>   		brcmf_fw_request_done(fw, ctx);
+>   		return;
+>   	}
+> @@ -755,7 +756,8 @@ static bool brcmf_fw_request_is_valid(struct brcmf_fw_request *req)
+>   
+>   int brcmf_fw_get_firmwares(struct device *dev, struct brcmf_fw_request *req,
+>   			   void (*fw_cb)(struct device *dev, int err,
+> -					 struct brcmf_fw_request *req))
+> +					 struct brcmf_fw_request *req),
+> +			   void **ctxp)
+>   {
+>   	struct brcmf_fw_item *first = &req->items[0];
+>   	struct brcmf_fw *fwctx;
+> @@ -776,6 +778,8 @@ int brcmf_fw_get_firmwares(struct device *dev, struct brcmf_fw_request *req,
+>   	fwctx->dev = dev;
+>   	fwctx->req = req;
+>   	fwctx->done = fw_cb;
+> +	fwctx->ctxp = ctxp;
+> +	WRITE_ONCE(*ctxp, fwctx);
+>   
+>   	/* First try alternative board-specific path if any */
+>   	if (fwctx->req->board_types[0])
+> @@ -799,6 +803,22 @@ int brcmf_fw_get_firmwares(struct device *dev, struct brcmf_fw_request *req,
+>   	return 0;
+>   }
+>   
+> +void brcmf_fw_cancel(struct device *dev, void **ctxp)
+> +{
+> +	struct brcmf_fw *fwctx;
+> +
+> +	fwctx = xchg(ctxp, NULL);
+> +	if (!fwctx)
+> +		return;
+> +
+> +	/* Keep canceling requests until they see that we cleared ctxp */
+> +	while (request_firmware_nowait_cancel(dev, fwctx,
+> +					      brcmf_fw_request_done_alt_path))
+> +		;
+> +	request_firmware_nowait_cancel(dev, fwctx, brcmf_fw_request_done);
+> +	kfree(fwctx);
+> +}
+> +
+>   struct brcmf_fw_request *
+>   brcmf_fw_alloc_request(u32 chip, u32 chiprev,
+>   		       const struct brcmf_firmware_mapping mapping_table[],
+> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.h
+> index 4002d326fd21b..932899d4086b3 100644
+> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.h
+> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.h
+> @@ -87,9 +87,23 @@ brcmf_fw_alloc_request(u32 chip, u32 chiprev,
+>    * Request firmware(s) asynchronously. When the asynchronous request
+>    * fails it will not use the callback, but call device_release_driver()
+>    * instead which will call the driver .remove() callback.
+> + *
+> + * ctxp is a (pointer to an) opaque pointer that may be passed to
+> + * brcmf_fw_cancel().
+>    */
+>   int brcmf_fw_get_firmwares(struct device *dev, struct brcmf_fw_request *req,
+>   			   void (*fw_cb)(struct device *dev, int err,
+> -					 struct brcmf_fw_request *req));
+> +					 struct brcmf_fw_request *req),
+> +			   void **ctxp);
+> +
+> +/**
+> + * brcmf_fw_cancel() - Cancel an outstanding firmware request
+> + * @dev: Device requesting the firmware
+> + * @ctxp: Opaque context pointer filled in by brcmf_fw_get_firmwares()
+> + *
+> + * Cancel an outstanding firmware request identified by @dev and @ctxp, which
+> + * should be the same as passed to brcmf_fw_get_firmwares().
+> + */
+> +void brcmf_fw_cancel(struct device *dev, void **ctxp);
+>   
+>   #endif /* BRCMFMAC_FIRMWARE_H */
+> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+> index 55f4d7b970f28..9eae712b0d98c 100644
+> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+> @@ -1555,6 +1555,8 @@ static int brcmf_pcie_reset(struct device *dev)
+>   	struct brcmf_fw_request *fwreq;
+>   	int err;
+>   
+> +	brcmf_fw_cancel(dev, &bus_if->fwctx);
+> +
+>   	brcmf_pcie_intr_disable(devinfo);
+>   
+>   	brcmf_pcie_bus_console_read(devinfo, true);
+> @@ -1572,7 +1574,8 @@ static int brcmf_pcie_reset(struct device *dev)
+>   		return -ENOMEM;
+>   	}
+>   
+> -	err = brcmf_fw_get_firmwares(dev, fwreq, brcmf_pcie_setup);
+> +	err = brcmf_fw_get_firmwares(dev, fwreq, brcmf_pcie_setup,
+> +				     &bus_if->fwctx);
+>   	if (err) {
+>   		dev_err(dev, "Failed to prepare FW request\n");
+>   		kfree(fwreq);
+> @@ -2231,7 +2234,6 @@ static void brcmf_pcie_setup(struct device *dev, int ret,
+>   	brcmf_err(bus, "Dongle setup failed\n");
+>   	brcmf_pcie_bus_console_read(devinfo, true);
+>   	brcmf_fw_crashed(dev);
+> -	device_release_driver(dev);
+>   }
+>   
+>   static struct brcmf_fw_request *
+> @@ -2554,7 +2556,8 @@ brcmf_pcie_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+>   		goto fail_brcmf;
+>   	}
+>   
+> -	ret = brcmf_fw_get_firmwares(bus->dev, fwreq, brcmf_pcie_setup);
+> +	ret = brcmf_fw_get_firmwares(bus->dev, fwreq, brcmf_pcie_setup,
+> +				     &bus->fwctx);
+>   	if (ret < 0) {
+>   		kfree(fwreq);
+>   		goto fail_brcmf;
+> @@ -2595,6 +2598,8 @@ brcmf_pcie_remove(struct pci_dev *pdev)
+>   	brcmf_pcie_bus_console_read(devinfo, false);
+>   	brcmf_pcie_fwcon_timer(devinfo, false);
+>   
+> +	brcmf_fw_cancel(bus->dev, &bus->fwctx);
+> +
+>   	devinfo->state = BRCMFMAC_PCIE_STATE_DOWN;
+>   	if (devinfo->ci)
+>   		brcmf_pcie_intr_disable(devinfo);
+> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
+> index 381801af3ac98..1c32fe5828a2f 100644
+> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
+> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
+> @@ -4417,8 +4417,6 @@ static void brcmf_sdio_firmware_callback(struct device *dev, int err,
+>   	sdio_release_host(sdiod->func1);
+>   fail:
+>   	brcmf_dbg(TRACE, "failed: dev=%s, err=%d\n", dev_name(dev), err);
+> -	device_release_driver(&sdiod->func2->dev);
+> -	device_release_driver(dev);
+>   }
+>   
+>   static struct brcmf_fw_request *
+> @@ -4546,7 +4544,8 @@ int brcmf_sdio_probe(struct brcmf_sdio_dev *sdiodev)
+>   	}
+>   
+>   	ret = brcmf_fw_get_firmwares(sdiodev->dev, fwreq,
+> -				     brcmf_sdio_firmware_callback);
+> +				     brcmf_sdio_firmware_callback,
+> +				     &sdiodev->bus_if->fwctx);
+>   	if (ret != 0) {
+>   		brcmf_err("async firmware request failed: %d\n", ret);
+>   		kfree(fwreq);
+> @@ -4581,6 +4580,9 @@ void brcmf_sdio_remove(struct brcmf_sdio *bus)
+>   			bus->watchdog_tsk = NULL;
+>   		}
+>   
+> +		brcmf_fw_cancel(bus->sdiodev->dev,
+> +				&bus->sdiodev->bus_if->fwctx);
+> +
+>   		/* De-register interrupt handler */
+>   		brcmf_sdiod_intr_unregister(bus->sdiodev);
+>   
+> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
+> index b41949a9bdc8e..e8c0db0c82689 100644
+> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
+> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
+> @@ -1306,7 +1306,8 @@ static int brcmf_usb_probe_cb(struct brcmf_usbdev_info *devinfo,
+>   	}
+>   
+>   	/* request firmware here */
+> -	ret = brcmf_fw_get_firmwares(dev, fwreq, brcmf_usb_probe_phase2);
+> +	ret = brcmf_fw_get_firmwares(dev, fwreq, brcmf_usb_probe_phase2,
+> +				     &bus->fwctx);
+>   	if (ret) {
+>   		brcmf_err("firmware request failed: %d\n", ret);
+>   		kfree(fwreq);
+> @@ -1524,7 +1525,8 @@ static int brcmf_usb_reset_resume(struct usb_interface *intf)
+>   	if (!fwreq)
+>   		return -ENOMEM;
+>   
+> -	ret = brcmf_fw_get_firmwares(&usb->dev, fwreq, brcmf_usb_probe_phase2);
+> +	ret = brcmf_fw_get_firmwares(&usb->dev, fwreq, brcmf_usb_probe_phase2,
+> +				     &devinfo->bus_pub->bus->fwctx);
 
-kernel test robot noticed "EIP:kernfs_remove_by_name_ns" on:
+This should be devinfo->bus_pub.bus->fwctx. Forgot to add the hunk before sending.
 
-commit: 8d91a5ecce11412c646ad1f1637334ef9546ea90 ("net: wireless: brcmfmac: remove platform data based probe") https://git.kernel.org/cgit/linux/kernel/git/soc/soc.git board-remove-7.3
+--Sean
 
-in testcase: boot
-
-config: i386-randconfig-011-20260914
-compiler: clang-22
-test machine: qemu-system-i386 -enable-kvm -cpu SandyBridge -smp 4 -m 4G
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <yi1.lai@intel.com>
-| Closes: https://lore.kernel.org/oe-lkp/202609221423.71fce5fb-lkp@intel.com
-
-
-[    5.486950][    T1] ------------[ cut here ]------------
-[    5.488426][    T1] kernfs: can not remove 'uevent', no directory
-[    5.489919][    T1] WARNING: fs/kernfs/dir.c:1786 at kernfs_remove_by_name_ns+0x7b/0xc0, CPU#0: swapper/0/1
-[    5.492378][    T1] Modules linked in:
-[    5.493281][    T1] CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted 7.3.0-rc2-00073-g8d91a5ecce11 #1 PREEMPTLAZY
-[    5.495837][    T1] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-[    5.498316][    T1] EIP: kernfs_remove_by_name_ns (kernfs/dir.c:1785)
-[    5.499706][    T1] Code: 74 5a a8 03 75 5c ff 00 89 c1 89 c6 e8 5e f9 ff ff 89 f0 e8 d7 d8 ff ff 31 f6 eb 1c 53 68 30 84 07 c3 e8 08 1b d4 ff 83 c4 08 <0f> 0b be fe ff ff ff eb 14 be fe ff ff ff 89 f8 e8 70 da da ff 8b
-All code
-========
-   0:	74 5a                	je     0x5c
-   2:	a8 03                	test   $0x3,%al
-   4:	75 5c                	jne    0x62
-   6:	ff 00                	incl   (%rax)
-   8:	89 c1                	mov    %eax,%ecx
-   a:	89 c6                	mov    %eax,%esi
-   c:	e8 5e f9 ff ff       	call   0xfffffffffffff96f
-  11:	89 f0                	mov    %esi,%eax
-  13:	e8 d7 d8 ff ff       	call   0xffffffffffffd8ef
-  18:	31 f6                	xor    %esi,%esi
-  1a:	eb 1c                	jmp    0x38
-  1c:	53                   	push   %rbx
-  1d:	68 30 84 07 c3       	push   $0xffffffffc3078430
-  22:	e8 08 1b d4 ff       	call   0xffffffffffd41b2f
-  27:	83 c4 08             	add    $0x8,%esp
-  2a:*	0f 0b                	ud2		<-- trapping instruction
-  2c:	be fe ff ff ff       	mov    $0xfffffffe,%esi
-  31:	eb 14                	jmp    0x47
-  33:	be fe ff ff ff       	mov    $0xfffffffe,%esi
-  38:	89 f8                	mov    %edi,%eax
-  3a:	e8 70 da da ff       	call   0xffffffffffdadaaf
-  3f:	8b                   	.byte 0x8b
-
-Code starting with the faulting instruction ===========================================
-   0:	0f 0b                	ud2
-   2:	be fe ff ff ff       	mov    $0xfffffffe,%esi
-   7:	eb 14                	jmp    0x1d
-   9:	be fe ff ff ff       	mov    $0xfffffffe,%esi
-   e:	89 f8                	mov    %edi,%eax
-  10:	e8 70 da da ff       	call   0xffffffffffdada85
-  15:	8b                   	.byte 0x8b
-[    5.504411][    T1] EAX: 00000000 EBX: c3095d8c ECX: 00000000 EDX: 00000000
-[    5.506084][    T1] ESI: c35f2608 EDI: c01dd42c EBP: c0245c1c ESP: c0245c08
-[    5.507830][    T1] DS: 007b ES: 007b FS: 0000 GS: 0000 SS: 0068 EFLAGS: 00010282
-[    5.509606][    T1] CR0: 80050033 CR2: ffd97000 CR3: 0386e000 CR4: 000406d0
-[    5.511412][    T1] Call Trace:
-[    5.512419][    T1]  driver_remove_file (sysfs/file.c:515 linux/sysfs.h:780 base/driver.c:126)
-[    5.513635][    T1]  bus_remove_driver (base/bus.c:830)
-[    5.514785][    T1]  driver_unregister (base/driver.c:202)
-[    5.515927][    T1]  brcmfmac_module_init (base/platform.c:1005 net/wireless/broadcom/brcm80211/brcmfmac/common.c:580)
-[    5.517104][    T1]  __initstub__kmod_brcmfmac__510_591_brcmfmac_module_init6 (net/wireless/broadcom/brcm80211/brcmfmac/common.c:591)
-[    5.519013][    T1]  do_one_initcall (main.c:1357)
-[    5.520164][    T1]  ? __initstub__kmod_ath6kl_sdio__508_1430_ath6kl_sdio_driver_init6 (usercopy_32.c:?)
-[    5.522289][    T1]  ? __lock_acquire (locking/lockdep.c:4718)
-[    5.523491][    T1]  ? __lock_acquire (locking/lockdep.c:4718)
-[    5.525180][    T1]  ? lock_acquire (locking/lockdep.c:5942)
-[    5.526824][    T1]  ? __lock_acquire (locking/lockdep.c:4718)
-[    5.530956][    T1]  ? __lock_acquire (locking/lockdep.c:4718)
-[    5.532755][    T1]  ? lock_acquire (locking/lockdep.c:5942)
-[    5.534332][    T1]  ? lock_acquire (locking/lockdep.c:5942)
-[    5.536001][    T1]  ? __this_cpu_preempt_check (smp_processor_id.c:64)
-[    5.537894][    T1]  ? __this_cpu_preempt_check (smp_processor_id.c:64)
-[    5.539914][    T1]  ? ktime_get (time/timekeeping.c:1002)
-[    5.541408][    T1]  ? ktime_get (time/timekeeping.c:1002)
-[    5.542911][    T1]  ? ktime_get (time/timekeeping.c:321 time/timekeeping.c:482 time/timekeeping.c:1004)
-[    5.544554][    T1]  ? clockevents_program_event (time/clockevents.c:372)
-[    5.546602][    T1]  ? irqentry_exit (linux/irq-entry-common.h:507)
-[    5.548377][    T1]  ? __this_cpu_preempt_check (smp_processor_id.c:64)
-[    5.550315][    T1]  ? lockdep_hardirqs_on (locking/lockdep.c:4516)
-[    5.552128][    T1]  ? irqentry_exit (linux/irq-entry-common.h:507)
-[    5.553774][    T1]  ? sysvec_apic_timer_interrupt (x86/kernel/apic/apic.c:1062)
-[    5.559179][    T1]  ? trace_hardirqs_on (trace/trace_preemptirq.c:79)
-[    5.560942][    T1]  ? vmware_sched_clock (vmware.c:?)
-[    5.562784][    T1]  ? irqentry_exit (linux/irq-entry-common.h:507)
-[    5.564594][    T1]  ? vmware_sched_clock (vmware.c:?)
-[    5.566492][    T1]  ? sysvec_apic_timer_interrupt (x86/kernel/apic/apic.c:1062)
-[    5.568555][    T1]  ? handle_exception (x86/entry/entry_32.S:1044)
-[    5.570285][    T1]  ? parameq (params.c:98)
-[    5.571797][    T1]  ? next_arg (cmdline.c:283)
-[    5.573381][    T1]  ? parameq (linux/fortify-string.h:218 params.c:99)
-[    5.574711][    T1]  ? parse_args (params.c:153)
-[    5.579714][    T1]  do_initcall_level (main.c:1419)
-[    5.581382][    T1]  do_initcalls (main.c:1435)
-[    5.582841][    T1]  ? rest_init (main.c:?)
-[    5.584478][    T1]  do_basic_setup (main.c:1455)
-[    5.586016][    T1]  kernel_init_freeable (main.c:1670)
-[    5.587875][    T1]  ? rest_init (main.c:?)
-[    5.589472][    T1]  kernel_init (main.c:1560)
-[    5.590987][    T1]  ret_from_fork (x86/kernel/process.c:158)
-[    5.592643][    T1]  ? rest_init (main.c:?)
-[    5.594157][    T1]  ret_from_fork_asm (x86/entry/entry_32.S:736)
-[    5.595882][    T1]  entry_INT80_32 (x86/entry/entry_32.S:940)
-[    5.597546][    T1] irq event stamp: 90237
-[    5.598888][    T1] hardirqs last  enabled at (90251): __console_unlock (printk/printk.c:347)
-[    5.600980][    T1] hardirqs last disabled at (90266): __console_unlock (printk/printk.c:345)
-[    5.603033][    T1] softirqs last  enabled at (90070): __do_softirq (softirq.c:679)
-[    5.604968][    T1] softirqs last disabled at (90061): __do_softirq (softirq.c:679)
-[    5.606947][    T1] ---[ end trace 0000000000000000 ]---
-
-
-The kernel config and materials to reproduce are available at:
-https://download.01.org/0day-ci/archive/20260922/202609221423.71fce5fb-lkp@intel.com
-
-
-
---
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+>   	if (ret < 0)
+>   		kfree(fwreq);
+>   
 
