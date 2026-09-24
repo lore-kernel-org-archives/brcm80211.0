@@ -1,86 +1,76 @@
-Received: from smtp-relay-internal-0.canonical.com (smtp-relay-internal-0.canonical.com [185.125.188.122])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm2-f12.google.com (mail-wm2-f12.google.com [74.125.225.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE0F257ED91
-	for <brcm80211@lists.linux.dev>; Wed, 23 Sep 2026 20:48:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.125.188.122
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45BC13BB48
+	for <brcm80211@lists.linux.dev>; Thu, 24 Sep 2026 12:30:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.140
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790196496; cv=none; b=aWBNfDWz+b85B8Az8yV4anr9XDEYd4oVkgMJke1GylY63BCUMk/MO+im5x9s2VC6cf6sfyeaynzS0o3coV/FyKZrdKsVvbCWp4Cetg4He3/icELFTfLun8Q0n1+61Evf8a84mnDvlp0rmJdnXEElDnLy2teG77ZaOng+qWCEu6o=
+	t=1790253053; cv=none; b=KT23WQ7Qt476/As4R4vU2Bt3zYpwOcap0HAPK5LbeciRtqEdu1vVoJ3wmkkSyWafFnV1NyZ2jsBRuxF8CivWfGJ61mHfLbLdZz9prACaXVv+H1UKInn7+/xYYa0DHYXQ/5CqlBn7nfZFDNpaxFahKfu1CjEzMtp9aiPw58Xk/n8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790196496; c=relaxed/simple;
-	bh=/JJF6ssyxAQdmL0bSTx1Ono3iYU/qejhw/WQLlUJjoo=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=FuQdUy/kar9Ah+gtKDHzpYeoTCrxDngtqrOmvLuHhfsWD+DtsBSyDzIcz2/hal7OcVBeu25WexCchSpJ9i3CHLIRtF9wAUq1aXag4LtZJBq7Vtw+EpCLz5gRRf3zVLjloUgR59RP8go1RmDIsLLBoaT+AuIB8+V3KeCM3WGzEtk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=canonical.com; spf=pass smtp.mailfrom=canonical.com; dkim=pass (4096-bit key) header.d=canonical.com header.i=@canonical.com header.b=cVHavJqo; arc=none smtp.client-ip=185.125.188.122
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=canonical.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=canonical.com
+	s=arc-20240116; t=1790253053; c=relaxed/simple;
+	bh=feq1bcLZOkeXI/qUwCevPwJr4SdTs/1WRLQXKorQ6GQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=C+nLIM+vSD2NA9LKnlM3+MJBaRFZLTQqkSVCtbzLqVJTtoSHNafQgyXvOlZEXnAt4715CulhnAR8WUyB6e0WqhRVF4k5AUDvWWhmA/u9mU58BNzMVMRUfw0oBrtdxIpeGzt4AALrFvhn3Ut4F6+17qj8sTFS3uNZ8zJtKwlok38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AriEz0y5; arc=none smtp.client-ip=74.125.225.140
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=canonical.com header.i=@canonical.com header.b="cVHavJqo"
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com [209.85.218.69])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 113873F780
-	for <brcm80211@lists.linux.dev>; Wed, 23 Sep 2026 20:42:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-	s=20251003; t=1790196177;
-	bh=1lsBUs9NSNq+2CCd0RHpAdGjAy6PPuORFqVcIIm1nuk=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version;
-	b=cVHavJqoeUvPYyz/+c9am5+bg0tyvwbVPoCoS7SFk+Ez8eUquVjppMSrsnB+OAnJ9
-	 rYQbXm6f3RBWjTVK7mac8bSTQDvswTrQywLVDDSSxmkaLolAImHHGrSdqjC3rHVncb
-	 //xUxmWfifg5EET2IJ1WHpFnIgZYd3Ip6RoGKmfIsMsaDlr8/HkZcdUITiBZAA+h22
-	 AqGw9KNRkZopJOoeCziWgLXxYmylXhAUb//lOfgM7v+dJ2prMqZK125TdfsnrcZwqI
-	 5915RudZYhTEMbvY1xYzo6KQ/7hypJaFnYmMbbUrBoHQi744E2iEQhQfwJq93wIRW7
-	 Qbp60nisj7Ub74zeMDJdPL2+LdIsGKMGb8tHxJyRi5+1iJ2WavZ9Azp2vbgVLWwSXK
-	 WWEtEnNC7RV5d2zc1viYm0o1pF41Eps7C6S81ye6UgcLaghemDdblI/k5uM2qs0b1o
-	 rfj/znp19C0mmI3PKSfRs6xz8XBO0tbJX3GdtXsyZHqXm38zofyLCa5Al6tFhIOntC
-	 NF8t7WbTYYt9jQokQPMWjr+5pz4LJ96c7XHW7iXLl0mkVX8vYEK0AGUqW2D+ovNOsP
-	 MCoZIjjx91aAVr5BWlcwQ5366nNegFKanSAGj+RRNAxECFlUlCDD/EeGETrtm2CuYj
-	 q/6QyDsoBvE04JxO/yWu/v4U=
-Received: by mail-ej1-f69.google.com with SMTP id a640c23a62f3a-c29959eb71fso135326466b.1
-        for <brcm80211@lists.linux.dev>; Wed, 23 Sep 2026 13:42:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AriEz0y5"
+Received: by mail-wm2-f12.google.com with SMTP id 5b1f17b1804b1-49b912d3920so13862435e9.1
+        for <brcm80211@lists.linux.dev>; Thu, 24 Sep 2026 05:30:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790253048; x=1790857848; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=0D3eaT5BNEoIaAjsEGOHSHHnJMJpvKkiEM0V7CbB5XI=;
+        b=AriEz0y5k8lGQvBjWM9Q3ehdQDYvDs9UJwtaljM95qfU2hcLqMbfKTqllI0o2FXvkU
+         Aj9LATgP5PtQsjwUehIAwqUehPZbpkISlSpvrXF0teJ+VXXf5a+wyNzgWo1htjJBpUDG
+         P84Kxc4lJ5WT62Yh/2hx8h54+kV5H/VKnwWBrXG+I6hUyx7LNXJicWJ2zZne7BxjhVqi
+         jOOs46cjwmEjRl75ROrm80ZaFwO5VRTlv9KXKjjy5fp4/HwMaSJp/eIDTPpeK3wPBHwf
+         Zil5g42z23hz5SB95aJ5wSA9zU2aFmaMsLzt9F0SQxokhww/bKSk0/U3skH5RjMnGos0
+         U5Ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790196176; x=1790800976;
+        d=1e100.net; s=20260707; t=1790253048; x=1790857848;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=1lsBUs9NSNq+2CCd0RHpAdGjAy6PPuORFqVcIIm1nuk=;
-        b=AAMj9sn5pC8bVLginen3eoYYvwv1cHCC9xKrPrKt6NWnjYbGW+ROC8RivcK7YSH6dJ
-         /JRTdyPMQfqPDmMHAeMnCONLzPeZuasbMO6d5zdQyCACgw1PHNWKY8Se5IZzRBV+Kayz
-         YWU4tNMhTTXabjQB2CFs0/zdIHf45H2G8r/o4Dyh3NiGcqHqiyQZo1OO5+Z2Dt4d7lOX
-         lVfikxiCWVU3uMeu8X1mKcgTSYu6xAnMByFEO+9/7ug5c8uBPsDAejscE/1E0UKRi8Ww
-         9kqjwo5nEYRmxxR2X/h/UWsEWCj3dExjqTBLeFWoCgUwlLEfkXiGxPjuvsOYQ+J67eWZ
-         agHw==
-X-Forwarded-Encrypted: i=1; AKwUvBwJftl2E5gNPtS3GIKW/4QCjQGk3q3d80lSHMpGoFud8PJp/6LmO7vNrs1BNKZSfg5yNS6HjH88jZg=@lists.linux.dev
-X-Gm-Message-State: AFuF++kQSQR8Z9gkB07viJ1nGUtdppsecLz6/JdZhhWv3MvZSKHjXi68
-	D/aWIXrceU/f2ljifyiRYoFMHAyd6/KFAcnBpJRPHDwVPNKi+AJIM9Dnl2f3wa3CgMxjTgMlVZR
-	FsalORxjds7kivgM/ookiL0+7U9Sq7bnA/ucOHZu3WWArqVckf7BUJXbkcBgXW1KV4l9j2+FvQC
-	zI5g==
-X-Gm-Gg: AYBFou145IrywjfvFb/lITtoXc7DuE/aBx1AS9nxGoISwIMDVQ8fkspuTuSCKxOOdOr
-	oOEUBTFQcmEY8ougOLsJUsuASEMwq75fYDfleZsNaa2UKGPmQlx5DmLC9rP9SIrHXQnTbKL8ku7
-	X+fTq3FIK8QSyopGSIcLwb0ixbJhs9Bx4G+W5TuBuh2+sFNOvd28rGYy1EU3k3WcNJYHGpkSgaW
-	/M5TJuI++/1p5v0VwUnYzLcErH1GbXZZBXA3k3tqDS7qNdjUyi5L35arANxeqY4qPXdqTprvVAP
-	pfAfou6gFVePLpV22qY0163zzZdr5tnFtq9nks87FxFepGxrzPOntx/SPbte+rILvH+HvNqH30t
-	KMUul4fZGByMPx7Zkf9KS083aVumTqsPBrvb3+nC75YlnetRzaHeN2orRYEfXa5nLGHYM+qejxs
-	XABYbrmdY=
-X-Received: by 2002:a17:907:968c:b0:c29:4b08:79d with SMTP id a640c23a62f3a-c2ac237a45bmr26772266b.26.1790196176626;
-        Wed, 23 Sep 2026 13:42:56 -0700 (PDT)
-X-Received: by 2002:a17:907:968c:b0:c29:4b08:79d with SMTP id a640c23a62f3a-c2ac237a45bmr26770966b.26.1790196176365;
-        Wed, 23 Sep 2026 13:42:56 -0700 (PDT)
-Received: from deep-thought.gnur.de (ip-095-089-205-015.vkd78.pools.vodafone-ip.de. [95.89.205.15])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c2aae6a4a00sm185431466b.46.2026.09.23.13.42.55
+        bh=0D3eaT5BNEoIaAjsEGOHSHHnJMJpvKkiEM0V7CbB5XI=;
+        b=Tq0ApWBuS5GX5HMG8fcXPiTph4MLKHxBZOIHFtBYqJHGnRz5aiMMJjZgvBmYJq8TPH
+         vVn9kv5bhetnGmGbbMInm5JUO9CaqfQ3Wm+32+P5NimtGyoJnPubwtwb4n5asgMx4Otf
+         gQZJFt3J5K4Nv+Xzzc4lqLDNN6t73n3FF1dif2MGwTRwp6G8EYOSgMHTsgsgGU/mXWDZ
+         O5MXz3Lp4LWW7YLr5WNVAr5YlhIslhKnQCOnjHJazcPPuXe4R+TPKXPo+9Tp5qZQnwEI
+         fQzQj/9KHk6orZ8zU0l7cl9ZA+g3zvSuFbsPkOp0aAUvl2+3OteKxQ8vAuL8kzW1Giu4
+         Fx2A==
+X-Forwarded-Encrypted: i=1; AKwUvBwHU9Xb6jnckOJLWY/jCDO/DXFq2SYxA386Uh7hcAg+HryrEQmEkQvVkMtY4qU6CiYar9pJpPa5A+A=@lists.linux.dev
+X-Gm-Message-State: AFuF++lLgYhTBiRyLmwyfqEi3p3GOWJxfP9/gimoMMGBeKSIFP9PiO8R
+	eGf0UnJ1GvutkS0h1ac1bfekr8PktHGPBHmGH/7vtI1KlvapKZKgM711
+X-Gm-Gg: AYBFou2l11zT5QfJJ3Rpdw3fJ4tHgoUIemOZsRhkh03Fxj2khK+VWtmVBiCFseOj1C9
+	pN6cC8OjG/Z3vx6fVgnqZ4sISxFBrPrRGt15piR9mbVmNvR916RrICbG73aFV1UOwB7ByoD7OuI
+	SMgL1kNEthDOGGZvWZRh/LvO+64qGCiKcAr16D3F9CSgXnmLy2wi7gW2BODxFGE7+2Flwvpxkm7
+	bUpNHS0ZouNaAejazs1NkGNNgFZMBpVpWYMbmdLnJnJa4sIiREON5UitXHelo5yUpG1e8JDLQbD
+	Ck94N3fwQS+GEI2zHLdoZ/ztpjTgmYZU0kTsrVykW0tJOXJdP2kEGvQeI5pG5Ukz+9jckUIbWG/
+	Nvwj5gHbe6hD39GaAEhS3XxaOD0rLG8iSFbQDy6cHggOqTy0oW+kg2Tuhn8enZTkMwhDXtEzN6p
+	Gc95HBLimR/TTgQEElc1xkdn2DjWBQvEkSPDYEGTmnmlBfmMuVgb1VIJD40734+Z8dv4tey/tnQ
+	gNxob3JSJiCBhH1vobFiJ3nXp+eKOV3Sj2eTvPkfVIEp6Y3VPFdKfZDJ69RMB2KKgjwY6bclk8=
+X-Received: by 2002:a05:600c:3b07:b0:49e:84bf:6121 with SMTP id 5b1f17b1804b1-49fe66d1653mr39911805e9.13.1790253048131;
+        Thu, 24 Sep 2026 05:30:48 -0700 (PDT)
+Received: from pws-dionisio-3680.powersoft.it (78-209-174-168.subs.proxad.net. [78.209.174.168])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49fe5bae43dsm64010115e9.5.2026.09.24.05.30.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Sep 2026 13:42:55 -0700 (PDT)
-From: Benjamin Drung <benjamin.drung@canonical.com>
+        Thu, 24 Sep 2026 05:30:47 -0700 (PDT)
+From: Michele Dionisio <michele.dionisio@gmail.com>
 To: Arend van Spriel <arend.vanspriel@broadcom.com>
-Cc: linux-wireless@vger.kernel.org,
+Cc: Michele Dionisio <michele.dionisio@gmail.com>,
+	Hante Meuleman <meuleman@broadcom.com>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Kalle Valo <kvalo@kernel.org>,
+	Pieter-Paul Giesberts <pieterpg@broadcom.com>,
+	linux-wireless@vger.kernel.org,
 	brcm80211@lists.linux.dev,
 	brcm80211-dev-list.pdl@broadcom.com,
-	linux-kernel@vger.kernel.org,
-	Matthias Brugger <mbrugger@suse.com>,
-	Benjamin Drung <benjamin.drung@canonical.com>
-Subject: [PATCH 0/2] brcmfmac: firmware: Add missing clm_blob firmware files
-Date: Wed, 23 Sep 2026 22:37:37 +0200
-Message-ID: <20260923203739.2560527-1-benjamin.drung@canonical.com>
+	linux-kernel@vger.kernel.org
+Subject: [PATCH wireless 0/1] wifi: brcmfmac: fix oops on removal while wpa_supplicant exits
+Date: Thu, 24 Sep 2026 14:30:26 +0200
+Message-ID: <20260924123027.4122909-1-michele.dionisio@gmail.com>
 X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
@@ -90,38 +80,41 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi,
+Unloading brcmfmac while wpa_supplicant is still exiting crashes the
+kernel in _cfg80211_unregister_wdev(). The P2P device interface is
+removed twice: once by NL80211_CMD_DEL_INTERFACE (brcmf_p2p_del_vif())
+and once by brcmf_detach(), which reads ifp->vif before blocking on
+rtnl_lock() and then uses it after the other path has freed it.
 
-I noticed that these firmware files were missing inside the initrd when
-including the brcmfmac kernel module:
+I hit this on an i.MX 8M Plus board with a CYW55513 (Sona IF513) on
+SDIO, running the Ezurio backport of brcmfmac from v6.18.22 on a 5.4-rt
+kernel. The code involved is unchanged in mainline. It reproduces with:
 
-```
-/usr/lib/firmware/brcm/brcmfmac43436-sdio.clm_blob.zst
-/usr/lib/firmware/brcm/brcmfmac43456-sdio.clm_blob.zst
-/usr/lib/firmware/brcm/brcmfmac43430-sdio.raspberrypi,3-model-b.clm_blob.zst
-/usr/lib/firmware/brcm/brcmfmac43430b0-sdio.raspberrypi,model-zero-2-w.clm_blob.zst
-/usr/lib/firmware/brcm/brcmfmac43436-sdio.raspberrypi,model-zero-2-w.clm_blob.zst
-/usr/lib/firmware/brcm/brcmfmac43455-sdio.raspberrypi,3-model-a-plus.clm_blob.zst
-/usr/lib/firmware/brcm/brcmfmac43455-sdio.raspberrypi,3-model-b-plus.clm_blob.zst
-/usr/lib/firmware/brcm/brcmfmac43455-sdio.raspberrypi,4-compute-module.clm_blob.zst
-/usr/lib/firmware/brcm/brcmfmac43455-sdio.raspberrypi,4-model-b.clm_blob.zst
-/usr/lib/firmware/brcm/brcmfmac43455-sdio.raspberrypi,5-compute-module.clm_blob.zst
-/usr/lib/firmware/brcm/brcmfmac43455-sdio.raspberrypi,5-model-b.clm_blob.zst
-/usr/lib/firmware/brcm/brcmfmac43455-sdio.raspberrypi,500.clm_blob.zst
-/usr/lib/firmware/brcm/brcmfmac43456-sdio.raspberrypi,4-compute-module.clm_blob.zst
-/usr/lib/firmware/brcm/brcmfmac43456-sdio.raspberrypi,400.clm_blob.zst
-```
+  kill $(pidof wpa_supplicant); rmmod brcmfmac_cyw brcmfmac
 
-These changes should be backported to the stable kernel releases as
-well.
+The patch takes RTNL and the wiphy mutex in brcmf_detach() before
+removing the interface that has no netdev, and re-reads iflist under
+them.
 
-Benjamin Drung (2):
-  wifi: brcmfmac: Add per-board clm_blob firmware binaries
-  wifi: brcmfmac: Add clm_blob firmware for brcmfmac43456-sdio
+Testing: on mainline the patch is build tested only (W=1, no warnings).
+I tested the same change on the board above, applied to the Ezurio
+backport of brcmfmac (from v6.18.22) running on the 5.4-rt kernel: with
+the patch the reproducer no longer crashes the kernel. I am not able to
+test a mainline kernel on that board.
 
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+The analysis of the oops and the patch were done with the help of an
+AI assistant (Claude), from the oops, the driver debug log (debug=0x406)
+and the driver sources. I reviewed the change and I can answer
+questions about it.
 
+Michele Dionisio (1):
+  wifi: brcmfmac: fix P2P device removal race in brcmf_detach()
+
+ .../broadcom/brcm80211/brcmfmac/core.c        | 27 +++++++++++++++++--
+ 1 file changed, 25 insertions(+), 2 deletions(-)
+
+
+base-commit: 93f51579e7df248780214094418f205253383cc5
 -- 
 2.53.0
 
