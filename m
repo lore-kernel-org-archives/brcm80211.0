@@ -1,68 +1,68 @@
-Received: from mail-wm2-f4.google.com (mail-wm2-f4.google.com [74.125.225.132])
+Received: from mail-wm2-f11.google.com (mail-wm2-f11.google.com [74.125.225.139])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 623CB36A341
-	for <brcm80211@lists.linux.dev>; Mon, 28 Sep 2026 07:55:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.132
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BFFA468C1B
+	for <brcm80211@lists.linux.dev>; Mon, 28 Sep 2026 07:59:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.139
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790582106; cv=none; b=XHEc+ox53TbXgH0e9Kgsx88mJNJk/iQersUwYQTGqky7RQoPQXfiPNah1eetkZDKEmcHLfoqsdjjwRFU6ZPh9D0WaKKsqqAOOxnlOJ+IlhjVf8Q/KfbS86STdGkjK59YCfEpR1SLQ78JSZkwViyN2AftkUutclBbjUXALLQ8B0I=
+	t=1790582352; cv=none; b=ljO7Fu4o00jwRofEI38EMeL3dSM1vlI0ECYVfFAOQh207qEsntLf6y/igIckppylFC8qSmEWFJE0/N8FxkG6T7XZkCFYSw+n0ZIvBv44YukT2whceYeeIBhSaE1MDpYJpzGl1kw5fZpRDhN4OM6WRdbAjrudopRVqUi8mTHacTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790582106; c=relaxed/simple;
-	bh=b8alYS8//PbcHqgx8jRmmDZzchvUgilx76oq+rn8QMk=;
+	s=arc-20240116; t=1790582352; c=relaxed/simple;
+	bh=ED+sBRr3QhMO5/4gS/VqfY8k9EZbHBPa7Fm+KPqc9as=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MxTZYMkrpGIhsUuyD7HYlHVz2607hSE5wYRfkQOu4yX+Tnb3uFX/l4VuBdKBZRNzJtd95uqOWol0gl+N61l5XTR524yZXyyH8lBSnWU+0auBTHQsOhtrkvH7582WHinneJQGfsFY6r8jvPFHQ4kAxFNeAj04BrV6XrIVAW3P2D4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=Nhm3BlML; arc=none smtp.client-ip=74.125.225.132
+	 In-Reply-To:Content-Type; b=lWfFeOUVBJdes090YppqRTR6PnqTNRIqiMz7shtXbwedNsWx8vBdUY9dMSy14f4tUyVsckbS4jKQxE8oBVi5m50ZUayBa+JStMHwxFvk1CFpwvXyiIrVPET4XPHw3sAdWyU7SQxrzMg4pEmKDFktdQUoHg9x/C5ENGIbvchruGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=G8tC+kAP; arc=none smtp.client-ip=74.125.225.139
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="Nhm3BlML"
-Received: by mail-wm2-f4.google.com with SMTP id 5b1f17b1804b1-49cd71f9909so7923455e9.1
-        for <brcm80211@lists.linux.dev>; Mon, 28 Sep 2026 00:55:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="G8tC+kAP"
+Received: by mail-wm2-f11.google.com with SMTP id 5b1f17b1804b1-49ff96a9784so6369525e9.1
+        for <brcm80211@lists.linux.dev>; Mon, 28 Sep 2026 00:59:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1790582102; x=1791186902; darn=lists.linux.dev;
+        d=suse.com; s=google; t=1790582349; x=1791187149; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=31XUkSRJuqJIxbyoM09CJAfu/QARGMWZ93NvtWQGmao=;
-        b=Nhm3BlMLwFpIVWndv50FKNk/PJVJJFFEDTapuhrn0h7MXlkhIwfQa3exKmFoLoBaIv
-         GfLNol9Lj1LShOM28kZh/eiWXX4rYVQ/XlSna9ONTUunHFGrsdY13WXcIk/VsyeBRzh5
-         a4jPbst39qyuhjomipdJhszWltGHvsGFjRmDbuCOG6SB/h7IRbbFAuThwIOBn+PnIeh1
-         bln1VeTcI7MmnL3wxRoIfaBC9Dylgzy/Ca23LavW5xxtPERahVWRim1Qd9w3FGTzibYk
-         NJVIlYwPSQ1oBu34ig5JiKp7R+5+n38B66+KFc9ov5FI1nOmbVeIi+SAyecZQY0j7Bvf
-         5y8A==
+        bh=XhysCFeCFrK6Hy/AV9kl1/zr3IXUOwo2mfXgBsYx8sE=;
+        b=G8tC+kAPTJs4jh3B9APS4k8Vyif9m+WO1phnmarza0QlOV/ZjAZIBG288WrX98+eJ3
+         Ot80zyYDPYYbCahQ04A5VttDxgg8GvP+onmGb4AyiJ9BZkjeDDD0LrefJAOVnXxHlQLL
+         HhczcqaE1t7oV1s8DfrQ3ledjZjXZ6l8iZxgNQpGqe8+7PO4OvSMcajqH7ekcetSho7K
+         v7AK7bx0rxH55/STvw0IDsBFgTq0Kkq5FT5hlhQv9cCdR/Fv2EZkL9Zw9M856UWoMoVI
+         +lQRE/7HKTM592AqhzrQ7FZxSfCJpMPwzeBDpZt3qbBCdBi0gwQFJqNCkhnI++fidXYH
+         kuOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790582102; x=1791186902;
+        d=1e100.net; s=20260707; t=1790582349; x=1791187149;
         h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=31XUkSRJuqJIxbyoM09CJAfu/QARGMWZ93NvtWQGmao=;
-        b=YQDXAftByMF1nO01xoQBzCZ3mIvZFeioXGv72GyYQ7+wL10n9GJg57FS6lAP0TOVaJ
-         gy2QyIlsvHTnsqgTXkfayCWX9zvWmKeC2pOS2g4FAD+Mit+sWL8D8d5Y+cCmQprHpxo1
-         keuD2H5XePxBHDYrHQEwN54yNaVeQr6LVhBD/e/lQZOwckbF8k+MuvzwIKp9P4i1O/Xn
-         p8lj5Udd3ButZrzL2OyMffz+pyxobGfdNs26CPdZakwh7+bAKxjnQQ8tT7KUN0X0DWXu
-         RUOpNyAvFt92BC0TzYrihEs2NjZgb6TCykPITKnX3ZneDGHy0QBvIDlat51SKOhkeFe+
-         knWg==
-X-Forwarded-Encrypted: i=1; AKwUvBx6BOcfYcYr0DWgklfN/Gl3iuSa21O4iJSH1XHg8cHsM2YqJA81gw6KcIZBgIFSoW37EiKc5o7oh60=@lists.linux.dev
-X-Gm-Message-State: AFuF++nucskijC/YKB/ghZeLLEZ3Xso6IxnB/CCAfq8ML9T5zL+d9uB0
-	q/5JofUd74cVYJJG+cvEFUfEvxzv5hjSEYjL7vU97viL/NgW6kf8LhxX+c+P+nw1YrQ=
-X-Gm-Gg: AYBFou15GSGxEYqwTHbWNUYijL9mn3nJ4m3IvLNzHtHzoQ/z9C2e07u5El16NaHVXZb
-	xN3ju37fWw1vn3AMOLiWVkkY/6+MsWITblvETTu+CIzSrknm3kf7cJKRYaimhbjf7Rqvtbb3E12
-	GGAVbF0JMj0VfuwFjIRzuKtViFM8/bgqBvJ2/gCqTQsqvPU2ZygIofD6fmpsTCgLQu7O19pDCBm
-	fPvMv4pmFG54RPWXk28/C/f+J2roOGoe25uD6W/2mDtoXw096Va7w4HpCtO/NZS3ODJAMsA1Sel
-	E7tJHfe38EiCC44CQxl4z2CCmXlcHHWJ8BjoaFql+xQvPd5c0pKd2r6krtxY2ir2cR0gxSwHFpK
-	ROJLrNaAUfWqHPPrl5OOcQPU285Ghgzb9IvSbVGPpOJ0rEGlbxCnG0h3Se0ilnjaTVBhYVp4CmR
-	AdtDTjwXCJepL6a1zUcYak0ma5tmA4/UZbymnffU9kDHxo5EpjaCCTjwEkqc4wjTKQshwhdei3G
-	JwMELEscXgenK0gqjZp6u/V7c72bAI2C6vqBR0Turc=
-X-Received: by 2002:a05:600c:8719:b0:49e:6c11:c4fc with SMTP id 5b1f17b1804b1-49fe66c8a5amr224841855e9.7.1790582102485;
-        Mon, 28 Sep 2026 00:55:02 -0700 (PDT)
+        bh=XhysCFeCFrK6Hy/AV9kl1/zr3IXUOwo2mfXgBsYx8sE=;
+        b=EPkJNAGQH9YQMPNPgsIi94DpXgaVvT1UY6IQwJ/r5PviWb60Ysm21OV9jFev6z6tTS
+         piNg5vfqs2sqezTS63c5Ugw5vVlJjehmcKKd47Tr84EozvKLU1uHHS1G1BxkCymZATrT
+         xNQKc21QZDKP+kJWnCxTiCAUicQ7qKX/CJzDO2vdMUwISfFprg8pTYfqjlVqQMQFyK17
+         eaaR81B3Wtdg/WVHG/Cb8B+WB772+SzvcbdqUrT2MSIdx0eDuYY1TQ4CUbVf8PyBGspI
+         /Y94NKH9J20clkhVwllqEPCXi7WQFh9cBPVqjbtO583SEipUEZ1YtOK/7hDu4bEdMEBO
+         qOvQ==
+X-Forwarded-Encrypted: i=1; AKwUvBzoLGFX6Cyty2JHMhE/8vQvG9+YAfmTZ6D1CL2dsHRcNxnAt5L9IG8ps48HRfN/BtPETDYFoCDji+Y=@lists.linux.dev
+X-Gm-Message-State: AFuF++nsuVwKGIuGwPL4LQYa5yHVdQys2wlIc7U9BMNv/ChwqS0HSP1o
+	sI7dzo5AQ8aanl0kEe74RcwLMBZ69F90GCs5Ysas5jKWAULvOEmFln8hys4o0X7yiBg=
+X-Gm-Gg: AYBFou1XEp6Tye8dJZPjzOmUKNh4hBcOf+gOUiifLAv7HIyYN0dn+aGKElRkBpX+gWn
+	4zsjBWJ9h0C8ul3S+gWqfWqmOSvsBxAqGSRAUwSagejl4bHQbMs+oxX/m5FW+zSAnVLB9AEzzV+
+	w2GNXicTdgQhWU+FkBL0sfj7XSkeWIUTVahv9ng/p5irNrqthJa3BO1i/z/k5J2lCd9RiiS8850
+	vMyoVIWi74Ewok7CvDsKwK+dzoVnqexilIdhx4j49813TvtCiYlFUFlfgUw7w+9znrRg5q0vBRj
+	b5fdHkcO0p/IMjlRzKcRKyR+KbYBSjn0M5SZqSQl7Li+vFE6Roaw6VkgC8OGPM5qAW+6PKiuJfc
+	hB6Bd+IFJt9L0HKtl/kynHT5kMtwnMvFY/OU98mOJ2Dqs3v+2qWc7R5Mah0A9LBkp9bpk66jFov
+	JuyF12wOPMIR8ljDmz1vNoHj+ynBlq7l7dcC/+F1wwxGgIThrcWV6Yn0wUFG0TcapTNrQe0DVk8
+	YnqQA8RpHWc4mFfvfYWLdLWQsq0C+g37oem9ev5hGTs/NK1XmD2uA==
+X-Received: by 2002:a05:600c:a4c:b0:49c:fa20:cc08 with SMTP id 5b1f17b1804b1-49fe67060cemr213903135e9.31.1790582349255;
+        Mon, 28 Sep 2026 00:59:09 -0700 (PDT)
 Received: from [192.168.0.38] (static-246-51-231-77.ipcom.comunitel.net. [77.231.51.246])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a00178bebasm128950675e9.11.2026.09.28.00.55.01
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a007be0761sm21702035e9.3.2026.09.28.00.59.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Sep 2026 00:55:02 -0700 (PDT)
-Message-ID: <c2f3dd05-97a8-43c8-9825-46f62cb5d41e@suse.com>
-Date: Mon, 28 Sep 2026 09:55:00 +0200
+        Mon, 28 Sep 2026 00:59:08 -0700 (PDT)
+Message-ID: <bafa7204-1025-4db6-974b-1491d3cc48a6@suse.com>
+Date: Mon, 28 Sep 2026 09:59:07 +0200
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -70,14 +70,14 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] wifi: brcmfmac: Add per-board clm_blob firmware
- binaries
+Subject: Re: [PATCH 2/2] wifi: brcmfmac: Add clm_blob firmware for
+ brcmfmac43456-sdio
 To: Benjamin Drung <benjamin.drung@canonical.com>,
  Arend van Spriel <arend.vanspriel@broadcom.com>
 Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
  brcm80211-dev-list.pdl@broadcom.com, linux-kernel@vger.kernel.org
 References: <20260923203739.2560527-1-benjamin.drung@canonical.com>
- <20260923203739.2560527-2-benjamin.drung@canonical.com>
+ <20260923203739.2560527-3-benjamin.drung@canonical.com>
 Content-Language: en-US, ca-ES, es-ES
 From: Matthias Brugger <mbrugger@suse.com>
 Autocrypt: addr=mbrugger@suse.com; keydata=
@@ -123,7 +123,7 @@ Autocrypt: addr=mbrugger@suse.com; keydata=
  LV6nybxdRG/jp8ZQdQQixPA9azZDzuTu+NjKtzIA5qtfZfmm8xC+kAwAMZ/ZnfCsKwN0bbnD
  YfO3B5Q131ASmu0kbwY03Mw4PhxDzZNrt4a89Y95dq5YkMtVH2Me1ZP063cFCCYCkvEAK/C8
  PVrr2NoUqi/bxI8fFQJD1jVj8K0=
-In-Reply-To: <20260923203739.2560527-2-benjamin.drung@canonical.com>
+In-Reply-To: <20260923203739.2560527-3-benjamin.drung@canonical.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
@@ -134,24 +134,12 @@ On 23/09/2026 22:37, Benjamin Drung wrote:
 > including the brcmfmac kernel module:
 > 
 > ```
-> /usr/lib/firmware/brcm/brcmfmac43430-sdio.raspberrypi,3-model-b.clm_blob.zst
-> /usr/lib/firmware/brcm/brcmfmac43430b0-sdio.raspberrypi,model-zero-2-w.clm_blob.zst
-> /usr/lib/firmware/brcm/brcmfmac43436-sdio.raspberrypi,model-zero-2-w.clm_blob.zst
-> /usr/lib/firmware/brcm/brcmfmac43455-sdio.raspberrypi,3-model-a-plus.clm_blob.zst
-> /usr/lib/firmware/brcm/brcmfmac43455-sdio.raspberrypi,3-model-b-plus.clm_blob.zst
-> /usr/lib/firmware/brcm/brcmfmac43455-sdio.raspberrypi,4-compute-module.clm_blob.zst
-> /usr/lib/firmware/brcm/brcmfmac43455-sdio.raspberrypi,4-model-b.clm_blob.zst
-> /usr/lib/firmware/brcm/brcmfmac43455-sdio.raspberrypi,5-compute-module.clm_blob.zst
-> /usr/lib/firmware/brcm/brcmfmac43455-sdio.raspberrypi,5-model-b.clm_blob.zst
-> /usr/lib/firmware/brcm/brcmfmac43455-sdio.raspberrypi,500.clm_blob.zst
-> /usr/lib/firmware/brcm/brcmfmac43456-sdio.raspberrypi,4-compute-module.clm_blob.zst
-> /usr/lib/firmware/brcm/brcmfmac43456-sdio.raspberrypi,400.clm_blob.zst
+> /usr/lib/firmware/brcm/brcmfmac43436-sdio.clm_blob.zst
+> /usr/lib/firmware/brcm/brcmfmac43456-sdio.clm_blob.zst
 > ```
 > 
-> Commit 885f256f61f9 ("brcmfmac: Add clm_blob firmware files to modinfo")
-> added clm_blob firmware binaries, but did not add them for per-board
-> firmware binaries. So add a similar glob for the per-board firmware
-> binaries.
+> So include the clm_blob firmware file for brcmfmac43456-sdio similar to
+> the other firmware files.
 > 
 > Bug-Ubuntu: https://launchpad.net/bugs/2168109
 > Signed-off-by: Benjamin Drung <benjamin.drung@canonical.com>
@@ -159,19 +147,20 @@ On 23/09/2026 22:37, Benjamin Drung wrote:
 Reviewed-by: Matthias Brugger <mbrugger@suse.com>
 
 > ---
->   drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c | 1 +
->   1 file changed, 1 insertion(+)
+>   drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 > diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-> index 381801af3ac9..3cff0f1fe25f 100644
+> index 3cff0f1fe25f..cea52d408817 100644
 > --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
 > +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-> @@ -631,6 +631,7 @@ MODULE_FIRMWARE(BRCMF_FW_DEFAULT_PATH "brcmfmac*-sdio.*.txt");
->   
->   /* per-board firmware binaries */
->   MODULE_FIRMWARE(BRCMF_FW_DEFAULT_PATH "brcmfmac*-sdio.*.bin");
-> +MODULE_FIRMWARE(BRCMF_FW_DEFAULT_PATH "brcmfmac*-sdio.*.clm_blob");
->   
->   static const struct brcmf_firmware_mapping brcmf_sdio_fwnames[] = {
->   	BRCMF_FW_ENTRY(BRCM_CC_43143_CHIP_ID, 0xFFFFFFFF, 43143),
+> @@ -618,7 +618,7 @@ BRCMF_FW_CLM_DEF(43430A1, "brcmfmac43430-sdio");
+>   BRCMF_FW_DEF(43430B0, "brcmfmac43430b0-sdio");
+>   BRCMF_FW_CLM_DEF(43439, "brcmfmac43439-sdio");
+>   BRCMF_FW_CLM_DEF(43455, "brcmfmac43455-sdio");
+> -BRCMF_FW_DEF(43456, "brcmfmac43456-sdio");
+> +BRCMF_FW_CLM_DEF(43456, "brcmfmac43456-sdio");
+>   BRCMF_FW_CLM_DEF(4354, "brcmfmac4354-sdio");
+>   BRCMF_FW_CLM_DEF(4356, "brcmfmac4356-sdio");
+>   BRCMF_FW_DEF(4359, "brcmfmac4359-sdio");
 
