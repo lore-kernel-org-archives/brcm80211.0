@@ -1,96 +1,102 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+Received: from mx5.mail-out.lima-city.de (mx5.mail-out.lima-city.de [91.216.248.207])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 441844A0EF5;
-	Thu,  1 Oct 2026 07:57:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCB3023504B;
+	Thu,  1 Oct 2026 08:59:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.216.248.207
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790841479; cv=none; b=Oq8gYhQ1m1ItEG7keF+/4jRYW/UEdTDSV1RzzxbbxIbMp6DEkfw6hslAaOHlBbTitcUVjRUyhN67hQ7BnimdkRv+Z4eiA2Atif/VyAqdGJJWw3X9Fwbmf5gJLiqurK4WL3Q+x8kyvwUCu+Bidf73jsy3NnZn++PAu63L8PuoKLk=
+	t=1790845147; cv=none; b=sN6e/MBu8xp5EUsY62SaVz6NTpDVzTqt4iYlpmk7iXPnOOyW2/i4ZruQtcoqzvVGAtwWUsbHBtJO8wWPQ7+oiyeBxfEQouWiJDZuwKBlR/fkj+bR4Zxzhyt106yGe1R5WKzmezZqURcw80lC53SqOBQ7ZkYAHnxQBjeMFMQac58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790841479; c=relaxed/simple;
-	bh=ly+BWC52sF/OYFXfYj6BaYppy1ieR0G9wlserb6IaFA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XMpCi774NVL8fKQIN3kgGu8Tijtt+Pq7FGTIZdrrlNts2U46Af+HWmZJtgFFN46KIB1UChZSvSpxL7V5aE59ZWRYUZuFl6ym/3wqoCBOiLGgi7jarRIHfRkrUId+vqhS/jvYYiXcMFIyJ2fpeg8mZltHUKdUbvB2EG6X6RcMkCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=a2XN6vES; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=fIWTvi4k; arc=none smtp.client-ip=193.142.43.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+	s=arc-20240116; t=1790845147; c=relaxed/simple;
+	bh=USU15RAmkIfypqza9ahT9tglspbbxsALKGaI/8Ch51E=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=bR0YhIFc8KHET+e5v02eSwWlnV9pPwcWWrz3snXqjEMULXLFrtC1JH+CIXe5WJaSfXH9nue/2oozC/9oAksnwoP42TXATBIlmbUwiv1bmRg7GiPtmz62G1vOUtvBqvIeno8gn5Zpv/MISd6j1f4EUKxfjCrpz1y0jdwoXxpzDYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=deq.rocks; spf=none smtp.mailfrom=deq.rocks; dkim=pass (2048-bit key) header.d=deq.rocks header.i=@deq.rocks header.b=WS3SxfXM; arc=none smtp.client-ip=91.216.248.207
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=deq.rocks
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=deq.rocks
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="a2XN6vES";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="fIWTvi4k"
-Date: Thu, 1 Oct 2026 09:57:55 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1790841476;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=M6T3x2RxWtqqk+wcudz6NNG13H0Pe7ygwHg54hjQ92w=;
-	b=a2XN6vEStkiFi4QOi2f58GVZzy5OQFXqqk7Ju2BKHLVRY2zZHPoryFCiT2qC/UMIjSahtI
-	1AZ2vscsoD9mRcAaXOBlO+PZOnq+861nS3Jk9nQ0/TcGn2xdVtW+qFDR2uqu7aRcvsYdX8
-	DWEsRikHHEZ+nzdqtMJaYQ3tWulAFjJzwrhZH2S8lNC0cvUmNXvZGvxlTJwUwKypOTWZNf
-	5rJHxIu7LYme0UGvq2cni+sfzkQ/FpuTv9j1e4jqx7YH2zPJcnNtyqCfVik72AjHd0sRLT
-	ZXg3oOg3HnKCho6rnZGsUfqmwCMbIMI8PBGw8fLja4uw0sRuQK3zfPS4BDuZNw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1790841476;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=M6T3x2RxWtqqk+wcudz6NNG13H0Pe7ygwHg54hjQ92w=;
-	b=fIWTvi4kPkbBnrdPPo1dRokyr6OevCik1PKF0bbmV08CTQ5B5bFH2eyO9zqbURz5QiDFaE
-	u2jhQdhydAKjVPCQ==
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-To: Karl Mehltretter <kmehltretter@gmail.com>
-Cc: linux-wireless@vger.kernel.org,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Clark Williams <clrkwllms@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>, brcm80211@lists.linux.dev,
-	brcm80211-dev-list.pdl@broadcom.com, linux-kernel@vger.kernel.org,
-	linux-rt-devel@lists.linux.dev, stable@vger.kernel.org
-Subject: Re: [PATCH] wifi: brcmfmac: avoid sleeping tx locks in netpoll
- context
-Message-ID: <20261001075755.3MilPS2C@linutronix.de>
-References: <20260930185417.61865-1-kmehltretter@gmail.com>
+	dkim=pass (2048-bit key) header.d=deq.rocks header.i=@deq.rocks header.b="WS3SxfXM"
+From: Andre Eikmeyer <dev@deq.rocks>
+X-Lima-ML-UUID: 394562be-8666-4d0b-9712-3cb345edd73b
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=deq.rocks;
+	s=securedbylima-20251205; t=1790844791;
+	bh=USU15RAmkIfypqza9ahT9tglspbbxsALKGaI/8Ch51E=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=WS3SxfXMmIfSaoz+QnojdeplGZBGq9KBowKNA/6QB+tLyMmwkne2uZIgUUQdBZa2f
+	 Qm/CbqOn+HPF9iT/A72izu7jZH2/v0M5OZ4eAl+N+lZtJajrgdZHVuoyHK4AkmWgiU
+	 T0bsAE9Jxp+EXJ+hZroQGA9MaVXQil92/2NYHhoyNUyd+JPUUKv9uuRLvUHTA9Fay4
+	 8u2A6OWX0PuhJKTm92U6Ml9mL46p2uL2iJxKUn/8CowP7WL+r2FSltLjFVxkg+WkcT
+	 rjKOQthAQ7aBN7cCFy32mVVNTsgoih47wKCoLd8FWPzzVZNmn5b9AnhkEq5WYuJ077
+	 6yBvahid6/nLw==
+To: Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Cc: Aditya Garg <gargaditya08@live.com>,
+	kernel test robot <lkp@intel.com>,
+	oe-kbuild-all@lists.linux.dev,
+	linux-wireless@vger.kernel.org,
+	brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com,
+	linux-kernel@vger.kernel.org,
+	Andre Eikmeyer <dev@deq.rocks>
+Subject: [PATCH v2] wifi: brcmfmac: handle missing D3 ACK on BCM4377 T2 Macs
+Date: Thu,  1 Oct 2026 10:53:08 +0200
+Message-ID: <20261001085308.1688049-1-dev@deq.rocks>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260918213014.1890677-1-dev@deq.rocks>
+References: <20260918213014.1890677-1-dev@deq.rocks>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260930185417.61865-1-kmehltretter@gmail.com>
+Content-Transfer-Encoding: 8bit
 
-On 2026-09-30 20:54:17 [+0200], Karl Mehltretter wrote:
-> With the default fcmode=0, netpoll calls ndo_start_xmit() with hard
-> interrupts disabled and reaches brcmf_sdio_bus_txdata() directly. The
-> function takes txq_lock with spin_lock_bh(), and the queue helper takes
-> the embedded sk_buff_head lock. These locks may sleep on PREEMPT_RT.
-> On non-RT, spin_unlock_bh() can run pending networking softirqs before
-> netpoll releases the transmit lock, causing a recursive transmit
-> deadlock.
-> 
-> Use spin_trylock() for IRQ-disabled calls and enqueue with the unlocked
-> skb helper while holding txq_lock. On PREEMPT_RT, reject hard IRQ and NMI
-> callers, where rt-spinlocks cannot be acquired. If the lock is busy or
-> the queue is full, return through the existing drop path. Do not evict an
-> older packet from this context. Suppress the queue-full printk because
-> netconsole can recursively enter this path.
-> 
-> The flow-control callback takes another spinlock, so defer it when an
-> IRQ-disabled enqueue reaches TXHI. The data worker rechecks the bus state
-> and queue length under txq_lock before stopping the queue. Existing TXLOW
-> handling wakes the queue after it drains.
-> 
-> This fixes the direct SDIO transmit path used by fcmode=0. Modes 1 and 2
-> take the FWS lock first and need a separate change.
+BCM4377 on the affected T2 Macs does not acknowledge HOST_D3_INFORM.
+The current PCIe suspend callback treats this as fatal and aborts system
+suspend.
 
-Is this the only affected driver?
-Do you have maybe a backtrace?
+When this happens on BCM4377, mask the mailbox interrupt, preserve the
+bus-down state, and let generic PCI/ACPI suspend proceed. On resume the
+existing recovery path tears down and probes the device again instead of
+relying on a D0 mailbox transaction.
 
-> Fixes: ac3d9dd034e5 ("netpoll: make ndo_poll_controller() optional")
-> Cc: stable@vger.kernel.org
-> Assisted-by: LLM
-> Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Tested-on: MacBookAir9,1, MacBookPro15,4, MacBookPro16,3
+Signed-off-by: Andre Eikmeyer <dev@deq.rocks>
+---
+Changes in v2:
+- Drop the redundant DMI allowlist; BCM4377 is Apple-exclusive and only
+  appears in the three affected MacBook models.
+- Keep the device check inside CONFIG_PM, fixing the CONFIG_PM=n unused
+  function warning reported by the kernel test robot.
 
-Sebastian
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+index 55f4d7b97..e2e050395 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+@@ -2652,11 +2652,18 @@ static int brcmf_pcie_pm_enter_D3(struct device *dev)
+ 	wait_event_timeout(devinfo->mbdata_resp_wait, devinfo->mbdata_completed,
+ 			   BRCMF_PCIE_MBDATA_TIMEOUT);
+ 	if (!devinfo->mbdata_completed) {
++		if (devinfo->pdev->device == BRCM_PCIE_4377_DEVICE_ID) {
++			dev_info(dev, "D3 ACK missing; masking PCIe mailbox interrupt\n");
++			brcmf_pcie_intr_disable(devinfo);
++			goto done;
++		}
++
+ 		brcmf_err(bus, "Timeout on response for entering D3 substate\n");
+ 		brcmf_bus_change_state(bus, BRCMF_BUS_UP);
+ 		return -EIO;
+ 	}
+ 
++done:
+ 	devinfo->state = BRCMFMAC_PCIE_STATE_DOWN;
+ 
+ 	return 0;
+
+base-commit: 1631d79ae57dce2c5f88ad278307028638a8b4d9
+-- 
+2.55.0
