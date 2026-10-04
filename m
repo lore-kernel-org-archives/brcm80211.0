@@ -1,147 +1,116 @@
-Received: from mail-wm2-f12.google.com (mail-wm2-f12.google.com [74.125.225.140])
+Received: from mail-oo1-f98.google.com (mail-oo1-f98.google.com [209.85.161.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52EF24078D5
-	for <brcm80211@lists.linux.dev>; Thu,  1 Oct 2026 23:41:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 471F941A502
+	for <brcm80211@lists.linux.dev>; Sun,  4 Oct 2026 09:45:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.98
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790898118; cv=none; b=a7usjcMc+FVD3wKQqI6Av6ERX2F5RzyoT8NqvB0/EvEHAFMQ4ry3JACxJddlWrtRFsFYATevIrjlc3zguqCJV2zIzGR6JAotNxlV6PYxb3xs7oNSX203NaVE7i8C6JmG9Rj9J0dvj3gbGZ/F7QqnUOIMIznyNuDIl0eay1OjIww=
+	t=1791107129; cv=none; b=fQGu6T2wEOSlPdiwQoUXlnIUK6Y01fAcCL+VV8YKs3ECSMaUPxFA6/wznrFk9jMB2FTPA9JRCtolFNTvp2fOjfHF3vaOHqSuiomJ3iG8MsXebSC1j/JoPnbIzCoOTdyhK1Pq5h3nboym6ZsJVrmqtEWe6RQxW4z0xtJpkcs9dZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790898118; c=relaxed/simple;
-	bh=k8FV0AuY/UnTXAbRfnvFY/B3Ch7+YNxyw8EB7UJBX+o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=t3/1a1kMrGFRpvJpaUd7vT/uxABMlLS2RnS4WvN/dzN0Lia/4l6737z5vdRoVT8hnWwM56tIrTvSxH+761AMle1rJARVLSTV1C0rpqWp2s8B80RoT07gpPpOq1dcntEfU8GrU4u9mZ1B2+b7MkBs7FrLOnVl2K3C3eikLaD6I20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FMLIIbAi; arc=none smtp.client-ip=74.125.225.140
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1791107129; c=relaxed/simple;
+	bh=INRGB+/ti9rjpjFdoKVgunKwtrTAl+XMQ4DCWtMzBgk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=fq3BX40wBU8zMH+legeshP9ZP/cS9qhrspM0mMMStNi2t3nLg9R0L5UhIkxgQoK8c36Ab2nFJMNPErGYcN/R2vXcLGSfKcR89LiRBoF1uI6xN1ILgVuIf+Z8tZejm+BzLn97B46My0iYEdNAaXAvsPsitQSF5snOo18fAPwqIrw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=WZoO3RJI; arc=none smtp.client-ip=209.85.161.98
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FMLIIbAi"
-Received: by mail-wm2-f12.google.com with SMTP id 5b1f17b1804b1-49e6598dd44so44243605e9.1
-        for <brcm80211@lists.linux.dev>; Thu, 01 Oct 2026 16:41:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790898114; x=1791502914; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=x2eHfLXSxsUxHEfJdm6K8VExNqrOwW+s9I9FDdxMVoY=;
-        b=FMLIIbAiPzlsnix93/cCf1VKjys5a8KKNljj3+Rev9npFQIeBg1EIViqImRlZYKvy2
-         YMmh/Pr9W4Xq7ZXjMpCqZ3HUcW5EDvnzV5aI8iL355Cf6Vv1upgRkZPLKB8EnxRTe7TP
-         menvyx3lInXIEcwkwke4wiG87r7/sVTVg6ABPlAxC8cha8DzpthRczaCnqFrngps3R9c
-         SW1fnsxG0xtK5trdLpL7+7uWUgXHRGURoqU0HK4vUbTOOefHW9QHaFc3/HYJaM5/FFSv
-         Uy1MrH4hssxR1cuCjh3XukGzcb0deV09hy4mLy3/gX73Z4veO9qagO3WjCWurgASJPTT
-         oGLQ==
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="WZoO3RJI"
+Received: by mail-oo1-f98.google.com with SMTP id 006d021491bc7-6dde81a6820so858312eaf.2
+        for <brcm80211@lists.linux.dev>; Sun, 04 Oct 2026 02:45:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790898114; x=1791502914;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
+        d=1e100.net; s=20260707; t=1791107120; x=1791711920;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:dkim-signature:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=x2eHfLXSxsUxHEfJdm6K8VExNqrOwW+s9I9FDdxMVoY=;
-        b=1Mq1PLIiN9GOAzYJPKRJhMxS0sjL461s9WrdmdEco7li/hSI1TYbvvCTpSIiPmVcCl
-         8que4ySnE93qfE+EDQUintDMJOKMqVaidXU204ixv+rS+eiEebNALPPBTbvKHeR2eZyo
-         +SBmDFbjlsJyl+ukszvgK/ewMPPvaPLzapEzz8hK4OoRx5qJP2kSiRfzc0aSlhculGEq
-         kU13zXEm5rJf3wKIwDOmxAnyJlDxCNeDaJ14qWGncaZJ5mwGGINLfhIPhL1LqFgFZuqC
-         7XwNijDyBskIRLEPIt3lP2A5cX8PlTeLsCx+DjWT2JXKQcFq2OgKJltpThf+vRdLYtQc
-         pHLQ==
-X-Forwarded-Encrypted: i=1; AKwUvBykMhEokmqWb2BacjEPYX1mqQDY5F6byfes2VyMhn0BMK/X9fq1wnl+bfNCbVARDVmFAATPom5pksc=@lists.linux.dev
-X-Gm-Message-State: AFuF++l7wOeRGopyDBV7OChDd0iQ3XxpcJ7umSaETCfo6XH7RogxN2bu
-	mGgidWMR4/NuWTAZ6FDrBHstyVvVSL0pfrQY1a4HckviNpxr+DiIZBtl
-X-Gm-Gg: AYBFou1hcDyYxeaA+Bl+1R/peONXEmxo4R96PzDLIO1LvzO5bjPoFxU+Y0+W2Kl5DLm
-	jHWPqEqhJdrVMyxEw2LsnSH6tz6FnEExZqxT1d2Naehs2Te7nrveIz+OslNV3IEznaaLQAuQ6xQ
-	jqszZidGOWeuZGvOL8pTnizb2TOj/gYT//YfyWaXz6HHzeNIi95ijk0+IgMxyMs4NkAKE4MmyeX
-	1g1ZuF0tjlOYbPRk2s6rTTVSNzPT2J7iXyRBjRxWTsjdyW36MjlyqQJLvF5Gie60mPV6h0f96Nk
-	g1y++NdkGHeiRmd7DMdmNV9aDP6NIi0LIQmazJOyNTc+Rmxt//kLveCGSG3TvVcPhwXMUPbxQoS
-	8SmrjztjUOoDqlYzzUoiD8jn1RgWHR8VszY228huWXDQLT0j5kOvu1907TDvHOCdsX+MH6IM1SX
-	UxIEDR9HDu0r/KztesDkdaMoXkSclfpkZ9PmfAwQfP0O1qzWUSYIUrkNnYLXHC7dC4Xy8T8idYg
-	RXYMJbab7MzvTt9S58Hnla9l3T7gX2hsk4v1sV02gCQm3pIVRRXM/FZK86EuqKJGWjf0HvehVv5
-	Y346itwFej3d7adRreBsQuBQERU/+w2Ix2kNWtvpp3zYix5oCb3GGu4yqiwOMiajBREO9f34UhD
-	YgDFncf/bTA==
-X-Received: by 2002:a05:600c:620c:b0:49c:fa20:cbfd with SMTP id 5b1f17b1804b1-4a027583fb0mr16121105e9.20.1790898114308;
-        Thu, 01 Oct 2026 16:41:54 -0700 (PDT)
-Received: from MBP-von-Karl.localdomain (dynamic-2a02-3100-b3ca-3a01-3deb-81e4-0dc4-fbe8.310.pool.telefonica.de. [2a02:3100:b3ca:3a01:3deb:81e4:dc4:fbe8])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a0280dc6e7sm30779645e9.15.2026.10.01.16.41.53
+        bh=JoFX+YMXd60kpER0QJajp4LEvvy2XvMbrnb9b5wYktk=;
+        b=G+yJdFf6jkNzFURSjagKJ9Ptli5+pe7QAUcKXIwWIVmr55Eg8iRsfhuGwsmq+A/94q
+         2vTMa3qPIFv7x5TODj5q0LypLcQqAxcWmin8eKHN2V9e5gCol7Z8rW+75XD5MpfeNH7y
+         SRs8zS7b4yJglErz6IJDqc/2Wqc0peNTxM508STHWta5e4qWUhsj19CSCyPyNQQ0znhL
+         6VA9pb5LjJWQmnk4YIH5KxpYJPvGA+BJP8a7X71sa2iSTKVgvVfG/RUQ7ystl4X50OBj
+         4WSGLdNuN5+tmk8Kf0UZWPzCHRwXPISpzmGcipRNnjD4anbLJjTQj8EWea+PQMMuWOUR
+         zzwQ==
+X-Forwarded-Encrypted: i=1; AKwUvBxDKv5MVSa5a/0NN7X+qPSgF8sbHSTO62iRf2r16s5mvFEm8+2JtSIswwkN2952w4gw5Mh2lvApVdc=@lists.linux.dev
+X-Gm-Message-State: AFuF++m+8REfOLMUaR7h3pxSSFWr03adUrZPo9SzG/8ScXtVuX+lMzsT
+	N21YZ9fSbMZ7hCEONrECTrjB6ZmVHbADG5jICDB4qAWs41YFiUnWFIJ66ymoRcNWH20XDvlECrm
+	g5Zbm562kRfMiL/bTxCBJrxUygu1Oeo/opF6bR8udV6AKnAg16BvoFSMvGpi4uNvZ+244xdPQY9
+	HH4nr9oFMBNU2iOgo36no3nLRfBSQu8jZHH3GCjDu4o5yCFFdJT6ySpQpssSixl6Yfw/5rHBAQV
+	Dq5RCj4+HxFgQyD3eMllQ==
+X-Gm-Gg: AYBFou2lpvDZUBVqag6oZqOOfVnrDzF8f9J4P3wDN1ey74FSwo9JsXHmqdAiwQB6wKn
+	upqTOL3HoqOGl+uteV33hv1raCmNQPDdvo0iA8Yxp5iyCBb8NyJ3ts7KlSRpnNLTxZfsBcMIcc6
+	lZZIIyg/yoT0zi4oM/zDiy8GkZAA/daz0p0TfGw3HU+xHL6Qa7vaMf8Jnk0Hrhv1ypYd9wdgvNW
+	isLvxcpvVYZyXANvU00Lh0DzMy/lpA2w823nUPuoXg6TajZwZE2fxAiItMT9VXD8djaOw62rfU2
+	+sWlKgmN1b1H+OC0Hy71Zx8KM4pPzacYICK6JEYtrQXFy63gdWIulywIUrQPMCuALDiUMdbVUrj
+	2XOYfDnivbCL2CKWrLmhPvurEIRiDLUkDKXScgi+fb/UYFmu8N9AqZ/d4jpWO6vIt6pOQj54Om9
+	SiXRpLVkY1u02VbyiNirMLkAXsq+2riN237c0l2x/4DQ==
+X-Received: by 2002:a05:6820:1ca7:b0:6d7:4c28:5f21 with SMTP id 006d021491bc7-6e09e28126emr3863684eaf.53.1791107119618;
+        Sun, 04 Oct 2026 02:45:19 -0700 (PDT)
+Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-120.dlp.protect.broadcom.com. [144.49.247.120])
+        by smtp-relay.gmail.com with ESMTPS id 006d021491bc7-6df3b79f481sm53432eaf.25.2026.10.04.02.45.18
+        for <brcm80211@lists.linux.dev>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 04 Oct 2026 02:45:19 -0700 (PDT)
+X-Relaying-Domain: broadcom.com
+X-CFilter-Loop: Reflected
+Received: by mail-dy1-f200.google.com with SMTP id 5a478bee46e88-34ef0362d95so1883600eec.1
+        for <brcm80211@lists.linux.dev>; Sun, 04 Oct 2026 02:45:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google; t=1791107117; x=1791711917; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=JoFX+YMXd60kpER0QJajp4LEvvy2XvMbrnb9b5wYktk=;
+        b=WZoO3RJIGwHfE7kD8RVL5/Y8/i30RWRQ+jdOpIsbaSolWoc2U34OULk3T8DVp/bDUB
+         9i7jcYWXtoaseO0kplLCxMbIX1p65qJqgtS+lJFNO/MMjxV0VTGH7aUz4niqupEXRazG
+         fcJ1UE2Wm+dyb/p7Vr7kUueDHgo49//azeG0U=
+X-Forwarded-Encrypted: i=1; AKwUvBy0bXCg8WaiKzZQyHw+u37TJNojeYPAM5z478NeCNwJuaFx2D9zn3WFqRrMbLZ0fjNQuXwLs10JBqI=@lists.linux.dev
+X-Received: by 2002:a05:7022:eb42:20b0:144:fc5b:2121 with SMTP id a92af1059eb24-151c30ec64cmr5879793c88.17.1791107116960;
+        Sun, 04 Oct 2026 02:45:16 -0700 (PDT)
+X-Received: by 2002:a05:7022:eb42:20b0:144:fc5b:2121 with SMTP id a92af1059eb24-151c30ec64cmr5879764c88.17.1791107116264;
+        Sun, 04 Oct 2026 02:45:16 -0700 (PDT)
+Received: from bld-bun-02.bun.broadcom.net ([192.19.176.227])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-151fcec9a95sm12736954c88.15.2026.10.04.02.45.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Oct 2026 16:41:53 -0700 (PDT)
-Date: Fri, 2 Oct 2026 01:41:51 +0200
-From: Karl Mehltretter <kmehltretter@gmail.com>
-To: Sebastian Andrzej Siewior <bigeasy@linutronix.de>, 
-	g@mbp-von-karl.localdomain
-Cc: linux-wireless@vger.kernel.org, 
-	Arend van Spriel <arend.vanspriel@broadcom.com>, Clark Williams <clrkwllms@kernel.org>, 
-	Steven Rostedt <rostedt@goodmis.org>, "David S. Miller" <davem@davemloft.net>, 
-	Eric Dumazet <edumazet@google.com>, brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com, 
-	linux-kernel@vger.kernel.org, linux-rt-devel@lists.linux.dev, stable@vger.kernel.org
-Subject: Re: [PATCH] wifi: brcmfmac: avoid sleeping tx locks in netpoll
- contextg
-Message-ID: <ar7vLt5kQ2HJoJY9@gmail.com>
-References: <20260930185417.61865-1-kmehltretter@gmail.com>
- <20261001075755.3MilPS2C@linutronix.de>
+        Sun, 04 Oct 2026 02:45:15 -0700 (PDT)
+From: Arend van Spriel <arend.vanspriel@broadcom.com>
+To: Sebastian Reichel <sebastian.reichel@collabora.com>
+Cc: Heiko Stuebner <heiko@sntech.de>,
+	linux-wireless@vger.kernel.org,
+	brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com,
+	linux-rockchip@lists.infradead.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	kernel@collabora.com,
+	Arend van Spriel <arend.vanspriel@broadcom.com>
+Subject: Re: [PATCH wireless-next v2] wifi: brcmfmac: Improve D3 substate entering timeout handling
+Date: Sun,  4 Oct 2026 02:45:10 -0700
+Message-ID: <20261004094510.1323851-1-arend.vanspriel@broadcom.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260915-brcmfmac-bcm43752-suspend-fix-v2-1-1bd84914998b@collabora.com>
+References: <20260915-brcmfmac-bcm43752-suspend-fix-v2-1-1bd84914998b@collabora.com>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261001075755.3MilPS2C@linutronix.de>
+Content-Transfer-Encoding: 8bit
+X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
 
-On Thu, Oct 01, 2026 at 09:57:55AM +0100, Sebastian Andrzej Siewior wrote:
-> On 2026-09-30 20:54:17 [+0200], Karl Mehltretter wrote:
-> > This fixes the direct SDIO transmit path used by fcmode=0. Modes 1 and 2
-> > take the FWS lock first and need a separate change.
-> 
-> Is this the only affected driver?
+On Tue, 15 Sep 2026 02:50:39 +0200, Sebastian Reichel wrote:
+> Some firmwares (e.g. BCM43752) do not service the D3_INFORM mailbox
+> handshake when idle, so the D3 ACK never arrives. If WoWL is not armed
+> the device is going to be powered off during system suspend and
+> re-probed on resume anyway (brcmf_pcie_pm_leave_D3() handles that), so
+> the missing ACK is harmless and must not abort the whole system suspend.
+> When WoWL is active the device has to stay powered with its state
+> preserved, so keep treating the timeout as fatal.
 
-I also reproduced a sleeping-lock warning with 8139cp on PREEMPT_RT
-using QEMU's RTL8139C+ device. Enabling a dynamic netconsole target caused
-the printer thread to enter cp_start_xmit() with hard interrupts disabled:
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
 
-  BUG: sleeping function called from invalid context
-  in_atomic(): 0, irqs_disabled(): 1, pid: 107, name: pr/netcon0
-  hardirqs last disabled at netpoll_send_skb+0x1c8/0x3d0
-  rt_spin_lock
-  cp_start_xmit+0x31/0x8b6 [8139cp]
-  netpoll_start_xmit+0x18e/0x260
-  netpoll_send_skb+0x37a/0x3d0
-  netconsole_write+0x56d/0x820
-
-That was one reproduction on the netdev base a7bfaba4823e. I have not
-established how many drivers are affected.
-
-Source inspection also identified 8139too and macb as candidates: their
-transmit paths take ordinary spinlock_t locks. I have not reproduced the
-warning with either driver.
-
-The earlier netpoll/NBCON discussion concerns NAPI polling and
-scheduler-lock deadlocks, rather than this driver-lock warning:
-
-https://lore.kernel.org/linux-rt-devel/20260618111554.2n0pP_O9@linutronix.de/
-
-> Do you have maybe a backtrace?
-> 
-
-This is the original Pi 400 report on 7.3-rc3 with PREEMPT_RT. That kernel
-also had unrelated allocation-test patches applied. DEBUG_ATOMIC_SLEEP
-was disabled, so this report is the BH-disable warning:
-
-  DEBUG_LOCKS_WARN_ON(this_cpu_read(softirq_ctrl.cnt))
-  WARNING: kernel/softirq.c:199 at __local_bh_disable_ip+0xd8/0x200
-  CPU#0: pr/netcon0/769
-  Call trace:
-   __local_bh_disable_ip+0xd8/0x200
-   brcmf_sdio_bus_txdata+0x90/0x2b0 [brcmfmac]
-   brcmf_proto_bcdc_txdata+0x90/0xb0 [brcmfmac]
-   brcmf_proto_bcdc_tx_queue_data+0x60/0xa0 [brcmfmac]
-   brcmf_netdev_start_xmit+0x164/0x390 [brcmfmac]
-   netpoll_start_xmit+0x160/0x218
-   netpoll_send_skb+0x208/0x2b0
-   netpoll_send_udp+0x298/0x478
-   netconsole_write+0x440/0x7a0
-   netconsole_write_basic+0x20/0x40
-   nbcon_emit_next_record+0x208/0x2a8
-   nbcon_emit_one+0xc8/0x110
-   nbcon_kthread_func+0x184/0x210
-
-Thanks,
-Karl
+> Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+> ---
+>  drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c | 10 +++++++---
+>  1 file changed, 7 insertions(+), 3 deletions(-)
