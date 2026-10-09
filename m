@@ -1,98 +1,109 @@
-Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.2])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12D713E1201
-	for <brcm80211@lists.linux.dev>; Fri,  9 Oct 2026 07:23:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D236147127E
+	for <brcm80211@lists.linux.dev>; Fri,  9 Oct 2026 07:30:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791530596; cv=none; b=d+MGd3dY0UqPEoxuAS0Kq6DCjpiIc9IL4DvEBecS1OnXPUeok6ZRsPrwtvoKozktq0zSVZmn3it9VWwKEMuDqeczw/G11fK1zkbBC9IVz6S/nx8eB4c9zQIxEAibTpDgD3cTNHCUlEZ487LtYuie6ctVM6qzfXE9blWM9vu//os=
+	t=1791531042; cv=none; b=RujZmElgFWgvKho/WrfWrQOvvEiuUhp9ebOq2Xcb4Jy+CeuGik0/HoZ60QcqTiNRUdQd49af1s9BDe1V1om3QIF6to/PpU4VfLXTwze6QAsKxBQyFxYMiemj60kxf+zows8a3Ud20hChvbBBuP1+3U1cX8tuf1IV7bCtZ9MsmYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791530596; c=relaxed/simple;
-	bh=AMFp/Ebr159vLz/n0Yb3+LfWedR4hlt4rlDlqUnbufk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YFW+sESnmm28TLexd/CMIm22sZ4/4lHBVgv9hX0oRnqhj+0RSQWQE2uLHZ/7Ob2Cl6tMyDwtZtH3dQSP+8mFCHug/T9kXDp2kqbRO15Z5nolB33nOwlQAZktXqUvirD2iHDY/Yxn73POcH9ParfPsvgDdzV55HVd3AzjP8wZJ8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=VrkQVqDx; arc=none smtp.client-ip=220.197.31.2
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1791531042; c=relaxed/simple;
+	bh=m2sbDzTVz80zNixXWIi0WDat1SU37qeKuIL9ZzrWE0s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=n8p32DxRoHY2hh6sZNi4lxkWx/4ZopRc94uddYZLVyrK9dJ1m+OcbHvHn6pnGWh+XTfFX4yPuf6JJg0eL9Gt215C07lJOGC6fhExq+UMWmICxSay9J2NHSZuaIDx8nUjmX8AEw86383+uo7OGTO6i7El33PFixlLTg9bIZFg6Sw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KniNOG1b; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="VrkQVqDx"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=zM
-	/zoDgiq86hQBEum2co31KfW0tzv70MXIWrE2UrOKk=; b=VrkQVqDx4ImuP4ba+s
-	Gws1qQJx9h+laURQV4W1sWgjNCv5urOS7qRYMkjqvYsesK9BKLCs+ppUToKpn5Ys
-	fKW85o3AJbjAnvG5SDpQMOSKJTKbhbfnY2XADCH2MIhFE+33TBmx0Hb4n/hOJK8s
-	h/QUZv9RXkMN15uNGsLGIPqRw=
-Received: from WIN-TOG0NDEIICD.localdomain (unknown [])
-	by gzga-smtp-mtada-g1-2 (Coremail) with SMTP id _____wDX_zk4lshqdCt9DQ--.25180S2;
-	Fri, 09 Oct 2026 15:22:33 +0800 (CST)
-From: Shirong Zhao <shxzhaosr@163.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KniNOG1b"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-49d0da752ffso55302355e9.3
+        for <brcm80211@lists.linux.dev>; Fri, 09 Oct 2026 00:30:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1791531039; x=1792135839; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=QhfdgCnusoug/g1d4W12Bzr39jd94gg5/ulsL7PdlMY=;
+        b=KniNOG1bZhU3dl8ZVtnDHPyGblC+2J3zP1Z762jwv0yFqRh2J+DArvhiHJUz3uku+S
+         JIEqF7QRtZNcrxtAmIgfyBXIjmBUfpfY3SJcMYUfK3EPxIT+kmRKfqvKrZ390N++bJj5
+         c5im7S98+bNeH80NrfGE3jTTa9ByN/ZVYsBnpFn82O9nGqFG4aseWqACBArv3V8ojdoX
+         iEsUi00oMOQi1y31KYs4cVSxUQ3wx2vZTsVoF6BQJapNsI/igJNtHocDtlsBrT8zpSew
+         TBFP5AO0dR0pT/u4gMUyzkJ+zyYF32kXCgUVYIwqULkwAkbuIPxT6eqtEt5vy1AVRww5
+         iM+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791531039; x=1792135839;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=QhfdgCnusoug/g1d4W12Bzr39jd94gg5/ulsL7PdlMY=;
+        b=BASedlmlbcRblCWc4cKkwhYpMBcV142ASpsZ55Mkcl3NChI1R7RLopkr4dMBkt9tyS
+         qJtnN4Ll6yEawRNLEaitQ1lswu0fSx8/XUyIEK/sUTLkzNiPR3Hyi5zFlD32rOSVS5/a
+         KeKV0qHfb13ifFP52yzhA/xU6trgQAYhVGE4KuQvuK5nUT1SRkrEIF/ht1ixG9uANEfO
+         Z9hDLZtLCzWep/IXMPANLMCMiTOVLZisJ+YWbOxYHSUWkXCBxZUB5ABorTX5UWSECXPL
+         JQLeg50Ztbbl88QOI0MyIjqS+6kh6pL8BIAgSNdQ5VtEyqTLqJfLqa9oSyB8ZOKim0Q8
+         IC3Q==
+X-Forwarded-Encrypted: i=1; AKwUvByi+kJQIG86Dtz+7pXoDXmb7YtY34jOn/bRwvOzu0YzJ/eQL6JUT2mP0IHe1l8hihTv63Ihi2KztQE=@lists.linux.dev
+X-Gm-Message-State: AFuF++mHKqOpjLqqDYKwZW/dKYg3lV35j116SjmVbI8e5XqmWnhDFx0s
+	1cL++gBDdO6RnMdMA+mkB1lix4jsr83sJ8+UFc4BGv89fFT9mtnehppE
+X-Gm-Gg: AYBFou0qxsfdVG0IppkIvObTyIubWi5A4Em3ZQ2L5MHStwlhsd2o8Rsbo+uj9qLS1AH
+	fGoe/DT2TPrNZ2k7+kwB2z46VYn0FLkOPO717Ca/n5WB5NOHezz0RnhViQQAC5RQn/qe1dmpc0e
+	c9Zp34bGhCkVEY4AiSxOz1EtzsbW+MSoLfrtzval5PDlscbIaYABAzTkS/YVITfO5Qe/GefETck
+	t+OqefVNF9oB1djkzERKKdaV9yCtGbijxD21TA/yRIoQ2oz2/pp9DyiNXnJmahj7+qa1OAsMCZ6
+	FEM9nv86tkI2wFAB64kWDJgUJtyqo0kbJmyxJ7Vm3MA8CsXMNUOgoiVZPSzOUrfkP1rbV0PXUnQ
+	nmZbUxECx9+9CuHnF5o+prmgLWI13asl2C/eqYJYELUuo0O66yQ1u6EXYe1NpUdZGWXpTmzWwdn
+	tN6i/PGw+BsWYeP3jrQJ1o3k180cwzQL8S/BbUiZiEMYVx6lGLZ2hdaXfvEuGNOXkqfG7lhhOYY
+	DYxHHlXG67/7nxiPMPR6eQjAjiwDcreGRQpyKlXB77n241XJr2oBckSVy98hNskkY/DcIe011zv
+	DeoGYozRFCfuV86/yQTgt0Y/a2OCEj+/zVfxwEFPVDO+fh67etigfts87oHyPqrOXBFc3aCCDEu
+	b
+X-Received: by 2002:a05:600d:82c6:b0:4a0:1fe2:d4c8 with SMTP id 5b1f17b1804b1-4a18e4a4c3emr19524635e9.5.1791531038809;
+        Fri, 09 Oct 2026 00:30:38 -0700 (PDT)
+Received: from unknown748F3CBA5068 (dynamic-2a02-3100-a128-aa01-297a-7094-853e-a20c.310.pool.telefonica.de. [2a02:3100:a128:aa01:297a:7094:853e:a20c])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a18bf31b83sm38426495e9.12.2026.10.09.00.30.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 Oct 2026 00:30:38 -0700 (PDT)
+Date: Fri, 9 Oct 2026 09:30:37 +0200
+From: Karl Mehltretter <kmehltretter@gmail.com>
 To: Arend van Spriel <arend.vanspriel@broadcom.com>
-Cc: linux-wireless@vger.kernel.org,
-	brcm80211@lists.linux.dev,
-	brcm80211-dev-list.pdl@broadcom.com,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v2] wifi: brcmfmac: drop glom superframe on header parse failure
-Date: Fri,  9 Oct 2026 15:22:32 +0800
-Message-ID: <20261009072232.18-1-shxzhaosr@163.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261008103312.20-1-shxzhaosr@163.com>
-References: <20261008103312.20-1-shxzhaosr@163.com>
+Cc: linux-wireless@vger.kernel.org, 
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>, Clark Williams <clrkwllms@kernel.org>, 
+	Steven Rostedt <rostedt@goodmis.org>, "David S . Miller" <davem@davemloft.net>, 
+	Eric Dumazet <edumazet@google.com>, brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com, 
+	linux-kernel@vger.kernel.org, linux-rt-devel@lists.linux.dev, stable@vger.kernel.org
+Subject: Re: [PATCH] wifi: brcmfmac: avoid sleeping tx locks in netpoll
+ context
+Message-ID: <asiX75kRueyFqWuO@gmail.com>
+References: <20260930185417.61865-1-kmehltretter@gmail.com>
+ <20261004122910.1392318-1-arend.vanspriel@broadcom.com>
+ <asR1TaKQJlPFqEvR@gmail.com>
+ <802a092a-314a-4f77-aa1d-134b3d020069@broadcom.com>
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:_____wDX_zk4lshqdCt9DQ--.25180S2
-X-Coremail-Antispam: 1Uf129KBjvJXoW7tF43ur4ftw17uryUurWfXwb_yoW8Zr47pr
-	WIgFyj9r4DJrZYkrZ7AF1xAF1Fqa1Uta4UKay8u3WfuF4rAr1ftr4v9Fyjgr1YyrsYk3sF
-	qFWFvrsxJr9FgFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07j4c_-UUUUU=
-X-CM-SenderInfo: hvk06xhdrv2qqrwthudrp/xtbCxRmAvmrIljmKUwAA32
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <802a092a-314a-4f77-aa1d-134b3d020069@broadcom.com>
 
-brcmf_sdio_rxglom() uses rd_new.len_nxtfrm and rd_new.dat_offset
-right after the superframe brcmf_sdio_hdparse() without checking
-errcode.  On parse failure those fields are either uninitialized
-(the early -ENODATA/-EIO/-EPROTO returns) or hold a rejected value
-(the -ENXIO bad-offset return), so bus->cur_read.len gets garbage
-and skb_pull() runs with a garbage length.
+On Tue, Oct 06, 2026 at 10:27:27AM +0100, Arend van Spriel wrote:
+> > 
+> > Lockdep instrumentation in fcmode=1 and 2 confirmed that cleanup enters
+> > without txq_lock.
+> 
+> This is an observation unrelated to the patch, right? You mentioned in the
+> patch it only covers fcmode=0, right?
+> 
 
-Check errcode first and drop the superframe with the same cleanup
-used for a bad subframe below.
+Yes, the cleanup observation is unrelated to the fcmode=0 fix. I
+mentioned it to explain why I kept brcmu_pktq_penq() for normal calls.
 
-Verified against wireless.git main (fd4e7f1137291), the current
-wireless fixes tree.
+I'm looking at a separate brcmfmac FWS-path RT/netpoll fix for modes
+1 and 2. The prototype defers IRQ-disabled transmit to the FWS worker.
 
-Signed-off-by: Shirong Zhao <shxzhaosr@163.com>
----
-Changes in v2: check errcode before sdio_release_host() so the
-cleanup runs under the already-claimed host, avoiding the extra
-release/claim cycle (suggested by Arend van Spriel).
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+Are modes 1 and 2 used or recommended on SDIO devices? That would
+help me prioritise the follow-up.
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-index 381801af3..abe8d44ec 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-@@ -1648,6 +1648,17 @@ static u8 brcmf_sdio_rxglom(struct brcmf_sdio *bus, u8 rxseq)
- 		sdio_claim_host(bus->sdiodev->func1);
- 		errcode = brcmf_sdio_hdparse(bus, pfirst->data, &rd_new,
- 					     BRCMF_SDIO_FT_SUPER);
-+		if (errcode) {
-+			/* Superframe header is bad; rd_new fields are not
-+			 * valid here. Drop it like a bad subframe below.
-+			 */
-+			brcmf_sdio_rxfail(bus, true, false);
-+			bus->sdcnt.rxglomfail++;
-+			brcmf_sdio_free_glom(bus);
-+			sdio_release_host(bus->sdiodev->func1);
-+			bus->cur_read.len = 0;
-+			return 0;
-+		}
- 		sdio_release_host(bus->sdiodev->func1);
- 		bus->cur_read.len = rd_new.len_nxtfrm << 4;
- 
- 		/* Remove superframe header, remember offset */
-
+Thanks,
+Karl
