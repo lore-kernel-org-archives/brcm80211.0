@@ -1,105 +1,137 @@
-Received: from ms.puri.sm (ms.puri.sm [135.181.196.210])
+Received: from forward101d.mail.yandex.net (forward101d.mail.yandex.net [51.250.60.161])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8C91347FC0
-	for <brcm80211@lists.linux.dev>; Sun, 18 Oct 2026 06:58:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=135.181.196.210
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A70B73C6A56
+	for <brcm80211@lists.linux.dev>; Sun, 18 Oct 2026 19:40:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=51.250.60.161
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792306718; cv=none; b=l4LDTediUqV8mPOWQuergyIth/T7nDFduvvXPpHJSob5aqSilnCjar5GO/lB9hZ3XmC9cyLhzPWOICzLthiMMg/GY/QqgV9Gh0ahqEqsPd9QJQP03i5WzHwuLnZfrAfhiT2QAxZ/AeZnJ1wIqpH216pe2BNk1eFAtXJCEz+6Mjo=
+	t=1792352411; cv=none; b=aHdHT4WUoC8YrULUAcNf9x0nt53WCeTbIEQ1O2b5xO4qC+uP4v5WJlFPjTG4gyBoYYbgi4EMtqBZPM2ncF7VDJFkL8JT3EKqrEPts3uq7KCiFP/0cxzvHBFWtq0+EFowcx/x4EnjX28HnXSDtBnd8L1ELl+PyOoinJNIhlLCNTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792306718; c=relaxed/simple;
-	bh=qvSAkfPXBK85nIKvwlaMA+P/P+Ie/Tb7w5MX7+TjJnc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=gg31J15/3Ov3PGRm045eh1Yh4lNA3azXMnQAbmwF2Zfr3UVa6pWFpXrdmNON0A9hSmDPJu1FEzTrtKw7/6uOxx+gxWHajKzX3a8B0gW7mInIwNrLKjbD6wAJdmjfwiQVhceJ61FD5VOIfDfd3jMrlf9hevO/K3ApvgVm9Q4okbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=puri.sm; spf=pass smtp.mailfrom=puri.sm; dkim=pass (2048-bit key) header.d=puri.sm header.i=@puri.sm header.b=I/5Iwk0m; arc=none smtp.client-ip=135.181.196.210
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=puri.sm
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=puri.sm
+	s=arc-20240116; t=1792352411; c=relaxed/simple;
+	bh=yxYOAbEakTQK/EKwd4BmwkwcRlAv5edH4vJzvWRVHUk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=bVnwT9ApFGglIkyE2e1fViJNDP9Gya2cSCoC6iFSD/MB4LhomxnU6WNkPwLByyId7JEVyes5qDk8gvuzbcZNMjualFYeeGvkGsQGeu2mkAStBF7j4RC3H8TWV32PkyrAOiloycYPO8SgHQuRkwiRabooP55wu2Xs/mSWoPegp84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=yandex.ru; spf=pass smtp.mailfrom=yandex.ru; dkim=pass (1024-bit key) header.d=yandex.ru header.i=@yandex.ru header.b=JZ1je3CY; arc=none smtp.client-ip=51.250.60.161
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=yandex.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yandex.ru
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=puri.sm header.i=@puri.sm header.b="I/5Iwk0m"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=puri.sm; s=smtp2;
-	t=1792306386; bh=qvSAkfPXBK85nIKvwlaMA+P/P+Ie/Tb7w5MX7+TjJnc=;
-	h=From:Date:Subject:To:Cc;
-	b=I/5Iwk0mCGzuK1LgV8pHZe3TdxIJDUqXuwL09Ck+HuGsz3x1lR0e+g6/rcArr7A32
-	 9DSaHKuUGE8QOwHiOICZuNEOl7fKs2QJLwB2hsAOgnFPpJr39hXjyf/YXLgdUliTcu
-	 bVTURQVN4cXzA1VhUm/TIxL1z69lYPRlCxtt4GVBgvPXdXcuqxmTzOwFyJ+AWWMIjE
-	 AF/NPX6CKOxxFnF3ix/RKCdCwjJJGWS8efiAS01UsxEM7FNoJ60CBQuE6E9uOmoW5D
-	 iQTf+qqs3+tQ0ZJK1RL48CttfBwfo/0C400KrN/bghIaROkTauEJgEnWmC6Fnlfu2y
-	 urw79LIx1l6bQ==
-Received: from pliszka.localdomain (83.24.27.201.ipv4.supernova.orange.pl [83.24.27.201])
-	by ms.puri.sm (Postfix) with ESMTPSA id DA1F51F5E8;
-	Sat, 17 Oct 2026 23:53:05 -0700 (PDT)
-From: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
-Date: Sun, 18 Oct 2026 08:52:43 +0200
-Subject: [PATCH] wifi: brcmfmac: use ISO3166 country code fallback on 43752
+	dkim=pass (1024-bit key) header.d=yandex.ru header.i=@yandex.ru header.b="JZ1je3CY"
+Received: from mail-nwsmtp-smtp-production-main-73.yp-c.yandex.net (mail-nwsmtp-smtp-production-main-73.yp-c.yandex.net)
+	by forward101d.mail.yandex.net (postfix) with ESMTPS id 471F7C0040;
+	Sun, 18 Oct 2026 22:39:58 +0300 (MSK)
+Received: by mail-nwsmtp-smtp-production-main-73 with ESMTPSA id odeNcANdeeA0-XJHspWh3;
+	Sun, 18 Oct 2026 22:39:57 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
+	t=1792352397; bh=rI30WXEYUgaFP2Fijjd2kWABcP/25zubdRs8pQsEkZY=;
+	h=Message-ID:Date:Cc:Subject:To:From;
+	b=JZ1je3CYoGU1ocZwJNz9o7sWvY8R8EfWMizkN9hKsYjclnftQbJ3PVoCEHyqhQK82
+	 pcfuG6L7LDEp0fSdRNHdtfANwFgcu0JKyfBwztaKneXdG9IjDWOlvhfdKyDnkA807B
+	 gMfCuWhU/BZzfjRVcU5WXTc98lA2dP5fWt89V8cY=
+Authentication-Results: mail-nwsmtp-smtp-production-main-73; dkim=pass header.i=@yandex.ru
+From: Sergey Armodin <dolph-in@yandex.ru>
+To: Arend van Spriel <arend.vanspriel@broadcom.com>,
+	linux-wireless@vger.kernel.org
+Cc: brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com
+Subject: [PATCH wireless-next] wifi: brcmfmac: pcie: restore FEM control pin mode on Apple BCM43602
+Date: Mon, 19 Oct 2026 02:39:50 +0700
+Message-ID: <20261018193950.14287-1-dolph-in@yandex.ru>
+X-Mailer: git-send-email 2.56.0
 Precedence: bulk
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261018-brcmfmac-country-code-v1-1-54d7cbcce035@puri.sm>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yWMwQ7CIBBEf6XZs0QgaNRfMT0A3do1lppdMJqm/
- y7oafImM28FQSYUuHQrML5IaEkVzK6DOPl0Q0VDZbDaHo02JxU4zuPso4pLSZk/NQdUeHY2OG0
- cHhDq98k40vvnvfZ/lhLuGHOTtUXwglXmU5xa9aBUZD97yciwbV//tg6OmAAAAA==
-X-Change-ID: 20261018-brcmfmac-country-code-e942b4014e5e
-To: Arend van Spriel <arend.vanspriel@broadcom.com>, 
- Angus Ainslie <angus@akkea.ca>, Kalle Valo <kvalo@kernel.org>
-Cc: kernel@puri.sm, linux-wireless@vger.kernel.org, 
- brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com, 
- linux-kernel@vger.kernel.org, stable@vger.kernel.org, 
- Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1336;
- i=sebastian.krzyszkowiak@puri.sm; h=from:subject:message-id;
- bh=qvSAkfPXBK85nIKvwlaMA+P/P+Ie/Tb7w5MX7+TjJnc=;
- b=owEBbQKS/ZANAwAKAejyNc8728P/AcsmYgBq1GzRuycjVCSe47CjuTqsApGrZUTaMen871JOE
- 9y4Zgq8yhqJAjMEAAEKAB0WIQQi3Z+uAGoRQ1g2YXzo8jXPO9vD/wUCatRs0QAKCRDo8jXPO9vD
- /9G3EACe3jCcyote0++9/dYWztHQzxQjX1s1HCII9VN7e9h1nCAm96QC0kGSTZAWt2brTz4DJwX
- T/qpnmKJG3Ch3pqnG8k5jD+QBhDlnbEY7q5JKC0IPLt+/eisFmFk5R7h63DbkdG3cqSpxjeVoxH
- 8G8xLm4Put35d89Dg1Ndetu13c3XyJDJul039X7NTBn7fi1f8F+H333KakAr3LZ7QPSxVwyIUdb
- 8zX8GvW+Cb58wZPXZroaiTXnKXLOIgVhiZLw+3LHpJi/LakPbFZ8eEQj91xamgjWZtQpu0FaZjp
- GOXxn2Vv0SZGSRLrSw93dyzMIlKzzk7Mw43fcc2rrPMmJRFMG45MhlI9cz4OtXaP1Pr1dqbulhn
- 335F46D2KfnbOyI/Wsu1FXbrHY1A+ncHnXDBRgCHnSHH1xeRkS7wbngmCmdXDs1e4yebR04UOxK
- G/QckwnRIbxUvby46Dk7yi1XtZkgJ4kUXvkRr4lTqttnnxx9GdpeS4ljp4cmCa6DJcKY1J0Kbvy
- Yxx7StYXQ9QFn39j7uwgafShzsZ0xrp/L2NdYq6O31GiiTUK1hl7WqUntYbuJuUN6NP1XiSBFiY
- M2U6t07K46fYObf3lHBpGoRreyxz8SCclEADK5/U0RDc9SVqjt7IbHcIFM6+b7KAghUbR50QBkC
- MO/iPh3QtH697bw==
-X-Developer-Key: i=sebastian.krzyszkowiak@puri.sm; a=openpgp;
- fpr=22DD9FAE006A11435836617CE8F235CF3BDBC3FF
+Content-Transfer-Encoding: 8bit
 
-Without this, the interface stays confined to the country set by
-ccode iovar default value, which is usually 0 (global).
+On a MacBookPro14,3 with a BCM43602 (14e4:43ba, subsystem 106b:0173),
+5 GHz stops working once the chip has been reset to its power-on
+state, which happens over S3 while running on battery. Scans still
+report 5 GHz networks, but every attempt to join one fails: the
+firmware ends the join with a SET_SSID event with status
+BRCMF_E_STATUS_FAIL and no LINK event, which brcmfmac reports as
+WLAN_STATUS_AUTH_TIMEOUT, seen in wpa_supplicant as
+"CTRL-EVENT-ASSOC-REJECT ... status_code=16". A 2.4 GHz network could
+still be joined in that state. Reloading the driver, power cycling
+the slot or a secondary bus reset do not help; only a reboot of the
+machine does.
 
-Tested by verifying that enabling the fallback makes channel 13 APs
-visible in scans while in Poland without having to manually change
-the ccode variable.
+On this board 5 GHz depends on bit 4 of the ChipCommon chipcontrol
+register, which Broadcom's sbchipc.h calls
+CCTRL4360_DISCRETE_FEMCTRL_MODE (front-end module control through the
+discrete FEM control pins). After a reboot the bit is set. brcmfmac
+never writes it and firmware 7.35.177.61 does not set it after a
+power-on reset, so presumably the platform firmware sets it at boot.
+The watchdog reset brcmfmac does on probe and remove preserves the
+bit, but a power-on reset clears it: power cycling the slot of a
+working system breaks 5 GHz the same way. Read with the driver unbound
+after the firmware has run, chipcontrol is 0x01400010 after a reboot
+and 0x01000000 after S3 on battery. Bit 22 is lost as well, but
+setting bit 4 alone before the firmware is downloaded is enough to
+make 5 GHz work again.
 
-Fixes: d2587c57ffd8 ("brcmfmac: add 43752 SDIO ids and initialization")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
+Set the bit, if it is clear, before downloading the firmware on
+BCM43602 boards with Apple's subsystem vendor ID. When the firmware is
+lost over a resume, brcmfmac removes and probes the device again, so
+this covers S3 as well as a driver reload. This was only seen on a
+MacBookPro14,3; the check covers all Apple BCM43602 boards on the
+assumption that their platform firmware sets the bit the same way.
+
+Tested on a MacBookPro14,3 with firmware 7.35.177.61: after power
+cycling the slot and after S3 on battery the driver sets the bit and
+5 GHz associates again; after a normal boot the bit is already set and
+nothing is written.
+
+Signed-off-by: Sergey Armodin <dolph-in@yandex.ru>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../broadcom/brcm80211/brcmfmac/pcie.c        | 30 +++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-index 872c48806d09..bd6ac29a0471 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-@@ -7973,6 +7973,7 @@ static bool brmcf_use_iso3166_ccode_fallback(struct brcmf_pub *drvr)
- 	case BRCM_CC_4345_CHIP_ID:
- 	case BRCM_CC_4356_CHIP_ID:
- 	case BRCM_CC_43602_CHIP_ID:
-+	case BRCM_CC_43752_CHIP_ID:
- 		return true;
- 	default:
- 		return false;
-
----
-base-commit: 32c52ec87d6245ee2d12ed5dd509e40062939b50
-change-id: 20261018-brcmfmac-country-code-e942b4014e5e
-
-Best regards,
---  
-Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+index 17bae04c1..a97a597e7 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+@@ -726,9 +726,39 @@ static void brcmf_pcie_attach(struct brcmf_pciedev_info *devinfo)
+ }
+ 
+ 
++/* ChipCommon chipcontrol bit selecting the discrete FEM control pin mode */
++#define BRCMF_CC_CHIPCTL_4360_DISCRETE_FEMCTRL_MODE	BIT(4)
++
++/* On a MacBookPro14,3 with a BCM43602, 5 GHz only works with the discrete
++ * FEM control pin mode selected in the ChipCommon chipcontrol register. The
++ * bit is set after a reboot, but a power-on reset of the chip (e.g. over S3
++ * on battery) clears it and the firmware does not set it again. Other Apple
++ * BCM43602 boards are assumed to be set up the same way. Restore the bit
++ * before the firmware is started.
++ */
++static void brcmf_pcie_43602_apple_femctrl(struct brcmf_pciedev_info *devinfo)
++{
++	u32 val;
++
++	if (devinfo->pdev->subsystem_vendor != PCI_VENDOR_ID_APPLE)
++		return;
++
++	brcmf_pcie_select_core(devinfo, BCMA_CORE_CHIPCOMMON);
++	val = READCC32(devinfo, chipcontrol);
++	if (val & BRCMF_CC_CHIPCTL_4360_DISCRETE_FEMCTRL_MODE)
++		return;
++
++	brcmf_dbg(PCIE, "chipcontrol 0x%08x, setting discrete FEM control mode\n",
++		  val);
++	WRITECC32(devinfo, chipcontrol,
++		  val | BRCMF_CC_CHIPCTL_4360_DISCRETE_FEMCTRL_MODE);
++}
++
+ static int brcmf_pcie_enter_download_state(struct brcmf_pciedev_info *devinfo)
+ {
+ 	if (devinfo->ci->chip == BRCM_CC_43602_CHIP_ID) {
++		brcmf_pcie_43602_apple_femctrl(devinfo);
++
+ 		brcmf_pcie_select_core(devinfo, BCMA_CORE_ARM_CR4);
+ 		brcmf_pcie_write_reg32(devinfo, BRCMF_PCIE_ARMCR4REG_BANKIDX,
+ 				       5);
+-- 
+2.55.0
 
