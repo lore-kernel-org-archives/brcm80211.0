@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B800C582BB4;
-	Mon, 19 Oct 2026 13:55:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69AC864C41C;
+	Mon, 19 Oct 2026 14:06:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792418130; cv=none; b=EIc/l/RG1C7kOgLbMxN/LBNXqqsLAen3YTJwchDZzrvKPxVr+sz6HewdYOfSxYLdMHFwLC0mchXUPA6R7ufO8bMgn8DmS+vatmU4bpjEx0LhOu++lMK2qb68k3fV2erWXytV2Zb1hOPd1Q7lfV9eNG0F5uAWdcYDFDzsH3Ivm8U=
+	t=1792418822; cv=none; b=UadLGS6/tth2nxUGCKdClShhMQYqPA4PosRooSricBRmtQM0KsgPoi3BrzamkB1sQH6th0HKA1ifhsSeY5P1ydWx1y5iKQzZDeb9KYes1OIu3yymFKK/ozf8uCMUVPQMB0cjnBNkcZtIobG1x1/VoHChq83dbwccg08Y1RM0QB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792418130; c=relaxed/simple;
-	bh=2U0d5qrDcG5/pZEA05xrfVXhbNnZqGT1IUbK0M81VSs=;
+	s=arc-20240116; t=1792418822; c=relaxed/simple;
+	bh=JePvHHriR9Uz5hahUwNPgpcuWpfGjqwZBG6fLHqZiHc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=E5eOVbE/uEAvcA6VCqIbvoYWocJNWmtwR2n1NvHcrktNVJKlAUmD8MRhiePFiIe58kePkSQI2CG/8wsbqVxi0BMb5a02L4pee3oAwFHNymcgk6olyZvw7NHqoOlFXlJqtRd9cZbG+KOsEnduxjZ9SrJdQFxwOY1xj85179BWUBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MEk2e+45; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=oLeTmDhr1KUBZGaVbMEZko3PZ8fdrmcox+Wv7Neyo1v7nUNqHg6YjgcuoudiCe4YqGiF2/bImKZo2XS2ZTdlXjMMicXljuckOWOMGujcE33qWfLuQdTpls/oVj+3bkcLHqT7bezDXA6EZbTHk5/sA/RFtBg2o4WZFR55CfyJJcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VcXRMFJJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MEk2e+45"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A26A71F000C5;
-	Mon, 19 Oct 2026 13:55:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VcXRMFJJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AA011F000C6;
+	Mon, 19 Oct 2026 14:06:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792418127;
-	bh=ylNlqt/szmOgKj0nVcAf3216sWQ1woDYsv0ewQgQCgU=;
+	s=k20260515; t=1792418816;
+	bh=B5YYPIxfAI73hAgTN9wvGfVFwk19HyvqgMAuoF0zEaI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MEk2e+458gokLKtX4lBbykt9OoFKDiVEgDbjxMr89FF6d4jocLdgAFdlwWLHoOrN9
-	 IFzVthwtyT6FE5J7dA9JIu/JdESUoHhWJAIWrFoG86lGfmpFRsd8ycnXnNmp85K/Su
-	 RL0stjdaD6weJtovke0HHl50aG6hgp1tHmjj4GVVWad+BJ562dqTbLOkPceToRSFuH
-	 nBFy81PTcbSoJvbeYktHuUL4j6jfIfz8SjOCg4BznxdOuJNeh9I37zG3YDeoxCNyWs
-	 omkG636ENiHfOcxZ8NiTRVWfjHdDBVdfm9ga0/wHeRTSkjBLGZ7LVhQGqvIhCrttkI
-	 U92vzwLYjnlHw==
+	b=VcXRMFJJYAi+pAkOQzRnssxP31bKxp+nMUW5e/8U9vG1BPRPaPqZExoEgP6tbB1qQ
+	 gIg1fSNfW7wtls9qVxkVcDInOIFsy9qezEFw79EArnO7JjprdxlsjD6NW2+NwyC3IS
+	 IkgwI6DS91QMvKiysgYC03HadY54S61KSTFERvbeiV7wViv8iU5nFkz9F/qdCx9FGl
+	 beDxUGk9KAd25cZ7nubfS2scUfJI8lBSxJAhYo4vwJAmLeOAQI4gJ3KJ2f+pbtYdj+
+	 nMEqLLNCQ/LIkCefemydoVAwsrx7d6O4oTpC0KzBYIZQJGuxUAkukiN1Bdp9tJkWKd
+	 fuEio8e/go5nA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
@@ -37,9 +37,9 @@ Cc: Can Peng <pengcan@kylinos.cn>,
 	brcm80211@lists.linux.dev,
 	brcm80211-dev-list.pdl@broadcom.com,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] wifi: brcmfmac: Set DMA direction for msgbuf packet IDs
-Date: Mon, 19 Oct 2026 09:45:22 -0400
-Message-ID: <20261019135441.1420968-31-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] wifi: brcmfmac: validate msgbuf flowring IDs before use
+Date: Mon, 19 Oct 2026 09:53:28 -0400
+Message-ID: <20261019135441.1420968-517-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261019135441.1420968-1-sashal@kernel.org>
 References: <20261019135441.1420968-1-sashal@kernel.org>
@@ -57,80 +57,76 @@ Content-Transfer-Encoding: 8bit
 
 From: Can Peng <pengcan@kylinos.cn>
 
-[ Upstream commit f0ba5fd51ff23077ce66cb9be79d41a4b7c19c5e ]
+[ Upstream commit 32856f39fefdc75bd253cab999f996750628648e ]
 
-brcmf_msgbuf_init_pktids() takes the DMA direction from its callers,
-but never stores it in the packet ID state.  Since the state is zeroed,
-pktids->direction remains DMA_BIDIRECTIONAL for both the TX and RX
-packet ID pools.
+Firmware messages carry flow_ring_id values which brcmfmac converts
+to an internal flowid by subtracting
+BRCMF_H2D_MSGRING_FLOWRING_IDSTART. The resulting value is used as
+a bit index in txstatus_done_map and as an array index into
+msgbuf->flowrings and the flowring state.
 
-All msgbuf packet ID map and unmap paths use pktids->direction.  As a
-result, TX buffers requested with DMA_TO_DEVICE and RX buffers requested
-with DMA_FROM_DEVICE are mapped and unmapped as DMA_BIDIRECTIONAL
-instead.
+Validate the firmware supplied flow_ring_id before using it. This
+prevents flow_ring_id values below BRCMF_H2D_MSGRING_FLOWRING_IDSTART
+from underflowing and rejects values outside msgbuf->max_flowrings.
 
-Store the caller-provided direction when initializing the packet ID
-state.
+In the tx status path, complete the packet with an error after
+removing a valid packet id so the skb is not leaked when the flow
+ring id is invalid.
 
 Signed-off-by: Can Peng <pengcan@kylinos.cn>
 Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20260724092530.674624-1-pengcan@kylinos.cn
+Link: https://patch.msgid.link/20260723055618.550834-1-pengcan@kylinos.cn
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The local tree is **5.15.221** (`pending-5.15`). The missing
-`pktids->direction` store is present here, so this is a one-line DMA
-correctness fix for this tree.
+This is a 5.15.221 tree (`pending-5.15`). The buggy firmware-ID indexing
+is present here, and the patch is a small bounds check that prevents
+out-of-bounds writes/crashes and an skb leak.
 
 ===============================================================
 PHASE 1: COMMIT MESSAGE FORENSICS
 ===============================================================
 
 Step 1.1: PARSE THE SUBJECT LINE
-Record: **[wifi / brcmfmac]** **[Set]** Store DMA direction on msgbuf
-packet ID pools so TX/RX map/unmap use the caller’s direction instead of
-the zeroed `DMA_BIDIRECTIONAL` default.
+Record: [subsystem: wifi: brcmfmac] [action verb: validate] [intent:
+reject firmware-supplied msgbuf flowring IDs before they are used as
+bitmap/array indexes]
 
 Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
-From the commit text under review:
-- **Acked-by:** Arend van Spriel `<arend.vanspriel@broadcom.com>`
-  (brcm80211 maintainer)
-- **Link:**
-  `https://patch.msgid.link/20260724092530.674624-1-pengcan@kylinos.cn`
-- **Signed-off-by:** Can Peng `<pengcan@kylinos.cn>` (author)
-- **Signed-off-by:** Johannes Berg `<johannes.berg@intel.com>` (wireless
+Record: Tags in the candidate message:
+- Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com> (brcmfmac
   maintainer)
-- No **Fixes:** / **Cc: stable** / **Reported-by** in the applied
-  message (expected for this review queue)
+- Link:
+  https://patch.msgid.link/20260723055618.550834-1-pengcan@kylinos.cn
+- Signed-off-by: Can Peng <pengcan@kylinos.cn> (author)
+- Signed-off-by: Johannes Berg <johannes.berg@intel.com> (wireless
+  maintainer who applied it)
 
-Original mailing-list submission (openwall / LKML, msgid
-`20260724092530.674624-1-pengcan@kylinos.cn`) **did** include:
-- `Fixes: 9a1bb60250d2 ("brcmfmac: Adding msgbuf protocol.")`
-- `Cc: stable@vger.kernel.org`
-
-Those tags were dropped when the patch was applied. That is
-author/maintainer intent, not a pipeline “already selected” marker.
-Decision below is still on technical merit.
+No Reported-by, Tested-by, Fixes, or Cc: stable in the candidate text
+(absence expected). The original mailing-list submission (v1, same
+msgid) did include `Fixes: 9a1bb60250d2 ("brcmfmac: Adding msgbuf
+protocol.")` and `Cc: stable@vger.kernel.org`; those are author-
+submitted tags, not pipeline markers.
 
 Step 1.3: ANALYZE THE COMMIT BODY TEXT
 Record:
-**Bug:** `brcmf_msgbuf_init_pktids()` takes `enum dma_data_direction
-direction` but never writes `pktids->direction`. `pktids` is zeroed, and
-`DMA_BIDIRECTIONAL == 0`.
-**Symptom:** TX pools created with `DMA_TO_DEVICE` and RX pools with
-`DMA_FROM_DEVICE` are mapped/unmapped as bidirectional.
-**Version:** Introduced with msgbuf (2014); no version cutoff in the
-message.
-**Root cause:** Missing store of a parameter that every map/unmap path
-already reads.
+- Bug: firmware `flow_ring_id` is converted with `id -
+  BRCMF_H2D_MSGRING_FLOWRING_IDSTART` and then used as a bit index in
+  `txstatus_done_map` and an array index into `msgbuf->flowrings` /
+  flowring state, with no range check.
+- Failure mode: IDs below `BRCMF_H2D_MSGRING_FLOWRING_IDSTART` (2)
+  underflow a `u16`; IDs above `max_flowrings` index past allocated
+  arrays. On the TX-status path, a valid pktid can already have been
+  taken, so an early return would leak the skb.
+- Version info in the body: none. Original Fixes target is from 2014.
+- Root cause (author): missing validation of firmware-supplied ring IDs.
 
 Step 1.4: DETECT HIDDEN BUG FIXES
-Record: Not a disguised cleanup. It is an explicit DMA-direction
-correctness fix. The unused parameter plus zeroed field is the entire
-bug.
+Record: Not a hidden fix. The subject/body describe a bounds check and
+an skb-leak close on the invalid-ID TX-status path.
 
 ===============================================================
 PHASE 2: DIFF ANALYSIS - LINE BY LINE
@@ -138,308 +134,435 @@ PHASE 2: DIFF ANALYSIS - LINE BY LINE
 
 Step 2.1: INVENTORY THE CHANGES
 Record:
-- **File:** `drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c`
-- **Scope:** +1 line in `brcmf_msgbuf_init_pktids()` (`pktids->direction
-  = direction;`)
-- **Classification:** single-file surgical fix
-- Mainline hunk context uses `kzalloc_objs` / `kzalloc_obj`; this 5.15
-  tree uses `kcalloc` / `kzalloc`. The added line is the same.
+- File: `drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c`
+  (single file)
+- Scope: ~40 insertions / 6 deletions (mailing-list v1: 46 lines net in
+  that file)
+- Functions: adds `brcmf_msgbuf_get_flowid()`; changes
+  `brcmf_msgbuf_process_txstatus()`,
+  `brcmf_msgbuf_process_flow_ring_create_response()`,
+  `brcmf_msgbuf_process_flow_ring_delete_response()`
+- Classification: single-file surgical fix
 
 Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
 Record:
-**Before:** After allocating the array and `pktids`, only `array` and
-`array_size` are set. `direction` stays 0.
-**After:** The caller-provided direction is stored.
-**Path:** Probe/init (`brcmf_proto_msgbuf_attach`), then every TX/RX
-`dma_map_single` / `dma_unmap_single` via `pktids->direction`.
+- Helper (new): convert firmware `flow_ring_id` to internal `flowid`
+  only if `id >= BRCMF_H2D_MSGRING_FLOWRING_IDSTART` and `(id - START) <
+  msgbuf->max_flowrings`. Uses `u32` so the subtract cannot wrap.
+- TX status (normal/error path): previously always subtracted then
+  `set_bit(flowid, txstatus_done_map)`, `msgbuf->flowrings[flowid]`,
+  `atomic_dec`, `brcmf_txfinalize(..., true)`. After: if ID invalid,
+  `brcmf_txfinalize(..., false)` and return (skb already taken from
+  pktid table).
+- Create/delete response: previously subtracted and used the index
+  unconditionally (`brcmf_msgbuf_remove_flowring`,
+  `brcmf_flowring_open`, `brcmf_flowring_delete`). After: invalid ID
+  returns without touching rings.
 
 Step 2.3: IDENTIFY THE BUG MECHANISM
-Record: **Logic / DMA API correctness** (with IOMMU and cache/bounce
-side effects).
-Callers already pass the right direction:
-
-```1580:1585:drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
-        msgbuf->tx_pktids = brcmf_msgbuf_init_pktids(NR_TX_PKTIDS,
-                                                     DMA_TO_DEVICE);
-        if (!msgbuf->tx_pktids)
-                goto fail;
-        msgbuf->rx_pktids = brcmf_msgbuf_init_pktids(NR_RX_PKTIDS,
-                                                     DMA_FROM_DEVICE);
-```
-
-Map/unmap always use `pktids->direction` (`brcmf_msgbuf_alloc_pktid`,
-`brcmf_msgbuf_get_pktid`, `brcmf_msgbuf_release_array`). Verified
-`DMA_BIDIRECTIONAL = 0` in `include/linux/dma-direction.h`.
-
-Verified DMA consequences in this tree:
-- **IOMMU:** `dma_info_to_prot()` maps BIDIRECTIONAL → `IOMMU_READ |
-  IOMMU_WRITE`, TO_DEVICE → `IOMMU_READ` only, FROM_DEVICE →
-  `IOMMU_WRITE` only (`drivers/iommu/dma-iommu.c`). TX SKBs currently
-  get device **write** permission they should not have.
-- **Docs:** Networking TX must be `DMA_TO_DEVICE`, RX `DMA_FROM_DEVICE`
-  (`Documentation/core-api/dma-api-howto.rst`).
-- **SWIOTLB / non-coherent:** direction selects bounce copy and
-  `arch_sync_dma_*` behavior.
+Record:
+- Category: memory safety (out-of-bounds index / underflow) plus
+  resource leak on the TX-status error path.
+- Mechanism: firmware DMA completion messages supply
+  `compl_hdr.flow_ring_id`. `BRCMF_H2D_MSGRING_FLOWRING_IDSTART` is 2.
+  For ID 0 or 1, `u16 flowid -= 2` wraps to 65534/65535. `set_bit()`
+  then writes far past `txstatus_done_map` (sized to `max_flowrings`
+  bits). `msgbuf->flowrings[flowid]` is an OOB load and typically a
+  crash. Oversized IDs do the same without wrapping. The helper rejects
+  both. TX-status also finalizes the skb so `brcmf_msgbuf_get_pktid()`’s
+  take is not leaked.
 
 Step 2.4: ASSESS THE FIX QUALITY
-Record: Obviously correct: the parameter exists only to be stored. One
-assignment, no API/lock/structure change. Regression risk is low: it
-uses the directions the callers already requested. Using stricter TX
-mapping (device read-only) is the intended, safer model.
+Record:
+- Obviously correct: range check matches how the host builds IDs
+  (`flowid + BRCMF_H2D_MSGRING_FLOWRING_IDSTART` in create/delete
+  requests). Happy path is unchanged.
+- Minimal: one helper, three call sites, no API change.
+- Regression risk: low. Invalid create/delete IDs now skip ring
+  teardown; that is safer than OOB. A stuck ring on bogus firmware is
+  preferable to memory corruption. `brcmf_txfinalize()` already handles
+  a NULL `ifp` from a bad `ifidx` by freeing the skb.
+- Red flags: none. Double blank line after the helper is style-only (v2
+  tried to clean it; Johannes applied v1).
 
 ===============================================================
 PHASE 3: GIT HISTORY INVESTIGATION
 ===============================================================
 
 Step 3.1: BLAME THE CHANGED LINES
-Record: Buggy code from **`9a1bb60250d2`** (“brcmfmac: Adding msgbuf
-protocol.”, Hante Meuleman, 2014-07-30). `git describe --contains` →
-`v3.17-rc1`. Field, parameter, and missing store have been this way
-since introduction. `git merge-base --is-ancestor 9a1bb60250d2b HEAD`
-succeeded.
+Record:
+- Unvalidated `flowid = le16_to_cpu(...flow_ring_id)` dates to
+  9a1bb60250d2 (Hante Meuleman, 2014-07-30), “brcmfmac: Adding msgbuf
+  protocol.”
+- The subtract of `BRCMF_H2D_MSGRING_FLOWRING_IDSTART` was added in
+  be4b092cab84b (Franky Lin, 2016-11-23), “brcmfmac: add pcie host
+  dongle interface rev6 support” (replaced
+  `BRCMF_NROF_H2D_COMMON_MSGRINGS`, also 2).
+- Code has been in-tree for many years, including this 5.15 branch.
 
 Step 3.2: FOLLOW THE FIXES: TAG
-Record: Applied commit has no Fixes tag. Original submission fixes
-**`9a1bb60250d2`**, which **is** in this tree. No later intermediate fix
-stores `direction` (`git log --grep` on this file found none).
+Record:
+- Original mailing-list Fixes: 9a1bb60250d2. `git merge-base --is-
+  ancestor 9a1bb60250d2 HEAD` succeeds.
+- Slightly imprecise: large-ID OOB is from 2014; underflow of IDs 0/1 is
+  from the 2016 subtract. Both commits are in this tree.
+- No later in-tree fix of the same hole (`brcmf_msgbuf_get_flowid` is
+  absent; `git log --grep="invalid flowring"` / `--grep="flow_ring_id"`
+  on this path found nothing equivalent).
 
 Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Record: Recent related commit already here: **`ddb864ea9ca2e`** (“wifi:
-brcmfmac: unmap dma buffer in brcmf_msgbuf_alloc_pktid()”) — error-path
-unmap, still using `pktids->direction`. Standalone; not part of a
-numbered series.
+Record: Recent `msgbuf.c` commits here are unrelated (pktid DMA unmap,
+allocation-mode plumbing, memleak in attach). Not part of a functional
+series that must land first. v2 was whitespace-only prep + the same
+validation; Johannes applied v1 and declined the cleanup.
 
 Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Record: Can Peng has **no** other commits in this 5.15 brcm80211
-history. Arend van Spriel is the listed brcm80211 maintainer
-(`MAINTAINERS`) and **Acked-by** the patch.
+Record: `git log --author="Can Peng"` on
+`drivers/net/wireless/broadcom/brcm80211/` in this tree is empty
+(outside contributor). Weight comes from Arend van Spriel’s Acked-by and
+Johannes applying the patch.
 
 Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Record: No new helpers. The one-line store applies on the existing
-`kcalloc`/`kzalloc` function. **Standalone.**
+Record: No new helpers, structs, or APIs. Uses existing `bphy_err`,
+`brcmf_txfinalize`, `brcmf_get_ifp`, `msgbuf->max_flowrings`.
+Standalone. v2 patch 1/2 (blank-line cleanup) is not required.
 
 ===============================================================
 PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 ===============================================================
 
 Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
-Record: `b4 dig -c` on this tree cannot target the mainline SHA (commit
-not present). lore.kernel.org fetch returned 403. Thread recovered from:
-- https://lists.openwall.net/linux-kernel/2026/07/24/732 (v1 submission)
-- https://lkml.iu.edu/hypermail/linux/kernel/2608.0/00969.html (Ack)
-
-Single revision. No NAK. Maintainer ack only.
+Record:
+- `b4 mbox` on msgid `20260723055618.550834-1-pengcan@kylinos.cn`
+  retrieved the thread (lore WebFetch returned 403).
+- v1: standalone `[PATCH wireless]` with Fixes + Cc: stable.
+- Arend: one nit (double blank line), “To be applied to wireless tree,”
+  Acked-by. No NAK.
+- v2: 0/2 cover + whitespace cleanup + same validation rebase. Johannes:
+  too late, he already applied v1; not rebasing for whitespace.
+- Applied version matches the candidate (v1, double blank line kept). No
+  later functional revision.
 
 Step 4.2: CHECK WHO REVIEWED THE PATCH
 Record: To: Arend van Spriel. Cc: linux-wireless, brcm80211 lists,
-linux-kernel, **stable@vger.kernel.org**. Ack from the brcm80211
-maintainer. Applied by Johannes Berg.
+linux-kernel, stable@vger.kernel.org. Ack from the brcm80211 maintainer;
+applied by Johannes Berg.
 
 Step 4.3: SEARCH FOR THE BUG REPORT
-Record: No syzbot/bugzilla/user crash in the message. Bug is from code
-inspection (parameter never stored).
+Record: No syzbot, bugzilla, or user crash in the message. Justification
+is code analysis of firmware-supplied indexes. Trigger is a bad
+`flow_ring_id` on D2H completion rings (firmware bug, DMA corruption, or
+hostile firmware), not a documented userspace repro.
 
 Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-Record: Standalone 1-line patch, not `N/M`.
+Record: v2 series is cleanup + this fix. Functional patch is self-
+contained. No other msgbuf ID-validation patches in the thread.
 
 Step 4.5: CHECK STABLE MAILING LIST HISTORY
-Record: Author Cc’d stable on submission. Targeted
-lore.kernel.org/stable search did not return a later rejection thread
-(lore 403 / search noise). **UNVERIFIED:** no explicit stable-list NAK
-found.
+Record: Author Cc’d stable@vger.kernel.org on v1/v2. No separate stable-
+list rejection found. lore.kernel.org HTTP from WebFetch was 403;
+evidence is the b4-retrieved mbox.
 
 ===============================================================
 PHASE 5: CODE SEMANTIC ANALYSIS
 ===============================================================
 
 Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Record: `brcmf_msgbuf_init_pktids()` only. Consumers of the field:
-`brcmf_msgbuf_alloc_pktid`, `brcmf_msgbuf_get_pktid`,
-`brcmf_msgbuf_release_array`.
+Record: `brcmf_msgbuf_get_flowid` (new);
+`brcmf_msgbuf_process_txstatus`;
+`brcmf_msgbuf_process_flow_ring_create_response`;
+`brcmf_msgbuf_process_flow_ring_delete_response`.
 
 Step 5.2: TRACE CALLERS
 Record:
-- Init: `brcmf_proto_msgbuf_attach()` → TX `DMA_TO_DEVICE`, RX
-  `DMA_FROM_DEVICE`.
-- Alloc: TX from `brcmf_msgbuf_txflow`; RX from
-  `brcmf_msgbuf_rxbuf_data_fill` and ioctl/event buffer post.
-- Get/unmap: TX status and RX complete paths.
-Hot path for **PCIe** brcmfmac (`CONFIG_BRCMFMAC_PCIE` selects
-`BRCMFMAC_PROTO_MSGBUF`). SDIO/USB use BCDC, not this file.
+- All three process_* functions are called only from
+  `brcmf_msgbuf_process_msgtype()` (`MSGBUF_TYPE_TX_STATUS`,
+  `MSGBUF_TYPE_FLOW_RING_CREATE_CMPLT`,
+  `MSGBUF_TYPE_FLOW_RING_DELETE_CMPLT`).
+- That is called from `brcmf_msgbuf_process_rx()` while draining D2H
+  rings.
+- `brcmf_proto_msgbuf_rx_trigger()` calls process_rx for RX/TX/control
+  complete rings.
+- Call site: `brcmf_pcie_isr_thread()` in `pcie.c` on
+  `BRCMF_PCIE_MB_INT_D2H_DB` (IRQ thread). Hot path for PCIe FullMAC
+  traffic.
 
 Step 5.3: TRACE CALLEES
-Record: `dma_map_single` / `dma_unmap_single` with `pktids->direction`.
+Record: `brcmf_msgbuf_get_pktid` (takes skb out of the TX pktid table;
+already bounds-checks pktid); `set_bit`; `msgbuf->flowrings[flowid]`;
+`atomic_dec(&commonring->outstanding_tx)`; `brcmf_txfinalize`;
+`brcmf_get_ifp`; `brcmf_msgbuf_remove_flowring` /
+`brcmf_flowring_delete` / `brcmf_flowring_open` (those use `flowid` as
+`flow->rings[flowid]` with no extra range check).
 
 Step 5.4: FOLLOW THE CALL CHAIN
-Record: Userspace networking on Broadcom FullMAC **PCIe** WiFi (TX/RX).
-Unprivileged traffic hits this path. Not an init-only leak.
+Record: Userspace TX → flowring → firmware; firmware posts TX-status /
+create / delete completions into DMA rings; host IRQ processes them. Any
+PCIe brcmfmac user hits this path. Not a syscall fuzz target by itself;
+firmware-supplied fields in DMA completions are still a real input.
 
 Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Record: All four map/unmap sites in this file already use
-`pktids->direction`. No second missing store.
+Record: Other `flow_ring_id` uses: host-generated create/delete
+requests, and ring-status which only logs the ID. No sibling driver copy
+of this helper. `brcmf_flowring_delete`/`open` do not bounds-check
+`flowid`; they assume the caller already has a valid index.
 
 ===============================================================
 PHASE 6: CROSS-REFERENCING AGAINST THE LOCAL TREE
 ===============================================================
 
 Step 6.1: DOES THE BUGGY CODE EXIST IN THIS TREE?
-Record: **Yes.** `msgbuf.c` lines 294–313 omit the store. Introduced in
-v3.17, present for the entire 5.15 lifetime. `git log --grep="Set DMA
-direction for msgbuf"` on this file is empty.
+Record: Yes. This checkout is 5.15.221 (`p-5.15-2-g6703e5d2f3a29`).
+Unvalidated subtract is in `msgbuf.c` at process_txstatus (~883–891),
+create_response (~1239–1245), delete_response (~1268–1274). Introduced
+2014/2016; present here. `brcmf_msgbuf_get_flowid` is not present.
 
 Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Record: **Clean apply** of the one added line. Context around allocators
-differs (`kcalloc` vs mainline `kzalloc_objs`); do not transplant the
-mainline hunk blindly—only add `pktids->direction = direction;`.
+Record: Minor context conflict. 5.15 `brcmf_msgbuf_rxreorder` still has
+a `bool inirq` argument (687006e20c445); the candidate hunk context uses
+the later two-argument form. Insertion point after
+`brcmf_msgbuf_remove_flowring` and the three process_* hunks match.
+Expected: trivial context adjust, not a rework. `bphy_err`,
+`max_flowrings`, `brcmf_txfinalize` all exist.
 
 Step 6.3: CHECK IF RELATED FIXES ARE ALREADY HERE
-Record: Only the 2022 unmap-on-alloc-failure fix (`ddb864ea9ca2e`).
-Direction is still unset.
+Record: No equivalent validation. Unrelated msgbuf fixes (pktid unmap,
+attach memleak) do not close this hole.
 
 ===============================================================
 PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 ===============================================================
 
 Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-Record: **wifi / brcmfmac msgbuf (PCIe).** **IMPORTANT** — common
-laptop/embedded Broadcom FullMAC PCIe devices, not core mm/VFS.
+Record: [brcmfmac msgbuf / PCIe FullMAC Wi-Fi] [IMPORTANT]. Not core
+mm/vfs, but used on Raspberry Pi-class boards and many Broadcom PCIe
+WLAN cards. `CONFIG_BRCMFMAC_PCIE` selects `BRCMFMAC_PROTO_MSGBUF`.
+SDIO/USB FullMAC uses BCDC, not this path.
 
 Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Record: Mature driver (msgbuf since 2014). File still gets targeted
-fixes; this is an old latent bug, not churn from a new API.
+Record: Mature. msgbuf protocol from 2014; this file is not under heavy
+5.15 churn. Long-standing hole, not a brand-new subsystem.
 
 ===============================================================
 PHASE 8: IMPACT AND RISK ASSESSMENT
 ===============================================================
 
 Step 8.1: DETERMINE WHO IS AFFECTED
-Record: **Driver-specific / config-specific:** `CONFIG_BRCMFMAC` +
-`CONFIG_BRCMFMAC_PCIE` (msgbuf). Not SDIO/USB BCDC. Enabled in several
-ARM/arm64 defconfigs; widely used on x86 laptops with Broadcom PCIe
-WiFi.
+Record: Driver-specific / config-specific: `CONFIG_BRCMFMAC_PCIE`
+(msgbuf). Does not affect SDIO/USB brcmfmac. Population is still large
+for an LTS kernel.
 
 Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-Record: Every TX map and RX buffer post for msgbuf. Common path.
-Unprivileged traffic can trigger it. Not a rare race.
+Record: Trigger is a firmware completion with `flow_ring_id` < 2 or `>=
+max_flowrings + 2`. Normal firmware should echo host IDs, so the common
+path is fine. Realistic triggers: buggy/mismatched firmware, DMA
+corruption, compromised firmware. Unprivileged userspace cannot poke the
+ID directly; it can generate TX completions by sending traffic.
 
 Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
 Record:
-- **IOMMU:** TX buffers mapped writable to the device → expanded DMA
-  attack surface / isolation bug. **HIGH** (security-relevant).
-- **Non-coherent / bounce DMA:** extra or wrong sync/copy vs the
-  documented TX/RX directions → possible packet corruption. **HIGH** if
-  it hits; **MEDIUM** on typical coherent x86 without IOMMU
-  (BIDIRECTIONAL is documented to “work” at a cost).
-- No oops in the commit message. Severity still **HIGH** because DMA
-  permission and coherency are real user-visible classes, not style.
+- `set_bit(underflowed_id, txstatus_done_map)`: out-of-bounds write
+  (memory corruption).
+- `msgbuf->flowrings[flowid]` / `flow->rings[flowid]`: OOB / NULL deref
+  → oops.
+- TX-status without finalize: skb leak (the patch closes this).
+- Severity: HIGH (crash / memory corruption on a common Wi-Fi driver).
+  Not a documented privilege-escalation writeup, but OOB write from
+  device DMA is security-relevant.
 
 Step 8.4: CALCULATE RISK-BENEFIT RATIO
-Record: **Benefit: high** (correct DMA direction on every packet for a
-common WiFi driver; tighter IOMMU perms on TX). **Risk: very low** (one
-assignment of an already-passed enum). **Ratio: strongly favors
-backport.**
+Record:
+- Benefit: high for PCIe brcmfmac — prevents OOB write/crash and a leak.
+- Risk: low — ~40-line helper, no locking/API/data-structure change, no
+  happy-path behavior change.
+- Ratio: strongly favors backport.
 
 ===============================================================
 PHASE 9: FINAL SYNTHESIS
 ===============================================================
 
 Step 9.1: COMPILE THE EVIDENCE
+FOR:
+- Real OOB index from firmware-supplied IDs (underflow and upper bound),
+  present in this 5.15 tree since 2014/2016.
+- TX-status path can leak an skb after `brcmf_msgbuf_get_pktid()` if the
+  ring ID is bad.
+- Small, obviously correct helper; happy path unchanged.
+- Maintainer Acked-by; wireless maintainer applied v1.
+- Applies with only a trivial rxreorder-context tweak.
 
-**FOR:**
-- Real, long-standing bug: direction parameter never stored; field stays
-  `DMA_BIDIRECTIONAL`.
-- Code is in this 5.15 tree (`9a1bb60250d2` is an ancestor).
-- One-line, obviously correct, no new API.
-- IOMMU maps BIDIRECTIONAL as R+W; TX should be device-read-only.
-- DMA API requires precise TX/RX directions for networking.
-- Maintainer Acked-by; original submission had Fixes + Cc: stable
-  (dropped on apply).
-- Applies here with only the one store.
+AGAINST:
+- No public crash/syzbot report; trigger depends on bad firmware IDs.
+- Affects only PCIe msgbuf, not all brcmfmac buses.
 
-**AGAINST:**
-- No crash/syzbot report; driver has “worked” since 2014 on many
-  coherent platforms.
-- Affects PCIe msgbuf only, not all brcmfmac buses.
-
-**UNRESOLVED:**
-- Could not `b4 dig` the mainline SHA (not in this checkout);
-  lore.kernel.org HTTP 403.
-- No evidence of a stable-list rejection.
+UNRESOLVED:
+- Could not HTTP-fetch lore.kernel.org (403); thread was recovered via
+  `b4 mbox`.
+- No mainline SHA in this checkout to `merge-base --is-ancestor` the fix
+  itself (expected: it is not in 5.15 yet).
 
 Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? **PASS** — missing store; maintainer
-   ack.
-2. Fixes a real bug that affects users? **PASS** — wrong DMA direction
-   on live TX/RX.
-3. Important issue (crash, security, corruption, deadlock)? **PASS** —
-   IOMMU write on TX buffers; coherency/bounce mismatch.
-4. Small and contained? **PASS** — +1 line, one function.
-5. No new features or APIs? **PASS**.
-6. Can apply to the local tree? **PASS** — add the assignment after
-   `pktids->array_size = nr_array_entries;`.
+1. Obviously correct and tested? PASS — range check matches host ID
+   encoding; Acked by subsystem maintainer.
+2. Fixes a real bug that affects users? PASS — unvalidated device-
+   supplied index used as bit/array index; skb leak on that path.
+3. Important issue? PASS — OOB write / crash / leak; HIGH.
+4. Small and contained? PASS — one file, ~40 lines, three call sites.
+5. No new features or APIs? PASS — internal helper only.
+6. Can apply to the local tree? PASS — buggy code is here; minor context
+   conflict only.
 
 Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Record: Not a device-ID/quirk/DT/docs exception. Ordinary correctness
-fix.
+Record: Not a device-ID/quirk/DT/build/docs exception. It is a
+straightforward memory-safety fix.
 
 Step 9.4: MAKE YOUR DECISION
-Backport. The bug exists in 5.15, the fix is the intended store of an
-existing parameter, and DMA direction is not optional cosmetics: it
-controls IOMMU prot and cache/bounce behavior on a production WiFi
-datapath.
-
-What it solves for stable users: PCIe brcmfmac currently maps TX and RX
-SKBs as bidirectional. That grants the device write access to TX buffers
-under IOMMU and uses the wrong sync/bounce path. Storing the caller
-direction restores `DMA_TO_DEVICE` / `DMA_FROM_DEVICE` as the attach
-path already requests.
-
-Risk vs benefit: one assignment vs a persistent DMA-permission/coherency
-bug. No prerequisites beyond code already in this tree.
+This should be backported to this 5.15 tree. The hole exists here, the
+fix is surgical, and the downside of skipping it is memory corruption or
+an oops if firmware supplies a bad flowring ID.
 
 Verification:
-- [Phase 1] Tags on applied commit: Acked-by Arend van Spriel, Link
-  msgid, SOBs Can Peng / Johannes Berg; no Fixes/Cc in applied text
-- [Phase 1] Original mail: Fixes 9a1bb60250d2, Cc:
-  stable@vger.kernel.org (openwall 2026-07-24)
-- [Phase 2] Diff: +1 line `pktids->direction = direction;` in
-  `brcmf_msgbuf_init_pktids`
-- [Phase 2] Local `dma-direction.h`: `DMA_BIDIRECTIONAL = 0`
-- [Phase 2] `dma_info_to_prot`: BIDIRECTIONAL → READ|WRITE; TO_DEVICE →
-  READ
-- [Phase 3] `git blame`: missing store since 9a1bb60250d2 (v3.17-rc1)
-- [Phase 3] `git merge-base --is-ancestor 9a1bb60250d2b HEAD`: yes
-- [Phase 3] This fix not in tree (`git log --grep` empty on msgbuf.c)
-- [Phase 3] Related: ddb864ea9ca2e already in tree; still uses unset
-  direction
-- [Phase 4] b4 dig: cannot run on missing mainline SHA; lore 403
-- [Phase 4] Thread: v1 only; Ack 2026-08-02; no NAK
-- [Phase 5] Callers: attach + TX flow + RX/ioctl/event buffer post; PCIe
-  msgbuf hot path
+- [Phase 1] Parsed candidate tags: Acked-by Arend van Spriel, Link
+  msgid, SOBs Can Peng / Johannes Berg; no Fixes/Cc in candidate text.
+- [Phase 1] `b4 mbox` v1 body: `Fixes: 9a1bb60250d2` and `Cc:
+  stable@vger.kernel.org`.
+- [Phase 2] Diff: helper `brcmf_msgbuf_get_flowid`; TX-status finalizes
+  skb on invalid ID; create/delete return early.
+- [Phase 2] Confirmed `BRCMF_H2D_MSGRING_FLOWRING_IDSTART` is 2 in
+  `bus.h`; `flowid` is `u16` so subtract underflows.
+- [Phase 2] `txstatus_done_map` allocated as
+  `BITS_TO_LONGS(max_flowrings) * sizeof(unsigned long)` — overflowed
+  bit index is OOB.
+- [Phase 2] `brcmf_txfinalize()` NULL-`ifp` path frees the skb
+  (`core.c`).
+- [Phase 3] `git blame`: unvalidated use 9a1bb60250d2 (2014); subtract
+  be4b092cab84b (2016).
+- [Phase 3] `git merge-base --is-ancestor 9a1bb60250d2 HEAD`: yes.
+- [Phase 3] No `brcmf_msgbuf_get_flowid` in this tree; no prior “invalid
+  flowring” fix on this path.
+- [Phase 4] `b4 mbox -c`: 7 messages; v1 applied; v2 whitespace declined
+  by Johannes; Arend Acked-by, no NAK.
+- [Phase 4] WebFetch lore/msgid.link: 403; used b4 instead.
+- [Phase 5] Call chain: `brcmf_pcie_isr_thread` →
+  `brcmf_proto_msgbuf_rx_trigger` → `brcmf_msgbuf_process_rx` →
+  `process_msgtype` → the three functions.
+- [Phase 5] Host encodes IDs as `flowid +
+  BRCMF_H2D_MSGRING_FLOWRING_IDSTART` at msgbuf.c create/delete request
+  sites.
 - [Phase 6] `git describe HEAD`: p-5.15-2-g6703e5d2f3a29; `make
-  kernelversion`: 5.15.221
-- [Phase 6] Local init still lacks the store (lines 310–313)
-- [Phase 8] Failure: wrong DMA dir / IOMMU TX writable; severity HIGH
-- UNVERIFIED: full lore.kernel.org thread via b4; explicit stable-list
-  NAK (none found)
+  kernelversion`: 5.15.221.
+- [Phase 6] Local `process_txstatus` still does unvalidated `flowid -=
+  BRCMF_H2D_MSGRING_FLOWRING_IDSTART`.
+- [Phase 6] Nearby `brcmf_msgbuf_rxreorder(..., bool inirq)` differs
+  from candidate context → minor apply tweak.
+- [Phase 7] `Kconfig`: `BRCMFMAC_PCIE` selects `BRCMFMAC_PROTO_MSGBUF`.
+- [Phase 8] Failure mode: OOB `set_bit` / OOB `flowrings[]` dereference;
+  severity HIGH.
+- UNVERIFIED: live firmware that currently emits IDs < 2 (no user report
+  in the thread).
 
 **YES**
 
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../broadcom/brcm80211/brcmfmac/msgbuf.c      | 46 ++++++++++++++++---
+ 1 file changed, 40 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
-index 45fbcbdc7d9e4..de47d6b7e02b2 100644
+index de47d6b7e02b2..f850e64108c41 100644
 --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
 +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
-@@ -310,6 +310,7 @@ brcmf_msgbuf_init_pktids(u32 nr_array_entries,
- 	}
- 	pktids->array = array;
- 	pktids->array_size = nr_array_entries;
-+	pktids->direction = direction;
- 
- 	return pktids;
+@@ -561,6 +561,28 @@ brcmf_msgbuf_remove_flowring(struct brcmf_msgbuf *msgbuf, u16 flowid)
+ 	brcmf_flowring_delete(msgbuf->flow, flowid);
  }
+ 
++static bool brcmf_msgbuf_get_flowid(struct brcmf_msgbuf *msgbuf,
++				    u16 flow_ring_id, u16 *flowid)
++{
++	u32 id = flow_ring_id;
++
++	if (id < BRCMF_H2D_MSGRING_FLOWRING_IDSTART) {
++		bphy_err(msgbuf->drvr, "invalid flowring id %u\n",
++			 flow_ring_id);
++		return false;
++	}
++
++	id -= BRCMF_H2D_MSGRING_FLOWRING_IDSTART;
++	if (id >= msgbuf->max_flowrings) {
++		bphy_err(msgbuf->drvr, "invalid flowring id %u\n",
++			 flow_ring_id);
++		return false;
++	}
++
++	*flowid = id;
++	return true;
++}
++
+ 
+ static struct brcmf_msgbuf_work_item *
+ brcmf_msgbuf_dequeue_work(struct brcmf_msgbuf *msgbuf)
+@@ -881,17 +903,23 @@ brcmf_msgbuf_process_txstatus(struct brcmf_msgbuf *msgbuf, void *buf)
+ 	struct msgbuf_tx_status *tx_status;
+ 	u32 idx;
+ 	struct sk_buff *skb;
++	u16 flow_ring_id;
+ 	u16 flowid;
+ 
+ 	tx_status = (struct msgbuf_tx_status *)buf;
+ 	idx = le32_to_cpu(tx_status->msg.request_id) - 1;
+-	flowid = le16_to_cpu(tx_status->compl_hdr.flow_ring_id);
+-	flowid -= BRCMF_H2D_MSGRING_FLOWRING_IDSTART;
++	flow_ring_id = le16_to_cpu(tx_status->compl_hdr.flow_ring_id);
+ 	skb = brcmf_msgbuf_get_pktid(msgbuf->drvr->bus_if->dev,
+ 				     msgbuf->tx_pktids, idx);
+ 	if (!skb)
+ 		return;
+ 
++	if (!brcmf_msgbuf_get_flowid(msgbuf, flow_ring_id, &flowid)) {
++		brcmf_txfinalize(brcmf_get_ifp(msgbuf->drvr, tx_status->msg.ifidx),
++				 skb, false);
++		return;
++	}
++
+ 	set_bit(flowid, msgbuf->txstatus_done_map);
+ 	commonring = msgbuf->flowrings[flowid];
+ 	atomic_dec(&commonring->outstanding_tx);
+@@ -1238,13 +1266,16 @@ brcmf_msgbuf_process_flow_ring_create_response(struct brcmf_msgbuf *msgbuf,
+ 	struct msgbuf_flowring_create_resp *flowring_create_resp;
+ 	u16 status;
+ 	u16 flowid;
++	u16 flow_ring_id;
+ 
+ 	flowring_create_resp = (struct msgbuf_flowring_create_resp *)buf;
+ 
+-	flowid = le16_to_cpu(flowring_create_resp->compl_hdr.flow_ring_id);
+-	flowid -= BRCMF_H2D_MSGRING_FLOWRING_IDSTART;
++	flow_ring_id = le16_to_cpu(flowring_create_resp->compl_hdr.flow_ring_id);
+ 	status =  le16_to_cpu(flowring_create_resp->compl_hdr.status);
+ 
++	if (!brcmf_msgbuf_get_flowid(msgbuf, flow_ring_id, &flowid))
++		return;
++
+ 	if (status) {
+ 		bphy_err(drvr, "Flowring creation failed, code %d\n", status);
+ 		brcmf_msgbuf_remove_flowring(msgbuf, flowid);
+@@ -1267,13 +1298,16 @@ brcmf_msgbuf_process_flow_ring_delete_response(struct brcmf_msgbuf *msgbuf,
+ 	struct msgbuf_flowring_delete_resp *flowring_delete_resp;
+ 	u16 status;
+ 	u16 flowid;
++	u16 flow_ring_id;
+ 
+ 	flowring_delete_resp = (struct msgbuf_flowring_delete_resp *)buf;
+ 
+-	flowid = le16_to_cpu(flowring_delete_resp->compl_hdr.flow_ring_id);
+-	flowid -= BRCMF_H2D_MSGRING_FLOWRING_IDSTART;
++	flow_ring_id = le16_to_cpu(flowring_delete_resp->compl_hdr.flow_ring_id);
+ 	status =  le16_to_cpu(flowring_delete_resp->compl_hdr.status);
+ 
++	if (!brcmf_msgbuf_get_flowid(msgbuf, flow_ring_id, &flowid))
++		return;
++
+ 	if (status) {
+ 		bphy_err(drvr, "Flowring deletion failed, code %d\n", status);
+ 		brcmf_flowring_delete(msgbuf->flow, flowid);
 -- 
 2.53.0
 
