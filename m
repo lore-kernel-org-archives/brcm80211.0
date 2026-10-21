@@ -1,94 +1,68 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=192.198.163.15
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792528793;
-	b=0k3THbGKT/5B8Sgtvswmm08yTUpV8iu4bU0dje38zX+71D3ef3byyyfqppjmFQ4X23Jp
-	 czo/ySawKhk77uY6FLtNl9LR+4OlrKYzMUDN2wSRdT0s57IzLR75dQd03xC0rJSJXXRR3
-	 ZfR00Uw7+74PnipHgh4sy+hSjYmKphP6s5NHRDFEIr80wS5E4N8ID9yEsJMC9l/Og24MM
-	 drjajEmUDF9Z9Tld1zUwaE9YO8GzYwrbwy06mV2FD7d6CG3S6CyNR8geWC9HgaOJvAYnU
-	 k7BxCdkO2kzKkw2w63NlIyRwFLONsST4OXPIr8pui3ZAHqMYAB3CbwHbkNEj5n7CsCw==
+	t=1792562280;
+	b=adE4BAo918EUAUYnR7D7E2XNgzj2WjvIYd81Jkvj/JL63/9dsjcIue5Zv0l+YL2/4pvu
+	 QVjVl9wdTwzbP31/ZznXmWKEm2tvJ3HKWRr95MSxKf9c862SiP/Q89pkXFjVun4UUQT7r
+	 7sLS4euyVTSbFYg1gvlGIe+0NsSTeMIw7AnkNqmCjDH17F+x8BsYe519kfSwKvzBDx6/z
+	 wt9vP9PNN3RYL3tqN7juoULBCafJ1IqYZ4OeW2xSOUi62mjDZjR2abDX7TFpl3RMyouxF
+	 xIQX+ujAMPsvllSHhngCi6Ys/YJ/0gEPtSy9pwLL2Ktm6Kxab7lks5pBNplumNwrrUQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792528793;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=69ZsWlJYKqcYYqFI8rMOizWSH2P8Ln8H/nLJiISKOi8=;
-	b=18XjYEf+n5SBWfKDLFnuX2TJVW2g3ClbydSqcF++m5AvTEdBMUguaHhKbk5TeSWGtiOV
-	 Sm+WJZaixSPPjpjPNG7c4XfbgNlTyGfKiIkbBCm2drU1NZzL3GWUUJvn3vDGD6+P2MweR
-	 ZDsf8Cv/zfZ78JyulYbLHj+/+Mjd/Le/gl+GYpGWv3nGoqYPkM9xKWWas7oo05nXaaVOm
-	 gdTlw+wzUnK9fq/sdYmV1uQDHA0lrlZcNT1NTYS0qawrUUIz3lsxIYj50pRnX2IrvUuQi
-	 vUcead2lLHsr9psl9do8rEiqXZimZe+NEr4q0QdXcja9fa5yvB36wzOIIngZWdprdDw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792562280;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
+	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=G8dYOpxn7MC+ZuaGnfx+ivHYE4BwvuIFkRKXEM8ocss=;
+	b=XcD+LmheIuwTAot7uoIuLb8mkqvxNnHqkyPUo8nooiFrlbpj0qM3WRV03A4QzdNkWLs/
+	 77qs8Mvg3B8TrEnyCpHx8lhcG4NW0zpibvW6rWQsHBf7ujy15QST/S5AttyDOii2H9mzm
+	 P49JJfZLd6YbyuoYJahBctTjmtqQYUM6vPsGgS58yvOwtdjsbqin910FKSjKJL0VPKOID
+	 lfeO0qQOLKgJDkJXvgqxJKwcT/Xg7FRjIVeaWuQeZu9HDPtlusBskPEO0wCXJGkVUDZtu
+	 x0a6opk8riROHznAS0fXHiFgea3orSQ3X1+Pj6WeqURtGEzGImROf1r6I/ByK9RJmhQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=A0ixEpBF;
-	arc=none smtp.remote-ip=209.85.128.50
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=linux.intel.com;
+	spf=pass smtp.mailfrom=linux.intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=T5Wk1+WC;
+	arc=none smtp.remote-ip=192.198.163.15
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2545A606A319
-	for <brcm80211@lists.linux.dev>; Tue, 20 Oct 2026 20:39:53 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2545A606A319
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BEC3606A31A;
+	Wed, 21 Oct 2026 05:57:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3BEC3606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=A0ixEpBF
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4a1e477fe16so62275e9.1
-        for <brcm80211@lists.linux.dev>; Tue, 20 Oct 2026 13:39:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792528791; x=1793133591; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=69ZsWlJYKqcYYqFI8rMOizWSH2P8Ln8H/nLJiISKOi8=;
-        b=A0ixEpBFs5x97Ft89uYnHnZkfm0Ngzjfvlu3TSpl4LMBY78PjXdP+hYIDKutFxEEoq
-         Mgx8ep9FQd9S+21L3bFVj8AkzWIghSTttcHggAcraBNT8c/cB7j3cgSY/cJ2AsBOJ6ka
-         +sISJ+wovRvgpjyvAblo+kUgboJJJyBqZKO+TqpUvhyTZP5zq0knnBlToG9kGq3taByu
-         /mB28e0A/ZGAw+ZUinv0+6OcHmkZ2GUlN/ZVlxoMrRE51briHnYlvAi2oxooUAmELm2J
-         NKp0NJ5sZ3z3+zP8/RtmpLynSi5vno5pSfCZjLh4VwjcJURrd+pG/9OewKxlbcu4wEpe
-         s2/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792528791; x=1793133591;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=69ZsWlJYKqcYYqFI8rMOizWSH2P8Ln8H/nLJiISKOi8=;
-        b=LYrTZjjS0pECz3JePwAcOuL9x1guAIaBnCPbQSTWI4mDtcDVrEqnRQD6yNeUS4kXGj
-         KNxb1TaQG1jXzn0mcVEUjjb+4pl/R97LiGG2dqTLrKrDMCPBFXWxbBlUfxLuSDcEb1Od
-         xm4JU4/Hw0zddrbd8xBeAg5r/nW1lqKeojF/FM3dSBG0XLXFlYyQbhMrb8IDbG52Gs9d
-         pPVfC1XMWSzvfGnwKXeh94zWZXX37br0ANn3z10QuG9SgmCxS8nABGv47dTZchMG4fMm
-         puV6nnYzejUqHCMmlQMSmje4SYIk4v/BxCVKhWwM8WYfL69j3jTnFITw+S1rH40/BaF8
-         oA+w==
-X-Forwarded-Encrypted: i=1; AKwUvByBPa0bPdUjtESBJ27THvX2abmCYDNmGw4vJvDr8ZNxb3k5MCT/eV+T6e/OJbndI3nHfFxszW/Ug8k=@lists.linux.dev
-X-Gm-Message-State: AFq9FYIVd8baB5HYSFwbs68wRf8Ee5nHggU7cCCGd0bgAMBMjXHhhRBy
-	z3WBhJaCrpnT57+nIxrhgiOKo+PObiupPSPPmQdvCPAEhugkr7l5Gxzq
-X-Gm-Gg: AYBFou0WJEroFP8+QS2c0QvmrsWAbC6i1wXL1dQ+NslLdrRfAH7r3+WOU7uRj1R5WL1
-	jZZZ854DdNbICZYWyBBFegVu/HKggBuzYQvCXP+Rc8uIPtjL8Gl4/+HecdKEWcwXObRCHquEwR/
-	MvArD0zHILJXzYSj7o8QnqJgI9KsCccq/XdM/s9H/xaaOCKQDb2ipkf425btewkZN0Eu3vDSFD9
-	6OsRfLpKR6yLRTod+3EfqI8xCn8VQDRF8RysB8WHpvNFeGdjZ7k7xYZb+xRBIVL+Jr84K1hO9Iu
-	6Qun63DkhFvh4+T68V4pWbBhqt1cDRWMihwp8uS/hTUW5tmQqkWP3FAk3jLZn+cl2eOd/MKkW/9
-	rNBiotDQmQUzRhN2ooUMkabG0kAg8qo3bfUJHOca1yqXxykN3IqBZ947hWXyi7mS2H2YM5v+jsd
-	mhgx2iiDn1yuu9Z2o875edMvK2sDRfO+Hban3G/HBWv8Vp8kY6QKKgcyErrmnha9XcdYJw1qC88
-	g==
-X-Received: by 2002:a05:600c:8b0a:b0:4a1:dbdf:17a8 with SMTP id 5b1f17b1804b1-4a1dbdf1a18mr238063555e9.2.1792528791378;
-        Tue, 20 Oct 2026 13:39:51 -0700 (PDT)
-Received: from vitor-21h1cto1ww ([2001:8a0:c4c6:f00:691:6627:6830:68b9])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a1f2d324f8sm90720295e9.6.2026.10.20.13.39.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Oct 2026 13:39:50 -0700 (PDT)
-From: Vitor Soares <ivitro@gmail.com>
-To: Arend van Spriel <arend.vanspriel@broadcom.com>
-Cc: Vitor Soares <vitor.soares@toradex.com>,
-	linux-wireless@vger.kernel.org,
-	brcm80211@lists.linux.dev,
-	brcm80211-dev-list.pdl@broadcom.com,
-	linux-kernel@vger.kernel.org,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	stable@vger.kernel.org
-Subject: [PATCH v1] wifi: brcmfmac: skip bus_reset cancel when the work was never initialized
-Date: Tue, 20 Oct 2026 21:39:13 +0100
-Message-ID: <20261020203916.381637-2-ivitro@gmail.com>
-X-Mailer: git-send-email 2.53.0
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=T5Wk1+WC
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1792562280; x=1824098280;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=H7Us3csM7KlqfmOQtYVzQN6z5KTrQAj7QwzbfGFGHNY=;
+  b=T5Wk1+WCQT5QqdOIvHlcfbIuesT/Svk1Ecw+Cg+HYdAIs+PiumPSeaPJ
+   RacyYYf6MEh2XfvlmenBSgn0nd4+liEQ2nkC+RIZlHgyrr5nTLyLpgTZG
+   DV/SUwsUh97rqBsjwLCG1s9wf/h1VOltJBvwhQiTLFYi6nOlCcJQikycd
+   vb1452D/xw2+EpgOKZr+lGfF2JaSFTv3jg7VRTryS9S4PxReQeU/ewbNd
+   pIwqqizSSHZHrvWitlMPeF8CIwad0bwXO8dXLqrspfO3tp8VjVva2f0WI
+   Syh8TPCsra9OUjWnMaJpoSGffXZCNLYMYEQS2N2bktgJfP1AQBB41IWdG
+   g==;
+X-CSE-ConnectionGUID: P9aYScA2TGK0udrcXyEGFw==
+X-CSE-MsgGUID: K0tFR3+jRha0AC/BJzeHCw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11941"; a="1290586"
+X-IronPort-AV: E=Sophos;i="6.27,169,1787036400"; 
+   d="scan'208";a="1290586"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Oct 2026 22:57:59 -0700
+X-CSE-ConnectionGUID: doxQZF4GRc2o6suR8aK/ng==
+X-CSE-MsgGUID: Off98YcyQr2i3X7DBKcVGg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,169,1787036400"; 
+   d="scan'208";a="3067035"
+Received: from blu2-desk.sh.intel.com (HELO [10.239.156.26]) ([10.239.156.26])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Oct 2026 22:57:56 -0700
+Message-ID: <50cac102-9b50-4d0d-af58-8aac51a6d51c@linux.intel.com>
+Date: Wed, 21 Oct 2026 13:57:53 +0800
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Post: <mailto:brcm80211@lists.linux.dev>
@@ -98,60 +72,119 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:brcm80211+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [REGRESSION] BCM4355 Wi-Fi fails with Intel IOMMU on
+ 7.3.0-2-t2-noble
+To: Peter Kiddier <peter@kiddier.org>, linux-wireless@vger.kernel.org
+Cc: brcm80211@lists.linux.dev, iommu@lists.linux.dev,
+ arend.vanspriel@broadcom.com, regressions@lists.linux.dev
+References: <CA+3E589O46nj=c1Y+Rwk_nPZZKEUjFvMfWaAFmQ2-7De9iUxFw@mail.gmail.com>
+Content-Language: en-US
+From: Baolu Lu <baolu.lu@linux.intel.com>
+In-Reply-To: <CA+3E589O46nj=c1Y+Rwk_nPZZKEUjFvMfWaAFmQ2-7De9iUxFw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Vitor Soares <vitor.soares@toradex.com>
+On 10/20/26 19:32, Peter Kiddier wrote:
+> Hello,
+> 
+> I am reporting a Wi-Fi regression on a 2018 Apple MacBook Air with a
+> T2 chip, running Linux Mint Zena based on Ubuntu 24.04.
+> 
+> The Broadcom BCM4355 Wi-Fi device works with kernel 7.2.11-3-t2-noble
+> but fails with 7.3.0-2-t2-noble. Disabling the Intel IOMMU using
+> intel_iommu=off restores Wi-Fi on 7.3.0-2.
+> 
+> Hardware:
+> - Apple MacBook Air 2018 (MacBookAir8,1)
+> - Wi-Fi: Broadcom BCM4355 802.11ac Wireless LAN SoC
+> - PCI ID: 14e4:43dc (subsystem 106b:0843)
+> - Driver: brcmfmac
+> - Interface: wlp2s0
+> 
+> Test results:
+> 
+> - 7.2.11-3-t2-noble, default kernel command line: Wi-Fi works.
+> - 7.3.0-2-t2-noble, default kernel command line: Wi-Fi fails.
+> - 7.3.0-2-t2-noble with intel_iommu=off: Wi-Fi works.
+> - Reloading brcmfmac on the failing configuration does not restore Wi-Fi.
+> 
+> On the failing 7.3.0-2 boot, the driver detects the device, loads its
+> firmware and creates wlp2s0:
+> 
+> brcmfmac 0000:02:00.0: enabling device (0000 -> 0002)
+> brcmfmac: brcmf_fw_alloc_request: using brcm/brcmfmac4355c1-pcie for
+> chip BCM4355/12
+> brcmfmac: brcmf_c_process_txcap_blob: TxCap blob found, loading
+> brcmfmac: brcmf_c_preinit_dcmds: Firmware: BCM4355/12 wl0: Jul  8 2023
+> 17:49:51 version 9.30.503.0.32.5.87 FWID 01-e74b9cb0
+> brcmfmac 0000:02:00.0 wlp2s0: renamed from wlan0
+> 
+> However, Wi-Fi subsequently stops responding. The kernel log reports
+> errors including:
+> 
+> brcmf_msgbuf_query_dcmd: Timeout on response for query command
+> brcmf_cfg80211_scan: scan error (-5)
+> brcmf_run_escan: error (-5)
+> brcmf_msgbuf_tx_ioctl: Failed to reserve space in commonring
+> brcmf_cfg80211_get_channel: chanspec failed (-5)
+> 
+> There is also an error creating the P2P interface:
+> 
+> brcmf_cfg80211_add_iface: add iface p2p-dev-wlp2s0 type 10 failed: err=-52
+> 
+> I tried reloading the driver using:
+> 
+> sudo modprobe -r brcmfmac_wcc
+> sudo modprobe -r brcmfmac
+> sudo modprobe brcmfmac
+> 
+> The driver and firmware loaded again, but Wi-Fi remained unusable.
+> 
+> The firmware files are present under /lib/firmware/brcm/, and the
+> firmware version reported by the driver is the same on the working and
+> failing kernels.
+> 
+> The brcmfmac module metadata differs between the kernels:
+> 
+> Working kernel 7.2.11-3-t2-noble:
+> srcversion: 3B6176FDB720DDE8E7C596B
+> 
+> Failing kernel 7.3.0-2-t2-noble:
+> srcversion: 3DCA38D52402541701276CF
+> 
+> I did not find obvious PCIe AER or fatal errors in the failing boot's
+> kernel log.
+> 
+> It has been suggested testing intel_iommu=off after reloading
+> brcmfmac. The driver reload did not help, but booting with
+> intel_iommu=off restored Wi-Fi.
+> 
+> This strongly suggests an interaction between Intel IOMMU handling and
+> the BCM4355/brcmfmac driver in the 7.3.0-2-t2-noble kernel.
+> 
+> I have not tested a vanilla upstream kernel, so I cannot yet confirm
+> whether this reproduces outside the T2 kernel packages. Unfortunately,
+> I have limited time available for further testing, so I may not be
+> able to investigate additional requests promptly. I wanted to report
+> the reproducible behaviour and the intel_iommu=off workaround in case
+> it helps identify the regression.
+> 
+> Could you advise on further diagnostics, or whether this should be
+> investigated as an IOMMU or brcmfmac regression?
+> 
+> Thank you.
+> 
 
-When the firmware request fails, brcmf_pcie_setup() releases its own
-driver, which runs brcmf_pcie_remove() -> brcmf_bus_cancel_reset_work().
-At that point brcmf_alloc() has set bus_if->drvr, but brcmf_attach() has
-not run, so drvr->bus_reset was never INIT_WORK()ed. cancel_work_sync()
-on the zeroed work then trips WARN_ON(!work->func) in __flush_work():
+Can you reproduce this issue with the mainline kernel?
 
-  brcmfmac 0000:01:00.0: Direct firmware load for brcm/brcmfmac43752-pcie.bin failed with error -2
-  brcmfmac 0000:01:00.0: brcmf_pcie_setup: Dongle setup failed
-  ieee80211 phy0: brcmf_fw_crashed: Firmware has halted or crashed
-  WARNING: kernel/workqueue.c:4409 at __flush_work+0x318/0x338, CPU#0: kworker/0:1/10
-  Workqueue: events request_firmware_work_func
-  Call trace:
-   __flush_work+0x318/0x338 (P)
-   cancel_work_sync+0x6c/0x90
-   brcmf_bus_cancel_reset_work+0x3c/0x54 [brcmfmac]
-   brcmf_pcie_remove+0x5c/0x124 [brcmfmac]
-   pci_device_remove+0x44/0xd8
-   device_remove+0x4c/0x80
-   device_release_driver_internal+0x1d0/0x22c
-   device_release_driver+0x18/0x24
-   brcmf_pcie_setup+0x58/0xc94 [brcmfmac]
-   brcmf_fw_request_done+0x14c/0x198 [brcmfmac]
-   request_firmware_work_func+0x5c/0xe8
+Do you see any IOMMU fault messages in the kernel log? You can check
+by running:
 
-brcmf_bus_schedule_reset() already gates on bus_reset.func for this
-reason. Apply the same check on the cancel side.
+   # dmesg | grep DMAR
 
-Reproduced on a BCM43752 PCIe module with the firmware file absent.
-With this change the same failure path completes without the warning.
+Have you tried narrowing down the cause with boot options such as
+iommu=pt or intel_iommu=on,sm_off?
 
-Fixes: 43b25879f004 ("wifi: brcmfmac: drain bus_reset work on device removal")
-Cc: stable@vger.kernel.org
-Signed-off-by: Vitor Soares <vitor.soares@toradex.com>
----
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
-index 92ec269f43b2..a3d662348711 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
-@@ -1186,7 +1186,7 @@ void brcmf_bus_cancel_reset_work(struct brcmf_bus *bus_if)
- {
- 	mutex_lock(&bus_if->bus_reset_lock);
- 	bus_if->removing = true;
--	if (bus_if->drvr)
-+	if (bus_if->drvr && bus_if->drvr->bus_reset.func)
- 		cancel_work_sync(&bus_if->drvr->bus_reset);
- 	mutex_unlock(&bus_if->bus_reset_lock);
- }
--- 
-2.53.0
-
+Thanks,
+baolu
