@@ -1,68 +1,60 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=192.198.163.15
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=93.77.172.83
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792562280;
-	b=adE4BAo918EUAUYnR7D7E2XNgzj2WjvIYd81Jkvj/JL63/9dsjcIue5Zv0l+YL2/4pvu
-	 QVjVl9wdTwzbP31/ZznXmWKEm2tvJ3HKWRr95MSxKf9c862SiP/Q89pkXFjVun4UUQT7r
-	 7sLS4euyVTSbFYg1gvlGIe+0NsSTeMIw7AnkNqmCjDH17F+x8BsYe519kfSwKvzBDx6/z
-	 wt9vP9PNN3RYL3tqN7juoULBCafJ1IqYZ4OeW2xSOUi62mjDZjR2abDX7TFpl3RMyouxF
-	 xIQX+ujAMPsvllSHhngCi6Ys/YJ/0gEPtSy9pwLL2Ktm6Kxab7lks5pBNplumNwrrUQ==
+	t=1792765825;
+	b=u/fpz2EK5BYei3TtNvRRroWLHoFO1i60CNlEG/bMiCAZ9cleZnLLnz5omZxeFqXdFiMo
+	 SVPbDmBZLtLBwynl3rMK3N4D7G0jVlYLUa+croUatIkWQOsMUAhBp4zeCvnqptHwkV1fV
+	 YRn9VLeXz3ttYQWCes+dOE+C2ID/fsOm/u4Sv0d9wLWjbX58HZlR1UkqivY3AbRjeaj8+
+	 ovd1UQrBmCJFBSt1fRLuQgzou8Uap4fpVrTgEh64HL1noO3BjA/2v1p/ZmGawupRB5H7n
+	 PcdO7+Z23cR0TC1HQgqG2DdpKlhgVDfSqQBEkscrK14xfeeKW2z3haI3yiWtUwUgW6A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792562280;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=G8dYOpxn7MC+ZuaGnfx+ivHYE4BwvuIFkRKXEM8ocss=;
-	b=XcD+LmheIuwTAot7uoIuLb8mkqvxNnHqkyPUo8nooiFrlbpj0qM3WRV03A4QzdNkWLs/
-	 77qs8Mvg3B8TrEnyCpHx8lhcG4NW0zpibvW6rWQsHBf7ujy15QST/S5AttyDOii2H9mzm
-	 P49JJfZLd6YbyuoYJahBctTjmtqQYUM6vPsGgS58yvOwtdjsbqin910FKSjKJL0VPKOID
-	 lfeO0qQOLKgJDkJXvgqxJKwcT/Xg7FRjIVeaWuQeZu9HDPtlusBskPEO0wCXJGkVUDZtu
-	 x0a6opk8riROHznAS0fXHiFgea3orSQ3X1+Pj6WeqURtGEzGImROf1r6I/ByK9RJmhQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792765825;
+	h=DMARC-Filter:Received:Received:X-Yandex-Fwd:DKIM-Signature:From:To:
+	 Cc:Subject:Date:Message-ID:X-Mailer:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=Q4YBxp9Ib2eL1X9V1E4sWkkEpnIlNYN58hjqcOkNbeM=;
+	b=R9BfEtCjX+Ny0dfwsz4MkLsa2/2yeBkNq0N+Agbkd1cCKLySG4bF7ZSztoyRGhTZmOb4
+	 TKLJn2R7lNpFEIEF5lRgJPClPYmqVMj53EghOL0FaWO4iJ7bAFICc3YlNfIO/7jIRXNrl
+	 n1tXBJz3KuMmoDECKwWM/MOCCU+cYk6nlLAgsWrkMntsy0xO+KCDI3VUQOfFYdQn0yV98
+	 STOzhpTmNb8c96DvO/zQIaB+SMzb0unDYPzO6JHfEceAJkEmAb1728k6lgOVUPV/1QHou
+	 70hEphFFF27Nfy1AQ6XMMHLxhyzcE/ZXwywl+0EEHbUuHTdAEMVWZT0FBJnHYcF2xPA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.intel.com;
-	spf=pass smtp.mailfrom=linux.intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=T5Wk1+WC;
-	arc=none smtp.remote-ip=192.198.163.15
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=yandex.ru;
+	spf=pass smtp.mailfrom=yandex.ru;
+	dkim=pass header.d=yandex.ru header.i=@yandex.ru header.a=rsa-sha256 header.s=mail header.b=gogYjfSl;
+	arc=none smtp.remote-ip=93.77.172.83
+Received: from forward400e.mail.yandex.net (forward400e.mail.yandex.net [93.77.172.83])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BEC3606A31A;
-	Wed, 21 Oct 2026 05:57:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3BEC3606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FA7B606A31B
+	for <brcm80211@lists.linux.dev>; Fri, 23 Oct 2026 14:30:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8FA7B606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=yandex.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yandex.ru
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=T5Wk1+WC
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1792562280; x=1824098280;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=H7Us3csM7KlqfmOQtYVzQN6z5KTrQAj7QwzbfGFGHNY=;
-  b=T5Wk1+WCQT5QqdOIvHlcfbIuesT/Svk1Ecw+Cg+HYdAIs+PiumPSeaPJ
-   RacyYYf6MEh2XfvlmenBSgn0nd4+liEQ2nkC+RIZlHgyrr5nTLyLpgTZG
-   DV/SUwsUh97rqBsjwLCG1s9wf/h1VOltJBvwhQiTLFYi6nOlCcJQikycd
-   vb1452D/xw2+EpgOKZr+lGfF2JaSFTv3jg7VRTryS9S4PxReQeU/ewbNd
-   pIwqqizSSHZHrvWitlMPeF8CIwad0bwXO8dXLqrspfO3tp8VjVva2f0WI
-   Syh8TPCsra9OUjWnMaJpoSGffXZCNLYMYEQS2N2bktgJfP1AQBB41IWdG
-   g==;
-X-CSE-ConnectionGUID: P9aYScA2TGK0udrcXyEGFw==
-X-CSE-MsgGUID: K0tFR3+jRha0AC/BJzeHCw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11941"; a="1290586"
-X-IronPort-AV: E=Sophos;i="6.27,169,1787036400"; 
-   d="scan'208";a="1290586"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Oct 2026 22:57:59 -0700
-X-CSE-ConnectionGUID: doxQZF4GRc2o6suR8aK/ng==
-X-CSE-MsgGUID: Off98YcyQr2i3X7DBKcVGg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,169,1787036400"; 
-   d="scan'208";a="3067035"
-Received: from blu2-desk.sh.intel.com (HELO [10.239.156.26]) ([10.239.156.26])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Oct 2026 22:57:56 -0700
-Message-ID: <50cac102-9b50-4d0d-af58-8aac51a6d51c@linux.intel.com>
-Date: Wed, 21 Oct 2026 13:57:53 +0800
+	dkim=pass (1024-bit key, unprotected) header.d=yandex.ru header.i=@yandex.ru header.a=rsa-sha256 header.s=mail header.b=gogYjfSl
+Received: from mail-nwsmtp-smtp-production-main-63.yp-c.yandex.net (mail-nwsmtp-smtp-production-main-63.yp-c.yandex.net)
+	by forward400e.mail.yandex.net (postfix) with ESMTPS id 3FB2B82526;
+	Fri, 23 Oct 2026 17:30:13 +0300 (MSK)
+Received: by mail-nwsmtp-smtp-production-main-63 with ESMTPSA id 3UeBSOCiJmI0-Brb3G9fB;
+	Fri, 23 Oct 2026 17:30:12 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
+	t=1792765812; bh=Q4YBxp9Ib2eL1X9V1E4sWkkEpnIlNYN58hjqcOkNbeM=;
+	h=Message-ID:Date:Cc:Subject:To:From;
+	b=gogYjfSl9pohZRNrjHS2lw6TayQLCHgG3WM9YeO0dXfFxFyh9W9uPy4ayzMH9ant8
+	 g9BfmZnYIAYgXs1kTgOrX/2+GSs9JUW/tadPrlww2grKrFJuVfYmFGGBp6IkA/ZKes
+	 Bt5rSvr8sPzG7OV2ZKkD6mQX5P04Xkp/vNWkDoyw=
+Authentication-Results: mail-nwsmtp-smtp-production-main-63; dkim=pass header.i=@yandex.ru
+From: Sergey Armodin <dolph-in@yandex.ru>
+To: Arend van Spriel <arend.vanspriel@broadcom.com>,
+	linux-wireless@vger.kernel.org
+Cc: brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com
+Subject: [PATCH wireless-next v2] wifi: brcmfmac: pcie: restore FEM control pin mode on Apple BCM43602
+Date: Fri, 23 Oct 2026 21:30:03 +0700
+Message-ID: <20261023143003.1307752-1-dolph-in@yandex.ru>
+X-Mailer: git-send-email 2.56.0
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Post: <mailto:brcm80211@lists.linux.dev>
@@ -72,119 +64,125 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:brcm80211+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [REGRESSION] BCM4355 Wi-Fi fails with Intel IOMMU on
- 7.3.0-2-t2-noble
-To: Peter Kiddier <peter@kiddier.org>, linux-wireless@vger.kernel.org
-Cc: brcm80211@lists.linux.dev, iommu@lists.linux.dev,
- arend.vanspriel@broadcom.com, regressions@lists.linux.dev
-References: <CA+3E589O46nj=c1Y+Rwk_nPZZKEUjFvMfWaAFmQ2-7De9iUxFw@mail.gmail.com>
-Content-Language: en-US
-From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <CA+3E589O46nj=c1Y+Rwk_nPZZKEUjFvMfWaAFmQ2-7De9iUxFw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 10/20/26 19:32, Peter Kiddier wrote:
-> Hello,
-> 
-> I am reporting a Wi-Fi regression on a 2018 Apple MacBook Air with a
-> T2 chip, running Linux Mint Zena based on Ubuntu 24.04.
-> 
-> The Broadcom BCM4355 Wi-Fi device works with kernel 7.2.11-3-t2-noble
-> but fails with 7.3.0-2-t2-noble. Disabling the Intel IOMMU using
-> intel_iommu=off restores Wi-Fi on 7.3.0-2.
-> 
-> Hardware:
-> - Apple MacBook Air 2018 (MacBookAir8,1)
-> - Wi-Fi: Broadcom BCM4355 802.11ac Wireless LAN SoC
-> - PCI ID: 14e4:43dc (subsystem 106b:0843)
-> - Driver: brcmfmac
-> - Interface: wlp2s0
-> 
-> Test results:
-> 
-> - 7.2.11-3-t2-noble, default kernel command line: Wi-Fi works.
-> - 7.3.0-2-t2-noble, default kernel command line: Wi-Fi fails.
-> - 7.3.0-2-t2-noble with intel_iommu=off: Wi-Fi works.
-> - Reloading brcmfmac on the failing configuration does not restore Wi-Fi.
-> 
-> On the failing 7.3.0-2 boot, the driver detects the device, loads its
-> firmware and creates wlp2s0:
-> 
-> brcmfmac 0000:02:00.0: enabling device (0000 -> 0002)
-> brcmfmac: brcmf_fw_alloc_request: using brcm/brcmfmac4355c1-pcie for
-> chip BCM4355/12
-> brcmfmac: brcmf_c_process_txcap_blob: TxCap blob found, loading
-> brcmfmac: brcmf_c_preinit_dcmds: Firmware: BCM4355/12 wl0: Jul  8 2023
-> 17:49:51 version 9.30.503.0.32.5.87 FWID 01-e74b9cb0
-> brcmfmac 0000:02:00.0 wlp2s0: renamed from wlan0
-> 
-> However, Wi-Fi subsequently stops responding. The kernel log reports
-> errors including:
-> 
-> brcmf_msgbuf_query_dcmd: Timeout on response for query command
-> brcmf_cfg80211_scan: scan error (-5)
-> brcmf_run_escan: error (-5)
-> brcmf_msgbuf_tx_ioctl: Failed to reserve space in commonring
-> brcmf_cfg80211_get_channel: chanspec failed (-5)
-> 
-> There is also an error creating the P2P interface:
-> 
-> brcmf_cfg80211_add_iface: add iface p2p-dev-wlp2s0 type 10 failed: err=-52
-> 
-> I tried reloading the driver using:
-> 
-> sudo modprobe -r brcmfmac_wcc
-> sudo modprobe -r brcmfmac
-> sudo modprobe brcmfmac
-> 
-> The driver and firmware loaded again, but Wi-Fi remained unusable.
-> 
-> The firmware files are present under /lib/firmware/brcm/, and the
-> firmware version reported by the driver is the same on the working and
-> failing kernels.
-> 
-> The brcmfmac module metadata differs between the kernels:
-> 
-> Working kernel 7.2.11-3-t2-noble:
-> srcversion: 3B6176FDB720DDE8E7C596B
-> 
-> Failing kernel 7.3.0-2-t2-noble:
-> srcversion: 3DCA38D52402541701276CF
-> 
-> I did not find obvious PCIe AER or fatal errors in the failing boot's
-> kernel log.
-> 
-> It has been suggested testing intel_iommu=off after reloading
-> brcmfmac. The driver reload did not help, but booting with
-> intel_iommu=off restored Wi-Fi.
-> 
-> This strongly suggests an interaction between Intel IOMMU handling and
-> the BCM4355/brcmfmac driver in the 7.3.0-2-t2-noble kernel.
-> 
-> I have not tested a vanilla upstream kernel, so I cannot yet confirm
-> whether this reproduces outside the T2 kernel packages. Unfortunately,
-> I have limited time available for further testing, so I may not be
-> able to investigate additional requests promptly. I wanted to report
-> the reproducible behaviour and the intel_iommu=off workaround in case
-> it helps identify the regression.
-> 
-> Could you advise on further diagnostics, or whether this should be
-> investigated as an IOMMU or brcmfmac regression?
-> 
-> Thank you.
-> 
+On a MacBookPro14,3 with a BCM43602 (14e4:43ba, subsystem 106b:0173),
+5 GHz stops working once the chip has been reset to its power-on
+state, which happens over S3 while running on battery. Scans still
+report 5 GHz networks, but every attempt to join one fails: the
+firmware ends the join with a SET_SSID event with status
+BRCMF_E_STATUS_FAIL and no LINK event, which brcmfmac reports as
+WLAN_STATUS_AUTH_TIMEOUT, seen in wpa_supplicant as
+"CTRL-EVENT-ASSOC-REJECT ... status_code=16". A 2.4 GHz network could
+still be joined in that state. Reloading the driver, power cycling
+the slot or a secondary bus reset do not help; only a reboot of the
+machine does.
 
-Can you reproduce this issue with the mainline kernel?
+On this board 5 GHz depends on bit 4 of the ChipCommon chipcontrol
+register, which Broadcom's sbchipc.h calls
+CCTRL4360_DISCRETE_FEMCTRL_MODE (front-end module control through the
+discrete FEM control pins). After a reboot the bit is set. brcmfmac
+never writes it and firmware 7.35.177.61 does not set it after a
+power-on reset, so presumably the platform firmware sets it at boot.
+The watchdog reset brcmfmac does on probe and remove preserves the
+bit, but a power-on reset clears it: power cycling the slot of a
+working system breaks 5 GHz the same way. Read with the driver unbound
+after the firmware has run, chipcontrol is 0x01400010 after a reboot
+and 0x01000000 after S3 on battery. Bit 22 is lost as well, but
+setting bit 4 alone before the firmware is downloaded is enough to
+make 5 GHz work again.
 
-Do you see any IOMMU fault messages in the kernel log? You can check
-by running:
+A MacBookPro14,2 (subsystem 106b:0157) was reported to behave the
+same way, over S3 on AC power as well as on battery: with the driver
+unbound, chipcontrol read 0x01400090 after a boot, 0 after S3 and
+0x01000000 once the firmware had run again, and setting bit 4 from
+user space before loading the driver made 5 GHz work again. A
+MacBookPro11,5 (subsystem 106b:0152), on the other hand, boots with
+chipcontrol 0x0100000c, bit 4 clear, and 5 GHz works there, so not
+every Apple BCM43602 board uses this mode.
 
-   # dmesg | grep DMAR
+Set the bit, if it is clear, before downloading the firmware, but only
+for the MacBookPro14,2 and MacBookPro14,3 subsystem IDs. Subsystem ID
+0x0157 may not be unique to the MacBookPro14,2: it is also the ID that
+the module on the MacBookPro14,3 reports after a reset, until the
+platform firmware rewrites it to 0x0173, so other boards with the same
+module may match too. When the firmware is lost over a resume,
+brcmfmac removes and probes the device again, so this covers S3 as
+well as a driver reload.
 
-Have you tried narrowing down the cause with boot options such as
-iommu=pt or intel_iommu=on,sm_off?
+Tested on a MacBookPro14,3 with firmware 7.35.177.61: after power
+cycling the slot and after S3 on battery the driver sets the bit and
+5 GHz associates again; after a normal boot the bit is already set and
+nothing is written. Not tested with this patch on a MacBookPro14,2.
 
-Thanks,
-baolu
+Signed-off-by: Sergey Armodin <dolph-in@yandex.ru>
+---
+v2:
+- Only set the bit on the MacBookPro14,2 and MacBookPro14,3 instead of
+  on all Apple BCM43602 boards, since a MacBookPro11,5 boots with the
+  bit clear and 5 GHz works there.
+- Describe the MacBookPro14,2 and MacBookPro11,5 reports.
+- Retested on the MacBookPro14,3 with a slot power cycle. The S3 result
+  is from v1, which does the same on this board.
+
+v1: https://lore.kernel.org/linux-wireless/20261018193950.14287-1-dolph-in@yandex.ru/
+
+ .../broadcom/brcm80211/brcmfmac/pcie.c        | 39 +++++++++++++++++++
+ 1 file changed, 39 insertions(+)
+
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+index 17bae04c1..653994d7b 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+@@ -726,9 +726,48 @@ static void brcmf_pcie_attach(struct brcmf_pciedev_info *devinfo)
+ }
+ 
+ 
++/* ChipCommon chipcontrol bit selecting the discrete FEM control pin mode */
++#define BRCMF_CC_CHIPCTL_4360_DISCRETE_FEMCTRL_MODE	BIT(4)
++
++/* On the Apple boards below, 5 GHz on the BCM43602 only works with the
++ * discrete FEM control pin mode selected in the ChipCommon chipcontrol
++ * register. The bit is set after a reboot, but a power-on reset of the chip
++ * (e.g. over S3) clears it and the firmware does not set it again. Restore
++ * it before the firmware is started. Other Apple boards may not use this
++ * mode (a MacBookPro11,5 boots with the bit clear), so they are left alone.
++ */
++static void brcmf_pcie_43602_apple_femctrl(struct brcmf_pciedev_info *devinfo)
++{
++	const struct pci_dev *pdev = devinfo->pdev;
++	u32 val;
++
++	if (pdev->subsystem_vendor != PCI_VENDOR_ID_APPLE)
++		return;
++
++	switch (pdev->subsystem_device) {
++	case 0x0157:	/* MacBookPro14,2, possibly others */
++	case 0x0173:	/* MacBookPro14,3 */
++		break;
++	default:
++		return;
++	}
++
++	brcmf_pcie_select_core(devinfo, BCMA_CORE_CHIPCOMMON);
++	val = READCC32(devinfo, chipcontrol);
++	if (val & BRCMF_CC_CHIPCTL_4360_DISCRETE_FEMCTRL_MODE)
++		return;
++
++	brcmf_dbg(PCIE, "chipcontrol 0x%08x, setting discrete FEM control mode\n",
++		  val);
++	WRITECC32(devinfo, chipcontrol,
++		  val | BRCMF_CC_CHIPCTL_4360_DISCRETE_FEMCTRL_MODE);
++}
++
+ static int brcmf_pcie_enter_download_state(struct brcmf_pciedev_info *devinfo)
+ {
+ 	if (devinfo->ci->chip == BRCM_CC_43602_CHIP_ID) {
++		brcmf_pcie_43602_apple_femctrl(devinfo);
++
+ 		brcmf_pcie_select_core(devinfo, BCMA_CORE_ARM_CR4);
+ 		brcmf_pcie_write_reg32(devinfo, BRCMF_PCIE_ARMCR4REG_BANKIDX,
+ 				       5);
+-- 
+2.56.0
+
