@@ -1,83 +1,83 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.170
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.181
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792993055;
-	b=gM0iLawzQsVai/Rb9hE+e/wX9Wj6oEQ1ucmwjdl0Wn97SOs7XmFw/nMA+0b0SaGrrheY
-	 Zj1856hvjxP8HPEAlNgRNp6/oKF2YJ8AFdVBmXHeMPR8KFHlXI4ftRf86ViEd0EEWwsUR
-	 S21Dbfo9FwPAJGfcQdu4fvFPN6mPb0QuDszslBQWt6tiY31OqZy+5efYqjLV7PAllCB9m
-	 Fp4m4mpNd7OfomyXTzivuofChQUhA2GQKBAJcafhYe9aY51hpCBeTh5RYaWUDAQjSc1br
-	 XmRQz3BORUWclN0qOE5oAHuApBfizC5Sj60dfWsdp9HzycHfDDS7XUPbUJ+vlfomLXg==
+	t=1792993058;
+	b=iBqnxcQED89ezbvdTBs6GIP/AxjjIFDQGCfUwClWEiORwlGDa+M8qqmkOYGmcxe5avjs
+	 d3wQhoePoLI/coRRABaVV4aQ118kXxp+lAsPpGL0o6hBvzZ8ZE8SDF4sKWSsVNMHSVBDg
+	 P20YWCcezQFyKjlFAXde9qCHfH34MPSocOzEYvH/4WeD67IVM0zgfSA4eUqzdBtd7A1rz
+	 3F1u9uG0mUra7dtTAGvte0Qzn/pmrDq5t3McyF8rrPEdWDIzZzIjDpqo4gdkiAeFKkbsQ
+	 gtUs6isb8GckZCqcIOlA2pVvqXP9sv/I1gf3j87AV66bgQUX+Mey/kgp7s40WI44B6g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792993055;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792993058;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qov8lUf31PcYBvnZm5x9lod028QGCejgTq+LtVJaKag=;
-	b=RwtvN40Eeud+3c0U/UzIreZwTUszVHIGpef/Zk3Rlxef4orXkcB18wy7Gd/vuTlhvHK2
-	 j4gw4nrzdw2oI674Hx6T3L1xAXZwbYj0OxLE93oxApRQv2fJyn76bLD6wI3fFbKT4nv4I
-	 X4HY8Mf2IwoDTwcSVAfMczxgq+zdPETI/Wzn6OsX+uiiKx3m92vLaN676qxc/GtGUtr6C
-	 tKQi3gbuseJpHr4agWrBUFsnLXNFa42dgb6vrlstRRyp7iR5+e0PqKuSwR/16LBy9a3N4
-	 U6lWQLb5j2nUvjWwP1YPXqa2JWsgTX7Fhy6OMt+hYzhRCISxdJPAE5WMY5oI0NvIszA==
+	bh=zsodfXTZ8d+Y9AkFsVNLE1dVFYbWR+28e5TCIgiv4EQ=;
+	b=e2h1y+GhIZzLZLTwzsHVJBhO1uElD/VUN/uZRCfuGJEaI2+sr7foMSwHJnehaFmEX6tS
+	 QpVpwRY4iq9lItxeBevQuvMYrzDxBI8zBf4L4/34SsFN0hXi4uZeG7GdwfhrmTcMaZ+n7
+	 C81Lurb5EmZuPSXq0tItqwvSUZrvL9mST8sTs8vivAIKe7m+wISf89M/Bs1HyD+6MJNFi
+	 FO1KCPf8BU6ECK3eNoug6ptL9uIlu8HxrPFA17F0l/P2BkgYH1TbEKizuNiCkMPIPQB/G
+	 sZDAbj/PdHlLRNOZKMIb+hUZUnsizXzZytmmwlx00r4s2s3c3pw6vFx88KOdAyYskYg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=i06URGVd;
-	arc=none smtp.remote-ip=209.85.210.170
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=XTELG6Fd;
+	arc=none smtp.remote-ip=209.85.210.181
+Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB9BD60A3817
-	for <brcm80211@lists.linux.dev>; Mon, 26 Oct 2026 05:37:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AB9BD60A3817
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3D1660A5BC6
+	for <brcm80211@lists.linux.dev>; Mon, 26 Oct 2026 05:37:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F3D1660A5BC6
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=i06URGVd
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-8a052aff9e9so1801865b3a.0
-        for <brcm80211@lists.linux.dev>; Sun, 25 Oct 2026 22:37:34 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=XTELG6Fd
+Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-8a07078200fso805034b3a.2
+        for <brcm80211@lists.linux.dev>; Sun, 25 Oct 2026 22:37:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792993054; x=1793597854; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1792993057; x=1793597857; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=qov8lUf31PcYBvnZm5x9lod028QGCejgTq+LtVJaKag=;
-        b=i06URGVdU/NCXQNWhNSbPQo8c0bZ4y7hITuRdoAjFbMYgx2G/iIDKtUimCJcJ4J0Tr
-         G85N1o5XJOiUB80qHdv4d8i+JgepduSotHH83c62s247wG53cBHmrrFizUI4cFKhdCbC
-         H5coURjlZ/T6+9vVHoi/UYw2Rk4IyIPXCyQRVVjHeljY5YtjzS0mCNlyOOKPirpGCSMN
-         ScSeOWjARNN4tmLuo6CDhwi4xmB3traCd83gBOXRYZB07x4CWYs7XWOpjcA6k4V6GEuZ
-         ga5CLNJAGY6znqj1S7gvMqTEtz1eEhmrh6g+u3qDdh7ghqZzapYqrfLxKYt3BOraW57Q
-         HkZg==
+        bh=zsodfXTZ8d+Y9AkFsVNLE1dVFYbWR+28e5TCIgiv4EQ=;
+        b=XTELG6FdTh4WSl/U9UGbaujm2yD4+qhfrHU3PSJ5IZun9/l7awdaRpN5iWWdadLuvD
+         xYzjqW3MbHvn8G8nVAfNMN9I4f8oZ+Ao6I15vUR9R7LwOZbdzhbLqUVWYWnZLtQ60bBc
+         qEH6hvs36c/4ndzE+VuPxY4uP7wnXFNY2eOtIgl/Jz7efYF7HLSysAMzLI65bYC4J1pg
+         eVUaPZ/vV3GI8ClK6P4ExUadQW4oIpxJe1kCmHtTWenugV0iZnv1OjewZ4l5KxHcEx+7
+         4hp7J9dLOOxw69x7tu9o0dZzRGysLQUzXzgxl1UoG6iyuE+UZWzIphbahYJmDTurMHyf
+         /svg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792993054; x=1793597854;
+        d=1e100.net; s=20260707; t=1792993057; x=1793597857;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=qov8lUf31PcYBvnZm5x9lod028QGCejgTq+LtVJaKag=;
-        b=KHfX22E8rPqzV2vQ6GZE3tvretleIRvR6HklxWZyBDD4NaymPHuRYNPkhq96tD/kHy
-         QYaqqDUmokJ66VqwH3WOpiEwN1WZdJP7/SLr6BpoFgXINnZjBDx9Cb0nALrW3AvN2SHh
-         7JlkRs6n2vuwxMu0Ot73ABmsbu71g/S1nQR30rBY8yUXhXiuKcaYxgPARO6Zw4Qu9N3y
-         VUIPeicEj4/oE0jv/Dr5f8QudHvIJueV3hb5AN8JOX4UzPN10ut2hmekqNDhj/NTtw6a
-         gNCo2vZRUvkC9GmS693WuBP8GwuMARQS2hw4BIn17KoK2rJTNvCx4JO/iDUrBZX47U+f
-         aYvA==
-X-Forwarded-Encrypted: i=1; AKwUvBxuYepwr6o64bmLTw5OkCKOKgbBZhrVk+bM8tmtGuGlL+KYS6pHrbbknyWnjbZfX+1ZSjhugPBTW10=@lists.linux.dev
-X-Gm-Message-State: AFq9FYII7gxQx+B3ZjQji0WBzyWBLCBFIKizeAkGuspZwYmR/013JqYa
-	dkHj9hXMDMaHL/5TJe6aFLV6jeXulAKMHUroMt0BfjtIXtZpjYy6Bqze
-X-Gm-Gg: AYBFou1LcNC/Fh5qmLI5TOYT9rK8JGrxuzaEsN78zbYSNAhAkWfIFdRNIJDw/0cUj6H
-	T9YtYLVB3dzcB3rY37U8Y0p8XPpYc9y4T7gmOhYutZJsCn/UO/2+nbkng18IvYQ1ZafQx8Tw8H1
-	QucMFhoeYqVXaiN/fcIBwMBUDTeXbetthzsqtAcXzJvoOUOIO2MKfR6gz6KmdRhF4ib/DLjB/A3
-	/EGqHRF2wlQbiVvSqZrnyC3Q2fowiPbuzTHGlVNo0z9Wqe9tXVkf9ipMCiSbLIUTGbQNDOOekRc
-	ZnDn4KHU29T2SmcUdwulDfpoRstFfSYVwpNpPukc16ZYSq/QVWLCsil2uVM0ZXmhuL9vBj8z/Ek
-	i2R4UbG3QUODutGyhJmCTRqutLB76jnB3Rs+IeU710op4QnHCIdOwBq3wV6dwSmKWtBwCAgf8jh
-	+Q3+ZVtUOO884yfAKqHHGXKxDsXnfzRTIaXgEmhvaRNHLSAPlwKwyFqHXTpfjs71GpSkL88xjAL
-	2qvOlwJpjC5rzwROAicgc1s42VLB/NycTJrJ/CHTTygH2YW648113DvRe1srwjzzBcrfN5RAa5t
-	woM0
-X-Received: by 2002:a05:6a00:301e:b0:89e:37b1:b81e with SMTP id d2e1a72fcca58-8a367252ab7mr4249701b3a.31.1792993054002;
-        Sun, 25 Oct 2026 22:37:34 -0700 (PDT)
+        bh=zsodfXTZ8d+Y9AkFsVNLE1dVFYbWR+28e5TCIgiv4EQ=;
+        b=OcUYUwm1gi0fYXUxOyb4iCjJg9jryOXQauK2w5XX+rGttsvgZC6pWvlWejdieOQava
+         JiTypdzaCtRazdgTD+v/+g1gOX8LUvMicZRAtQPEiWyl1x25meFs4Zh/PAtZCt/xCgZU
+         lIthAG9AP4uMUoWWB5ybiqPs8QnY9Gy9GWUSIp33iurEKDx7UlONvS3z0jqq1ooEdQHA
+         TE2LxHtPB55EoeVkl0Omx94ci/qkffrr8Ck2Z04lUEHG/Qs3t0x3nSl0PVX/WZ5rtmPR
+         J0XTyL6JS/Bb/pCf4owbRL7N0TrFeLuly+hzBh1BFpaULthrdJtg2VteUZ7Jqzuv3xFE
+         hgXw==
+X-Forwarded-Encrypted: i=1; AKwUvBxu8FELFNtspsGj42h8u3PeOyWVDjItiHef0N/wpYIoVDwpzl76frLy7Q75VNHda8fUbhbcJwJmQ6k=@lists.linux.dev
+X-Gm-Message-State: AFq9FYKP55e08uyI6ff+CVKgSpgRoUVlLV5eifdnIhH6NQXeyCtO1WKu
+	iBdHehiL+SHfdsCUEAvz9TJO6stjnKoEnu2oj2erkuAcrQ23ivF82Qw8
+X-Gm-Gg: AYBFou2Y5JXgNAUAdOFXYKFpC5xgv0n0QD/1W8AQZg7mCP1L5QIFCQhhxUOKvquyW1T
+	UHX0Dix+wazoB6bqdFZ1FRXfQZW76eMTuAVlURMGDcxlecjFz6lhGAiq9yjKEwYpk7OyoQvfl2/
+	yRwN5u0tMyGgwvOsS205oaZSeVp/QAbNFjUB7nsLm64ebYs2ohmJ7TKWvbesukdcwIs4/uQwc2b
+	OGHdGnJtOH95xWOn8CWrRAQ9QscM+SOIPwbkz2QHeQEyoAIxBKgEQVhxIp5mrnHL/E+6xDKUYUV
+	yNwR+8qYULwbH1s6oEC3cDOQGnoqioL9TFJ8m4+i0bzSOs8ACUqILEkqT+fLHvpNOvaBWm61fKP
+	1BevhRQdGflYvTnF2DBxlaeUo8j3zKwQpp1ZujWEyhhICELlbVyqkaxQxIIA4Gu6SS3Nt7s1/Lb
+	AIkzQ7WAKB0UCA5qJUjBwzC+kvHMFy1PmVQAtF1AuFmGQ6wsvw8SazwGVCu6i5OG+dnORVua5KV
+	BSZvjjRbOZiQfMzU73aZ97gKPiDp8adc2JfbkZ7vWgfVH4HF7xoyTxrtJyQG37YuJYWzOL0V0PQ
+	0UL3
+X-Received: by 2002:a05:6a00:2448:b0:898:9b2:605b with SMTP id d2e1a72fcca58-8a367a2f710mr4800290b3a.56.1792993057378;
+        Sun, 25 Oct 2026 22:37:37 -0700 (PDT)
 Received: from acemagic-m1.tail4fb79.ts.net ([2401:7400:c804:b668:673b:a930:e065:eca])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8a368d867a0sm927851b3a.2.2026.10.25.22.37.30
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8a368d867a0sm927851b3a.2.2026.10.25.22.37.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 Oct 2026 22:37:33 -0700 (PDT)
+        Sun, 25 Oct 2026 22:37:37 -0700 (PDT)
 From: Ragul Balaji <ragulbaby@gmail.com>
 To: linux-wireless@vger.kernel.org
 Cc: Arend van Spriel <arend.vanspriel@broadcom.com>,
@@ -87,9 +87,9 @@ Cc: Arend van Spriel <arend.vanspriel@broadcom.com>,
 	Ho Jie Feng <hjf3108@gmail.com>,
 	linux-kernel@vger.kernel.org,
 	brcm80211-dev-list.pdl@broadcom.com
-Subject: [RFC PATCH wireless-next 12/17] wifi: bcm4323x: add the USB transport and firmware setup
-Date: Mon, 26 Oct 2026 13:36:18 +0800
-Message-ID: <20261026053633.361454-13-ragulbaby@gmail.com>
+Subject: [RFC PATCH wireless-next 13/17] wifi: bcm4323x: add the receive path
+Date: Mon, 26 Oct 2026 13:36:19 +0800
+Message-ID: <20261026053633.361454-14-ragulbaby@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261026053633.361454-1-ragulbaby@gmail.com>
 References: <20261026053633.361454-1-ragulbaby@gmail.com>
@@ -104,570 +104,338 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Adds the usb side of the driver, enumeration, tx/rx and
-firmware. Requires brcm/bcm4323x.bin.
-
-The ID table covers the BCM43231 and BCM4323 adapters of
-Belkin, Dynex and Netgear.
+Add the RX path of the device. RX supports RX aggregation.
 
 Signed-off-by: Ragul Balaji <ragulbaby@gmail.com>
 Signed-off-by: Ho Jie Feng <hjf3108@gmail.com>
 ---
- .../brcm80211/bcm4323x/bcm4323x_core.c        | 545 ++++++++++++++++++
- 1 file changed, 545 insertions(+)
- create mode 100644 drivers/net/wireless/broadcom/brcm80211/bcm4323x/bcm4323x_core.c
+ .../broadcom/brcm80211/bcm4323x/bcm4323x_rx.c | 317 ++++++++++++++++++
+ 1 file changed, 317 insertions(+)
+ create mode 100644 drivers/net/wireless/broadcom/brcm80211/bcm4323x/bcm4323x_rx.c
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/bcm4323x/bcm4323x_core.c b/drivers/net/wireless/broadcom/brcm80211/bcm4323x/bcm4323x_core.c
+diff --git a/drivers/net/wireless/broadcom/brcm80211/bcm4323x/bcm4323x_rx.c b/drivers/net/wireless/broadcom/brcm80211/bcm4323x/bcm4323x_rx.c
 new file mode 100644
-index 000000000..e1a3cdf3b
+index 000000000..8f5b3e01f
 --- /dev/null
-+++ b/drivers/net/wireless/broadcom/brcm80211/bcm4323x/bcm4323x_core.c
-@@ -0,0 +1,545 @@
++++ b/drivers/net/wireless/broadcom/brcm80211/bcm4323x/bcm4323x_rx.c
+@@ -0,0 +1,317 @@
 +// SPDX-License-Identifier: GPL-2.0-only
-+
-+#include <linux/device.h>
-+#include <linux/firmware.h>
-+#include <linux/iopoll.h>
-+#include <linux/module.h>
-+#include <linux/slab.h>
-+
-+#include <brcm_usb_rdl.h>
 +
 +#include "bcm4323x.h"
 +
-+#define BCM4323X_FW_NAME "brcm/bcm4323x.bin"
++#define BCM4323X_RPC_PROC_RX 0x51
++#define BCM4323X_RPC_PROC_TX_STATUS 0x52
++#define BCM4323X_RPC_PROC_NOISE_RESULT 0x66
 +
-+#define BCM4323X_REQ_RPC_RESPONSE 9
-+#define BCM4323X_REQ_TYPE (USB_DIR_IN | USB_TYPE_VENDOR | USB_RECIP_INTERFACE)
-+#define BCM4323X_DL_VALUE 1
-+#define BCM4323X_TIMEOUT_MS 2000
-+#define BCM4323X_BOOT_CHIP_ID 0x4322
-+
-+#define BCM4323X_BOOT_POLL_US 40000
-+#define BCM4323X_BOOT_TIMEOUT_US 1200000
-+#define BCM4323X_CONTROL_MAX 1928
-+#define BCM4323X_IO_SIZE 4096
-+#define BCM4323X_RPC_READS 16
-+
-+union bcm4323x_dl_response {
-+	struct rdl_state_le rdl;
-+	struct {
-+		__le32 chip;
-+		__le32 chiprev;
-+	} id;
-+};
-+
-+struct bcm4323x_handshake {
++struct bcm4323x_handshake_reply {
 +	__le32 version;
++	__le32 state;
 +	__le32 chip;
 +} __packed;
 +
-+static int bcm4323x_bulk_transfer(struct bcm4323x *dev, void *buffer, int length, bool *sent)
++/* Procedure 0x51 */
++struct bcm4323x_rxhdr {
++	/* The length of the body up to the end of the frame, without its FCS */
++	__le32 length;
++	/* from brcmfmac: struct wlc_d11rxhdr */
++	struct d11rxhdr_le rxhdr;
++	__le32 tsf_l;
++	s8 rssi;
++	u8 reserved0[3];
++	s8 rxpwr0;
++	s8 rxpwr1;
++	u8 reserved1[4];
++} __packed;
++
++/* Procedure 0x66 */
++struct bcm4323x_noise {
++	__le32 channel;
++	__le32 dbm;
++} __packed;
++
++#define BCM4323X_RX_FRAME_OFFSET (sizeof(struct bcm4323x_rxhdr) + D11_PHY_HDR_LEN)
++
++/* Verify the receive frame key slot matches */
++static bool bcm4323x_rx_key_match(struct bcm4323x *dev, struct sk_buff *skb, unsigned int index)
 +{
-+	int actual = 0;
-+	int ret;
++	const struct ieee80211_hdr *hdr = (void *)skb->data;
++	bool multicast;
++	bool group_slot;
++	const u8 *frame_bssid;
++	struct ieee80211_vif *vif;
++	const u8 *bssid;
++	bool addressed;
 +
-+	ret = usb_bulk_msg(dev->udev, dev->tx_pipe, buffer, length, &actual, BCM4323X_TIMEOUT_MS);
-+	if (sent)
-+		*sent = actual > 0;
-+	if (ret)
-+		return ret;
++	if (ieee80211_get_hdrlen_from_skb(skb) < sizeof(struct ieee80211_hdr_3addr) ||
++	    !ieee80211_has_protected(hdr->frame_control) || index >= BCM4323X_HW_KEYS)
++		return false;
++	/* A group key takes the slot of its key ID, below the pairwise keys. */
++	multicast = is_multicast_ether_addr(hdr->addr1);
++	group_slot = index < BCM4323X_HW_PAIRWISE_BASE;
++	if (multicast != group_slot)
++		return false;
 +
-+	if (!(length % usb_maxpacket(dev->udev, dev->tx_pipe)))
-+		return usb_bulk_msg(dev->udev, dev->tx_pipe, NULL, 0, &actual, BCM4323X_TIMEOUT_MS);
-+
-+	return 0;
-+}
-+
-+/* from brcmfmac: check_file */
-+static int bcm4323x_check_file(const struct firmware *fw)
-+{
-+	const struct trx_header_le *trx = (const void *)fw->data;
-+
-+	/* Unlike brcmfmac's images, this one is not flagged TRX_UNCOMP_IMAGE. */
-+	if (fw->size < sizeof(*trx) || trx->magic != cpu_to_le32(TRX_MAGIC) ||
-+	    le32_to_cpu(trx->len) != fw->size)
-+		return -EINVAL;
-+	return 0;
-+}
-+
-+/* from brcmfmac: brcmf_usb_dl_cmd */
-+static int bcm4323x_dl_cmd(struct bcm4323x *dev, u8 cmd, union bcm4323x_dl_response *buffer)
-+{
-+	return usb_control_msg_recv(dev->udev, 0, cmd, BCM4323X_REQ_TYPE, BCM4323X_DL_VALUE,
-+				    dev->intf->cur_altsetting->desc.bInterfaceNumber, buffer,
-+				    sizeof(*buffer), BCM4323X_TIMEOUT_MS, GFP_KERNEL);
-+}
-+
-+/* from brcmfmac: brcmf_usb_resetcfg */
-+static int bcm4323x_wait_postboot(struct bcm4323x *dev)
-+{
-+	union bcm4323x_dl_response id;
-+	int err;
-+
-+	/* The bootloader stalls or answers short while the runtime starts. */
-+	return poll_timeout_us(err = bcm4323x_dl_cmd(dev, DL_GETVER, &id),
-+			       err ? err != -EPIPE && err != -EREMOTEIO :
-+				     id.id.chip == cpu_to_le32(BRCMF_POSTBOOT_ID),
-+			       BCM4323X_BOOT_POLL_US, BCM4323X_BOOT_TIMEOUT_US, true) ?: err;
-+}
-+
-+/* from brcmfmac: brcmf_usb_dl_writeimage */
-+static int bcm4323x_dl_writeimage(struct bcm4323x *dev, const u8 *fw, u32 fwlen)
-+{
-+	union bcm4323x_dl_response state;
-+	u32 rdlstate;
-+	u32 sent = 0;
-+	int err;
-+
-+	err = bcm4323x_dl_cmd(dev, DL_START, &state);
-+	if (err)
-+		return err;
-+	if (le32_to_cpu(state.rdl.state) != DL_WAITING)
-+		return -EINVAL;
-+
-+	while (sent < fwlen) {
-+		u32 sendlen = min_t(u32, fwlen - sent, TRX_RDL_CHUNK);
-+
-+		memcpy(dev->io_buffer, fw + sent, sendlen);
-+		err = bcm4323x_bulk_transfer(dev, dev->io_buffer, sendlen, NULL);
-+		if (err)
-+			return err;
-+		sent += sendlen;
-+
-+		err = bcm4323x_dl_cmd(dev, DL_GETSTATE, &state);
-+		if (err)
-+			return err;
-+		rdlstate = le32_to_cpu(state.rdl.state);
-+		/*
-+		 * Unlike brcmfmac, expect the bytes to be accepted at once, as the
-+		 * reference driver does.
-+		 */
-+		if (rdlstate == DL_BAD_HDR || rdlstate == DL_BAD_CRC ||
-+		    le32_to_cpu(state.rdl.bytes) != sent)
-+			return -EINVAL;
++	rcu_read_lock();
++	vif = rcu_dereference(dev->active_vif);
++	if (!vif) {
++		addressed = false;
++	} else if (multicast) {
++		/* An interface type change can repoint it. */
++		bssid = READ_ONCE(vif->bss_conf.bssid);
++		frame_bssid = ieee80211_get_bssid((void *)skb->data, skb->len, vif->type);
++		addressed = frame_bssid && bssid && ether_addr_equal(frame_bssid, bssid);
++	} else {
++		addressed = ether_addr_equal(hdr->addr1, vif->addr);
 +	}
-+	return 0;
++	rcu_read_unlock();
++	if (!addressed)
++		return false;
++
++	/* bcm4323x_set_key() sets the peer before it puts the slot in use. */
++	if (!test_bit_acquire(index, dev->keys))
++		return false;
++	return multicast || ether_addr_equal(hdr->addr2, dev->key_peers[index]);
 +}
 +
-+/* from brcmfmac: brcmf_usb_dlrun */
-+static int bcm4323x_dlrun(struct bcm4323x *dev)
++/* from brcmsmac: prep_mac80211_status */
++static void bcm4323x_set_rx_rate(struct bcm4323x *dev, struct ieee80211_rx_status *status,
++				 const u8 *body, unsigned int frame_offset)
 +{
-+	union bcm4323x_dl_response state;
-+	int err;
++	const struct bcm4323x_rxhdr *hdr = (const void *)body;
++	const struct ieee80211_supported_band *sband = &dev->bands[status->band];
++	struct d11rxhdr rxh = {
++		.PhyRxStatus_0 = le16_to_cpu(hdr->rxhdr.PhyRxStatus_0),
++		.RxChan = le16_to_cpu(hdr->rxhdr.RxChan),
++	};
++	u8 *plcp = (u8 *)body + frame_offset - D11_PHY_HDR_LEN;
++	unsigned int i;
++	u32 rspec;
 +
-+	err = bcm4323x_dl_cmd(dev, DL_GETSTATE, &state);
-+	if (err)
-+		return err;
-+	if (state.rdl.state != cpu_to_le32(DL_RUNNABLE))
-+		return -EINVAL;
-+
-+	err = bcm4323x_dl_cmd(dev, DL_GO, &state);
-+	if (err)
-+		return err;
-+	return bcm4323x_wait_postboot(dev);
-+}
-+
-+/* from brcmfmac: brcmf_usb_fw_download, brcmf_usb_dlneeded */
-+static int bcm4323x_fw_download(struct bcm4323x *dev, const struct firmware *fw)
-+{
-+	union bcm4323x_dl_response id;
-+	int err;
-+
-+	err = bcm4323x_check_file(fw);
-+	if (err)
-+		return err;
-+
-+	err = bcm4323x_dl_cmd(dev, DL_GETVER, &id);
-+	if (err)
-+		return err;
-+	if (id.id.chip != cpu_to_le32(BRCMF_POSTBOOT_ID)) {
-+		if (id.id.chip != cpu_to_le32(BCM4323X_BOOT_CHIP_ID))
-+			return -ENODEV;
-+		err = bcm4323x_dl_writeimage(dev, fw->data, fw->size);
-+		if (!err)
-+			err = bcm4323x_dlrun(dev);
-+		if (err)
-+			return err;
++	if ((rxh.PhyRxStatus_0 & PRXS0_FT_MASK) == PRXS0_PREN) {
++		if (plcp[0] || plcp[1] || plcp[2])
++			memcpy(dev->rx_ht_plcp, plcp, sizeof(dev->rx_ht_plcp));
++		plcp = dev->rx_ht_plcp;
 +	}
-+	bcm4323x_dl_cmd(dev, DL_RESETCFG, &id);
-+	return 0;
++	rspec = brcmu_compute_rspec(&rxh, plcp);
++	if (is_mcs_rate(rspec)) {
++		status->encoding = RX_ENC_HT;
++		status->rate_idx = rspec & RSPEC_RATE_MASK;
++		if (status->rate_idx >= BCM4323X_NUM_MCS)
++			status->rate_idx = 0;
++		if (rspec_is40mhz(rspec))
++			status->bw = RATE_INFO_BW_40;
++		if (rspec_issgi(rspec))
++			status->enc_flags |= RX_ENC_FLAG_SHORT_GI;
++		/* The HT-SIG byte has the STBC field where plcp3_issgi() finds SGI. */
++		status->enc_flags |= rspec_stc(plcp[3] << 16) << RX_ENC_FLAG_STBC_SHIFT;
++		return;
++	}
++	for (i = 0; i < sband->n_bitrates; i++)
++		if (sband->bitrates[i].hw_value == rspec2rate(rspec)) {
++			status->rate_idx = i;
++			break;
++		}
++	if (is_cck_rate(rspec) && (rxh.PhyRxStatus_0 & PRXS0_SHORTH))
++		status->enc_flags |= RX_ENC_FLAG_SHORTPRE;
++}
++
++static unsigned int bcm4323x_rx_frame_offset(const struct bcm4323x_rxhdr *hdr)
++{
++	if (le16_to_cpu(hdr->rxhdr.RxStatus1) & RXS_PBPRES)
++		return BCM4323X_RX_FRAME_OFFSET + sizeof(__le16);
++	return BCM4323X_RX_FRAME_OFFSET;
++}
++
++/* Whether a procedure 0x51 body holds a whole frame, on a channel of the device */
++static bool bcm4323x_rx_valid(struct bcm4323x *dev, const u8 *body, size_t body_length)
++{
++	const struct bcm4323x_rxhdr *hdr = (const void *)body;
++	unsigned int frame_size;
++	unsigned int channel;
++
++	if (body_length < BCM4323X_RX_FRAME_OFFSET + sizeof(__le32))
++		return false;
++	frame_size = le32_to_cpu(hdr->length);
++	if (ALIGN(frame_size + sizeof(__le32), sizeof(__le32)) > body_length ||
++	    frame_size <= bcm4323x_rx_frame_offset(hdr))
++		return false;
++	channel = le16_get_bits(hdr->rxhdr.RxChan, RXS_CHAN_ID_MASK);
++	if (le16_to_cpu(hdr->rxhdr.RxChan) & RXS_CHAN_5G)
++		return channel && dev->chip->has_5ghz && channel <= 196;
++	return channel && channel <= BCM4323X_NUM_2GHZ_CHANNELS;
 +}
 +
 +/*
-+ * Reads the response to a control procedure, skipping the responses to other
-+ * procedures that the dongle kept, and copies the start of its body, if any.
++ * from brcmsmac: wlc_phy_chanspec_set, which gives the microcode the center of
++ * a 40 MHz channel, while mac80211 expects the control channel
++ *
++ * Returns 0 for a frame received before a switch.
 + */
-+static int bcm4323x_rpc_response_locked(struct bcm4323x *dev, u32 procedure, void *response,
-+					size_t response_length)
++static unsigned int bcm4323x_rx_channel(struct bcm4323x *dev, const struct d11rxhdr_le *rxh)
 +{
-+	const struct bcm4323x_rpc_header *rpc = (void *)dev->io_buffer;
-+	u8 interface = dev->intf->cur_altsetting->desc.bInterfaceNumber;
-+	unsigned int reads;
-+	size_t length;
-+	int ret;
++	unsigned int channel = le16_get_bits(rxh->RxChan, RXS_CHAN_ID_MASK);
++	u16 chanspec;
 +
-+	lockdep_assert_held(&dev->io_mutex);
-+	for (reads = 0; reads < BCM4323X_RPC_READS; reads++) {
-+		ret = usb_control_msg(dev->udev, usb_rcvctrlpipe(dev->udev, 0),
-+				      BCM4323X_REQ_RPC_RESPONSE, BCM4323X_REQ_TYPE, 0, interface,
-+				      dev->io_buffer, BCM4323X_CONTROL_MAX,
-+				      BCM4323X_TIMEOUT_MS);
-+		if (ret < 0)
-+			return ret;
-+		if (ret < sizeof(*rpc))
-+			return -EPROTO;
-+
-+		length = le32_to_cpu(rpc->length) + sizeof(rpc->length);
-+		if (length < sizeof(*rpc) || length > ret ||
-+		    FIELD_GET(BCM4323X_RPC_CLASS_MASK, le32_to_cpu(rpc->xid_class)) !=
-+			    BCM4323X_RPC_CLASS_CONTROL)
-+			return -EPROTO;
-+		if (le32_to_cpu(rpc->procedure) != procedure) {
-+			dev_dbg(&dev->intf->dev, "skipped response to RPC 0x%x\n",
-+				le32_to_cpu(rpc->procedure));
-+			continue;
-+		}
-+		if (!response)
-+			return 0;
-+		if (length - sizeof(*rpc) < response_length)
-+			return -EPROTO;
-+		memcpy(response, rpc + 1, response_length);
++	if (!(le16_to_cpu(rxh->RxChan) & RXS_CHAN_40))
++		return channel;
++	chanspec = READ_ONCE(dev->chanspec);
++	if (!CHSPEC_IS40(chanspec) || CHSPEC_CHANNEL(chanspec) != channel)
 +		return 0;
-+	}
-+	return -EPROTO;
++	return CHSPEC_CTL_CHAN(chanspec);
 +}
 +
-+static int bcm4323x_rpc_transact(struct bcm4323x *dev, u8 rpc_class, u32 procedure,
-+				 const void *body, size_t body_length, void *response,
-+				 size_t response_length)
++/* from brcmsmac: brcms_c_recv, prep_mac80211_status */
++static void bcm4323x_rx_80211(struct bcm4323x *dev, const u8 *body, size_t body_length)
 +{
-+	struct bcm4323x_rpc_header *rpc;
-+	bool sent;
-+	int ret;
++	const struct bcm4323x_rxhdr *hdr = (const void *)body;
++	const struct d11rxhdr_le *rxh = &hdr->rxhdr;
++	unsigned int frame_offset;
++	unsigned int frame_length;
++	unsigned int rx_status1;
++	unsigned int channel;
++	struct sk_buff *skb;
++	struct ieee80211_rx_status *status;
 +
-+	if (body_length > BCM4323X_IO_SIZE - sizeof(*rpc))
-+		return -EMSGSIZE;
-+	if (READ_ONCE(dev->dead))
-+		return -ENODEV;
-+
-+	mutex_lock(&dev->io_mutex);
-+	rpc = (void *)dev->io_buffer;
-+	rpc->length = bcm4323x_rpc_length(body_length);
-+	rpc->xid_class = bcm4323x_rpc_xid_class(rpc_class, dev->rpc_xid);
-+	rpc->procedure = cpu_to_le32(procedure);
-+	memcpy(rpc + 1, body, body_length);
-+	ret = bcm4323x_bulk_transfer(dev, dev->io_buffer, sizeof(*rpc) + body_length, &sent);
-+	if (sent)
-+		dev->rpc_xid++;
-+	if (!ret && rpc_class == BCM4323X_RPC_CLASS_CONTROL)
-+		ret = bcm4323x_rpc_response_locked(dev, procedure, response, response_length);
-+	mutex_unlock(&dev->io_mutex);
-+	return ret;
-+}
-+
-+int bcm4323x_rpc_send(struct bcm4323x *dev, u32 procedure, const void *body, size_t body_length)
-+{
-+	return bcm4323x_rpc_transact(dev, BCM4323X_RPC_CLASS_DATA, procedure, body, body_length,
-+				     NULL, 0);
-+}
-+
-+int bcm4323x_rpc_call(struct bcm4323x *dev, u32 procedure, const void *body, size_t body_length,
-+		      void *response, size_t response_length)
-+{
-+	return bcm4323x_rpc_transact(dev, BCM4323X_RPC_CLASS_CONTROL, procedure, body,
-+				     body_length, response, response_length);
-+}
-+
-+static int bcm4323x_handshake_step(struct bcm4323x *dev, u32 procedure, __le32 chip)
-+{
-+	struct bcm4323x_handshake body = {
-+		.version = cpu_to_le32(BCM4323X_RPC_VERSION),
-+		.chip = chip,
-+	};
-+	int ret;
-+
-+	reinit_completion(&dev->handshake_done);
-+	ret = bcm4323x_rpc_transact(dev, BCM4323X_RPC_CLASS_TRANSPORT, procedure, &body,
-+				    sizeof(body), NULL, 0);
-+	if (ret)
-+		return ret;
-+	if (!wait_for_completion_timeout(&dev->handshake_done,
-+					 msecs_to_jiffies(BCM4323X_TIMEOUT_MS)))
-+		return -ETIMEDOUT;
-+	/* VERSION sends no chip ID, and CHIP the one that the VERSION reply carried. */
-+	if (!dev->handshake_chip || (chip && dev->handshake_chip != chip))
-+		return -EPROTO;
-+	return 0;
-+}
-+
-+/* Reset the runtime firmware to its initialized state. */
-+static int bcm4323x_init_firmware(struct bcm4323x *dev)
-+{
-+	int ret;
-+
-+	ret = bcm4323x_start_rx_urbs(dev);
-+	if (ret)
-+		return ret;
-+	ret = bcm4323x_handshake_step(dev, BCM4323X_RPC_PROC_VERSION, 0);
-+	if (!ret)
-+		ret = bcm4323x_handshake_step(dev, BCM4323X_RPC_PROC_CHIP, dev->handshake_chip);
-+
-+	dev->rpc_xid = 0;
-+	if (!ret)
-+		ret = bcm4323x_init_mac(dev);
-+	bcm4323x_kill_rx_urbs(dev);
-+	if (!ret && READ_ONCE(dev->dead))
-+		ret = -EIO;
-+	return ret;
-+}
-+
-+void bcm4323x_kill_rx_urbs(struct bcm4323x *dev)
-+{
-+	unsigned int index;
-+
-+	for (index = 0; index < BCM4323X_RX_URBS; index++)
-+		usb_kill_urb(dev->rx_urbs[index]);
-+}
-+
-+int bcm4323x_start_rx_urbs(struct bcm4323x *dev)
-+{
-+	unsigned int index;
-+	int ret;
-+
-+	for (index = 0; index < BCM4323X_RX_URBS; index++) {
-+		ret = usb_submit_urb(dev->rx_urbs[index], GFP_KERNEL);
-+		if (ret) {
-+			bcm4323x_kill_rx_urbs(dev);
-+			return ret;
-+		}
-+	}
-+	return 0;
-+}
-+
-+static int bcm4323x_alloc_transport(struct bcm4323x *dev)
-+{
-+	struct usb_endpoint_descriptor *bulk_in;
-+	struct usb_endpoint_descriptor *bulk_out;
-+	unsigned int rx_pipe;
-+	unsigned int index;
-+
-+	if (usb_find_common_endpoints_reverse(dev->intf->cur_altsetting, &bulk_in, &bulk_out,
-+					      NULL, NULL))
-+		return -ENODEV;
-+	dev->tx_pipe = usb_sndbulkpipe(dev->udev, bulk_out->bEndpointAddress);
-+	dev->io_buffer = devm_kmalloc(&dev->intf->dev, BCM4323X_IO_SIZE, GFP_KERNEL);
-+	if (!dev->io_buffer)
-+		return -ENOMEM;
-+
-+	rx_pipe = usb_rcvbulkpipe(dev->udev, bulk_in->bEndpointAddress);
-+	for (index = 0; index < BCM4323X_RX_URBS; index++) {
-+		struct urb *urb = usb_alloc_urb(0, GFP_KERNEL);
-+		void *buffer;
-+
-+		if (!urb)
-+			return -ENOMEM;
-+		dev->rx_urbs[index] = urb;
-+		buffer = kmalloc(BCM4323X_RX_SIZE, GFP_KERNEL);
-+		if (!buffer)
-+			return -ENOMEM;
-+		usb_fill_bulk_urb(urb, dev->udev, rx_pipe, buffer, BCM4323X_RX_SIZE,
-+				  bcm4323x_rx_complete, dev);
-+		urb->transfer_flags = URB_FREE_BUFFER;
-+	}
-+	return 0;
-+}
-+
-+static void bcm4323x_free_transport(struct bcm4323x *dev)
-+{
-+	unsigned int index;
-+
-+	for (index = 0; index < BCM4323X_RX_URBS; index++)
-+		usb_free_urb(dev->rx_urbs[index]);
-+}
-+
-+struct bcm4323x_reprobe {
-+	struct work_struct work;
-+	struct device *dev;
-+};
-+
-+static void bcm4323x_reprobe_work(struct work_struct *work)
-+{
-+	struct bcm4323x_reprobe *reprobe = container_of(work, struct bcm4323x_reprobe, work);
-+	int ret;
-+
-+	ret = device_reprobe(reprobe->dev);
-+	if (ret)
-+		dev_err(reprobe->dev, "reprobe failed: %d\n", ret);
-+	put_device(reprobe->dev);
-+	kfree(reprobe);
-+	module_put(THIS_MODULE);
-+}
-+
-+/* Reprobe the device in case the firmware stalls */
-+void bcm4323x_fatal_error(struct bcm4323x *dev)
-+{
-+	struct bcm4323x_reprobe *reprobe;
-+
-+	if (xchg(&dev->dead, true))
-+		return;
-+
-+	wake_up_all(&dev->tx_wait);
 +	if (!READ_ONCE(dev->running))
 +		return;
-+	ieee80211_stop_queues(dev->hw);
-+
-+	if (!try_module_get(THIS_MODULE))
-+		return;
-+	reprobe = kzalloc_obj(*reprobe, GFP_ATOMIC);
-+	if (!reprobe) {
-+		module_put(THIS_MODULE);
++	if (!bcm4323x_rx_valid(dev, body, body_length)) {
++		dev_dbg_ratelimited(&dev->intf->dev, "malformed procedure 0x51 body (%zu bytes)\n",
++				    body_length);
 +		return;
 +	}
-+	INIT_WORK(&reprobe->work, bcm4323x_reprobe_work);
-+	reprobe->dev = get_device(&dev->intf->dev);
-+	queue_work(system_long_wq, &reprobe->work);
-+}
++	channel = bcm4323x_rx_channel(dev, rxh);
++	if (!channel)
++		return;
 +
-+static int bcm4323x_probe(struct usb_interface *intf, const struct usb_device_id *id)
-+{
-+	const struct bcm4323x_chip *chip = (const void *)id->driver_info;
-+	struct ieee80211_hw *hw;
-+	struct bcm4323x *dev;
-+	const char *stage;
-+	const struct firmware *firmware = NULL;
-+	int ret;
++	frame_offset = bcm4323x_rx_frame_offset(hdr);
++	frame_length = le32_to_cpu(hdr->length) - frame_offset;
++	/* Aligns the IP header of QoS data, which mac80211 would otherwise move. */
++	skb = dev_alloc_skb(frame_length + 2);
++	if (!skb)
++		return;
++	skb_reserve(skb, 2);
++	skb_put_data(skb, body + frame_offset, frame_length);
 +
-+	hw = ieee80211_alloc_hw(sizeof(*dev), &bcm4323x_ops);
-+	if (!hw)
-+		return -ENOMEM;
-+	dev = hw->priv;
-+	dev->hw = hw;
-+	dev->chip = chip;
-+	dev->udev = interface_to_usbdev(intf);
-+	dev->intf = intf;
-+	mutex_init(&dev->io_mutex);
-+	init_completion(&dev->handshake_done);
-+	bcm4323x_init_tx(dev);
-+	usb_set_intfdata(intf, hw);
-+
-+	stage = "transport allocation";
-+	ret = bcm4323x_alloc_transport(dev);
-+	if (ret)
-+		goto error;
-+	stage = "firmware request";
-+	ret = request_firmware(&firmware, BCM4323X_FW_NAME, &intf->dev);
-+	if (ret)
-+		goto error;
-+	stage = "firmware activation";
-+	ret = bcm4323x_fw_download(dev, firmware);
-+	if (ret)
-+		goto error;
-+	stage = "runtime initialization";
-+	ret = bcm4323x_init_firmware(dev);
-+	if (ret)
-+		goto error;
-+
-+	stage = "mac80211 registration";
-+	ret = bcm4323x_register_hw(dev);
-+	if (ret)
-+		goto error;
-+	bcm4323x_led_register(dev);
-+
-+	dev_info(&intf->dev, "BCM4323x RPC mac80211 device ready, MAC %pM\n", hw->wiphy->perm_addr);
-+	release_firmware(firmware);
-+	return 0;
-+
-+error:
-+	release_firmware(firmware);
-+	bcm4323x_free_transport(dev);
-+	ieee80211_free_hw(hw);
-+	return dev_err_probe(&intf->dev, ret, "%s failed\n", stage);
-+}
-+
-+static void bcm4323x_disconnect(struct usb_interface *intf)
-+{
-+	struct ieee80211_hw *hw = usb_get_intfdata(intf);
-+	struct bcm4323x *dev = hw->priv;
-+
-+	bcm4323x_led_unregister(dev);
-+	ieee80211_unregister_hw(hw);
-+	bcm4323x_free_transport(dev);
-+	ieee80211_free_hw(hw);
-+}
-+
-+static int bcm4323x_suspend(struct usb_interface *intf, pm_message_t message)
-+{
-+	return 0;
-+}
-+
-+static int bcm4323x_resume(struct usb_interface *intf)
-+{
-+	struct ieee80211_hw *hw = usb_get_intfdata(intf);
-+	struct bcm4323x *dev = hw->priv;
-+	int ret;
-+
-+	if (READ_ONCE(dev->dead))
-+		return 0;
-+	ret = bcm4323x_rpc_call(dev, BCM4323X_RPC_PROC_WATCHDOG, NULL, 0, NULL, 0);
-+	if (ret) {
-+		dev_err(&intf->dev, "firmware lost during suspend: %d\n", ret);
-+		WRITE_ONCE(dev->dead, true);
-+		intf->needs_binding = 1;
++	status = IEEE80211_SKB_RXCB(skb);
++	status->band = le16_to_cpu(rxh->RxChan) & RXS_CHAN_5G ? NL80211_BAND_5GHZ :
++								NL80211_BAND_2GHZ;
++	status->freq = ieee80211_channel_to_frequency(channel, status->band);
++	bcm4323x_set_rx_rate(dev, status, body, frame_offset);
++	/* PHY status is valid only on the last subframe of an A-MPDU. */
++	if ((le16_to_cpu(rxh->RxStatus2) & RXS_PHYRXST_VALID) && hdr->rssi < 0) {
++		status->signal = hdr->rssi;
++		status->chains = BCM4323X_ANTENNAS;
++		status->chain_signal[0] = hdr->rxpwr0;
++		status->chain_signal[1] = hdr->rxpwr1;
++	} else {
++		status->flag |= RX_FLAG_NO_SIGNAL_VAL;
 +	}
-+	return 0;
++	rx_status1 = le16_to_cpu(rxh->RxStatus1);
++	if (rx_status1 & RXS_FCSERR)
++		status->flag |= RX_FLAG_FAILED_FCS_CRC;
++
++	/* Only accept hw decrypted frame if it isn't corrupted */
++	if ((rx_status1 & RXS_DECATMPT) && !(rx_status1 & RXS_DECERR) &&
++	    bcm4323x_rx_key_match(dev, skb, FIELD_GET(RXS_SECKINDX_MASK, rx_status1)))
++		status->flag |= RX_FLAG_DECRYPTED;
++	ieee80211_rx_irqsafe(dev->hw, skb);
 +}
 +
-+static const struct bcm4323x_chip bcm43231_chip = { };
++static void bcm4323x_handle_handshake_reply(struct bcm4323x *dev, const u8 *body,
++					    size_t body_length)
++{
++	const struct bcm4323x_handshake_reply *reply = (const void *)body;
 +
-+static const struct bcm4323x_chip wna3100_chip = {
-+	.has_wps_button = true,
-+};
++	dev->handshake_chip = 0;
++	if (body_length == sizeof(*reply) && le32_to_cpu(reply->version) == BCM4323X_RPC_VERSION)
++		dev->handshake_chip = reply->chip;
++	complete(&dev->handshake_done);
++}
 +
-+static const struct bcm4323x_chip bcm4323_chip = {
-+	.has_5ghz = true,
-+};
++static void bcm4323x_rx_noise(struct bcm4323x *dev, const u8 *body, size_t body_length)
++{
++	const struct bcm4323x_noise *noise = (const void *)body;
++	u32 channel;
++	s32 dbm;
++	unsigned int i;
 +
-+static const struct bcm4323x_chip f9l1101_chip = {
-+	.has_5ghz = true,
-+	.channel_data_2ghz = { 0x58, 0x44, 0x3c },
-+	.has_wps_led = true,
-+	.has_wps_button = true,
-+};
++	if (body_length < sizeof(*noise))
++		return;
++	/* Channels above 0x7F are presented as sign-extended */
++	channel = le32_to_cpu(noise->channel) & 0xff;
++	dbm = le32_to_cpu(noise->dbm);
++	if (dbm >= 0 || dbm < S8_MIN)
++		return;
++	for (i = 0; i < BCM4323X_NUM_CHANNELS; i++)
++		if (dev->channels[i].hw_value == channel) {
++			WRITE_ONCE(dev->noise[i], dbm);
++			break;
++		}
++}
 +
-+static const struct usb_device_id bcm4323x_id_table[] = {
-+	/* Belkin Double N+ Wireless USB Adapter */
-+	{ USB_DEVICE(0x050d, 0x6050), .driver_info = (kernel_ulong_t)&bcm4323_chip },
-+	/* Belkin F7D4101/F9L1101v1 */
-+	{ USB_DEVICE(0x050d, 0x615a), .driver_info = (kernel_ulong_t)&f9l1101_chip },
-+	/* Belkin N+ Wireless USB Adapter */
-+	{ USB_DEVICE(0x050d, 0x825c), .driver_info = (kernel_ulong_t)&bcm4323_chip },
-+	/* Dynex DX-NUSB */
-+	{ USB_DEVICE(0x050d, 0xd321), .driver_info = (kernel_ulong_t)&bcm43231_chip },
-+	/* Netgear WNDA3100v2 */
-+	{ USB_DEVICE(0x0846, 0x9011), .driver_info = (kernel_ulong_t)&bcm4323_chip },
-+	/* Netgear WNA3100 */
-+	{ USB_DEVICE(0x0846, 0x9020), .driver_info = (kernel_ulong_t)&wna3100_chip },
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(usb, bcm4323x_id_table);
++static void bcm4323x_handle_runtime_frame(struct bcm4323x *dev, const u8 *frame, size_t length)
++{
++	const struct bcm4323x_rpc_header *rpc = (const void *)frame;
++	u8 rpc_class = FIELD_GET(BCM4323X_RPC_CLASS_MASK, le32_to_cpu(rpc->xid_class));
++	u32 procedure = le32_to_cpu(rpc->procedure);
++	const u8 *body = frame + sizeof(*rpc);
++	size_t body_length = length - sizeof(*rpc);
 +
-+static struct usb_driver bcm4323x_driver = {
-+	.name = KBUILD_MODNAME,
-+	.probe = bcm4323x_probe,
-+	.disconnect = bcm4323x_disconnect,
-+	.suspend = bcm4323x_suspend,
-+	.resume = bcm4323x_resume,
-+	.id_table = bcm4323x_id_table,
-+	.soft_unbind = 1,
-+};
-+module_usb_driver(bcm4323x_driver);
++	if (rpc_class == BCM4323X_RPC_CLASS_TRANSPORT) {
++		if (procedure == BCM4323X_RPC_PROC_VERSION ||
++		    procedure == BCM4323X_RPC_PROC_CHIP_ACK)
++			bcm4323x_handle_handshake_reply(dev, body, body_length);
++	} else if (rpc_class == BCM4323X_RPC_CLASS_DATA) {
++		switch (procedure) {
++		case BCM4323X_RPC_PROC_RX:
++			bcm4323x_rx_80211(dev, body, body_length);
++			break;
++		case BCM4323X_RPC_PROC_TX_STATUS:
++			bcm4323x_tx_status(dev, body, body_length);
++			break;
++		case BCM4323X_RPC_PROC_NOISE_RESULT:
++			bcm4323x_rx_noise(dev, body, body_length);
++			break;
++		}
++	}
++}
 +
-+MODULE_AUTHOR("Ragul Balaji <ragulbaby@gmail.com>");
-+MODULE_AUTHOR("Ho Jie Feng <hjf3108@gmail.com>");
-+MODULE_DESCRIPTION("Broadcom BCM4323x USB mac80211 driver");
-+MODULE_LICENSE("GPL");
-+MODULE_FIRMWARE(BCM4323X_FW_NAME);
++void bcm4323x_rx_complete(struct urb *urb)
++{
++	struct bcm4323x *dev = urb->context;
++	u8 *cursor = urb->transfer_buffer;
++	size_t remaining = urb->actual_length;
++	int ret = 0;
++
++	/* Errors on explicit stops don't need an error print */
++	if (urb->status == -ENOENT || urb->status == -ECONNRESET || urb->status == -ESHUTDOWN)
++		return;
++	if (urb->status) {
++		dev_err_ratelimited(&dev->intf->dev, "RX URB failed: %d\n", urb->status);
++		bcm4323x_fatal_error(dev);
++		return;
++	}
++
++	/* RPC frames don't split across transfers */
++	while (remaining) {
++		const struct bcm4323x_rpc_header *rpc = (const void *)cursor;
++		u32 length = remaining < sizeof(*rpc) ? 0 :
++			     le32_to_cpu(rpc->length) + sizeof(rpc->length);
++
++		if (length < sizeof(*rpc) || length > remaining) {
++			dev_warn_ratelimited(&dev->intf->dev, "invalid RX RPC length %u of %zu\n",
++					     length, remaining);
++			break;
++		}
++		bcm4323x_handle_runtime_frame(dev, cursor, length);
++		cursor += length;
++		remaining -= length;
++	}
++	if (!READ_ONCE(dev->dead))
++		ret = usb_submit_urb(urb, GFP_ATOMIC);
++	if (ret && ret != -EPERM)
++		dev_warn_ratelimited(&dev->intf->dev, "RX URB left idle: %d\n", ret);
++}
 -- 
 2.53.0
 
