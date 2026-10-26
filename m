@@ -1,60 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=93.77.172.83
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.170
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792765825;
-	b=u/fpz2EK5BYei3TtNvRRroWLHoFO1i60CNlEG/bMiCAZ9cleZnLLnz5omZxeFqXdFiMo
-	 SVPbDmBZLtLBwynl3rMK3N4D7G0jVlYLUa+croUatIkWQOsMUAhBp4zeCvnqptHwkV1fV
-	 YRn9VLeXz3ttYQWCes+dOE+C2ID/fsOm/u4Sv0d9wLWjbX58HZlR1UkqivY3AbRjeaj8+
-	 ovd1UQrBmCJFBSt1fRLuQgzou8Uap4fpVrTgEh64HL1noO3BjA/2v1p/ZmGawupRB5H7n
-	 PcdO7+Z23cR0TC1HQgqG2DdpKlhgVDfSqQBEkscrK14xfeeKW2z3haI3yiWtUwUgW6A==
+	t=1792993005;
+	b=GhKAfReg/S92WtwgvDYeSAoYLhZOYOil5uCweaWE4q4Mh9mO1hBix6ydk7yYwnSJxwjg
+	 Hf5DdeYmNEWgYp3lHguGFJA4g942mEwvP8wO1qrgvKdJl/WBZ5MS8uXBxCmdrsUTbXieC
+	 P9YZWzETEO9m/5XK1ZyfnPgWTdum0abE0NBVIWzqsTpyP4vV7vsDRlm8v9MNH67gS3u1S
+	 JfWywMl1j4SMCKE1Hy7G+vfZmu32tXKI5ZpmrrMdwra/blzWa0np+wDqQ8G2SbjGP7UU0
+	 b3uuHrSDN3tb76lxv1fK0p+jJ/KifMeDBcvai9vasaYtpr8Vw9i72htca8Wnn3od3vw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792765825;
-	h=DMARC-Filter:Received:Received:X-Yandex-Fwd:DKIM-Signature:From:To:
-	 Cc:Subject:Date:Message-ID:X-Mailer:MIME-Version:
+	a=rsa-sha256; c=relaxed/relaxed; t=1792993005;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=Q4YBxp9Ib2eL1X9V1E4sWkkEpnIlNYN58hjqcOkNbeM=;
-	b=R9BfEtCjX+Ny0dfwsz4MkLsa2/2yeBkNq0N+Agbkd1cCKLySG4bF7ZSztoyRGhTZmOb4
-	 TKLJn2R7lNpFEIEF5lRgJPClPYmqVMj53EghOL0FaWO4iJ7bAFICc3YlNfIO/7jIRXNrl
-	 n1tXBJz3KuMmoDECKwWM/MOCCU+cYk6nlLAgsWrkMntsy0xO+KCDI3VUQOfFYdQn0yV98
-	 STOzhpTmNb8c96DvO/zQIaB+SMzb0unDYPzO6JHfEceAJkEmAb1728k6lgOVUPV/1QHou
-	 70hEphFFF27Nfy1AQ6XMMHLxhyzcE/ZXwywl+0EEHbUuHTdAEMVWZT0FBJnHYcF2xPA==
+	bh=6gzFO8XXzg0k4ZAcZpWqWJXV202MH2eZbj0US5jOWjs=;
+	b=VHrQt0+uqp2GrWWs8QKJplgwerzn50uNe7yJWgmUeEJnamx+3H+3a3fC/0jsJygfjHzc
+	 YYCzG6jr5lK54LqbTR+7nfUd0CdEzDmElOZHK0HvhBBgkITv5JIANatpyFDnad9c+clNO
+	 7ZPVsLAYRsRkOgHW1tbV/ggy+ZKq1YT7JcW0AMn5gDE5gNPkGcVcGNMUkrOH8SUypYD0z
+	 HEI99o6S1SdE6yfX8TNotPtv/2NGhRefzvf+sz5wPbLkheJD1BOtW7lWnC2QxQHlHkkil
+	 SZ2VgwYCP+Q6Heot2m2VEdKGg5Bhp8KzNWIoovmhrObjce2yW4k7/0+rvpXfvAi2w6g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=yandex.ru;
-	spf=pass smtp.mailfrom=yandex.ru;
-	dkim=pass header.d=yandex.ru header.i=@yandex.ru header.a=rsa-sha256 header.s=mail header.b=gogYjfSl;
-	arc=none smtp.remote-ip=93.77.172.83
-Received: from forward400e.mail.yandex.net (forward400e.mail.yandex.net [93.77.172.83])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=nA1eVcfF;
+	arc=none smtp.remote-ip=209.85.215.170
+Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FA7B606A31B
-	for <brcm80211@lists.linux.dev>; Fri, 23 Oct 2026 14:30:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8FA7B606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=yandex.ru
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yandex.ru
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78327606A325
+	for <brcm80211@lists.linux.dev>; Mon, 26 Oct 2026 05:36:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 78327606A325
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=yandex.ru header.i=@yandex.ru header.a=rsa-sha256 header.s=mail header.b=gogYjfSl
-Received: from mail-nwsmtp-smtp-production-main-63.yp-c.yandex.net (mail-nwsmtp-smtp-production-main-63.yp-c.yandex.net)
-	by forward400e.mail.yandex.net (postfix) with ESMTPS id 3FB2B82526;
-	Fri, 23 Oct 2026 17:30:13 +0300 (MSK)
-Received: by mail-nwsmtp-smtp-production-main-63 with ESMTPSA id 3UeBSOCiJmI0-Brb3G9fB;
-	Fri, 23 Oct 2026 17:30:12 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
-	t=1792765812; bh=Q4YBxp9Ib2eL1X9V1E4sWkkEpnIlNYN58hjqcOkNbeM=;
-	h=Message-ID:Date:Cc:Subject:To:From;
-	b=gogYjfSl9pohZRNrjHS2lw6TayQLCHgG3WM9YeO0dXfFxFyh9W9uPy4ayzMH9ant8
-	 g9BfmZnYIAYgXs1kTgOrX/2+GSs9JUW/tadPrlww2grKrFJuVfYmFGGBp6IkA/ZKes
-	 Bt5rSvr8sPzG7OV2ZKkD6mQX5P04Xkp/vNWkDoyw=
-Authentication-Results: mail-nwsmtp-smtp-production-main-63; dkim=pass header.i=@yandex.ru
-From: Sergey Armodin <dolph-in@yandex.ru>
-To: Arend van Spriel <arend.vanspriel@broadcom.com>,
-	linux-wireless@vger.kernel.org
-Cc: brcm80211@lists.linux.dev,
-	brcm80211-dev-list.pdl@broadcom.com
-Subject: [PATCH wireless-next v2] wifi: brcmfmac: pcie: restore FEM control pin mode on Apple BCM43602
-Date: Fri, 23 Oct 2026 21:30:03 +0700
-Message-ID: <20261023143003.1307752-1-dolph-in@yandex.ru>
-X-Mailer: git-send-email 2.56.0
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=nA1eVcfF
+Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-cd69954c755so1749589a12.3
+        for <brcm80211@lists.linux.dev>; Sun, 25 Oct 2026 22:36:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792993005; x=1793597805; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=6gzFO8XXzg0k4ZAcZpWqWJXV202MH2eZbj0US5jOWjs=;
+        b=nA1eVcfFzQER0VKrobf3ebwPRM8BL3ZDWVGQ3nRsh59o9Q/5F7t4ys5KjcXBDK1d0v
+         qc0J+xTjMxY9+Mjq5v1avPorkA5uyIzSLtig4NNO1StbSNJNZUi2dpKsVH+fWu4ypnHo
+         Fy8ZHHgkWW0RUAhMfEp3mwoKkOmed6AUCIxhKk0kIOt2XQLyq801hMHJ65IfcQOVj7Lc
+         2Y9xkJFiGVnBescgVRE0R1L6hUXlTXp6ktlZCKg0qZMFELx7gVTiJNunaa0dXiK2HNY3
+         teyVOnEsszLzGjmcIj0g40VQfYX/PHKwtOnUdkH+XUUgzKFkSim5H2MZBsn8lKvkxrFi
+         ZSQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792993005; x=1793597805;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=6gzFO8XXzg0k4ZAcZpWqWJXV202MH2eZbj0US5jOWjs=;
+        b=VGL6qz49IAVN2vkcCuu7csBG/u6Ce3tuSsonfMBnv28mHQWJalllWy41NMZNdleG3Z
+         THU2lTUFrgJ8A46wGqU9kOosD4ZI5Rt7y8/KI6WWfb/AwmgnRZqN4B/vXm0k5+Q6eDKV
+         ICi+bQvoxWhbwUDg3+yCrXPHvfcwiBo7WJzbDRagZya46bRJGR71Xb2/34Y/w4z3bmn2
+         KrtALWdWfLmQaopWNkXI4aICQQllngi87PfAkfEKvjuiwOMWNGkcHFrfUsR8cNOL4Fhc
+         Qgqo5kbZfMdKP31vqTU3OLd8hr3iZCzcTIPqaLKNKks3SfBiij1vCeefMnzaIehu52lZ
+         nd3Q==
+X-Forwarded-Encrypted: i=1; AKwUvBxyU4p5TzTLCEB0oGxy8omg1wbMFzV/T/WOSfl8Qa1vbeBWdU/y38sqhj57zrbdpGboZEG5WON4jiM=@lists.linux.dev
+X-Gm-Message-State: AFq9FYJJN3bDmdAfLabXctnabLcCpveKOAdGt0XMNog9bpWlUDdz0TbV
+	7U3cPNMD4O+X+cXQwoUOvzs0q7FEzOx7z7XNcRKJxLfyCKHITC/MSnCS
+X-Gm-Gg: AYBFou3qWfpHIZaoSTBkqh8NgLwea05mEqThaSSgI85TH9PpVpBButAJzquy1/qehzi
+	W3uFR7Tgp+gA0QjMqQKLWLztDy552+1wl0pLFZa0Bhl5MhDCDyg5BZM6h1vfVYDoG4rTaDY6qPG
+	hXBJYXlzZrWPjkpnF980cjnoYWZ4V1hd0R+JpgXZ6NnuLVcYKV8BznKX1DX6wGRUUEGQIy3dVOv
+	Pfvga0V3G03TO2m9ZERHa9uca9dh+m+TstsptdWyY3/+0OJIpC4tzPnK15xqe+fAL7aDFolqZwe
+	O2MUQ3Hx+L7ZMYQlIpSAVzQaKkSmu59eRuuEi0RKgz2UW83pboNtRpwfemVYWiSDMqvbMIJwcZx
+	7SFGKmoHZMFUUAFt25Lq9aMy91hhUgJ9jeARsP5Kqi9ZCGgI6mic6gqUQGgjMPmCbCHSR6BJN2i
+	3OcHeP7BXlyUbBNqDN9VDilCfSdb27APWY7wS6G9DWfwy0gjNOqidtE/huNGM6ozWMZGJqKafGX
+	YYzrFN80/4DWhr3SXGjy8i21Vf7+b+MJyEFH9YIfq3PjXP0MMyX4TFErLZyC9T3ay3EXJ0vesjg
+	NHKz
+X-Received: by 2002:a05:6a21:4e0b:b0:3e1:8890:8400 with SMTP id adf61e73a8af0-3e7bfbdb8dcmr4954301637.15.1792993004740;
+        Sun, 25 Oct 2026 22:36:44 -0700 (PDT)
+Received: from acemagic-m1.tail4fb79.ts.net ([2401:7400:c804:b668:673b:a930:e065:eca])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8a368d867a0sm927851b3a.2.2026.10.25.22.36.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 25 Oct 2026 22:36:44 -0700 (PDT)
+From: Ragul Balaji <ragulbaby@gmail.com>
+To: linux-wireless@vger.kernel.org
+Cc: Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes@sipsolutions.net>,
+	brcm80211@lists.linux.dev,
+	Ragul Balaji <ragulbaby@gmail.com>
+Subject: [RFC PATCH wireless-next 00/17] wifi: add a driver for Broadcom BCM4323x USB adapters
+Date: Mon, 26 Oct 2026 13:36:06 +0800
+Message-ID: <20261026053633.361454-1-ragulbaby@gmail.com>
+X-Mailer: git-send-email 2.53.0
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Post: <mailto:brcm80211@lists.linux.dev>
@@ -66,123 +98,139 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On a MacBookPro14,3 with a BCM43602 (14e4:43ba, subsystem 106b:0173),
-5 GHz stops working once the chip has been reset to its power-on
-state, which happens over S3 while running on battery. Scans still
-report 5 GHz networks, but every attempt to join one fails: the
-firmware ends the join with a SET_SSID event with status
-BRCMF_E_STATUS_FAIL and no LINK event, which brcmfmac reports as
-WLAN_STATUS_AUTH_TIMEOUT, seen in wpa_supplicant as
-"CTRL-EVENT-ASSOC-REJECT ... status_code=16". A 2.4 GHz network could
-still be joined in that state. Reloading the driver, power cycling
-the slot or a secondary bus reset do not help; only a reboot of the
-machine does.
+This series adds support for the following 802.11n USB adapters:
+- Broadcom BCM43231 (Netgear WNA3100, Dynex DX-NUSB)
+- BCM4323 (Netgear WNDA3100v2, Belkin F9L1101 and others)
 
-On this board 5 GHz depends on bit 4 of the ChipCommon chipcontrol
-register, which Broadcom's sbchipc.h calls
-CCTRL4360_DISCRETE_FEMCTRL_MODE (front-end module control through the
-discrete FEM control pins). After a reboot the bit is set. brcmfmac
-never writes it and firmware 7.35.177.61 does not set it after a
-power-on reset, so presumably the platform firmware sets it at boot.
-The watchdog reset brcmfmac does on probe and remove preserves the
-bit, but a power-on reset clears it: power cycling the slot of a
-working system breaks 5 GHz the same way. Read with the driver unbound
-after the firmware has run, chipcontrol is 0x01400010 after a reboot
-and 0x01000000 after S3 on battery. Bit 22 is lost as well, but
-setting bit 4 alone before the firmware is downloaded is enough to
-make 5 GHz work again.
 
-A MacBookPro14,2 (subsystem 106b:0157) was reported to behave the
-same way, over S3 on AC power as well as on battery: with the driver
-unbound, chipcontrol read 0x01400090 after a boot, 0 after S3 and
-0x01000000 once the firmware had run again, and setting bit 4 from
-user space before loading the driver made 5 GHz work again. A
-MacBookPro11,5 (subsystem 106b:0152), on the other hand, boots with
-chipcontrol 0x0100000c, bit 4 clear, and 5 GHz works there, so not
-every Apple BCM43602 board uses this mode.
+The protocol was inferred from USB captures of the vendor's
+Windows driver, cross referenced with code from brcmsmac, brcmfmac and b43.
+The code which are copied almost as-is from the referenced drivers
+are indicated in the comments of the code
 
-Set the bit, if it is clear, before downloading the firmware, but only
-for the MacBookPro14,2 and MacBookPro14,3 subsystem IDs. Subsystem ID
-0x0157 may not be unique to the MacBookPro14,2: it is also the ID that
-the module on the MacBookPro14,3 reports after a reset, until the
-platform firmware rewrites it to 0x0173, so other boards with the same
-module may match too. When the firmware is lost over a resume,
-brcmfmac removes and probes the device again, so this covers S3 as
-well as a driver reload.
+The driver supports:
 
-Tested on a MacBookPro14,3 with firmware 7.35.177.61: after power
-cycling the slot and after S3 on battery the driver sets the bit and
-5 GHz associates again; after a normal boot the bit is already set and
-nothing is written. Not tested with this patch on a MacBookPro14,2.
+- station, P2P client and monitor interfaces
+- HT20 and HT40, A-MPDU and A-MSDU transmission
+- 2.4 GHz channels 1-14 and, on the BCM4323, 5 GHz channels 36-165
+- hardware CCMP with management frame protection
+- the LEDs and the WPS button
 
-Signed-off-by: Sergey Armodin <dolph-in@yandex.ru>
----
-v2:
-- Only set the bit on the MacBookPro14,2 and MacBookPro14,3 instead of
-  on all Apple BCM43602 boards, since a MacBookPro11,5 boots with the
-  bit clear and 5 GHz works there.
-- Describe the MacBookPro14,2 and MacBookPro11,5 reports.
-- Retested on the MacBookPro14,3 with a slot power cycle. The S3 result
-  is from v1, which does the same on this board.
+Power save, AP, P2P GO, IBSS and mesh interfaces and hardware
+TKIP/WEP can be added in later patches
 
-v1: https://lore.kernel.org/linux-wireless/20261018193950.14287-1-dolph-in@yandex.ru/
+The series
+----------
 
- .../broadcom/brcm80211/brcmfmac/pcie.c        | 39 +++++++++++++++++++
- 1 file changed, 39 insertions(+)
+Patches 1-10 prepare brcm80211, so that the driver shares brcmsmac's
+and brcmfmac's code instead of copying it:
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-index 17bae04c1..653994d7b 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-@@ -726,9 +726,48 @@ static void brcmf_pcie_attach(struct brcmf_pciedev_info *devinfo)
- }
- 
- 
-+/* ChipCommon chipcontrol bit selecting the discrete FEM control pin mode */
-+#define BRCMF_CC_CHIPCTL_4360_DISCRETE_FEMCTRL_MODE	BIT(4)
-+
-+/* On the Apple boards below, 5 GHz on the BCM43602 only works with the
-+ * discrete FEM control pin mode selected in the ChipCommon chipcontrol
-+ * register. The bit is set after a reboot, but a power-on reset of the chip
-+ * (e.g. over S3) clears it and the firmware does not set it again. Restore
-+ * it before the firmware is started. Other Apple boards may not use this
-+ * mode (a MacBookPro11,5 boots with the bit clear), so they are left alone.
-+ */
-+static void brcmf_pcie_43602_apple_femctrl(struct brcmf_pciedev_info *devinfo)
-+{
-+	const struct pci_dev *pdev = devinfo->pdev;
-+	u32 val;
-+
-+	if (pdev->subsystem_vendor != PCI_VENDOR_ID_APPLE)
-+		return;
-+
-+	switch (pdev->subsystem_device) {
-+	case 0x0157:	/* MacBookPro14,2, possibly others */
-+	case 0x0173:	/* MacBookPro14,3 */
-+		break;
-+	default:
-+		return;
-+	}
-+
-+	brcmf_pcie_select_core(devinfo, BCMA_CORE_CHIPCOMMON);
-+	val = READCC32(devinfo, chipcontrol);
-+	if (val & BRCMF_CC_CHIPCTL_4360_DISCRETE_FEMCTRL_MODE)
-+		return;
-+
-+	brcmf_dbg(PCIE, "chipcontrol 0x%08x, setting discrete FEM control mode\n",
-+		  val);
-+	WRITECC32(devinfo, chipcontrol,
-+		  val | BRCMF_CC_CHIPCTL_4360_DISCRETE_FEMCTRL_MODE);
-+}
-+
- static int brcmf_pcie_enter_download_state(struct brcmf_pciedev_info *devinfo)
- {
- 	if (devinfo->ci->chip == BRCM_CC_43602_CHIP_ID) {
-+		brcmf_pcie_43602_apple_femctrl(devinfo);
-+
- 		brcmf_pcie_select_core(devinfo, BCMA_CORE_ARM_CR4);
- 		brcmf_pcie_write_reg32(devinfo, BRCMF_PCIE_ARMCR4REG_BANKIDX,
- 				       5);
+- 1-2 make d11.h self-contained and move it, with the transmit frame
+  ID masks, to the shared include directory;
+- 3-4 prepare brcmsmac's rate tables and rateset helpers for brcmutil;
+- 5 fixes brcmsmac's L-SIG length of short-GI frames, which could be
+  one symbol shorter than the frame;
+- 6-7 make the PLCP and frame timing helpers take the band instead
+  of brcmsmac's state, and move them to rate.c;
+- 8 moves rate.c, with all of these tables and helpers, to brcmutil;
+- 9 moves brcmfmac's USB bootloader definitions to a shared header, as
+  these adapters boot through the same bootloader.
+- 10 exports ieee80211_get_bssid() from mac80211 again, reverting
+  391234eb4831 ("wifi: mac80211: unexport ieee80211_get_bssid()")
+Apart from patch 5, these patches change no behaviour; patch 6 only
+drops the device name from the helpers' error messages. The brcmsmac
+and brcmfmac changes are compile-tested only.
+
+Patches 11-17 add the driver, with the Kconfig, Makefile and MAINTAINERS
+entry coming last.
+
+Firmware
+--------
+
+The driver requires brcm/bcm4323x.bin. As captured from the 5.100.68.46
+version of the Windows driver.
+sha256 cc286a529396434a38e59382dcd46fa92a57f1cd1a38eea20d2b24dec028cf29
+This firmware needs to be in linux-firmware.
+
+Testing
+-------
+
+On a Belkin F9L1101 associated to a 5 GHz HT40 WPA2 access point,
+single-stream TCP ran at 107-128 Mbit/s in both directions.
+
+AI USE
+------
+Reverse engineering is done with assistance from LLMs.
+Code has been reviewed us manually.
+
+Ragul Balaji (17):
+  wifi: brcmsmac: make d11.h self-contained
+  wifi: brcm80211: move d11.h to the shared include directory
+  wifi: brcmsmac: look up OFDM rates in rate.c
+  wifi: brcmsmac: give the rate tables and helpers a brcmu_ prefix
+  wifi: brcmsmac: round short-GI L-SIG lengths up to whole symbols
+  wifi: brcmsmac: pass the band to the PLCP and frame timing helpers
+  wifi: brcmsmac: move the PLCP and frame timing helpers to rate.c
+  wifi: brcm80211: move the rate helpers of brcmsmac to brcmutil
+  wifi: brcm80211: move the USB bootloader definitions to a shared
+    header
+  wifi: mac80211: export ieee80211_get_bssid() again
+  wifi: bcm4323x: add the shared definitions
+  wifi: bcm4323x: add the USB transport and firmware setup
+  wifi: bcm4323x: add the receive path
+  wifi: bcm4323x: add the transmit path
+  wifi: bcm4323x: add the mac80211 operations
+  wifi: bcm4323x: add LED and WPS button support
+  wifi: bcm4323x: add Kconfig, Makefile and MAINTAINERS entry
+
+ MAINTAINERS                                   |    7 +
+ .../net/wireless/broadcom/brcm80211/Kconfig   |    1 +
+ .../net/wireless/broadcom/brcm80211/Makefile  |    1 +
+ .../broadcom/brcm80211/bcm4323x/Kconfig       |   12 +
+ .../broadcom/brcm80211/bcm4323x/Makefile      |    6 +
+ .../broadcom/brcm80211/bcm4323x/bcm4323x.h    |  258 +++
+ .../brcm80211/bcm4323x/bcm4323x_core.c        |  545 ++++++
+ .../brcm80211/bcm4323x/bcm4323x_led.c         |  221 +++
+ .../brcm80211/bcm4323x/bcm4323x_mac.c         | 1495 +++++++++++++++++
+ .../broadcom/brcm80211/bcm4323x/bcm4323x_rx.c |  317 ++++
+ .../broadcom/brcm80211/bcm4323x/bcm4323x_tx.c | 1386 +++++++++++++++
+ .../broadcom/brcm80211/brcmfmac/usb.c         |   68 +-
+ .../broadcom/brcm80211/brcmsmac/Makefile      |    1 -
+ .../broadcom/brcm80211/brcmsmac/ampdu.c       |   34 +-
+ .../broadcom/brcm80211/brcmsmac/dma.h         |   27 -
+ .../broadcom/brcm80211/brcmsmac/mac80211_if.c |    2 +-
+ .../broadcom/brcm80211/brcmsmac/main.c        |  687 ++------
+ .../broadcom/brcm80211/brcmsmac/main.h        |   26 +-
+ .../broadcom/brcm80211/brcmsmac/phy/phy_cmn.c |   17 -
+ .../broadcom/brcm80211/brcmsmac/phy/phy_hal.h |    3 +-
+ .../broadcom/brcm80211/brcmsmac/pub.h         |   35 +-
+ .../broadcom/brcm80211/brcmsmac/rate.c        |  514 ------
+ .../broadcom/brcm80211/brcmsmac/stf.c         |    4 +-
+ .../broadcom/brcm80211/brcmutil/Makefile      |    2 +-
+ .../broadcom/brcm80211/brcmutil/rate.c        | 1027 +++++++++++
+ .../broadcom/brcm80211/include/brcm_usb_rdl.h |   77 +
+ .../{brcmsmac/rate.h => include/brcmu_rate.h} |  160 +-
+ .../brcm80211/{brcmsmac => include}/d11.h     |   43 +-
+ include/net/mac80211.h                        |   12 +
+ net/mac80211/ieee80211_i.h                    |    2 -
+ net/mac80211/util.c                           |    1 +
+ 31 files changed, 5649 insertions(+), 1342 deletions(-)
+ create mode 100644 drivers/net/wireless/broadcom/brcm80211/bcm4323x/Kconfig
+ create mode 100644 drivers/net/wireless/broadcom/brcm80211/bcm4323x/Makefile
+ create mode 100644 drivers/net/wireless/broadcom/brcm80211/bcm4323x/bcm4323x.h
+ create mode 100644 drivers/net/wireless/broadcom/brcm80211/bcm4323x/bcm4323x_core.c
+ create mode 100644 drivers/net/wireless/broadcom/brcm80211/bcm4323x/bcm4323x_led.c
+ create mode 100644 drivers/net/wireless/broadcom/brcm80211/bcm4323x/bcm4323x_mac.c
+ create mode 100644 drivers/net/wireless/broadcom/brcm80211/bcm4323x/bcm4323x_rx.c
+ create mode 100644 drivers/net/wireless/broadcom/brcm80211/bcm4323x/bcm4323x_tx.c
+ delete mode 100644 drivers/net/wireless/broadcom/brcm80211/brcmsmac/rate.c
+ create mode 100644 drivers/net/wireless/broadcom/brcm80211/brcmutil/rate.c
+ create mode 100644 drivers/net/wireless/broadcom/brcm80211/include/brcm_usb_rdl.h
+ rename drivers/net/wireless/broadcom/brcm80211/{brcmsmac/rate.h => include/brcmu_rate.h} (53%)
+ rename drivers/net/wireless/broadcom/brcm80211/{brcmsmac => include}/d11.h (97%)
+
+
+base-commit: 734bef548a96e8774d6eef5dfa2026c6edc4e80b
 -- 
-2.56.0
+2.53.0
 
