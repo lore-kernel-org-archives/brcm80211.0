@@ -1,61 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=178.154.239.94
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.226
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793553635;
-	b=b8IQk25XriEVYmfECxKK1dArpfqsaRTWBWYLXdkv18vnbnQg6KYZ1305vSmaBU1HTEmZ
-	 67bScBeJvHjshGYk0gLirOpM6KWcJUp9tnYvhd5ipF+26Q9lunRQbpQL1hQkM8md8/VqS
-	 1lfeaplDy852Nvzw+Wte1ivdX7lhJkcLLU+cCKiq1qH05zuu1tpXJIdCvsAX3IaTonDJR
-	 AedVLKwB6jIbonKOungxs135xgpV8vgSoMhZ5h8Xm0DIyyPCNRsyeVsjo/uscWfZbv20D
-	 n14ZRZKEo5Y9puZphLkzxvcyvuRqq8OxCOA9qm41Pi+tPDplSOsR7lABt6m/QKJHc2Q==
+	t=1793561248;
+	b=iB5887fB3r8q7AUeeEXwC3xZKLR2M6r2dNTYm2qEZmqpKtapUXu7yfOEfhimN5HRvbyc
+	 UILoC6IT7qwbzormWHhu0bVP4CvcYEtdXtFpVH6ZfzhF3g4PTJ0bKcHUBdywhZQtFP390
+	 Z00sjIwytmmOZ1lQwLZHXeJo2URc21Dto0WNhVr+GBDRyAYAZUq3SXSG0edQgYsBzmGAh
+	 vzEbFl8s8TX2R6HrkViLB79Qcy/J9dhMmTE9HLseC0oby0qIfWQXi0DewXLl59844i3Hd
+	 S8/Krf/sbzu/uh7sjdzCXNmxucy13svS+IEjk8CgHWhX1NX1H/OIQM3s5PuADbrrYgw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793553635;
-	h=DMARC-Filter:Received:Received:X-Yandex-Fwd:DKIM-Signature:From:To:
-	 Cc:Subject:Date:Message-ID:X-Mailer:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=2ZuuJ4B38gxCXymoqHQeCOTO0iM8vAg4P1SoDO+VaM8=;
-	b=e2DQagDXLaamQz1hwGPwNZfRqBBeYHLz4DXOK+zs912qUoTc+N+w/bX5DVGsRi+MR9Rw
-	 P/gThMn/EvdSh3SajE87FyxmEud2coxKlZeGI+XAWlHTXMhQTCmFc6zirQjPOGEWxmyBB
-	 pNxR7YgZzxFFANJv4odQ3bZ8JnhYyF7xKFoCqt/9F1+LvU2A8npKdXz15+Syyv2lM2esa
-	 I24IllI7d5Qu4nl8LY4VTot90WjmQ7h17mAqt46GIu/i5Q8m+hd56hL3FPNbIEBc4sTR4
-	 Cn3t4C1tEriRFjj6skNwVdM8muzTz0CLpj526TOlm5enMG8TtsuZB0MF0AMk4O6EoUQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793561248;
+	h=DMARC-Filter:Received:X-Google-DKIM-Signature:X-Forwarded-Encrypted:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:X-Relaying-Domain:
+	 X-CFilter-Loop:Received:DKIM-Signature:X-Forwarded-Encrypted:
+	 X-Received:X-Received:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-DetectorID-Processed;
+	bh=FBzaqWRuYJDOcynWW1oUqzv1XeYY64zxgMqREXlXnBE=;
+	b=SB8nSETGdDGBzSLevyO3WsE/rsaBxFJfyssGdWkX9ZzT1N9l01+hQV92E/jDiyiMy4Dc
+	 t2043FAxV1AIRi/enCfKYTqMKHihjtNnfLkcgEDoqM4NxUU/vUHfRQqaLWqzYbbnlVzyQ
+	 wLHbqmFPNjibPw9/vbm1cXuUW6QFtjhxYudqZmC2MA+wZKidZqck3dUgP7tn0yaAI7F0M
+	 iymmRqVUhXUjKbQzhmDpHspopg7+G+3P7HLXmLC+Gz2cOk7mkvn0OHvAFnyYLWhxNWDbs
+	 Z4lx7q3q/Ipk0MqXG4bOCSJJt/dSdM+mMEu0Lj6tjYHNHhZ3nNGeVQrTPAisT0AXhTQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=yandex.ru;
-	spf=pass smtp.mailfrom=yandex.ru;
-	dkim=pass header.d=yandex.ru header.i=@yandex.ru header.a=rsa-sha256 header.s=mail header.b=pJzOs5HM;
-	arc=none smtp.remote-ip=178.154.239.94
-Received: from forward401a.mail.yandex.net (forward401a.mail.yandex.net [178.154.239.94])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=broadcom.com;
+	spf=fail smtp.mailfrom=broadcom.com;
+	dkim=pass header.d=broadcom.com header.i=@broadcom.com header.a=rsa-sha256 header.s=google header.b=IKkv0k6d;
+	arc=none smtp.remote-ip=209.85.215.226
+Received: from mail-pg1-f226.google.com (mail-pg1-f226.google.com [209.85.215.226])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE16606A325
-	for <brcm80211@lists.linux.dev>; Sun,  1 Nov 2026 17:20:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EEE16606A325
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=yandex.ru
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yandex.ru
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56182606A32E
+	for <brcm80211@lists.linux.dev>; Sun,  1 Nov 2026 19:27:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 56182606A32E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=yandex.ru header.i=@yandex.ru header.a=rsa-sha256 header.s=mail header.b=pJzOs5HM
-Received: from mail-nwsmtp-smtp-production-main-73 (mail-nwsmtp-smtp-production-main-73.yp-c.yandex.net)
-	by forward401a.mail.yandex.net (postfix) with ESMTPS id 1AC6CC00FF;
-	Sun, 01 Nov 2026 20:20:25 +0300 (MSK)
-Received: by mail-nwsmtp-smtp-production-main-73 with ESMTPSA id CKqn197cU0U0-Y3GU7O0t;
-	Sun, 01 Nov 2026 20:20:23 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
-	t=1793553624; bh=2ZuuJ4B38gxCXymoqHQeCOTO0iM8vAg4P1SoDO+VaM8=;
-	h=Message-ID:Date:Cc:Subject:To:From;
-	b=pJzOs5HMXYEjybLjYgGPKxKifYRDMiUDbaWNhe8H2UTzP37gctNxB/Qy6mi60GeGR
-	 toD3+iePS/DvjnHRm08D1lFr3vqwhqi2PSVsDdvK1UoDD6LUL13HAd/dxBKjKs8a4K
-	 t9fdeLl53PGEFX+Ptrv5pF2JROcV3gY6DHkBhnnQ=
-Authentication-Results: mail-nwsmtp-smtp-production-main-73; dkim=pass header.i=@yandex.ru
-From: Sergey Armodin <dolph-in@yandex.ru>
-To: Arend van Spriel <arend.vanspriel@broadcom.com>,
-	linux-wireless@vger.kernel.org
-Cc: brcm80211@lists.linux.dev,
-	brcm80211-dev-list.pdl@broadcom.com,
-	Angel Lindo <angellindo@gmail.com>
-Subject: [PATCH wireless-next v3] wifi: brcmfmac: pcie: restore FEM control pin mode on Apple BCM43602
-Date: Mon,  2 Nov 2026 00:20:11 +0700
-Message-ID: <20261101172011.1591620-1-dolph-in@yandex.ru>
-X-Mailer: git-send-email 2.56.0
+	dkim=pass (1024-bit key, unprotected) header.d=broadcom.com header.i=@broadcom.com header.a=rsa-sha256 header.s=google header.b=IKkv0k6d
+Received: by mail-pg1-f226.google.com with SMTP id 41be03b00d2f7-cdb2893531bso133641a12.1
+        for <brcm80211@lists.linux.dev>; Sun, 01 Nov 2026 11:27:28 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793561248; x=1794166048;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:dkim-signature:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=FBzaqWRuYJDOcynWW1oUqzv1XeYY64zxgMqREXlXnBE=;
+        b=s1+yGvY3mHvAAp86wnIb/Q2Dey6578waZIODOqHhsIlKRcVVDnv8VZo76Yu0tfmJ/S
+         kwLsDXHPrJl4qDcduRiiYMSFogUEmvwaUgdadTLQKf4IWq5QHWQlIPqo8BSC99y3HQED
+         iwdHVcTf2nGqmS4xpDu9HDoaaysYMwE3DDFcU2sxYSdivuHqb9GGG/+/kUQO9Y/6pSY5
+         JD+fmOMDyL2JgYXO8j6K+r6r950N7VH3q4Wj5Gn8H10G8b26MgYV3pZ5H/4sbUcnFL+s
+         FZCr1DkC0PEINwwet0hTiZaB6pDqoIwpIEKhRLz53avktZC58iNntb0sNM3Y5lskOa+Q
+         wN6Q==
+X-Forwarded-Encrypted: i=1; AKwUvBy5Rlq4YSTlsljnAUybWANSrXhdogl2Yh60OCsRj+uJOwzmfjTFFlLnKfHuXPp6F+Hyf6DryxsBPLo=@lists.linux.dev
+X-Gm-Message-State: APuU4Z/f08gH5nreVPfeKNCI1Qi8+/qt8p+fL0+N0Ek1oJnbI/PX0SVx
+	2N3RMvqyGdnmYQwU96Xa0My9bgh+ddxxK6dOrIeUTFvJzNWczgK89MPgrdngdsC7UR3x3k65gIr
+	642WWI2fOOqASG1hs8qfkp3olzCu6+Z3sSebT50EMGKN3KiQrmWqcfaLF4DlU8UJqzrCZXTdHiU
+	aDNDzMN2zJrgz9SbWNNnH3X5Hg/tX22Z8q741vnBz1P6cFmKI4hUdh//wwThNnrR1D4Z5DGSdxJ
+	gOEnlo4pa7Clde7Erc=
+X-Gm-Gg: AYBFou10DG/JdE/phaRCIF1OFoW/1ZsnihinlFRwtUKIRqGEz+Er6R7HtZHhCqdwaRx
+	NUra37mbEG41km1DH2OmbvJCH87d5fx1AhBxpIQTYOtk85CiEAwjRrt4/8sNwUe/NN47IMpumPH
+	5gMM8jg4nX/YrT8MLYvk0VtWLDkSGpBR8JBSGvCqI9rIgiBcs29WVvstIqkhFVTS9sjsCplxz+a
+	8Z+X87AGCT+qa1dojlWB6jtHofyYh8iI7wWS3DQwVdbv31PA/kjBUNOmqU64LWVbAS7fgy+4bSK
+	Ltjw32hSI5eiMabkAhXCQel5ZZbjpH0iIW14he5Hbw3wuwfK92HGrl5m8K48J6vMvBl5OWN77xW
+	JinDiio5ehl0iaBj5Nu+E702QJwrkaUml/D0I5KU+2tugltRzFu0T+IKSIHT7F6sDKmUJFv0yfK
+	xrgvjkc5WJXapEWS9MQp69DjLLQYeOxzz+q062gqk=
+X-Received: by 2002:a17:90b:1b08:b0:3ab:5832:727d with SMTP id 98e67ed59e1d1-3ae8982af58mr6570453a91.35.1793561247679;
+        Sun, 01 Nov 2026 11:27:27 -0800 (PST)
+Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-28.dlp.protect.broadcom.com. [144.49.247.28])
+        by smtp-relay.gmail.com with ESMTPS id 98e67ed59e1d1-3ae8809c5ebsm2900348a91.4.2026.11.01.11.27.25
+        for <brcm80211@lists.linux.dev>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 01 Nov 2026 11:27:27 -0800 (PST)
+X-Relaying-Domain: broadcom.com
+X-CFilter-Loop: Reflected
+Received: by mail-ej1-f70.google.com with SMTP id a640c23a62f3a-c429d9d05f0so108935066b.1
+        for <brcm80211@lists.linux.dev>; Sun, 01 Nov 2026 11:27:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google; t=1793561244; x=1794166044; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=FBzaqWRuYJDOcynWW1oUqzv1XeYY64zxgMqREXlXnBE=;
+        b=IKkv0k6dLyQrspRl+xKlhsrAkqHPAWO4utOQGPf0toYwECoz401QNuZOC6WwGLQgr1
+         UCsGcg+ZRRb7ortV6nWnr1oTq3KTmHI6lg+ObWlsaIwyw0KXgb0yJa7Z3kghMFokeZ40
+         3dCyIlfropEHibOGs57HQSgW+hMUDngBgB6tM=
+X-Forwarded-Encrypted: i=1; AKwUvByiAhmqFTYfkUftNOQakwjLAGRWoJtiWcpZEqCIfKwu4/2w/kFEDTNeyLdEEWfU0L8+YMLBsWzK5gY=@lists.linux.dev
+X-Received: by 2002:a17:907:86a4:b0:c46:9d7b:37d with SMTP id a640c23a62f3a-c4ca7a4b544mr641619866b.17.1793561244357;
+        Sun, 01 Nov 2026 11:27:24 -0800 (PST)
+X-Received: by 2002:a17:907:86a4:b0:c46:9d7b:37d with SMTP id a640c23a62f3a-c4ca7a4b544mr641618066b.17.1793561243910;
+        Sun, 01 Nov 2026 11:27:23 -0800 (PST)
+Received: from [192.168.178.26] (f215227.upc-f.chello.nl. [80.56.215.227])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c4cabc1920csm303460866b.5.2026.11.01.11.27.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 01 Nov 2026 11:27:22 -0800 (PST)
+Message-ID: <d78cbbd2-601a-4cf1-800f-3be57a2b7de2@broadcom.com>
+Date: Sun, 1 Nov 2026 20:27:22 +0100
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Post: <mailto:brcm80211@lists.linux.dev>
@@ -65,148 +105,56 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:brcm80211+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/13] wifi: brcmfmac: Add BCM4388 support
+To: michael.reeves077@gmail.com, Pieter-Paul Giesberts
+ <pieterpg@broadcom.com>, "Franky Lin (Zhenhui)" <frankyl@broadcom.com>,
+ Mathy Vanhoef <vanhoefm@gmail.com>, Kalle Valo <kvalo@kernel.org>,
+ Kees Cook <kees@kernel.org>, "Gustavo A. R. Silva" <gustavoars@kernel.org>
+Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
+ brcm80211-dev-list.pdl@broadcom.com, asahi@lists.linux.dev,
+ Hector Martin <marcan@marcan.st>, Daniel Berlin <dberlin@dberlin.org>,
+ Janne Grunau <j@jannau.net>, linux-kernel@vger.kernel.org,
+ Hante Meuleman <meuleman@broadcom.com>, linux-hardening@vger.kernel.org,
+ Peter Robinson <pbrobinson@gmail.com>,
+ Izabela Bakollari <ibakolla@redhat.com>
+References: <20260925-brcm4388-submit-v1-0-b5cbc2cde2fb@gmail.com>
+Content-Language: en-US
+From: Arend van Spriel <arend.vanspriel@broadcom.com>
+In-Reply-To: <20260925-brcm4388-submit-v1-0-b5cbc2cde2fb@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
 
-On a MacBookPro14,3 with a BCM43602 (14e4:43ba, subsystem 106b:0173),
-5 GHz stops working once the chip has been reset to its power-on
-state, which happens over S3 while running on battery. Scans still
-report 5 GHz networks, but every attempt to join one fails: the
-firmware ends the join with a SET_SSID event with status
-BRCMF_E_STATUS_FAIL and no LINK event, which brcmfmac reports as
-WLAN_STATUS_AUTH_TIMEOUT, seen in wpa_supplicant as
-"CTRL-EVENT-ASSOC-REJECT ... status_code=16". A 2.4 GHz network could
-still be joined in that state. Reloading the driver, power cycling
-the slot or a secondary bus reset do not help; only a reboot of the
-machine does.
++ Peter, Izabela
 
-On this board 5 GHz depends on bit 4 of the ChipCommon chipcontrol
-register, which Broadcom's sbchipc.h calls
-CCTRL4360_DISCRETE_FEMCTRL_MODE (front-end module control through the
-discrete FEM control pins). After a reboot the bit is set. brcmfmac
-never writes it and firmware 7.35.177.61 does not set it after a
-power-on reset, so presumably the platform firmware sets it at boot.
-The watchdog reset brcmfmac does on probe and remove preserves the
-bit, but a power-on reset clears it: power cycling the slot of a
-working system breaks 5 GHz the same way. Read with the driver unbound
-after the firmware has run, chipcontrol is 0x01400010 after a reboot
-and 0x01000000 after S3 on battery. Bit 22 is lost as well, but
-setting bit 4 alone before the firmware is downloaded is enough to
-make 5 GHz work again.
+On 25/09/2026 15:43, Michael Reeves via B4 Relay wrote:
+> The Broadcom BCM4388 chipset requires new PCIe initialization and
+> firmware interfaces. Add support for these interfaces to brcmfmac to
+> enable basic station operation.
+> 
+> This series adds:
+> - Signed firmware loading and mailbox transport
+> - Fixes for chip identification and firmware capability matching
+> - Versioned scan and join requests, and extended PMK payloads
+> - Updated event mask handling
+> 
+> These changes include work by Hector Martin and Daniel Berlin from Asahi
+> Linux, refactored where needed for upstream inclusion.
+> 
+> The series provides basic station support only. 6 GHz support is planned
+> for a follow-up patchset after this lands. The driver retains legacy
+> interfaces for older firmware.
+> 
+> Tested on an Apple M3 MacBook Air (J613):
+> - Device boot and network scanning
+> - 5 GHz WPA2-PSK association and DHCP
+> - Bidirectional TCP traffic
 
-A MacBookPro14,2 (subsystem 106b:0157) was reported to behave the same
-way, over S3 on AC power as well as on battery: with the driver
-unbound, chipcontrol read 0x01400090 after a boot, 0 after S3 and
-0x01000000 once the firmware had run again, and setting bit 4 from
-user space before loading the driver made 5 GHz work again.
+Finally got some time to get this series tested on my setup. The patches 
+generally look good. So far no regressions observed. It would be good if 
+some more people could test this series on their equipment. I will do 
+some more testing and wait some days.
 
-A MacBookPro13,3 (subsystem 106b:015a) was reported to lose the bit as
-well, but only over S3 off the charger: with the driver unbound,
-chipcontrol read 0x01400090 after a boot and 0 after S3 with the
-charger unplugged for some or all of the sleep, but kept bit 4 over S3
-on the charger. After S3 on battery, joins failed with status 16, and
-setting bit 4 from user space before loading the driver made 5 GHz
-work again.
-
-A MacBookPro11,5 (subsystem 106b:0152), on the other hand, boots with
-chipcontrol 0x0100000c, bit 4 clear, and 5 GHz works there, so not
-every Apple BCM43602 board uses this mode.
-
-Set the bit, if it is clear, before downloading the firmware, but only
-for the MacBookPro13,3, MacBookPro14,2 and MacBookPro14,3 subsystem
-IDs. Subsystem ID 0x0157 may not be unique to the MacBookPro14,2: it
-is also the ID that the module on the MacBookPro14,3 reports after a
-reset, until the platform firmware rewrites it to 0x0173, so other
-boards with the same module may match too. When the firmware is lost
-over a resume, brcmfmac removes and probes the device again, so this
-covers S3 as well as a driver reload.
-
-Tested on a MacBookPro14,3 with firmware 7.35.177.61: after power
-cycling the slot and after S3 on battery the driver sets the bit and
-5 GHz associates again; after a normal boot the bit is already set and
-nothing is written. Not tested with this patch on a MacBookPro13,3 or
-a MacBookPro14,2.
-
-Tested-by: Angel Lindo <angellindo@gmail.com> # MacBookPro14,3
-Signed-off-by: Sergey Armodin <dolph-in@yandex.ru>
----
-v3:
-- Also set the bit on the MacBookPro13,3 (subsystem 106b:015a), from
-  chipcontrol readings reported for that board.
-- Add Angel Lindo's Tested-by from v2 on a MacBookPro14,3. His build
-  also carried other local patches, one of them keeping the card in D0
-  over suspend. His chipcontrol read 0x01000010 after each resume and
-  0x01400010 after a boot: bit 22 was lost, so the chip was still
-  reset, and bit 4 was set again by this patch. v3 only adds a
-  subsystem ID, so nothing changes on that board.
-
-v2:
-- Only set the bit on the MacBookPro14,2 and MacBookPro14,3 instead of
-  on all Apple BCM43602 boards, since a MacBookPro11,5 boots with the
-  bit clear and 5 GHz works there.
-- Describe the MacBookPro14,2 and MacBookPro11,5 reports.
-- Retested on the MacBookPro14,3 with a slot power cycle. The S3 result
-  is from v1, which does the same on this board.
-
-v1: https://lore.kernel.org/linux-wireless/20261018193950.14287-1-dolph-in@yandex.ru/
-v2: https://lore.kernel.org/linux-wireless/20261023143003.1307752-1-dolph-in@yandex.ru/
-
- .../broadcom/brcm80211/brcmfmac/pcie.c        | 40 +++++++++++++++++++
- 1 file changed, 40 insertions(+)
-
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-index 17bae04c1..7c4d312fa 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-@@ -726,9 +726,49 @@ static void brcmf_pcie_attach(struct brcmf_pciedev_info *devinfo)
- }
- 
- 
-+/* ChipCommon chipcontrol bit selecting the discrete FEM control pin mode */
-+#define BRCMF_CC_CHIPCTL_4360_DISCRETE_FEMCTRL_MODE	BIT(4)
-+
-+/* On the Apple boards below, 5 GHz on the BCM43602 only works with the
-+ * discrete FEM control pin mode selected in the ChipCommon chipcontrol
-+ * register. The bit is set after a reboot, but a power-on reset of the chip
-+ * (e.g. over S3) clears it and the firmware does not set it again. Restore
-+ * it before the firmware is started. Other Apple boards may not use this
-+ * mode (a MacBookPro11,5 boots with the bit clear), so they are left alone.
-+ */
-+static void brcmf_pcie_43602_apple_femctrl(struct brcmf_pciedev_info *devinfo)
-+{
-+	const struct pci_dev *pdev = devinfo->pdev;
-+	u32 val;
-+
-+	if (pdev->subsystem_vendor != PCI_VENDOR_ID_APPLE)
-+		return;
-+
-+	switch (pdev->subsystem_device) {
-+	case 0x0157:	/* MacBookPro14,2, possibly others */
-+	case 0x015a:	/* MacBookPro13,3 */
-+	case 0x0173:	/* MacBookPro14,3 */
-+		break;
-+	default:
-+		return;
-+	}
-+
-+	brcmf_pcie_select_core(devinfo, BCMA_CORE_CHIPCOMMON);
-+	val = READCC32(devinfo, chipcontrol);
-+	if (val & BRCMF_CC_CHIPCTL_4360_DISCRETE_FEMCTRL_MODE)
-+		return;
-+
-+	brcmf_dbg(PCIE, "chipcontrol 0x%08x, setting discrete FEM control mode\n",
-+		  val);
-+	WRITECC32(devinfo, chipcontrol,
-+		  val | BRCMF_CC_CHIPCTL_4360_DISCRETE_FEMCTRL_MODE);
-+}
-+
- static int brcmf_pcie_enter_download_state(struct brcmf_pciedev_info *devinfo)
- {
- 	if (devinfo->ci->chip == BRCM_CC_43602_CHIP_ID) {
-+		brcmf_pcie_43602_apple_femctrl(devinfo);
-+
- 		brcmf_pcie_select_core(devinfo, BCMA_CORE_ARM_CR4);
- 		brcmf_pcie_write_reg32(devinfo, BRCMF_PCIE_ARMCR4REG_BANKIDX,
- 				       5);
--- 
-2.56.0
-
+Regards,
+Arend
