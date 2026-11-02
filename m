@@ -1,79 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.161.50
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.44
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793580188;
-	b=wiWof3+53tXn3wJTgMNtxIfQ0UdGtitCq+JTT+hGdzZgGc7jrdi4Dk4A7ifBqijaVKiQ
-	 kTPhHA+UXJhiu8+mhnWGifjpuPxCnYch9eIPrbL09AGMjEV9CWvo5UAdavH3GXSYkGSo+
-	 hW4low9TH3GWx3d/FLGkDIJLdnydIJEsTFUu8rSizdRjyT1z5728t2LCys/Vl8aXl3UiK
-	 XKRqRBIqbMGxvQ0U99amvT/EcI/7bmeka3Z7QHp5bjKUFF7iBl3Q31fdhSGPAhJ6oLH9Y
-	 ilEDsWN7jPyFwTeK4hCUgLxUPvqBgekgMVF4NHrhnLaaolmFxNRZohpMfVYOvNBSpCQ==
+	t=1793622200;
+	b=lKNWzeT13PpoSqP+hgM5EQuTuXZul5FsY418Tmz78YKi5awtUSxe0Yt7sF7JlVQegIQ0
+	 m/vKq1g48fu1PvRhZLAbqsdN+uVpL1p6LVLmmokMt1XOJfl0/qUMbSimlgLu3pMwifD8g
+	 jb1dbXE+D7z33JxcMXLm+ru48Q3kQ3wNvwIiplCTZM6g0RoJqnfzMceGKUdDsoJnhA6N3
+	 AsTcwTRtCs/ASxGk2XgjtectFsu301V3uECrWtVFH1UDa6yVn/GbGIsRL1gttNz30lC/G
+	 /elio3g3JNOrmWgIim9wUuQ1bstTGmxL6VQcV/ogbcz36ORs9gZFikXsazlUoFg8Ssg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793580188;
-	h=DMARC-Filter:Received:X-Google-DKIM-Signature:X-Forwarded-Encrypted:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Received:
-	 X-Forwarded-Encrypted:X-Received:MIME-Version:References:In-Reply-To:
-	 From:Date:X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:
-	 Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=AxLijxCHhlhY2faPDuw/HBU0+yy89FEV9COVq1aaz44=;
-	b=BqapZmmpiXuGE4BK5uy1tWfFjJV2mgSiU5CAXmUzYwj4dVroHHwY5bPYvMfVwzXAYfKg
-	 pDh3yTkEetUaE4JE3Xqr7DStLVQNQWRw58DqLlHMAfni0J4Dmd8tIFJ2DvP66pv0a1D/R
-	 olxIJ4ibO8DVftDhjtaaFonZZAVai9ePsJJqW5L9kHBUF93gekh3hAd7wfMG2t6Bc1OCR
-	 lVVaovKWu/S20QcjIyN8kzPIkui2RY0r5CNdbhzfj5qdUlnRHDECYJQBhKcdpr12Id9QS
-	 8VMmjPJ4M+Y6v3AREfio1C3q3InYRkSG213PzXY0GeIPwJ4mpA5YbfHRXGHQdwif3nQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793622200;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=3iOIXEmflTG6buskQdm9P4t1/QlWTCynkV6kHZ1H/SU=;
+	b=sQCQonvMrwSTiheHEEHsrdm7fDXKUy5JYJ30ZV8mW2Bz3nuXn1D+XVRoGg+8qHP6G9pC
+	 Eq8nDd2gUczJfpNBe90hwvbnWgnSlKQecGfNmUH3G4ffF9bfGlpY2TWU3uTtaFJJNpwdG
+	 ySFj6KaKbNDEcJ9wXc5CA/sVqftqqMp8dSFx/q22HfEKD6bYzFY5HckJF2TToDhOF1T8Y
+	 NdW2Hnd8fz0RP/IdDFiil66o+DYGFZ6d7GZhqHAtvmwDd6IKucK9G+JX6BxERd+YtgTje
+	 huvWVH7j1Nfyvrbp/PSBpwG+5KDnlgTGP57/wZo8JHEyvVtV7kYyd32lPnKv0Vl8p3A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=gompa.dev;
+	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	arc=none smtp.remote-ip=209.85.161.50
-Received: from mail-oo1-f50.google.com (mail-oo1-f50.google.com [209.85.161.50])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=YcsUaW2s;
+	arc=none smtp.remote-ip=209.85.128.44
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09FA2606A32D
-	for <brcm80211@lists.linux.dev>; Mon,  2 Nov 2026 00:43:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 09FA2606A32D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gompa.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BAD260A5BE5
+	for <brcm80211@lists.linux.dev>; Mon,  2 Nov 2026 12:23:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6BAD260A5BE5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oo1-f50.google.com with SMTP id 006d021491bc7-6d290b10a35so981423eaf.2
-        for <brcm80211@lists.linux.dev>; Sun, 01 Nov 2026 16:43:07 -0800 (PST)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=YcsUaW2s
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4ac95761c85so18348145e9.2
+        for <brcm80211@lists.linux.dev>; Mon, 02 Nov 2026 04:23:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793622199; x=1794226999; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=3iOIXEmflTG6buskQdm9P4t1/QlWTCynkV6kHZ1H/SU=;
+        b=YcsUaW2sDYY6ACD6dQ4Ai3UGmJ1NRv7RyDrG0YfJpmyKB5a01dyYk2n4YFHGLOPrXT
+         9And60qzq0VAYltH8ufxJJmMHNJ6W++0MYQ1Qz6bF9L5lfaIgrAyejl4oTClwE3QEgC4
+         8WMrxPReiSWYoxG4NJqu7V6ZSjL2nyV7qbm6m1AopWOKpOXwLrzroho/PkgKalVVCqS4
+         rNYRbSdUjnnFpF5th39AKgxsUiDSiWCMpWHKdkXotIXoPfM6hFSLDWG2f1MuW2sXb1sG
+         hyJUMP2BlsbTznmdCsDqHWyb8N2s8X7kFIA7ArHvXnEjR6T0hnBEa680VNb8qMCDv1uB
+         FBvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793580186; x=1794184986;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=AxLijxCHhlhY2faPDuw/HBU0+yy89FEV9COVq1aaz44=;
-        b=BqjCY4Q9Vz+628FLiMXLDuU8JGiyohiHVDnPSxFpXHqrRRy1phatLYHub5o7HNnDpE
-         Xv4I23F8XfQ4D0libPx5dGagoFImkSGG2X2BP8uM4laL/F8p8ktXX4ey5yc8NRMYs9HV
-         o1WDKqLThLlgJnO9NlkFNgJgQDulRVkLVk8bjt7EnqLm8iYeQhbhHGw3ZmfaExe4icGc
-         4Y+Lf+ZeQ3Q6veg3wT5hZAegGWWRnuB+wUztm7i3ZP6dSbfA2fBYCHoTebcajJ0Q4DqU
-         a0kMRd0lfW9tHTJ12DsHV7/w6YmCPwkn7jsXMWddDK+TKTFD+gTpDZ9hANXUhlIG4dZg
-         /MkA==
-X-Forwarded-Encrypted: i=1; AKwUvBxMPVp5FHsnmwVxv9BQOSh+VsUcBxKJ+Z5M15zYOExrkYH3ENQiOp+QZrOp6bfKkUXd+CVjyY2JNUU=@lists.linux.dev
-X-Gm-Message-State: AFq9FYLzRclZkVxWTcq4Ya5xhHkrr7ePIPnF7tYcJ3sAz+KhIDs33YXV
-	Rm7JAVaLUqoeJHY7ZBz8FNZIUPnhrr2F7FVPlNKjBunAUnYTV08JOofPeVd2yKjB
-X-Gm-Gg: AYBFou3f30NIKjsBkcapqpD5nOixBAYXqLyE96ljv87bvEt3eKvvH0nJWLgTOTKr+G9
-	6NG41U4e4S8l7vUsDSCpqqV7bYX1r+j2EOKgwL3dMaawQxZBmOFypomaQT5MC5mFHXeDxR8Zqfm
-	wuN54JnLCgkSj2Q+v8PuTerJ0PuEQScKyhgeCOTVl7hgI0Xl/+LVSx++MImS6P22/v/JEluafoy
-	1AYMwCZSl8QqfIkbhgg0m2XpNnWrEmZoc0Eg7cvzp3Yu87SLSa9GQrsk08M4om0Dj9MuA52i76w
-	S07Gq5qRDCBCWY0gMfTS5lkXfyyhvKrOQw2fCMH4ttcVAQqGM7o966tMydtsY55FPd4iGMAlO22
-	kZDidnZMdvY6fStKNAc7lw75HPiQIIrqxlsMQoKXJ8YtaUXUeRhH/ZA1EI/Tg1kMHxssPUnfdWo
-	wkUgrnPVxhxU3NMbEKth4ruToVWLWM4mtUHrfVN/PNCkBbUVRReR8YRopqcaCLCRU3ldYqFos/6
-	xL2kuMqIqRWW8J/Kl/YOBifn402GGljYD1yTWzFQsWaEreEZgnyJaGz6xNo29agPMDT6TwnX1/0
-	XqORDgOUCCrd89wsHTCkGEagmDf2xHKnYyNnepNIBzIlYpeYLuH65h2pds8agpMq5hg4qVZ319V
-	Tu00aMy/MACOwISP9BtIxSvK1UsjkpNt/wcIwjz5Jw55i7I0sqrM6C1RE/WugD+iaZIIsFu8NwM
-	o=
-X-Received: by 2002:a05:6820:571a:20b0:6f4:8f1d:a49b with SMTP id 006d021491bc7-714f24eace8mr3259160eaf.10.1793580186456;
-        Sun, 01 Nov 2026 16:43:06 -0800 (PST)
-Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com. [209.85.210.54])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-714f2cf11fasm7527848eaf.3.2026.11.01.16.43.05
-        for <brcm80211@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 01 Nov 2026 16:43:05 -0800 (PST)
-Received: by mail-ot1-f54.google.com with SMTP id 46e09a7af769-8479f46ecd8so969052a34.0
-        for <brcm80211@lists.linux.dev>; Sun, 01 Nov 2026 16:43:05 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AKwUvBwtlzSHwnpiipuwdD+x6KTVzZ2qY3A+DEv4NGB+YaS3vbpDfUXT70oMZp/GPURK3oASZxrlcnMHDJI=@lists.linux.dev
-X-Received: by 2002:a05:6830:3e03:b0:814:b62d:3122 with SMTP id
- 46e09a7af769-85d365b1f81mr6135908a34.22.1793580185285; Sun, 01 Nov 2026
- 16:43:05 -0800 (PST)
+        d=1e100.net; s=20260707; t=1793622199; x=1794226999;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=3iOIXEmflTG6buskQdm9P4t1/QlWTCynkV6kHZ1H/SU=;
+        b=GkT/tk3QrGrBlZE5hCATu1bGWTwMTlIb8mG0YSHYZQMfUtSEPvwcMT7Ba5qiJpxpxN
+         usXFKVRBdsF/+/K2TJQI7ZxHG+7oHcUsX6ysgw1SGPrknnhoRccphB/5mY1E1zmyDndO
+         43JzPv3/oWKgjF7C57M47VNSP2F+733WbJ7deq7azF+UZDiDEfMgiFYXFoBZKApCX9HA
+         GZkpTzF66QsNTeL6XKyU8obKZx2aWdVT59fQJM4EBdbfRUWZrCGFsAFnN7JOLzgIbaOE
+         CWtWrvEHJec1gbDimEEe3+x3uMioVkF1sVwAatmOoULoct19QObVw4DQYh6I3GWQpZG2
+         +VnQ==
+X-Forwarded-Encrypted: i=1; AKwUvBwx/sFZxvgAPPkDFcs1c8qz5HVzJQeODI6zLKrIT+YTd3wDljYCTQd8FYK1l5lfpKtmQHNpNir2sb4=@lists.linux.dev
+X-Gm-Message-State: AFq9FYKqtvWVjsAAWlDIkDqFN4XhUFBo7N1rLoAi5a7Cl5I+A3sUDPVv
+	roULEeQuTip9qD786/dGgbBIQnfM1RtkGfEKv4TA2sbQ+ZLONo04TEs=
+X-Gm-Gg: AYBFou1MYJLb4L6ZlA53kHxAzPHzrcAiYSEIhzHEjCz/c9QV1LquQYs0B0x7LBbUSCe
+	H1D9oD+3tQT7UHDFbw3BfNBtHdqTHMyfreZ4lzvJvO3c3aZtUVIge2ywzdDjvjPwkYriGnCa7wx
+	XdkhabUgLCEAFItzuxZ2KjOkTttxJKpHboSZiJ1KmzHi4eE28nhrc6zkcZRNT+ae7FzewHZjN1u
+	uGnKC781kJ78y1CD1i9AFMCjY1QWw85xemQ++hGSza6eNxDqKrw2ZGXOrud8SiBlbZIj6CgVzkQ
+	FEnHU3A4y/i4eTZXMv70wbDINZmQQS7u2j/4dF7mNv6ccXjyBqV+lH/WQRTfav6bj9cwMo5iTDM
+	RMplUQeRbbElcxmk69rsBVMmI3dBFATbWM+zgO9wB6lZ7/XMP7YItO1wGrtBckqlZ0E1hCJ4Jba
+	5zXUPcSyy9od2alsp9mVGKP2YDwdsmLTk77UudcdoajIYkmNGLGLejDx+yDTr96UgDnGobGxkMh
+	lhEMmr/lBMIpgLKngW6oKZmnHUdHoTGp6lYHGU8rGhbJKxOfeQOmsMSbaJg9/aYAWmS/QPaIw==
+X-Received: by 2002:a05:600c:198c:b0:4a1:fc98:1cb1 with SMTP id 5b1f17b1804b1-4ac15584c05mr237157175e9.2.1793622198548;
+        Mon, 02 Nov 2026 04:23:18 -0800 (PST)
+Received: from debian.. ([2001:41d0:303:db6b::])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4abf67aa704sm255490595e9.8.2026.11.02.04.23.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Nov 2026 04:23:13 -0800 (PST)
+From: Tristan Madani <tristmd@gmail.com>
+To: linux-wireless@vger.kernel.org
+Cc: arend.vanspriel@broadcom.com,
+	brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com,
+	fariyaf@gmail.com,
+	linville@tuxdriver.com,
+	kvalo@kernel.org,
+	linux-kernel@vger.kernel.org,
+	Tristan Madani <tristan@talencesecurity.com>
+Subject: [PATCH wireless 0/2] wifi: zero-pad SDIO writes to avoid leaking heap data
+Date: Mon,  2 Nov 2026 12:23:09 +0000
+Message-ID: <20261102122311.181075-1-tristmd@gmail.com>
+X-Mailer: git-send-email 2.47.3
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Post: <mailto:brcm80211@lists.linux.dev>
@@ -83,108 +99,29 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:brcm80211+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20260925-brcm4388-submit-v1-0-b5cbc2cde2fb@gmail.com>
-In-Reply-To: <20260925-brcm4388-submit-v1-0-b5cbc2cde2fb@gmail.com>
-From: Neal Gompa <neal@gompa.dev>
-Date: Sun, 1 Nov 2026 19:42:28 -0500
-X-Gmail-Original-Message-ID: <CAEg-Je918POdPr-=6Dzpdkx_i+Hv4wxv5-8A3MUDEqC8SA59NA@mail.gmail.com>
-X-Gm-Features: AclHuK_r7QD-EGzh5icdkxVPJ8YDU4Pcq4HDNCl7O8hh8I3jnfCORQFhQybBRTw
-Message-ID: <CAEg-Je918POdPr-=6Dzpdkx_i+Hv4wxv5-8A3MUDEqC8SA59NA@mail.gmail.com>
-Subject: Re: [PATCH 00/13] wifi: brcmfmac: Add BCM4388 support
-To: michael.reeves077@gmail.com
-Cc: Arend van Spriel <arend.vanspriel@broadcom.com>, 
-	Pieter-Paul Giesberts <pieterpg@broadcom.com>, "Franky Lin (Zhenhui)" <frankyl@broadcom.com>, 
-	Mathy Vanhoef <vanhoefm@gmail.com>, Kalle Valo <kvalo@kernel.org>, Kees Cook <kees@kernel.org>, 
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>, linux-wireless@vger.kernel.org, 
-	brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com, 
-	asahi@lists.linux.dev, Hector Martin <marcan@marcan.st>, 
-	Daniel Berlin <dberlin@dberlin.org>, Janne Grunau <j@jannau.net>, linux-kernel@vger.kernel.org, 
-	Hante Meuleman <meuleman@broadcom.com>, linux-hardening@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Fri, Sep 25, 2026 at 9:49=E2=80=AFAM Michael Reeves via B4 Relay
-<devnull+michael.reeves077.gmail.com@kernel.org> wrote:
->
-> The Broadcom BCM4388 chipset requires new PCIe initialization and
-> firmware interfaces. Add support for these interfaces to brcmfmac to
-> enable basic station operation.
->
-> This series adds:
-> - Signed firmware loading and mailbox transport
-> - Fixes for chip identification and firmware capability matching
-> - Versioned scan and join requests, and extended PMK payloads
-> - Updated event mask handling
->
-> These changes include work by Hector Martin and Daniel Berlin from Asahi
-> Linux, refactored where needed for upstream inclusion.
->
-> The series provides basic station support only. 6 GHz support is planned
-> for a follow-up patchset after this lands. The driver retains legacy
-> interfaces for older firmware.
->
-> Tested on an Apple M3 MacBook Air (J613):
-> - Device boot and network scanning
-> - 5 GHz WPA2-PSK association and DHCP
-> - Bidirectional TCP traffic
->
-> Testing required separate Apple PCIe and devicetree patches, as well as
-> Janne Grunau's port-authorization fix [1].
->
-> [1] https://lore.kernel.org/linux-wireless/20260915-brcmfmac-4way-handsha=
-ke-offload-authenticated-event-v2-1-fbb9cc7ac177@jannau.net/
->
-> ---
-> Daniel Berlin (1):
->       wifi: brcmfmac: Support versioned scan parameter layouts
->
-> Hector Martin (6):
->       wifi: brcmfmac: Support newer PCIe core startup and interrupts
->       wifi: brcmfmac: Negotiate PCIe mailbox transport with firmware
->       wifi: brcmfmac: Load signed PCIe firmware images
->       wifi: brcmfmac: Accept newer BSS information versions
->       wifi: brcmfmac: Support versioned join requests
->       wifi: brcmfmac: Add BCM4388 support
->
-> Michael Reeves (6):
->       wifi: brcmfmac: pcie: Report the detected chip ID to the bus
->       wifi: brcmfmac: Match complete firmware capability names
->       wifi: brcmfmac: Fall back to RSSI-only default join preferences
->       wifi: brcmfmac: Use event_msgs_ext for event masks
->       wifi: brcmfmac: Handle larger firmware band lists
->       wifi: brcmfmac: Handle extended PMK command payloads
->
->  .../wireless/broadcom/brcm80211/brcmfmac/Makefile  |   1 +
->  .../net/wireless/broadcom/brcm80211/brcmfmac/bus.h |   9 +
->  .../broadcom/brcm80211/brcmfmac/cfg80211.c         | 368 +++++++-------
->  .../wireless/broadcom/brcm80211/brcmfmac/chip.c    |  36 +-
->  .../wireless/broadcom/brcm80211/brcmfmac/common.c  |  27 +-
->  .../wireless/broadcom/brcm80211/brcmfmac/core.c    |   5 +-
->  .../wireless/broadcom/brcm80211/brcmfmac/core.h    |  18 +
->  .../wireless/broadcom/brcm80211/brcmfmac/feature.c | 124 ++++-
->  .../wireless/broadcom/brcm80211/brcmfmac/feature.h |   2 +
->  .../wireless/broadcom/brcm80211/brcmfmac/fweh.c    | 130 ++++-
->  .../wireless/broadcom/brcm80211/brcmfmac/fweh.h    |   1 +
->  .../broadcom/brcm80211/brcmfmac/fwil_types.h       | 141 +++++-
->  .../wireless/broadcom/brcm80211/brcmfmac/msgbuf.c  |  65 ++-
->  .../wireless/broadcom/brcm80211/brcmfmac/msgbuf.h  |   9 +-
->  .../wireless/broadcom/brcm80211/brcmfmac/pcie.c    | 560 +++++++++++++++=
-++----
->  .../broadcom/brcm80211/brcmfmac/scan_param.c       | 416 +++++++++++++++
->  .../broadcom/brcm80211/brcmfmac/scan_param.h       |  13 +
->  .../broadcom/brcm80211/include/brcm_hw_ids.h       |   2 +
->  .../broadcom/brcm80211/include/chipcommon.h        |   5 +
->  19 files changed, 1593 insertions(+), 339 deletions(-)
-> ---
-> base-commit: 42a9fb3382fc2573e92f41d203b095d9a372cfc9
-> change-id: 20260925-brcm4388-submit-5cb8d3e6d6a5
->
+From: Tristan Madani <tristan@talencesecurity.com>
 
-Works for me and looks good.
+Several wireless drivers round up the length passed to
+sdio_memcpy_toio() / sdio_writesb() for alignment purposes but do not
+clear the padding bytes.  The SDIO controller then reads past the
+original buffer into adjacent heap memory, sending stale kernel data to
+the wireless device.
 
-Reviewed-by: Neal Gompa <neal@gompa.dev>
+Fix brcmfmac (4-byte alignment) and rsi (block alignment) by
+zero-filling the gap before the write.
 
+A third patch for rtw88 hits the same class of bug but needs a rebase
+and will follow separately.
 
---=20
-=E7=9C=9F=E5=AE=9F=E3=81=AF=E3=81=84=E3=81=A4=E3=82=82=E4=B8=80=E3=81=A4=EF=
-=BC=81/ Always, there's only one truth!
+Tristan Madani (2):
+  wifi: brcmfmac: zero-pad SDIO write to 4-byte boundary
+  wifi: rsi: zero-pad SDIO TX to block boundary
+
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c | 3 +++
+ drivers/net/wireless/rsi/rsi_91x_sdio.c                   | 3 +++
+ 2 files changed, 6 insertions(+)
+
+-- 
+2.47.3
