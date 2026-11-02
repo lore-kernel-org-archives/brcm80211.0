@@ -1,101 +1,79 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.226
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.161.50
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793561248;
-	b=iB5887fB3r8q7AUeeEXwC3xZKLR2M6r2dNTYm2qEZmqpKtapUXu7yfOEfhimN5HRvbyc
-	 UILoC6IT7qwbzormWHhu0bVP4CvcYEtdXtFpVH6ZfzhF3g4PTJ0bKcHUBdywhZQtFP390
-	 Z00sjIwytmmOZ1lQwLZHXeJo2URc21Dto0WNhVr+GBDRyAYAZUq3SXSG0edQgYsBzmGAh
-	 vzEbFl8s8TX2R6HrkViLB79Qcy/J9dhMmTE9HLseC0oby0qIfWQXi0DewXLl59844i3Hd
-	 S8/Krf/sbzu/uh7sjdzCXNmxucy13svS+IEjk8CgHWhX1NX1H/OIQM3s5PuADbrrYgw==
+	t=1793580188;
+	b=wiWof3+53tXn3wJTgMNtxIfQ0UdGtitCq+JTT+hGdzZgGc7jrdi4Dk4A7ifBqijaVKiQ
+	 kTPhHA+UXJhiu8+mhnWGifjpuPxCnYch9eIPrbL09AGMjEV9CWvo5UAdavH3GXSYkGSo+
+	 hW4low9TH3GWx3d/FLGkDIJLdnydIJEsTFUu8rSizdRjyT1z5728t2LCys/Vl8aXl3UiK
+	 XKRqRBIqbMGxvQ0U99amvT/EcI/7bmeka3Z7QHp5bjKUFF7iBl3Q31fdhSGPAhJ6oLH9Y
+	 ilEDsWN7jPyFwTeK4hCUgLxUPvqBgekgMVF4NHrhnLaaolmFxNRZohpMfVYOvNBSpCQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793561248;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793580188;
 	h=DMARC-Filter:Received:X-Google-DKIM-Signature:X-Forwarded-Encrypted:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:X-Relaying-Domain:
-	 X-CFilter-Loop:Received:DKIM-Signature:X-Forwarded-Encrypted:
-	 X-Received:X-Received:Received:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-DetectorID-Processed;
-	bh=FBzaqWRuYJDOcynWW1oUqzv1XeYY64zxgMqREXlXnBE=;
-	b=SB8nSETGdDGBzSLevyO3WsE/rsaBxFJfyssGdWkX9ZzT1N9l01+hQV92E/jDiyiMy4Dc
-	 t2043FAxV1AIRi/enCfKYTqMKHihjtNnfLkcgEDoqM4NxUU/vUHfRQqaLWqzYbbnlVzyQ
-	 wLHbqmFPNjibPw9/vbm1cXuUW6QFtjhxYudqZmC2MA+wZKidZqck3dUgP7tn0yaAI7F0M
-	 iymmRqVUhXUjKbQzhmDpHspopg7+G+3P7HLXmLC+Gz2cOk7mkvn0OHvAFnyYLWhxNWDbs
-	 Z4lx7q3q/Ipk0MqXG4bOCSJJt/dSdM+mMEu0Lj6tjYHNHhZ3nNGeVQrTPAisT0AXhTQ==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Received:
+	 X-Forwarded-Encrypted:X-Received:MIME-Version:References:In-Reply-To:
+	 From:Date:X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:
+	 Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=AxLijxCHhlhY2faPDuw/HBU0+yy89FEV9COVq1aaz44=;
+	b=BqapZmmpiXuGE4BK5uy1tWfFjJV2mgSiU5CAXmUzYwj4dVroHHwY5bPYvMfVwzXAYfKg
+	 pDh3yTkEetUaE4JE3Xqr7DStLVQNQWRw58DqLlHMAfni0J4Dmd8tIFJ2DvP66pv0a1D/R
+	 olxIJ4ibO8DVftDhjtaaFonZZAVai9ePsJJqW5L9kHBUF93gekh3hAd7wfMG2t6Bc1OCR
+	 lVVaovKWu/S20QcjIyN8kzPIkui2RY0r5CNdbhzfj5qdUlnRHDECYJQBhKcdpr12Id9QS
+	 8VMmjPJ4M+Y6v3AREfio1C3q3InYRkSG213PzXY0GeIPwJ4mpA5YbfHRXGHQdwif3nQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=broadcom.com;
-	spf=fail smtp.mailfrom=broadcom.com;
-	dkim=pass header.d=broadcom.com header.i=@broadcom.com header.a=rsa-sha256 header.s=google header.b=IKkv0k6d;
-	arc=none smtp.remote-ip=209.85.215.226
-Received: from mail-pg1-f226.google.com (mail-pg1-f226.google.com [209.85.215.226])
+	dmarc=none header.from=gompa.dev;
+	spf=pass smtp.mailfrom=gmail.com;
+	arc=none smtp.remote-ip=209.85.161.50
+Received: from mail-oo1-f50.google.com (mail-oo1-f50.google.com [209.85.161.50])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56182606A32E
-	for <brcm80211@lists.linux.dev>; Sun,  1 Nov 2026 19:27:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 56182606A32E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=broadcom.com header.i=@broadcom.com header.a=rsa-sha256 header.s=google header.b=IKkv0k6d
-Received: by mail-pg1-f226.google.com with SMTP id 41be03b00d2f7-cdb2893531bso133641a12.1
-        for <brcm80211@lists.linux.dev>; Sun, 01 Nov 2026 11:27:28 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09FA2606A32D
+	for <brcm80211@lists.linux.dev>; Mon,  2 Nov 2026 00:43:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 09FA2606A32D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gompa.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-oo1-f50.google.com with SMTP id 006d021491bc7-6d290b10a35so981423eaf.2
+        for <brcm80211@lists.linux.dev>; Sun, 01 Nov 2026 16:43:07 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793561248; x=1794166048;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:dkim-signature:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=FBzaqWRuYJDOcynWW1oUqzv1XeYY64zxgMqREXlXnBE=;
-        b=s1+yGvY3mHvAAp86wnIb/Q2Dey6578waZIODOqHhsIlKRcVVDnv8VZo76Yu0tfmJ/S
-         kwLsDXHPrJl4qDcduRiiYMSFogUEmvwaUgdadTLQKf4IWq5QHWQlIPqo8BSC99y3HQED
-         iwdHVcTf2nGqmS4xpDu9HDoaaysYMwE3DDFcU2sxYSdivuHqb9GGG/+/kUQO9Y/6pSY5
-         JD+fmOMDyL2JgYXO8j6K+r6r950N7VH3q4Wj5Gn8H10G8b26MgYV3pZ5H/4sbUcnFL+s
-         FZCr1DkC0PEINwwet0hTiZaB6pDqoIwpIEKhRLz53avktZC58iNntb0sNM3Y5lskOa+Q
-         wN6Q==
-X-Forwarded-Encrypted: i=1; AKwUvBy5Rlq4YSTlsljnAUybWANSrXhdogl2Yh60OCsRj+uJOwzmfjTFFlLnKfHuXPp6F+Hyf6DryxsBPLo=@lists.linux.dev
-X-Gm-Message-State: APuU4Z/f08gH5nreVPfeKNCI1Qi8+/qt8p+fL0+N0Ek1oJnbI/PX0SVx
-	2N3RMvqyGdnmYQwU96Xa0My9bgh+ddxxK6dOrIeUTFvJzNWczgK89MPgrdngdsC7UR3x3k65gIr
-	642WWI2fOOqASG1hs8qfkp3olzCu6+Z3sSebT50EMGKN3KiQrmWqcfaLF4DlU8UJqzrCZXTdHiU
-	aDNDzMN2zJrgz9SbWNNnH3X5Hg/tX22Z8q741vnBz1P6cFmKI4hUdh//wwThNnrR1D4Z5DGSdxJ
-	gOEnlo4pa7Clde7Erc=
-X-Gm-Gg: AYBFou10DG/JdE/phaRCIF1OFoW/1ZsnihinlFRwtUKIRqGEz+Er6R7HtZHhCqdwaRx
-	NUra37mbEG41km1DH2OmbvJCH87d5fx1AhBxpIQTYOtk85CiEAwjRrt4/8sNwUe/NN47IMpumPH
-	5gMM8jg4nX/YrT8MLYvk0VtWLDkSGpBR8JBSGvCqI9rIgiBcs29WVvstIqkhFVTS9sjsCplxz+a
-	8Z+X87AGCT+qa1dojlWB6jtHofyYh8iI7wWS3DQwVdbv31PA/kjBUNOmqU64LWVbAS7fgy+4bSK
-	Ltjw32hSI5eiMabkAhXCQel5ZZbjpH0iIW14he5Hbw3wuwfK92HGrl5m8K48J6vMvBl5OWN77xW
-	JinDiio5ehl0iaBj5Nu+E702QJwrkaUml/D0I5KU+2tugltRzFu0T+IKSIHT7F6sDKmUJFv0yfK
-	xrgvjkc5WJXapEWS9MQp69DjLLQYeOxzz+q062gqk=
-X-Received: by 2002:a17:90b:1b08:b0:3ab:5832:727d with SMTP id 98e67ed59e1d1-3ae8982af58mr6570453a91.35.1793561247679;
-        Sun, 01 Nov 2026 11:27:27 -0800 (PST)
-Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-28.dlp.protect.broadcom.com. [144.49.247.28])
-        by smtp-relay.gmail.com with ESMTPS id 98e67ed59e1d1-3ae8809c5ebsm2900348a91.4.2026.11.01.11.27.25
-        for <brcm80211@lists.linux.dev>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 01 Nov 2026 11:27:27 -0800 (PST)
-X-Relaying-Domain: broadcom.com
-X-CFilter-Loop: Reflected
-Received: by mail-ej1-f70.google.com with SMTP id a640c23a62f3a-c429d9d05f0so108935066b.1
-        for <brcm80211@lists.linux.dev>; Sun, 01 Nov 2026 11:27:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1793561244; x=1794166044; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+        d=1e100.net; s=20260707; t=1793580186; x=1794184986;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=FBzaqWRuYJDOcynWW1oUqzv1XeYY64zxgMqREXlXnBE=;
-        b=IKkv0k6dLyQrspRl+xKlhsrAkqHPAWO4utOQGPf0toYwECoz401QNuZOC6WwGLQgr1
-         UCsGcg+ZRRb7ortV6nWnr1oTq3KTmHI6lg+ObWlsaIwyw0KXgb0yJa7Z3kghMFokeZ40
-         3dCyIlfropEHibOGs57HQSgW+hMUDngBgB6tM=
-X-Forwarded-Encrypted: i=1; AKwUvByiAhmqFTYfkUftNOQakwjLAGRWoJtiWcpZEqCIfKwu4/2w/kFEDTNeyLdEEWfU0L8+YMLBsWzK5gY=@lists.linux.dev
-X-Received: by 2002:a17:907:86a4:b0:c46:9d7b:37d with SMTP id a640c23a62f3a-c4ca7a4b544mr641619866b.17.1793561244357;
-        Sun, 01 Nov 2026 11:27:24 -0800 (PST)
-X-Received: by 2002:a17:907:86a4:b0:c46:9d7b:37d with SMTP id a640c23a62f3a-c4ca7a4b544mr641618066b.17.1793561243910;
-        Sun, 01 Nov 2026 11:27:23 -0800 (PST)
-Received: from [192.168.178.26] (f215227.upc-f.chello.nl. [80.56.215.227])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c4cabc1920csm303460866b.5.2026.11.01.11.27.22
+        bh=AxLijxCHhlhY2faPDuw/HBU0+yy89FEV9COVq1aaz44=;
+        b=BqjCY4Q9Vz+628FLiMXLDuU8JGiyohiHVDnPSxFpXHqrRRy1phatLYHub5o7HNnDpE
+         Xv4I23F8XfQ4D0libPx5dGagoFImkSGG2X2BP8uM4laL/F8p8ktXX4ey5yc8NRMYs9HV
+         o1WDKqLThLlgJnO9NlkFNgJgQDulRVkLVk8bjt7EnqLm8iYeQhbhHGw3ZmfaExe4icGc
+         4Y+Lf+ZeQ3Q6veg3wT5hZAegGWWRnuB+wUztm7i3ZP6dSbfA2fBYCHoTebcajJ0Q4DqU
+         a0kMRd0lfW9tHTJ12DsHV7/w6YmCPwkn7jsXMWddDK+TKTFD+gTpDZ9hANXUhlIG4dZg
+         /MkA==
+X-Forwarded-Encrypted: i=1; AKwUvBxMPVp5FHsnmwVxv9BQOSh+VsUcBxKJ+Z5M15zYOExrkYH3ENQiOp+QZrOp6bfKkUXd+CVjyY2JNUU=@lists.linux.dev
+X-Gm-Message-State: AFq9FYLzRclZkVxWTcq4Ya5xhHkrr7ePIPnF7tYcJ3sAz+KhIDs33YXV
+	Rm7JAVaLUqoeJHY7ZBz8FNZIUPnhrr2F7FVPlNKjBunAUnYTV08JOofPeVd2yKjB
+X-Gm-Gg: AYBFou3f30NIKjsBkcapqpD5nOixBAYXqLyE96ljv87bvEt3eKvvH0nJWLgTOTKr+G9
+	6NG41U4e4S8l7vUsDSCpqqV7bYX1r+j2EOKgwL3dMaawQxZBmOFypomaQT5MC5mFHXeDxR8Zqfm
+	wuN54JnLCgkSj2Q+v8PuTerJ0PuEQScKyhgeCOTVl7hgI0Xl/+LVSx++MImS6P22/v/JEluafoy
+	1AYMwCZSl8QqfIkbhgg0m2XpNnWrEmZoc0Eg7cvzp3Yu87SLSa9GQrsk08M4om0Dj9MuA52i76w
+	S07Gq5qRDCBCWY0gMfTS5lkXfyyhvKrOQw2fCMH4ttcVAQqGM7o966tMydtsY55FPd4iGMAlO22
+	kZDidnZMdvY6fStKNAc7lw75HPiQIIrqxlsMQoKXJ8YtaUXUeRhH/ZA1EI/Tg1kMHxssPUnfdWo
+	wkUgrnPVxhxU3NMbEKth4ruToVWLWM4mtUHrfVN/PNCkBbUVRReR8YRopqcaCLCRU3ldYqFos/6
+	xL2kuMqIqRWW8J/Kl/YOBifn402GGljYD1yTWzFQsWaEreEZgnyJaGz6xNo29agPMDT6TwnX1/0
+	XqORDgOUCCrd89wsHTCkGEagmDf2xHKnYyNnepNIBzIlYpeYLuH65h2pds8agpMq5hg4qVZ319V
+	Tu00aMy/MACOwISP9BtIxSvK1UsjkpNt/wcIwjz5Jw55i7I0sqrM6C1RE/WugD+iaZIIsFu8NwM
+	o=
+X-Received: by 2002:a05:6820:571a:20b0:6f4:8f1d:a49b with SMTP id 006d021491bc7-714f24eace8mr3259160eaf.10.1793580186456;
+        Sun, 01 Nov 2026 16:43:06 -0800 (PST)
+Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com. [209.85.210.54])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-714f2cf11fasm7527848eaf.3.2026.11.01.16.43.05
+        for <brcm80211@lists.linux.dev>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 01 Nov 2026 11:27:22 -0800 (PST)
-Message-ID: <d78cbbd2-601a-4cf1-800f-3be57a2b7de2@broadcom.com>
-Date: Sun, 1 Nov 2026 20:27:22 +0100
+        Sun, 01 Nov 2026 16:43:05 -0800 (PST)
+Received: by mail-ot1-f54.google.com with SMTP id 46e09a7af769-8479f46ecd8so969052a34.0
+        for <brcm80211@lists.linux.dev>; Sun, 01 Nov 2026 16:43:05 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AKwUvBwtlzSHwnpiipuwdD+x6KTVzZ2qY3A+DEv4NGB+YaS3vbpDfUXT70oMZp/GPURK3oASZxrlcnMHDJI=@lists.linux.dev
+X-Received: by 2002:a05:6830:3e03:b0:814:b62d:3122 with SMTP id
+ 46e09a7af769-85d365b1f81mr6135908a34.22.1793580185285; Sun, 01 Nov 2026
+ 16:43:05 -0800 (PST)
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Post: <mailto:brcm80211@lists.linux.dev>
@@ -105,56 +83,108 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:brcm80211+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/13] wifi: brcmfmac: Add BCM4388 support
-To: michael.reeves077@gmail.com, Pieter-Paul Giesberts
- <pieterpg@broadcom.com>, "Franky Lin (Zhenhui)" <frankyl@broadcom.com>,
- Mathy Vanhoef <vanhoefm@gmail.com>, Kalle Valo <kvalo@kernel.org>,
- Kees Cook <kees@kernel.org>, "Gustavo A. R. Silva" <gustavoars@kernel.org>
-Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
- brcm80211-dev-list.pdl@broadcom.com, asahi@lists.linux.dev,
- Hector Martin <marcan@marcan.st>, Daniel Berlin <dberlin@dberlin.org>,
- Janne Grunau <j@jannau.net>, linux-kernel@vger.kernel.org,
- Hante Meuleman <meuleman@broadcom.com>, linux-hardening@vger.kernel.org,
- Peter Robinson <pbrobinson@gmail.com>,
- Izabela Bakollari <ibakolla@redhat.com>
 References: <20260925-brcm4388-submit-v1-0-b5cbc2cde2fb@gmail.com>
-Content-Language: en-US
-From: Arend van Spriel <arend.vanspriel@broadcom.com>
 In-Reply-To: <20260925-brcm4388-submit-v1-0-b5cbc2cde2fb@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
+From: Neal Gompa <neal@gompa.dev>
+Date: Sun, 1 Nov 2026 19:42:28 -0500
+X-Gmail-Original-Message-ID: <CAEg-Je918POdPr-=6Dzpdkx_i+Hv4wxv5-8A3MUDEqC8SA59NA@mail.gmail.com>
+X-Gm-Features: AclHuK_r7QD-EGzh5icdkxVPJ8YDU4Pcq4HDNCl7O8hh8I3jnfCORQFhQybBRTw
+Message-ID: <CAEg-Je918POdPr-=6Dzpdkx_i+Hv4wxv5-8A3MUDEqC8SA59NA@mail.gmail.com>
+Subject: Re: [PATCH 00/13] wifi: brcmfmac: Add BCM4388 support
+To: michael.reeves077@gmail.com
+Cc: Arend van Spriel <arend.vanspriel@broadcom.com>, 
+	Pieter-Paul Giesberts <pieterpg@broadcom.com>, "Franky Lin (Zhenhui)" <frankyl@broadcom.com>, 
+	Mathy Vanhoef <vanhoefm@gmail.com>, Kalle Valo <kvalo@kernel.org>, Kees Cook <kees@kernel.org>, 
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>, linux-wireless@vger.kernel.org, 
+	brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com, 
+	asahi@lists.linux.dev, Hector Martin <marcan@marcan.st>, 
+	Daniel Berlin <dberlin@dberlin.org>, Janne Grunau <j@jannau.net>, linux-kernel@vger.kernel.org, 
+	Hante Meuleman <meuleman@broadcom.com>, linux-hardening@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-+ Peter, Izabela
-
-On 25/09/2026 15:43, Michael Reeves via B4 Relay wrote:
+On Fri, Sep 25, 2026 at 9:49=E2=80=AFAM Michael Reeves via B4 Relay
+<devnull+michael.reeves077.gmail.com@kernel.org> wrote:
+>
 > The Broadcom BCM4388 chipset requires new PCIe initialization and
 > firmware interfaces. Add support for these interfaces to brcmfmac to
 > enable basic station operation.
-> 
+>
 > This series adds:
 > - Signed firmware loading and mailbox transport
 > - Fixes for chip identification and firmware capability matching
 > - Versioned scan and join requests, and extended PMK payloads
 > - Updated event mask handling
-> 
+>
 > These changes include work by Hector Martin and Daniel Berlin from Asahi
 > Linux, refactored where needed for upstream inclusion.
-> 
+>
 > The series provides basic station support only. 6 GHz support is planned
 > for a follow-up patchset after this lands. The driver retains legacy
 > interfaces for older firmware.
-> 
+>
 > Tested on an Apple M3 MacBook Air (J613):
 > - Device boot and network scanning
 > - 5 GHz WPA2-PSK association and DHCP
 > - Bidirectional TCP traffic
+>
+> Testing required separate Apple PCIe and devicetree patches, as well as
+> Janne Grunau's port-authorization fix [1].
+>
+> [1] https://lore.kernel.org/linux-wireless/20260915-brcmfmac-4way-handsha=
+ke-offload-authenticated-event-v2-1-fbb9cc7ac177@jannau.net/
+>
+> ---
+> Daniel Berlin (1):
+>       wifi: brcmfmac: Support versioned scan parameter layouts
+>
+> Hector Martin (6):
+>       wifi: brcmfmac: Support newer PCIe core startup and interrupts
+>       wifi: brcmfmac: Negotiate PCIe mailbox transport with firmware
+>       wifi: brcmfmac: Load signed PCIe firmware images
+>       wifi: brcmfmac: Accept newer BSS information versions
+>       wifi: brcmfmac: Support versioned join requests
+>       wifi: brcmfmac: Add BCM4388 support
+>
+> Michael Reeves (6):
+>       wifi: brcmfmac: pcie: Report the detected chip ID to the bus
+>       wifi: brcmfmac: Match complete firmware capability names
+>       wifi: brcmfmac: Fall back to RSSI-only default join preferences
+>       wifi: brcmfmac: Use event_msgs_ext for event masks
+>       wifi: brcmfmac: Handle larger firmware band lists
+>       wifi: brcmfmac: Handle extended PMK command payloads
+>
+>  .../wireless/broadcom/brcm80211/brcmfmac/Makefile  |   1 +
+>  .../net/wireless/broadcom/brcm80211/brcmfmac/bus.h |   9 +
+>  .../broadcom/brcm80211/brcmfmac/cfg80211.c         | 368 +++++++-------
+>  .../wireless/broadcom/brcm80211/brcmfmac/chip.c    |  36 +-
+>  .../wireless/broadcom/brcm80211/brcmfmac/common.c  |  27 +-
+>  .../wireless/broadcom/brcm80211/brcmfmac/core.c    |   5 +-
+>  .../wireless/broadcom/brcm80211/brcmfmac/core.h    |  18 +
+>  .../wireless/broadcom/brcm80211/brcmfmac/feature.c | 124 ++++-
+>  .../wireless/broadcom/brcm80211/brcmfmac/feature.h |   2 +
+>  .../wireless/broadcom/brcm80211/brcmfmac/fweh.c    | 130 ++++-
+>  .../wireless/broadcom/brcm80211/brcmfmac/fweh.h    |   1 +
+>  .../broadcom/brcm80211/brcmfmac/fwil_types.h       | 141 +++++-
+>  .../wireless/broadcom/brcm80211/brcmfmac/msgbuf.c  |  65 ++-
+>  .../wireless/broadcom/brcm80211/brcmfmac/msgbuf.h  |   9 +-
+>  .../wireless/broadcom/brcm80211/brcmfmac/pcie.c    | 560 +++++++++++++++=
+++----
+>  .../broadcom/brcm80211/brcmfmac/scan_param.c       | 416 +++++++++++++++
+>  .../broadcom/brcm80211/brcmfmac/scan_param.h       |  13 +
+>  .../broadcom/brcm80211/include/brcm_hw_ids.h       |   2 +
+>  .../broadcom/brcm80211/include/chipcommon.h        |   5 +
+>  19 files changed, 1593 insertions(+), 339 deletions(-)
+> ---
+> base-commit: 42a9fb3382fc2573e92f41d203b095d9a372cfc9
+> change-id: 20260925-brcm4388-submit-5cb8d3e6d6a5
+>
 
-Finally got some time to get this series tested on my setup. The patches 
-generally look good. So far no regressions observed. It would be good if 
-some more people could test this series on their equipment. I will do 
-some more testing and wait some days.
+Works for me and looks good.
 
-Regards,
-Arend
+Reviewed-by: Neal Gompa <neal@gompa.dev>
+
+
+--=20
+=E7=9C=9F=E5=AE=9F=E3=81=AF=E3=81=84=E3=81=A4=E3=82=82=E4=B8=80=E3=81=A4=EF=
+=BC=81/ Always, there's only one truth!
