@@ -1,63 +1,63 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.216.248.207
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.216.248.212
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793805364;
-	b=zQvbqsZJEX62IO3H+NCbInshMEr93no6RoHbhreh5o7l82WOWfXBcsEMoMHOnsSU4axS
-	 EUeWhBk1zPqzxzWSo+tQaInzkisD1o7NYT7Zq1YOBnACTxCJ3tXNWw6cihtlMm//9Vq91
-	 t2x9Cr/fKnYR5zSuBxgvk0JUL/ocAIhZwwdEk2PKwhqiBgeNvLAkCXe2+1qWSCVE6phRT
-	 gnhYZytjR8mPF6pJidmZtOlDk2HT2CE8DJK3ApopEaPnEllb0Nx3NmZ+zrfUSZ7NSnpMM
-	 RjAB20idNXhozwAoNUldpjyk9hYEepqeaoe9fWszyjA04ThLS/VhDKGciV3Qdgb99LA==
+	t=1793805382;
+	b=IFrjrm5IF1WMu7D2Fve2umxwMoiAq5jzR7GvFVdMHHIGGK3cq7Rj1CQ8OyqeAqGYxs6v
+	 9O1rdjZ01qJ+B8prz0ww3VxzD+SCwlyrUdCBavD2fbmTNXaaTimFrgJSlF+JD/UMLKU3g
+	 qRYR4cVnueX+UXp8NWPREt7sPNz/PE2YbdEvC3pqbUtGBSXsbKV0EgRRVoGuOVaVzjD1L
+	 d1deeNLLuMHP1l/Hl78EmCjPUhMESWNhfdgUccjllmDPAa4E1dJPKZc6mAsYGQwS4/ASn
+	 dxMPSHhgtDnVBcY2UAn4c1KmeV3UyA11yPrz4a5J3HLV7/DAO7JItf8X+xv2SMtYlbg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793805364;
-	h=DMARC-Filter:From:DKIM-Signature:To:Cc:Subject:Date:Message-ID:
-	 X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=FmkxNNy+ToMepP/ABtw7xTjrpXoi59PxFvnFgDXrA8w=;
-	b=r7Upirb0Rl35z3nCYzW0WC8tId5neLV2TCKqbvubo/cf6qFL+YbngJVmaPdAhRFEHtNX
-	 x6quJsQusq+jdycGOJUMAvXa4oEy8XjLun9IvdP5i3zSY3s/Zyu+sVA6LycWKa0Jyc+DX
-	 ZK40Eui21DUg9YzutHgPY3qXcoooEcrKeVywNq8GYMSg7JjPVriYdJoH+KAMVs2e13e9B
-	 E0mxY97rhcdOy6DXOL/J05uz80AW/DjaztJGkl32kza7wFN3/MWo/i9rl51jH5qq7BA6z
-	 zmLBm5jxQSx5tn8biBDdiQ9EAK6Q/mghnt1QRRih84JCV6nLkFXS7wElfoKcGI+To9Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793805382;
+	h=DMARC-Filter:From:X-Lima-ML-UUID:DKIM-Signature:To:Cc:Subject:Date:
+	 Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
+	bh=Gg0GU7y4BpX9CjOw9wkYKSPmsxYAjtxr8SHUj4VlaIg=;
+	b=tcGiPg1luEkp7T98bovGf1Fv0voJAU83S1jZ5XpJP4oCN6usDAxe+/9ezXNU1NZJcbUp
+	 +fcg+/980fyBfzoGPBPeC+D+ZD2l8U6hNlhHHo8JtAfG9ehXgjyS/wTJ9V3AAAh7A8z3v
+	 kwoVVI7X04wzHG9PQLWpGPPDdbk5wxB9seRFOnpUSX5uyxEgRThpzHijv651sw79CfcSe
+	 mYAo7/Ie+bccloIVmY7VNh1sYAicboDe3ifi+mpKbagMk6mBdhV/RBO6QO1KvsvXytTsf
+	 BOXStniez+gQTMjI+0Ncaq9i8kne0mWx9Pfui486r2ZHfYBLnurISYc6cZ+DDZieW1w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=none header.from=deq.rocks;
 	spf=none smtp.mailfrom=deq.rocks;
-	dkim=pass header.d=deq.rocks header.i=@deq.rocks header.a=rsa-sha256 header.s=securedbylima-20251205 header.b=U94boUCW;
-	arc=none smtp.remote-ip=91.216.248.207
-Received: from mx5.mail-out.lima-city.de (mx5.mail-out.lima-city.de [91.216.248.207])
+	dkim=pass header.d=deq.rocks header.i=@deq.rocks header.a=rsa-sha256 header.s=securedbylima-20251205 header.b=gfHTlQyZ;
+	arc=none smtp.remote-ip=91.216.248.212
+Received: from bulk0.mail-out.lima-city.de (bulk0.mail-out.lima-city.de [91.216.248.212])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2977D606D80E
-	for <brcm80211@lists.linux.dev>; Wed,  4 Nov 2026 15:16:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2977D606D80E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE95660A3813
+	for <brcm80211@lists.linux.dev>; Wed,  4 Nov 2026 15:16:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BE95660A3813
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=deq.rocks
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=deq.rocks
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=deq.rocks header.i=@deq.rocks header.a=rsa-sha256 header.s=securedbylima-20251205 header.b=U94boUCW
+	dkim=pass (2048-bit key, unprotected) header.d=deq.rocks header.i=@deq.rocks header.a=rsa-sha256 header.s=securedbylima-20251205 header.b=gfHTlQyZ
 From: Andre Eikmeyer <dev@deq.rocks>
+X-Lima-ML-UUID: 71c5472f-e6c5-4240-a477-5538a226664e
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=deq.rocks;
-	s=securedbylima-20251205; t=1793805361;
-	bh=VmecE7aJ+0JSl/7mJYiBiRErvc45KJfwgo6cIMtg5rI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U94boUCWddQzLH/dT4/hQ8ADwJK5MmqUzfQO1UGr+aOc2iMfm3pswrOGLKcJkvtwn
-	 Zb1h7xyNFdhwNg9p3onvazGNzx5lx6TKxiI1UWVzR7qca2n6Dw8BWBck+PeWcXHe7T
-	 STrKIdGykk4qzJq3mnbjU2c8bi/VjpxibjhO1sZUKQm66QfNuJYBvUxDS3NHgfXgXK
-	 /CBPlmkMhHgnt8GDI9K9/zTWD/8yCZVibdvDATOwq1MO1v6G6EvgML3qvBd5oy95ei
-	 jUPrJktvcnyY5wVpdv7uB85Ch2ZzPNv36rNfIQiMVzyRr7qfYmBL9ms9k5SSz2F1iE
-	 l/9+0095/AtlQ==
+	s=securedbylima-20251205; t=1793805379;
+	bh=wIWsTUIttos50AavwboYoSeCnvp4m0UJ5HE+oI0n2sw=;
+	h=From:To:Cc:Subject:Date:From;
+	b=gfHTlQyZ4XOYpvHZHkiXr9fKptLI0kFAdGHiDchXtH255P8qlD+5qvNjKhHDu02dl
+	 IVcGk2BuIezHAWQYBHq+eMASh7zzQhIFOyWmGXH7gEI6UPPNXCD0nJPrjbj99BXPKK
+	 pVZPMx9z1er4Ja5dx+7o9SyUmgF6jHe+YB6I5BIAgAxPS5uoldFPDkHXtQ7N41VJUD
+	 sZhdqjJP8V1VQ15A/Ej/mqv11YhPmfok/RPJhmltLI3QJ0WAHuLLbnFKlTT9v2hoO2
+	 Mbhjqcoey7/29wSvGNrea8b3LrdQYvJ8U19a92QWEXcrJJgPm+myQkoe+Ow1O7BE2n
+	 5vvIuhZ288vkQ==
 To: arend.vanspriel@broadcom.com
 Cc: linux-wireless@vger.kernel.org,
 	brcm80211@lists.linux.dev,
 	brcm80211-dev-list.pdl@broadcom.com,
 	linux-kernel@vger.kernel.org,
+	sebastian.reichel@collabora.com,
 	Andre Eikmeyer <dev@deq.rocks>,
+	Lukas Klizas <lukas@klizas.lt>,
 	Yossef Osman <Yossef.Osman@proton.me>,
 	Aditya Garg <aditya.garg@linux.dev>
-Subject: [PATCH 7/7] wifi: brcmfmac: pass AWDL frames and role changes to user space
-Date: Wed,  4 Nov 2026 16:15:47 +0100
-Message-ID: <20261104151547.70333-8-dev@deq.rocks>
+Subject: [PATCH] wifi: brcmfmac: reload the firmware after a missing D3 ACK
+Date: Wed,  4 Nov 2026 16:16:16 +0100
+Message-ID: <20261104151616.70623-1-dev@deq.rocks>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261104151547.70333-1-dev@deq.rocks>
-References: <20261104151547.70333-1-dev@deq.rocks>
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Post: <mailto:brcm80211@lists.linux.dev>
@@ -69,310 +69,129 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-User space runs the AWDL election and peer discovery from the AWDL
-action frames other devices send. The firmware reports them with two
-events on the AWDL interface, ACTION_FRAME_RX and AWDL_EVENT (98). A
-header is in front of the frame. Its first 16 bits, high byte first,
-are its version: 1 is struct brcmf_rx_mgmt_data with 16 bytes, 2 has 24
-bytes. Both events come with either version. AWDL_EVENT carries a frame
-only with some of its status values. AWDL_ROLE (97) reports the AWDL
-role of the firmware in its status, 0 slave, 1 master not taking part
-in the election and 2 master.
+Since commit 6f88e6ebdc1a ("wifi: brcmfmac: Improve D3 substate entering
+timeout handling") system suspend goes on after a missing D3 ACK when
+WoWL is off. On resume brcmf_pcie_pm_leave_D3() still takes the hot
+resume path when the INTMASK register reads back nonzero. Firmware that
+did not answer D3_INFORM can do that and stays dead afterwards. On the
+BCM4364 in the MacBookPro16,1 the association and DHCP came back while
+the data path was dead. On the MacBookPro15,1 every firmware command
+timed out after such a resume and each further suspend failed.
 
-Register the two AWDL events when the firmware supports AWDL, so the
-event mask includes them. Pass every AWDL action frame (vendor specific
-category, OUI 00:17:f2, type 8) of the two events and the role changes
-to user space as the vendor events AWDL_FRAME and AWDL_ROLE. Other
-events of the AWDL interface are dropped as before.
+Record the missing ACK and force the remove and re-probe path on the
+next resume so the firmware is loaded again.
 
+brcmf_msgbuf_delete_flowring() waits for outstanding tx status before
+it checks the bus state. Check the bus first and stop waiting when it
+goes down, since the firmware does not report tx status then.
+
+Fixes: 6f88e6ebdc1a ("wifi: brcmfmac: Improve D3 substate entering timeout handling")
+Link: https://github.com/t2linux/T2-Debian-and-Ubuntu-Kernel/issues/174
+Co-developed-by: Lukas Klizas <lukas@klizas.lt>
+Signed-off-by: Lukas Klizas <lukas@klizas.lt>
 Tested-by: Yossef Osman <Yossef.Osman@proton.me>
 Tested-by: Aditya Garg <aditya.garg@linux.dev>
 Signed-off-by: Andre Eikmeyer <dev@deq.rocks>
 ---
- .../broadcom/brcm80211/brcmfmac/awdl.c        | 122 +++++++++++++++++-
- .../broadcom/brcm80211/brcmfmac/awdl.h        |   4 +
- .../broadcom/brcm80211/brcmfmac/cfg80211.c    |   1 +
- .../broadcom/brcm80211/brcmfmac/fweh.c        |   8 +-
- .../broadcom/brcm80211/brcmfmac/fweh.h        |   5 +
- .../broadcom/brcm80211/brcmfmac/vendor.c      |   8 ++
- .../broadcom/brcm80211/brcmfmac/vendor.h      |  12 ++
- 7 files changed, 151 insertions(+), 9 deletions(-)
+The KaiT2en community runs this patch with its kernels, no regression
+was reported.
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/awdl.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/awdl.c
-index 7df77a7fdf4..c8d92e84c5a 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/awdl.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/awdl.c
-@@ -639,17 +639,125 @@ static void brcmf_awdl_settle_work(struct wiphy *wiphy,
- 		       sizeof(dwell_off));
- }
+This replaces "wifi: brcmfmac: handle missing D3 ACK on BCM4377 T2 Macs"
+(v2). Commit 6f88e6ebdc1a covers its suspend part for all chips, this
+patch handles the resume after it:
+
+  https://lore.kernel.org/all/20261001085308.1688049-1-dev@deq.rocks/
+
+ .../broadcom/brcm80211/brcmfmac/msgbuf.c      | 22 ++++++++++++-------
+ .../broadcom/brcm80211/brcmfmac/pcie.c        | 16 ++++++++++++++
+ 2 files changed, 30 insertions(+), 8 deletions(-)
+
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
+index 069ba701665..f002eda5171 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
+@@ -1445,13 +1445,26 @@ void brcmf_msgbuf_delete_flowring(struct brcmf_pub *drvr, u16 flowid)
+ 	int err;
+ 	int retry = BRCMF_MAX_TXSTATUS_WAIT_RETRIES;
  
-+/*
-+ * ACTION_FRAME_RX and AWDL_EVENT put a header in front of a received frame.
-+ * Its first 16 bits, high byte first, are the version: 1 is struct
-+ * brcmf_rx_mgmt_data with 16 bytes, 2 has 24 bytes.
-+ */
-+#define BRCMF_AWDL_RX_HDR_V1_LEN	16
-+#define BRCMF_AWDL_RX_HDR_V2_LEN	24
-+
-+/* AWDL action frame: vendor specific category, Apple OUI, type AWDL */
-+static const u8 brcmf_awdl_af[] = { 0x7f, 0x00, 0x17, 0xf2, 0x08 };
-+
-+static struct sk_buff *brcmf_awdl_event_alloc(struct brcmf_pub *drvr,
-+					      int event, int len)
-+{
-+	struct brcmf_if *pri = brcmf_get_ifp(drvr, 0);
-+
-+	return cfg80211_vendor_event_alloc(drvr->wiphy,
-+					   pri && pri->vif ? &pri->vif->wdev :
-+							     NULL,
-+					   len, event, GFP_KERNEL);
-+}
-+
-+/**
-+ * brcmf_awdl_fweh_event() - pass a firmware event of the AWDL interface on.
-+ *
-+ * @ifp: interface of the event.
-+ * @e: event message.
-+ * @data: event data.
-+ *
-+ * Called from the firmware event worker for the events of the AWDL
-+ * interface, which do not go to the cfg80211 handlers. Received AWDL action
-+ * frames and role changes become vendor events, other events are dropped.
-+ * AWDL_EVENT carries an AWDL action frame with some of its status values.
-+ * Return: 0 or a negative error code.
-+ */
-+int brcmf_awdl_fweh_event(struct brcmf_if *ifp,
-+			  const struct brcmf_event_msg *e, void *data)
-+{
-+	struct brcmf_pub *drvr = ifp->drvr;
-+	struct sk_buff *skb;
-+	u32 hdr;
-+
-+	if (!ifp->awdl)
-+		return 0;
-+
-+	switch (e->event_code) {
-+	case BRCMF_E_ACTION_FRAME_RX:
-+	case BRCMF_E_AWDL_EVENT:
-+		break;
-+	case BRCMF_E_AWDL_ROLE:
-+		skb = brcmf_awdl_event_alloc(drvr, BRCMF_VNDR_EVTS_AWDL_ROLE,
-+					     NLMSG_DEFAULT_SIZE);
-+		if (!skb)
-+			return -ENOMEM;
-+		if (nla_put_u32(skb, BRCMF_AWDL_ATTR_ROLE, e->status)) {
-+			kfree_skb(skb);
-+			return -EMSGSIZE;
-+		}
-+		cfg80211_vendor_event(skb, GFP_KERNEL);
-+		return 0;
-+	default:
-+		return 0;
-+	}
-+
-+	if (e->datalen < 2)
-+		return 0;
-+	switch (get_unaligned_be16(data)) {
-+	case 1:
-+		hdr = BRCMF_AWDL_RX_HDR_V1_LEN;
-+		break;
-+	case 2:
-+		hdr = BRCMF_AWDL_RX_HDR_V2_LEN;
-+		break;
-+	default:
-+		return 0;
-+	}
-+	if (e->datalen < hdr + sizeof(brcmf_awdl_af) ||
-+	    memcmp((u8 *)data + hdr, brcmf_awdl_af, sizeof(brcmf_awdl_af)))
-+		return 0;
-+
-+	skb = brcmf_awdl_event_alloc(drvr, BRCMF_VNDR_EVTS_AWDL_FRAME,
-+				     e->datalen);
-+	if (!skb)
-+		return -ENOMEM;
-+	if (nla_put(skb, BRCMF_AWDL_ATTR_ADDR, ETH_ALEN, e->addr) ||
-+	    nla_put(skb, BRCMF_AWDL_ATTR_FRAME, e->datalen - hdr,
-+		    (u8 *)data + hdr)) {
-+		kfree_skb(skb);
-+		return -EMSGSIZE;
-+	}
-+	cfg80211_vendor_event(skb, GFP_KERNEL);
-+	return 0;
-+}
-+
-+/*
-+ * Registers the firmware events that only the AWDL interface reports, so the
-+ * event mask includes them. The firmware runs AWDL with all of them enabled.
-+ */
-+void brcmf_awdl_register_events(struct brcmf_pub *drvr)
-+{
-+	static const enum brcmf_fweh_event_code events[] = {
-+		BRCMF_E_AWDL_AW, BRCMF_E_AWDL_ROLE, BRCMF_E_AWDL_EVENT,
-+		BRCMF_E_AWDL_STATS, BRCMF_E_SDB_STATE,
-+	};
-+	struct brcmf_if *pri = brcmf_get_ifp(drvr, 0);
-+	int i;
-+
-+	if (!pri || !brcmf_feat_is_enabled(pri, BRCMF_FEAT_AWDL))
++	/* no need to wait or submit if firmware can not be reached */
++	if (drvr->bus_if->state != BRCMF_BUS_UP) {
++		brcmf_dbg(MSGBUF, "bus down, flowring will be removed\n");
++		brcmf_msgbuf_remove_flowring(msgbuf, flowid);
 +		return;
-+	for (i = 0; i < ARRAY_SIZE(events); i++)
-+		brcmf_fweh_register(drvr, events[i], brcmf_awdl_fweh_event);
-+}
++	}
 +
- static void brcmf_awdl_send_result(struct brcmf_pub *drvr, int event,
- 				   int status, struct net_device *ndev)
- {
--	struct brcmf_if *pri = brcmf_get_ifp(drvr, 0);
- 	struct sk_buff *skb;
+ 	/* make sure it is not in txflow */
+ 	brcmf_commonring_lock(commonring_del);
+ 	flow->rings[flowid]->status = RING_CLOSING;
+ 	brcmf_commonring_unlock(commonring_del);
  
--	skb = cfg80211_vendor_event_alloc(drvr->wiphy,
--					  pri && pri->vif ? &pri->vif->wdev :
--							    NULL,
--					  NLMSG_DEFAULT_SIZE, event,
--					  GFP_KERNEL);
-+	skb = brcmf_awdl_event_alloc(drvr, event, NLMSG_DEFAULT_SIZE);
- 	if (!skb)
- 		return;
- 	if (nla_put_s32(skb, BRCMF_AWDL_ATTR_STATUS, status) ||
-@@ -732,6 +840,8 @@ const struct nla_policy brcmf_awdl_vndr_policy[BRCMF_AWDL_ATTR_MAX + 1] = {
- 	[BRCMF_AWDL_ATTR_IFINDEX] = { .type = NLA_REJECT },
- 	[BRCMF_AWDL_ATTR_PEER_IES] = { .type = NLA_BINARY,
- 				       .len = BRCMF_AWDL_PEER_IES_MAX },
-+	[BRCMF_AWDL_ATTR_FRAME] = { .type = NLA_REJECT },
-+	[BRCMF_AWDL_ATTR_ROLE] = { .type = NLA_REJECT },
- };
- 
- /* The device of a vendor command and its parsed attributes */
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/awdl.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/awdl.h
-index 63030221dea..06c932a3c95 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/awdl.h
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/awdl.h
-@@ -18,6 +18,7 @@ struct brcmf_pub;
- struct brcmf_if;
- struct net_device;
- struct sk_buff;
-+struct brcmf_event_msg;
- 
- enum brcmf_awdl_op {
- 	BRCMF_AWDL_OP_NONE,
-@@ -87,6 +88,9 @@ int brcmf_awdl_add(struct brcmf_pub *drvr, const u8 *mac,
- 		   struct net_device **ndev);
- int brcmf_awdl_del(struct brcmf_pub *drvr);
- void brcmf_awdl_suspend(struct brcmf_pub *drvr);
-+void brcmf_awdl_register_events(struct brcmf_pub *drvr);
-+int brcmf_awdl_fweh_event(struct brcmf_if *ifp,
-+			  const struct brcmf_event_msg *e, void *data);
- bool brcmf_awdl_if_added(struct brcmf_pub *drvr, struct brcmf_if *ifp);
- bool brcmf_awdl_if_removed(struct brcmf_pub *drvr, struct brcmf_if *ifp);
- int brcmf_awdl_encap(struct brcmf_if *ifp, struct sk_buff *skb);
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-index 41ea0481cf1..cad12496173 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-@@ -7045,6 +7045,7 @@ static s32 wl_init_priv(struct brcmf_cfg80211_info *cfg)
- 	if (err)
- 		return err;
- 	brcmf_register_event_handlers(cfg);
-+	brcmf_awdl_register_events(cfg->pub);
- 	mutex_init(&cfg->usr_sync);
- 	brcmf_init_escan(cfg);
- 	brcmf_init_conf(cfg->conf);
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c
-index 8c098029104..bd4bf205cc1 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c
-@@ -324,11 +324,13 @@ static void brcmf_fweh_event_worker(struct work_struct *work)
- 			ifp = drvr->iflist[0];
- 		else
- 			ifp = drvr->iflist[emsg.bsscfgidx];
--		/* The AWDL interface has no vif, its events are not for
--		 * the cfg80211 handlers
-+		/* The AWDL interface has no vif, its events go to user
-+		 * space and not to the cfg80211 handlers
- 		 */
--		if (ifp && ifp->awdl)
-+		if (ifp && ifp->awdl) {
-+			brcmf_awdl_fweh_event(ifp, &emsg, event->data);
- 			goto event_free;
+-	/* wait for commonring txflow finished */
++	/* wait for commonring txflow finished, but bail if bus goes down */
+ 	while (retry && atomic_read(&commonring_del->outstanding_tx)) {
++		if (drvr->bus_if->state != BRCMF_BUS_UP) {
++			brcmf_dbg(MSGBUF, "bus went down, aborting wait\n");
++			atomic_set(&commonring_del->outstanding_tx, 0);
++			brcmf_msgbuf_remove_flowring(msgbuf, flowid);
++			return;
 +		}
+ 		usleep_range(5000, 10000);
+ 		retry--;
+ 	}
+@@ -1460,13 +1473,6 @@ void brcmf_msgbuf_delete_flowring(struct brcmf_pub *drvr, u16 flowid)
+ 		atomic_set(&commonring_del->outstanding_tx, 0);
+ 	}
  
- 		err = brcmf_fweh_call_event_handler(drvr, ifp, event->code,
- 						    &emsg, event->data);
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.h
-index e327dd58d29..f8dee73cab1 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.h
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.h
-@@ -94,7 +94,12 @@ struct brcmf_cfg80211_info;
- 	BRCMF_ENUM_DEF(FIFO_CREDIT_MAP, 74) \
- 	BRCMF_ENUM_DEF(ACTION_FRAME_RX, 75) \
- 	BRCMF_ENUM_DEF(TDLS_PEER_EVENT, 92) \
-+	BRCMF_ENUM_DEF(AWDL_AW, 96) \
-+	BRCMF_ENUM_DEF(AWDL_ROLE, 97) \
-+	BRCMF_ENUM_DEF(AWDL_EVENT, 98) \
- 	BRCMF_ENUM_DEF(BCMC_CREDIT_SUPPORT, 127) \
-+	BRCMF_ENUM_DEF(AWDL_STATS, 150) \
-+	BRCMF_ENUM_DEF(SDB_STATE, 152) \
- 	BRCMF_ABSTRACT_ENUM_DEF(EXT_AUTH_REQ, 0) \
- 	BRCMF_ABSTRACT_ENUM_DEF(EXT_AUTH_FRAME_RX, 1) \
- 	BRCMF_ABSTRACT_ENUM_DEF(MGMT_FRAME_TXSTATUS, 2) \
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/vendor.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/vendor.c
-index 5e7de07c995..aae9cd75947 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/vendor.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/vendor.c
-@@ -193,4 +193,12 @@ const struct nl80211_vendor_cmd_info brcmf_vendor_events[] = {
- 		.vendor_id = BROADCOM_OUI,
- 		.subcmd = BRCMF_VNDR_EVTS_AWDL_STOPPED
- 	},
-+	[BRCMF_VNDR_EVTS_AWDL_FRAME] = {
-+		.vendor_id = BROADCOM_OUI,
-+		.subcmd = BRCMF_VNDR_EVTS_AWDL_FRAME
-+	},
-+	[BRCMF_VNDR_EVTS_AWDL_ROLE] = {
-+		.vendor_id = BROADCOM_OUI,
-+		.subcmd = BRCMF_VNDR_EVTS_AWDL_ROLE
-+	},
- };
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/vendor.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/vendor.h
-index ce7f7c46710..96009375eb7 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/vendor.h
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/vendor.h
-@@ -54,6 +54,11 @@ enum brcmf_vndr_cmds {
-  * @BRCMF_VNDR_EVTS_AWDL_STOPPED: the AWDL interface was removed, after
-  *	%BRCMF_VNDR_CMDS_AWDL_STOP or before system sleep, with
-  *	%BRCMF_AWDL_ATTR_STATUS.
-+ * @BRCMF_VNDR_EVTS_AWDL_FRAME: AWDL action frame received from
-+ *	%BRCMF_AWDL_ATTR_ADDR, the frame body from the category on in
-+ *	%BRCMF_AWDL_ATTR_FRAME.
-+ * @BRCMF_VNDR_EVTS_AWDL_ROLE: the firmware changed its AWDL role to
-+ *	%BRCMF_AWDL_ATTR_ROLE.
-  * @BRCMF_VNDR_EVTS_LAST: number of vendor events.
-  *
-  * The value of an event is its index in the vendor events and its vendor
-@@ -62,6 +67,8 @@ enum brcmf_vndr_cmds {
- enum brcmf_vndr_evts {
- 	BRCMF_VNDR_EVTS_AWDL_STARTED,
- 	BRCMF_VNDR_EVTS_AWDL_STOPPED,
-+	BRCMF_VNDR_EVTS_AWDL_FRAME,
-+	BRCMF_VNDR_EVTS_AWDL_ROLE,
- 	BRCMF_VNDR_EVTS_LAST
- };
+-	/* no need to submit if firmware can not be reached */
+-	if (drvr->bus_if->state != BRCMF_BUS_UP) {
+-		brcmf_dbg(MSGBUF, "bus down, flowring will be removed\n");
+-		brcmf_msgbuf_remove_flowring(msgbuf, flowid);
+-		return;
+-	}
+-
+ 	commonring = msgbuf->commonrings[BRCMF_H2D_MSGRING_CONTROL_SUBMIT];
+ 	brcmf_commonring_lock(commonring);
+ 	ret_ptr = brcmf_commonring_reserve_for_write(commonring);
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+index 17bae04c14b..21bf3168df3 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+@@ -346,6 +346,7 @@ struct brcmf_pciedev_info {
+ 	struct brcmf_pcie_shared_info shared;
+ 	wait_queue_head_t mbdata_resp_wait;
+ 	bool mbdata_completed;
++	bool d3_ack_timeout;
+ 	bool irq_allocated;
+ 	bool wowl_enabled;
+ 	u8 dma_idx_sz;
+@@ -2659,6 +2660,10 @@ static int brcmf_pcie_pm_enter_D3(struct device *dev)
+ 		}
  
-@@ -80,6 +87,9 @@ enum brcmf_vndr_evts {
-  * @BRCMF_AWDL_ATTR_IFINDEX: interface index of the AWDL interface (u32).
-  * @BRCMF_AWDL_ATTR_PEER_IES: HT and VHT capabilities elements of a peer,
-  *	built from the AWDL TLVs it sends, as macOS passes them.
-+ * @BRCMF_AWDL_ATTR_FRAME: received action frame body.
-+ * @BRCMF_AWDL_ATTR_ROLE: AWDL role of the firmware (u32), 0 slave, 1 master
-+ *	not taking part in the election, 2 master.
-  * @BRCMF_AWDL_ATTR_MAX: highest attribute.
-  */
- enum brcmf_awdl_attrs {
-@@ -94,6 +104,8 @@ enum brcmf_awdl_attrs {
- 	BRCMF_AWDL_ATTR_STATUS,
- 	BRCMF_AWDL_ATTR_IFINDEX,
- 	BRCMF_AWDL_ATTR_PEER_IES,
-+	BRCMF_AWDL_ATTR_FRAME,
-+	BRCMF_AWDL_ATTR_ROLE,
+ 		brcmf_dbg(PCIE, "No D3 ACK, continuing to power the device off\n");
++		/* Remember that firmware is unresponsive so resume skips the
++		 * hot-resume path and does a full remove + re-probe.
++		 */
++		devinfo->d3_ack_timeout = true;
+ 	}
  
- 	__BRCMF_AWDL_ATTR_AFTER_LAST,
- 	BRCMF_AWDL_ATTR_MAX = __BRCMF_AWDL_ATTR_AFTER_LAST - 1
+ 	devinfo->state = BRCMFMAC_PCIE_STATE_DOWN;
+@@ -2680,6 +2685,17 @@ static int brcmf_pcie_pm_leave_D3(struct device *dev)
+ 	devinfo = bus->bus_priv.pcie->devinfo;
+ 	brcmf_dbg(PCIE, "Enter, dev=%p, bus=%p\n", dev, bus);
+ 
++	/* Firmware that failed to ACK D3_INFORM at suspend cannot be
++	 * trusted even if its registers still read back sanely: it may
++	 * keep the association up while the data path is dead. Skip the
++	 * hot-resume path and force a full re-probe to reload it.
++	 */
++	if (devinfo->d3_ack_timeout) {
++		devinfo->d3_ack_timeout = false;
++		brcmf_err(bus, "Firmware was unresponsive at suspend, reloading\n");
++		goto cleanup;
++	}
++
+ 	/* Check if device is still up and running, if so we are ready */
+ 	if (brcmf_pcie_read_reg32(devinfo, devinfo->reginfo->intmask) != 0) {
+ 		brcmf_dbg(PCIE, "Try to wakeup device....\n");
+
+base-commit: 991a73f4909f1348ffb4b38765cdb522a775e4c2
