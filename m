@@ -1,93 +1,108 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.47
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.98
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793811872;
-	b=nOpcLiw1aKdR/xscgmyPqcBpwJwzYDH4EyJskmOeSdB6ss43Pld+Zj7VVfNJ7Bn4RYbe
-	 E/+9eWUO82ZLE0nlxFKPBX98agRmdLXdLg3MS1YYwb0yhZNz1Rq8+kdxRphDfDA5NjPqQ
-	 HrbRewhHlcsUeK4K8SuYkpYFyU7/GW3STMzYhj4jEun3RYNrPf6KqqxuFLeRYj3oOpolJ
-	 kp3m8z8CrTz+H1cn7Qfor5rL+Ow/3exWXe2qMHsL0AgFMzj6g/fqXbFEvh7zugG9Jcwmg
-	 0v7tIZXshG/2f56pjVxUXafg+Km/LcWfF1JfO7hBpw4MOd1wn8FQLoL94ScwoTVNPGg==
+	t=1793900023;
+	b=23zGR9MNa7Tkc56XZbGZoZ9s8Hi/sDwBGt0Q9Lm7FIFxIAA7VmRHljXkGOB/D/qbjmXo
+	 0qsugAlZoKLL7PRPcHxfjdbJ9B2nhKPF9Yu8uUr6UbTumZfMe7UoNNxnt4oSZOiXEDfOt
+	 nEF9sZKLSpkoYxf+zxmyAUrGOZVZxn9WnX7W9SRu6HUazDhTCInDUaI6Gm6wVghsOTtEG
+	 Clvo6CqT///8SnGi1Jw6GHtwjybzmMvc6PCPWsDtHdWPSNY/ulhCGNCmgNn319V1vtSVU
+	 lu2BdmHxWffRW1KskORv4BBtFr3OhuVOQTAGok8bnF7dvyfYxiWus3mnekhKYMlno1w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793811872;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=F8uAXRtGsSienYNkaab0cXktgUbGtmZejNsezC1QQio=;
-	b=th9kzQfOlXJau5CB+nW/DufPHHTnAxrNxC8+k+wFn2U0CUE3S0X0z56YQo8go5Ug+5Wz
-	 3oZhrA9XkM5ZJgWC9D7F5iwBJnBbpIVWhn4DGHPEZNtjDl5rE5OFNadAJN6Yt/cPolkhK
-	 yf0hn6HhsyPFfDBbDs48AOpg3K8bXlN/gS0auPgstUCK02Qyvecp1+PiMSPvv08VB1y71
-	 OJiTLAkOZUEvo4RtDrwm2A7MJ57hYcAy+ccmI1D1SvZS70kxOsSKfwQRyIBQY7/LFm7C1
-	 WqIZ6rlmu1uYYQsXUBVyq5aHfpJf1bBcWziLa5VGeLP4qqmec7C3vAZVAEr/h2DC4Ug==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793900023;
+	h=DMARC-Filter:Received:X-Google-DKIM-Signature:X-Forwarded-Encrypted:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:X-Relaying-Domain:
+	 X-CFilter-Loop:Received:DKIM-Signature:X-Forwarded-Encrypted:
+	 X-Received:X-Received:Received:From:To:CC:Date:Message-ID:In-Reply-To:
+	 References:User-Agent:Subject:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:X-DetectorID-Processed;
+	bh=zaFE8iTb8ZQzitBt5EqDvKEkChXKzQMc8ot83f0D0Wo=;
+	b=WGOK8YdXXuHuMIHoB6UJqQ/vnDXkIlqDTzJUPa7kn0YynOwjNDzBfxnqyjswbvsJJ2rn
+	 xN0zvgcgOqNLDwlLEIGSiJAZp62iU0of6msj5WolE2GcQ6Hn9QdVDuSW8bBPCDX6jEOim
+	 zd/s5ct4yvbnmRKIKou9KiyoJiMXxl4rJ5MNH0P5uwaU5wdryPiyDkzsCD/eB9grF+HYx
+	 ssqDTXCO8iLSDfFzYUr/7gBR/LzPYr/0uxh8fE6AdgdM1oalvU2H8FQ3/m/MssVRuS/7T
+	 qplInGAvXQDa/FyDpJmWQDKb9obka53HOWHDKSUwoCg1j6hvuyhIHXBpZwncRbfkTwg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Ts4yxYSO;
-	arc=none smtp.remote-ip=209.85.221.47
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+	dmarc=pass header.from=broadcom.com;
+	spf=fail smtp.mailfrom=broadcom.com;
+	dkim=pass header.d=broadcom.com header.i=@broadcom.com header.a=rsa-sha256 header.s=google header.b=AjkoTP3O;
+	arc=none smtp.remote-ip=209.85.216.98
+Received: from mail-pj1-f98.google.com (mail-pj1-f98.google.com [209.85.216.98])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92D5A606A329
-	for <brcm80211@lists.linux.dev>; Wed,  4 Nov 2026 17:04:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 92D5A606A329
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC7A3606A329
+	for <brcm80211@lists.linux.dev>; Thu,  5 Nov 2026 17:33:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CC7A3606A329
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Ts4yxYSO
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-48afbd2c386so686767f8f.3
-        for <brcm80211@lists.linux.dev>; Wed, 04 Nov 2026 09:04:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793811870; x=1794416670; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=F8uAXRtGsSienYNkaab0cXktgUbGtmZejNsezC1QQio=;
-        b=Ts4yxYSOHB0LdLBex1NkMNGdaIJE4rzGUY3D0FD+L8B18ZRAUmDdsQqYxYMcepWJ0x
-         fCQGZkW0silVdU3fOEqQWfEtghRB/O1VU5Hqrdzq2sZfYWDJWpn5CDpPSsvUUcYTwW6b
-         bIE1nWHq8B6P65GYWVzwPSdlC5f9OrQEHGr0kckeAF9JRExuaXv0gAV3I2fRIt4Rs0s1
-         U8Cy4nLS4NzfglwrNHzMV8vDQu49WS94nQ4MEt1VFMcVsi+Ew2wTy5evpIhKMorEAcR9
-         xq9WbiQsI+d77HxJLqSm0XFKVo4BDIKUddLPkAbkzz5/f3UCU1XP34+CF0ecit+aEp14
-         /toA==
+	dkim=pass (1024-bit key, unprotected) header.d=broadcom.com header.i=@broadcom.com header.a=rsa-sha256 header.s=google header.b=AjkoTP3O
+Received: by mail-pj1-f98.google.com with SMTP id 98e67ed59e1d1-3ac78f4c10bso941391a91.1
+        for <brcm80211@lists.linux.dev>; Thu, 05 Nov 2026 09:33:42 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793811870; x=1794416670;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20260707; t=1793900022; x=1794504822;
+        h=content-transfer-encoding:content-type:mime-version:subject
+         :user-agent:references:in-reply-to:message-id:date:cc:to:from
+         :dkim-signature:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=F8uAXRtGsSienYNkaab0cXktgUbGtmZejNsezC1QQio=;
-        b=tUqUT5Bb4v4glUh/0xKeZnWh6GUOrksNl/YaRXrMM0AduJjoofDXHGedjMq2/3SFKK
-         uy9jhoObpIgA8KnYhNsl74T9mIL03dwFxV2nrvGyYgyegGotmWqmpar/OVhZu3oaA+NZ
-         FbyCC5sqmcNvIN3wpo4eJIMfHpYFNDb0T7WfxsSrY9c7QOEmOlwiYqkhFpLNdVlIdFk4
-         h221L2xWu+yW7Y+dxaBhDQPuckxZJs0btxlwTkLokKa0xDhkUgjcdCglys7TLsW8jqaD
-         Azt3+MSXS9TBd8pICTt5gmNxHUftupLaDZZYUxxcOEOQhk14p7hBUh9v2/i3EceFKIvv
-         /oTA==
-X-Forwarded-Encrypted: i=1; AKwUvBw0/VNx9oaiVwfqIftblg4jCmPZTZ0sbsonzaAye9YWKD9V+GEWbpZuzYjLvz0CS1Bgw3dOuvnvnXg=@lists.linux.dev
-X-Gm-Message-State: APuU4Z9LTOrwKYkenrIW6P8xZ9gG3ZfOxbsKm73usW4doJeGBqXX6vnE
-	+/yJkPgLh2jaLsGMoJuMJBdzjCa/u57MZlbx2hTaoNK7sm9T+2MuzV3G
-X-Gm-Gg: AYBFou3U8Ij3cPwEAxAdyqgxjmHxbgDoFu1yQrnhyNJYHFx99ZIXedkeiccc9FH0A3b
-	2rwUxv8LZxetRrPOWauPNmYCRQxL6rRhcDHbtZP6MXCUmEalD1ycP2igEZbhGu3Prv3IQnE6stU
-	F+qQYNv38UghX67DJ2bbhwTeSkAOIjFXz5b8VqkO3TPQl8SBN2r/QxG06qA/WwOPSIeKrMXUFnK
-	MiOqbA+YUMDj9EanTPGVEAUC4YOD2FXb8Tuehn8Tva3g5Rc70+baw2Rvun+h0kyVdFei991AKo6
-	ltKU1J2luzXBmMA8iMNpF2IwmzTsWJfJggfNhwACQThuI5OnM5dePQiac02v5u6igUQJNqID1pF
-	Tx1HQkTjSLgthv8jp+415Hhsiit3xwxrx3v3uR+qgYP7yopfixiVbvEPDCD1I1/sfiOx76jGCcS
-	OAvCPFe5l2qdBCG0O8+QbaHBwswckgAo7TDQC4GPJop0D4kNmD/MqHSeqGxHMOUShZQIiTdmaaU
-	bsiNvF0/UwQvawCRFPSlYC2WTW1GzqZBgA2Qdh1a/0D3pSzVgxL3s91UOxK4qrYLTzGnzaZv36k
-	sKkbGUyi8r+OHldAfSmgWG9nyu7i4H1q2qSv01RFwv8qF13F7MmQHub/8MKFPN6abZMnTewjThN
-	m9mrct4N0xRA=
-X-Received: by 2002:adf:e19c:0:b0:490:ae2:b841 with SMTP id ffacd0b85a97d-4900ae2b9a7mr4474785f8f.30.1793811869589;
-        Wed, 04 Nov 2026 09:04:29 -0800 (PST)
-Received: from User-PC.localdomain (185-80-76-65.ptr185.nosmadeira.net. [185.80.76.65])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48fecac17c1sm4747263f8f.10.2026.11.04.09.04.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Nov 2026 09:04:28 -0800 (PST)
-From: Jeff Campbell <inca.jeff.campbell@gmail.com>
-To: Arend van Spriel <arend.vanspriel@broadcom.com>
-Cc: linux-wireless@vger.kernel.org,
-	brcm80211@lists.linux.dev,
-	brcm80211-dev-list.pdl@broadcom.com,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH wireless-next] wifi: brcmfmac: enable 2.4 GHz VHT on BCM4366 before AP bring-up
-Date: Wed,  4 Nov 2026 17:04:26 +0000
-Message-ID: <20261104170426.4129715-1-inca.jeff.campbell@gmail.com>
-X-Mailer: git-send-email 2.47.3
+        bh=zaFE8iTb8ZQzitBt5EqDvKEkChXKzQMc8ot83f0D0Wo=;
+        b=Xtbfq5QdUnwrgCkNyDxZ7RQX+8EIrIpllj7Pwt4W8rkSP6CWCHkddfT0kWphNw4XrL
+         DCiNidyi5U+mrdRWDK/pwG+3G6XQcJc4LSwA3Q4lH7eqN2P+TkyhyZkiRBQ66JPK62yz
+         CbmM4gOYNZ/VW4jo7CTfOGPEvhB/IETETHMN+15MpAcqOVsRTXAwIBQ6tSGocENkog7i
+         zx3KQqTr5/zvpGKIcRnEXgpYk7zeGlsM+NnrZmBXoH/ksjcLgQhUwE0XvwjQHg2G67dY
+         QBM6IsdRVanwkM6n44YLXeA1p1dU/0GWctKjpKu/KJWU++LsvRp38Fn7Qz/v0e6Barqc
+         /iCw==
+X-Forwarded-Encrypted: i=1; AKwUvByKmqT8D/tQtpP70XKOTmbGplSFNU4CIxxMl90qwGFDn+3HcHTyiTeALvbo50GtD6TrzY91BVrbPkw=@lists.linux.dev
+X-Gm-Message-State: APuU4Z+9/93d/jcNPIj6t4VQLhuN/Vl0Nu9nksMKPo0+37ua4kcs353E
+	2Uy6DnHtc7f4HN2DfRiOxN6kzCh2T25HXlnGz1QmVQGHSlI1+jeu7YKJ0ugkkJ04zC3vqkdONiK
+	7lqH61Wa6TlyjKYxhtovTVwGtgNMZkIbRwYX1SeryHwOzdR+WXX8yNfEiiPtqDnqhyGQ5KVj/0m
+	/SObS/i9aIhKJBbZogAdYkIorxG/lJ8YmxNrAqEMlrkABLneBlho7xz4t3xqi5cYWaVUb1prrgj
+	sSLmePTBRNHMMXfouvl9A==
+X-Gm-Gg: AYBFou138Vzm8SetHK7C7RAHsZ9ce9fjaG8MNH7sT9RQfPnBV0v9icJd+f4sZNshuRJ
+	2O5G9s6J8KOOw+gjFmHRRRt8+DP7mRpdNSRDL02JD1biqsQPnEXV1tILqyfG/ob2XPUAG4BGupi
+	5G1IOuGx2FGbv3TuKMWy187o1w+ur1NBpXrhITbfTIhOZRHjSDf6Tz0GD4If2rXLA1yjMsC1+UV
+	pCCHwTN1P7W/p7VH8xYDvSnxdyTrWh//bnfnaK9KvFWbf2efeNmHVZ0VGvrjX2FGOCGUtPvJx2X
+	vZmx/NCCVgJo07SbQir9R+4nDoN71jfjBHxgRnDpYO4d9Z6nVtmtCix9i4Gad/g6LPLgSlpGuRp
+	Lr6EzFXEdtCaNzI7KdcyU46QJ70w7FWeaqkE1uu3KdRasD68KKwjWrCKZTAcpAdY0XVZFdoCFBF
+	DOfIupHPzpJ+OJ8r0zfuGtMm2UVyGtMIWa9HY/Kmc=
+X-Received: by 2002:a17:90b:53c7:b0:3ac:7e3a:1033 with SMTP id 98e67ed59e1d1-3ae897c5e5dmr17180522a91.59.1793900022139;
+        Thu, 05 Nov 2026 09:33:42 -0800 (PST)
+Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-28.dlp.protect.broadcom.com. [144.49.247.28])
+        by smtp-relay.gmail.com with ESMTPS id 98e67ed59e1d1-3b094cf3bdesm1586984a91.0.2026.11.05.09.33.41
+        for <brcm80211@lists.linux.dev>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 05 Nov 2026 09:33:42 -0800 (PST)
+X-Relaying-Domain: broadcom.com
+X-CFilter-Loop: Reflected
+Received: by mail-pj1-f71.google.com with SMTP id 98e67ed59e1d1-3b09a466295so1866080a91.2
+        for <brcm80211@lists.linux.dev>; Thu, 05 Nov 2026 09:33:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google; t=1793900020; x=1794504820; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:mime-version:subject
+         :user-agent:references:in-reply-to:message-id:date:cc:to:from:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=zaFE8iTb8ZQzitBt5EqDvKEkChXKzQMc8ot83f0D0Wo=;
+        b=AjkoTP3OX1BxuKrVZeiQ6At5Ws1dm2QGdnnLQfJRNt5oiG2rbwY/hzU3mN5PO1Wjql
+         p3tXsXRcFXkoLfVcC6g9OEIcyHypEVQu3tzXVjsVgcEDKoaQItERiGvyVFLi8uvwLnty
+         Y2Z6f8lSC1c01QP1X7WtXB/U57OR22OuGY/9A=
+X-Forwarded-Encrypted: i=1; AKwUvBys/5ELpbvc6tC8cUuSNsyAfGx7y0AhxhcWy8jWMwZ+2DKALmiVjnx8UAhkL4i/tk8KAbbeOpTLID8=@lists.linux.dev
+X-Received: by 2002:a17:90b:3944:b0:3ad:4a8b:c703 with SMTP id 98e67ed59e1d1-3ae896f8649mr15916794a91.19.1793900019915;
+        Thu, 05 Nov 2026 09:33:39 -0800 (PST)
+X-Received: by 2002:a17:90b:3944:b0:3ad:4a8b:c703 with SMTP id 98e67ed59e1d1-3ae896f8649mr15916774a91.19.1793900019449;
+        Thu, 05 Nov 2026 09:33:39 -0800 (PST)
+Received: from [192.168.178.59] (f215227.upc-f.chello.nl. [80.56.215.227])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b0b328a04asm4597873a91.14.2026.11.05.09.33.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 05 Nov 2026 09:33:38 -0800 (PST)
+From: Arend van Spriel <arend.vanspriel@broadcom.com>
+To: Andre Eikmeyer <dev@deq.rocks>
+CC: <linux-wireless@vger.kernel.org>, <brcm80211@lists.linux.dev>, <brcm80211-dev-list.pdl@broadcom.com>, <linux-kernel@vger.kernel.org>, Aditya Garg <aditya.garg@linux.dev>, Yossef Osman <Yossef.Osman@proton.me>
+Date: Thu, 05 Nov 2026 18:33:34 +0100
+Message-ID: <1a1acc5e9b0.2873.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
+In-Reply-To: <20261104151547.70333-2-dev@deq.rocks>
+References: <20261104151547.70333-1-dev@deq.rocks>
+ <20261104151547.70333-2-dev@deq.rocks>
+User-Agent: AquaMail/2.8.1 (build: 200801029)
+Subject: Re: [PATCH 1/7] wifi: brcmfmac: match firmware capabilities as whole words
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Post: <mailto:brcm80211@lists.linux.dev>
@@ -97,97 +112,48 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:brcm80211+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset="us-ascii"
 Content-Transfer-Encoding: 8bit
+X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
 
-On BCM4366 firmware 10.28.2 (r769115) the 2.4 GHz radio defaults to
-vht_features 6: proprietary rates and 1024-QAM on, 2.4 GHz VHT off.
-brcmfmac never sets this iovar. As an AP the d11 PSM watchdog then fires
-repeatedly once a client passes traffic, the client disassociates and
-never completes DHCP.  This renders the radio unusable as an AP.
+Op 4 november 2026 16:15:51 schreef Andre Eikmeyer <dev@deq.rocks>:
 
-On an ASUS RT-AC86U (BCM43666 2.4 GHz radio), with every other bring-up
-setting held fixed, values 0 and 6 fail and values 1 and 7 are stable,
-so bit 0 alone decides it. The ASUS firmware for this router sets 7.
+> brcmf_feat_firmware_capabilities() looks for each capability with
+> strnstr() in the space separated reply of the "cap" iovar, so a
+> capability matches inside a longer one. The Apple firmware for the
+> BCM4364 lists "hp2p" but not "p2p":
+>
+>  ... evt_ext lpr_scan bkoff_evt hp2p rng_reseed arpoe
+>
+> The driver still sets BRCMF_FEAT_P2P and advertises the P2P interface
+> types. wpa_supplicant then creates a P2P device, which fails because
+> the firmware rejects p2p_disc and p2p_da_override with
+> BCME_UNSUPPORTED:
 
-Set bit 0, keeping the other bits, on the primary 2.4 GHz BSS of the
-4366 family while the radio is still down. 5 GHz is left alone: it
-keeps 6 and is stable.  This stabilizes 2.4GHz AP and clients now
-associate, DHCP and pass traffic at normal levels.
+[...]
 
-Signed-off-by: Jeff Campbell <inca.jeff.campbell@gmail.com>
----
-Tested on an ASUS RT-AC86U, firmware 10.28.2 (r769115), AP mode, 2.4 GHz
-channel 1 at 20 MHz, one client. The router runs OpenWrt on 6.12, so this
-is wireless-next brcmfmac at 991a73f49 built as a module with a small
-local shim for the older cfg80211 API (not part of this patch), not a
-wireless-next kernel. The two builds differ only by this patch:
+> Fixes: ec64241c9fd2 ("brcmfmac: obtain feature info using 'cap' firmware 
+> command")
+> Reported-by: Aditya Garg <aditya.garg@linux.dev>
+> Closes: 
+> https://lore.kernel.org/all/MA0P287MB021718EE92FC809CB2BB0F82B8BD2@MA0P287MB0217.INDP287.PROD.OUTLOOK.COM/
+> Tested-by: Yossef Osman <Yossef.Osman@proton.me>
+> Tested-by: Aditya Garg <aditya.garg@linux.dev>
+> Signed-off-by: Andre Eikmeyer <dev@deq.rocks>
 
-  with patch:    vht_features 7, three speed test runs on one association,
-                 no watchdog, DHCP completes, 560/155917 tx failed
-  without patch: vht_features 6, 16 PSM watchdogs in the first 102 s after
-                 boot, client retries DHCP and gives up
+Nearly identical patch was already accepted in the 4388 support series. 
+Dropping this one.
 
-5 GHz stays at 6 in both builds. One speed test run there was clean, with
-no tx failures and no watchdog.
+Regards,
+Arend
 
-The chip check covers the 4366
-family, but only the 43666 2.4 GHz radio on this board has been tested.
+> ---
+> .../wireless/broadcom/brcm80211/brcmfmac/feature.c | 14 ++++++++++----
+> 1 file changed, 10 insertions(+), 4 deletions(-)
+>
+> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/feature.c 
+> b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/feature.c
+> index cc19e5e7ebf..b324eb53a69 100644
+> ---
 
- .../broadcom/brcm80211/brcmfmac/cfg80211.c    | 32 +++++++++++++++++++
- 1 file changed, 32 insertions(+)
-
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-index 46714d871..e971057fb 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-@@ -5253,6 +5253,36 @@ brcmf_parse_configure_security(struct brcmf_if *ifp,
- 	return err;
- }
- 
-+#define BRCMF_VHT_FEATURES_2G_ENAB	BIT(0)
-+
-+static void brcmf_cfg80211_4366_2g_vht(struct brcmf_if *ifp,
-+				       const struct cfg80211_chan_def *chandef)
-+{
-+	u32 chip = ifp->drvr->bus_if->chip;
-+	u32 val, want;
-+	s32 err;
-+
-+	if (chandef->chan->band != NL80211_BAND_2GHZ)
-+		return;
-+	if (chip != BRCM_CC_4366_CHIP_ID && chip != BRCM_CC_43664_CHIP_ID &&
-+	    chip != BRCM_CC_43666_CHIP_ID)
-+		return;
-+	err = brcmf_fil_iovar_int_get(ifp, "vht_features", &val);
-+	if (err < 0) {
-+		brcmf_dbg(INFO, "vht_features get failed (%d)\n", err);
-+		return;
-+	}
-+	if (val & BRCMF_VHT_FEATURES_2G_ENAB)
-+		return;
-+	want = val | BRCMF_VHT_FEATURES_2G_ENAB;
-+	err = brcmf_fil_iovar_int_set(ifp, "vht_features", want);
-+	if (err < 0)
-+		bphy_err(ifp->drvr, "vht_features 2.4 GHz enable failed (%d)\n",
-+			 err);
-+	else
-+		brcmf_dbg(INFO, "vht_features 0x%x -> 0x%x\n", val, want);
-+}
-+
- static s32
- brcmf_cfg80211_start_ap(struct wiphy *wiphy, struct net_device *ndev,
- 			struct cfg80211_ap_settings *settings)
-@@ -5397,6 +5427,8 @@ brcmf_cfg80211_start_ap(struct wiphy *wiphy, struct net_device *ndev,
- 				goto exit;
- 			}
- 		}
-+		if (!mbss)
-+			brcmf_cfg80211_4366_2g_vht(ifp, &settings->chandef);
- 		err = brcmf_fil_cmd_int_set(ifp, BRCMF_C_UP, 1);
- 		if (err < 0) {
- 			bphy_err(drvr, "BRCMF_C_UP error (%d)\n", err);
-
-base-commit: 991a73f4909f1348ffb4b38765cdb522a775e4c2
--- 
-2.47.3
 
