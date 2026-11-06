@@ -1,55 +1,64 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.79
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.216.248.207
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793966831;
-	b=l6GsynJNtKGPMDUq/hCdrHcVfqgFHA95eo/j5te8xZVRcWBBWq27nWIwd0uAp+QnmlIZ
-	 +PBP27+DXhqYOjEoUIzCgwpvnI3ZLOmgZP7epxtHu2o/4nNZrOfBAGD1L+kqfcOeFbyg8
-	 NgIpV29YgVa9XFZIXte1iIb+T7FUn7/ZUm8xcCqoFEZzPX1lRXMDAqt+GPq0YJNfqs61m
-	 31/UvgreXR/ZrMgtK2/iDNKSUgPESZp31US0L8LKKVqDhWDmbzolaGJ8GEmPCA+QBlOpA
-	 jImiLEyXD1hibQmBrpoCC0VMgAeS1s+RbbA+/xbIEB87p5Kkl2puoS0ygpixUXQCtcg==
+	t=1793975782;
+	b=HuSPGnyFpqWD93PutbSr19RjoWV8e5ceusmaXip2KSkSovdPdIlcMspFld0w/saovkqM
+	 ODu9HXgm4hr2BJdznaQkD6/WcLpYd3Cx+oYkslBtEnvcNlpIoZLwG8v3iqNMNkq+YJx4C
+	 9rv3IS2eMVytIguLk6QFxslmKZZK4qNIsX4rPXA36jzBK9Y2ON5ARN5dRnGlwo7k6rDt7
+	 y3OsXibW3BJQc2wk9buECQKQzqc4vdf1EzSckEgVebVj1oxa4JYECuyBM5kChGNiAgtEN
+	 gpxp8pek2YSWk2cwM7txQVCMwFrm+HKZ4p6c+4l9vTU4T5ofuMGUQxQ+SHCN2FA/nDQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793966831;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:Content-Type:Content-Transfer-Encoding:
-	 From:Mime-Version:Subject:Date:Message-Id:References:Cc:In-Reply-To:
-	 To:X-Mailer;
-	bh=/UbyUKw9omZVMKFc8o2t5RKh2+gHKfyA/9nJyAlqI4Q=;
-	b=Y6+ngpFRgmuOHid5ZsP5dx4GWUXc7DbkRhhpyMS0kgvXQd3VQTcgw3YCUzTrcT+5fnCA
-	 BqWkGSV53WH3RdAJ0AnuRSYgb5+9FzojHWHgFXgkBH0swOuO+/4EqWdr0cXVq6rhld86H
-	 n5uzhKT+wXowv2xH9V7t3YzWynbAs1OtDkZ8KOMRz071ilVRkI+bT8KQDFZFYYE/DxFRP
-	 4+UThnFp68aT2ZJnxF3jEmtp3kbJx/P+T8GF87SdQqs/ahbfPiiadybAUjmMueJxOCR7u
-	 teGliALitQ+MfuVeF0ldUj5LLTbJnwp0Cp/hvVJUIRcdZJ5uaA8W8DM/knFFsohotxg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793975782;
+	h=DMARC-Filter:Date:X-Lima-ML-UUID:DKIM-Signature:From:To:Cc:Subject:
+	 Message-ID:Organization:X-Mailer:In-Reply-To:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=rawHr2YVl/H9jkwI+2q/ek0LKfKPSyS72kN0JSTFTe8=;
+	b=0kjq5W8ygy0X+YcaHaBdSsCSPineeUm0MeqjbKRFciPxJAZsQ1Tm7YlbPg159QAhViIG
+	 jK1cXegjlsGk2E1kPW2Pn9NF2kO9fdSWZ9GIi1Dgxege3n4TcF7r5QkFZj50b6OnWw8Br
+	 YClgn0W2puB6C4Dkeag7Yp2UmPW6WlHCsNMTyEJVqRgUwmIxEy6fIIfIQfpvbY0b5LSf5
+	 rzi3CHaatGY5cp9y7cgJvEyiSPQX/GFlDUtfBe/ji9+7R5rfhsiW7rDcat6rbO/J2XTt6
+	 dBOo7X+icQG1rAF1xgTegkRHWq5pxyfhrEwClVUnmxb+5fcXdFrsFyIINegSS/OlfdQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.dev;
-	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=qP0gWheo;
-	arc=none smtp.remote-ip=95.215.58.79
-Received: from mta1.migadu.com (out-79.mta1.migadu.com [95.215.58.79])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=none header.from=deq.rocks;
+	spf=none smtp.mailfrom=deq.rocks;
+	dkim=pass header.d=deq.rocks header.i=@deq.rocks header.a=rsa-sha256 header.s=securedbylima-20251205 header.b=hbL8du9u;
+	arc=none smtp.remote-ip=91.216.248.207
+Received: from mx5.mail-out.lima-city.de (mx5.mail-out.lima-city.de [91.216.248.207])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A4A2606D807
-	for <brcm80211@lists.linux.dev>; Fri,  6 Nov 2026 12:07:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9A4A2606D807
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21642606D81F;
+	Fri,  6 Nov 2026 14:36:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 21642606D81F
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=deq.rocks
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=deq.rocks
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=qP0gWheo
-X-Envelope-To: brcm80211@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=/KEvK7dVaRMP9BRN0ZLePkyoaFXMxcTu+6guCCq8Id0=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1793966828; v=1; x=1794571628;
- b=qP0gWheoGyWdYFfsKjXv/7Pk3nruqG3GTvwvickazzxd6yb5ebgRpNGCxAxubttan2CxxdTT
- 4MDQT6pS0vy2HVCfGSRjjMhpzspiGy99jVO+CtBTGSQ3Qnp/29SzNot/K83mnurfPQE0lg0ppaV
- Rz/Xu3xpxXdGahZ3Pilimsu0=
-X-Envelope-To: brcm80211@lists.linux.dev
-Received: by mta12.migadu.com with ESMTPS id 27daf28be36fd430;
-	Fri, 06 Nov 2026 12:07:08 +0000
-X-Mizu-Trace-ID: 27daf28be36fd430
-X-Migadu-Flow: FLOW_OUT
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Aditya Garg <aditya.garg@linux.dev>
+	dkim=pass (2048-bit key, unprotected) header.d=deq.rocks header.i=@deq.rocks header.a=rsa-sha256 header.s=securedbylima-20251205 header.b=hbL8du9u
+Date: Fri, 6 Nov 2026 15:36:12 +0100
+X-Lima-ML-UUID: cf184ba6-36c4-4d0a-b5d8-4034eb89d686
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=deq.rocks;
+	s=securedbylima-20251205; t=1793975777;
+	bh=cUspOtuWmA7XJYb4jzXp/qPVPvu+wOcxUbKsynPaRnI=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=hbL8du9ufctCpUaLovUKKJcVq8POlp8KcWQKZ9pM6Cz0SzgdYKd9suBVx2OddI3H/
+	 Id9XxKNVG5QeAwS0DN+SrQl26rLWR5MzDtbgLSpUbvyNgJKznk2EAIvcaZ+aTacwQt
+	 Fir7WRTxEM5RYI0yFqaiNOSVeVwpGhDXTEo7hiL2vuVzKI0XZdqXCLpk41G08K4YvO
+	 9VVyIPqQrEy5TBvn/T6kQIpF8gX4GWscaifQVJDo3HN8U8U6rl45lcQ1/wrVzeoZxi
+	 GccCRnRcWxojEofWtHTATz+6wi9bGtp0wcYn1JH3Zd0uBvIefOXApecdUwJxcNjZZe
+	 LWqVUxCkSja4Q==
+From: =?UTF-8?B?QW5kcsOp?= Eikmeyer <dev@deq.rocks>
+To: arend.vanspriel@broadcom.com
+Cc: asahi@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com,
+ brcm80211@lists.linux.dev, dberlin@dberlin.org, frankyl@broadcom.com,
+ gustavoars@kernel.org, j@jannau.net, kees@kernel.org, kvalo@kernel.org,
+ linux-hardening@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-wireless@vger.kernel.org, marcan@marcan.st, meuleman@broadcom.com,
+ michael.reeves077@gmail.com, pieterpg@broadcom.com, vanhoefm@gmail.com
+Subject: Re: [PATCH 05/13] wifi: brcmfmac: Negotiate PCIe mailbox transport
+ with firmware
+Message-ID: <20261106153612.2aadef2a@kait2en-mbp15-1>
+Organization: KaiT2en
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
+In-Reply-To: <20261103135856.3676311-7-arend.vanspriel@broadcom.com>
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Post: <mailto:brcm80211@lists.linux.dev>
@@ -58,81 +67,54 @@ List-Subscribe: <mailto:brcm80211+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:brcm80211+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH] wifi: brcmfmac: keep ARP and ND offload off on the BCM4364
-Date: Fri, 6 Nov 2026 17:36:54 +0530
-Message-Id: <1B9F864C-77C2-47D7-8E8C-E9F066C5D267@linux.dev>
-References: <20261104151620.70671-1-dev@deq.rocks>
-Cc: arend.vanspriel@broadcom.com, linux-wireless@vger.kernel.org,
- brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com,
- linux-kernel@vger.kernel.org, Andre Eikmeyer <dev@deq.rocks>,
- Yossef Osman <Yossef.Osman@proton.me>, stable@vger.kernel.org
-In-Reply-To: <20261104151620.70671-1-dev@deq.rocks>
-To: Andre Eikmeyer <dev@deq.rocks>
-X-Mailer: iPad Mail (24B119)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+
+Hi Michael,
+
+I tested 01, 04 and 05 on a T2 Macbook Air 9,1 (BCM4377/4). IIRC should be 
+the same chip as on T2 Macbook 15,4.
+
+Arend, with the patch we get D3 ACK on s2idle and s3. So this basically
+renders the D3 ACK WoWL workaround patch obsolete, you recently acked.
+So it will suspend now without refusing d3cold transition, but BT is still
+dead on resume, which is a separate issue. Just mentioning... 
+
+Anyways Michael, the patch as acked now will fail on resume with
+
+  brcmf_pcie_send_mb_data: Failed to send H2D mailbox data (-5)
+
+brcmf_pcie_pm_leave_D3() sends D0_INFORM while devinfo->state is still
+DOWN, hence we get an -EIO, so the driver falls back to remove and 
+re-probe. The Asahi tree sets the state before D0_INFORM. With that
+change my 4377 resumes without reset.
 
 
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+@@ -2838,10 +2838,10 @@ static int brcmf_pcie_pm_leave_D3(struct device *dev)
+        /* Check if device is still up and running, if so we are ready */
+        if (brcmf_pcie_read_pcie32(devinfo, devinfo->reginfo->intmask) != 0) {
+                brcmf_dbg(PCIE, "Try to wakeup device....\n");
++               devinfo->state = BRCMFMAC_PCIE_STATE_UP;
+                if (brcmf_pcie_send_mb_data(devinfo, BRCMF_H2D_HOST_D0_INFORM))
+                        goto cleanup;
+                brcmf_dbg(PCIE, "Hot resume, continue....\n");
+-               devinfo->state = BRCMFMAC_PCIE_STATE_UP;
+                brcmf_pcie_select_core(devinfo, BCMA_CORE_PCIE2);
+                brcmf_bus_change_state(bus, BRCMF_BUS_UP);
+                brcmf_pcie_intr_enable(devinfo);
+@@ -2851,6 +2851,7 @@ static int brcmf_pcie_pm_leave_D3(struct device *dev)
+        }
 
-> On 4 Nov 2026, at 8:46=E2=80=AFPM, Andre Eikmeyer <dev@deq.rocks> wrote:
->=20
-> =EF=BB=BFbrcmfmac enables the firmware's ARP and IPv6 ND offload (ndoe) wh=
-enever
-> the interface is up and not promiscuous. On the Apple firmware for the
-> BCM4364, ndoe makes IPv6 downloads collapse. IPv6 downloads topped out
-> at 55 Mbit/s on a MacBookPro15,1 with the BCM4364/3 and on the
-> MacBookPro16,1 with the later revision. The BCM4377 is not affected.
->=20
-> macOS enables ND offload for associated sleep only. A trace under
-> macOS 26.6.1 on a MacBookPro16,2 shows nd_hostip_clear, ndoe=3D1 and the
-> IPv6 addresses before sleep and ndoe cleared again on wake, see the
-> first report below. Keep them off on the BCM4364.
->=20
-> Closes: https://github.com/t2linux/kernel/issues/34
-> Closes: https://github.com/t2linux/T2-Debian-and-Ubuntu-Kernel/issues/227
-> Tested-by: Yossef Osman <Yossef.Osman@proton.me>
-> Tested-by: Aditya Garg <aditya.garg@linux.dev>
-> Signed-off-by: Andre Eikmeyer <dev@deq.rocks>
+ cleanup:
++       devinfo->state = BRCMFMAC_PCIE_STATE_DOWN;
+        brcmf_chip_detach(devinfo->ci);
+        devinfo->ci = NULL;
+        pdev = devinfo->pdev;
 
-The bug is present even in 6.18 LTS
+Feel free to fold it into v2, or I can send it as a follow-up if the
+series is already applied.
 
-Cc: stable@vger.kernel.org
-> ---
-> The KaiT2en community runs this patch with its kernels, no regression
-> was reported.
->=20
-> .../net/wireless/broadcom/brcm80211/brcmfmac/core.c    | 10 ++++++++++
-> 1 file changed, 10 insertions(+)
->=20
-> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c b/dri=
-vers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
-> index 92ec269f43b..6eae7135aeb 100644
-> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
-> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
-> @@ -13,6 +13,7 @@
-> #include <net/addrconf.h>
-> #include <net/ieee80211_radiotap.h>
-> #include <net/ipv6.h>
-> +#include <brcm_hw_ids.h>
-> #include <brcmu_utils.h>
-> #include <brcmu_wifi.h>
->=20
-> @@ -103,6 +104,15 @@ void brcmf_configure_arp_nd_offload(struct brcmf_if *=
-ifp, bool enable)
->        return;
->    }
->=20
-> +    /* With ND offload on while awake, the Apple firmware for the BCM4364=
-
-> +     * makes IPv6 downloads drop to low rates. macOS runs ARP and ND
-> +     * offload only in sleep, keep both off on this chip.
-> +     */
-> +    if (enable && ifp->drvr->bus_if->chip =3D=3D BRCM_CC_4364_CHIP_ID) {
-> +        brcmf_dbg(TRACE, "Skip ARP/ND offload enable on BCM4364\n");
-> +        enable =3D false;
-> +    }
-> +
->    if (enable)
->        mode =3D BRCMF_ARP_OL_AGENT | BRCMF_ARP_OL_PEER_AUTO_REPLY;
->    else
->=20
-> base-commit: 991a73f4909f1348ffb4b38765cdb522a775e4c2
+Andre
