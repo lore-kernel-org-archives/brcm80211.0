@@ -1,102 +1,62 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.174
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.216.248.207
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063698;
-	b=Kr03Wj6uNH39/mvaO4aLZQT0g3vPkeB+TUiBLl0Svj/UoH2tYVgyx+7YC1NKIrmz+HeO
-	 MyDblTKaZ3qM12sF0ZSWyGWuiLpz7oZhsojDjWpU8sGXMKMmkg1hA3IK1umvqn1sy+oP6
-	 GkZ4/dWTYLJZ34cN/sPncAxvZ/MEWemnJLqRcSU6ixgYfkG9ohxyI5OmAuT/de7ZXyiSz
-	 jM63YcaCBJCWZB+WQ/6pg1YBqsC1CoktR9hp+FQiRNBysTAqDIkVD2MTfxY2sNSMsHimc
-	 eYCBMGJctIWin2IfOTR2WhMAIEbCkbyxAV7KYFF2vyQrC1mj2pppBnGOGOxx0pWkZSg==
+	t=1794066504;
+	b=XedE5CrQ7qMPruL3M15hXxjiuYYiNhUti89Gn5U3wYy7fBCvy6kct1ZbeODKzJGLzxjS
+	 YmYajQFHfyc3TkCdh0Rx0J8btk7a24YoFg+rAyBhSDfe4UVzKjXH+THe1R73GI+Sx/P9T
+	 UcPO3zOqGmhgvis3HxuSDqVemXQQ8IO0PBd0RcMsiI9RN4Oj1qy7NyorYobJr+78/n24e
+	 Vicwxtfnk3NmCOMS7HPuVBqCCb2TAlCSX9Z+q0ifG7pDQMYlTFeiFa6MQDnPxXm7RlyMx
+	 4uuuxdCbChEUEgOsYwajuU1p7QIkMcZwfKApvrT30ktyzIgm7Gr5eIv65qnrGvgtJzw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063698;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=UJIT6szgZ3iHxWbb4OfUYZIiW48z49jGazGBAmmxbcw=;
-	b=zpIpYrp5JcVxv6aYF1Y/vsmnJIojeF4WWe4xIQNV8aoO05mj5hDF8M08wU/f2ky4kdAV
-	 GlkhOfASXJMKyPFP67bSgUXZ7CfvNaqeLDsTvxZ109DZESWiHn0TT8GUR8xPdu51niqEa
-	 gPxunqSHLwG/vQbjf+vv3NjuNQMKp8FPnYJhgj9/svpAxWyuzhXHbqNfMlcehoKYaoJ0v
-	 WekrKD/wseE8UXBuMdAIqWy+W61d0koQHollyrd5+5Hoq0W2sDyjOnWTPec8hWzV4z6e2
-	 bLy3Dxt118TI06Am4GxlNxiWwXGJtMoR1DKZAH9wxCXj7lSGgJSDGtqFWhW/+Wm6SOw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794066504;
+	h=DMARC-Filter:From:X-Lima-ML-UUID:DKIM-Signature:To:Cc:Subject:Date:
+	 Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
+	bh=2TSwzs4toJkuTQ0MSsNXskQy4m0VfDGBoS0m1W9mFYE=;
+	b=GzFacT2coSSiiHe2ZbMWfyIAypieM7IhWVcn0Go6uf3Yra6lt/EeBEpNLqg+PQzwr1cP
+	 uTTqZwD9Ne6mJjfSKL2btwWJPJ/c2XeG+A03CnslPqbzTemSscui8xmAgf9KGFEpXzVSv
+	 QMe5xHGOK/roUHGNS4+qAPimnLrJHC3aTPa8iW6T25eYrKmG/+SB+nsO0w9F8eHmAr+oJ
+	 Z7JnE282CxbYKbstT/tWUeRPL7H+eU3zd2BNKXfIfbBSjDZjNmD5GcC5YPKnYMOa9PyzW
+	 rIGL8FubBU1QvpDVEY9gOp0iovdndG0zbVahSyj833ikLWQq/XLqylNeb1Wmhs8CYxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=GUeXQlhB;
-	arc=none smtp.remote-ip=74.125.82.174
-Received: from mail-dy1-f174.google.com (mail-dy1-f174.google.com [74.125.82.174])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=none header.from=deq.rocks;
+	spf=none smtp.mailfrom=deq.rocks;
+	dkim=pass header.d=deq.rocks header.i=@deq.rocks header.a=rsa-sha256 header.s=securedbylima-20251205 header.b=GTOuLeMy;
+	arc=none smtp.remote-ip=91.216.248.207
+Received: from mx5.mail-out.lima-city.de (mx5.mail-out.lima-city.de [91.216.248.207])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 666B7606B89E
-	for <brcm80211@lists.linux.dev>; Sat,  7 Nov 2026 15:01:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 666B7606B89E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D43606A33A;
+	Sat,  7 Nov 2026 15:48:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 02D43606A33A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=deq.rocks
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=deq.rocks
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=GUeXQlhB
-Received: by mail-dy1-f174.google.com with SMTP id 5a478bee46e88-33bf40b0c8bso2717003eec.0
-        for <brcm80211@lists.linux.dev>; Sat, 07 Nov 2026 07:01:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794063696; x=1794668496; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=UJIT6szgZ3iHxWbb4OfUYZIiW48z49jGazGBAmmxbcw=;
-        b=GUeXQlhBQ3IFT0BVnQSik6UTGDnjLIRLejultooywX83VAv4hVb5iO68irBz4fuoB8
-         0F0/ugjg98Y0dHPp+bAy0dHxl6MCRLoK0GPU5Itomvd8ClGyb5XdSQQk6Btf5RMV04M4
-         C4BQw00f1l4Kon3gWh4IBKz+mTnKmEqkO+QcpiCaUo5ypvAfLUk+8Jy/eI+1rn5Ubfp9
-         +j+SXYEZIkPuFdk3SvIDI03EkP/x7DinUDIccuAKS5hPF2oZyrVygrAg/BcNKY8qI8ue
-         RuzKbe8aH184mB1Q0N1IZdBjA6V1irFuYGOCNtoRD7sNVVg7bMNKLnZlxCIoLwgEfm9Y
-         LVow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794063696; x=1794668496;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=UJIT6szgZ3iHxWbb4OfUYZIiW48z49jGazGBAmmxbcw=;
-        b=oxY8bBfOrmd3C4y386lvTj92Xg9LQYtYmPw6HcBLF09TDvVO2pGp4XEhNQgOblqflA
-         hJ+ST5SOsD3C3q6w0Qd/HbDdz4yKNVGjh0lwx4lDo7pjF3O5cTHtBxGMLN+cJA6GPHby
-         xJCMK5hXSNb2txsJO/yBfMWFgKm9w5eif1zut9w5bTUG+H1qiAoLiAZmwsBNFCAGeo/V
-         4N7qggRUH8dB6Ff36GERoPIVWKxzWFEkZAuAqjrLEKshv2DhfhYIbKPYXIGNINIm191T
-         NnqlKNWiAqH+kxzCpncJ39cM105pN2sCWWVdHowNyWmZkNqK8kFiRP7GcwXr/jeWUj3b
-         lOzQ==
-X-Forwarded-Encrypted: i=1; AL+hErHsn2unlA/pQbZbWBWuCaFH6T70NsHW7GPWHTByMk5Z0xEIB4rhBxim1PKufMfBm2K5HYw5+qktblo=@lists.linux.dev
-X-Gm-Message-State: APuU4Z9gDxJ/k8jFBuuqEF1LNpiiklvsfrnCKaoSl9bGZcFoIqNvqMQD
-	D1sp0zkky1HWwDD4EFBdqNR5arEHz2mAyaNSKEgustcXjRcYthq4pbKC
-X-Gm-Gg: AYBFou3uxOZiDhoLOsZXAL8KexfNsDqSf44YzfOWBqZmc3VW/JVWr0zSZ6ncpo3mbX9
-	4eIOntRfMnCQLsWcLeOQyE8hfTAWfTQYLbrhcbUlIJuB3HC1HYOR1qurpTdedII6Lyc9tz54mFz
-	zTXeMU56z6s/ZW+8mE0HS7YxdF3+dq9N3FutkeI31EMvRxZccVi8CHooHQgzF1xyWkDkIL/bCQS
-	NYUkqZq8oDaVK6r1loiCyAi8gKZBdGJJgQOM9nuMrFl11L5gooaOKSpvdlgE6V/xEIiamaR+eX6
-	rBJx+HKvG76/AJ9z+uj5RafakH1A4xEkXxIRnPsVD6Dw7zHznqebOqvh6RsFNdj1/ir3F7F89kv
-	sxfZicl+5QWQskaiVp+kIYxHWQZ5kpBQDa36/wrYc+5XRJGOfB6RetIoWxKqEc/sV77VNjRY+cz
-	LCkSE3cDTfma9E2Oj29RRQ2crly52Xs2AHL7EOSGR3sCLoqDNoDnNz2KfglhzFyqfsWJivcguU6
-	UliLp8ZALMVT9jE1FVVEyW8QUKgl7v1qJAwXcUGFOULTbZyz3QGRdqBy6zPCXj+S1wMtESJ5W3h
-	xR52pch0eNekQQQk2SkvrQ8uiPDnz2R6ichS8j8IOFdZSY3yT3I=
-X-Received: by 2002:a05:7300:c7c3:b0:36c:bf78:967e with SMTP id 5a478bee46e88-36f75a2b06bmr8006122eec.10.1794063695913;
-        Sat, 07 Nov 2026 07:01:35 -0800 (PST)
-Received: from KRHW1CJW23 ([139.177.225.255])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-36fa8d44a5fsm15540799eec.7.2026.11.07.07.01.28
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sat, 07 Nov 2026 07:01:35 -0800 (PST)
-From: Zhao Li <enderaoelyther@gmail.com>
+	dkim=pass (2048-bit key) header.d=deq.rocks header.i=@deq.rocks header.a=rsa-sha256 header.s=securedbylima-20251205 header.b=GTOuLeMy
+From: Andre Eikmeyer <dev@deq.rocks>
+X-Lima-ML-UUID: af9fc4e5-9ee0-417b-900e-491deda6e2f1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=deq.rocks;
+	s=securedbylima-20251205; t=1794066493;
+	bh=uTpTCkCVs2J2SIQukI3selteqaCydXP7zz1h7Ezajk4=;
+	h=From:To:Cc:Subject:Date:From;
+	b=GTOuLeMycp+Q9ysJdonMalNh8l8q5MUBe7Vyuy47zb7GIf02+khYfw4dxeU07Txtm
+	 l3VEKipvkOnLLOZN6cmrympZrM5oYqbKHfvKCDaeGi6bi79X14IwZUPrjq9429bSES
+	 0ixG+b6yI494RWnk05EqmCjZIbg7sYjwrB6Acyd2srTQVL5sOws17VTJv/8+vveoFj
+	 qf+KEYagEMqZW9xWIxbEzeuCzkfRHdQyJmfX8PuhD04A7+Zoea03oTl8QIyAd8R7SL
+	 lcCYWgEaxyrTZddugrKh/2i9Uzp/PFissUT5fnPmMXIZ7JrfphhW4x2S090Qa5PgYH
+	 Vr4UlEU93/OLg==
 To: Arend van Spriel <arend.vanspriel@broadcom.com>
-Cc: Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Jason Huang <jason.huang2@infineon.com>,
-	Shelley Yang <shelley.yang@infineon.com>,
-	Avraham Stern <avraham.stern@intel.com>,
-	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
-	Girish Rudrappa <girishbukkasagara.rudrappa@infineon.com>,
-	linux-wireless@vger.kernel.org,
+Cc: linux-wireless@vger.kernel.org,
 	brcm80211@lists.linux.dev,
 	brcm80211-dev-list.pdl@broadcom.com,
 	linux-kernel@vger.kernel.org,
-	kurt.lee@cypress.com,
-	Carella Chen <carella.chen@infineon.com>,
-	Chi-hsien Lin <chi-hsien.lin@cypress.com>,
-	Darren Li <hsin-hung.li@cypress.com>,
-	Ryohei Hashimoto <laurel.medalist12@gmail.com>
-Subject: [PATCH wireless] wifi: brcmfmac: skip beacon fixed fields when parsing SAE PWE rates
-Date: Sat,  7 Nov 2026 23:01:11 +0800
-Message-ID: <20261107150111.12424-1-enderaoelyther@gmail.com>
+	Michael Reeves <michael.reeves077@gmail.com>,
+	Hector Martin <marcan@marcan.st>,
+	Janne Grunau <j@jannau.net>,
+	asahi@lists.linux.dev,
+	Sebastian Reichel <sebastian.reichel@collabora.com>
+Subject: [PATCH 0/4] wifi: brcmfmac: pcie: S3 suspend and resume on the T2 Mac chips
+Date: Sat,  7 Nov 2026 16:48:06 +0100
+Message-ID: <20261107154810.89780-1-dev@deq.rocks>
 X-Mailer: git-send-email 2.56.0
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
@@ -109,51 +69,52 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-brcmf_parse_configure_sae_pwe() passes settings->beacon.head directly to
-brcmf_parse_tlvs() when searching for WLAN_EID_SUPP_RATES, so the 802.11
-management header and fixed beacon fields are parsed as elements and
-Supported Rates is missed. When BSS_MEMBERSHIP_SELECTOR_SAE_H2E is in
-Supported Rates rather than Extended Supported Rates, an H2E-only AP is
-configured to accept Hunting-and-Pecking as well.
+This goes on top of Michael Reeves' BCM4388 series [1], which also
+changes how brcmfmac talks to the BCM4364 and BCM4377 of the T2 Macs.
+These patches are follow-ups to it.
 
-Skip DOT11_MGMT_HDR_LEN + DOT11_BCN_PRB_FIXED_LEN first, as the SSID
-lookup in brcmf_cfg80211_start_ap() already does.
+Michael's Patch 5 moves the mailbox to the control ring when the
+firmware does not set BRCMF_PCIE_SHARED_USE_MAILBOX. On the BCM4377
+of the T2 Macs that makes D3 work at all, since this firmware doesn't
+read the TCM mailbox the driver used before. But that caused some
+other issues as an aftermath.
 
-AI assistance was used.
+Patches 1 and 2 fix two things in that path. D0_INFORM on resume fails
+while the PCIe state is still DOWN, which I reported on patch 5 [2].
+And with host ready as a capability, the host ready doorbell at init
+halts the BCM4364 firmware.
 
-Fixes: f3d9c56e6eb2 ("wifi: brcmfmac: Set extsae_pwe parameter to Infineon firmware in SAP mode")
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
----
-Compile-tested only; no new W=1 GCC/Clang, sparse or smatch warnings.
+Patch 3 probes again after a resume through the platform firmware,
+since the chip loses its firmware in S3. Patch 4 stands on its own and
+drops a tx status wait on flowring delete that the BCM4377 firmware
+doesnt satisfy.
 
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+The Bluetooth function of the BCM4377 gets the same resume handling in
+"Bluetooth: hci_bcm4377: resume after ACPI S3" on linux-bluetooth.
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-index 46714d871260..0c91fdc406bd 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-@@ -5144,6 +5144,7 @@ brcmf_parse_configure_sae_pwe(struct brcmf_if *ifp,
- 	u8 ie_len, i;
- 	u32 wpa_auth = 0;
- 	u32 sae_pwe = 0; /* 0 = Hunting-and-Pecking only, 1 = H2E only, 2 = both */
-+	u32 ie_offset = DOT11_MGMT_HDR_LEN + DOT11_BCN_PRB_FIXED_LEN;
- 	s32 err = 0;
- 
- 	if (!brcmf_feat_is_enabled(ifp, BRCMF_FEAT_SAE_EXT))
-@@ -5167,8 +5168,8 @@ brcmf_parse_configure_sae_pwe(struct brcmf_if *ifp,
- 	 */
- 
- 	if (sae_pwe == 2) {
--		supp_rate_ie = brcmf_parse_tlvs((u8 *)settings->beacon.head,
--						settings->beacon.head_len,
-+		supp_rate_ie = brcmf_parse_tlvs(settings->beacon.head + ie_offset,
-+						settings->beacon.head_len - ie_offset,
- 						WLAN_EID_SUPP_RATES);
- 		ext_rate_ie = brcmf_parse_tlvs((u8 *)settings->beacon.tail,
- 					       settings->beacon.tail_len,
+Tested with S3 on the BCM4377 (MacBookAir9,1) and BCM4364B2
+(MacBookPro15,1), and probe on the BCM4364B3 (MacBookPro16,1).
 
-base-commit: 6b4b543fa18757297ac756a6fe6e64f506b7844a
--- 
-2.56.0
+[1] https://lore.kernel.org/all/20260925-brcm4388-submit-v1-0-b5cbc2cde2fb@gmail.com/
+[2] https://lore.kernel.org/all/20261106153612.2aadef2a@kait2en-mbp15-1/
 
+
+Andre Eikmeyer (4):
+  wifi: brcmfmac: pcie: set the state before D0_INFORM on resume
+  wifi: brcmfmac: pcie: skip the host ready doorbell at init once it is
+    a capability
+  wifi: brcmfmac: pcie: probe again after a resume through firmware
+  wifi: brcmfmac: msgbuf: send the flowring delete without waiting for
+    tx status
+
+ .../broadcom/brcm80211/brcmfmac/msgbuf.c      | 23 +++++++---------
+ .../broadcom/brcm80211/brcmfmac/pcie.c        | 26 ++++++++++++++++---
+ 2 files changed, 33 insertions(+), 16 deletions(-)
+
+
+base-commit: 991a73f4909f1348ffb4b38765cdb522a775e4c2
+prerequisite-patch-id: e3427132df0f9740b79d9b3f84bc14c25f787514
+prerequisite-patch-id: 1a0aae8b057854813ca6d1f20d3bf153a7b761ec
+prerequisite-patch-id: 3453364de54d0d786a6126fca792567f13aa3679
+prerequisite-patch-id: d40a127ef83ad7d898ca7c3d643b45b829051477
+prerequisite-patch-id: 5bd50905bb42d138eb6fda7d5ad795615348ecdd
