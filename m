@@ -1,109 +1,103 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.227
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.174
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794036195;
-	b=uxHBhWkXrLA89Ot4GEXpRtekzv8T6m3TE5fDRmsUpT5+VJTP7H/pQKWD8dmLM6Xv74C1
-	 Z4KlHifHeUlsvhPrDdRnB+9tfIAfY/5+uGHSP4UvpsmjF9/+2TuOgKZmouQqBCSYUKZ23
-	 16eRXvByZ7bE9W1hhUfaRbARJY/QJ1eyopCtz83pBevt2bsMguFURnqAUAkMcNz6BbQ9m
-	 p+IdeUZAjt4bfh8FSt8p/Dz3vKCfM6/+SK5sEeAXwzBUaOzPJiHkVY9XpKty5MjNXW070
-	 VMVsGAO+QyWSVQ+imK3uNE2YWUOd0qU1Cx9Pdma24yS7xJy3SWwDWss4sxDhRE6Cqpg==
+	t=1794063698;
+	b=Kr03Wj6uNH39/mvaO4aLZQT0g3vPkeB+TUiBLl0Svj/UoH2tYVgyx+7YC1NKIrmz+HeO
+	 MyDblTKaZ3qM12sF0ZSWyGWuiLpz7oZhsojDjWpU8sGXMKMmkg1hA3IK1umvqn1sy+oP6
+	 GkZ4/dWTYLJZ34cN/sPncAxvZ/MEWemnJLqRcSU6ixgYfkG9ohxyI5OmAuT/de7ZXyiSz
+	 jM63YcaCBJCWZB+WQ/6pg1YBqsC1CoktR9hp+FQiRNBysTAqDIkVD2MTfxY2sNSMsHimc
+	 eYCBMGJctIWin2IfOTR2WhMAIEbCkbyxAV7KYFF2vyQrC1mj2pppBnGOGOxx0pWkZSg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794036195;
-	h=DMARC-Filter:Received:X-Google-DKIM-Signature:X-Forwarded-Encrypted:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:X-Relaying-Domain:
-	 X-CFilter-Loop:Received:DKIM-Signature:X-Forwarded-Encrypted:
-	 X-Received:X-Received:Received:From:To:CC:Date:Message-ID:In-Reply-To:
-	 References:User-Agent:Subject:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding:X-DetectorID-Processed;
-	bh=Y0FgIFQtxvacrqev0zCbMfAujPCpt+ydjgI/Lt3fFqI=;
-	b=udI9h9sLd46IRZ/AwU8Thxc0qlGIbuWpjPTa9zCxNZ5axqahVWeMexGgRnm7HUjYK85u
-	 q9kKxBV65biL7NmWMgqvDn7q9k0a8OPnxm+NhTO+9HvYzt0wnxSQZ50dNctAix7GgKCvu
-	 zC36vptRFfwd9zURiK/bmlq13AzjjLBkHfv/PuShe+w8D8od9G/O3rrMXNs8KTA5xveSC
-	 JbuA/w821PaIFI0vj9YqRUajIAyDjFoO5j0fd/j3h77lqIWOF1QADAlGQyrYoizlZPGec
-	 3MOacr+4gnfCw7zGBraQs4kO6g+OtDtOrFiZfNzwNSc9nBwcvVeW6zRm9xd+yDEJakg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063698;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=UJIT6szgZ3iHxWbb4OfUYZIiW48z49jGazGBAmmxbcw=;
+	b=zpIpYrp5JcVxv6aYF1Y/vsmnJIojeF4WWe4xIQNV8aoO05mj5hDF8M08wU/f2ky4kdAV
+	 GlkhOfASXJMKyPFP67bSgUXZ7CfvNaqeLDsTvxZ109DZESWiHn0TT8GUR8xPdu51niqEa
+	 gPxunqSHLwG/vQbjf+vv3NjuNQMKp8FPnYJhgj9/svpAxWyuzhXHbqNfMlcehoKYaoJ0v
+	 WekrKD/wseE8UXBuMdAIqWy+W61d0koQHollyrd5+5Hoq0W2sDyjOnWTPec8hWzV4z6e2
+	 bLy3Dxt118TI06Am4GxlNxiWwXGJtMoR1DKZAH9wxCXj7lSGgJSDGtqFWhW/+Wm6SOw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=broadcom.com;
-	spf=fail smtp.mailfrom=broadcom.com;
-	dkim=pass header.d=broadcom.com header.i=@broadcom.com header.a=rsa-sha256 header.s=google header.b=LUa+VEo+;
-	arc=none smtp.remote-ip=209.85.215.227
-Received: from mail-pg1-f227.google.com (mail-pg1-f227.google.com [209.85.215.227])
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=GUeXQlhB;
+	arc=none smtp.remote-ip=74.125.82.174
+Received: from mail-dy1-f174.google.com (mail-dy1-f174.google.com [74.125.82.174])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 725EE606A32D
-	for <brcm80211@lists.linux.dev>; Sat,  7 Nov 2026 07:23:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 725EE606A32D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 666B7606B89E
+	for <brcm80211@lists.linux.dev>; Sat,  7 Nov 2026 15:01:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 666B7606B89E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.a=rsa-sha256 header.s=google header.b=LUa+VEo+
-Received: by mail-pg1-f227.google.com with SMTP id 41be03b00d2f7-cd6028ff33fso697957a12.0
-        for <brcm80211@lists.linux.dev>; Fri, 06 Nov 2026 23:23:15 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794036195; x=1794640995;
-        h=content-transfer-encoding:content-type:mime-version:subject
-         :user-agent:references:in-reply-to:message-id:date:cc:to:from
-         :dkim-signature:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=Y0FgIFQtxvacrqev0zCbMfAujPCpt+ydjgI/Lt3fFqI=;
-        b=eYSCmelGTmk1XY/NTrQIcy0GQMc6DNsnlbOt11zUfpeg4paxzyo1btCSgioxosCE2b
-         7+pRfZhz1bX8ICp98Hf97KngYYX1ZE6TgqDNAFIHlMJiCbmXuujPeyGeG3t6xWHghG1C
-         0N4pz/Zvf3zyrFyfEOGg7ljxG9pCOGs+TeJeujhNCk1wHpqFhHY9LxLUd9kFsNXBKHLP
-         ApGzyNPD6MqiTsGcHmot0Jvpj9ayHUpqkQwYGJvxmEu45NJiZI6fVX3UmsJJqysAYqb/
-         4DOgGntfeJVE8i7IGqu8oTUQdMv04kWX7D5k62JPs+7o9qTJ2orIOEcImmp+I18/SW0U
-         bPAQ==
-X-Forwarded-Encrypted: i=1; AL+hErGclagKVvIGoBzUIBRLlYpfQps2mw+hzyR3Lsqto/ElttEoHpu6fXjkDmHXrUF/zmuYI13r9GXuwl8=@lists.linux.dev
-X-Gm-Message-State: APuU4Z/45WkGTt6gMKQ4MDc0UsKJPlCHTRB+g8K0GmBhB5NydHIO6wTa
-	/WGESSQYAmrwKh1KrecL7YW8+fg4ed+5oajFh0Q2fjq0sOG9/CfG1C/ZIAPEXilE8xg+RHeRclz
-	YJ2mPofiQkqs/oAhsU/uAKkq52TlSY3JRDdiVabPaX5aTqX0/RJKz8SLSuAKbE88kPPTrLO1Wm6
-	Nn5nOU20Af9XeUC5OCi0F4G5HTM0fL00/d+xF6Ogn8ZWUVUdrvReC2OPhvr1PyMdrPT+hgz9f3l
-	uETipdklC/O91OWfp+nNg==
-X-Gm-Gg: AYBFou1GOtK18sqXOvq9VRKvRHi17aquFGiRRqdqsHMU9noGluYvSSMMTzG/nNexv3v
-	sAobnRqHF1IH+D96afUdMhb1XN88prZ/YFanoC+IwZNwgVu3JUbO5UicVlKOlb0FMNgQUd6ouFF
-	fTvv/iJD5y1xNVBy867jJW24Wxmmfl+G3b20OdWp0xjzJRbdakB6gymQ1QFY5KLU/9dusPGyH3e
-	26KVIkccW0hBsaWao9/bSUjMSeTu+QBauK9nJez2ROQd3ywe+FWAHKIJNYanWkh//fFicCYioql
-	VC2en7vWRdXDWMN5EKN/gxaGW2H9Um/rezZDWHFt7eOY/QvvabFiZLNSbfoOUw6eC4w6wxx7sRW
-	tIzQm53m5wjv56CifwzBoLbYklA4M7HBcNZvmb5/gXRzuaKQv5tf6Zrnx3tuB8QEdyv45mze+xu
-	mCF0yIG/Ym5n3l8owQrIPvlLn8GJZCgzUx+VzOAYs=
-X-Received: by 2002:a17:90b:2f87:b0:3a8:a1f6:3b32 with SMTP id 98e67ed59e1d1-3b0db6d2440mr4791492a91.38.1794036194558;
-        Fri, 06 Nov 2026 23:23:14 -0800 (PST)
-Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-17.dlp.protect.broadcom.com. [144.49.247.17])
-        by smtp-relay.gmail.com with ESMTPS id 98e67ed59e1d1-3b1058d4f27sm1163848a91.3.2026.11.06.23.23.14
-        for <brcm80211@lists.linux.dev>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 06 Nov 2026 23:23:14 -0800 (PST)
-X-Relaying-Domain: broadcom.com
-X-CFilter-Loop: Reflected
-Received: by mail-ej1-f71.google.com with SMTP id a640c23a62f3a-c40bbd26f74so124112966b.0
-        for <brcm80211@lists.linux.dev>; Fri, 06 Nov 2026 23:23:13 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=GUeXQlhB
+Received: by mail-dy1-f174.google.com with SMTP id 5a478bee46e88-33bf40b0c8bso2717003eec.0
+        for <brcm80211@lists.linux.dev>; Sat, 07 Nov 2026 07:01:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1794036192; x=1794640992; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:mime-version:subject
-         :user-agent:references:in-reply-to:message-id:date:cc:to:from:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Y0FgIFQtxvacrqev0zCbMfAujPCpt+ydjgI/Lt3fFqI=;
-        b=LUa+VEo+EJSOSkrieZJlmcmp2l3PWr6JdSPqfow08sjFa4PH028+pvmtWSjfI5Cgcz
-         ZSyS94OICnrqZtlKCCepVc7lIDUdz2OtZoiWXha5J4trJFZa5rQ96ZvjqvNIg8aW4erA
-         Z+BgilDH+hxP9ihSAIAN1UfrFPuzlrsAfPiOQ=
-X-Forwarded-Encrypted: i=1; AL+hErEzHjK3HLqIkwjzzlAhoFRoLTJERna2RMOkH4ndjiTPOHNUcDn6Jh3C8s3KNstRDM9yeNHPOwLSFQ8=@lists.linux.dev
-X-Received: by 2002:a17:906:d54c:b0:c29:5d41:dfe8 with SMTP id a640c23a62f3a-c4d34ca43afmr369013966b.43.1794036192736;
-        Fri, 06 Nov 2026 23:23:12 -0800 (PST)
-X-Received: by 2002:a17:906:d54c:b0:c29:5d41:dfe8 with SMTP id a640c23a62f3a-c4d34ca43afmr369012066b.43.1794036192265;
-        Fri, 06 Nov 2026 23:23:12 -0800 (PST)
-Received: from [192.168.178.59] (f215227.upc-f.chello.nl. [80.56.215.227])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c4d3569fa54sm134100066b.58.2026.11.06.23.23.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Nov 2026 23:23:11 -0800 (PST)
-From: Arend van Spriel <arend.vanspriel@broadcom.com>
-To: =?UTF-8?B?QW5kcsOpIEVpa21leWVy?= <dev@deq.rocks>
-CC: <asahi@lists.linux.dev>, <brcm80211-dev-list.pdl@broadcom.com>, <brcm80211@lists.linux.dev>, <dberlin@dberlin.org>, <frankyl@broadcom.com>, <gustavoars@kernel.org>, <j@jannau.net>, <kees@kernel.org>, <kvalo@kernel.org>, <linux-hardening@vger.kernel.org>, <linux-kernel@vger.kernel.org>, <linux-wireless@vger.kernel.org>, <marcan@marcan.st>, <meuleman@broadcom.com>, <michael.reeves077@gmail.com>, <pieterpg@broadcom.com>, <vanhoefm@gmail.com>
-Date: Sat, 07 Nov 2026 08:23:10 +0100
-Message-ID: <1a1b4e3cb30.2873.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
-In-Reply-To: <20261106191826.4ddb997a@kait2en-mbp15-1>
-References: <20261106153612.2aadef2a@kait2en-mbp15-1>
- <1a1b1ef4b20.2873.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
- <20261106191826.4ddb997a@kait2en-mbp15-1>
-User-Agent: AquaMail/2.8.1 (build: 200801029)
-Subject: Re: [PATCH 05/13] wifi: brcmfmac: Negotiate PCIe mailbox transport with firmware
+        d=gmail.com; s=20260707; t=1794063696; x=1794668496; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=UJIT6szgZ3iHxWbb4OfUYZIiW48z49jGazGBAmmxbcw=;
+        b=GUeXQlhBQ3IFT0BVnQSik6UTGDnjLIRLejultooywX83VAv4hVb5iO68irBz4fuoB8
+         0F0/ugjg98Y0dHPp+bAy0dHxl6MCRLoK0GPU5Itomvd8ClGyb5XdSQQk6Btf5RMV04M4
+         C4BQw00f1l4Kon3gWh4IBKz+mTnKmEqkO+QcpiCaUo5ypvAfLUk+8Jy/eI+1rn5Ubfp9
+         +j+SXYEZIkPuFdk3SvIDI03EkP/x7DinUDIccuAKS5hPF2oZyrVygrAg/BcNKY8qI8ue
+         RuzKbe8aH184mB1Q0N1IZdBjA6V1irFuYGOCNtoRD7sNVVg7bMNKLnZlxCIoLwgEfm9Y
+         LVow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794063696; x=1794668496;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=UJIT6szgZ3iHxWbb4OfUYZIiW48z49jGazGBAmmxbcw=;
+        b=oxY8bBfOrmd3C4y386lvTj92Xg9LQYtYmPw6HcBLF09TDvVO2pGp4XEhNQgOblqflA
+         hJ+ST5SOsD3C3q6w0Qd/HbDdz4yKNVGjh0lwx4lDo7pjF3O5cTHtBxGMLN+cJA6GPHby
+         xJCMK5hXSNb2txsJO/yBfMWFgKm9w5eif1zut9w5bTUG+H1qiAoLiAZmwsBNFCAGeo/V
+         4N7qggRUH8dB6Ff36GERoPIVWKxzWFEkZAuAqjrLEKshv2DhfhYIbKPYXIGNINIm191T
+         NnqlKNWiAqH+kxzCpncJ39cM105pN2sCWWVdHowNyWmZkNqK8kFiRP7GcwXr/jeWUj3b
+         lOzQ==
+X-Forwarded-Encrypted: i=1; AL+hErHsn2unlA/pQbZbWBWuCaFH6T70NsHW7GPWHTByMk5Z0xEIB4rhBxim1PKufMfBm2K5HYw5+qktblo=@lists.linux.dev
+X-Gm-Message-State: APuU4Z9gDxJ/k8jFBuuqEF1LNpiiklvsfrnCKaoSl9bGZcFoIqNvqMQD
+	D1sp0zkky1HWwDD4EFBdqNR5arEHz2mAyaNSKEgustcXjRcYthq4pbKC
+X-Gm-Gg: AYBFou3uxOZiDhoLOsZXAL8KexfNsDqSf44YzfOWBqZmc3VW/JVWr0zSZ6ncpo3mbX9
+	4eIOntRfMnCQLsWcLeOQyE8hfTAWfTQYLbrhcbUlIJuB3HC1HYOR1qurpTdedII6Lyc9tz54mFz
+	zTXeMU56z6s/ZW+8mE0HS7YxdF3+dq9N3FutkeI31EMvRxZccVi8CHooHQgzF1xyWkDkIL/bCQS
+	NYUkqZq8oDaVK6r1loiCyAi8gKZBdGJJgQOM9nuMrFl11L5gooaOKSpvdlgE6V/xEIiamaR+eX6
+	rBJx+HKvG76/AJ9z+uj5RafakH1A4xEkXxIRnPsVD6Dw7zHznqebOqvh6RsFNdj1/ir3F7F89kv
+	sxfZicl+5QWQskaiVp+kIYxHWQZ5kpBQDa36/wrYc+5XRJGOfB6RetIoWxKqEc/sV77VNjRY+cz
+	LCkSE3cDTfma9E2Oj29RRQ2crly52Xs2AHL7EOSGR3sCLoqDNoDnNz2KfglhzFyqfsWJivcguU6
+	UliLp8ZALMVT9jE1FVVEyW8QUKgl7v1qJAwXcUGFOULTbZyz3QGRdqBy6zPCXj+S1wMtESJ5W3h
+	xR52pch0eNekQQQk2SkvrQ8uiPDnz2R6ichS8j8IOFdZSY3yT3I=
+X-Received: by 2002:a05:7300:c7c3:b0:36c:bf78:967e with SMTP id 5a478bee46e88-36f75a2b06bmr8006122eec.10.1794063695913;
+        Sat, 07 Nov 2026 07:01:35 -0800 (PST)
+Received: from KRHW1CJW23 ([139.177.225.255])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-36fa8d44a5fsm15540799eec.7.2026.11.07.07.01.28
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Sat, 07 Nov 2026 07:01:35 -0800 (PST)
+From: Zhao Li <enderaoelyther@gmail.com>
+To: Arend van Spriel <arend.vanspriel@broadcom.com>
+Cc: Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Jason Huang <jason.huang2@infineon.com>,
+	Shelley Yang <shelley.yang@infineon.com>,
+	Avraham Stern <avraham.stern@intel.com>,
+	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
+	Girish Rudrappa <girishbukkasagara.rudrappa@infineon.com>,
+	linux-wireless@vger.kernel.org,
+	brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com,
+	linux-kernel@vger.kernel.org,
+	kurt.lee@cypress.com,
+	Carella Chen <carella.chen@infineon.com>,
+	Chi-hsien Lin <chi-hsien.lin@cypress.com>,
+	Darren Li <hsin-hung.li@cypress.com>,
+	Ryohei Hashimoto <laurel.medalist12@gmail.com>
+Subject: [PATCH wireless] wifi: brcmfmac: skip beacon fixed fields when parsing SAE PWE rates
+Date: Sat,  7 Nov 2026 23:01:11 +0800
+Message-ID: <20261107150111.12424-1-enderaoelyther@gmail.com>
+X-Mailer: git-send-email 2.56.0
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Post: <mailto:brcm80211@lists.linux.dev>
@@ -113,43 +107,53 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:brcm80211+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
 
-Op 6 november 2026 19:18:32 schreef André Eikmeyer <dev@deq.rocks>:
+brcmf_parse_configure_sae_pwe() passes settings->beacon.head directly to
+brcmf_parse_tlvs() when searching for WLAN_EID_SUPP_RATES, so the 802.11
+management header and fixed beacon fields are parsed as elements and
+Supported Rates is missed. When BSS_MEMBERSHIP_SELECTOR_SAE_H2E is in
+Supported Rates rather than Extended Supported Rates, an H2E-only AP is
+configured to accept Hunting-and-Pecking as well.
 
-> On Fri, 06 Nov 2026 18:36:52 +0100
-> Arend van Spriel <arend.vanspriel@broadcom.com> wrote:
->
->> Sorry, you lost me there. What is the relation between the patch in
->> this subject and D3 ack.
->
-> Hi Arend,
->
-> D3_INFORM and D3_ACK are mailbox messages, and 05 changes how they are
-> exchanged. Without 05 brcmfmac writes D3_INFORM to the TCM mailbox
-> and our cursed Apple 4377 firmware on the 9,1 doesn't read it.
->
-> That is why I mentioned the D3 ACK timeout handling patch. I
-> submitted that because I was sure the firmware wouldn't send it.
-> But actually the transport was broken.
->
-> https://lore.kernel.org/all/20261001085308.1688049-1-dev@deq.rocks/
->
-> which was superseded by Sebastian's patch here:
->
-> https://lore.kernel.org/linux-wireless/20260915-brcmfmac-bcm43752-suspend-fix-v2-1-1bd84914998b@collabora.com/
->
-> So probably for addressing Sebastian's issue this needs to stay
-> anyways. My memory served me wrong. I just read that his device is not
-> an Apple product, but his patch incidentally worked around the same
-> problem. Sorry if i was causing unneccessary noise.
+Skip DOT11_MGMT_HDR_LEN + DOT11_BCN_PRB_FIXED_LEN first, as the SSID
+lookup in brcmf_cfg80211_start_ap() already does.
 
-No problem. Thanks for helping me unclutter my head.
+AI assistance was used.
 
-Regards,
-Arend
->
+Fixes: f3d9c56e6eb2 ("wifi: brcmfmac: Set extsae_pwe parameter to Infineon firmware in SAP mode")
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+---
+Compile-tested only; no new W=1 GCC/Clang, sparse or smatch warnings.
 
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+index 46714d871260..0c91fdc406bd 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -5144,6 +5144,7 @@ brcmf_parse_configure_sae_pwe(struct brcmf_if *ifp,
+ 	u8 ie_len, i;
+ 	u32 wpa_auth = 0;
+ 	u32 sae_pwe = 0; /* 0 = Hunting-and-Pecking only, 1 = H2E only, 2 = both */
++	u32 ie_offset = DOT11_MGMT_HDR_LEN + DOT11_BCN_PRB_FIXED_LEN;
+ 	s32 err = 0;
+ 
+ 	if (!brcmf_feat_is_enabled(ifp, BRCMF_FEAT_SAE_EXT))
+@@ -5167,8 +5168,8 @@ brcmf_parse_configure_sae_pwe(struct brcmf_if *ifp,
+ 	 */
+ 
+ 	if (sae_pwe == 2) {
+-		supp_rate_ie = brcmf_parse_tlvs((u8 *)settings->beacon.head,
+-						settings->beacon.head_len,
++		supp_rate_ie = brcmf_parse_tlvs(settings->beacon.head + ie_offset,
++						settings->beacon.head_len - ie_offset,
+ 						WLAN_EID_SUPP_RATES);
+ 		ext_rate_ie = brcmf_parse_tlvs((u8 *)settings->beacon.tail,
+ 					       settings->beacon.tail_len,
+
+base-commit: 6b4b543fa18757297ac756a6fe6e64f506b7844a
+-- 
+2.56.0
 
