@@ -1,92 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.208.48
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794352320;
-	b=zpMXyWoEwsv7AsGSRJh6PZbBXcUTel4S5Jvo1izSOkrWZNjhqWW6bSzlDkKeDHlI370E
-	 fmIq6Q60uFDRthdSzXZdiBxADzaUqiWCkH3DwPJrr8yP161EOFW1aHsZQTvNSgmQNTuyP
-	 hlOHcdU4/jBu0x3Xo4U7gAkHnaGSITTERp6GVGi/HgjymVcPbKkWCGId9/oWYS0zFLfQ9
-	 UOSdRtYw6h/mNHX6A/5xHjcRgerRMaenLfCx1OBRGy8+Manj/qrY9lsOFqsMmJNLvCPkx
-	 mxEt7HHxQXOzKOwNFM9Oe1996bbut/sKpXkcr9n/j4Ft2MZi+GrneuDJG/iUzJpA0nA==
+	t=1794352379;
+	b=2ZhVeajAfjSoLgGQiWKZzy5+0cVtIE3+A+XIgPLk6ccKW84VR4/DxkxmoVlHCAoeKglU
+	 a5WoYfqZTRmGTBDdGOqeIbKCELdocJyPzKQVELKudaxKqz50GSTgPI7tqQBAlQdqxC9nn
+	 CX8q+aEW55Gsqa2yV0MEfFZQ91qO/ceGv4htd0YKsQZ6pSEwn3AIEWKkDPS8lTXbOcMoF
+	 z7h3XF4jgrlbJ1AMBE+yKqoe5nOGw8WhY63hfUBs2igrOWDfuiTnoJC1HZJ+iv2xGSp/r
+	 LzxFVT1kqg282kUBkyQb6z7lUKpUUsp73m1Hj1zkKHgOOuEImfvIX39L16aRDEGxdFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794352320;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794352379;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=0Xojv1PznqkjFmN7+yFbdkDsoaJ1qnF0z52IzXttlsY=;
-	b=FAkyGty8PidgV5R7LUZrZz8c2reRDgigpl4nhTXUJULigzpj7dNkN5jvT5XJSz81USn1
-	 /vTNTOFgPHLkdnTF/ChY0Dm63p0TCDUx9ovnOaLQIWKWcLxmrNzk/jTSykVYfcwQJkdzL
-	 E6+GrmhqK3IhX+e1SKTt5X3sHv+v07pcrO0+qmi5oEUd8JeMJUHUfAQIVx7L+2JfZnTuX
-	 795eoOnSJcV3hMjhwdbQ8V+LPddJMPBmkWumiF6b+uW5pxTCYVlg2sv3BChF1DtOO65QZ
-	 hH4dL3JQ9r3zG0KhbCLuf65kkTo9R7ebI0BvNEaY/lATuRo33Gv4PZf3EDOtBnc/dCA==
+	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=KNeqLz5KhPE320r25YtgufZ8qCYzgA1u0TPgeMKulgo=;
+	b=JVWj/WftcEi1HzhDic92+170Mp6XVc6fx5htFFnJZVXLyd2frkG4cwKjT9NZ93NuA/bn
+	 EdY47XWw1fr+3HqTl4n7OoZ0XyD52BsUX/2QWa5R/C1O/Ou5fpHcE+FSjqJIt2qxeedCx
+	 UJzhdoKuUw49pSEUlmPBlQK6eyBjGEUAGBSlsg2nneF/T//zHL5gQIDQEc+owoSZMLEeG
+	 jL6OmpBM4HaUUr8kOHTaYYeqOV1wySoJ6nwFrGeQpEBM6q8mX4OFhe7GmGqXLDA9aW6mf
+	 pvTsIDpHYvA0UU8xTxgJYmUuizp3Bv47SP5eKEQrfQn02EtdUZyD8mVl+74adRJiVjA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=gkGY8VJf;
-	arc=none smtp.remote-ip=209.85.218.42
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=iqDRS10z;
+	arc=none smtp.remote-ip=209.85.208.48
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54457606A320
-	for <brcm80211@lists.linux.dev>; Tue, 10 Nov 2026 23:12:00 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 54457606A320
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9009606A321
+	for <brcm80211@lists.linux.dev>; Tue, 10 Nov 2026 23:12:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C9009606A321
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=gkGY8VJf
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-c40e30c26a4so393087766b.0
-        for <brcm80211@lists.linux.dev>; Tue, 10 Nov 2026 15:12:00 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=iqDRS10z
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-6b408f2d936so4011508a12.1
+        for <brcm80211@lists.linux.dev>; Tue, 10 Nov 2026 15:12:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794352319; x=1794957119; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=0Xojv1PznqkjFmN7+yFbdkDsoaJ1qnF0z52IzXttlsY=;
-        b=gkGY8VJf0uijq/SCCLGd3CEcVi75EG5TwEs14KgLIYWOJJVk1zMaUbTqLDUjsF2db/
-         UguJyiF7I00P7UVToe0jsYvBq1IpCAc/80no12JtzLlTGiSg8yX5RMPl9U3qxHijxHxX
-         66wqlywoLOw6IW6GrHTHGBeXaHnd7WGACoOk3SBKWArP83YkzPYbMLX4KTy0xyzYqBcN
-         kAS1HK5ueqhhzhICGvbOWk0m5tnb0FFOfx5fUOZFdDc8jQwW6RNx05u6LF0fDi25PUnF
-         snRqtUxQH8tc/Te6yJ+R3mCi7Mdf/I8myKvX5oHdO+SpC9afqktaQoaTJzFgiw0RObfT
-         DPfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794352319; x=1794957119;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20260707; t=1794352377; x=1794957177; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=0Xojv1PznqkjFmN7+yFbdkDsoaJ1qnF0z52IzXttlsY=;
-        b=MzbIqO8/Vtzxa3xnO8PjyXCdZPYFR8Jvdfg4rZfoNBYA0ooAN61IQDbTqnK8fp57bq
-         e64g/9fob6vuQTFpoPeOLVzm/vtLtN25dbtNXJq8RHOM6kcwxEdK64/EqTP+Gtcwgumb
-         wQUM1yIaMV7A0+msqhVtZU2D/ZJVMg4mojhG+jpyVkKBrBiIVfiYL7+BCdJXLnb98m5v
-         FzBBnPEkrrug4f4ox+TcSNPEJfH3kpg3pNe8YdosCxOK4JY9bgmzzu31Zrk/BHtTihBC
-         KiZk9m9GWA06j6rQPjHiazyNxMBwkm8IjpFMxsz0UjQC0d2cbLYA84mC+9Xu9N2OGxNQ
-         VQbg==
-X-Forwarded-Encrypted: i=1; AL+hErFbl7SLnY9pdk3JGqMdQh8+8CRhKiAjIvedLRSOz8NrGWvm8f9IGigljy4ObHlKBaPsNhUvQY9RKNk=@lists.linux.dev
-X-Gm-Message-State: APuU4Z80s/V06ztEBgpZc9SscqpAlOLs81MJmohFj8h64NQxcmslppeB
-	f1CdMjYfjZvjsdk5bSVqxSOJ6CWvUGdZ0mTjtFZY1QWUyo4QaCbAS4EV
-X-Gm-Gg: AYBFou3+Quf8w/eoKfK7ao85xPLFUfpEVzdk6Cvp6McQ7NlrN1bYxvO5XnP71Wchbn+
-	r8lpzo3CbrPyYDzC1l4KyvUpnm9d02Ut2QA47YFfghX/WSjKSuwpD4IxETtF03ju+PiKNRCdf2W
-	aJ1KUCACF42eyF0hOxw5mHVao+5/BDynKb4w44MtsKiKE140uTDyo2XT3hyBVf5N3wSwNwNdOcc
-	aSEjLzaAQ2JQ1p8O3TR8dmm0nMXT2Ly+OZWuAD7zRrqW6XgfNKoDUQvJfMgnKM3O+xM//97+v5t
-	LCXfNI6YFdxptrFRhbGDBrXQsxMfv7Gbv+/gfORvZPekyNHFHN/jK4NWaEWiYhpL9wVZNIJl642
-	/ixPvWM6vWV1hxUeVN+RWbXL90IhHGdlwnHViQoJogQU8R+UB0/kRia+dZyEnCKT0gm4erLLUZ5
-	N/9TSAPPnD50qZE9QX/cWV6maoGtZ87L3yqf3er5Hq3j8H3O/bEZxy1kZRptF5f3ji5pZ+cezns
-	NlSOkU/5OEW4FlWU2oZkN6M+iWsnU3q+nJeLFgdI4Yez4adRO4E0euntK96k4Y30bM5sKOr+KRQ
-	7YpEMlefRa3BFlHc8crrG5SznwsFvz9d/RegWNrVn3vqXg7vCdHo0h0=
-X-Received: by 2002:a17:906:dc91:b0:c41:1781:a2af with SMTP id a640c23a62f3a-c506338c761mr81873766b.9.1794352318510;
-        Tue, 10 Nov 2026 15:11:58 -0800 (PST)
+        bh=KNeqLz5KhPE320r25YtgufZ8qCYzgA1u0TPgeMKulgo=;
+        b=iqDRS10z6xZEvN64EkFDLw3fWbHaNF+HrB46rz5T33gWpJlMBTnZEoR3AWzhGM2xt6
+         OBK0Ls1dBzYJHAye/kYvPR8YNaJ3G84QUhJvaPwZGdw1OzZWqXWNwtxPS6Q9zycvDD1r
+         j908/+jHK9D1aw066HpVh9aafX+Sss75WpIIAJAYP0Y6u3prK/IiqbM9NRgEuzTg6xyJ
+         mMdPTUbSo8UsRuklYQmEZQWL83vTnqhoZ/LYYfFABxjvwo3QKCeGspWqX8I1iNtriGrF
+         UDIpPw8/DfrTPpQRNWm2NnlZAh7RdJH8UNyec6bskdIQ1kM571qgqEM4JGrdAFt1Xvmu
+         WtRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794352377; x=1794957177;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=KNeqLz5KhPE320r25YtgufZ8qCYzgA1u0TPgeMKulgo=;
+        b=tkFmzZl3HYIEad2NhTMTaZaDNLQpZDTajRnI9QVI6Sl2kpcED59+g2h2SzFMDtd+/3
+         Mc5P3ee/Q6Bn7IXlYAU1SXsRteFuWKwUGLfehQ28dXLOIC4mJb3VMOX/QPaI9NUk4AJR
+         Y5Q6Wdl/t1XfMhf/iZvOn/X+EmEKNiJuL97bF31RmRpD7TiMJOp7jP1dPDKf2LUF3Q5A
+         guX5GAcpPqVC7QQkcwhuF1fqihlftXPIg052WEdFARIE3YsWb3qym0zKf797M4fU9INR
+         kxIbFw+nKTFPOczmu0XOykRZbmfeKCS0Pl1AxbsP57vYL7MfGgS/pQIUe+DJYvGtXxyo
+         8NZg==
+X-Forwarded-Encrypted: i=1; AL+hErGXQFK714DrbOwCK5ujQTTzpvqWSThCm8n/rssSXc0G8P+HkywWKXVSoAtbEQKDkrZlom66yJ5gk7A=@lists.linux.dev
+X-Gm-Message-State: APuU4Z+MPRs3rlqM+Ju+aMzXN800MJ66723Orf90yzdMXcjxGCq+fEOY
+	KMG2WLSp9/dbBwVrWmeo8wdyYY5JmmQU/2jh80WV2Be3YyBngMux8QE8
+X-Gm-Gg: AYBFou1ha8piHrlzxaCxQ6xZ8nt4SuSWigfe9SPW+NAq7NKOkErZPvKeu7KGELgwugd
+	bpJfT2dKXT/JjjNhIYMu+Jmd+4N1HKPA4LPUY4ZDioF6pFND75o6wnE+HZ0EEnqop8XoySXtAv2
+	BX0cTEXwfl0iQ+xYI+CqzcLlYXgjJvSwSy5Ayp8FQxTsPlc18eLEW9X61j3Kfuq5XBbgu92MMV1
+	hoxFIttKYAIzqNXjszRRF8bGHC2FoPfp2n2J5Cx6Vtfvuk1J980vc5i6C6uQwOen0nPMQwI0LWj
+	cU5EuU1voWHol/owLDULI6O/DBCwju4WAX1nXgocILHIPftEqWWtal50Bx4QLdaGBAHU3Uuu1bz
+	msu4TnLzqCON0CbX30DoormxjIBeU57Xp30DZ4fugrZWNH1CRginQ9yqmeYuHBH81m25C5bZ0v1
+	LVVBDl/+AyHow6dH9QJ851/yJtBVrNDupnZxbf96PK1lJ4CSmMcaoDNa7F+W8hQ1GdcFALOX93z
+	ey/a91uOjKEBKC7J5KyQhuIs+oHQK4QNS/zkA/4OP2FC05PV7aQ+juE3IjXSEHOpAeqSPHIWf94
+	OOFTOHZAeZpZvI0WCwB7V+oe7WQQQ3BjGYMdS6w4I3wksLfBHrA25iE=
+X-Received: by 2002:a05:6402:4506:b0:6b5:7886:c450 with SMTP id 4fb4d7f45d1cf-6b77781b377mr528054a12.40.1794352376981;
+        Tue, 10 Nov 2026 15:12:56 -0800 (PST)
 Received: from localhost.localdomain ([2a13:e746:396c:c600::31b])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6b7578ece26sm1667694a12.24.2026.11.10.15.11.57
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6b75790353asm1750018a12.31.2026.11.10.15.12.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Nov 2026 15:11:58 -0800 (PST)
+        Tue, 10 Nov 2026 15:12:56 -0800 (PST)
 From: "Kordian Chmielewski (mlody1212)" <kudzo51@gmail.com>
-To: linux-wireless@vger.kernel.org
+To: dev@deq.rocks
 Cc: arend.vanspriel@broadcom.com,
-	brcm80211@lists.linux.dev,
+	asahi@lists.linux.dev,
 	brcm80211-dev-list.pdl@broadcom.com,
-	"Kordian Chmielewski (mlody1212)" <kudzo51@gmail.com>
-Subject: [PATCH RESEND wireless-next] wifi: brcmfmac: delete the flowrings of an AP that stops or goes down
-Date: Wed, 11 Nov 2026 00:11:45 +0100
-Message-ID: <20261110231145.206744-1-kudzo51@gmail.com>
+	brcm80211@lists.linux.dev,
+	j@jannau.net,
+	linux-kernel@vger.kernel.org,
+	linux-wireless@vger.kernel.org,
+	marcan@marcan.st,
+	michael.reeves077@gmail.com,
+	sebastian.reichel@collabora.com
+Subject: Re: [PATCH 4/4] wifi: brcmfmac: msgbuf: send the flowring delete without waiting for tx status
+Date: Wed, 11 Nov 2026 00:12:47 +0100
+Message-ID: <20261110231248.206892-1-kudzo51@gmail.com>
 X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261107154810.89780-5-dev@deq.rocks>
+References: <20261107154810.89780-5-dev@deq.rocks>
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Post: <mailto:brcm80211@lists.linux.dev>
@@ -98,83 +107,24 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-An access point has a flowring per destination: one for each station
-and one for its broadcast and multicast frames. The ring of a station is
-deleted when the station leaves, by brcmf_proto_delete_peer() with its
-address, but nothing deletes the broadcast ring, nor any ring of an AP
-that stops: brcmf_cfg80211_stop_ap() deletes none, and on the link-down
-event of an AP delete_peer gets the address of the event, which names no
-station. A new start of the same interface then keeps the old rings.
+On Sat, Nov 07, 2026 at 15:48 UTC, Andre Eikmeyer wrote:
+> The BCM4377 firmware returns the tx status of queued packets only when
+> it gets the flowring delete request.
 
-Seen with a BCM43684 whose AP OpenWrt starts twice at boot, 1.2 s apart:
-the firmware never read again the broadcast ring opened as the first
-start ended. ARP and every other broadcast of that BSS were lost, and
-once the ring was full flow control stopped the interface for all of
-its stations, until the ring was deleted hours later by a change of the
-interface type; the firmware then served new rings normally. The vendor
-driver deletes all the rings of an interface on a link-down event.
+The same happens on a BCM43684 (firmware 17.10.188.75, an access point
+with about 15 clients on two radios; this chip also needs patches for
+its BCA firmware that I haven't posted yet). In 10.5 hours the wait
+timed out 23 times. 2835 frames were still out when their flowring was
+deleted, and every one of them was completed later, at most 81 s after
+it was posted. No pktid was lost, so the 100 ms wait did not help here
+either.
 
-Do the same, and when the AP stops: brcmf_flowring_delete_peer() without
-a peer now deletes every ring of the interface.
+What I can't tell from these numbers is whether a tx status can still
+come after the delete response. If it can, it lands on a new ring that
+got the same flowid in the meantime and decrements its outstanding_tx,
+which also drives brcmf_msgbuf_schedule_txdata(). Do you know how the
+firmware orders them? In my tree each tx pktid keeps the generation of
+its flowring for that case; I can send it on top of your patch if it
+turns out to be needed.
 
-Fixes: 9a1bb60250d2 ("brcmfmac: Adding msgbuf protocol.")
-Signed-off-by: Kordian Chmielewski (mlody1212) <kudzo51@gmail.com>
----
-Resent unchanged: patchwork did not record the posting of 9 November.
-
- .../broadcom/brcm80211/brcmfmac/cfg80211.c         | 14 +++++++++++++-
- .../broadcom/brcm80211/brcmfmac/flowring.c         |  5 +++--
- 2 files changed, 16 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-index b0eaf9641..91184bdcf 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-@@ -5480,6 +5480,11 @@ static int brcmf_cfg80211_stop_ap(struct wiphy *wiphy, struct net_device *ndev,
- 		/* first to make sure they get processed by fw. */
- 		msleep(400);
- 
-+		/* the BSS goes away and its rings with it: nothing else
-+		 * deletes the one for broadcast and multicast frames
-+		 */
-+		brcmf_proto_delete_peer(ifp->drvr, ifp->ifidx, NULL);
-+
- 		if (profile->use_fwauth != BIT(BRCMF_PROFILE_FWAUTH_NONE)) {
- 			struct cfg80211_crypto_settings crypto = {};
- 
-@@ -6750,7 +6755,14 @@ brcmf_notify_connect_status(struct brcmf_if *ifp,
- 	    (e->event_code == BRCMF_E_DEAUTH_IND) ||
- 	    (e->event_code == BRCMF_E_DISASSOC_IND) ||
- 	    ((e->event_code == BRCMF_E_LINK) && (!e->flags))) {
--		brcmf_proto_delete_peer(ifp->drvr, ifp->ifidx, (u8 *)e->addr);
-+		/* the address of a link event of an AP names no station:
-+		 * the BSS is down, and so are all of its rings
-+		 */
-+		if (e->event_code == BRCMF_E_LINK && brcmf_is_apmode(ifp->vif))
-+			brcmf_proto_delete_peer(ifp->drvr, ifp->ifidx, NULL);
-+		else
-+			brcmf_proto_delete_peer(ifp->drvr, ifp->ifidx,
-+						(u8 *)e->addr);
- 	}
- 
- 	if (brcmf_is_apmode(ifp->vif)) {
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/flowring.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/flowring.c
-index 35cbcea0a..b9570d638 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/flowring.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/flowring.c
-@@ -432,9 +432,10 @@ void brcmf_flowring_delete_peer(struct brcmf_flowring *flow, int ifidx,
- 	u16 flowid;
- 	bool sta;
- 
--	sta = (flow->addr_mode[ifidx] == ADDR_INDIRECT);
-+	/* without a peer: every ring of the interface */
-+	sta = (flow->addr_mode[ifidx] == ADDR_INDIRECT) || !peer;
- 
--	search = flow->tdls_entry;
-+	search = peer ? flow->tdls_entry : NULL;
- 	prev = NULL;
- 	while (search) {
- 		if (memcmp(search->mac, peer, ETH_ALEN) == 0) {
--- 
-2.56.0
-
+Kordian
