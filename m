@@ -1,101 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.214.180
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794330096;
-	b=D5tPbIz3fORYFauSRC5ychwy2t2yaCNGq9+X+4bT6BtLtyAyWO5d+y3LC2VY0moAygEI
-	 eKXZ80CYHlWKjGc55ZWpzgGsIRSURzUwPDkFBUWMbWUlvvfpL0rZfdc3nHs3ZHoUVUKRa
-	 VcRsAPYfqjhsd8aGYjhSlPNaSm02VerQeKC5YSL0Twodhx8OEpMPx1AlZlumIapljBalj
-	 XtcqNg2JqFVQskIAHG2KuM2EV1AlS4qmfnkrdH9zBTVFQCH6G5YWqpdbT8TdzSynMLPr1
-	 DdUz86KiRhLnF4lpRf8rkAAk7Nnw9K/2jQzNiu52arZ4zEiMc2jJV7g01WnGS9otZLQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794330096;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=PRiBbEmWvYRpDNvq5W8oT+0WClu7yq5mlhnTlEgSgUE=;
-	b=IUHZm6tZYiWwBec30yCvEN2QHoltRcYsNcAknOZ8Q3Ck/8DXec21euFuMUPWYRTo4JGl
-	 STsxL31R2gm0URPF+Mu3aAqDJDsyxBTGkwY2XBe1mW/tVhqmrtP1JMB1iU165WTftDsO+
-	 +MC/y9SV0ZFvPdpEc5V0rl3Kg1mALhix4azojeNez4kAC/fmf5MBnnC2yAckFlef1VhaK
-	 93KWN2dAZOa/CyY4x447x+frgcP+7zEocitSvX8Yf8LXJervoWt/GPj/R5/tbBVKavnHJ
-	 BiBwGOlXWGkJkl/IA8CLkG8BE/ovCZ7j6jkC0NTCXYZyFn3hRx6JadSFuKtpVIZfX8g==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=CVpK8YJ8;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.214.180
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.228
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794338838;
+	b=gileamcv3kxi3368OqNWhNawBTp8ij6nLcKQfLaRhKXfxj8IgaoI5OiaJxB1X/ugD/7e
+	 gfW2WkEqMdYkvQ1mxLpO1EMPMGq6z1NjYdyWs11ynJN8y0jZpPEh6TuJXYgVTWuQzcEti
+	 3Xg3qQQxflWKO8fB28HsF57UPzZ1SCNA6S6B1H4MYHaw6C2RPuhGA+txUkDsMIku0eyTO
+	 7oP1xy0Yh+Qyuf5tWXzj51D154V6Aj1ejkCNFdE0IbAPFKKAcqKVfAmpHOvhQpyx91pDT
+	 uS2VMbWY1Vy/GzFa7T7vt6FtrPuCdUVh1tvlfnisopufyDZZyfaVQxQp3t/QjzZJxaQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794338838;
+	h=DMARC-Filter:Received:X-Google-DKIM-Signature:X-Forwarded-Encrypted:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:X-Relaying-Domain:
+	 X-CFilter-Loop:Received:DKIM-Signature:X-Forwarded-Encrypted:
+	 X-Received:X-Received:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-DetectorID-Processed;
+	bh=yGtSveCQEvAEo8vEbw0oolMScwgHZwQg56T6xGM7xJQ=;
+	b=Cu+aXj3baVjoB51N13LxvcXcrsfQ4+BLF8bnYRchndilpov6lqbBo0npnhzTa7wTRI4n
+	 LbunHIEus2/BWzpb8OSDT8ftM2gbdFsXQ/yq03G02Nwwg++ocP0cQYC49tR+z01pgg3qk
+	 dEElM7OUaOm6/ZoQKPS85OoszZFA6xPmJnt2R1ee5rWJcc4bBpdC5os8jdYpsvzWw4hPk
+	 HP1GyMTIucnpy5C6NAIoE16RDW+pAbQLoFpD3DmBGeosA4FoDZ21sF58UITenKGnChlJB
+	 SFeBkVXF6Hln0XcJhhincyfyCmcuJg3c0x3gN5NMLBwykVpIYmb21dHqN/sNscVGkqw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=broadcom.com;
+	spf=fail smtp.mailfrom=broadcom.com;
+	dkim=pass header.d=broadcom.com header.i=@broadcom.com header.a=rsa-sha256 header.s=google header.b=JUU1mLKl;
+	arc=none smtp.remote-ip=209.85.215.228
+Received: from mail-pg1-f228.google.com (mail-pg1-f228.google.com [209.85.215.228])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB9D6606A31C
-	for <brcm80211@lists.linux.dev>; Tue, 10 Nov 2026 17:01:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DB9D6606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B3ED60A2614
+	for <brcm80211@lists.linux.dev>; Tue, 10 Nov 2026 19:27:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2B3ED60A2614
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=CVpK8YJ8
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2ed0e2015aaso9752185ad.3
-        for <brcm80211@lists.linux.dev>; Tue, 10 Nov 2026 09:01:35 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794330095; cv=none;
-        d=google.com; s=arc-20260327;
-        b=hmYl22iWH9h3hq4eJE4+47/IL+9x6cPpURQoH66Vf/C8JYj+Nu0SWrvmSRuWxsPdlz
-         3VlMLHSwU1Y4lHfgDWjqebRLTiMI5RPmdTFT82AkmwjJaHa5kYXEUpjh1LvjIE57TmO5
-         ftf1yNCd1wM+PV52tg1NIdkT4nX+GgQw5KsTby/t7C0B14Qo6+9IR5OxEvs/MisD0kLC
-         ADqe4SoIh2/2XMVysNdExDuIY04bIF/VS5Mqyrvc4WcCACDrd/EiVaBCyIwoDfZ0Qzys
-         2C5hP5J/WqTzmROE0bYdagQrpRZEqxVkaIZJiHQDINz4gi7COfKqsIP/lr5kYeMMMx26
-         HrPQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=PRiBbEmWvYRpDNvq5W8oT+0WClu7yq5mlhnTlEgSgUE=;
-        fh=+j476aEPfeexADeDoJ2RgZfyAz+bBNLkoJN9PAqNcLU=;
-        b=bvSsaFkw0YTp5hEC8Sjy547DmFXxXgIv5iJdVOx6yjXHrThRu8v96QYdBJlfGgeS3w
-         HKEyy0z+lqGG3VzJEgi0nHAqmET5QjHCpKRkENZsxoYVGzpvhxcKeY3E+W33SUGNm/S4
-         m32UH3+GUMNd/qRjPq5rlCngTbfXirvY8tdFVk6R26olgvKF84gGPaE7eExZDpilFNcI
-         //jXm9Y8vhlV0eAVEIFM/s3ZIMbcjguZRb2cVSVtKyTaW3z3jE4e7EA4vpuWLa9HnIsy
-         R7ryU6NwsCA0Se5hrWF/bC0Qa5KL9y9+JvkFJZaGg/SCek150zg+Vmr+tXdlMwhFWAOe
-         mNgg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794330095; x=1794934895; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=PRiBbEmWvYRpDNvq5W8oT+0WClu7yq5mlhnTlEgSgUE=;
-        b=CVpK8YJ8LHOdo0FxqfWGGPV+HB18NPYXMduZ/gluk2ENda/JbyTEMwj02Rvwuhbg7o
-         ZHv5qNClDl7/WCVc25qpQZCKLMWdBVRsxwk2ecj14UGvGYV38pcb7EDP+RmVg9t/389h
-         +v/j6JIgs5z6tLYfGnWG7jcvHgQc98ZcAYORlAaztAOv+j7hgu7zH770eB/z5iLW+HBV
-         2y1Ww2Y1DXIsw9uSD73k8t5891D8GsgKJCa1N4qTg0nVTy3kV5gpcR/jaOn3ZKMUZJuQ
-         B2fvFJfUSTMGx7dhFAk/mM+0us0lWSUeixuSBjpmpYCJPfJBsIPkyBIBmDnK/JwrLjpZ
-         8+zg==
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.a=rsa-sha256 header.s=google header.b=JUU1mLKl
+Received: by mail-pg1-f228.google.com with SMTP id 41be03b00d2f7-cdb15cd8558so1044531a12.2
+        for <brcm80211@lists.linux.dev>; Tue, 10 Nov 2026 11:27:18 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794330095; x=1794934895;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=1e100.net; s=20260707; t=1794338837; x=1794943637;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:dkim-signature:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=yGtSveCQEvAEo8vEbw0oolMScwgHZwQg56T6xGM7xJQ=;
+        b=Q9sK1T5Q3IIw2TcMb6nNyp13B8SIj2QdAJvNRGlTTC8iQN5aKDZK/j9S7FvRWh8r32
+         1nLuskTOC9W60BYeRGHrAGT5cj5sp5vhEAv/vjCxmRPVkvPycnd17TEtEDm6XISB453q
+         Ry9lov0bhNJQsaUFLClGRopswwJ00Zd9fTVJjvxw5/PGbpLyIipVbL5e6o68705Wutt9
+         1ePzTTXcvVH3qNeGx29xqXzXi/ItPFLCE2Ge6dOg7L1nCcuUPLiOPC86llQgRiwJaNnR
+         hKrW3QuZ/6de2ejMfY6m/0qrsRStcylDqpjEz7uYR8HJKv2ADBkJpEbTifrvcZ+l/x6l
+         9Svg==
+X-Forwarded-Encrypted: i=1; AL+hErE4j8WMbK+IkMv9KiwhH5iEP3pna/efj1UnGJsWe8Ql7C91obKPhrhdQQiynag/PuQ70geNqvCZp10=@lists.linux.dev
+X-Gm-Message-State: APuU4Z/V31Lz68keL3R+pfccY8WS6M7cduhIe9EncjfqmHFPRr32O0Dz
+	4aVD2OQoSk2MLPeBOTqRKSUQpop+JVfZLLyfzbaT6hEBlj9m6u1X6v9af70G15yRS51YdxETK/S
+	BsMLcjzDw/rK4OyuCb7eBcI8N5Mq57pCT8Qkyk8X4QVFdrpK9TZJi4LhI/gb3BnEIN8vqpMK42H
+	JBxWWTpfwO34U4hk99FfQRZTrba1k0CzQYeKvobsaXGTj/qN/TODwHXDY4QPYbBP2LqXvwoU393
+	4UcXLfCGFnxR3zGdE8=
+X-Gm-Gg: AYBFou0TCv5sWNCS9tANF2BOZ1MWPbiCs1DId9jMq5BtP4SiuVpRZzCjwT57+pDs4II
+	/djLG2FH2KezwqH5jiRkn6MO/p5woOdB5BPqKV9TAzt9V64VI93/gDA9nzrh3eG9TqHmavwfEHC
+	azCp3STyD5zr8rTy2mFQmaJRboa5rOWnWwRFCLAxkXktR4aWRv3+AK22zLGrfxyTywEhqJLsghS
+	vd2hc0+l/yjadtnHcYT2O6A8luvnv72hAnFig09LXTIRoxlSoLdmqyxpqajzFK/tg84rDD7xTj2
+	g3LRovpFCZKegCdZjw1jVdZCoY+bXyZSYW8FknqZ2PVH5iYPW+wCrrllVoFtN7MTHzSyy+LARQc
+	2PUntPe632sKlYCrOAZ+3uNxeng1otWEtvZvn/ZSxiePa6dqLtoaWb66WCHlZGRyqF7/nAFe6F+
+	JFxXoqvCxo/I0lu03L9zD9oOr+LkccOshqo16NOII=
+X-Received: by 2002:a17:90b:2d8a:b0:3ac:ea3b:f28b with SMTP id 98e67ed59e1d1-3b166ceb599mr3383230a91.24.1794338837392;
+        Tue, 10 Nov 2026 11:27:17 -0800 (PST)
+Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-22.dlp.protect.broadcom.com. [144.49.247.22])
+        by smtp-relay.gmail.com with ESMTPS id 98e67ed59e1d1-3b17e3294bfsm421549a91.8.2026.11.10.11.27.16
+        for <brcm80211@lists.linux.dev>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 10 Nov 2026 11:27:17 -0800 (PST)
+X-Relaying-Domain: broadcom.com
+X-CFilter-Loop: Reflected
+Received: by mail-dy1-f198.google.com with SMTP id 5a478bee46e88-30c0d568830so5462936eec.1
+        for <brcm80211@lists.linux.dev>; Tue, 10 Nov 2026 11:27:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google; t=1794338836; x=1794943636; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=PRiBbEmWvYRpDNvq5W8oT+0WClu7yq5mlhnTlEgSgUE=;
-        b=sLCg7rtS/er4Xh/NZ92QZGLcncZD5TPl2fMYyl+UhF1PHMHiE1TJyojyctTTBIg//H
-         aFBjl4dFX7aQ2LgCbOFXV5qg4JG/YClj4tYy4GHAoez1TXQZBgSnVeeeaXTAVCM5Mffr
-         1wa2svu85m5nQl9NcabsrjV6gYlcF1cBzaHKmPy2VWaXFwDFGsG1n49zC6l/xXnwYBca
-         HNYkkFQmNXj13kznw9rlQbL1K1B97oPhXGDM9f8bgipGN8h3AMK1vN8i1LGbn9mb4kxR
-         eFd36sbz1aTdBLZ63jb5fJ5MLVTFZcWeW78bcM48FXuFiwR1coPTn1vJag7VhuJ0hTID
-         hOnQ==
-X-Forwarded-Encrypted: i=1; AL+hErHwSCZuTZaGpd15saS8+UY40haAb+CxWd1lFvletVa1rXVL/wttIYUJrgxbsZTFWEOZYGvvAzY01XQ=@lists.linux.dev
-X-Gm-Message-State: APuU4Z+/fpy1Qp2RsSOfYVQP3hzpKzwVVN0iivnkFlq5hY2JYUcuJEPb
-	bX9IfdQ2xo9i0n+VGGgqG8Z3td46n/ztB/806O32OmK9+fP4BUkK4mm8I41aW/TtVH7pFml+Zbk
-	ndVqEPnzHUfG4WOui8o51TId9b7bJjTQ=
-X-Gm-Gg: AYBFou1wy6rC7Pa37YiTEcQQ8o8YhjLCvvhY3bjM/V1u3nipWJ81i94cojn83iW08zf
-	FtQqeAYjRoSyJIZvAgSsYR2RVHGq/7oO/orhzaU7r6AVIrmSY4MLpsMEQONImRwWTBP5PhjUYL5
-	DPqbvdajq8y8OzOqtcVk6sUga8ZXLkc7QGMJVPVxUiQf+Dvfu8sPN1yfGku/zVgQ+PTfKlYGMQX
-	2l3NWak9Mo1jTZAe4mUapTfObEZEjHwqYlvyYIGxFeIfyEzBXykEkzsqlGdJIMLiGLwL18ayeK7
-	dOPtA8fNRiMvwqZDe+in6SgYaH369tyMeXoQabx5frjcHwQ8LmVTKXL3+ra6Rab30YMxVIk9PVc
-	sU9rDl6Jzl0dE9I8gaGANA9ZK2jU5+xYTT281pX26qRrK8eAqGHmdjDxvKO5qDkiiXx15c4OmhN
-	qHrNWnxj94IfsjyuZ7
-X-Received: by 2002:a17:903:2c0d:b0:2dd:ad73:5b6c with SMTP id
- d9443c01a7336-2edb91d1be7mr29021395ad.28.1794330095334; Tue, 10 Nov 2026
- 09:01:35 -0800 (PST)
+        bh=yGtSveCQEvAEo8vEbw0oolMScwgHZwQg56T6xGM7xJQ=;
+        b=JUU1mLKlOUw7LCTuxIQoq6iVCP6w70MkoJV6NT9NGDbwQfPZaK2faAJL2j3WgnE5hR
+         BKkNvs5HSD6BiI9SXhaaJE3OhbHXMvlIdSgswdmbLVcIfvwjXNepq/kosHJHAt0/54TK
+         FAERRbj1UeroP2lgzmgVD/uZEFnCZtFamVCCU=
+X-Forwarded-Encrypted: i=1; AL+hErFshdXNRyGo/zOsxx58GwCa1rwQ5XwdDzovldIlY4kbx6QwYGtJClyLxLHZ0IbaLjVgaJK8eYlbBvg=@lists.linux.dev
+X-Received: by 2002:a05:7301:e01:b0:36a:1fa2:fbbe with SMTP id 5a478bee46e88-37686e2efb2mr449296eec.41.1794338835374;
+        Tue, 10 Nov 2026 11:27:15 -0800 (PST)
+X-Received: by 2002:a05:7301:e01:b0:36a:1fa2:fbbe with SMTP id 5a478bee46e88-37686e2efb2mr449187eec.41.1794338834273;
+        Tue, 10 Nov 2026 11:27:14 -0800 (PST)
+Received: from [10.229.42.90] ([192.19.176.227])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-37520cfdfc6sm9953171eec.17.2026.11.10.11.27.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Nov 2026 11:27:13 -0800 (PST)
+Message-ID: <936ee9c7-a59a-425b-870b-8e8fcfcf9eec@broadcom.com>
+Date: Tue, 10 Nov 2026 20:27:09 +0100
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Post: <mailto:brcm80211@lists.linux.dev>
@@ -105,60 +105,65 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:brcm80211+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261026053633.361454-1-ragulbaby@gmail.com> <f79112b0-d4a3-49a7-aec7-190ad4951bb1@broadcom.com>
-In-Reply-To: <f79112b0-d4a3-49a7-aec7-190ad4951bb1@broadcom.com>
-From: Ragul Balaji <ragulbaby@gmail.com>
-Date: Tue, 10 Nov 2026 11:01:22 -0600
-X-Gm-Features: AclHuK-qAhQQJmLAEoUnYuJytpf9QaGHuJqgYrVYZ81qt_RC_QuekruQ3SpoK44
-Message-ID: <CAJnRr=r=XMRcJEdM31DK+Z+bEJoz7gvLwS6XbHQSL+iN4+Krvw@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
 Subject: Re: [RFC PATCH wireless-next 00/17] wifi: add a driver for Broadcom
  BCM4323x USB adapters
-To: Arend van Spriel <arend.vanspriel@broadcom.com>
-Cc: linux-wireless@vger.kernel.org, Johannes Berg <johannes@sipsolutions.net>, 
-	brcm80211@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: Ragul Balaji <ragulbaby@gmail.com>
+Cc: linux-wireless@vger.kernel.org, Johannes Berg
+ <johannes@sipsolutions.net>, brcm80211@lists.linux.dev
+References: <20261026053633.361454-1-ragulbaby@gmail.com>
+ <f79112b0-d4a3-49a7-aec7-190ad4951bb1@broadcom.com>
+ <CAJnRr=r=XMRcJEdM31DK+Z+bEJoz7gvLwS6XbHQSL+iN4+Krvw@mail.gmail.com>
+Content-Language: en-US
+From: Arend van Spriel <arend.vanspriel@broadcom.com>
+In-Reply-To: <CAJnRr=r=XMRcJEdM31DK+Z+bEJoz7gvLwS6XbHQSL+iN4+Krvw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
 
-On Sun, Nov 8, 2026 at 1:55=E2=80=AFPM Arend van Spriel
-<arend.vanspriel@broadcom.com> wrote:
->
-> On 26/10/2026 06:36, Ragul Balaji wrote:
-> > This series adds support for the following 802.11n USB adapters:
-> > - Broadcom BCM43231 (Netgear WNA3100, Dynex DX-NUSB)
-> > - BCM4323 (Netgear WNDA3100v2, Belkin F9L1101 and others)
-> >
-> >
-> > The protocol was inferred from USB captures of the vendor's
-> > Windows driver, cross referenced with code from brcmsmac, brcmfmac and =
-b43.
-> > The code which are copied almost as-is from the referenced drivers
-> > are indicated in the comments of the code
-> >
-> > The driver supports:
-> >
-> > - station, P2P client and monitor interfaces
-> > - HT20 and HT40, A-MPDU and A-MSDU transmission
-> > - 2.4 GHz channels 1-14 and, on the BCM4323, 5 GHz channels 36-165
-> > - hardware CCMP with management frame protection
-> > - the LEDs and the WPS button
-> >
-> > Power save, AP, P2P GO, IBSS and mesh interfaces and hardware
-> > TKIP/WEP can be added in later patches
-> This is really old cruft and it is a different driver architecture.
-> Within Broadcom we called it BMAC and when we upstreamed the brcm80211
-> drivers this architecture was already going to be abandoned. The term
-> BMAC is also found in brcmsmac code base so it is easy to see where the
-> split was made for the RPC interface.
->
-> Generally speaking I am a strong believer of reuse, but this series is
-> touching the other drivers more than I like. I would rather split it in
-> two series so we can apply the patches touching the existing drivers
-> first and assure that there are no regressions. Then add the "new" BMAC
-> driver.
-Ok that makes sense. we will split it up into brcmfmac, brcmsmac and
-the driver files.
-Qn for you: should we rename this to "brcmbmac" or is this current name fin=
-e?
->
-> Regards,
-> Arend
+On 10/11/2026 18:01, Ragul Balaji wrote:
+> On Sun, Nov 8, 2026 at 1:55 PM Arend van Spriel
+> <arend.vanspriel@broadcom.com> wrote:
+>>
+>> On 26/10/2026 06:36, Ragul Balaji wrote:
+>>> This series adds support for the following 802.11n USB adapters:
+>>> - Broadcom BCM43231 (Netgear WNA3100, Dynex DX-NUSB)
+>>> - BCM4323 (Netgear WNDA3100v2, Belkin F9L1101 and others)
+>>>
+>>>
+>>> The protocol was inferred from USB captures of the vendor's
+>>> Windows driver, cross referenced with code from brcmsmac, brcmfmac and b43.
+>>> The code which are copied almost as-is from the referenced drivers
+>>> are indicated in the comments of the code
+>>>
+>>> The driver supports:
+>>>
+>>> - station, P2P client and monitor interfaces
+>>> - HT20 and HT40, A-MPDU and A-MSDU transmission
+>>> - 2.4 GHz channels 1-14 and, on the BCM4323, 5 GHz channels 36-165
+>>> - hardware CCMP with management frame protection
+>>> - the LEDs and the WPS button
+>>>
+>>> Power save, AP, P2P GO, IBSS and mesh interfaces and hardware
+>>> TKIP/WEP can be added in later patches
+>> This is really old cruft and it is a different driver architecture.
+>> Within Broadcom we called it BMAC and when we upstreamed the brcm80211
+>> drivers this architecture was already going to be abandoned. The term
+>> BMAC is also found in brcmsmac code base so it is easy to see where the
+>> split was made for the RPC interface.
+>>
+>> Generally speaking I am a strong believer of reuse, but this series is
+>> touching the other drivers more than I like. I would rather split it in
+>> two series so we can apply the patches touching the existing drivers
+>> first and assure that there are no regressions. Then add the "new" BMAC
+>> driver.
+> Ok that makes sense. we will split it up into brcmfmac, brcmsmac and
+> the driver files.
+> Qn for you: should we rename this to "brcmbmac" or is this current name fine?
+
+It does feel more aligned with the other drivers to use brcmbmac, but on 
+the other hand what's in a name. Personally I would go with brcmbmac, 
+but I can go either way.
+
+Regards,
+Arend
