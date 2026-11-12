@@ -1,103 +1,94 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.53
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.173
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794426973;
-	b=FyJzCw8oXeH4AkUay8Ag28doM3zcCzXmUbd7RJn8DR97dT7Iwf+tp/qUpYt9EFnCC5dq
-	 M3rYqH/gb80so4ofn1+bodkLLN8U0NU+5ud32JNL1ec9orUlma0k5BvOcpJqqdlGaERex
-	 0rlDiymkTIUvKKr62b0J3QLhrhf6KPVDZkTIAen7UMqnuNE0dW75mH1sR0aw+xxYg0QRW
-	 zRnR/YcuUnrJe1YKYtOEDY5TFqM9Mo4heiuaMau7kQRbA5QAVaoyrormkpof+xz364MBm
-	 6rhS7Mb1r8h4lwz28R2PoalkIiQVf0fRAlhgfSRa575CHJWNGjChQDbJzgmIgxDgaEg==
+	t=1794460178;
+	b=2WJKT8gLfY8QMfP25/y707x9qpcl26B2K8DrRpdNY1M3lmpZDJHOjWeNLV2rSG1vB1ZI
+	 ZlAF8g7ZTqF1NT5p7T8clehvA2d1/8YN0nu5ClBMuaDkQ0pD0wZL5k8pHe1m4RYjKnHww
+	 vJBJd3YZmcVmYTEiMrm3fqrnazWMgPWE6zHXOsnLPcc3phhgxEen6WBOqrIoDk2xKJjyV
+	 Q24itTBymW3TSHGpXpBKQXmehdDYun9c+yRKGK4vQdZVttQOJkgOLPeV6nOiQzfb3/gSd
+	 EVGqxgkW3E0ehaZKJioMJHZfN656a3vrPeVZlh7QR2gbkK+aEaiSQ1q89B3mI5k+naA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794426973;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794460178;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=KW38EDguzPKmx8VkeacRZuMXAWaeadLZ5kGyBS7By/A=;
-	b=cOb3k47N57Lrh2sNx/G+V+/cPEyo9wlZNtvtK+uqFPbG6Bb6fRY5m7RF1NKj+gctYy4w
-	 XOkpJycXitsx9UmFI/UciB1wbgA5jF8BsaoBVAJ1UoAPIPziSeqiKNUwlEmB4MBJzpvNb
-	 J85mrkgZSz0aBjGkqoA+ck+1wUZ5AtGJkCzZsZzUxvQkYZJOqRAi34pe+YEojIS3Jlyka
-	 ZTm6P5bIYilq//JnkudV1xsP87QukrswdGfG0Nd30jsu5CdKibAgyngnNtwNIIqa2TQYw
-	 BloPjgH5QY1Nvtll8MdknnI9UPCZGx/z/6It0ijZWEm6MZsTOaWV/ZclbUbhHCZpa6Q==
+	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=GX4UBF4+o9VP0UVeZf0hRho2t5z7boGHcIQ9wJV6Itc=;
+	b=xQtiHsPJMzzRDKpwdFie3t8ANI7BG86gMlrI6CgI/1eouXkm22gKwgo8xCrqoGixTlve
+	 dIQplaJbMKil5egQ+iqriWTDAjzqUyqZQMOJRpnu6bwp53n6jyCtZjQO6obZFKX0VnT2h
+	 PMQrw7W+0BgVgscHQ7t2P+DF4kH0sW7sankozHh/EhdBW+iGHyiNkygZsLCLTMFiR2R5Y
+	 5uYrADwg733G4VVTJraA+uLiP83ycF4jCoDW2hOMPy3vpiiOzkTNKLhdr1VlPwrn2gL6I
+	 dC1wH4CySS+rk3VDJGgHRfc3FlwZbKYkz50LTiGhOHtsUGzSHvYUh67xrk839FvvHsg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=DdU4hGgX;
-	arc=none smtp.remote-ip=209.85.218.53
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=QNShbfsW;
+	arc=none smtp.remote-ip=74.125.82.173
+Received: from mail-dy1-f173.google.com (mail-dy1-f173.google.com [74.125.82.173])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 076BD606A8AB
-	for <brcm80211@lists.linux.dev>; Wed, 11 Nov 2026 19:56:12 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 076BD606A8AB
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACA51606A323
+	for <brcm80211@lists.linux.dev>; Thu, 12 Nov 2026 05:09:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org ACA51606A323
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=DdU4hGgX
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-c4d2b741ed9so549755366b.2
-        for <brcm80211@lists.linux.dev>; Wed, 11 Nov 2026 11:56:12 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=QNShbfsW
+Received: by mail-dy1-f173.google.com with SMTP id 5a478bee46e88-3704d30b84fso4943562eec.1
+        for <brcm80211@lists.linux.dev>; Wed, 11 Nov 2026 21:09:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794426971; x=1795031771; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=KW38EDguzPKmx8VkeacRZuMXAWaeadLZ5kGyBS7By/A=;
-        b=DdU4hGgX1I50tpkpkOffqAr2rh1ivcD4paXaZqOD+D2pBUP/jTVHnfShFxM27eg4XV
-         /qD8v5CWSP7H3QLIPdTj6eCk1FIM41xVqeCM57sBLLIQQUE82uyCJeXHv8eEJI+q2N8p
-         EgY4aZ81e52ZOPMJGdfSDRmCwA/d8Brs1KHzqFY97Kv3Mha9J4zXkC9cRDlUzbXFFHHD
-         f6kmC2E7cAFpNiLRdYnXOibdPd/Yi47bg+L7+O7QwvM/xj8p2ECZ44KiaEoLiGW98k4p
-         2uf8P8pdsxOp+wFDvu5GwJbDvweMZjR7k4jd7wnOn8c8+rTxAddnuM++TDs9MDHC3aTn
-         ErNg==
+        d=gmail.com; s=20260707; t=1794460177; x=1795064977; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=GX4UBF4+o9VP0UVeZf0hRho2t5z7boGHcIQ9wJV6Itc=;
+        b=QNShbfsWkkQJVzk5mN8x+5kg1tztlnfaUJVMQWSGCjy7g3vJ095L3ziHrGYP0dfMNk
+         lwyEoRCljbEhV+7ClvzYlA2jEfoue4mfeMvdMYbHs6aMbdGOMMolGwfl0KRtozxNgt2I
+         E+8rQJ/lhuXQjJ96wZTqiLHmoP5+Ya4DsamPM0vguY1cesXkhbTlzzQ9w/je3TqyflNP
+         HvQ22WpNzF5WII+jxhWd3vBkRNxqsKUd/IDIpEitkrKC3JkXACfxo78Ek6sYjtCXCrYO
+         s9rJ8PsKNpF/dWzToU5cuRKMjQl8An0wu3LYddjL071+Eu+ytEqYAhq5k5VVSGTLQZYc
+         r5EA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794426971; x=1795031771;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=KW38EDguzPKmx8VkeacRZuMXAWaeadLZ5kGyBS7By/A=;
-        b=2j6BQFxwSmYaDutbkvgnN67GrPMyE4Th6gqy7zU6uqEETs/o2IJQG3ysJliWDd/8M9
-         Do5J8QW1hSTOG1QqCgI5VK2IluyDnwe7KX4ByxlOBeLnwsLTDXJjYWfkZA3zVmOJrlHh
-         5GPvw8viRRhqN9PRVpHWiDbpkh34sA4OHkebeP1ew3VOgD9acaq0+h/5s7CyA7ody6vO
-         mhHaV3DjEYXc7SrNhOloMo+GexmOuW+ErgzSHsGvU0oaafQ+5sNaIIscHYSo5T0kw9s6
-         BHroyzjzBZ26Cc56WLUz34DdavhQkPs19Pql2wq+bF9rO5HqevSiwXDF2lxtZzcH0daX
-         UytQ==
-X-Forwarded-Encrypted: i=1; AL+hErGH4mtJLikiFO3Xmrw64f1Za6exguQMO4VZ5wlVEgaT4JvVZaiBrGkYA9zUsnUkcFan+lW+yn7vrzk=@lists.linux.dev
-X-Gm-Message-State: APuU4Z9007C7G5DwMZhIC7MfeJcD0XAgfjDjt+39DTU6OPsJZErP2com
-	c5TsNUA7HVeUcQC/DKFhv6v4mqXy6U9P8SIPKtWOYfQdArc7DhCmYCrr
-X-Gm-Gg: AYBFou1EUEPQDjSZjFdUyIKhMfh+b+5jBKZFOXJuK+tewRTsNbLgWepvYQU6hYHp6v1
-	ps6Nc7xqCUQ81P5e0KU7QYQ4DYnnJDBwydBBv+/++4ugY9MiY5XPA5JeNeRbiJDAhnc2aVYQJHD
-	MimZWDKCun5aGITC8c0dGaxwzVx3w/gzY2EVAl46cOQXQ8EtBVmrDq6T6WzYGOPMqLdI/1mDq0j
-	osDA0n8QetDy6pXND7PT+VONOGppBffQB/Mc0CUAcg61u3NjU5cVUxFPLOWQjh4WUAeybJHdytJ
-	9VaZZqHkD0k1wRSsupDF0BvNK27TJ1HCA6YkAzjUX5Rs6aroQ9gPcwZBlhOgUc4YEKwYDss6HhE
-	mg1ebH4sZpOL1jrHbTZ2mAYKQ0x5ZgTKmwsH6NSK6YfcA3wHgsHtRPjst+1ooXIzTyWVZAE32X+
-	fCrl/W5ioVl1jnLcEr3vTkdqcJ7nzIyYO3DtsVwkSiXJZRFG0LQjOaI3GYtTp9ulY4uU5k/dbpc
-	x5b26EEFQsBBAH880wgYtgI7gF6QztnBf6LiZpN99J4oTzBHNYHvIrHQvvoQ1MfRsAcsGRbneaf
-	VSVZlNyH4Jes+GLRFfxVaDliLVpw0CX0N5lRq2tB5ZAd3wFB3/m4fzJ0s4Xycjw5KPo4H8Re37N
-	v
-X-Received: by 2002:a17:907:8dc9:b0:c29:f5d8:9c82 with SMTP id a640c23a62f3a-c5066cf9644mr299944166b.49.1794426971015;
-        Wed, 11 Nov 2026 11:56:11 -0800 (PST)
-Received: from localhost.localdomain ([2a13:e746:396c:c600::31a])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c504a57085fsm264408166b.22.2026.11.11.11.56.09
+        d=1e100.net; s=20260707; t=1794460177; x=1795064977;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=GX4UBF4+o9VP0UVeZf0hRho2t5z7boGHcIQ9wJV6Itc=;
+        b=A/pJMGAkLAAviVDzIy2xvKmvypkD+gxpJm1FyVAFdSW6zfna3Pcc6/W+7KMhHnYsMX
+         w51tfDuSvR5KNhaCaAouEkuuGELurVi08tMY/1EcCzOzAyU2PlNiptfIZc3gK6uQKiCC
+         sS3JzgShFH0Ban/oG1R8XGYYHmawnBAyXgmXEpId1+5HjP26wbkkDPD6DbTgYWvYA1G/
+         v6yPuoV1J3APovEYFfgEpLFXnKXgdzcLUR1OfMXDnc3XuI1WTN6pMwHzxuKZl8jAIZnf
+         H+v6nmI5zrDg3xrdoUSMVhZPdbhs2IvbifdHiFAMtxvdB8SBkhUUD6PhVRUfNd1vfjSy
+         jmLw==
+X-Forwarded-Encrypted: i=1; AL+hErFMMS81QnWeq9TU5kRPOyR1H4B5OuBoGcwyRgoEig6Ixcy8E6WNXnB91H4oTHJ2RT556AlHLazBgMY=@lists.linux.dev
+X-Gm-Message-State: APuU4Z857ZQ8+RcWSZV+E6Od3BQBu/dDJTw38vPI/a66nD5u2z50UnvD
+	6inmMvlRsEGvKvwDBe/5a+nY+grC0FVe8B4Ukior4Lc4HaZG9YEVHWYI
+X-Gm-Gg: AYBFou1EOW9S7vKR+OjkEx1YUKyUng7DznSnaJyWxBtDzmO55YGCcc615UEXluwAjYQ
+	LNDeavaYyWiIOPS/xHOF2T87tND37BewUFKtHYH1hh4sldrHM7OTXw6JNFFiMpmyzBU4ZZipq7p
+	2UNf92ewzwA+dZIwAI+dTcwCQFXYF4tOjeJgQz2zO3Bhzy0AblOhjzhjsjA4mzy9emnVOYaMLsE
+	F32eh/hAA1isDn/yvbg+VAsDz0cBZFYxssCLQBXVRHEjq+a48Hst3kH0/UDXgP0IQ+9x4eQkj43
+	aNCemWxSPJ8YHxBOT52yfbTSOZOwdxPhtgUKqzad2REcGUqAleTVbCe3LOXVsNInbcU33W/7xTN
+	9j/Or83G2nz27YUimPryZkNex+lLgwNR2NQnmD0zd+vHKHdXFJZdEr97FHdZN3qFGGUKPHJIMp/
+	8aDp9wSOBokcEc/PZH7WG2pZ159QLwmtirNpuZa7YrF6fhDziSelhlUQbIrmIy3wwrL6aTKQySX
+	FCIyK2ErVuq8iW+zJI5nEXNNMIwURvpqCRb0AnInyIn7UsABOKze/n/CkqnU/UcZdFRGlECO0f4
+	zMkOIgW2sdenLIkNlAbzvU7hehF9JoFGiN8YpUUqFwPOanz65yUWk8g=
+X-Received: by 2002:a05:7300:d404:b0:372:32a1:b384 with SMTP id 5a478bee46e88-3768695036dmr4937182eec.33.1794460176694;
+        Wed, 11 Nov 2026 21:09:36 -0800 (PST)
+Received: from acemagic-m1.tail4fb79.ts.net ([2401:7400:c804:b668:37ea:9b2d:3d7a:8379])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-37520608b52sm19537627eec.13.2026.11.11.21.09.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Nov 2026 11:56:10 -0800 (PST)
-From: "Kordian Chmielewski (mlody1212)" <kudzo51@gmail.com>
-To: dev@deq.rocks
-Cc: arend.vanspriel@broadcom.com,
-	asahi@lists.linux.dev,
-	brcm80211-dev-list.pdl@broadcom.com,
-	brcm80211@lists.linux.dev,
-	j@jannau.net,
+        Wed, 11 Nov 2026 21:09:36 -0800 (PST)
+From: Ragul Balaji <ragulbaby@gmail.com>
+To: linux-wireless@vger.kernel.org
+Cc: Ragul Balaji <ragulbaby@gmail.com>,
+	Ho Jie Feng <hjf3108@gmail.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
 	linux-kernel@vger.kernel.org,
-	linux-wireless@vger.kernel.org,
-	marcan@marcan.st,
-	michael.reeves077@gmail.com,
-	sebastian.reichel@collabora.com,
-	"Kordian Chmielewski (mlody1212)" <kudzo51@gmail.com>
-Subject: [PATCH wireless-next] wifi: brcmfmac: msgbuf: count tx status only for the current flowring
-Date: Wed, 11 Nov 2026 20:55:59 +0100
-Message-ID: <20261111195559.160650-1-kudzo51@gmail.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261111200714.7897345f@kait2en-mbp15-1>
-References: <20261111200714.7897345f@kait2en-mbp15-1>
+	brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com
+Subject: [PATCH] wifi: brcm80211: move the USB bootloader definitions to a shared header
+Date: Thu, 12 Nov 2026 13:08:15 +0800
+Message-ID: <20261112050816.2795512-1-ragulbaby@gmail.com>
+X-Mailer: git-send-email 2.53.0
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Post: <mailto:brcm80211@lists.linux.dev>
@@ -109,159 +100,198 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-brcmf_proto_msgbuf_rx_trigger() reads the tx complete ring before the
-control complete ring. When the firmware writes the tx status of a packet
-shortly before the delete response of its flowring, the host can see the
-response in one pass and the status only in the next one, after
-brcmf_msgbuf_remove_flowring() has released the flowid. If a new flowring
-got the flowid in the meantime, the status decrements its outstanding_tx,
-which brcmf_msgbuf_schedule_txdata() and the trickle check in
-brcmf_proto_msgbuf_rx_trigger() rely on. This happens whatever order the
-firmware sends the two messages in.
+The Broadcom USB bootloader downloads firmware the same way for other
+USB chips than the FullMAC ones of brcmfmac.  Move its commands, states,
+firmware header and response layouts from brcmfmac's usb.c to a header
+in the shared include directory, so that other drivers can use them.
 
-Give each flowid a generation that goes up when the flowid is released,
-and keep it in the tx pktid of every packet posted to the flowring. A tx
-status of an older generation still releases its packet, but no longer
-touches the counter.
-
-Signed-off-by: Kordian Chmielewski (mlody1212) <kudzo51@gmail.com>
+Signed-off-by: Ragul Balaji <ragulbaby@gmail.com>
+Signed-off-by: Ho Jie Feng <hjf3108@gmail.com>
 ---
+In preparation for the brcmbmac driver.
 
-Notes:
-    Hi Andre,
-    
-    thanks for checking the trace. Here is the patch, on top of your
-    [PATCH 4/4] wifi: brcmfmac: msgbuf: send the flowring delete without waiting for tx status
-    https://lore.kernel.org/all/20261107154810.89780-5-dev@deq.rocks/
-    
-    The generation goes up when the flowid is released, not when the delete
-    is sent, so the debug message in your patch still counts the tx status
-    that comes before the response. My tree for a BCM43684 access point
-    bumps it when the delete is sent; this version is compile-tested only.
-    Feel free to take it into the next version of your series.
+ .../broadcom/brcm80211/brcmfmac/usb.c         | 68 +---------------
+ .../broadcom/brcm80211/include/brcm_usb_rdl.h | 78 +++++++++++++++++++
+ 2 files changed, 79 insertions(+), 67 deletions(-)
+ create mode 100644 drivers/net/wireless/broadcom/brcm80211/include/brcm_usb_rdl.h
 
- .../broadcom/brcm80211/brcmfmac/msgbuf.c      | 34 ++++++++++++++++++-
- 1 file changed, 33 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
-index 8fd970571..9d8360d3e 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
-@@ -247,6 +247,7 @@ struct brcmf_msgbuf {
- 	struct brcmf_commonring **commonrings;
- 	struct brcmf_commonring **flowrings;
- 	dma_addr_t *flowring_dma_handle;
-+	u16 *flowring_gen;
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
+index b41949a9bd..e48f064682 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
+@@ -12,6 +12,7 @@
+ #include <brcmu_utils.h>
+ #include <brcm_hw_ids.h>
+ #include <brcmu_wifi.h>
++#include <brcm_usb_rdl.h>
+ #include "bus.h"
+ #include "debug.h"
+ #include "firmware.h"
+@@ -26,8 +27,6 @@
+ #define BRCMF_USB_RESET_GETVER_SPINWAIT	100	/* in unit of ms */
+ #define BRCMF_USB_RESET_GETVER_LOOP_CNT	10
  
- 	u16 max_flowrings;
- 	u16 max_submissionrings;
-@@ -293,6 +294,7 @@ struct brcmf_msgbuf {
- struct brcmf_msgbuf_pktid {
- 	atomic_t  allocated;
- 	u16 data_offset;
-+	u16 gen;	/* tx: flowring_gen of its flowid when posted */
- 	struct sk_buff *skb;
- 	dma_addr_t physaddr;
+-#define BRCMF_POSTBOOT_ID		0xA123  /* ID to detect if dongle
+-						   has boot up */
+ #define BRCMF_USB_NRXQ			50
+ #define BRCMF_USB_NTXQ			50
+ 
+@@ -52,71 +51,6 @@ static const struct brcmf_firmware_mapping brcmf_usb_fwnames[] = {
+ 	BRCMF_FW_ENTRY(CY_CC_4373_CHIP_ID, 0xFFFFFFFF, 4373)
  };
-@@ -559,6 +561,21 @@ static void brcmf_msgbuf_rxreorder(struct brcmf_if *ifp, struct sk_buff *skb)
- {
- }
  
+-#define TRX_MAGIC		0x30524448	/* "HDR0" */
+-#define TRX_MAX_OFFSET		3		/* Max number of file offsets */
+-#define TRX_UNCOMP_IMAGE	0x20		/* Trx holds uncompressed img */
+-#define TRX_RDL_CHUNK		1500		/* size of each dl transfer */
+-#define TRX_OFFSETS_DLFWLEN_IDX	0
+-
+-/* Control messages: bRequest values */
+-#define DL_GETSTATE	0	/* returns the rdl_state_t struct */
+-#define DL_CHECK_CRC	1	/* currently unused */
+-#define DL_GO		2	/* execute downloaded image */
+-#define DL_START	3	/* initialize dl state */
+-#define DL_REBOOT	4	/* reboot the device in 2 seconds */
+-#define DL_GETVER	5	/* returns the bootrom_id_t struct */
+-#define DL_GO_PROTECTED	6	/* execute the downloaded code and set reset
+-				 * event to occur in 2 seconds.  It is the
+-				 * responsibility of the downloaded code to
+-				 * clear this event
+-				 */
+-#define DL_EXEC		7	/* jump to a supplied address */
+-#define DL_RESETCFG	8	/* To support single enum on dongle
+-				 * - Not used by bootloader
+-				 */
+-#define DL_DEFER_RESP_OK 9	/* Potentially defer the response to setup
+-				 * if resp unavailable
+-				 */
+-
+-/* states */
+-#define DL_WAITING	0	/* waiting to rx first pkt */
+-#define DL_READY	1	/* hdr was good, waiting for more of the
+-				 * compressed image
+-				 */
+-#define DL_BAD_HDR	2	/* hdr was corrupted */
+-#define DL_BAD_CRC	3	/* compressed image was corrupted */
+-#define DL_RUNNABLE	4	/* download was successful,waiting for go cmd */
+-#define DL_START_FAIL	5	/* failed to initialize correctly */
+-#define DL_NVRAM_TOOBIG	6	/* host specified nvram data exceeds DL_NVRAM
+-				 * value
+-				 */
+-#define DL_IMAGE_TOOBIG	7	/* firmware image too big */
+-
+-
+-struct trx_header_le {
+-	__le32 magic;		/* "HDR0" */
+-	__le32 len;		/* Length of file including header */
+-	__le32 crc32;		/* CRC from flag_version to end of file */
+-	__le32 flag_version;	/* 0:15 flags, 16:31 version */
+-	__le32 offsets[TRX_MAX_OFFSET];	/* Offsets of partitions from start of
+-					 * header
+-					 */
+-};
+-
+-struct rdl_state_le {
+-	__le32 state;
+-	__le32 bytes;
+-};
+-
+-struct bootrom_id_le {
+-	__le32 chip;		/* Chip id */
+-	__le32 chiprev;		/* Chip rev */
+-	__le32 ramsize;		/* Size of  RAM */
+-	__le32 remapbase;	/* Current remap base address */
+-	__le32 boardtype;	/* Type of board */
+-	__le32 boardrev;	/* Board revision */
+-};
+-
+ struct brcmf_usbdev_info {
+ 	struct brcmf_usbdev bus_pub; /* MUST BE FIRST */
+ 	spinlock_t qlock;
+diff --git a/drivers/net/wireless/broadcom/brcm80211/include/brcm_usb_rdl.h b/drivers/net/wireless/broadcom/brcm80211/include/brcm_usb_rdl.h
+new file mode 100644
+index 0000000000..bf6665d33f
+--- /dev/null
++++ b/drivers/net/wireless/broadcom/brcm80211/include/brcm_usb_rdl.h
+@@ -0,0 +1,78 @@
++/* SPDX-License-Identifier: ISC */
 +/*
-+ * Called when a flowid is released. A tx status can still come for a packet
-+ * of the old flowring after that: brcmf_proto_msgbuf_rx_trigger() reads the
-+ * tx complete ring before the control complete ring, so it can see a delete
-+ * response before a tx status the firmware wrote first. The flowid may have
-+ * gone to a new flowring by then, and the status must not decrement the
-+ * outstanding_tx of the new one.
++ * Copyright (c) 2011 Broadcom Corporation
 + */
-+static void brcmf_msgbuf_flowring_next_gen(struct brcmf_msgbuf *msgbuf,
-+					   u16 flowid)
-+{
-+	WRITE_ONCE(msgbuf->flowring_gen[flowid],
-+		   msgbuf->flowring_gen[flowid] + 1);
-+}
 +
- static void
- brcmf_msgbuf_remove_flowring(struct brcmf_msgbuf *msgbuf, u16 flowid)
- {
-@@ -566,6 +583,7 @@ brcmf_msgbuf_remove_flowring(struct brcmf_msgbuf *msgbuf, u16 flowid)
- 	void *dma_buf;
- 
- 	brcmf_dbg(MSGBUF, "Removing flowring %d\n", flowid);
-+	brcmf_msgbuf_flowring_next_gen(msgbuf, flowid);
- 
- 	dma_sz = BRCMF_H2D_TXFLOWRING_MAX_ITEM * BRCMF_H2D_TXFLOWRING_ITEMSIZE;
- 	dma_buf = msgbuf->flowrings[flowid]->buf_addr;
-@@ -768,6 +786,8 @@ static void brcmf_msgbuf_txflow(struct brcmf_msgbuf *msgbuf, u16 flowid)
- 			bphy_err(drvr, "No PKTID available !!\n");
- 			break;
- 		}
-+		msgbuf->tx_pktids->array[pktid].gen =
-+			READ_ONCE(msgbuf->flowring_gen[flowid]);
- 		ret_ptr = brcmf_commonring_reserve_for_write(commonring);
- 		if (!ret_ptr) {
- 			brcmf_msgbuf_get_pktid(msgbuf->drvr->bus_if->dev,
-@@ -920,10 +940,13 @@ brcmf_msgbuf_process_txstatus(struct brcmf_msgbuf *msgbuf, void *buf)
- 	struct sk_buff *skb;
- 	u16 flow_ring_id;
- 	u16 flowid;
-+	u16 gen = 0;
- 
- 	tx_status = (struct msgbuf_tx_status *)buf;
- 	idx = le32_to_cpu(tx_status->msg.request_id) - 1;
- 	flow_ring_id = le16_to_cpu(tx_status->compl_hdr.flow_ring_id);
-+	if (idx < msgbuf->tx_pktids->array_size)
-+		gen = msgbuf->tx_pktids->array[idx].gen;
- 	skb = brcmf_msgbuf_get_pktid(msgbuf->drvr->bus_if->dev,
- 				     msgbuf->tx_pktids, idx);
- 	if (!skb)
-@@ -937,7 +960,9 @@ brcmf_msgbuf_process_txstatus(struct brcmf_msgbuf *msgbuf, void *buf)
- 
- 	set_bit(flowid, msgbuf->txstatus_done_map);
- 	commonring = msgbuf->flowrings[flowid];
--	atomic_dec(&commonring->outstanding_tx);
-+	/* not for a packet of a flowring that had the flowid before */
-+	if (gen == READ_ONCE(msgbuf->flowring_gen[flowid]))
-+		atomic_dec(&commonring->outstanding_tx);
- 
- 	brcmf_txfinalize(brcmf_get_ifp(msgbuf->drvr, tx_status->msg.ifidx),
- 			 skb, true);
-@@ -1325,6 +1350,7 @@ brcmf_msgbuf_process_flow_ring_delete_response(struct brcmf_msgbuf *msgbuf,
- 
- 	if (status) {
- 		bphy_err(drvr, "Flowring deletion failed, code %d\n", status);
-+		brcmf_msgbuf_flowring_next_gen(msgbuf, flowid);
- 		brcmf_flowring_delete(msgbuf->flow, flowid);
- 		return;
- 	}
-@@ -1681,6 +1707,10 @@ int brcmf_proto_msgbuf_attach(struct brcmf_pub *drvr)
- 			     msgbuf->max_flowrings);
- 	if (!msgbuf->flowring_dma_handle)
- 		goto fail;
-+	msgbuf->flowring_gen = kzalloc_objs(*msgbuf->flowring_gen,
-+					    msgbuf->max_flowrings);
-+	if (!msgbuf->flowring_gen)
-+		goto fail;
- 
- 	msgbuf->rx_dataoffset = if_msgbuf->rx_dataoffset;
- 	msgbuf->max_rxbufpost = if_msgbuf->max_rxbufpost;
-@@ -1732,6 +1762,7 @@ int brcmf_proto_msgbuf_attach(struct brcmf_pub *drvr)
- 		kfree(msgbuf->txstatus_done_map);
- 		brcmf_msgbuf_release_pktids(msgbuf);
- 		kfree(msgbuf->flowring_dma_handle);
-+		kfree(msgbuf->flowring_gen);
- 		if (msgbuf->ioctbuf)
- 			dma_free_coherent(drvr->bus_if->dev,
- 					  BRCMF_TX_IOCTL_MAX_MSG_SIZE,
-@@ -1772,6 +1803,7 @@ void brcmf_proto_msgbuf_detach(struct brcmf_pub *drvr)
- 				  msgbuf->ioctbuf, msgbuf->ioctbuf_handle);
- 		brcmf_msgbuf_release_pktids(msgbuf);
- 		kfree(msgbuf->flowring_dma_handle);
-+		kfree(msgbuf->flowring_gen);
- 		kfree(msgbuf);
- 		drvr->proto->pd = NULL;
- 	}
++#ifndef	_BRCM_USB_RDL_H_
++#define	_BRCM_USB_RDL_H_
++
++#include <linux/types.h>
++
++#define BRCMF_POSTBOOT_ID		0xA123  /* ID to detect if dongle
++						   has boot up */
++
++#define TRX_MAGIC		0x30524448	/* "HDR0" */
++#define TRX_MAX_OFFSET		3		/* Max number of file offsets */
++#define TRX_UNCOMP_IMAGE	0x20		/* Trx holds uncompressed img */
++#define TRX_RDL_CHUNK		1500		/* size of each dl transfer */
++#define TRX_OFFSETS_DLFWLEN_IDX	0
++
++/* Control messages: bRequest values */
++#define DL_GETSTATE	0	/* returns the rdl_state_t struct */
++#define DL_CHECK_CRC	1	/* currently unused */
++#define DL_GO		2	/* execute downloaded image */
++#define DL_START	3	/* initialize dl state */
++#define DL_REBOOT	4	/* reboot the device in 2 seconds */
++#define DL_GETVER	5	/* returns the bootrom_id_t struct */
++#define DL_GO_PROTECTED	6	/* execute the downloaded code and set reset
++				 * event to occur in 2 seconds.  It is the
++				 * responsibility of the downloaded code to
++				 * clear this event
++				 */
++#define DL_EXEC		7	/* jump to a supplied address */
++#define DL_RESETCFG	8	/* To support single enum on dongle
++				 * - Not used by bootloader
++				 */
++#define DL_DEFER_RESP_OK 9	/* Potentially defer the response to setup
++				 * if resp unavailable
++				 */
++
++/* states */
++#define DL_WAITING	0	/* waiting to rx first pkt */
++#define DL_READY	1	/* hdr was good, waiting for more of the
++				 * compressed image
++				 */
++#define DL_BAD_HDR	2	/* hdr was corrupted */
++#define DL_BAD_CRC	3	/* compressed image was corrupted */
++#define DL_RUNNABLE	4	/* download was successful,waiting for go cmd */
++#define DL_START_FAIL	5	/* failed to initialize correctly */
++#define DL_NVRAM_TOOBIG	6	/* host specified nvram data exceeds DL_NVRAM
++				 * value
++				 */
++#define DL_IMAGE_TOOBIG	7	/* firmware image too big */
++
++struct trx_header_le {
++	__le32 magic;		/* "HDR0" */
++	__le32 len;		/* Length of file including header */
++	__le32 crc32;		/* CRC from flag_version to end of file */
++	__le32 flag_version;	/* 0:15 flags, 16:31 version */
++	__le32 offsets[TRX_MAX_OFFSET];	/* Offsets of partitions from start of
++					 * header
++					 */
++};
++
++struct rdl_state_le {
++	__le32 state;
++	__le32 bytes;
++};
++
++struct bootrom_id_le {
++	__le32 chip;		/* Chip id */
++	__le32 chiprev;		/* Chip rev */
++	__le32 ramsize;		/* Size of  RAM */
++	__le32 remapbase;	/* Current remap base address */
++	__le32 boardtype;	/* Type of board */
++	__le32 boardrev;	/* Board revision */
++};
++
++#endif /* _BRCM_USB_RDL_H_ */
 -- 
-2.56.0
+2.53.0
 
