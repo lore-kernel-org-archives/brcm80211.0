@@ -1,80 +1,52 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794551526;
-	b=IaX3ldjZHisGdEjhlL3DFQAnbQhFhyppTeAq0cS+j5gXBr1dHASVr+NMiuhT/4XPglb5
-	 Eb9PV5imDHFTmvehSmo9iwGN6s7WTmVUxe4ZurASGBHsnaasHQQ+qoVexWXj0vDqobQh5
-	 PNvC36mUrBATclRg/ks7lAonkC8nApqd70TOBLSx60H/UtuKkD877Ki2ldbF8ZgtQelRg
-	 383NZ/A0Bxwx5amxKzoD46IBPNKDWXQZQinHg8YRykMOcSXPEx7PDL5IyUF0U0GaLkx5h
-	 BYKDCFk/i2+eRn8fYNfpdfrd1WwL9XASDuZbmmWO6Kw8uUiltMmeMX68DgPSD0L61aw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794551526;
-	h=Received:DKIM-Signature:Received:From:Subject:Date:Message-Id:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:X-B4-Tracking:
-	 X-Change-ID:To:Cc:X-Mailer:X-Developer-Signature:X-Developer-Key:
-	 X-Endpoint-Received:X-Original-From:Reply-To;
-	bh=HvA7+WtaTN4yvDTr9nDTm4lyRhrTIF/PJJOZl8KDOik=;
-	b=lY9hG2Qdmj6zCunwVFWA+o5gevnK3ZLTzYzV0+LsShs5FHuO+khrJAMSpf4eWkgJRbCc
-	 7ESpIFwT7QWAFk1pwbepSilzPevHg8297z26ORYB0qERV2YECb4UDgmo9CCst599d27vr
-	 Ee8uuIcBz1yj40v/+3CVUE4xyjgSOuhhsZCKZOT0zj09YN/Z4lj8BrsCDCUQ9bW+sim3U
-	 rea01hYgzWZ3yRL787/WGAt6w/q4Ujljitvy+HWBmQt/B4+dxxZKeFuglUR4UH4wXODOU
-	 KRkCfJseLef+4/hVHzuEDFvxqPolVPB6BZlikKmPEvCKQ1KJhKqdner/JxYiXQrJCug==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=f+aDS7k5;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04ABE606A327;
-	Fri, 13 Nov 2026 06:32:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=f+aDS7k5
-Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=100.80.115.77
-ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1794551525;
-	b=vcpUF/GPNfQyKvEkAdFJMOcczup+OBeKGccuN2pgPZ6Bo130pVVNVzAiBQf7/h/ggzqs
-	 wOiVn67QtvlNrzlc3xBuvRu7Kz/DfuB0qJfgwNs+wX9jZtLCXcmXK2H9Ak8pzIPB3mwsf
-	 TR22ShEgqmmrbTx9elM+HGptpxFK0cTIB3t+XFF0fsAHSJjAfEV1+Vk0CCF5+Hhwj2X2+
-	 CZRtGRFExc+9m3OMXCFjT5UdfdeeAK6oO+ZdbW8H7xLcX3hhTfw2Gg2Oyz3mchyQtHU7j
-	 wVWcEs3uxRVFPgSBFRwhxsK4BbRXAKvH3IyTHSBurT1jmhvxujL23oC7NT2gWgLB/KA==
-ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1794551525;
-	h=DKIM-Signature:Received:From:Subject:Date:Message-Id:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding:X-B4-Tracking:X-Change-ID:To:
-	 Cc:X-Mailer:X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
-	 X-Original-From:Reply-To;
-	bh=HvA7+WtaTN4yvDTr9nDTm4lyRhrTIF/PJJOZl8KDOik=;
-	b=saEmvdwjUSUW5froWWihB0yTvg9/0Z0pQoCMlHzrRME8nXZEnKXY1OXvanb1y66pH13W
-	 SFhRbIur2T0xRaBFkmiO3cwSr3g9nsq/EhcnX/t+lfIBIFp+fH3CloSi6yZAtZ+I2grpj
-	 Pnqg0U37jTN+UQvDuD4uwSNyVHaJl8x260Ipn2zM7H//u9lGiBILNYQzyRRGN/xwCU9Ip
-	 nIrfINc2gFD1uMEToEWZFVY6vnr5w8MZbACdSB0b0z40jbVE12wAK0/OQwsXmQF3DCNn6
-	 ajPB0GzMwQKKQiaIQ23ViB5P8HqYPQDBSnu3gw3qkdXxOW1Y6qb40YuB5yWWRc9t/Og==
-ARC-Authentication-Results: i=1; smtp.kernel.org; 
-	arc=none smtp.remote-ip=100.80.115.77
-Received: from lkml.kernel.org (nexus.subspace.kernel.org [100.80.115.77])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=37.252.191.174
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794559173;
+	b=Y2D0uiMt5PC8T0f5ffuEqaWr8YfefEvyxyal+KbWGNAUxg9Fd89u/xVnzy1y2C05Icmt
+	 zMKhgj6UFLq0+HWS2JYubKcayfpJxpGZy+TEl0i2wYULGPJH5hguIq5SlsgCs0G4BX+uF
+	 mG1cFTmeOfXQektaQzIltcD9tKTsFCTvgQAvVepY0D2MsP9VaHCIpSXWv6DUwm/FfbugT
+	 TmAYTsjEQIYaUrBgWjode0rvQBH/To22rTHTCnDHehdUMVytd3rWxQmwZYlEpPYboXCrB
+	 ThIPzZJ66/obQUqBqkErzJdmaSqlL8/v2WCuPP+kmN8Sq84paXqyVlrBfeVHDM+Qmsw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794559173;
+	h=DMARC-Filter:Received:DKIM-Signature:Received-SPF:Message-ID:Date:
+	 MIME-Version:User-Agent:Content-Language:To:Cc:From:Subject:
+	 Content-Type:Content-Transfer-Encoding:X-PPP-Message-ID:X-PPP-Vhost;
+	bh=/nsIgMSuEZ3IjLcOmBYDv4yvMTvK+ErcT3BPn2PeS9E=;
+	b=4PArbyQHowUYaMgEZoXPmvSvGux+W0HzB74AtcutktfSOwTOsmlBwRS2WbD/9GjckCz6
+	 XaMbUTJbCeRYVzyIv4eYFLs7SVs4QTgK+tzxUbqYrGwCEOFMlVBwEVdxPudCvLx3Lwt6J
+	 ewv9n+pd/37jB80YpueWCPqmbFzjQ5tB0kSYilAG/f1ieSpTGhsFamWoh1+eb90XTkBn1
+	 fQC8SfbDtMJgSUhTselj+3AjBfgqB4fZP469pRJXKrF1VQM7UKJZ06J3vwaIDjVqxkwSA
+	 bIygyB0xuygoWdVDmcwUYySG1osjUqJiDTV6mrLJ/MMJX/dsOnfTh5E9Hv/SB2OeHUw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=itsolution.at;
+	spf=pass smtp.mailfrom=itsolution.at;
+	dkim=pass header.d=itsolution.at header.i=@itsolution.at header.a=rsa-sha256 header.s=default header.b=LNdMk8ct;
+	arc=none smtp.remote-ip=37.252.191.174
+Received: from mail2.incublab.at (mail2.incublab.at [37.252.191.174])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 12EC71F000C4;
-	Fri, 13 Nov 2026 06:32:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794551525;
-	bh=HvA7+WtaTN4yvDTr9nDTm4lyRhrTIF/PJJOZl8KDOik=;
-	h=From:Subject:Date:To:Cc:Reply-To;
-	b=f+aDS7k5SUBuukbwNgPRJ6SwsIcIgb3o37wEMnPB5cZKRpaqw/OItTtWpXMay8Csf
-	 GpW0c429Csx4tT3A3WBpiX2F1ZcxnEDxfTobg0dZOk9/tSB+HsAh3wGRnMY+FDmx1L
-	 idEkgIx6gF/Df4TaxUlYtenclRZW1H4h4Ndxu37aghUwIwYjrA2MJb/6oO19iKpdXj
-	 1uUuQnlh6zsK83iwZOgpS2QOirkmB2Ww5ruIr9TI7eAVROmS2EDaoguGEbZhoHL/PG
-	 qA6tb050xl4X3vJyQpJWuLHOmjU7eZkZoAfdU5n4smLBJoQUuc7Cmdyj0l91fL8Hce
-	 8aWrW+Wi3HUGQ==
-Received: from nexus.subspace.kernel.org (localhost [IPv6:::1])
-	by lkml.kernel.org (Postfix) with ESMTP id 647CA47628;
-	Fri, 13 Nov 2026 06:32:04 +0000 (UTC)
-From: Michael Reeves via B4 Relay <devnull+michael.reeves077.gmail.com@kernel.org>
-Subject: [PATCH wireless-next 0/4] wifi: brcmfmac: Add support for 6 GHz
- operation
-Date: Fri, 13 Nov 2026 06:31:54 +0000
-Message-Id: <20261113-6ghz-v1-0-0b9a67e413a9@gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A354A606B1DB;
+	Fri, 13 Nov 2026 08:39:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A354A606B1DB
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=itsolution.at
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=itsolution.at
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key, unprotected) header.d=itsolution.at header.i=@itsolution.at header.a=rsa-sha256 header.s=default header.b=LNdMk8ct
+Received: from [192.168.100.123] (h081217101012.dyn.cm.kabsi.at [81.217.101.12])
+	by mail2.incublab.at (Postfix) with ESMTPSA id 88F26A075B3;
+	Fri, 13 Nov 2026 08:39:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=itsolution.at;
+	s=default; t=1794559163;
+	bh=/nsIgMSuEZ3IjLcOmBYDv4yvMTvK+ErcT3BPn2PeS9E=; h=To:From:Subject;
+	b=LNdMk8cteDvTGSPaoLn7s3LP3kSbEREUbO2bGrrjhK6JmsLfZAuSvrctXLl9FBiI/
+	 r281XuYQby/vlIBNOJThc0R1pj2TmSmIlKAZJGgjZZK5GBnNTDwwQDXCNJwSdDG6t4
+	 7PligbHmYQc5cVukTGBJv4vrLxz0YoTLC46crmOU=
+Authentication-Results: mail2.incublab.at;
+        spf=pass (sender IP is 81.217.101.12) smtp.mailfrom=argishti.khachik@itsolution.at smtp.helo=[192.168.100.123]
+Received-SPF: pass (mail2.incublab.at: connection is authenticated)
+Message-ID: <b010a7fa-73ea-43fa-a020-c2ea706295dd@itsolution.at>
+Date: Fri, 13 Nov 2026 09:39:23 +0100
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Post: <mailto:brcm80211@lists.linux.dev>
@@ -84,75 +56,75 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:brcm80211+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yWMQQ6CMBQFr0Le2iYWIhCvYlyU8oBvTDX9KATC3
- a2wnMxkViijUHHNVkR+ReUVEthTBj+40NNImxj5OS+ttYUp+2Exrm4vdeWawnsipe/ITuZ9c8M
- kkU+qmsB5xP3Q+mke9ON/hW37AfWOKtx3AAAA
-X-Change-ID: 20261113-6ghz-a8d587ab3cce
-To: Arend van Spriel <arend.vanspriel@broadcom.com>
-Cc: asahi@lists.linux.dev, linux-wireless@vger.kernel.org, 
- brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com, 
- linux-kernel@vger.kernel.org, Michael Reeves <michael.reeves077@gmail.com>, 
- Daniel Berlin <dberlin@dberlin.org>, Yureka Lilian <yureka@cyberchaos.dev>
-X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1794551523; l=1842;
- i=michael.reeves077@gmail.com; s=20261107; h=from:subject:message-id;
- bh=O2HbX3PGoxwHaTzbO9NvLzP3Q0NQYtRhPhMh4oU9kEY=;
- b=lpongLP+YiC0s/OvTNBUYPbK8V7Ti1fI4slD5KFcSIQVYpJMBlgTvJiZHV0uHW+ThRZJLLo4Q
- XJAEiUAm+87DmvZDEUY3SDYprUoQ4KrQo/2ch8hLJ9cr5EKTqF2NU+M
-X-Developer-Key: i=michael.reeves077@gmail.com; a=ed25519;
- pk=ykwkLcuByJYb/cdLc2UuoYP03pIzwrscEZg30+4tJL8=
-X-Endpoint-Received: by B4 Relay for michael.reeves077@gmail.com/20261107
- with auth_id=1442
-X-Original-From: Michael Reeves <michael.reeves077@gmail.com>
-Reply-To: michael.reeves077@gmail.com
+User-Agent: Betterbird (Linux)
+Content-Language: en-US, de-AT
+To: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev
+Cc: iommu@lists.linux.dev, regressions@lists.linux.dev
+From: Argishti KHACHIK <argishti.khachik@itsolution.at>
+Subject: [REGRESSION] brcmfmac BCM43602: DMAR read faults and firmware
+ timeouts on 7.3.3 with intel_iommu=on, works on 7.2.14 / with iommu=pt
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-PPP-Message-ID: <179455916379.2529963.3953393442639834989@mail2.incublab.at>
+X-PPP-Vhost: itsolution.at
 
-Hi Arend, all,
+Hi,
 
-This series adds support for 6 GHz (Wi-Fi 6E) operation to brcmfmac.
+since updating from 7.2.14 to 7.3.3 (Fedora 44 kernels), the
+BCM43602 Wi-Fi in my Dell XPS 15 9550 is unusable when the Intel
+IOMMU is in translation mode. Booting with iommu=pt fixes it.
 
-It includes HE capability advertisement, 6 GHz chanspec and band
-handling and PNO version 3 support. The PNO support is required to avoid
-channel-number collisions with 2.4/5 GHz during scheduled scans.
+Hardware: Dell XPS 15 9550, BIOS 1.14.0 02/13/2020
+Device:   Broadcom BCM43602 [14e4:43ba], PCIe, brcmfmac (msgbuf)
+Firmware: BCM43602/1 wl0: Nov 10 2015 06:38:10 version 7.35.177.61
+           (r598657) FWID 01-ea662a8c (linux-firmware)
+Cmdline:  ... intel_iommu=on
 
-It is adapted from our downstream work in the Asahi kernel by Daniel
-Berlin, but reworked to make the code cleaner and more maintainable.
+Results:
+- 7.2.14-200.fc44.x86_64:            works
+- 7.3.3-200.fc44.x86_64:             broken
+- 7.3.3-200.fc44.x86_64 + iommu=pt:  works
 
-As I don't have a 6 GHz AP to test with, Yureka Lilian tested this
-series on my behalf, on her Apple Silicon M3 Mac (BCM4388). Connection
-and use of a 6 GHz network was successful, without regressions on 2.4 
-GHz or 5 GHz operation.
+Userspace and firmware are identical in all three cases.
 
-Thank you for your time,
-Michael
+The firmware loads fine, then a few seconds later the IOMMU
+rejects DMA reads from the card:
 
-Signed-off-by: Michael Reeves <michael.reeves077@gmail.com>
----
-Daniel Berlin (2):
-      wifi: brcmfmac: Add support for 6 GHz chanspecs
-      wifi: brcmfmac: Add support for the 6 GHz band
+   brcmfmac: brcmf_c_preinit_dcmds: Firmware: BCM43602/1 wl0: Nov 10 
+2015 06:38:10 version 7.35.177.61 (r598657) FWID 01-ea662a8c
+   brcmfmac 0000:02:00.0 wlp2s0: renamed from wlan0
+   DMAR: DRHD: handling fault status reg 2
+   DMAR: [DMA Read NO_PASID] Request device [0000:02:00.0] fault addr 
+0xfff83000 [fault reason 0x06] PTE Read access is not set
+   DMAR: [DMA Read NO_PASID] Request device [0000:02:00.0] fault addr 
+0xfff80000 [fault reason 0x06] PTE Read access is not set
+   DMAR: [DMA Read NO_PASID] Request device [0000:02:00.0] fault addr 
+0xfff7e000 [fault reason 0x06] PTE Read access is not set
 
-Michael Reeves (2):
-      wifi: brcmfmac: Advertise HE capabilities
-      wifi: brcmfmac: Add support for PNO version 3
+After that, every firmware command times out:
 
- .../broadcom/brcm80211/brcmfmac/cfg80211.c         | 477 +++++++++++++++------
- .../broadcom/brcm80211/brcmfmac/cfg80211.h         |   2 +
- .../broadcom/brcm80211/brcmfmac/fwil_types.h       |  68 +++
- .../net/wireless/broadcom/brcm80211/brcmfmac/p2p.c |   6 +-
- .../net/wireless/broadcom/brcm80211/brcmfmac/pno.c | 147 ++++++-
- .../net/wireless/broadcom/brcm80211/brcmfmac/pno.h |  41 +-
- .../net/wireless/broadcom/brcm80211/brcmutil/d11.c |   7 +-
- .../broadcom/brcm80211/include/brcmu_d11.h         |   3 +-
- .../broadcom/brcm80211/include/brcmu_wifi.h        |   1 +
- 9 files changed, 585 insertions(+), 167 deletions(-)
----
-base-commit: 3c311bf321442d4c4f452a1a08bc9efce242a1f9
-change-id: 20261113-6ghz-a8d587ab3cce
+   ieee80211 phy0: brcmf_msgbuf_query_dcmd: Timeout on response for 
+query command
+   ieee80211 phy0: brcmf_cfg80211_get_channel: chanspec failed (-5)
+   ieee80211 phy0: brcmf_run_escan: error (-5)
+   ieee80211 phy0: brcmf_set_wsec: failed to change PSK in firmware (len=0)
 
-Best regards,
---  
-Michael Reeves <michael.reeves077@gmail.com>
+and after about two minutes the command ring is full:
 
+   ieee80211 phy0: brcmf_msgbuf_tx_ioctl: Failed to reserve space in 
+commonring
+   ieee80211 phy0: brcmf_run_escan: error (-12)
 
+Unloading and reloading brcmfmac reproduces the same DMAR faults
+right after the firmware loads again.
+
+User-visible effect: networks show up briefly, connecting never
+completes, then the scan list goes empty. Boot is noticeably slower.
+
+I can provide the full kernel log, test patches or bisect between
+v7.2 and v7.3 if that helps.
+
+#regzbot introduced: v7.2..v7.3
+
+Thanks,
+Argishti
