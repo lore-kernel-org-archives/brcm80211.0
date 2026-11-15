@@ -1,79 +1,93 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.161.43
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.43
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794594306;
-	b=SSNqepO3pMVOHQ+bdMEwxxW1EO42X/WyMW6kulPUhl8r1M3NYOWjdv5qD0yAWnM82hW0
-	 el7jEOH0dADjqdU7KOMwmF+RxvxM6pLZOi0eHVehXJN9eZTwFrxlKcu7G9vMDzjgI9CaO
-	 ARyo2q8thNZko/6IZ29vVhTvpLWDMcNTbqufDgbfPR46i0GnNy7KeCeLRzZ0mju/aj51a
-	 ysTfSMkx3wXLU9Gd7w7E579NAzc+prA9iLrJ3YpAlMakikaFG4wt+TNsvVcQyoROYXhIQ
-	 50WbNTHBY9mVC6sea3/01ti7tymGOaltt/dl1shHEq6jDxILQFkQcjXHSS+vf+PkOpA==
+	t=1794769130;
+	b=dqMhCfUJdbuxSj/gk6D35pu6tlf3Dk+lojunTuOycOvZSPHzjJhZCSMrXD7ppMR2ZY9U
+	 b8QGhAfqgO7Im89ssPzByMpIEhG76/CA3OpcaLNwo8JkFEsHNsGQHJ6bNqbNiMUX/9I4H
+	 l7jmp662Swq2ppQ/1tZinUhZX6pX7ZF63PtehjLrEhpNLKA3c9HfmKmc+ppyrHAZaottg
+	 QcyhKBchKG+w3dDaJqKtGRkbhG5TRPXhuO5ZebQEeON9gT077F1IV4UTyWbyQSlX3kUjP
+	 aJDWdlDb4Zoa+u/STVKQreOhZG8pFqqxn2t/FTPaRfWDJSnRsddYpdN4kfXK81eEufA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794594306;
-	h=DMARC-Filter:Received:X-Google-DKIM-Signature:X-Forwarded-Encrypted:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Received:
-	 X-Forwarded-Encrypted:X-Received:MIME-Version:References:In-Reply-To:
-	 From:Date:X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:
-	 Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=+4+M6Qf8kgsKLvqCkp78aI5bxXP1So+oEpWQ/VILqxM=;
-	b=36yiJG2wgfmgFJRfTO7JoxtRabZgEvmTpu/vcsLx0WnS8x+cCOce5iruy8ciViBmVkqu
-	 VkAuty4dU3+ZqXcdPjXFG9th/gyrboHqi1F7wQlX0GpksQE0hdwWk6PuXQZFch9qdPBRm
-	 zstT9pLPFBNQM8La5/pBFAubMs8j0YK4IiZAcrCCwjcwj0djgENy5V4oG+ky5CK6FysHg
-	 JIX1VtuQ76DQK2pMHizUAHQ+/wQkhRtMftsMtgTLU7R0ErY+RhK0ivjsfclX+X2xXNl5T
-	 WzZjTks7d0sTpCwLIx8cZSd5oeg/aItjemt8/VirOYvJhd0nZJ0prmMSUs9vlwuJ52g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794769130;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-Id:X-Mailer:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=BvKuisBW9st6dv4iYQYmdk7UUIHA5W7Ob6TCeUj4NB4=;
+	b=JJfS6lUo36H/HZD7kChRN7haJwUHsWV1hqFMANyys+D0gmSXDUY8TTCtZEgGkSopXkv/
+	 VfUz+drhd5WUbkwkDd7ZzNz9K33Zj2PoI9YmC+lHGyLudVY/fULGfNvgu5MP77NYXz/N1
+	 XsHizk+FWi3RcOqj4Tn4rZRtzL96WwpbZZzdyLY3s9MVEODk+gAC1L+BlU1Wgr6tosExH
+	 v86y1cHAXf3n1d7X9sUuqzQOmZlGmfIv5loe89vVmJGq6dl4uwQsk+7UzZ4jjsGeEh4J5
+	 gBpBaX9CNGMf1BgVTyaM/aGu6Dgre6yB2M3TAN0mqV4v4m+CKtMlbmzHb3LP4pRHeBw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=gompa.dev;
+	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	arc=none smtp.remote-ip=209.85.161.43
-Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="lw/qct/h";
+	arc=none smtp.remote-ip=74.125.82.43
+Received: from mail-dl1-f43.google.com (mail-dl1-f43.google.com [74.125.82.43])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E8ED606A32D
-	for <brcm80211@lists.linux.dev>; Fri, 13 Nov 2026 18:25:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9E8ED606A32D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gompa.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27B75606A884
+	for <brcm80211@lists.linux.dev>; Sun, 15 Nov 2026 18:58:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 27B75606A884
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oo1-f43.google.com with SMTP id 006d021491bc7-6de2f213b7aso498212eaf.0
-        for <brcm80211@lists.linux.dev>; Fri, 13 Nov 2026 10:25:05 -0800 (PST)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=lw/qct/h
+Received: by mail-dl1-f43.google.com with SMTP id a92af1059eb24-1b3beeaf6f9so3026015c88.0
+        for <brcm80211@lists.linux.dev>; Sun, 15 Nov 2026 10:58:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794769129; x=1795373929; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=BvKuisBW9st6dv4iYQYmdk7UUIHA5W7Ob6TCeUj4NB4=;
+        b=lw/qct/h1AmQfvQjOUPbqTLG6IZp8Mrx304d7SuRBhCc5gPr+amlIAtcw0Y/KkyBF+
+         i04/folq6N3jYE6pCw8ZQJj3mqnYYX0sI7eNSEleZr+LoKWB3o81H3BsbBPGuRLeO0yP
+         fM6ugVNeTPV2K8x6f8O+myMj8EyiqOnP2Unxbw/TyaJrl96nLTP4bySfdci/KjqEjTT/
+         VNfQqPzLP1XtknV8o1LuV0SuYcu0+3i4bIrDUzJ09IPG9fonJcMQEay8jFUND1kP8L0H
+         wiFfDyCH2G1X8s/vw0EYZoDbo3n6MTdO+vts+BzbU3h1Q7Ev04Xe1fCzZqerpkAsS6ZS
+         mQ4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794594304; x=1795199104;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=+4+M6Qf8kgsKLvqCkp78aI5bxXP1So+oEpWQ/VILqxM=;
-        b=vdnbGPWbSyu+/bAAWlfLU1lGA1yT7iMq7+elsavK2sOTe7EKXiWA2VDLkDn2rTuKap
-         vHb+9W/tig89lm7Czmioj4Px/FZW8yA75j//WFxVpPrp8m0mxyi72sdwPFFQkGcXPsE4
-         DCqxFEKkaPbnqSc7Yxq1+M9M/Waapjys0dX97nHsJRP123lwt+RTewvKOVU/+jPvyE7h
-         mcFvuq9PLykqsZ9//JgoBIwVcvF/huqP1iJE42d84UmDt+Hi9wIWt98LqaBea7rG6BiF
-         2EYhu+AREUOat/GldUg62iU1oOKOTUmywg+28gsYG6qpcBpY4l+INybfUYoT3fBzIkV5
-         a/og==
-X-Forwarded-Encrypted: i=1; AL+hErH0mtQsm+7AeJSG4cfliTbNZ2ubP+B8ZGxBx4R/xxfx2nwRlx+awd8e1Ugv1pP6ZdYkkXtdNFjA8fg=@lists.linux.dev
-X-Gm-Message-State: APuU4Z+HHV9UONO8pVMtGZhJClYGZTo4fP3cEZYaYl51gwUfAbadnmuE
-	f1WlR1GnLcEe/l7lvoyxlxzsnikr/5EJFXf1UclaOR5eafimgnKtKANtWdnKvA==
-X-Gm-Gg: AYBFou2QDW9NPStmFWNYBwivyLinQ6xE6oDaOqgfZFKxc0mYNVMUjq+J+GV2KGr7wj8
-	JmqZA1dTyG3e0RnDTC5FQU9a3yKLE7dHf8mpoBgmKuELX1MIWIp2FkZUsH4/jyvZRJbaWqqM5Gg
-	AC5wYGNUBn8RLaujyh6Hje/Lb9MzymzaX8K6XcxqUVetJxbOuO2xsuRPypygKoCRUCeA8lTKSrG
-	Op6AY+akARAszevHLwTiCVYjA3hhmONmLTdqW3iEszP7EtvjPbFCmvZy6s0/RMRg4dJhhsi79jW
-	eDBrVKBoXhCoKPRzt5anvhxAB/zmFyzakqxmx2RzSxq8b0oVFOgxRrzek4VtPsdQkUBVUxHuXua
-	NNY47IdoMjwt1OH6V4DD56HNdAuSSs2r2vc5QDGKkNYEqnG5101lfIqRoT3r/dUwhd6xlBI1rWv
-	0+HmmY+q2hjZq4emSprgP1UXWn0pWK840CfxrAyt/6j8ZTh3uhFDGn98hAAeIj8NvqgiENog4Qv
-	X+sXgmeUXK24HmTZqE3K1/I6JCkiIbK1mLN9+BWYF8CuIGFhSC2zOGR/0/xXWYJU0w9W6iW3aa1
-	1qzMXbqvRGU3mpl9wBJ62uE1JUZQP4dDX0Z9xqtlRuYUMPdfAebwsgyZaomACEv8UzRaTCJGrc7
-	wAUa/Zi5Q7wtheiCZTYFhYmc2NYnx9Z+3b+o6YtJSpcmL4jDYGepctQssZovzoL6RWgvNa3ipdn
-	da
-X-Received: by 2002:a05:6820:55c9:20b0:717:da:ba24 with SMTP id 006d021491bc7-71ab5183dd5mr1255161eaf.76.1794594304423;
-        Fri, 13 Nov 2026 10:25:04 -0800 (PST)
-Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com. [209.85.210.45])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-862880a52absm3235248a34.6.2026.11.13.10.25.03
-        for <brcm80211@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Nov 2026 10:25:03 -0800 (PST)
-Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-8470d7d430fso528903a34.3
-        for <brcm80211@lists.linux.dev>; Fri, 13 Nov 2026 10:25:03 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AL+hErGGBwZpSlLohbGnJ4dgBfwA//FeX/r02lW89nIDPNr6cvjwIRFfMPcG8oGEgZ43IUEtxQfhcEnwMK8=@lists.linux.dev
-X-Received: by 2002:a05:6830:2695:b0:83f:f24d:fe19 with SMTP id
- 46e09a7af769-8628979e65cmr3203276a34.3.1794594303480; Fri, 13 Nov 2026
- 10:25:03 -0800 (PST)
+        d=1e100.net; s=20260707; t=1794769129; x=1795373929;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=BvKuisBW9st6dv4iYQYmdk7UUIHA5W7Ob6TCeUj4NB4=;
+        b=vFkO2VoP6cJBDbLt7Yxz+iHTwWL+U9MQzq/0IOsL8cWT3F7ylD66gSgq1GMUqMYhW4
+         hwzAvg9HeqOvELgjYuYFhfwEOuYj4oEAFQaMEVmE25SnEsDo+xgZ/FpZ1qetRpJq7nLu
+         RBbyerrByomRSZjOnBi+fseDkf/C0E+l4gORqpqBGMyOj9/9Xk/PaO3lBjcKGIA5uCsr
+         3cYdV692FVyKbTeoxTYRKZVjYoTOt/H3WoweUIsXR4F9+ftQgmPyuwXYeJkzjyaakGAn
+         E/HvBwvZf8M2GKJv2grTs2Qr5JQHmRNJwArL1o/nbdpfqgyDqIBh4G//xQSvyxJ1VZDv
+         lphQ==
+X-Forwarded-Encrypted: i=1; AL+hErEBfBl1w1kLDwrwdmAtq5bCNQLxJFrSQLq1n63m/e7ZlYWpWKtdNEYaWesBeO3K1G4H5oxnHBZIKUg=@lists.linux.dev
+X-Gm-Message-State: APuU4Z9pg++PO0MX2Ma+bnCO0Bl4a46/NljX6RoQvn9+Ze5ikO/758Km
+	8pFyLX7URL7ZhQcDLZnWDCntyHiWLDu/mW0yExBaOQpx4gzLA2mLp7LS
+X-Gm-Gg: AYBFou1FcxXK2HOmzcJCAeQBWyA1xv/yncVKGDJ/8YJ3e+23VSo0eGRbnjaTCOANY5j
+	OtauKjmYfl7PXN+YD1kMdd6y4Z2EfaG6LSKeYIPC7RWsAUx53/hQ5R708Bc4GFI5W44Hl8jSDgy
+	Drs1BpoqUCiXokQBm8aApnZu1hEc6uXEcRu1hB5NwBcjG9LYVr71QBVJdHsfWHNvh6/hYuRZfcq
+	5Kz9HVnMjU6geShZmfNMfqWYCfOZ579eznwfQufc1j0od6X9sdPqAbNjKU62ZNzKxT8ujwyQnlr
+	x0NTUNMRGwKtdGSzNUnoIdHnK9OIhwx2M+odJ4GZljSMyBjBWh1+dpavVprYwb8Sw0EHrSrxlJF
+	0dbVQEcb/D626Zi1cpslNE3KQLORpsV23GBMYmKaaS3BDbt0g0JpKo09cRcyLHHjFNimZt9sEmE
+	mhlFMfKP+9oR9ONnD4w5tAJCUj/1tkPVCr8w2WhTsw31GxrHqEMLmllf4GDoKNef0meH/t6cuYh
+	3syxUUpylr/AF3gGx1K+9Ms4mEvc8SpydTwVxZxKWzZzUM3CU7fBwFUISru5Y61otd1DYm0BvbN
+	foQX3bSbeoux0/AOvKfY4orrmfrt9KieSj7MMXgvdpsGyrnUt+/H8Q==
+X-Received: by 2002:a05:701b:450f:10b0:1b2:41af:c21c with SMTP id a92af1059eb24-1b503157396mr7939805c88.39.1794769129109;
+        Sun, 15 Nov 2026 10:58:49 -0800 (PST)
+Received: from csl-conti-dell7858.ntu.edu.sg ([155.69.195.57])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1b5329ec87bsm82306c88.0.2026.11.15.10.58.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 15 Nov 2026 10:58:48 -0800 (PST)
+From: Maoyi Xie <maoyixie.tju@gmail.com>
+To: Arend van Spriel <arend.vanspriel@broadcom.com>
+Cc: linux-wireless@vger.kernel.org,
+	brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com,
+	linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Subject: [PATCH wireless 0/2] wifi: brcmfmac: fwsignal: bound indices from firmware signals
+Date: Mon, 16 Nov 2026 02:58:41 +0800
+Message-Id: <20261115185843.64633-1-maoyixie.tju@gmail.com>
+X-Mailer: git-send-email 2.34.1
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Post: <mailto:brcm80211@lists.linux.dev>
@@ -83,75 +97,25 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:brcm80211+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261113-6ghz-v1-0-0b9a67e413a9@gmail.com>
-In-Reply-To: <20261113-6ghz-v1-0-0b9a67e413a9@gmail.com>
-From: Neal Gompa <neal@gompa.dev>
-Date: Fri, 13 Nov 2026 13:24:26 -0500
-X-Gmail-Original-Message-ID: <CAEg-Je9XODS=vU-tjZev90Rng6D_B+9vxek96mV8yUpXwoQ7GA@mail.gmail.com>
-X-Gm-Features: AclHuK9fW5jJ3rn5jJzhWh_iZufJsywX71GMdWHbE-bhsHtoOzuaNfj98eY9hCo
-Message-ID: <CAEg-Je9XODS=vU-tjZev90Rng6D_B+9vxek96mV8yUpXwoQ7GA@mail.gmail.com>
-Subject: Re: [PATCH wireless-next 0/4] wifi: brcmfmac: Add support for 6 GHz operation
-To: michael.reeves077@gmail.com
-Cc: Arend van Spriel <arend.vanspriel@broadcom.com>, asahi@lists.linux.dev, 
-	linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev, 
-	brcm80211-dev-list.pdl@broadcom.com, linux-kernel@vger.kernel.org, 
-	Daniel Berlin <dberlin@dberlin.org>, Yureka Lilian <yureka@cyberchaos.dev>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Fri, Nov 13, 2026 at 4:20=E2=80=AFAM Michael Reeves via B4 Relay
-<devnull+michael.reeves077.gmail.com@kernel.org> wrote:
->
-> Hi Arend, all,
->
-> This series adds support for 6 GHz (Wi-Fi 6E) operation to brcmfmac.
->
-> It includes HE capability advertisement, 6 GHz chanspec and band
-> handling and PNO version 3 support. The PNO support is required to avoid
-> channel-number collisions with 2.4/5 GHz during scheduled scans.
->
-> It is adapted from our downstream work in the Asahi kernel by Daniel
-> Berlin, but reworked to make the code cleaner and more maintainable.
->
-> As I don't have a 6 GHz AP to test with, Yureka Lilian tested this
-> series on my behalf, on her Apple Silicon M3 Mac (BCM4388). Connection
-> and use of a 6 GHz network was successful, without regressions on 2.4
-> GHz or 5 GHz operation.
->
-> Thank you for your time,
-> Michael
->
-> Signed-off-by: Michael Reeves <michael.reeves077@gmail.com>
-> ---
-> Daniel Berlin (2):
->       wifi: brcmfmac: Add support for 6 GHz chanspecs
->       wifi: brcmfmac: Add support for the 6 GHz band
->
-> Michael Reeves (2):
->       wifi: brcmfmac: Advertise HE capabilities
->       wifi: brcmfmac: Add support for PNO version 3
->
->  .../broadcom/brcm80211/brcmfmac/cfg80211.c         | 477 +++++++++++++++=
-------
->  .../broadcom/brcm80211/brcmfmac/cfg80211.h         |   2 +
->  .../broadcom/brcm80211/brcmfmac/fwil_types.h       |  68 +++
->  .../net/wireless/broadcom/brcm80211/brcmfmac/p2p.c |   6 +-
->  .../net/wireless/broadcom/brcm80211/brcmfmac/pno.c | 147 ++++++-
->  .../net/wireless/broadcom/brcm80211/brcmfmac/pno.h |  41 +-
->  .../net/wireless/broadcom/brcm80211/brcmutil/d11.c |   7 +-
->  .../broadcom/brcm80211/include/brcmu_d11.h         |   3 +-
->  .../broadcom/brcm80211/include/brcmu_wifi.h        |   1 +
->  9 files changed, 585 insertions(+), 167 deletions(-)
-> ---
-> base-commit: 3c311bf321442d4c4f452a1a08bc9efce242a1f9
-> change-id: 20261113-6ghz-a8d587ab3cce
->
+These patches add bounds checks for indices that the device sends in the
+BCDC firmware signals. Patch 1 covers the AMPDU reorder indices. Patch 2
+covers the interface index of MACDESC_ADD. On USB, brcmfmac parses these
+signals with the default module parameters.
 
-LGTM.
+Both bugs were found with a static analysis tool that we develop. A
+userspace harness that compiles the fwsignal.c functions unchanged
+reproduces them under sanitizers. No hardware was available for testing.
 
-Reviewed-by: Neal Gompa <neal@gompa.dev>
+Maoyi Xie (2):
+  wifi: brcmfmac: fwsignal: bound the AMPDU reorder indices
+  wifi: brcmfmac: fwsignal: bound the MACDESC_ADD interface index
 
+ .../broadcom/brcm80211/brcmfmac/core.h        |  2 ++
+ .../broadcom/brcm80211/brcmfmac/fwsignal.c    | 26 ++++++++++++++++---
+ 2 files changed, 24 insertions(+), 4 deletions(-)
 
---=20
-=E7=9C=9F=E5=AE=9F=E3=81=AF=E3=81=84=E3=81=A4=E3=82=82=E4=B8=80=E3=81=A4=EF=
-=BC=81/ Always, there's only one truth!
+-- 
+2.34.1
+
