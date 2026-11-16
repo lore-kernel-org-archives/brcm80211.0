@@ -1,115 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.97
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.167.51
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794827636;
-	b=LxTMGH9pRXJjTAYeDh+V7Zx/TzazuhDfJGG+Q/Mt6G1LuwP8uXJCLg3bVKvrdyt91NI2
-	 SSE2DKu1zqBCZfeixpiWOKdn3/HMbftFmFfmad4eB9ADDstPakWjHGRNA8rbrutyBNx0Z
-	 CDtZ+/F4qgAZ3VmHRJt86Frmyass1XmiY7ng/RPNIfRuD1CQjdLEBy68+QcHEvcnhTI8Z
-	 aRMb0lDmmiEBY3T6wOC0/EF23OH6hkiLIw8ouyfMzUV3PihxyTn48GHG4r+w9dtwH+yGK
-	 VJV65wF6XTp55Eq+4aaBAjXNsuCj4c+KP/DoNS1Dzm43ltiE40LMRw9Ib+sIkcPBYbw==
+	t=1794833383;
+	b=iTN52PwTFCeSTZpTwIthw9VoY7sry7VNG+2WNdBNeCoWvl69C2/tLP68j/FIUoPS6xm/
+	 qJv4WOwMD1ulvLfEF08RXDYQYLONQYytEqXBiO76JiVdH0/gRz3elgTPknXAhQjV7hfG/
+	 x7GvRMYJHMw9qfCoHogmIO9QampXUInRb/VMZMxhIOycdwpcXth2kWe/5He/HhyCKjYup
+	 U/05CIdyUcWXAlDKzcbWE1C5Z12EkeM9vXtNRpDe5a9ZMKLbx36xlhtIOA/E6ndFrW2/u
+	 QVZ0ktDJ8SIWcZrQM3Gv2zaIN9jZz21nLUFMqHtec2hpnE00JD5oVCYsqh1SqiIC9Ew==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794827636;
-	h=DMARC-Filter:Received:X-Google-DKIM-Signature:X-Forwarded-Encrypted:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:X-Relaying-Domain:
-	 X-CFilter-Loop:Received:DKIM-Signature:X-Forwarded-Encrypted:
-	 X-Received:X-Received:Received:From:To:Cc:Subject:Date:Message-ID:
-	 X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding:X-DetectorID-Processed;
-	bh=gHPvQ0sAZosva0WODHRcSIIzv8Mp2UeBjkPyFqt5BkU=;
-	b=KpE97bO5tSGWFk59n7K55PDPkcPpyqyx/p/Tv8KgbM/c6K9JbC7ZA04SDYstxH0DPJTx
-	 aJX+VTcYqH+BhN6ZeJwv0acML3yIgXz8D1pZIIFEF3bBMp+QCUCOvAeYiMPYLAXSpUvFJ
-	 0Ga4FR5bX7s5DZhPNZ5S5eFo3dyYUnxSzQBOevDQrkTK6z5K3WQBCGvow17jaBMxgRuWz
-	 +TTzex23VG6EUF8zyuZwJWhlu3K/j+gODE3JnBCe7OwjzYe+cpo2FgOModZaaFOoJBLRd
-	 RC7vvWNmR2Kcj/EN+vQY3d/Y52F1qDiQ76NMUdV4oYOpqlvke6ji+PcCY1C/3PTqKWw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794833383;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=iOjXsp94ME04l5ZgdsqMTzmmF3foBeENjQDRF1pMd0E=;
+	b=XpG4zW5xC7Lsd30Sasuq1n51jeUWfi262M3ifxrSBvMUg7/8MVxUmBcE2MkLe0Bn+H8v
+	 Avr4HzsnbWZM6gByeu2hBgi+iJPMzGHZHUP879mdhI4hTp6MJiQZGYZJJ0pPDopJzQWjy
+	 vryeFE7TegZyjoQkSo1FgCc9IiuHbyNVGb/DRL6s4wLmBUjNSg04P6S/j8OELXZtSHJTD
+	 Ay1AFuRgK/9ZHFFpZLZcRuWzx6DphXC8kn4tFS8AY4kYDPCt8ahR1vV07O26lB8FKbr91
+	 lKpXFyVLdnm2zyoCllFanovFjP2RxRUW40if7UAM+DT8onbUMu/ibY0XIf++/3I02sA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=broadcom.com;
-	spf=fail smtp.mailfrom=broadcom.com;
-	dkim=pass header.d=broadcom.com header.i=@broadcom.com header.a=rsa-sha256 header.s=google header.b=NawwuK+A;
-	arc=none smtp.remote-ip=209.85.216.97
-Received: from mail-pj1-f97.google.com (mail-pj1-f97.google.com [209.85.216.97])
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ucrwSoYl;
+	arc=none smtp.remote-ip=209.85.167.51
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36FE5606A8BF
-	for <brcm80211@lists.linux.dev>; Mon, 16 Nov 2026 11:13:56 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 36FE5606A8BF
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A201F606A335
+	for <brcm80211@lists.linux.dev>; Mon, 16 Nov 2026 12:49:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A201F606A335
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.a=rsa-sha256 header.s=google header.b=NawwuK+A
-Received: by mail-pj1-f97.google.com with SMTP id 98e67ed59e1d1-3b0d09df973so3895142a91.0
-        for <brcm80211@lists.linux.dev>; Mon, 16 Nov 2026 03:13:56 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794827635; x=1795432435;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:dkim-signature:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=gHPvQ0sAZosva0WODHRcSIIzv8Mp2UeBjkPyFqt5BkU=;
-        b=NiLRa6AqVq960v4ITnMXeyzwpYcJmNL4YPgQM3iYltg60B/CMyr8hH2ymgAe/9uxMy
-         rD3fJqkn6aOczGO554+Q3XiiKxyve9AqeQ3DWVRukCquW8rTyun8YhtyPKHDlIf7CpNy
-         WP04+g4apWBlO1Hw/iBrEmzkRYRdswP5cPXKVnkl7o2GAulmRDawaq7uJwWh+CrORiJd
-         BKlGFNiTp55e0Np1Ndz0X3+1TU8wpPTQwNyLtZvHBiLuYF1IftSksQ+RBc/zpRCztIaw
-         L9BzsT/pQIyG127pe0BALTNPd6N39T1F9FT4S3n7bObhxscJxY+Ss1BxXofqyqXhsC8V
-         tg6Q==
-X-Forwarded-Encrypted: i=1; AL+hErEwZU3p4sPC6qyOik7oRhkmdyXHj9JoMEF916J4WCGCWsw2fKHXiRWmmrNM9vcLcUzeaf032rGxqgI=@lists.linux.dev
-X-Gm-Message-State: APuU4Z+siH8R/Pm3cr35mmrRKz7huiezKlneWEIja+m0kx9lcwvLG4Bj
-	fDBqKAfT9QoAgO/mf3D3PuUqb06aCv2dpGrePRoHAVsTTW1MB1BT2E0GmsxzXGebg3s9ERP8zQ+
-	YJtnin7+ZOl5bC2is3YrL4znPHnmZgPGoRmYijRFMzDzrjYoY+A/H0KTZJm5262qLZFgGxnGCzI
-	D3218zsUPpH0N7Us1nmLaGhzlYLDzwQ7WYtMbxldxPo9wvh+thQg3FSm8DM78S+DsKprW7W2eCj
-	sHr1OS7Tj3kDF2h77USNw==
-X-Gm-Gg: AZFdTZcT9jMyljLGnIuTLfV1iPCupARO9ASdghkYqXGDFOEj4OzAir0uaqLkWDQvvZX
-	dApcH/KkoSKkwc5g1mloJ4Ytsfkg+loiS3pJkO3Fge1ksU6eZYZ/i3FDR/7nTRoKngk8Qxa2xJw
-	15zQxzNKyadplp2YBgP1JkzgnwqHF262YSgTKynbZtSAlwptiVimlGm/RdrT3Xwg4RqpJo+OUCc
-	+LZ2tLX4XOAM6JxSsqJeexSUX+O4jo5C3HyqPhQ5/h4ggDYZkOzIR7nfFpYoRPcSQCjbMq2qZDN
-	yfjPwJZPW00PDkHEEpax5YYxWKg/3vfuujZAm/qjAAnv/ID5i6T1YqBj7f0Rv9zscHvW//DG1fm
-	qPd/EkZ0Q5zz4f7aTLN+zDkvdvoigr054VLlyHkJTFlfm+mZk1bz71FHyF+GlOcTKYFj/PZLKGN
-	10zmaPhWFCOkSlZh9uzM5pkmbl5rZoyS6uDUE2hOPKHA==
-X-Received: by 2002:a05:6102:3eca:b0:7c3:6466:3155 with SMTP id ada2fe7eead31-7d64d8da06cmr2596426137.33.1794827324719;
-        Mon, 16 Nov 2026 03:08:44 -0800 (PST)
-Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-123.dlp.protect.broadcom.com. [144.49.247.123])
-        by smtp-relay.gmail.com with ESMTPS id a1e0cc1a2514c-99c8d31ffedsm861279241.15.2026.11.16.03.08.44
-        for <brcm80211@lists.linux.dev>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 16 Nov 2026 03:08:44 -0800 (PST)
-X-Relaying-Domain: broadcom.com
-X-CFilter-Loop: Reflected
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-9495dd0f07eso562097585a.0
-        for <brcm80211@lists.linux.dev>; Mon, 16 Nov 2026 03:08:44 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ucrwSoYl
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-5be3ed646a5so4819896e87.1
+        for <brcm80211@lists.linux.dev>; Mon, 16 Nov 2026 04:49:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1794827324; x=1795432124; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20260707; t=1794833381; x=1795438181; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=iOjXsp94ME04l5ZgdsqMTzmmF3foBeENjQDRF1pMd0E=;
+        b=ucrwSoYlfaY7rwpBlA4UKGni0Fq+29PpOnOmEyJuFSSJ5QbZzH3MM/diV22VkLm7hQ
+         oCHzSig7J6HKnA0ANsyq3UpPCWMjUkOtrT9wopWLsSECtZZBDXVCx+4DLkzEofl34nUA
+         6uiB/yfsbthRmVykmQCcgFoqL4iPSUUJXht443nTvleXMXaarrexeYG+5hnNJzgwIdNS
+         u7BiGngel/gfxuFvw0s4AtkBU0J37ZJ04Vdx+Zf4a+CotWm2MU/JxZQmDuWQ1nugCrb9
+         0MoiMIH6An6vi4wwQx/Ba6uJM038Mbv9RuTCo7oeUCpBc77AMon2CjMZkToFxcJZAbr9
+         3E9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794833381; x=1795438181;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=gHPvQ0sAZosva0WODHRcSIIzv8Mp2UeBjkPyFqt5BkU=;
-        b=NawwuK+ABJpW4Xlf1v2QC+vonrcfMuRJWMUuE87T9OhZ9NYBdlTdAjC3dDMX5Jig0r
-         J4g1eINlzokWxYJ9mzr0KHpjrKDD2a+RFBml+9lzbFHEJ0lnX8ZKN9rHr79R1wximfWy
-         Ikca6PLVFywSbMw8AgnlnE9FXJqNOwpEQgFwQ=
-X-Forwarded-Encrypted: i=1; AL+hErEvgXcPxMA8qdmgKKmvI9rfvxx31+4X+jhNwPV+do4IfVS1i3rGP2F+7e2WnAYuwQOs7nwOs25b85M=@lists.linux.dev
-X-Received: by 2002:a05:620a:439b:b0:93f:35a7:cd4 with SMTP id af79cd13be357-9494bc708femr1401765085a.67.1794827323983;
-        Mon, 16 Nov 2026 03:08:43 -0800 (PST)
-X-Received: by 2002:a05:620a:439b:b0:93f:35a7:cd4 with SMTP id af79cd13be357-9494bc708femr1401761285a.67.1794827323573;
-        Mon, 16 Nov 2026 03:08:43 -0800 (PST)
-Received: from bld-bun-02.bun.broadcom.net ([192.19.176.227])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-9494c835b45sm825384985a.16.2026.11.16.03.08.41
+        bh=iOjXsp94ME04l5ZgdsqMTzmmF3foBeENjQDRF1pMd0E=;
+        b=EO3JFRKDba+YEMfF2KsK8d2LEgSeObITHGmdRKQlPQYrNm3N9KHwyroysFI3mJrcLn
+         FYT6Q9DQROSlnC2SrugaSa9mQyZpUpw/TU/Qo4ZIDIkd/ltKuFjnr4UxIV7FR0/oiZWD
+         fJ0K61q6a85jH+z8KIlhqfhg/kbzpxVj7UXFx5x+09hfZlk/7zSQaBi5ne4f/sm+IJKd
+         D2ZDGOpkh43+h6Mr1OaR4dm7YQhkTvy/JgMIOeKXPsSfoj6/CLrLJMUkeoW5VvRrJADV
+         kzNwLeY4e2LXbhEdyOrj8lat/vJZ4VECl1gAJflXAgHOextk/giWOfRKMRwpGg0HuBaN
+         KeIQ==
+X-Forwarded-Encrypted: i=1; AL+hErGZ6wiiWhwHx5wm9xebQj9G+sWq1pyLuVU9eJVTOpLYKDoY3J1bpnxDmBo6eb1YQfuALG/MJCt1sjA=@lists.linux.dev
+X-Gm-Message-State: APuU4Z8ZMh/POW6wiZDc6pop/8izKmXZMOWuDJCNsv1FuJpWEasSkkkR
+	nNvJpgPipKFAKfp6xgMQgEYiqrNExCoANbB/aGOyMjCl4WpAI0y4ge/G
+X-Gm-Gg: AYBFou3iJRCIaUuf71jVgHQ7y02rTAxf4mjHHbb0EW1U06NICqaGD6b/8bqOoyGwte+
+	CXgcEpId566B+EPyaGn+bW5qBRRxDDFvzqUoPB5xMLzU7C84HG7kJGTvLy7EIH0ItNJDl2pAicg
+	yEWb2hU/mX5p2w/S7Dg2gIHhi9z4KUsv+2Oyu9+q5PXizuUnuKPyYvxDKtG3tpA2QEfzL7GzFTU
+	8qm01he8btBiVIfWHXmOIZ3rC1+ZIhn+hGCtohqeHGdOruXjzBc1TMej7rkvzvQardi6g+xqK5D
+	0Q54BYdGBJQNOC7eb3IYBSvlJ6S+Z1SMuBFEJATC8Zme7slLgzMnswFBNkzn1d7ecobgAebWl4v
+	zxWsc1IBCXNW5d7Z75lvMPGJEPQHwp896ok506vIpr0gQHuim1TvkUECgEv/WuFPCnvvgUJk/Lh
+	rI7X0T4TQS5H4yvVRdGQ+EeiBehxq+Ly2ERN/fPjc64zVetl47EqduJKytSqkhk+Ufm6+3JYsS5
+	jmcK/dHTfbKe9TbKijSZuk3HXNPWPdfJOGxmdsJTwiYMjQ54YGfM9pAr/qV5Rw/cEWN7VtAXsit
+	ndgp3WW+pHvg8/O0SUhFLW23GlkYWtki5z/kc0PqmQ==
+X-Received: by 2002:a05:6512:b91:b0:5c1:595f:2a6e with SMTP id 2adb3069b0e04-5c1709c9e08mr3973809e87.30.1794833380394;
+        Mon, 16 Nov 2026 04:49:40 -0800 (PST)
+Received: from kordpc.lan ([2a13:e746:396c:c600::8f9])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5c17135658csm3197739e87.69.2026.11.16.04.49.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Nov 2026 03:08:43 -0800 (PST)
-From: Arend van Spriel <arend.vanspriel@broadcom.com>
-To: Andre Eikmeyer <dev@deq.rocks>
-Cc: arend.vanspriel@broadcom.com,
-	linux-wireless@vger.kernel.org,
+        Mon, 16 Nov 2026 04:49:39 -0800 (PST)
+From: Kordian Chmielewski <kudzo51@gmail.com>
+To: linux-wireless@vger.kernel.org
+Cc: Arend van Spriel <arend.vanspriel@broadcom.com>,
 	brcm80211@lists.linux.dev,
 	brcm80211-dev-list.pdl@broadcom.com,
-	linux-kernel@vger.kernel.org,
-	sebastian.reichel@collabora.com,
-	Lukas Klizas <lukas@klizas.lt>,
-	Yossef Osman <Yossef.Osman@proton.me>,
-	Aditya Garg <aditya.garg@linux.dev>
-Subject: Re: [PATCH] wifi: brcmfmac: reload the firmware after a missing D3 ACK
-Date: Mon, 16 Nov 2026 12:08:39 +0100
-Message-ID: <20261116110839.4481-1-arend.vanspriel@broadcom.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20261104151616.70623-1-dev@deq.rocks>
-References: <20261104151616.70623-1-dev@deq.rocks>
+	linux-kernel@vger.kernel.org
+Subject: [PATCH wireless-next v2] wifi: brcmfmac: delete the flowrings of an AP that stops or goes down
+Date: Mon, 16 Nov 2026 13:49:35 +0100
+Message-ID: <20261116124935.685189-1-kudzo51@gmail.com>
+X-Mailer: git-send-email 2.56.1
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Post: <mailto:brcm80211@lists.linux.dev>
@@ -120,52 +97,148 @@ List-Owner: <mailto:brcm80211+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
 
-On Wed, 4 Nov 2026 16:16:16 +0100, Andre Eikmeyer <dev@deq.rocks> wrote:
-> Since commit 6f88e6ebdc1a ("wifi: brcmfmac: Improve D3 substate entering
-> timeout handling") system suspend goes on after a missing D3 ACK when
-> WoWL is off. On resume brcmf_pcie_pm_leave_D3() still takes the hot
-> resume path when the INTMASK register reads back nonzero. Firmware that
-> did not answer D3_INFORM can do that and stays dead afterwards.
->
-> [...]
->
-> Record the missing ACK and force the remove and re-probe path on the
-> next resume so the firmware is loaded again.
->
-> brcmf_msgbuf_delete_flowring() waits for outstanding tx status before
-> it checks the bus state. Check the bus first and stop waiting when it
-> goes down, since the firmware does not report tx status then.
->
-> Fixes: 6f88e6ebdc1a ("wifi: brcmfmac: Improve D3 substate entering timeout handling")
-> ---
->  .../broadcom/brcm80211/brcmfmac/msgbuf.c      | 22 ++++++++++++-------
->  .../broadcom/brcm80211/brcmfmac/pcie.c        | 16 ++++++++++++++
->  2 files changed, 30 insertions(+), 8 deletions(-)
+An access point has a flowring for each station and access category,
+and one for its broadcast and multicast frames. The rings of a station
+are deleted when it leaves, by brcmf_proto_delete_peer() with its
+address. Stopping the AP deletes none of them, and neither does a
+link-down event: delete_peer then gets the address of the event, which
+names no station; on a BCM43684 it is the BSSID of the AP. When the
+interface is started again as an AP, it keeps the old broadcast ring.
 
-Thanks for the patch. The resume problem is addressed by Andre Eikmeyer's
-series "wifi: brcmfmac: pcie: S3 and deep sleep on the T2 Mac chips" [1]:
+Seen with a BCM43684 whose AP was stopped and started again at boot:
+the firmware no longer read the broadcast ring in use when the first
+start ended. The broadcasts of that BSS, ARP included, stayed in the
+ring, and once it was full flow control stopped the interface for all
+of its stations, until the ring was deleted hours later by a change of
+the interface type; the firmware then served new rings normally. The
+vendor driver deletes all the rings of an interface on a link-down
+event.
 
-- Patch 3/5 ("probe again after a resume through firmware") sends
-  brcmf_pcie_pm_leave_D3() straight to the remove and re-probe path when
-  the platform firmware handled the resume and WoWL is off, before the
-  INTMASK check that lets a dead firmware take the hot resume path.
-- Patch 4/5 ("send the flowring delete without waiting for tx status")
-  removes the tx status wait in brcmf_msgbuf_delete_flowring() that stalls
-  the flowring teardown when the firmware is gone.
+Do the same, and delete them in brcmf_cfg80211_stop_ap() after
+BRCMF_C_DOWN: brcmf_flowring_delete_peer() without a peer now deletes
+every ring of the interface.
 
-Your patch forces the re-probe on any missed D3 ACK for every PCIe chip,
-which also hits firmware that never ACKs D3_INFORM when idle, such as
-BCM43752 behind 6f88e6ebdc1a, and logs an error for an expected case. Note
-that the msgbuf.c change is a separate change from the D3 ACK handling as
-well.
+Fixes: 9a1bb60250d2 ("brcmfmac: Adding msgbuf protocol.")
+Signed-off-by: Kordian Chmielewski <kudzo51@gmail.com>
+---
 
-Please test with that series applied. If a case remains where a missed D3
-ACK leaves the firmware dead, send a patch on top of it, limited to the
-affected chips, with a description of the failure.
+Notes:
+    v2:
+    - the call in brcmf_cfg80211_stop_ap() now comes after BRCMF_C_DOWN,
+      in both branches (Arend): before it, a broadcast could open a new
+      ring between the delete and BRCMF_C_DOWN
+    - commit message: rings per station and access category, what the
+      address of the link-down event names, and the restart at boot
+      without a guess at its cause
+    v1: https://lore.kernel.org/all/20261110231145.206744-1-kudzo51@gmail.com/
+    
+    Arend, you suggested this or dropping the call and relying on the
+    link-down event. I kept the call so that the stop does not depend on
+    the event: on my BCM43684 it comes with reason 4 (BSS disabled),
+    possibly from the empty SET_SSID rather than from BRCMF_C_DOWN, and
+    the mbss branch sends only BRCMF_C_DOWN.
+    
+    The mainline driver does not run my BCM43684 (it needs the BCA host
+    interface, about 60 patches that are not upstream), so this patch is
+    compile-tested only. In my tree, with the variants behind module
+    parameters, I stopped and started a BCM43684 access point 45 times
+    with hostapd_cli disable and enable while 500 or 2000 broadcasts a
+    second went to it:
+    - without the patch the broadcast ring outlived the stop (7 of 7), and
+      after the first restart in each of the 3 runs without the patch the
+      firmware did not read it again: the ring stayed full and its read
+      pointer did not move
+    - stopping the AP brought a link-down event (reason 4, BSS disabled)
+      at every stop, before the carrier went off; its address was the
+      BSSID at each of the 25 stops where I logged it
+    - with the call before BRCMF_C_DOWN, as in v1, a broadcast asked for a
+      new ring before BRCMF_C_DOWN at 2 of 5 stops; in one of them the
+      ring opened, and only the link-down event deleted it
+    - after BRCMF_C_DOWN no ring opened: the firmware refused all 29 it
+      answered in that time
+    - with the call after BRCMF_C_DOWN no ring was left (17 stops), also
+      with the link-down handling turned off, and the firmware read the
+      new broadcast ring after each of the 10 starts where I checked
+    - my tree has a lock around the ring table and mainline has none;
+      there brcmf_msgbuf_delete_flowring() marks the ring RING_CLOSING
+      before it waits, so the second caller normally skips it, but the
+      check and the mark are not atomic and the table is read without a
+      lock, as for any delete_peer call today
+    - the mbss branch and a P2P GO were not tested: my tree takes down an
+      extra BSS with the "bss" iovar
+    - the vendor driver also opens no new ring while the link of the
+      interface is down; this patch does not, and in my test the firmware
+      refused such rings itself
+    - under that load the delete of the broadcast ring timed out waiting
+      for tx status 20 times out of 35; in mainline that leaves the tx
+      status counter of the ring wrong, which "msgbuf: count tx status
+      only for the current flowring" fixes:
+      https://lore.kernel.org/all/20261112175754.396469-1-kudzo51@gmail.com/
 
-[1] https://patchwork.kernel.org/project/linux-wireless/list/?series=1208304
+ .../broadcom/brcm80211/brcmfmac/cfg80211.c        | 15 ++++++++++++++-
+ .../broadcom/brcm80211/brcmfmac/flowring.c        |  5 +++--
+ 2 files changed, 17 insertions(+), 3 deletions(-)
 
-Regards,
-Arend
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+index b0eaf9641..d5b0a0770 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -5492,6 +5492,8 @@ static int brcmf_cfg80211_stop_ap(struct wiphy *wiphy, struct net_device *ndev,
+ 
+ 		if (ifp->vif->mbss) {
+ 			err = brcmf_fil_cmd_int_set(ifp, BRCMF_C_DOWN, 1);
++			/* the BSS goes away, and so do all of its rings */
++			brcmf_proto_delete_peer(ifp->drvr, ifp->ifidx, NULL);
+ 			return err;
+ 		}
+ 
+@@ -5507,6 +5509,10 @@ static int brcmf_cfg80211_stop_ap(struct wiphy *wiphy, struct net_device *ndev,
+ 		err = brcmf_fil_cmd_int_set(ifp, BRCMF_C_DOWN, 1);
+ 		if (err < 0)
+ 			bphy_err(drvr, "BRCMF_C_DOWN error %d\n", err);
++		/* the BSS goes away, and so do all of its rings: no station
++		 * deletes the one for broadcast and multicast frames
++		 */
++		brcmf_proto_delete_peer(ifp->drvr, ifp->ifidx, NULL);
+ 		err = brcmf_fil_cmd_int_set(ifp, BRCMF_C_SET_AP, 0);
+ 		if (err < 0)
+ 			bphy_err(drvr, "setting AP mode failed %d\n", err);
+@@ -6750,7 +6756,14 @@ brcmf_notify_connect_status(struct brcmf_if *ifp,
+ 	    (e->event_code == BRCMF_E_DEAUTH_IND) ||
+ 	    (e->event_code == BRCMF_E_DISASSOC_IND) ||
+ 	    ((e->event_code == BRCMF_E_LINK) && (!e->flags))) {
+-		brcmf_proto_delete_peer(ifp->drvr, ifp->ifidx, (u8 *)e->addr);
++		/* the address of a link event of an AP names no station:
++		 * the BSS is down, and so are all of its rings
++		 */
++		if (e->event_code == BRCMF_E_LINK && brcmf_is_apmode(ifp->vif))
++			brcmf_proto_delete_peer(ifp->drvr, ifp->ifidx, NULL);
++		else
++			brcmf_proto_delete_peer(ifp->drvr, ifp->ifidx,
++						(u8 *)e->addr);
+ 	}
+ 
+ 	if (brcmf_is_apmode(ifp->vif)) {
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/flowring.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/flowring.c
+index 35cbcea0a..b9570d638 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/flowring.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/flowring.c
+@@ -432,9 +432,10 @@ void brcmf_flowring_delete_peer(struct brcmf_flowring *flow, int ifidx,
+ 	u16 flowid;
+ 	bool sta;
+ 
+-	sta = (flow->addr_mode[ifidx] == ADDR_INDIRECT);
++	/* without a peer: every ring of the interface */
++	sta = (flow->addr_mode[ifidx] == ADDR_INDIRECT) || !peer;
+ 
+-	search = flow->tdls_entry;
++	search = peer ? flow->tdls_entry : NULL;
+ 	prev = NULL;
+ 	while (search) {
+ 		if (memcmp(search->mac, peer, ETH_ALEN) == 0) {
+
+base-commit: 5dbf2415ca9821a611d09308e3b29d2c37e7cd77
+-- 
+2.56.1
+
