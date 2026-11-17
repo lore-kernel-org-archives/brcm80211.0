@@ -1,111 +1,115 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.97
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.100
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794919932;
-	b=Wuh/U9/7MQILrCBYKgiMfXyLozZIxu5d7FX5J2YwV0xBHw7c7hyu1fueSg1Q40OxXqgn
-	 B0Yp3za/ckEmsegFdeiyHHag1Dbt4X7yoBdiEVZaYhGmpZP6QJV7mnE9DsvTd1DGAjvkA
-	 UiE1cpAiECV8ayJjUgGFdOL5Y8BhP8bwqdE0DIY0LHYEE6OfZRR45uCcYG4DaZYF+XoUL
-	 uW8LaBeEwu/jiNkosv5IbZAySdo+oHmS1zR/lBQcreIDj4lU3gYUzLKamNjht+KmcZXnn
-	 gTVT8KAa8aoD3UBzFzkIdpqQX/ddhlowe4+4yquBSn7aFdbDg45pt4YnKZB6WVHvM8Q==
+	t=1794922320;
+	b=quQ+jkD3lv/5Fz6lPhqK6Q4qOa43Y7VP7cU6X9kZ41+aR23f/SzhD67Yep15LPA5pANi
+	 2K/EavqwRi19dsncjgQzbQPGekUgOoL4dOLAj0LBV+K3SXmIiv38qJMZqQ9RIfydZRUYP
+	 INw+pGRFnoBxtizNLTnDRXB/55sCtwwB8O7AByQFSHVccCXVkbuqlcgHBUiVSdQ0HxATX
+	 u3pqGkPZtopoG5zHqaek5NLaOcvwrGwqjLtvmezgn1k/kFDPs/q6j+ZncH5r0HM6W1oqb
+	 WepzLtZ0YszxW+Ac4xE9S97FQKOMw/kkhmgOhzG/0yA7BRSNTX0rrUSoGx+oObcMKcw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794919932;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794922320;
 	h=DMARC-Filter:Received:X-Google-DKIM-Signature:X-Forwarded-Encrypted:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:X-Relaying-Domain:
 	 X-CFilter-Loop:Received:DKIM-Signature:X-Forwarded-Encrypted:
 	 X-Received:X-Received:Received:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding:X-DetectorID-Processed;
-	bh=qF5pRgK1fLCyx67ZJUqqMabNrPbzcG9t+q8YanBUEjo=;
-	b=tQIDqbWkTTojKtPMbBpOKNobCIqYwCFVweJzb8O66GRMGYTusxlKj6XJ63jXS4p4T+LL
-	 hMWNahDn3pDE9s6dD1igC8n+UjAc3AEFM4O0pxqstCkesNfw/OsPIn8ndS+7wIOmQlaVQ
-	 NY0z26PhaKrgT3HFC92JK8reAGnChk0oGE4Xrs09HJblJ/rnVGjFyNA8VlzaOy1lJpNue
-	 smVSn+Xu+RLGBMcHla5sXYnVBQ9iZq84X9P34Tz4U9N4YErQrvzakwRDnto2IZUjVxrD9
-	 uuJJF88j5IwnJ0LZz0S0xofM5hHYjIvdIQnE4KbEGdkZPfMu8MKmUo5u3qlr5/4Si8Q==
+	bh=ZD6TBLmK/IIZSnjK7MAJYBAkHQUcSU3Vb9rupdsZ2as=;
+	b=MT4W7xuZ47SBzAoBYravR/Ur4CWNkVRCjU4CtBLLLTxSVF8AG7AfwtW3b+6GhqgHcdKl
+	 k1uLwlhG6FbVaH4vAivGwtzuDJfQH7DnUXrrcHsjk2Nt32uGjIcbT3Kni1Qu4ApgCMim7
+	 7R0GNvfq5UGJvGjy6P3YARFpZcxe1xcqNmvadtRxWF9eetO0oJJBgu+ysLvU2n5z3lxUD
+	 pXzF/TF+KM1CCle9XgONUrBLbg8gImIxNBR0wAw7T6/e/8kCkLc6vcAnoPRXs/VGO0Nwc
+	 NB+lR/h6dW/VRGP10A0AVXLp4T1HwMJcLsxiPtlCBKX1GGQGS0Xi84EAtPrPCbzAj6g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=broadcom.com;
 	spf=fail smtp.mailfrom=broadcom.com;
-	dkim=pass header.d=broadcom.com header.i=@broadcom.com header.a=rsa-sha256 header.s=google header.b=WEbfRL9S;
-	arc=none smtp.remote-ip=209.85.216.97
-Received: from mail-pj1-f97.google.com (mail-pj1-f97.google.com [209.85.216.97])
+	dkim=pass header.d=broadcom.com header.i=@broadcom.com header.a=rsa-sha256 header.s=google header.b=cVUBuHok;
+	arc=none smtp.remote-ip=209.85.216.100
+Received: from mail-pj1-f100.google.com (mail-pj1-f100.google.com [209.85.216.100])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09B88606A33E
-	for <brcm80211@lists.linux.dev>; Tue, 17 Nov 2026 12:52:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 09B88606A33E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87F41606A31C
+	for <brcm80211@lists.linux.dev>; Tue, 17 Nov 2026 13:31:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 87F41606A31C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.a=rsa-sha256 header.s=google header.b=WEbfRL9S
-Received: by mail-pj1-f97.google.com with SMTP id 98e67ed59e1d1-3b0ae87069dso2600322a91.2
-        for <brcm80211@lists.linux.dev>; Tue, 17 Nov 2026 04:52:11 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.a=rsa-sha256 header.s=google header.b=cVUBuHok
+Received: by mail-pj1-f100.google.com with SMTP id 98e67ed59e1d1-3ae6b4c669fso638281a91.0
+        for <brcm80211@lists.linux.dev>; Tue, 17 Nov 2026 05:31:59 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794919931; x=1795524731;
+        d=1e100.net; s=20260707; t=1794922319; x=1795527119;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:dkim-signature:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=qF5pRgK1fLCyx67ZJUqqMabNrPbzcG9t+q8YanBUEjo=;
-        b=wiDjYsQhW9+I26d8hUcBAlSxaPeGOQ+egX3C/eQgMdxVVRSQVERW1zu4k08cQQraRL
-         YtIh2N9dDbznd2g8Y5g1v0/5r483GiMggAAEw8dEqZu60qdcqk8aAefLEttDWRmCjDiS
-         5wm+mfD32ozjP5vGUokAmwzgC5gr+Aa+2wltjU+2qr4eZVwauGqoZPYSwv4GhBf6Jl0+
-         SGuffYAHSa2wFT3iwMrVyEKrsDNxe6AYNNEZ1pQXyHp0Rig/JlNLvvaeXgMQDI1XRY61
-         aHzOur6M1+TjERl4tjkobwifCV8KJ7jnJx+ClDn2VtCC/VMod1bSuwC8+5jNUv0b3ymA
-         Afew==
-X-Forwarded-Encrypted: i=1; AL+hErHUOr46NioMVL99tUUjcH0ijo+g70kP6zpgYA59e1LTjJCShpdjiyw+lJBpUINaE3xgrF6soel9qaM=@lists.linux.dev
-X-Gm-Message-State: APuU4Z+J03ryitqh7TgiieRRch6/uPd4nOrIcqZmxS9SfAZ7BZXMUBJt
-	hHwdg3OG1MSYyfIwFZAPNwdGgKQZ4ts4UZJFdPRMfc6bIa3PdVY/QJ0VDjLHGdrvTAQxfaXjbOq
-	T7zBeyCXN7XjkFKyZrS84qLQkpOqE15Gk8C9V7boi0ny8hwUOiJLojMU+UM4A+akyH+6um4eKob
-	IkhkKUg0QysEe3l3AfGg0Aii1yyIBmNsWF3kxsuCmYJ0VgO1rQnpQG6jazFKOj9z6p3/+Q5IO6C
-	A7/CpyLrVjuvaMyFTjqVw==
-X-Gm-Gg: AZFdTZfgVSMp62Vizxe2vqL0lbYtB6DT3k+t/G93ATs+8r3VakQbx91bldiEikzQIQ9
-	9sCRW5hAHCAOt2B93G8D7yaMNy64tFU0nHPU4hqlCFPH/cQlBYVC70Z5VDPuVBvO5r0iSsGsweS
-	czUMiD6pc3hCTx2jTUiYQ5sCC072KvyHFdwRULrzwAkbjy54l8vt0xkGXZuL9/uHfem4X4Bd35u
-	4/iJjrDXu4+wvfpeT+gxRhu+HkBmph23Q6cScucdPt+/QYGj6YyHyYb6pdNYi/oxZUcJBFdjU5z
-	GdCnyfBctAojpzak9MZXqsiUaXTegPlHtt8G7MfeDGVi5wl88RVFU0/1ZyCB2zLmKWVE2IOIa/a
-	LbWmFLZDfeuaGR9RABtiI+6xCQFtlCZem/FPBl7qHNBzKsCZxpuIPC6OJQ7pVIFekyHqT116wtb
-	K2uTBuiY4dqPq99SEQSM3oumgF0ce9fjlHrhjwod0=
-X-Received: by 2002:a17:90b:1b06:b0:3ab:36c4:b4ff with SMTP id 98e67ed59e1d1-3b1b0a0d922mr13626922a91.24.1794919931281;
-        Tue, 17 Nov 2026 04:52:11 -0800 (PST)
-Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-28.dlp.protect.broadcom.com. [144.49.247.28])
-        by smtp-relay.gmail.com with ESMTPS id 98e67ed59e1d1-3b3c92ee62csm115341a91.8.2026.11.17.04.52.10
+        bh=ZD6TBLmK/IIZSnjK7MAJYBAkHQUcSU3Vb9rupdsZ2as=;
+        b=jJbDxc8ZikVK7AUiZoKonqyAnwggh09p/U/H2CP0oiJuciPkxH4nWLC5KlYAkCjBo1
+         4OVF62hmjar9z2zBk2M9X9scrhGZq5DjvTcfVnUBf37dGydNkoQ3BUluSireXlAkncqz
+         RZ9Ll4aUi02c2+eYKV8Gn327WyFK29gHFL64KEkenuv6/xfjyqoJxV4xD8mhNM41zfe2
+         wVhE9JxXexc2IzSYEonVdkdKBcBvyrTkk/nPjPL0nGlXFYLKS5SL8tP1ouhCQNk6oQvr
+         eP4FgZL0r/Ijq8E6V+v4kw2BoUapR9zW/HfO6YrXdnAc43wNcHQrGrOs0rh0LH9O8nrF
+         2cVw==
+X-Forwarded-Encrypted: i=1; AL+hErHdZCb86d74o4Vpsg5n9O5pTZ/rRdeR9PMI9TmMVZZGoNfduHjJhlJpa9YT1esc0HpPQ3dGGduVI1c=@lists.linux.dev
+X-Gm-Message-State: APuU4Z/gXO1x/uacZ6DbH9wnOQvYWbqqVXm6w9Y+W32MXypzWj883OaK
+	FtHcAGolLKkILSzpkDX6gVtTElv9QLyN5Jb9TMumKKyhmYhnXpfk9GfaWbq+aGUD1mXXc5Yj75p
+	0Wb62rqg0KmL3980kszZ0ZQZ3RfGEVrnhSh4+NygdtJBaXxtzPk36JaketNYQ71NZ3Y+is77hIk
+	UmSdvr+Nqsr9uAuWv0ByWJO+B48LWA4AcwwKwECXlpbBhJlRShFDeW4G/qWMOVhRhFHeW6eGomD
+	wUd7/zK7rxH3+vzjvpeuQ==
+X-Gm-Gg: AZFdTZfoycWyVTOj71HtmeOn1jwEBMlQbVH2r/zrT/DieB5pqKVFJ9YDeADn1ikHjFh
+	20MTNbFp4LsDuATsXk2MFKyLqXh0kb/yIZpeL1YpcKHLEofwmGmUXVJcbdmZjmZyUkDffjl0QGk
+	Bu9eIEJroSZakI6AjXy9VBdlLWZK5XtjTQ9O+O+H5HXGIXYxGDfPdNjfb9NzQalhX+d4t++C94z
+	0ybdQXFYVmZVhCIhOPMKMLddsR2qZ7RX0SQZdnc0iBbOQcB7kYRCtkoRHUzyx9+KBNU4h+/HOk/
+	hyVEj4krJoIy2meeisF7BVWo/PqY2nvRTB5N1YB/EiOPyJoQTinz3hF+gcIO5h5oh/x1k/97DGX
+	GAgJ0Bntv8pkT31b8R/9TytTESryaZ6hWTG2jec3Oqelc6d8t/yJtLgHR0Ty5HliwCCDrJDrXdC
+	558jXGZx+pyL8T/0iNJaKA6YTbvqu1k/Ej3RP0LAEoXQ==
+X-Received: by 2002:a17:90b:4c4e:b0:3b3:a763:555a with SMTP id 98e67ed59e1d1-3b3ac26d0famr2110978a91.36.1794922318626;
+        Tue, 17 Nov 2026 05:31:58 -0800 (PST)
+Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-123.dlp.protect.broadcom.com. [144.49.247.123])
+        by smtp-relay.gmail.com with ESMTPS id 41be03b00d2f7-cddc160bc5csm227099a12.2.2026.11.17.05.31.57
         for <brcm80211@lists.linux.dev>
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 17 Nov 2026 04:52:11 -0800 (PST)
+        Tue, 17 Nov 2026 05:31:58 -0800 (PST)
 X-Relaying-Domain: broadcom.com
 X-CFilter-Loop: Reflected
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-945b0154705so357791485a.3
-        for <brcm80211@lists.linux.dev>; Tue, 17 Nov 2026 04:52:10 -0800 (PST)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-94961ed97d6so179560185a.1
+        for <brcm80211@lists.linux.dev>; Tue, 17 Nov 2026 05:31:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1794919928; x=1795524728; darn=lists.linux.dev;
+        d=broadcom.com; s=google; t=1794922317; x=1795527117; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=qF5pRgK1fLCyx67ZJUqqMabNrPbzcG9t+q8YanBUEjo=;
-        b=WEbfRL9SXqLuxt1jFtLNN8kblJvO9YR7vNlfFUQZUOKoG8sCL4KSlRvxza/1sRou2U
-         NC/xh4mQOW4E9vBaExdIlu+LUpR9J88ykYWo6cvcSrrKDN9nx69P79fSpPswWliPRYqE
-         tk+yZlld4OykV2w7wHR4JURnMU+wC3/I46CdY=
-X-Forwarded-Encrypted: i=1; AL+hErGiORAjThlPYbVWmj7/G+tp4R4xHfqi6ByyqgcEkqbzL0HPB/h2xxpWF24O4dTnMRDFlt9Gniq12J0=@lists.linux.dev
-X-Received: by 2002:a05:620a:8908:b0:93f:735:6c83 with SMTP id af79cd13be357-9494bb3caaemr2034707885a.56.1794919928612;
-        Tue, 17 Nov 2026 04:52:08 -0800 (PST)
-X-Received: by 2002:a05:620a:8908:b0:93f:735:6c83 with SMTP id af79cd13be357-9494bb3caaemr2034705085a.56.1794919928133;
-        Tue, 17 Nov 2026 04:52:08 -0800 (PST)
+        bh=ZD6TBLmK/IIZSnjK7MAJYBAkHQUcSU3Vb9rupdsZ2as=;
+        b=cVUBuHokPkfTyRfQPagNII4Af667dlMZ2UoFTabfcqjlMqr21h/VDwEqVXWL8Q86Rv
+         Ej3V/pTbgITEt2fcw4aVh7dAiytUNc6PxvM/WDy9yW6gDdYmNcnRrFjFPRcznkshST43
+         Gt5T9ODwgRCc4mnpAGSQtNda6e0RmSP8NA00k=
+X-Forwarded-Encrypted: i=1; AL+hErHjBr2yQJy2fggJduvbleE/usg8hX7nQzXAC6c6R0FnRtzSIXGQ9yEpiFfOS70udRHU4nD4zvjXFl0=@lists.linux.dev
+X-Received: by 2002:a05:620a:17ab:b0:93e:c853:fc07 with SMTP id af79cd13be357-9498b826e55mr385557585a.32.1794922317175;
+        Tue, 17 Nov 2026 05:31:57 -0800 (PST)
+X-Received: by 2002:a05:620a:17ab:b0:93e:c853:fc07 with SMTP id af79cd13be357-9498b826e55mr385552685a.32.1794922316505;
+        Tue, 17 Nov 2026 05:31:56 -0800 (PST)
 Received: from bld-bun-02.bun.broadcom.net ([192.19.176.227])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-9494c870f31sm1089421185a.27.2026.11.17.04.52.06
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-9494c8fd141sm1094292085a.43.2026.11.17.05.31.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Nov 2026 04:52:07 -0800 (PST)
+        Tue, 17 Nov 2026 05:31:54 -0800 (PST)
 From: Arend van Spriel <arend.vanspriel@broadcom.com>
-To: Ragul Balaji <ragulbaby@gmail.com>
-Cc: Ho Jie Feng <hjf3108@gmail.com>,
+To: Mariia Nikitash <nikitash.mariiaw@gmail.com>
+Cc: arend.vanspriel@broadcom.com,
 	linux-wireless@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
 	brcm80211@lists.linux.dev,
-	brcm80211-dev-list.pdl@broadcom.com
-Subject: Re: [PATCH] wifi: brcm80211: move the USB bootloader definitions to a shared header
-Date: Tue, 17 Nov 2026 13:52:04 +0100
-Message-ID: <20261117125204.3992696-1-arend.vanspriel@broadcom.com>
+	brcm80211-dev-list.pdl@broadcom.com,
+	linux-kernel@vger.kernel.org,
+	morbo@google.com,
+	kees@kernel.org,
+	justinstitt@google.com,
+	codemender-patching+linux@google.com
+Subject: Re: [PATCH] wifi: brcmfmac: Replace strlcat() with snprintf() in brcmf_fw_alloc_request()
+Date: Tue, 17 Nov 2026 14:31:50 +0100
+Message-ID: <20261117133150.817227-1-arend.vanspriel@broadcom.com>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20261112050816.2795512-1-ragulbaby@gmail.com>
-References: <20261112050816.2795512-1-ragulbaby@gmail.com>
+In-Reply-To: <20261014005553.71803-1-nikitash.mariiaw@gmail.com>
+References: <20261014005553.71803-1-nikitash.mariiaw@gmail.com>
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Post: <mailto:brcm80211@lists.linux.dev>
@@ -118,44 +122,64 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
 
-On Thu, 12 Nov 2026 13:08:15 +0800, Ragul Balaji wrote:
-> The Broadcom USB bootloader downloads firmware the same way for other
-> USB chips than the FullMAC ones of brcmfmac.  Move its commands, states,
-> firmware header and response layouts from brcmfmac's usb.c to a header
-> in the shared include directory, so that other drivers can use them.
+On Tue, 13 Oct 2026 17:55:52 -0700, Mariia Nikitash <nikitash.mariiaw@gmail.com> wrote:
+> From: Bill Wendling <morbo@google.com>
 >
-> Signed-off-by: Ragul Balaji <ragulbaby@gmail.com>
-> Signed-off-by: Ho Jie Feng <hjf3108@gmail.com>
-> ---
->  .../net/wireless/broadcom/brcm80211/brcmfmac/usb.c | 68 +---------------
->  .../broadcom/brcm80211/include/brcm_usb_rdl.h      | 78 ++++++++++++++++++++++
->  2 files changed, 79 insertions(+), 67 deletions(-)
+> brcmf_fw_alloc_request() constructs firmware file paths by chaining
+> strscpy() and multiple strlcat() calls for the module parameter path,
+> separator, base name, and extension.
+>
+> In preparation for removing the deprecated strlcat() API[1], format the
+> complete firmware path in a single snprintf() call.
+>
+> Link: https://github.com/KSPP/linux/issues/370 [1]
+> Cc: codemender-patching+linux@google.com
+> Assisted-by: LLM
+
+Is this Cc: line necessary? Can you clarify its purpose? No need to clarify
+in the commit message. Just an email response will do.
+
+The Assisted-by: tag shows this change was produced with an LLM. Please
+follow the guidelines in Documentation/process/generated-content.rst so
+it is clear what was tool generated and what tool and/or LLM was used.
 
 [...]
 
-> +#ifndef	_BRCM_USB_RDL_H_
-> +#define	_BRCM_USB_RDL_H_
-> +
-> +#include <linux/types.h>
-> +
-> +#define BRCMF_POSTBOOT_ID		0xA123  /* ID to detect if dongle
-> +						   has boot up */
-> +
-> +#define TRX_MAGIC		0x30524448	/* "HDR0" */
+>  	for (j = 0; j < n_fwnames; j++) {
+> -		fwreq->items[j].path = fwnames[j].path;
+> -		fwnames[j].path[0] = '\0';
+>  		/* check if firmware path is provided by module parameter */
+>  		if (brcmf_mp_global.firmware_path[0] != '\0') {
+> -			strscpy(fwnames[j].path, mp_path,
+> -				BRCMF_FW_NAME_LEN);
+> -
+> -			if (end != '/') {
+> -				strlcat(fwnames[j].path, "/",
+> -					BRCMF_FW_NAME_LEN);
+> -			}
+> +			snprintf(fwnames[j].path, BRCMF_FW_NAME_LEN, "%s%s%s%s",
+> +				 mp_path, (end == '/') ? "" : "/",
+> +				 mapping_table[i].fw_base,
+> +				 fwnames[j].extension);
+> +		} else {
+> +			snprintf(fwnames[j].path, BRCMF_FW_NAME_LEN, "%s%s",
+> +				 mapping_table[i].fw_base,
+> +				 fwnames[j].extension);
+>  		}
+> -		strlcat(fwnames[j].path, mapping_table[i].fw_base,
+> -			BRCMF_FW_NAME_LEN);
+> -		strlcat(fwnames[j].path, fwnames[j].extension,
+> -			BRCMF_FW_NAME_LEN);
+>  		fwreq->items[j].path = fwnames[j].path;
+>  	}
 
-[...]
+Please address Kees' comment and collapse this into a single snprintf().
+Note mp_path points to the firmware_path array so it can never be NULL; an
+empty mp_path simply prints nothing, so something like the following would do:
 
-The move itself looks fine. Like the series "Move brcmsmac code into
-brcmutil in preparation for brcmbmac" (posted a few minutes later), it is
-part of the reorganization that has to go in before the brcmbmac driver
-is sent again, and nothing else in the tree uses this header yet. Keeping
-the brcmfmac and the brcmsmac parts as separate patches is fine, but
-please send them as one series with a common cover letter, so the shared
-pieces are reviewed together. Since the series then touches more than
-brcmsmac, rename it to something like "Reorganize brcm80211 code into
-shared directories in preparation for brcmbmac". Can you clarify the
-additional sign-off from Ho Jie Feng? Did he co-author the patch or did
-you use his (earlier) work?
+	snprintf(fwnames[j].path, BRCMF_FW_NAME_LEN, "%s%s%s%s", mp_path,
+		 (mp_path_len && end != '/') ? "/" : "",
+		 mapping_table[i].fw_base, fwnames[j].extension);
 
 Regards,
 Arend
