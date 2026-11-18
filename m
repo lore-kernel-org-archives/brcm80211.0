@@ -1,50 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.216.248.207
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795011028;
-	b=gk0xQxhzfsN1ZrclQrOupoYzbi4VYA6rsplE42NBzqC9wUX8RBJRonQpyElDyen6SnaW
-	 6ofzmH0aq9551CXVxYKy0A25c0WHpft7L772dh7/DDq5HD8h/vDimHkJAkVn4EZ/GcgAO
-	 Xi5k6KtPvYEWp9TonBTOhJCcznamdCD/iC0d8mWJmsVNt3GAbrE//32eglPKOXycWMrUa
-	 /URBjmQlxGjriKM4eGNUsF+WJnAxWYEjTUTg54efBToven7uyrnQTMzn/ICkyucqbpbO9
-	 R1VIy8QA0CIHjBcKe0RuNtHnDvXOheFaTc39S/KnPMwdy4myHtSssQwy6bsaaoKLV7w==
+	t=1795011039;
+	b=pQ3XyeTaL+PxvrKg1JVeenuUYpApDVgngkysYXZH5yq1VRnrklN2MqTphiMZJixjHB89
+	 Pi1JLOFPCc+yycmhnShmCl9wasz2EgqFT3HGgW4Y/k0HG2pBJFqtxJwsS0nnU1PHBva2C
+	 9keq2zKITimhpdqWgSyPV/OqmBnXXBlCfUlLYjUOhALOb/17AlYan7gEznh9mFYYYQiTh
+	 R3IgeG0HAfrjqytt/QEmvSKK2/t0/m5bd6CIrXudWpzT11YLfXdvRvJJT2FnR4+mj7N4T
+	 5aJvh+3mJpJEUtqdnRdYHuN41nkUK7HuGoKCubZyIdVNgWpohlczsH+9tHlHsJ3SaTQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795011028;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795011039;
 	h=DMARC-Filter:From:X-Lima-ML-UUID:DKIM-Signature:To:Cc:Subject:Date:
 	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=npsFFGCyRX9AaLtr89mNBARg/egcXIRyGy20k2D+J78=;
-	b=cHLKr7/o0tdEYYYFzVV86nngYLazKYvv4BeX4Z3n5CW6QxXJhHy12Hij7RkOaviXC/5F
-	 3kVLi9JVBgolytEG6J4HoMjY6aLDH7Jn91PXNmR5q3ZsIUOEdTtOETy6DyTMqLAvkxfGh
-	 gqVzJYrnojC0lMtAt7mCR73CpWL31lEvx0hOVfZkowlxFmN30nTtp0/1nCoWu5P77rkVq
-	 XKrOLO/cYnj9+3nw2k4fX8A5QxZwy0xZt5EA6cvq47PAIpcm48Fbj8PFTJFE+kjAAwKz6
-	 xwPjL4tgJClFkAeBvhU3EJPjo/KupOZfPZpsubIcYckRm81HeE0Wkhs20++Ss98wz6w==
+	bh=7UqE/4tIDUreuai79dYu52y1259azrccM+nQkr9paHM=;
+	b=NNvisREUzKYcGz8vkVXCsZ5cuvoUYsVziLZ2+DEAVSes3zn+X8azb2BM/DWhpKntwyO5
+	 nOq6+opA5WQaMLD4/kLXmx9oexkVOwd9qojeIfbQSsj4X4o2MDSyfK64vqxbmt9Vgz058
+	 RTklI5PfS+rEMgqhrp8Nnov80hoeuSiE0bdklkS1+wf3dhEwVW114+mRce5l3yiUeANbu
+	 H7BjPVcvPWpKQw6Ik1j1KLWRFs9KeoIULsxb7SP0cPbauJEIK2VaBTLl/nQ2fP9GwU4NG
+	 kJTk0//cUPNAmpFuMjdqaRpVDT/e1kLdzJt39oWrbVWBk9SxJmeLSysJ06D9FuaTJNQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=none header.from=deq.rocks;
 	spf=none smtp.mailfrom=deq.rocks;
-	dkim=pass header.d=deq.rocks header.i=@deq.rocks header.a=rsa-sha256 header.s=securedbylima-20251205 header.b=pe79D1zn;
+	dkim=pass header.d=deq.rocks header.i=@deq.rocks header.a=rsa-sha256 header.s=securedbylima-20251205 header.b=dHVYqjmq;
 	arc=none smtp.remote-ip=91.216.248.207
 Received: from mx5.mail-out.lima-city.de (mx5.mail-out.lima-city.de [91.216.248.207])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56F6E60A2624
-	for <brcm80211@lists.linux.dev>; Wed, 18 Nov 2026 14:10:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 56F6E60A2624
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ED3560A262B
+	for <brcm80211@lists.linux.dev>; Wed, 18 Nov 2026 14:10:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0ED3560A262B
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=deq.rocks
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=deq.rocks
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=deq.rocks header.i=@deq.rocks header.a=rsa-sha256 header.s=securedbylima-20251205 header.b=pe79D1zn
+	dkim=pass (2048-bit key) header.d=deq.rocks header.i=@deq.rocks header.a=rsa-sha256 header.s=securedbylima-20251205 header.b=dHVYqjmq
 From: Andre Eikmeyer <dev@deq.rocks>
-X-Lima-ML-UUID: ff3d75d7-7084-41f9-8f7c-185bf83dd864
+X-Lima-ML-UUID: 1b2255ce-775f-4271-bbbe-c8ab8f5057df
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=deq.rocks;
-	s=securedbylima-20251205; t=1795011023;
-	bh=C8lYz6kEtryEmtT4rtSEO7012drLrdeMROAIcR9aQbc=;
+	s=securedbylima-20251205; t=1795011026;
+	bh=yC0rqdeXYwOip/F5gNXc+nZqz5NnjWOAk6rV4niOTfo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pe79D1zne1QZC3C5aGQjm8Z8BQs89ePEU/21twVdzQrhYW55nar3sjxw3jPBgE1nC
-	 dyg92QzHU09hsmiS5vRvIBzV0W1JIVc8FgL14eZMXasXACEkf2tWhAW9tr4zWnLzqE
-	 OUWdcQVnguImh/g6YpmIUAD9tmDa8+q2DcwXoDOWFA1ekYU5kDnAL9fNVJpxMiu6DZ
-	 5Q+XoEZsCwzlkY1YUbdHKJsuxai5VCt77kJ6Z3XkvxqtsAvZo2n3usTdiOsK5hxfXD
-	 bWgTkIWDJaiYl1K0JA54hONvzH+Tor3yK/spdI/EneP/D3vkEX3zvj9hTzYxFKD6MU
-	 BilXI2TEUaBDw==
+	b=dHVYqjmqrPdKYi/m0LbMrhFqTYb7/pUWc+PVutgKlt+qGKqJZXsNIApXHIvSY5qrv
+	 5rTyLST5bz45ZoPCYsYuzE6nnTB9iqA+F3gSkGaK8hOC1MWFtoMl0TzAHGw5DNjdHO
+	 oCA93qDY36pWeXYqDNhXAfZm1UyXFGbTA8eNQc+7bsD5owc1Njxrba41TGqsiACBYF
+	 PnTBWl9MGL+wANDW6qMWh4z5MNQGj4ly5P+lN2OhZPAGXrc6z64oW+7i0FXng12hjX
+	 anfz3m7060xk7n3aMknTsyUD+4+uiAts6eholLaWkSqDvYO0BMNKKyiypcJOobRW3A
+	 t3NHtktEDCU7w==
 To: arend.vanspriel@broadcom.com
 Cc: linux-wireless@vger.kernel.org,
 	brcm80211@lists.linux.dev,
@@ -53,12 +53,12 @@ Cc: linux-wireless@vger.kernel.org,
 	Andre Eikmeyer <dev@deq.rocks>,
 	Yossef Osman <Yossef.Osman@proton.me>,
 	Aditya Garg <aditya.garg@linux.dev>
-Subject: [PATCH wireless-next v2] wifi: brcmfmac: turn off TX beamforming on Apple BCM4364
-Date: Wed, 18 Nov 2026 15:10:20 +0100
-Message-ID: <20261118141020.92306-1-dev@deq.rocks>
+Subject: [PATCH wireless-next v2] wifi: brcmfmac: leave the AP 4-way handshake to the host on Apple chips
+Date: Wed, 18 Nov 2026 15:10:24 +0100
+Message-ID: <20261118141024.92354-1-dev@deq.rocks>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261104151623.70695-1-dev@deq.rocks>
-References: <20261104151623.70695-1-dev@deq.rocks>
+In-Reply-To: <20261104151629.70790-1-dev@deq.rocks>
+References: <20261104151629.70790-1-dev@deq.rocks>
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Post: <mailto:brcm80211@lists.linux.dev>
@@ -70,24 +70,23 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-brcmfmac sets "txbf" to 1 at init. The Apple firmware for the BCM4364
-(9.30.514.0.32.5.94 on the MacBookPro15,1) has it on by default as
-well, and then rate control settles on a single beamformed spatial
-stream (nrate VHT MCS9 NSS1 TXBF) towards a two stream AP.
+The Apple firmware for the BCM4364 and BCM4377 lists "idauth" in its
+capabilities, so brcmfmac enables BRCMF_FEAT_FWAUTH and advertises
+NL80211_EXT_FEATURE_4WAY_HANDSHAKE_AP_PSK and, with "sae",
+NL80211_EXT_FEATURE_SAE_OFFLOAD_AP. hostapd and wpa_supplicant then leave
+the AP side of the handshake to the firmware, which doesn't complete.
 
-Beamforming more than one stream does not work on this firmware. With
-"txbf" on and the rate fixed to two or three streams, the firmware takes
-the rate but the uplink stalls. With "txbf" off, rate control picks two
-streams (VHT MCS9 NSS2) on its own.
+With a WPA2-PSK AP, brcmfmac sets the PMK in the firmware without error,
+the client associates, the firmware sends no EAPOL-Key frame and removes
+the station after about 8 s. Seen on the BCM4364 (MacBookPro15,1) and on
+the BCM4377 (MacBookAir9,1). With a WPA3-SAE AP and PMF required on the
+BCM4377, the client associates and is removed the same way without being
+authorized.
 
-Uplink measured with iperf3 against a wired server was:
-
-  0.5 m from the AP, -36 dBm:  351 -> 623 Mbit/s
-  -70 dBm:                      96-130 -> 149-175 Mbit/s
-
-Downlink and latency remain unchanged.
-
-Set "txbf" to 0 on the BCM4364 when the board type is an Apple one.
+Clear BRCMF_FEAT_FWAUTH on these chips when the board type is Apple, so
+the host runs the handshake. A WPA2-PSK AP then works. This also drops
+SAE_OFFLOAD_AP, which is not usable on this firmware. A WPA3-SAE AP does
+not work without the offload either, the client does not associate.
 
 Tested-by: Yossef Osman <Yossef.Osman@proton.me>
 Tested-by: Aditya Garg <aditya.garg@linux.dev>
@@ -95,58 +94,43 @@ Signed-off-by: Andre Eikmeyer <dev@deq.rocks>
 ---
 Changes in v2:
 - Restrict the quirk to Apple boards with settings->board_type
-- Spell out the txbf value with an explicit if and fix the comment
-- State the cause. Beamforming more than one stream does not work
-- Fix the typo
+- Drop the BCM4355, due to lack of testers
+- Test the BCM4377 as well with SAE_OFFLOAD_AP
 - Target wireless-next
-- v1: https://lore.kernel.org/all/20261104151623.70695-1-dev@deq.rocks/
+- v1: https://lore.kernel.org/all/20261104151629.70790-1-dev@deq.rocks/
 
-The T2 Linux community runs this patch with its kernels for quite a while
-now, no regression was reported.
+The T2 Linux community runs this patch with its kernels, no regression
+was reported.
 
- .../wireless/broadcom/brcm80211/brcmfmac/common.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ .../broadcom/brcm80211/brcmfmac/feature.c         | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
-index 93458c2fbc2e..f8ff6217de16 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
-@@ -10,6 +10,7 @@
- #include <linux/firmware.h>
- #include <brcmu_wifi.h>
- #include <brcmu_utils.h>
-+#include <brcm_hw_ids.h>
- #include "core.h"
- #include "bus.h"
- #include "debug.h"
-@@ -275,6 +276,7 @@ int brcmf_c_preinit_dcmds(struct brcmf_if *ifp)
- 	struct brcmf_rev_info *ri;
- 	char *clmver;
- 	char *ptr;
-+	s32 txbf;
- 	s32 err;
- 
- 	if (is_valid_ether_addr(ifp->mac_addr)) {
-@@ -432,8 +434,17 @@ int brcmf_c_preinit_dcmds(struct brcmf_if *ifp)
- 		goto done;
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/feature.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/feature.c
+index 27fa3a7941d9..54f61618b9a1 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/feature.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/feature.c
+@@ -423,6 +423,21 @@ void brcmf_feat_attach(struct brcmf_pub *drvr)
+ 					BIT(BRCMF_FEAT_WOWL_GTK);
+ 		}
  	}
- 
--	/* Enable tx beamforming, errors can be ignored (not supported) */
--	(void)brcmf_fil_iovar_int_set(ifp, "txbf", 1);
-+	/* Enable tx beamforming, errors can be ignored (not supported).
-+	 * The Apple firmware for the BCM4364 has it on by default and then
-+	 * beamforms a single spatial stream, as beamforming more than one
-+	 * stream does not work. Turn it off there, so two streams are used.
++	/* The Apple firmware for these chips lists "idauth", but in AP mode
++	 * it never completes the 4-way handshake or SAE, and the station is
++	 * dropped. Leave the handshake to the host.
 +	 */
-+	txbf = 1;
-+	if (drvr->bus_if->chip == BRCM_CC_4364_CHIP_ID &&
-+	    drvr->settings->board_type &&
-+	    strstarts(drvr->settings->board_type, "apple,"))
-+		txbf = 0;
-+	(void)brcmf_fil_iovar_int_set(ifp, "txbf", txbf);
- done:
- 	return err;
- }
++	if (drvr->settings->board_type &&
++	    strstarts(drvr->settings->board_type, "apple,")) {
++		switch (drvr->bus_if->chip) {
++		case BRCM_CC_4364_CHIP_ID:
++		case BRCM_CC_4377_CHIP_ID:
++			ifp->drvr->feat_flags &= ~BIT(BRCMF_FEAT_FWAUTH);
++			break;
++		default:
++			break;
++		}
++	}
+ 	/* MBSS does not work for all chips */
+ 	switch (drvr->bus_if->chip) {
+ 	case BRCM_CC_4330_CHIP_ID:
 
 base-commit: 5dbf2415ca9821a611d09308e3b29d2c37e7cd77
 -- 
