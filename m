@@ -1,85 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=211.75.126.72
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.72
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794969167;
-	b=ZQvvMFLVwk9SodO6dxiA7NnzN/Q1FiM4ynA+ovVui/iLMEJb6w1PIi37DCL6Y5a5egz+
-	 sUwzx0B2XPQohpT3A2X0vsyb7uB6rfX/LIonpqbQqayyN+lmG7QlP5MTePDdM5FNKYN6h
-	 rPbTmM0rSU6bMZXZxkYYzCzdfiRmDvdpVjvvkAhiQnR/hS9rPRWCoLA/r9up3yKIkILxh
-	 DQbus+6zNqMYoI4fuuL446QFTKuHVFxRmfESK00dWd1DVn6yaVueh+VbHOaSdFrCn7wwn
-	 MZYgzJDVhvAaMSLFrdhzFoFj0+6ie+h+ANsLFSOOSZmw9wZrhOj8eeJEJ/OurWQCBZA==
+	t=1794985734;
+	b=rveg+TOXczHjjcK3Z4SKmsL2stTDMnQAzthiodInsSYVQ3hXnwPLHZiYCBS28L46CsdW
+	 UAL78BZqvZiV2RsAmoAaCKABbu7W3gGIMxY0hewG27XQXKVeSTEKfxnljMlzwjTWJz89t
+	 tPZYe9L72lSHYHjyQTRuSvesFHsrHOsoehiTPynHw99pdHQpF03PoY36GWNQL94wtB2zW
+	 8zzAnTh28uP1QF0bllkulRpX4BA6KOtc0hVJEvCJrNGYUUUvGiA/6Om2bGaf2dKUVwnnx
+	 2xAYK0Wys6AwTSii+OOng4hbpeQcLHKAHUroe+TQ29CBtZgA93upwbatxsjZO3fJwTw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794969167;
-	h=DMARC-Filter:X-SpamFilter-By:DKIM-Signature:Received:Received:
-	 Received:From:To:CC:Subject:Thread-Topic:Thread-Index:Date:Message-ID:
-	 References:In-Reply-To:Accept-Language:Content-Language:
-	 x-originating-ip:Content-Type:Content-Transfer-Encoding:MIME-Version;
-	bh=E2JRUt8R+VeUnYftHxj4Dof2OS5CtNJzpWWxSa5MzYc=;
-	b=QNNb+tgJgQJGXevlLGLFhmJIDX2Cw8QF247lCqtQQE50I7uK2ecE1kDDtrChHtzb+DSZ
-	 RC3mCdvWX8o+SEy7GPTFzimStmDatO2y6ZVtqr2hqlgfjMr8Qa4PxI1XrxTF1QTWgM4le
-	 vQTsw0+PoCxunTmXNSjsj0mUTA66WrULMct4nrDTnRwA00/X1zdZGuEpAXEQO0g5PSKnJ
-	 KqQBl7USOkbdRWoQeJycsa+HTVx8F8rdRC99s/wBf0JpURF4PZ7tGtMjh/b6sHTpAotCC
-	 MPMx+ixBNw25TT1yHKEfkHp1e3dxCMvM9zfKpWpCRNdJRSKeAOeHP5nUMmwSIRMuJAw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794985734;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:Message-ID:Date:MIME-Version:User-Agent:
+	 Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=Tk73BOKWJZl4x7y6b8CgGJQ2haz+VUmMH9ckRu2GRRU=;
+	b=tvtbvJudMeL51Lu2/2QSrxCnfRMNIjwLp7BXMji4ZEuMYh0B3Qi77Z4dMLglA09qUZil
+	 Zd+2mpRT/ckX1c7gSfrk7t9rPhhXVQeyTtoZKGtHhKz/nvOwBw63K2kpKWYha5Be/yEqB
+	 N61zDbkhARsD1pqeYN99XSR+CHaBJ+vRjmHc60P4mQnNfRt/9IPTI+YekFpsHg3L1KJgX
+	 rYQ7fiq31xn5BzwYGeDhuMqLD729xq+pnsiEVZhnGu+IS0iWUrUH6c4gfKaVu532T6OEJ
+	 3Lv2JYJ6awH+h1TY6qFul1qay+c41WhbnlzoVjtnx3Ru9K/bLxb9Rormyey0A/6nu1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=realtek.com;
-	spf=pass smtp.mailfrom=realtek.com;
-	dkim=pass header.d=realtek.com header.i=@realtek.com header.a=rsa-sha256 header.s=dkim header.b=HagKWm2+;
-	arc=none smtp.remote-ip=211.75.126.72
-Received: from rtits2.realtek.com.tw (rtits2.realtek.com [211.75.126.72])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=linux.dev;
+	spf=pass smtp.mailfrom=linux.dev;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=NskjtoUF;
+	arc=none smtp.remote-ip=91.218.175.72
+Received: from mta0.migadu.com (out-72.mta0.migadu.com [91.218.175.72])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D6E4606A325;
-	Wed, 18 Nov 2026 02:32:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8D6E4606A325
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=realtek.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=realtek.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ABA1606A32F
+	for <brcm80211@lists.linux.dev>; Wed, 18 Nov 2026 07:08:53 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9ABA1606A32F
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=realtek.com header.i=@realtek.com header.a=rsa-sha256 header.s=dkim header.b=HagKWm2+
-X-SpamFilter-By: ArmorX SpamTrap 5.80 with qID 6AI2WRm24908132, This message is accepted by code: ctloc85258
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=realtek.com; s=dkim;
-	t=1794969147; bh=E2JRUt8R+VeUnYftHxj4Dof2OS5CtNJzpWWxSa5MzYc=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:MIME-Version;
-	b=HagKWm2+9onOnETPmvu7wU01KRoZuWua8aVsBa/S12jtX7+Q0QLvctO50tIsc7TYH
-	 uqjnEqnF4+0GlWVEW03pjdBQEgpHCLbHf9EfNh7cCWJicvSnW2qqsUBKm1ToYoQSx5
-	 pxgZ66UHYqHuqAvU6avGOCGABPPVdePHGZC8NniYFa2a1g6MsmnDKlWiw2tmKMngT5
-	 f09TPfp2LzB6bSverTp80jiP9fKe+X5lHd6pJodqkCXYHotjAJsBWimPLl3fvwHAaw
-	 Nq6xt2zAhvNDKxKGp0TGHC8GPTqzy8woI7SyKIMWEbPhj9Ds8weTuioi8ErlRV7jvP
-	 15r5sD9QxxHbg==
-Received: from mail.realtek.com (rtkexhmbs04.realtek.com.tw[10.21.1.54])
-	by rtits2.realtek.com.tw (8.15.2/3.29/5.94) with ESMTPS id 6AI2WRm24908132
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
-	Wed, 18 Nov 2026 10:32:27 +0800
-Received: from RTKEXHMBS06.realtek.com.tw (10.21.1.56) by
- RTKEXHMBS04.realtek.com.tw (10.21.1.54) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.56; Wed, 18 Nov 2026 10:32:27 +0800
-Received: from RTKEXHMBS06.realtek.com.tw ([fe80::eeeb:c765:ca73:5eef]) by
- RTKEXHMBS06.realtek.com.tw ([fe80::eeeb:c765:ca73:5eef%10]) with mapi id
- 15.02.2562.056; Wed, 18 Nov 2026 10:32:27 +0800
-From: Ping-Ke Shih <pkshih@realtek.com>
-To: Arend van Spriel <arend.vanspriel@broadcom.com>, Mariia Nikitash
-	<nikitash.mariiaw@gmail.com>
-CC: "linux-wireless@vger.kernel.org" <linux-wireless@vger.kernel.org>,
-	"brcm80211@lists.linux.dev" <brcm80211@lists.linux.dev>,
-	"brcm80211-dev-list.pdl@broadcom.com" <brcm80211-dev-list.pdl@broadcom.com>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"morbo@google.com" <morbo@google.com>, "kees@kernel.org" <kees@kernel.org>,
-	"justinstitt@google.com" <justinstitt@google.com>,
-	"codemender-patching+linux@google.com" <codemender-patching+linux@google.com>
-Subject: RE: [PATCH] wifi: brcmfmac: Replace strlcat() with snprintf() in
- brcmf_fw_alloc_request()
-Thread-Topic: [PATCH] wifi: brcmfmac: Replace strlcat() with snprintf() in
- brcmf_fw_alloc_request()
-Thread-Index: AQHdW3bNnvEHc/p9SkKWCGb74Afaobcx8vYAgAFf6GA=
-Date: Wed, 18 Nov 2026 02:32:27 +0000
-Message-ID: <670492ee188945f8a3a3b147ae5b840d@realtek.com>
-References: <20261014005553.71803-1-nikitash.mariiaw@gmail.com>
- <20261117133150.817227-1-arend.vanspriel@broadcom.com>
-In-Reply-To: <20261117133150.817227-1-arend.vanspriel@broadcom.com>
-Accept-Language: en-US, zh-TW
-Content-Language: zh-TW
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=NskjtoUF
+X-Envelope-To: brcm80211@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=yaMVr90IQaJTtVO+5bDifQljGhz3023Fv1fLYZpCIac=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1794985731; v=1; x=1795590531;
+ b=NskjtoUF4noer7yqvnM5Vc0tTs72CuJBr7ste0iBIQpqIYLkRELIo9pIaaHRwpMmiHhchuog
+ hlHi2G0xRt19VulQUkdDHVxzN/bXkmM9sootMkeqW1L2BP6VITKor0FyeCURfqUSkiKboolsddS
+ nt4RdFvZvKjzDmGBexoHT0HE=
+X-Envelope-To: brcm80211@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 92a814d0e9d82b49;
+	Wed, 18 Nov 2026 07:08:51 +0000
+X-Mizu-Trace-ID: 92a814d0e9d82b49
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <2c40e18f-02c2-48d7-b592-279634700c10@linux.dev>
+Date: Wed, 18 Nov 2026 12:38:42 +0530
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Post: <mailto:brcm80211@lists.linux.dev>
@@ -89,13 +58,150 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:brcm80211+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] wifi: brcmfmac: keep ARP and ND offload off on the
+ BCM4364
+To: Arend van Spriel <arend.vanspriel@broadcom.com>,
+ Andre Eikmeyer <dev@deq.rocks>
+Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev,
+ brcm80211-dev-list.pdl@broadcom.com, linux-kernel@vger.kernel.org,
+ Yossef Osman <Yossef.Osman@proton.me>
+References: <20261104151620.70671-1-dev@deq.rocks>
+ <20261116203719.281605-1-arend.vanspriel@broadcom.com>
+Content-Language: en-US
+From: Aditya Garg <aditya.garg@linux.dev>
+In-Reply-To: <20261116203719.281605-1-arend.vanspriel@broadcom.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-> The Assisted-by: tag shows this change was produced with an LLM. Please
-> follow the guidelines in Documentation/process/generated-content.rst so
-> it is clear what was tool generated and what tool and/or LLM was used.
-
-FYI. The Assisted-by is removed by:
-
-1e035297ffda ("docs: remove Assisted-by references")
 
 
+On 17/11/26 02:07, Arend van Spriel wrote:
+> On Wed, 4 Nov 2026 16:16:20 +0100, Andre Eikmeyer <dev@deq.rocks> wrote:
+>> brcmfmac enables the firmware's ARP and IPv6 ND offload (ndoe) whenever
+>> the interface is up and not promiscuous. On the Apple firmware for the
+>> BCM4364, ndoe makes IPv6 downloads collapse.
+> 
+> [...]
+> 
+>> ---
+>>  .../net/wireless/broadcom/brcm80211/brcmfmac/core.c    | 10 ++++++++++
+>>  1 file changed, 10 insertions(+)
+> 
+>> @@ -103,6 +104,15 @@ void brcmf_configure_arp_nd_offload(struct brcmf_if *ifp, bool enable)
+>>  		return;
+>>  	}
+>>
+>> +	/* With ND offload on while awake, the Apple firmware for the BCM4364
+>> +	 * makes IPv6 downloads drop to low rates. macOS runs ARP and ND
+>> +	 * offload only in sleep, keep both off on this chip.
+>> +	 */
+>> +	if (enable && ifp->drvr->bus_if->chip == BRCM_CC_4364_CHIP_ID) {
+>> +		brcmf_dbg(TRACE, "Skip ARP/ND offload enable on BCM4364\n");
+>> +		enable = false;
+>> +	}
+>> +
+>>  	if (enable)
+>>  		mode = BRCMF_ARP_OL_AGENT | BRCMF_ARP_OL_PEER_AUTO_REPLY;
+>>  	else
+> 
+> A few comments:
+> 
+> 1) The measurements only implicate ndoe. Do you have data showing arpoe
+> also needs to be off? Otherwise please limit this to ND offload.
+
+Limiting this to ND offload works for my MacBook Pro 16,1. We have also got a bug report stating BCM4355 is also affected.> 
+> 2) The commit message says this is an issue of the Apple firmware, but the
+> check is on the chip ID only. The same chip IDs are also used with other
+> firmware builds and boards (WCC/non-Apple), which would lose the feature
+> needlessly. Please restrict the quirk to the affected platform, e.g. with
+> the Apple board type (settings->board_type) or a per-firmware quirk, or
+> move it to the vendor feat_attach callback instead of a chip check in
+> this helper. The same applies to the other chip ID quirks of this batch
+> (txbf and FWAUTH).
+> 
+> 3) This looks like a bug fix. Please add a Fixes: tag and Cc: stable (as
+> Aditya suggested), and mark the target tree in the subject.
+> 
+> [...]
+> 
+> Regards,
+> Arend
+
+Arend and Andre, could you see if this works:
+
+-->8--
+
+From 4dce3bc04ce25711e03f8430283a87136726e46c Mon Sep 17 00:00:00 2001
+From: Aditya Garg <aditya.garg@linux.dev>
+Date: Wed, 18 Nov 2026 06:05:59 +0000
+Subject: [PATCH] wifi: brcmfmac: keep ND offload off on the BCM4355 and
+ BCM4364 while awake
+
+brcmfmac enables the firmware's ARP and IPv6 ND offload (ndoe) whenever
+the interface is up and not promiscuous. On the Apple firmware for the
+BCM4355 and BCM4364, ndoe makes IPv6 downloads collapse.
+MacBookPro15,1 with BCM4364/3, IPv6 downloads topped out at 55 Mbit/s.
+Same behaviour on the MacBookPro16,1 with the later chip revision and
+MacBookAir8,1 with BCM4355. Also tested on BCM4377 and turned out this
+chip is not affected.
+
+macOS runs these offloads only in sleep. It enables them on suspend
+and disables them on wake. Keep them off on the BCM4355 and BCM4364.
+
+Signed-off-by: Aditya Garg <aditya.garg@linux.dev>
+Cc: stable@vger.kernel.org
+---
+ .../broadcom/brcm80211/brcmfmac/core.c         | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
+index 92ec269f43b2..d054d33f3456 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
+@@ -13,6 +13,7 @@
+ #include <net/addrconf.h>
+ #include <net/ieee80211_radiotap.h>
+ #include <net/ipv6.h>
++#include <brcm_hw_ids.h>
+ #include <brcmu_utils.h>
+ #include <brcmu_wifi.h>
+ 
+@@ -97,6 +98,7 @@ void brcmf_configure_arp_nd_offload(struct brcmf_if *ifp, bool enable)
+ {
+ 	s32 err;
+ 	u32 mode;
++	bool nd_enable = enable;
+ 
+ 	if (enable && brcmf_is_apmode_operating(ifp->drvr->wiphy)) {
+ 		brcmf_dbg(TRACE, "Skip ARP/ND offload enable when soft AP is running\n");
+@@ -125,7 +127,21 @@ void brcmf_configure_arp_nd_offload(struct brcmf_if *ifp, bool enable)
+ 		}
+ 	}
+ 
+-	err = brcmf_fil_iovar_int_set(ifp, "ndoe", enable);
++	/* With ND offload on while awake, the Apple firmware for the BCM4355
++	 * and BCM4364 makes IPv6 downloads drop to low rates. macOS runs ND
++	 * offload only in sleep, keep it off on this chip.
++	 */
++	if (nd_enable &&
++	    (ifp->drvr->bus_if->chip == BRCM_CC_4355_CHIP_ID ||
++	     ifp->drvr->bus_if->chip == BRCM_CC_4364_CHIP_ID) &&
++	    ifp->drvr->settings->board_type &&
++	    !strncmp(ifp->drvr->settings->board_type, "apple,", 6)) {
++		brcmf_dbg(TRACE, "Skip ND offload enable on BCM%x, board_type=%s\n",
++			  ifp->drvr->bus_if->chip, ifp->drvr->settings->board_type);
++		nd_enable = false;
++	}
++
++	err = brcmf_fil_iovar_int_set(ifp, "ndoe", nd_enable);
+ 	if (err) {
+ 		brcmf_dbg(TRACE, "failed to configure (%d) ND offload err = %d\n",
+ 			  enable, err);
+-- 
+2.56.0
+
+
+-->8--
+
+Andre needs to sign this off and add his authorship if this is submitted btw.
