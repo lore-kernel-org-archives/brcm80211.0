@@ -1,100 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.161.52
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795084683;
-	b=Nvlfn1l/9YSXEfYXMOAHj/ANHTqzhDo/MMsGVMbtH7ij42Y6Gc1gmXtUDDUjxs+h6o1F
-	 ceTz7hM8W/qsJB1CuKYr/UBllkmtqtYz6qZlNbObUsuh+UOSfWoOEQ8SUEOQiZr6l5tw9
-	 kIika6cL/n7b+iwHorxQHqIoiNbKZ4nhZ5FrPE2ESbUYVYdoEdamAl5YAUsAb0r+X54Lk
-	 sH98jseKA+iUQPUXer/dYgo9yakXuH1yg/rB1ER1souz2gNkSM87nE31A86+F2CQ1D1FS
-	 mlXazZazofwQgqEs+oXEU/ciuq1rrnQN33DBGBuXXPYwLEF+WIB4DibMqsUajOiNkBA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795084683;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.47
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795196557;
+	b=DjuCrpT23+wZ6+5stoJKT7VdOMcPsmQrpSoxSEk+7WkGe5ERfIx3wFFZuNRIsMP/AhWd
+	 BtVmQ3eS00QDEm2RHkk3mkKQM6CgPWRK+QfUV09YMJtlslmowi+d4lWerj33UvbC1cFlJ
+	 1t+D8K7Wtl9CTIvb1zXmlk6c2hA7LlF8D5Dy3jr33HEJlRIR4fSg3YR5kaFia/knMqDM/
+	 E0B4iFuGoEglF16B5NYPjZVz2RiX27GRPp1nt+C3ID14Mf6uuMivLRtPK7qDc6iOJFHzD
+	 pT+FoMDGRpfruVJQaVI72xTkXKuv3iD3vYKW8RNNGsmVZOG8VxgPzvTp+DEIbdCH/rQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795196557;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type;
-	bh=D+9N4aioXVI29LS1qOtYPEdWRjnfXn6CSLbyGCX05wY=;
-	b=u/pAJQTUg/EYmhBJJNkIXbA+EXFhPj5d+PVR1aVoXVay6sKVAQe/3roCRRw3kcSQKwBc
-	 /qyDBiJEzcaCpPsroKWSETtUayX6ETCD5r8qavMAlfSHG/wXJdSipH1FQPirYag0zQwGC
-	 Y/WyuZt4PVehMS4e9dDeaz7499NYoXr0urWKsbMJ6yi4L8IKJuNqY//VIvw5uVz68nupK
-	 5HCnyRBM/m63CsGavFxh311zKq1i4u3+gIzxj9wUr8uMjMi0tlPxvJVK1zM+OMZpeiUe1
-	 e2TlSjcWOApFdHufi0K4tS/mTilxYRwXDy7W3dJ3ehOtqYr2eg6S7SViPjHQwVZ0iGQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=WDx7HoRp;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.161.52
-Received: from mail-oo1-f52.google.com (mail-oo1-f52.google.com [209.85.161.52])
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=ZcQXLHhR20hCfvjpVa526iaWuFLXqsFmhOokAK+WFKc=;
+	b=Zw2Ung8kWKxuTUrM3Da/QtxZ3vpumlX82pAgX307rjGQPHRCXWhYcYTeBR30zx/4MijO
+	 q3iiWLf56Z9ZMFXOga2SilHu4JP9Vs3u7tMBZGpVtijEVUEktBZ0Aw/gU3nnkT6GxkQET
+	 ALh1Cw7FPgj+gu3Xak+TpUBi5cS9K62R6MuZ+xgGpy5JawQEOk6zMsZv+duxuDvoxZcYS
+	 9o1D50tl20Kx7yODQwCUNri2+GAiQloBGe9QeQkVHLYcJsmsi/X2pwPade3cx00FjZgrG
+	 zkCpqZzPy4Nv0nLbsGlKkERTXHWz4nOrcMxgFf86stHOmMF2LXPU4RSwmnTg3/a8pgQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=amarulasolutions.com;
+	spf=pass smtp.mailfrom=amarulasolutions.com;
+	dkim=pass header.d=amarulasolutions.com header.i=@amarulasolutions.com header.a=rsa-sha256 header.s=google header.b=YaghYcbQ;
+	arc=none smtp.remote-ip=209.85.221.47
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D8F3606A339
-	for <brcm80211@lists.linux.dev>; Thu, 19 Nov 2026 10:38:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7D8F3606A339
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FD79606B061
+	for <brcm80211@lists.linux.dev>; Fri, 20 Nov 2026 17:42:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3FD79606B061
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=amarulasolutions.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amarulasolutions.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=WDx7HoRp
-Received: by mail-oo1-f52.google.com with SMTP id 006d021491bc7-716c0217635so866394eaf.0
-        for <brcm80211@lists.linux.dev>; Thu, 19 Nov 2026 02:38:03 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795084682; cv=none;
-        d=google.com; s=arc-20260327;
-        b=MDPpfUB+u1tPK/Dv0TFo84c9267ffsfJ9e2mDAKI0Kmh/MHLc44gz7fHgij86s5Qr2
-         3WakknucaljT6o0XU+P07qqVJdnlaJ8jBnA3JCsw99++CkZ6+Ldck82WSseWAFGzQp7f
-         AxrmDLfvsWaS5F36cN79R/SVDM0QgG2L+L2cQAZJiSmPzqFtw6DDZ8movqHv7LZuVF2m
-         Gu8or+OBB5C8oTx12hHCybILauOGJCSb6UiJffuG8cppkwPuXS2I4u0Pxxe4q4kYzw/w
-         8Zd1NWjRoxUHZFlebyVQqoVGNEDqm07lzDcd/vIFxbN89eyLpd2jIyesTmmW+Gabh+39
-         Umdw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=D+9N4aioXVI29LS1qOtYPEdWRjnfXn6CSLbyGCX05wY=;
-        fh=q5XX0WJfqZuz4osV/5O39Eq6KECufGflU3jnGaYsUMo=;
-        b=sFTon9tUlP7fOTeQva+ZB4OIRxa9V4DOx0yVgyJIJinCAnk5bsTf2lmSngQFxuMkQF
-         gkXMtkXjUyhHfYgAxWmE0lkbX3Em7K1Jxqt4WOfrPOZoTLEWA5wFfwBJde2v1vIQZ1wX
-         dx/TV2t8T5WZaH2FFkVPrWTWJ6oFu/ZbuMZCqBEOEiBdmm+11H/0h05NwXYwHvfzm5t5
-         6DMOfD1bHM7SdpaLNVbBRrfm2Q1yOX9x0e/XDy1711kcLuOJ3wEXEv838j7oVfa6TcjB
-         o6g20uA1yuCVdnDJV9e0cre0dCBSFc0esD6IYAcKDbmih07hYvRoZI7aRG5cODoDHt/g
-         ZTEQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (1024-bit key, unprotected) header.d=amarulasolutions.com header.i=@amarulasolutions.com header.a=rsa-sha256 header.s=google header.b=YaghYcbQ
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-491971ac844so1019039f8f.2
+        for <brcm80211@lists.linux.dev>; Fri, 20 Nov 2026 09:42:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795084682; x=1795689482; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=D+9N4aioXVI29LS1qOtYPEdWRjnfXn6CSLbyGCX05wY=;
-        b=WDx7HoRpZHG982hzRdsdUiJ5r1vl27YfFwcR6fSCmu2MfszFznjIeHgwzX8dCzl2Tk
-         tBKdhOzC6q2UFe5pAfnsh5hadZaVq1I7T1B9LJ1vDByvVfetbbCXUa/P2NgvfOHUIG14
-         O6tLhb7d8fK8Dl/bF2kfyMsOMZ5/MvYrjxKp5TSf7qq1vBWIZwVna5X+ex3im9mqN8PH
-         ywxWOc++0xgPYr0ZCoIOwyGGZX+X+Oy4sEIVJ50EAntfVeCYDoi62eoUG8cFQt46/4+d
-         fFWFnK1UAKaFVbqtyXnrwtElqnC43ezHSpHNjk4cUw8xeFEhOldARBpZY+XtBAw506EY
-         ryQw==
+        d=amarulasolutions.com; s=google; t=1795196556; x=1795801356; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=ZcQXLHhR20hCfvjpVa526iaWuFLXqsFmhOokAK+WFKc=;
+        b=YaghYcbQJ6vSh29zpfi6dqPsQVE7rs5guvJ99ChQg6Sqejhwe28fEPf8xWFAMlHYzl
+         CTbttGcteJX9vGVj27Psr0L16DTwiB4fjN0w4fJkw0NRAgOw8CT5FMbF2LxxA1URBBDL
+         p3pcSI0CJC98Flmb63ckN6X6n+A97tC+h3Fzg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795084682; x=1795689482;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=D+9N4aioXVI29LS1qOtYPEdWRjnfXn6CSLbyGCX05wY=;
-        b=K8WswHqVEwZu4aGYNSfh5e7IDEAU6vY+7I9ocsgRvuAMDQHLnASJQXPiNhRBacol3i
-         eIWasmq5Tk6Sj8z/OFS2UZEKi6SdsAZkTNfBakx0rBesIiiNXxyMdBD32p4ah1KEsaas
-         f4pOJf+IJEZ7qi5Tq2DXQIMjGoKOFqGpoLIfA+n39XNuREizlngzKsJB5px5io6Ir1fB
-         Z0X+A/Lw4rE6ju4cCw0YtTPaGDttKFRvp+y9T5JeOXsDrtutN2SwEHxhN/LyfXebMqTH
-         IQXMuyVzhq7qk2mMOnRNIdF2CaUmdrxAHAXnn09liJl2wEEp0T3ntEAsCbSRfKKj3lSI
-         NSfg==
-X-Forwarded-Encrypted: i=1; AL+hErGN3/C89+l9vLHnR2IM1J/MIywHtv9whle6d55VnlhD+qe+Mdt4ep5jXqvavIoOPxXgjuappfavO7U=@lists.linux.dev
-X-Gm-Message-State: APuU4Z8fZlrUr2LXb+Z1Z+lJIvjB6p25XwDBpx5pit8yx9Tt2vN1ZTs+
-	7szZkTcPBQ6Xd9rPunOts1oOtx+tEUa3ukDKAkcQYILps84WBKbstQ4jhkzHLaPvta/i/NQUNr/
-	zJTD/TEt2DoxUo8TiF0Ljpq/q+FV2CCE=
-X-Gm-Gg: AYBFou24sb1WzCnQfm10hza0AdVZPx4+Qc1v7y+8A+eGexkE08L7V/ADUGYzwntZKzl
-	5IVPAu9hr6v/fmbQbRdjRX6Sbzfx1jlNl2+Ke9jupOYfaBA25G4XF2cYUAsgdyIadlzXYC/lQee
-	0GZ8i+kFXcqwxJfYqV5zvnGOsJaljZL6O+W/ZwafBwsTfPUwiLQd49RfNnEWWr3M/PmiTYSd2rb
-	lV4LUOGmQnuKxQinqikVSrCPJ7N0LqHbuaV4IRlPeRyZbkcWDegLuzvVoU+TCRHKRoHfb3qrXl7
-	Rnl6cg6lfHB+OdOGIxz3w0X6oLx4z3f66frD1XB3IlxenhBg9yfP8wFvEk6+Wx3AowM/lcSTZHZ
-	iRmJH13icvWFIuKnkncxA8lyNF3ZQwojEqTd6HKZc7/gy67nGnXO4k2wNzUXzX4yoxrGEfxphRy
-	FwNttCt9GyZFGClJJvP7KsEa5EAOy/bg==
-X-Received: by 2002:a05:6820:3503:10b0:6cd:3fdc:2664 with SMTP id
- 006d021491bc7-71b3267b3d6mr204785eaf.37.1795084682370; Thu, 19 Nov 2026
- 02:38:02 -0800 (PST)
+        d=1e100.net; s=20260707; t=1795196556; x=1795801356;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=ZcQXLHhR20hCfvjpVa526iaWuFLXqsFmhOokAK+WFKc=;
+        b=odqCCfxsVdxxzDOQ7+kSHfNPTXdOI4co3X+L4KO8aFU3dXbDKSDC5rFEtKnqvCzJTM
+         rLy6qH78Zmu1oG3AjfoWE+HT3SaXe7FxAovgqmVdlO4r0r6g+CKH08eh1vvm4PSP1mN7
+         SucsXZaPk9nDhNVyBt/Q5fzbzgB66E1bpfPV92i88wOYIsonCajR1kvqYz5iTo8nNoTa
+         da6mMGReckhqr13kTGK9ZZDyEdVaC3f2TWb5u4sgOC77aum5GYc8zQ3RNThn/NU+2bBw
+         Yb5dEZAH0CSQyI8XfAziOeQoqyLe5HTDSpObNsJwt38qANh3w3A2o/O3N7yuef3BlxB4
+         myZw==
+X-Forwarded-Encrypted: i=1; AL+hErGEWqhVZNdA+dG24ncN9qe8AlwlK+HlUrpP6xxif/vLKx4/XmYLDjJcSmCbDrk4l44LyAL7nwOOTJM=@lists.linux.dev
+X-Gm-Message-State: APuU4Z97RKMu4IRPmHShznXJi25wCHAracPbhEJ4qyVB8/S5UQdtZcYL
+	Lm1Ese0TX3zWoT9KjWwUGj/bNzombDnhtqPtsmjfHuq5ToA2aBHNV1RJb85t2YQ+ZOY=
+X-Gm-Gg: AZFdTZeCQfkkZbmRUzuggixxe9+vvCFezXfJ2bHH7TnEL20WFQXw5wKOMijyiP5bc1+
+	MBkd++eirWZM8Tu6hYCuk228kbVKpG8iBh7L1oPX4Pxm/ijXYEZ2ScIWTJw3Q9bI/6sls4pxB1T
+	ZsuRvLZUfvqHLTrTKlHGfJ3Spy2cxx3+lB6lBz4LChZiBOz6hcS7JqDrt1ojfVpaIBe3xUIt9U0
+	YgHEynJqZrir2m/pSNxkUSsF5oCzij735rStNnfkmH+XO8U4cwth1135y0SunGS8QMgEfibbT9c
+	QzSTXoghFb654Uqz7mXV8MP1o9yntxUnHqsEnKxqZJBukMEui3enquI0cqhZL3noCZPs2mVnhPB
+	MdekcTeuhzhdTwByQVaKjSVdYnbc4Hn0Ow40bh6YIAxk1hJG2OiPreJGoIvbrTjfNNFgOMjlWWa
+	m/8IyUHauJNSKwi/3Es518jv0oRuSLt+pHRt+OHmTEqHLeRLX8sfVrP5YKGiDpVV6w7Fa2pz8hU
+	FxMhlf5hvxTElmb8+5E0CByS63Dq/WkWzIPzduDkBxlrpAhCIZ37YAfeW0sf416mbHhNBEc6ypZ
+	Q3Z0sXYfRbyW7FrjNqqphdjGz5HvcAmS/O0hw2xl9SxouTXRcUCIk9xsONM+3eZvrPLNM90JIA8
+	MEejM53wInGLxocZkPeUnAH1WLvh9l3jCbScM7Jm/HN+acuM7kY1uewX+WT6cjA/KlV/w7kk=
+X-Received: by 2002:a05:6000:470e:b0:4aa:323a:d7b7 with SMTP id ffacd0b85a97d-4abb16e310bmr8421955f8f.23.1795196555630;
+        Fri, 20 Nov 2026 09:42:35 -0800 (PST)
+Received: from dario-ThinkPad-P14s-Gen-5.amarulasolutions.com ([2.196.41.246])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4ab6b2050f1sm6597356f8f.38.2026.11.20.09.42.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Nov 2026 09:42:35 -0800 (PST)
+From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+To: Arend van Spriel <arend.vanspriel@broadcom.com>
+Cc: michael@amarulasolutions.com,
+	linux-amarula@amarulasolutions.com,
+	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
+	stable@vger.kernel.org,
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Benjamin Drung <benjamin.drung@canonical.com>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Matthias Brugger <mbrugger@suse.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	brcm80211-dev-list.pdl@broadcom.com,
+	brcm80211@lists.linux.dev,
+	linux-wireless@vger.kernel.org
+Subject: [PATCH wireless] wifi: brcmfmac: fix use-after-free of the watchdog task_struct
+Date: Fri, 20 Nov 2026 18:42:27 +0100
+Message-ID: <20261120174231.2024897-1-dario.binacchi@amarulasolutions.com>
+X-Mailer: git-send-email 2.43.0
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Post: <mailto:brcm80211@lists.linux.dev>
@@ -104,62 +103,80 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:brcm80211+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261112050816.2795512-1-ragulbaby@gmail.com> <20261117125204.3992696-1-arend.vanspriel@broadcom.com>
-In-Reply-To: <20261117125204.3992696-1-arend.vanspriel@broadcom.com>
-From: Jie Feng <hjf3108@gmail.com>
-Date: Thu, 19 Nov 2026 02:37:23 -0800
-X-Gm-Features: AclHuK9pB0av0B2Ec4fhz9yUKq6D5l_BFPjgXFCn4ODJXfmSjZymkoZ_qi1RZTA
-Message-ID: <CABOQOSVNZ0M7u80pCMOSTFH8vW2eAYQmcJKowdtTubj0-bLagA@mail.gmail.com>
-Subject: Re: [PATCH] wifi: brcm80211: move the USB bootloader definitions to a
- shared header
-To: Arend van Spriel <arend.vanspriel@broadcom.com>
-Cc: Ragul Balaji <ragulbaby@gmail.com>, linux-wireless@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, brcm80211@lists.linux.dev, 
-	brcm80211-dev-list.pdl@broadcom.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-On Tue, 17 Nov 2026 at 04:52, Arend van Spriel
-<arend.vanspriel@broadcom.com> wrote:
->
-> On Thu, 12 Nov 2026 13:08:15 +0800, Ragul Balaji wrote:
-> > The Broadcom USB bootloader downloads firmware the same way for other
-> > USB chips than the FullMAC ones of brcmfmac.  Move its commands, states,
-> > firmware header and response layouts from brcmfmac's usb.c to a header
-> > in the shared include directory, so that other drivers can use them.
-> >
-> > Signed-off-by: Ragul Balaji <ragulbaby@gmail.com>
-> > Signed-off-by: Ho Jie Feng <hjf3108@gmail.com>
-> > ---
-> >  .../net/wireless/broadcom/brcm80211/brcmfmac/usb.c | 68 +---------------
-> >  .../broadcom/brcm80211/include/brcm_usb_rdl.h      | 78 ++++++++++++++++++++++
-> >  2 files changed, 79 insertions(+), 67 deletions(-)
->
-> [...]
->
-> > +#ifndef      _BRCM_USB_RDL_H_
-> > +#define      _BRCM_USB_RDL_H_
-> > +
-> > +#include <linux/types.h>
-> > +
-> > +#define BRCMF_POSTBOOT_ID            0xA123  /* ID to detect if dongle
-> > +                                                has boot up */
-> > +
-> > +#define TRX_MAGIC            0x30524448      /* "HDR0" */
->
-> [...]
->
-> The move itself looks fine. Like the series "Move brcmsmac code into
-> brcmutil in preparation for brcmbmac" (posted a few minutes later), it is
-> part of the reorganization that has to go in before the brcmbmac driver
-> is sent again, and nothing else in the tree uses this header yet. Keeping
-> the brcmfmac and the brcmsmac parts as separate patches is fine, but
-> please send them as one series with a common cover letter, so the shared
-> pieces are reviewed together. Since the series then touches more than
-> brcmsmac, rename it to something like "Reorganize brcm80211 code into
-> shared directories in preparation for brcmbmac". Can you clarify the
-> additional sign-off from Ho Jie Feng? Did he co-author the patch or did
-> you use his (earlier) work?
-Yes, the driver was co-developed with me over a few months.
+The watchdog thread exits as soon as it receives a SIGTERM, also from
+userspace, e.g. when init kills all the processes at reboot. If the
+driver is removed afterwards, the reference taken right before sending
+the signal by commit c623b6358088 ("wifi: brcmfmac: Fix potential
+use-after-free issue when stopping watchdog task") comes too late, and
+kthread_stop() runs on a task_struct already freed.
 
-> Regards,
-> Arend
+  WARNING: kernel/kthread.c:84 at kthread_stop+0xd8/0x190
+  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+  Call trace:
+   kthread_stop+0x148/0x190 (P)
+   kthread_stop_put+0x14/0xb0
+   brcmf_sdio_remove+0x58/0x1d0
+   brcmf_sdiod_remove+0x20/0xa0
+   brcmf_ops_sdio_remove+0x5c/0x90
+
+Take the reference before the thread is started and drop it with
+kthread_stop_put() when it is stopped.
+
+Fixes: c623b6358088 ("wifi: brcmfmac: Fix potential use-after-free issue when stopping watchdog task")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+
+---
+
+ .../net/wireless/broadcom/brcm80211/brcmfmac/sdio.c  | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
+index cea52d408817..67b2291f8ee5 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
+@@ -2478,7 +2478,6 @@ static void brcmf_sdio_bus_stop(struct device *dev)
+ 	brcmf_dbg(TRACE, "Enter\n");
+ 
+ 	if (bus->watchdog_tsk) {
+-		get_task_struct(bus->watchdog_tsk);
+ 		send_sig(SIGTERM, bus->watchdog_tsk, 1);
+ 		kthread_stop_put(bus->watchdog_tsk);
+ 		bus->watchdog_tsk = NULL;
+@@ -4500,12 +4499,16 @@ int brcmf_sdio_probe(struct brcmf_sdio_dev *sdiodev)
+ 	timer_setup(&bus->timer, brcmf_sdio_watchdog, 0);
+ 	/* Initialize watchdog thread */
+ 	init_completion(&bus->watchdog_wait);
+-	bus->watchdog_tsk = kthread_run(brcmf_sdio_watchdog_thread,
+-					bus, "brcmf_wdog/%s",
+-					dev_name(&sdiodev->func1->dev));
++	bus->watchdog_tsk = kthread_create(brcmf_sdio_watchdog_thread,
++					   bus, "brcmf_wdog/%s",
++					   dev_name(&sdiodev->func1->dev));
+ 	if (IS_ERR(bus->watchdog_tsk)) {
+ 		pr_warn("brcmf_watchdog thread failed to start\n");
+ 		bus->watchdog_tsk = NULL;
++	} else {
++		/* The thread may exit on a SIGTERM before it is stopped */
++		get_task_struct(bus->watchdog_tsk);
++		wake_up_process(bus->watchdog_tsk);
+ 	}
+ 	/* Initialize DPC thread */
+ 	bus->dpc_triggered = false;
+@@ -4576,7 +4579,6 @@ void brcmf_sdio_remove(struct brcmf_sdio *bus)
+ 	if (bus) {
+ 		/* Stop watchdog task */
+ 		if (bus->watchdog_tsk) {
+-			get_task_struct(bus->watchdog_tsk);
+ 			send_sig(SIGTERM, bus->watchdog_tsk, 1);
+ 			kthread_stop_put(bus->watchdog_tsk);
+ 			bus->watchdog_tsk = NULL;
+---
+base-commit: d0f871bfb831705d9f55479f5b2b40f636ea7b16
+branch: brcmfmac-wdog-uaf
+
+-- 
+2.43.0
+
