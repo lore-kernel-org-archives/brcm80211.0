@@ -1,99 +1,57 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.47
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.70.43.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795196557;
-	b=DjuCrpT23+wZ6+5stoJKT7VdOMcPsmQrpSoxSEk+7WkGe5ERfIx3wFFZuNRIsMP/AhWd
-	 BtVmQ3eS00QDEm2RHkk3mkKQM6CgPWRK+QfUV09YMJtlslmowi+d4lWerj33UvbC1cFlJ
-	 1t+D8K7Wtl9CTIvb1zXmlk6c2hA7LlF8D5Dy3jr33HEJlRIR4fSg3YR5kaFia/knMqDM/
-	 E0B4iFuGoEglF16B5NYPjZVz2RiX27GRPp1nt+C3ID14Mf6uuMivLRtPK7qDc6iOJFHzD
-	 pT+FoMDGRpfruVJQaVI72xTkXKuv3iD3vYKW8RNNGsmVZOG8VxgPzvTp+DEIbdCH/rQ==
+	t=1795253283;
+	b=dW+gR0lT7q4zMf8IqqPrEk1K73QDYKvY9dVaZcrX3YPtlOKTgZbWctMt7GXu93ysDJo/
+	 kSWgwwjnKm6dLRjol2ZcmvT7LDE4IotjM9jCCndzAt3n3dKRJZkvobLbHqXQ/y0tcH50T
+	 3T3NCAHd4Ihjf3rimaT99J/CIH+s80GwV9AYnPRkHDPNuv0w8JROtNOK3km952HJkz/fQ
+	 dDfKbJ1ZoWN1cqM7e6TNcDyVmxj21XSbF/suPWWUPIeBnyBTijo1vK6XPa2q5ynZnWQpw
+	 0/QSV7Um7dTRxV3guc0cBUr3WE14SPVC3ykEMiLGqJ/7iLRxq+gmfJ9YRUaI/symk+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795196557;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:MIME-Version:
+	a=rsa-sha256; c=relaxed/relaxed; t=1795253283;
+	h=DMARC-Filter:DKIM-Signature:Date:To:From:Cc:Subject:Message-ID:
+	 Feedback-ID:X-Pm-Message-ID:MIME-Version:Content-Type:
 	 Content-Transfer-Encoding;
-	bh=ZcQXLHhR20hCfvjpVa526iaWuFLXqsFmhOokAK+WFKc=;
-	b=Zw2Ung8kWKxuTUrM3Da/QtxZ3vpumlX82pAgX307rjGQPHRCXWhYcYTeBR30zx/4MijO
-	 q3iiWLf56Z9ZMFXOga2SilHu4JP9Vs3u7tMBZGpVtijEVUEktBZ0Aw/gU3nnkT6GxkQET
-	 ALh1Cw7FPgj+gu3Xak+TpUBi5cS9K62R6MuZ+xgGpy5JawQEOk6zMsZv+duxuDvoxZcYS
-	 9o1D50tl20Kx7yODQwCUNri2+GAiQloBGe9QeQkVHLYcJsmsi/X2pwPade3cx00FjZgrG
-	 zkCpqZzPy4Nv0nLbsGlKkERTXHWz4nOrcMxgFf86stHOmMF2LXPU4RSwmnTg3/a8pgQ==
+	bh=0bSx2JclMF4MRpUkB5cyQcV3F1zjv1EmvhDRj9fFHOM=;
+	b=dHPbMbLrOZVVcXA4hpgmXZo26kq6j7RkwnAK7YDS3mYiMyYiYIX/WgLJkAR+Hm3UHYfd
+	 PB2vd4380L7pcTTLYvzGph8Ld4lQJuORTYn1pL4imXkvrGUoAOHkeWnbbSSklHC50Rsiv
+	 zA6MpNPEyISJrcE0K/r4+n3NyGT6y/yvs7jIfnbQGNLRRgEM4tf9BTo4eE5YQgnBbjP6L
+	 yJSPkr2qe5VBN0mfauAOO7OExKht9LjZlivLL5TacWUJseULbyDf0g17lxm/t888+sjUX
+	 zJS6fzZ1JLvqYk68mNpSN+EKWirYQ1Gt47tBRhR3/D2emL/A86DpK3QQOb88Y9h9nag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=amarulasolutions.com;
-	spf=pass smtp.mailfrom=amarulasolutions.com;
-	dkim=pass header.d=amarulasolutions.com header.i=@amarulasolutions.com header.a=rsa-sha256 header.s=google header.b=YaghYcbQ;
-	arc=none smtp.remote-ip=209.85.221.47
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=modelmiser.com;
+	spf=pass smtp.mailfrom=modelmiser.com;
+	dkim=pass header.d=modelmiser.com header.i=@modelmiser.com header.a=rsa-sha256 header.s=protonmail header.b=QDr60wB2;
+	arc=none smtp.remote-ip=185.70.43.18
+Received: from mail-4318.protonmail.ch (mail-4318.protonmail.ch [185.70.43.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FD79606B061
-	for <brcm80211@lists.linux.dev>; Fri, 20 Nov 2026 17:42:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3FD79606B061
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=amarulasolutions.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amarulasolutions.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28541606A325
+	for <brcm80211@lists.linux.dev>; Sat, 21 Nov 2026 09:28:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 28541606A325
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=modelmiser.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=modelmiser.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=amarulasolutions.com header.i=@amarulasolutions.com header.a=rsa-sha256 header.s=google header.b=YaghYcbQ
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-491971ac844so1019039f8f.2
-        for <brcm80211@lists.linux.dev>; Fri, 20 Nov 2026 09:42:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=amarulasolutions.com; s=google; t=1795196556; x=1795801356; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=ZcQXLHhR20hCfvjpVa526iaWuFLXqsFmhOokAK+WFKc=;
-        b=YaghYcbQJ6vSh29zpfi6dqPsQVE7rs5guvJ99ChQg6Sqejhwe28fEPf8xWFAMlHYzl
-         CTbttGcteJX9vGVj27Psr0L16DTwiB4fjN0w4fJkw0NRAgOw8CT5FMbF2LxxA1URBBDL
-         p3pcSI0CJC98Flmb63ckN6X6n+A97tC+h3Fzg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795196556; x=1795801356;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=ZcQXLHhR20hCfvjpVa526iaWuFLXqsFmhOokAK+WFKc=;
-        b=odqCCfxsVdxxzDOQ7+kSHfNPTXdOI4co3X+L4KO8aFU3dXbDKSDC5rFEtKnqvCzJTM
-         rLy6qH78Zmu1oG3AjfoWE+HT3SaXe7FxAovgqmVdlO4r0r6g+CKH08eh1vvm4PSP1mN7
-         SucsXZaPk9nDhNVyBt/Q5fzbzgB66E1bpfPV92i88wOYIsonCajR1kvqYz5iTo8nNoTa
-         da6mMGReckhqr13kTGK9ZZDyEdVaC3f2TWb5u4sgOC77aum5GYc8zQ3RNThn/NU+2bBw
-         Yb5dEZAH0CSQyI8XfAziOeQoqyLe5HTDSpObNsJwt38qANh3w3A2o/O3N7yuef3BlxB4
-         myZw==
-X-Forwarded-Encrypted: i=1; AL+hErGEWqhVZNdA+dG24ncN9qe8AlwlK+HlUrpP6xxif/vLKx4/XmYLDjJcSmCbDrk4l44LyAL7nwOOTJM=@lists.linux.dev
-X-Gm-Message-State: APuU4Z97RKMu4IRPmHShznXJi25wCHAracPbhEJ4qyVB8/S5UQdtZcYL
-	Lm1Ese0TX3zWoT9KjWwUGj/bNzombDnhtqPtsmjfHuq5ToA2aBHNV1RJb85t2YQ+ZOY=
-X-Gm-Gg: AZFdTZeCQfkkZbmRUzuggixxe9+vvCFezXfJ2bHH7TnEL20WFQXw5wKOMijyiP5bc1+
-	MBkd++eirWZM8Tu6hYCuk228kbVKpG8iBh7L1oPX4Pxm/ijXYEZ2ScIWTJw3Q9bI/6sls4pxB1T
-	ZsuRvLZUfvqHLTrTKlHGfJ3Spy2cxx3+lB6lBz4LChZiBOz6hcS7JqDrt1ojfVpaIBe3xUIt9U0
-	YgHEynJqZrir2m/pSNxkUSsF5oCzij735rStNnfkmH+XO8U4cwth1135y0SunGS8QMgEfibbT9c
-	QzSTXoghFb654Uqz7mXV8MP1o9yntxUnHqsEnKxqZJBukMEui3enquI0cqhZL3noCZPs2mVnhPB
-	MdekcTeuhzhdTwByQVaKjSVdYnbc4Hn0Ow40bh6YIAxk1hJG2OiPreJGoIvbrTjfNNFgOMjlWWa
-	m/8IyUHauJNSKwi/3Es518jv0oRuSLt+pHRt+OHmTEqHLeRLX8sfVrP5YKGiDpVV6w7Fa2pz8hU
-	FxMhlf5hvxTElmb8+5E0CByS63Dq/WkWzIPzduDkBxlrpAhCIZ37YAfeW0sf416mbHhNBEc6ypZ
-	Q3Z0sXYfRbyW7FrjNqqphdjGz5HvcAmS/O0hw2xl9SxouTXRcUCIk9xsONM+3eZvrPLNM90JIA8
-	MEejM53wInGLxocZkPeUnAH1WLvh9l3jCbScM7Jm/HN+acuM7kY1uewX+WT6cjA/KlV/w7kk=
-X-Received: by 2002:a05:6000:470e:b0:4aa:323a:d7b7 with SMTP id ffacd0b85a97d-4abb16e310bmr8421955f8f.23.1795196555630;
-        Fri, 20 Nov 2026 09:42:35 -0800 (PST)
-Received: from dario-ThinkPad-P14s-Gen-5.amarulasolutions.com ([2.196.41.246])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4ab6b2050f1sm6597356f8f.38.2026.11.20.09.42.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Nov 2026 09:42:35 -0800 (PST)
-From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+	dkim=pass (2048-bit key, unprotected) header.d=modelmiser.com header.i=@modelmiser.com header.a=rsa-sha256 header.s=protonmail header.b=QDr60wB2
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=modelmiser.com;
+	s=protonmail; t=1795253280; x=1795512480;
+	bh=0bSx2JclMF4MRpUkB5cyQcV3F1zjv1EmvhDRj9fFHOM=;
+	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=QDr60wB20CgBUF7pMQfUcjrMG7OUeSpzXSersWUnx/xquzjBmnBAwqsZCT2ezmb0S
+	 LN2JfEWgEUG8Yn4Zz+NQ3y1D1tgaSRv1vioeOfE9EcMvdANdPohMWa32M/lLYpsvwa
+	 JUsVnp2lCo3kUAfh422+CTNO3E1qfez8mmOBG0/xn/7Dg5BM512+LembbA23C77o4V
+	 LVDJvb/7W/G9loP/eez+k7ZEORauR65ClCVhmMkjp7UpS1FFtmdCBwEVfGNTXHQxPT
+	 ASLOVdMtjVmMBDcwtDgmUK5/+oxZgcUIr28LZ/BGrwtLPuqORZCN4bI6jNQrRfbmXt
+	 /U4quOkgqpMOQ==
+Date: Sat, 21 Nov 2026 09:27:54 +0000
 To: Arend van Spriel <arend.vanspriel@broadcom.com>
-Cc: michael@amarulasolutions.com,
-	linux-amarula@amarulasolutions.com,
-	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
-	stable@vger.kernel.org,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	Benjamin Drung <benjamin.drung@canonical.com>,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Matthias Brugger <mbrugger@suse.com>,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	brcm80211-dev-list.pdl@broadcom.com,
-	brcm80211@lists.linux.dev,
-	linux-wireless@vger.kernel.org
-Subject: [PATCH wireless] wifi: brcmfmac: fix use-after-free of the watchdog task_struct
-Date: Fri, 20 Nov 2026 18:42:27 +0100
-Message-ID: <20261120174231.2024897-1-dario.binacchi@amarulasolutions.com>
-X-Mailer: git-send-email 2.43.0
+From: Chad Aldreda <ca@modelmiser.com>
+Cc: Johannes Berg <johannes@sipsolutions.net>, linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com, linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Subject: [PATCH wireless] wifi: brcmfmac: fix join parameter length in IBSS join
+Message-ID: <20261121092746.2917397-2-ca@modelmiser.com>
+Feedback-ID: 232753253:user:proton
+X-Pm-Message-ID: 34466270bf4f03036581e02031ff89cba1ae6c7e
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Post: <mailto:brcm80211@lists.linux.dev>
@@ -103,80 +61,85 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:brcm80211+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-The watchdog thread exits as soon as it receives a SIGTERM, also from
-userspace, e.g. when init kills all the processes at reboot. If the
-driver is removed afterwards, the reference taken right before sending
-the signal by commit c623b6358088 ("wifi: brcmfmac: Fix potential
-use-after-free issue when stopping watchdog task") comes too late, and
-kthread_stop() runs on a task_struct already freed.
+brcmf_cfg80211_join_ibss() builds the length of the SET_SSID payload in
+steps. It starts with the SSID record (36 bytes), adds
+BRCMF_ASSOC_PARAMS_FIXED_SIZE (14) when a BSSID is given, and adds
+sizeof(join_params.params_le) (16) when the channel is fixed. With both a
+BSSID and a fixed channel the result is 66, but struct brcmf_join_params
+is 52 bytes (sizes as on x86-64, where __le32 is 4-byte aligned). The
+length is passed unchanged to the protocol layer, which copies that many
+bytes from the on-stack record (brcmf_proto_bcdc_msg(),
+brcmf_msgbuf_tx_ioctl()), so 14 bytes of kernel stack beyond it are sent
+to the firmware.
 
-  WARNING: kernel/kthread.c:84 at kthread_stop+0xd8/0x190
-  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-  Call trace:
-   kthread_stop+0x148/0x190 (P)
-   kthread_stop_put+0x14/0xb0
-   brcmf_sdio_remove+0x58/0x1d0
-   brcmf_sdiod_remove+0x20/0xa0
-   brcmf_ops_sdio_remove+0x5c/0x90
+When the channel is fixed the whole record is in use whether or not a
+BSSID was given, so set the length to sizeof(join_params) in that branch.
+The other three cases (36, 50 and 52 bytes) are unchanged.
 
-Take the reference before the thread is started and drop it with
-kthread_stop_put() when it is stopped.
+The double count dates from the commit that added this calculation: the
+BSSID case counted WL_ASSOC_PARAMS_FIXED_SIZE, and the existing
+wl_ch_to_chanspec(), which that commit called after the BSSID case,
+added WL_ASSOC_PARAMS_FIXED_SIZE plus one chanspec again.
 
-Fixes: c623b6358088 ("wifi: brcmfmac: Fix potential use-after-free issue when stopping watchdog task")
+Fixes: 69274f020a92 ("staging: brcm80211: Fixed ibss join/leave functionali=
+ty in brcmfmac driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
-
+Signed-off-by: Chad Aldreda <ca@modelmiser.com>
 ---
+Not run on hardware, and no reproducer was run. Reaching the line
+needs a brcmfmac device in IBSS mode and a join with both a BSSID and
+a fixed frequency:
+  iw dev wlan0 ibss join <ssid> <freq> fixed-freq <bssid>
+The four lengths (36, 50, 52, 66) were checked at compile time against
+the driver's headers on x86-64, and cfg80211.o builds with W=3D1.
 
- .../net/wireless/broadcom/brcm80211/brcmfmac/sdio.c  | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+Not checked: that firmware accepts 52 bytes in this case. It is the
+length the driver already sends for a fixed channel without a BSSID,
+from the SET_SSID fallback in brcmf_cfg80211_connect() when a channel
+is known, and from the AP start and stop paths.
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-index cea52d408817..67b2291f8ee5 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-@@ -2478,7 +2478,6 @@ static void brcmf_sdio_bus_stop(struct device *dev)
- 	brcmf_dbg(TRACE, "Enter\n");
- 
- 	if (bus->watchdog_tsk) {
--		get_task_struct(bus->watchdog_tsk);
- 		send_sig(SIGTERM, bus->watchdog_tsk, 1);
- 		kthread_stop_put(bus->watchdog_tsk);
- 		bus->watchdog_tsk = NULL;
-@@ -4500,12 +4499,16 @@ int brcmf_sdio_probe(struct brcmf_sdio_dev *sdiodev)
- 	timer_setup(&bus->timer, brcmf_sdio_watchdog, 0);
- 	/* Initialize watchdog thread */
- 	init_completion(&bus->watchdog_wait);
--	bus->watchdog_tsk = kthread_run(brcmf_sdio_watchdog_thread,
--					bus, "brcmf_wdog/%s",
--					dev_name(&sdiodev->func1->dev));
-+	bus->watchdog_tsk = kthread_create(brcmf_sdio_watchdog_thread,
-+					   bus, "brcmf_wdog/%s",
-+					   dev_name(&sdiodev->func1->dev));
- 	if (IS_ERR(bus->watchdog_tsk)) {
- 		pr_warn("brcmf_watchdog thread failed to start\n");
- 		bus->watchdog_tsk = NULL;
-+	} else {
-+		/* The thread may exit on a SIGTERM before it is stopped */
-+		get_task_struct(bus->watchdog_tsk);
-+		wake_up_process(bus->watchdog_tsk);
- 	}
- 	/* Initialize DPC thread */
- 	bus->dpc_triggered = false;
-@@ -4576,7 +4579,6 @@ void brcmf_sdio_remove(struct brcmf_sdio *bus)
- 	if (bus) {
- 		/* Stop watchdog task */
- 		if (bus->watchdog_tsk) {
--			get_task_struct(bus->watchdog_tsk);
- 			send_sig(SIGTERM, bus->watchdog_tsk, 1);
- 			kthread_stop_put(bus->watchdog_tsk);
- 			bus->watchdog_tsk = NULL;
----
-base-commit: d0f871bfb831705d9f55479f5b2b40f636ea7b16
-branch: brcmfmac-wdog-uaf
+Also not checked: on msgbuf the same length bounds the copy of the
+firmware's response back into the record (brcmf_msgbuf_query_dcmd()),
+so a response longer than 52 bytes would be written up to 14 bytes
+past it. Whether firmware returns data for SET_SSID is not known here.
 
--- 
+The BSSID-only length (50) is left alone to keep this a pure fix.
+
+Based on wireless/main dcf495789037. It also applies unchanged to
+wireless-next/main e1dd8486807c, where the length goes through
+brcmf_set_ssid() (39cae1c203a3) and is still passed on as is when the
+firmware does not use versioned join requests.
+
+Tools: the over-length was flagged by an AI model (Grok 4.7) asked to
+check notes on the driver's firmware interface against the source,
+and confirmed by an AI assistant (Claude Fable 5.2) reading the code.
+The patch, this description, the size check and the build were done
+by that assistant.
+
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/=
+drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+index 46714d871260..9e5955a98051 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -1901,7 +1901,7 @@ brcmf_cfg80211_join_ibss(struct wiphy *wiphy, struct =
+net_device *ndev,
+ =09=09=09join_params.params_le.chanspec_list[0] =3D
+ =09=09=09=09cpu_to_le16(chanspec);
+ =09=09=09join_params.params_le.chanspec_num =3D cpu_to_le32(1);
+-=09=09=09join_params_size +=3D sizeof(join_params.params_le);
++=09=09=09join_params_size =3D sizeof(join_params);
+ =09=09}
+=20
+ =09=09/* set channel for starter */
+
+base-commit: dcf495789037ab78d8ddf5844239cf85d92ac5f1
+--=20
 2.43.0
+
 
