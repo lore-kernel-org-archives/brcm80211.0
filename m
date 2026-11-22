@@ -1,98 +1,98 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.228
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.227
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795378189;
-	b=1f6RzEt5w2SrYj9NOVbzyakxWvsc5BzlSntJ2PGUR8b8wwOJYcW7BNWS6Z9uZZ6bV3B5
-	 gZVO+aGNPB5SVSRw09MFIcXUKuMDK12ZfHAwUCWK5wLLkFqRyGvPUxrfe0qB+USpkNsYM
-	 6NIeR3e4vzZvKJbGAsvi8vtSzyO1+DtMkiHeL4s+RH7aFKnlZ2IxH8uHJogi+FlL3xiWX
-	 CP4CoUb1f5jO2u5x4HdWDWMIAGBFUN4T5dAB18om/8rDCt67mbzQICKd2bwFuNnOUfTrt
-	 LM6ZgaBuqIZDD59WZs+LCt7gr5M76pO60NzFH0gVKm6eBe09DqiwBzxFrB+FG76ceMw==
+	t=1795378192;
+	b=SLu/+samg3IbnC7g59j28Lv/9uzPTDojzgO1V8z22Ieq8oUHwhFlBp2QAbOVL1upujfb
+	 3jogwnZVx4FYmE91VwbQzW8fhvclnxD68Rzy9h/p46jjMQn6sz51PmmO6OzMQSaIKXRrU
+	 D+UFTnCfLE3iwlRMeuIk3RVifikpsFv8p1+DvwSjwXSuVEFPznWIxcoV9ifyHMT1tblLB
+	 EWrqyL9DCv0BdYr8PKygb5z1ANJaYrW6CaCYncBE6/iueI0iSAimmi0KR/ANn7QDXF8LJ
+	 91X8i/SIHyJK+a8VsMaO5t5gqwxRwRFF4DO2MJ1WQC84ZEEMDz/3VchZNZnYHqtw99Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795378189;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795378192;
 	h=DMARC-Filter:Received:X-Google-DKIM-Signature:X-Forwarded-Encrypted:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:X-Relaying-Domain:
 	 X-CFilter-Loop:Received:DKIM-Signature:X-Forwarded-Encrypted:
 	 X-Received:X-Received:Received:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding:X-DetectorID-Processed;
-	bh=kTiDmMcQejKcdkn+MG3mE/4LRNga/Ihe5FTdQb6iz0E=;
-	b=UpJ3lpguWos/C8N5Vk+ECLtXIkB31rYV2ZLVbUk2SIS23Db2jHR66U83b0j3djB4CqOU
-	 eKIuC8JvUPe+DN7Je0gxHLJkZ+GCxPFtLv5ANzxL8ipyni4PQKy7DqG32Dh3d93UkeHZ7
-	 dg+MXJLeb9Qz44pvfpywWsSxBBKoEgfQstFfm3/6QsNzYzFkAX+UaF+nXYZ/3f62Fy2c8
-	 pdniAJnaV8FNBaE30QbT56HIzJBSShypTB0AvRvLmgL1LST45HlUz86eNLgvOCCO5KsdK
-	 aA00IFj7qE6J/Kxj71FyZkBAUXqu+8xQx2NTdcjSgn1w8TPplKmPeWAT3EKjMcIG5+A==
+	bh=znD4AFf8/IzQofgtA64x5aA+/MudrRRXANKmbKDYBVo=;
+	b=qVJWgpp4RtPSrLdgGtmJWUgfZvuIrbCkOpummwfqR1Pouo6I8xo6461SPUVapNBIpR3V
+	 Kqy5+lciywWbg3sIDvRKN9bwHdVMYK8FyUGvBtDKf7CZogJIZLjmHwF9fTUAA+kddBE6K
+	 l6bHavRLXkiUnKC877simJnwrfytOYoL0a16RoFyt7z4sfHK94dvGm0xh7JNIvG93M1WL
+	 AUvI9tDb/GPRp7tVbWcOftqWAeZjnr+2Woxhwg4NW/tQ3smJsBl3pwAhIAGHG2f0kGcC/
+	 XWSle0G2OwD8pxdJCZXW1VrIQDA5Pa+20/ULUdrcXIHIIAE9n1Ti8T9EFiiB7ArJMMw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=broadcom.com;
 	spf=fail smtp.mailfrom=broadcom.com;
-	dkim=pass header.d=broadcom.com header.i=@broadcom.com header.a=rsa-sha256 header.s=google header.b=C3v195SN;
-	arc=none smtp.remote-ip=209.85.215.228
-Received: from mail-pg1-f228.google.com (mail-pg1-f228.google.com [209.85.215.228])
+	dkim=pass header.d=broadcom.com header.i=@broadcom.com header.a=rsa-sha256 header.s=google header.b=KqIQl2NC;
+	arc=none smtp.remote-ip=209.85.128.227
+Received: from mail-yw1-f227.google.com (mail-yw1-f227.google.com [209.85.128.227])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03318606A327
-	for <brcm80211@lists.linux.dev>; Sun, 22 Nov 2026 20:09:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 03318606A327
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B4AA606A688
+	for <brcm80211@lists.linux.dev>; Sun, 22 Nov 2026 20:09:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1B4AA606A688
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.a=rsa-sha256 header.s=google header.b=C3v195SN
-Received: by mail-pg1-f228.google.com with SMTP id 41be03b00d2f7-cdba1b5ed8dso1281965a12.1
-        for <brcm80211@lists.linux.dev>; Sun, 22 Nov 2026 12:09:48 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.a=rsa-sha256 header.s=google header.b=KqIQl2NC
+Received: by mail-yw1-f227.google.com with SMTP id 00721157ae682-8b2d14968c9so23510657b3.0
+        for <brcm80211@lists.linux.dev>; Sun, 22 Nov 2026 12:09:50 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795378188; x=1795982988;
+        d=1e100.net; s=20260707; t=1795378190; x=1795982990;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:dkim-signature:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=kTiDmMcQejKcdkn+MG3mE/4LRNga/Ihe5FTdQb6iz0E=;
-        b=YBe6H0r3w/eeQjMWn3GIXxaOxRYne3PtZBW3eX8wPDWY32dnWjAQ7uIBsRaxV+vmQt
-         tD0a8n7bUFKSfCtTA1QbU78x7lhzA1SJWAX2zHKvK+NeQkyUYYMw+N1ySv8oXl3PsGH8
-         suUJAGvpUaBo2J45giaEjum0uPO6hGZq5oq1tRgZoU4Z/jh9sNpj0GtKicOddQQD77Xu
-         N/XIdxpvzJtE/ihUdzghGgZLZDNH7Qlm2YxWGcPIKWEpNxtL4wpIe9HTGaEikWmrxeuK
-         W23QZDvFcAfHRcpk5HXkZoEsJhQLPtTYqdcEjVTAEMXw78yC8ls8dAwqqTfe+XOpfgNO
-         QOYg==
-X-Forwarded-Encrypted: i=1; AL+hErE6WsgAZCYAwC0GvSlfh+udLJBHzBYYl3VSHfmp+cez0qJJuI1fBsAZu4qIAS2mxQftHS85IOYOPxo=@lists.linux.dev
-X-Gm-Message-State: APuU4Z9xK9LWu6rL2kRVcdw0fVupSSFjeEOUYcHRUGFP4KJhfmcCE994
-	k8ZjMk3jYKj5q/DQxTcr3DZ7hAmIloeWHOb2OHSKIDAs0gwwThYairagUeQjtG+gIrptYNfFDWF
-	shwsNw3D8iDV60BBXN1Bk0XyXcTNkUzQ3AlB+d2PpTXb0c6GOqr+TibYuJQzpwG08nXxnXabLm8
-	GB3pzzF0sEjynEBb+F/E0AFOyLqPlKjO1qCfNE/Q2n1Wcz6/+1SJ5Mhc3zU06klkLMJNmI2Gl/Y
-	aqNajGn1uzyshnMj9+CWA==
-X-Gm-Gg: AZFdTZdl6N/YiQRLpQXHkRfmSFN4oELVU+4VMwHzHPBb5zx9IjV59LY6lVrQb6jRVgo
-	iqwtN1XJXrsGCSju6x4VEww425NZyJTBEbIu5GyRi8vEFuZLk40WJlnt23A2VegUNmIl0o+rS/s
-	uHx1yDOpD5WoNhnqx7N9NDJEmBiQx8aeWMg5YOw9kvYglqfLRSxOIcAdkCEBcWceGoSXsm5JEZ6
-	gV3N5xv+O5Pb2tcHIYodVYEg+uvqY6f8tQZmbmVVErN+QWy7SleGFxfabdwtg01uQRn0a87N9g5
-	niIZp5o7ZVo+PjiMDzsWa0u2mD4KNuJvhGQZFvofoltuJhjOKB5vU3K5UnyO0fe6V5cfgHu3OzC
-	WAwGkvrfLG00dEdlaUVcleg8QNzlrjyxjBqvLw59VxWuv+T+605IWWpOZilhKcjZZFnyKFrlWYu
-	eKglQSqzvXbp33sGnBlIleNPb7hqUA2Jec8M+qQ9qEhg==
-X-Received: by 2002:a17:90b:3f43:b0:3ac:7406:b49 with SMTP id 98e67ed59e1d1-3b41c8e0512mr5988400a91.15.1795378188171;
-        Sun, 22 Nov 2026 12:09:48 -0800 (PST)
-Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-100.dlp.protect.broadcom.com. [144.49.247.100])
-        by smtp-relay.gmail.com with ESMTPS id 98e67ed59e1d1-3b41add899dsm6630856a91.3.2026.11.22.12.09.47
+        bh=znD4AFf8/IzQofgtA64x5aA+/MudrRRXANKmbKDYBVo=;
+        b=LZ/lEqauTJ6xlg/FSYax2yh75k5UzbeexRCQ/2/J6EQz13kv7Jv80gqgqSE4vE5DsW
+         9h6/jf+/kKrr7Oyp4S1V9oQEyKPc3t6Bg1Odz9wYqSeIpkacHbt9LEPdDTp2EQeT3O7D
+         m/fN4KWwEnakUUtDICD0Bl009Bl7XT+IAgSM6kVkumWDkVZNjTF+G0DRVJTRji5yYwID
+         FtoWQHz0oW/3pUUHOc1wnupgcerbWO7YMJNCrwcf5T6J3fNIPmUvtCUmGgeAzxZcgFdK
+         ZIo2RSRfP47B+YRA2+ym/orKjpCxU9aoWYn8wGhbrONQy3qSOq4EewfklrxoWkeRzB9+
+         EvKA==
+X-Forwarded-Encrypted: i=1; AL+hErFDbReQBhRRj39Ot7nhjdkbHdyv6gSxvucNcOOEh9XlkTdYn2qJsp2UA5kTkrJLuBdCO99kNpGdX2g=@lists.linux.dev
+X-Gm-Message-State: APuU4Z99XIGFRMsFXjq0WAY1/jVieOAKVklEb90TV8rMYQEfgfPeVgMB
+	muLPmR/XrKJeQ+e2DfO5lIYBi8Q4/VRdZ0iPQ9jraTZO7vXenE/eCHhd67KDqGkkMcfJtcCYQFS
+	2EaHfBoQ4VjDT9w/YNpsUQ9jxGHHexCgnZTt9nqZQengeXusmfID2Hh6shV0SIeEL9Xc6X/Yi0S
+	9LC0zFk7zP1zQ4y8I+3Ly+6nKCFdH47LTtqwpR6SKQYbtMixqjIMF+4a96TyyxhKuEp24MY8Nhu
+	dl/j3xFHi6vmKUCYZ2wyQ==
+X-Gm-Gg: AZFdTZdcJKqJ2pploUm3lDaNxKq4a81SFmBgLcVz+n5kCJubCN+UHgKS5DTEvxkGCQG
+	t8DS5IN30+KoPUF7BnMJkhIIPGjI33f5eXW8tkhF97EWGFk2nBgjZHWqvvzufuoVDDmKUE2LgxH
+	rnVh9v9ThrvMvQEuhC4TaXPKFm/MocMYydA602mjPS8/zpQ2kC/8wZXxfwG12nA4modwziv/3EF
+	SYnSRxus9995fblm7tmP9N/YfPYP2Kly/CVX2wHNEiZOHFBGqtsHvDCQ5leRtgj7yJVbTb7VCxK
+	EttFzcAspDCleSi81d9Xf5bo/xFYA5Ng2/FlqzcadvLEwOPHSAq9cAfU9iWZoG8XheBICurrKjx
+	L+GhWN/BumZmQ2CCoXkdE4ItnOQ0hbpqz021WU3+Vv6DIFUOxHmsvYbk/4gXczimHGpoXxyMp2q
+	4oSuuRfvsbnreXacs8g6FTOaPd84peRSRkoKr1GVE=
+X-Received: by 2002:a05:690c:7409:b0:8b4:d9d3:5740 with SMTP id 00721157ae682-8b52032cb00mr30968597b3.4.1795378189834;
+        Sun, 22 Nov 2026 12:09:49 -0800 (PST)
+Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-28.dlp.protect.broadcom.com. [144.49.247.28])
+        by smtp-relay.gmail.com with ESMTPS id 00721157ae682-8b5202c571esm635167b3.26.2026.11.22.12.09.49
         for <brcm80211@lists.linux.dev>
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 22 Nov 2026 12:09:48 -0800 (PST)
+        Sun, 22 Nov 2026 12:09:49 -0800 (PST)
 X-Relaying-Domain: broadcom.com
 X-CFilter-Loop: Reflected
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-93f5844cb60so505332585a.0
-        for <brcm80211@lists.linux.dev>; Sun, 22 Nov 2026 12:09:46 -0800 (PST)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-9495dd0f07eso522253685a.0
+        for <brcm80211@lists.linux.dev>; Sun, 22 Nov 2026 12:09:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1795378186; x=1795982986; darn=lists.linux.dev;
+        d=broadcom.com; s=google; t=1795378188; x=1795982988; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=kTiDmMcQejKcdkn+MG3mE/4LRNga/Ihe5FTdQb6iz0E=;
-        b=C3v195SNrKR2Rdq9ubNk7VEMeruW+ZKzq4H5UgjRWsARUTldFP0/2iaQELj/06eGI5
-         neVEJtjH2jEPa+uN6FSBIn/0jbqdIDQingJlqnOW0U8m2cPNtIyrZkmKYJXe+MicRiP9
-         hsehuViLKc/3xrkvbK0OvwyO5r1U77UVeMNwk=
-X-Forwarded-Encrypted: i=1; AL+hErGSNKhDjru1ahbHTBUPdJo5jh4+m+h2ZKBQ0lOpavyHMIJCOzZxshscxSBbzhuP8xrOf6YSQr+QFgc=@lists.linux.dev
-X-Received: by 2002:a05:620a:318a:b0:93e:c853:fc07 with SMTP id af79cd13be357-949baa0618fmr1654099685a.32.1795378186219;
-        Sun, 22 Nov 2026 12:09:46 -0800 (PST)
-X-Received: by 2002:a05:620a:318a:b0:93e:c853:fc07 with SMTP id af79cd13be357-949baa0618fmr1654096085a.32.1795378185743;
-        Sun, 22 Nov 2026 12:09:45 -0800 (PST)
+        bh=znD4AFf8/IzQofgtA64x5aA+/MudrRRXANKmbKDYBVo=;
+        b=KqIQl2NCGl+o+JzcuVry8bv+S6f6mO81ierEDEv5YIz2xJDlnJ/X6znSGJfk/NusYZ
+         I74tH5bxwK0BKXhYrBO61k1WZr2sM0i+FWUmP0ChkYEOa/oqVD1y8JpLdGDG45fNkUwk
+         TG+R8tssAtrb0njm62kmQVQ6BRy803nLXW/fg=
+X-Forwarded-Encrypted: i=1; AL+hErF1b7FBI3IyccflOHTYG5p+/HHQ484AirNQeBA5a6s/GL1VtXRtKJ59Le4LiPUcCnUmgg3P95BZXLY=@lists.linux.dev
+X-Received: by 2002:a05:620a:2945:b0:949:6574:f36a with SMTP id af79cd13be357-949ba9d02e8mr1628684285a.38.1795378188450;
+        Sun, 22 Nov 2026 12:09:48 -0800 (PST)
+X-Received: by 2002:a05:620a:2945:b0:949:6574:f36a with SMTP id af79cd13be357-949ba9d02e8mr1628681885a.38.1795378187987;
+        Sun, 22 Nov 2026 12:09:47 -0800 (PST)
 Received: from bld-bun-02.bun.broadcom.net ([192.19.176.227])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-949bb34ac11sm664845385a.14.2026.11.22.12.09.43
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-949bb34ac11sm664845385a.14.2026.11.22.12.09.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Nov 2026 12:09:45 -0800 (PST)
+        Sun, 22 Nov 2026 12:09:47 -0800 (PST)
 From: Arend van Spriel <arend.vanspriel@broadcom.com>
 To: Andre Eikmeyer <dev@deq.rocks>
 Cc: arend.vanspriel@broadcom.com,
@@ -102,12 +102,12 @@ Cc: arend.vanspriel@broadcom.com,
 	linux-kernel@vger.kernel.org,
 	Yossef Osman <Yossef.Osman@proton.me>,
 	Aditya Garg <aditya.garg@linux.dev>
-Subject: Re: [PATCH 6/7] wifi: brcmfmac: add vendor commands for AWDL
-Date: Sun, 22 Nov 2026 21:09:30 +0100
-Message-ID: <20261122200931.2090372-5-arend.vanspriel@broadcom.com>
+Subject: Re: [PATCH 7/7] wifi: brcmfmac: pass AWDL frames and role changes to user space
+Date: Sun, 22 Nov 2026 21:09:31 +0100
+Message-ID: <20261122200931.2090372-6-arend.vanspriel@broadcom.com>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20261104151547.70333-7-dev@deq.rocks>
-References: <20261104151547.70333-7-dev@deq.rocks>
+In-Reply-To: <20261104151547.70333-8-dev@deq.rocks>
+References: <20261104151547.70333-8-dev@deq.rocks>
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Post: <mailto:brcm80211@lists.linux.dev>
@@ -120,205 +120,102 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
 
-On Wed, 4 Nov 2026 16:15:46 +0100, Andre Eikmeyer <dev@deq.rocks> wrote:
-> AWDL election, peer discovery and services run in user space. The
-> firmware sends and receives the AWDL frames and the data once the host
-> has set its AWDL parameters. Add vendor commands of the Broadcom OUI on
-> the primary interface for that:
+On Wed, 4 Nov 2026 16:15:47 +0100, Andre Eikmeyer <dev@deq.rocks> wrote:
+> User space runs the AWDL election and peer discovery from the AWDL
+> action frames other devices send. The firmware reports them with two
+> events on the AWDL interface, ACTION_FRAME_RX and AWDL_EVENT (98). A
+> header is in front of the frame. Its first 16 bits, high byte first,
+> are its version: 1 is struct brcmf_rx_mgmt_data with 16 bytes, 2 has 24
+> bytes. Both events come with either version. AWDL_EVENT carries a frame
+> only with some of its status values. AWDL_ROLE (97) reports the AWDL
+> role of the firmware in its status, 0 slave, 1 master not taking part
+> in the election and 2 master.
 >
-> - AWDL_START creates the AWDL interface with the given MAC address and
->   starts AWDL with the given TLVs. AWDL_STOP stops it and removes the
->   interface. Registering and unregistering the network device needs
->   RTNL, vendor commands run with the wiphy lock only. Both commands
->   therefore run in a work item and report their result with the vendor
->   events AWDL_STARTED and AWDL_STOPPED.
-> - AWDL_SET_FRAMES replaces the TLVs the firmware sends, the TLVs of
->   awdl_payload and awdl_oob_af_auto. The driver adds the headers.
-> - AWDL_SET_SYNC sets the master to synchronize to, with its metric and
->   the distance to it. Leaving out the master makes the device its own
->   master.
-> - AWDL_PEER_ADD and AWDL_PEER_DEL add and remove a peer data frames go
->   to. AWDL_PEER_ADD takes the HT and VHT capabilities elements of the
->   peer, which macOS builds from the AWDL TLVs of the peer and passes in
->   awdl_peer_op.
->
-> The other firmware parameters of AWDL are set by the driver in the
-> order and with the values macOS 15.4.1 sets on the BCM4377 of a
-> MacBookAir9,1. The BCM4364 gets slot_bss without SDB,
-> its firmware traps with the SDB form while the station is on 5 GHz.
-> Some parameters change 500 ms and 5 s after the start.
->
-> The AWDL interface is removed before system sleep with an AWDL_STOPPED
-> event.
+> Register the two AWDL events when the firmware supports AWDL, so the
+> event mask includes them. Pass every AWDL action frame (vendor specific
+> category, OUI 00:17:f2, type 8) of the two events and the role changes
+> to user space as the vendor events AWDL_FRAME and AWDL_ROLE. Other
+> events of the AWDL interface are dropped as before.
 >
 > Tested-by: Yossef Osman <Yossef.Osman@proton.me>
 > Tested-by: Aditya Garg <aditya.garg@linux.dev>
 > Signed-off-by: Andre Eikmeyer <dev@deq.rocks>
 > ---
->  .../broadcom/brcm80211/brcmfmac/awdl.c        | 586 +++++++++++++++++-
->  .../broadcom/brcm80211/brcmfmac/awdl.h        |  53 ++
->  .../broadcom/brcm80211/brcmfmac/cfg80211.c    |   5 +-
->  .../broadcom/brcm80211/brcmfmac/vendor.c      |  78 +++
->  .../broadcom/brcm80211/brcmfmac/vendor.h      |  86 +++
->  5 files changed, 804 insertions(+), 4 deletions(-)
+>  .../broadcom/brcm80211/brcmfmac/awdl.c        | 122 +++++++++++++++++-
+>  .../broadcom/brcm80211/brcmfmac/awdl.h        |   4 +
+>  .../broadcom/brcm80211/brcmfmac/cfg80211.c    |   1 +
+>  .../broadcom/brcm80211/brcmfmac/fweh.c        |   8 +-
+>  .../broadcom/brcm80211/brcmfmac/fweh.h        |   5 +
+>  .../broadcom/brcm80211/brcmfmac/vendor.c      |   8 ++
+>  .../broadcom/brcm80211/brcmfmac/vendor.h      |  12 ++
+>  7 files changed, 151 insertions(+), 9 deletions(-)
 
 [...]
 
-> @@ -53,10 +58,123 @@ static const u8 brcmf_awdl_bssid[ETH_ALEN] = {
-> +};
-> +
-> +/* awdl_election_tree: the master at 0x0f, its metric at 0x15, distance 0x19 */
-> +#define BRCMF_AWDL_ELECTION_ADDR	0x0f
-> +#define BRCMF_AWDL_ELECTION_METRIC	0x15
-> +#define BRCMF_AWDL_ELECTION_DISTANCE	0x19
-> +static const u8 brcmf_awdl_election_tree[] = {
-> +	0x00, 0x00, 0x00, 0x41, 0x00, 0x00, 0x00, 0x00,
-> +	0x05, 0xba, 0x00, 0x00, 0x01, 0x03, 0x04, 0x00,
-> +	0x00, 0x00, 0x00, 0x00, 0x00, 0x41, 0x00, 0x00,
-> +	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +	0x00, 0x00,
-> +};
-> +
-> +/*
-
-These tables are patched at fixed offsets (0x0f, 0x15 and 0x19 here, and
-in slot_bss, awdl_opmode and awdl_peer_op). Say in a comment that they
-are copied from the macOS trace and not otherwise documented, and name
-the firmware versions they were verified on.
-
-[...]
-
-> @@ -335,6 +455,461 @@ int brcmf_awdl_decap(struct sk_buff *skb)
-> +/* Sets a firmware parameter of the AWDL interface, errors are only logged */
-> +static void brcmf_awdl_set(struct brcmf_if *ifp, const char *name,
-> +			   const void *data, u32 len)
-> +{
-> +	int err;
-> +
-> +	err = brcmf_fil_iovar_data_set(ifp, name, data, len);
-> +	if (err)
-> +		brcmf_dbg(INFO, "AWDL %s: %d\n", name, err);
-> +}
-> +
-
-brcmf_awdl_set() only logs a failure at INFO level, so AWDL_START
-reports status 0 when the firmware rejected awdl, awdl_config or
-slot_bss and AWDL is not running. Return the error from
-brcmf_awdl_set() and fail brcmf_awdl_enable() on the iovars AWDL needs
-(at least awdl, awdl_config and slot_bss). User space then gets the
-error in AWDL_STARTED and the interface is removed again. The same
-goes for brcmf_awdl_refresh(), which makes SET_FRAMES and SET_SYNC
-return 0 whatever the firmware says.
-
-[...]
-
-> @@ -335,6 +455,461 @@ int brcmf_awdl_decap(struct sk_buff *skb)
-> +	u8 buf[sizeof(brcmf_awdl_slot_bss)];
-> +	u8 *s0, *s1;
-> +	int i;
-> +
-> +	memcpy(buf, brcmf_awdl_slot_bss, sizeof(buf));
-> +	/* The BCM4364 firmware traps with the SDB form while the station is
-> +	 * on 5 GHz
-> +	 */
-> +	if (drvr->bus_if->chip == BRCM_CC_4364_CHIP_ID) {
-> +		buf[BRCMF_AWDL_SLOT_SDB] = BRCMF_AWDL_SLOT_SDB_OFF;
-> +		for (i = 0; i < BRCMF_AWDL_SLOTS; i++) {
-> +			s0 = buf + BRCMF_AWDL_SLOT_SLICE0 + 2 * i;
-> +			s1 = buf + BRCMF_AWDL_SLOT_SLICE1 + 2 * i;
-> +			if (!get_unaligned_le16(s0))
-> +				memcpy(s0, s1, 2);
-> +			memset(s1, 0, 2);
+> @@ -324,11 +324,13 @@ static void brcmf_fweh_event_worker(struct work_struct *work)
+>  			ifp = drvr->iflist[0];
+>  		else
+>  			ifp = drvr->iflist[emsg.bsscfgidx];
+> -		/* The AWDL interface has no vif, its events are not for
+> -		 * the cfg80211 handlers
+> +		/* The AWDL interface has no vif, its events go to user
+> +		 * space and not to the cfg80211 handlers
+>  		 */
+> -		if (ifp && ifp->awdl)
+> +		if (ifp && ifp->awdl) {
+> +			brcmf_awdl_fweh_event(ifp, &emsg, event->data);
+>  			goto event_free;
 > +		}
-> +	}
-> +	brcmf_awdl_set(drvr->awdl.ifp, "slot_bss", buf, sizeof(buf));
-> +}
-> +
-
-Chip checks like this one are not preferred. feature.c already
-carries the per-chip and per-firmware handling (quirks). Set a quirk
-for the BCM4364 there and test it here.
-
-[...]
-
-> @@ -335,6 +455,461 @@ int brcmf_awdl_decap(struct sk_buff *skb)
-> +int brcmf_awdl_vndr_stop(struct wiphy *wiphy, struct wireless_dev *wdev,
-> +			 const void *data, int len)
-> +{
-> +	struct nlattr *tb[BRCMF_AWDL_ATTR_MAX + 1];
-> +	struct brcmf_pub *drvr;
-> +	struct brcmf_awdl *awdl;
-> +
-> +	drvr = brcmf_awdl_vndr_parse(wiphy, data, len, tb);
-> +	if (IS_ERR(drvr))
-> +		return PTR_ERR(drvr);
-> +	awdl = &drvr->awdl;
-> +	if (awdl->detached)
-> +		return -ENODEV;
-> +	if (!awdl->ifp && awdl->op != BRCMF_AWDL_OP_START)
-> +		return -ENOENT;
-> +
-> +	spin_lock(&awdl->lock);
-> +	awdl->op = BRCMF_AWDL_OP_STOP;
-> +	spin_unlock(&awdl->lock);
-> +	schedule_work(&awdl->ctrl_work);
-> +	return 0;
-> +}
-
-AWDL_STOP while AWDL_START is still queued replaces the pending
-operation, there is a single op slot. The START is dropped without an
-AWDL_STARTED event, and the STOP finds no interface and reports
-AWDL_STOPPED with -ENOENT. User space that sends START and STOP back to
-back gets a start that is never answered. Reject the STOP with -EBUSY
-while a START is pending, or keep both operations pending and run them
-in order.
-
-[...]
-
-> @@ -8,12 +8,97 @@
 >
-> +/**
-> + * enum brcmf_vndr_evts - vendor events of the Broadcom OUI
-> + *
-> + * @BRCMF_VNDR_EVTS_AWDL_STARTED: result of %BRCMF_VNDR_CMDS_AWDL_START with
-> + *	%BRCMF_AWDL_ATTR_STATUS and, on success, %BRCMF_AWDL_ATTR_IFINDEX.
-> + * @BRCMF_VNDR_EVTS_AWDL_STOPPED: the AWDL interface was removed, after
-> + *	%BRCMF_VNDR_CMDS_AWDL_STOP or before system sleep, with
-> + *	%BRCMF_AWDL_ATTR_STATUS.
-> + * @BRCMF_VNDR_EVTS_LAST: number of vendor events.
-> + *
-> + * The value of an event is its index in the vendor events and its vendor
-> + * subcommand.
-> + */
-> +enum brcmf_vndr_evts {
-> +	BRCMF_VNDR_EVTS_AWDL_STARTED,
-> +	BRCMF_VNDR_EVTS_AWDL_STOPPED,
-> +	BRCMF_VNDR_EVTS_LAST
-> +};
-> +
-> +/**
-> + * enum brcmf_awdl_attrs - attributes of the AWDL vendor commands and events
-> + *
-> + * @BRCMF_AWDL_ATTR_ADDR: MAC address, of the AWDL interface or of a peer.
-> + * @BRCMF_AWDL_ATTR_PAYLOAD: AWDL TLVs for the firmware parameter
-> + *	awdl_payload.
-> + * @BRCMF_AWDL_ATTR_OOB: AWDL TLVs for the firmware parameter
-> + *	awdl_oob_af_auto.
-> + * @BRCMF_AWDL_ATTR_MASTER: MAC address of the master (u8[6]).
+>  		err = brcmf_fweh_call_event_handler(drvr, ifp, event->code,
+>  						    &emsg, event->data);
 
-Two points on this interface. The vendor commands are the exception
-agreed for AWDL, which makes this header ABI that cannot change after
-merge:
+The return value of brcmf_awdl_fweh_event() is not used, and a
+failure to allocate or fill the vendor event drops the frame without a
+trace. A bphy_err() on those paths would show why frames are missing.
 
-- AWDL_STOPPED is only sent for AWDL_STOP and before suspend. When the
-  firmware removes the AWDL interface on its own
-  (brcmf_awdl_if_removed() in patch 4) the net_device disappears and
-  user space is not told. Send AWDL_STOPPED in that case as well.
-- brcmf_vndr_cmds and brcmf_awdl_attrs start with an UNSPEC entry,
-  brcmf_vndr_evts does not, so AWDL_STARTED is subcommand 0. Add an
-  UNSPEC entry here, and describe BRCMF_AWDL_ATTR_UNSPEC in the
-  kernel-doc, the kdoc check warns about it.
+[...]
+
+> @@ -94,7 +94,12 @@ struct brcmf_cfg80211_info;
+>  	BRCMF_ENUM_DEF(FIFO_CREDIT_MAP, 74) \
+>  	BRCMF_ENUM_DEF(ACTION_FRAME_RX, 75) \
+>  	BRCMF_ENUM_DEF(TDLS_PEER_EVENT, 92) \
+> +	BRCMF_ENUM_DEF(AWDL_AW, 96) \
+> +	BRCMF_ENUM_DEF(AWDL_ROLE, 97) \
+> +	BRCMF_ENUM_DEF(AWDL_EVENT, 98) \
+>  	BRCMF_ENUM_DEF(BCMC_CREDIT_SUPPORT, 127) \
+> +	BRCMF_ENUM_DEF(AWDL_STATS, 150) \
+> +	BRCMF_ENUM_DEF(SDB_STATE, 152) \
+>  	BRCMF_ABSTRACT_ENUM_DEF(EXT_AUTH_REQ, 0) \
+>  	BRCMF_ABSTRACT_ENUM_DEF(EXT_AUTH_FRAME_RX, 1) \
+>  	BRCMF_ABSTRACT_ENUM_DEF(MGMT_FRAME_TXSTATUS, 2) \
+
+These event codes are specific to the firmware used for the Apple
+chips, but BRCMF_ENUM_DEF puts them in the common list where the same
+numbers may mean something else on other firmware families. Use
+abstract codes for them and translate them in the WCC vendor module,
+like cyw/core.c does for EXT_AUTH_REQ:
+
+1. fweh.h: replace the five BRCMF_ENUM_DEF() entries by
+   BRCMF_ABSTRACT_ENUM_DEF(AWDL_AW, 4), AWDL_ROLE 5, AWDL_EVENT 6,
+   AWDL_STATS 7 and SDB_STATE 8, after the existing abstract entries.
+2. wcc/core.c: define BRCMF_WCC_E_AWDL_AW (96), _AWDL_ROLE (97),
+   _AWDL_EVENT (98), _AWDL_STATS (150) and _SDB_STATE (152) next to
+   BRCMF_WCC_E_LAST, which already covers them, and add a
+   struct brcmf_fweh_event_map brcmf_wcc_event_map with these five items
+   and n_items = 5.
+3. wcc/core.c: set fweh->event_map = &brcmf_wcc_event_map in
+   brcmf_wcc_alloc_fweh_info().
+4. Register the events from a new brcmf_wcc_register_event_handlers(),
+   set as .register_event_handlers in brcmf_wcc_ops, instead of
+   brcmf_awdl_register_events() called from wl_init_priv(). Keep the
+   BRCMF_FEAT_AWDL check there, and export brcmf_awdl_fweh_event() for
+   it. An abstract code is not range checked by brcmf_fweh_register()
+   on a vendor without an event map, so it must not be registered from
+   common code.
+
+brcmf_awdl_fweh_event() itself keeps working, the event worker passes
+it the abstract code.
 
 Regards,
 Arend
