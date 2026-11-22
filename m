@@ -1,57 +1,113 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.70.43.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.214.227
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795253283;
-	b=dW+gR0lT7q4zMf8IqqPrEk1K73QDYKvY9dVaZcrX3YPtlOKTgZbWctMt7GXu93ysDJo/
-	 kSWgwwjnKm6dLRjol2ZcmvT7LDE4IotjM9jCCndzAt3n3dKRJZkvobLbHqXQ/y0tcH50T
-	 3T3NCAHd4Ihjf3rimaT99J/CIH+s80GwV9AYnPRkHDPNuv0w8JROtNOK3km952HJkz/fQ
-	 dDfKbJ1ZoWN1cqM7e6TNcDyVmxj21XSbF/suPWWUPIeBnyBTijo1vK6XPa2q5ynZnWQpw
-	 0/QSV7Um7dTRxV3guc0cBUr3WE14SPVC3ykEMiLGqJ/7iLRxq+gmfJ9YRUaI/symk+g==
+	t=1795378180;
+	b=hv1HoTx2YxcuI94cMahi4PbsyVj6ymIWe3qhUTKcRuoSAKQ+S3/CPhta9jaKyL0Frmpr
+	 DL13va3YXijQKxvRL1W3YaMMbhELaSGF4Oo4/T9eUZGD7esYTmywwCp7eGmt4CVMdcfas
+	 +3O4iLm9qEEyq0ueYas96vIuP7Mx2w/gSWV5zcF9UJgWsVsAkFKLWOIclYK5AtJMldKko
+	 P9lcQrmNan8TAuomG9E/TevX+IYOxAMpvBlcaxjEEIxycBEj9ou3bQEKJI2uwCgB1Hhi1
+	 x3TTOSfM8537Gj/0os0TcvEyt0PZSI7ifaWB1e9+whNxYovwycbEZ8cJfYSwNWeMPkA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795253283;
-	h=DMARC-Filter:DKIM-Signature:Date:To:From:Cc:Subject:Message-ID:
-	 Feedback-ID:X-Pm-Message-ID:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=0bSx2JclMF4MRpUkB5cyQcV3F1zjv1EmvhDRj9fFHOM=;
-	b=dHPbMbLrOZVVcXA4hpgmXZo26kq6j7RkwnAK7YDS3mYiMyYiYIX/WgLJkAR+Hm3UHYfd
-	 PB2vd4380L7pcTTLYvzGph8Ld4lQJuORTYn1pL4imXkvrGUoAOHkeWnbbSSklHC50Rsiv
-	 zA6MpNPEyISJrcE0K/r4+n3NyGT6y/yvs7jIfnbQGNLRRgEM4tf9BTo4eE5YQgnBbjP6L
-	 yJSPkr2qe5VBN0mfauAOO7OExKht9LjZlivLL5TacWUJseULbyDf0g17lxm/t888+sjUX
-	 zJS6fzZ1JLvqYk68mNpSN+EKWirYQ1Gt47tBRhR3/D2emL/A86DpK3QQOb88Y9h9nag==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795378180;
+	h=DMARC-Filter:Received:X-Google-DKIM-Signature:X-Forwarded-Encrypted:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:X-Relaying-Domain:
+	 X-CFilter-Loop:Received:DKIM-Signature:X-Forwarded-Encrypted:
+	 X-Received:X-Received:Received:From:To:Cc:Subject:Date:Message-ID:
+	 X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding:X-DetectorID-Processed;
+	bh=L3EwjgeJ6UtU7zI/nL/aL33LjDXNX3Ej0qdxqErhzoU=;
+	b=LY64qBQwkGaRw+w6XisWpWYZve1jMwi2EtVfp5tmTjFMAj5HTgjBE/4Gy8JpizlStrB+
+	 c6O2zacCFbU0ZKCzv49yCryoFWcvi/tRRs/Tw2WEBKFiehJs3eO5I39aAziuHWCTs4/6B
+	 kFrwAESBi3j67bH6SLaxHMqRZBiMl8Y2oeGWnfFVvvFZ1VGm+KqNzkRNoywdLCKRqtw80
+	 P7mr3yX9Zk2cX5UtOkDVC1LwqCn17yV9K0eU4UWLhMqh/YVlf+MbzUG+cGIEIf3VjNX/U
+	 yjq+5FZcBrEQ/LfCbMkruemNQADVFgEShuYLFQu04TIrK5g1l9+Etu/CrTNFL0WKKFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=modelmiser.com;
-	spf=pass smtp.mailfrom=modelmiser.com;
-	dkim=pass header.d=modelmiser.com header.i=@modelmiser.com header.a=rsa-sha256 header.s=protonmail header.b=QDr60wB2;
-	arc=none smtp.remote-ip=185.70.43.18
-Received: from mail-4318.protonmail.ch (mail-4318.protonmail.ch [185.70.43.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=broadcom.com;
+	spf=fail smtp.mailfrom=broadcom.com;
+	dkim=pass header.d=broadcom.com header.i=@broadcom.com header.a=rsa-sha256 header.s=google header.b=RPiwtY10;
+	arc=none smtp.remote-ip=209.85.214.227
+Received: from mail-pl1-f227.google.com (mail-pl1-f227.google.com [209.85.214.227])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28541606A325
-	for <brcm80211@lists.linux.dev>; Sat, 21 Nov 2026 09:28:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 28541606A325
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=modelmiser.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=modelmiser.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26ECE606A31D
+	for <brcm80211@lists.linux.dev>; Sun, 22 Nov 2026 20:09:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 26ECE606A31D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=modelmiser.com header.i=@modelmiser.com header.a=rsa-sha256 header.s=protonmail header.b=QDr60wB2
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=modelmiser.com;
-	s=protonmail; t=1795253280; x=1795512480;
-	bh=0bSx2JclMF4MRpUkB5cyQcV3F1zjv1EmvhDRj9fFHOM=;
-	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=QDr60wB20CgBUF7pMQfUcjrMG7OUeSpzXSersWUnx/xquzjBmnBAwqsZCT2ezmb0S
-	 LN2JfEWgEUG8Yn4Zz+NQ3y1D1tgaSRv1vioeOfE9EcMvdANdPohMWa32M/lLYpsvwa
-	 JUsVnp2lCo3kUAfh422+CTNO3E1qfez8mmOBG0/xn/7Dg5BM512+LembbA23C77o4V
-	 LVDJvb/7W/G9loP/eez+k7ZEORauR65ClCVhmMkjp7UpS1FFtmdCBwEVfGNTXHQxPT
-	 ASLOVdMtjVmMBDcwtDgmUK5/+oxZgcUIr28LZ/BGrwtLPuqORZCN4bI6jNQrRfbmXt
-	 /U4quOkgqpMOQ==
-Date: Sat, 21 Nov 2026 09:27:54 +0000
-To: Arend van Spriel <arend.vanspriel@broadcom.com>
-From: Chad Aldreda <ca@modelmiser.com>
-Cc: Johannes Berg <johannes@sipsolutions.net>, linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev, brcm80211-dev-list.pdl@broadcom.com, linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: [PATCH wireless] wifi: brcmfmac: fix join parameter length in IBSS join
-Message-ID: <20261121092746.2917397-2-ca@modelmiser.com>
-Feedback-ID: 232753253:user:proton
-X-Pm-Message-ID: 34466270bf4f03036581e02031ff89cba1ae6c7e
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.a=rsa-sha256 header.s=google header.b=RPiwtY10
+Received: by mail-pl1-f227.google.com with SMTP id d9443c01a7336-2f02ee04378so20698895ad.1
+        for <brcm80211@lists.linux.dev>; Sun, 22 Nov 2026 12:09:39 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795378179; x=1795982979;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:dkim-signature:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=L3EwjgeJ6UtU7zI/nL/aL33LjDXNX3Ej0qdxqErhzoU=;
+        b=oWKSZzYQ6uJwtkzH2lda8FrUF3+EdJAs9gXSVaXId7Sw3Llryb+ZKqI77bvSPmwUah
+         bhDtkfbsTUSEk9oqLC6Q7pq3sjXPHUqIq6j4xaw/7xkfb2b+h2bP53vuXxCS9dbPcv7m
+         RgIJHaqxLTHCwTx95bzWv9KSPdFsr6123dycr6mrfiqYpRVD7OzKWRkVa0CfQTaIE8al
+         11NftFKgeGVciLE9buk7eG/wCQRQAG4XntuZltzKBq5TooKmX4nVb7TSCppd/ZLlzOkh
+         2vAwdzS0O8juJj3DCVWHTShtDUFe5LiDAWOwWdiZ727iqrZajtFg4hBnzDTmaBJZkwTv
+         oRLg==
+X-Forwarded-Encrypted: i=1; AL+hErE0hpoRs6M3f4uZTsczD8LU71KdGPMR4DSW0qJqL15cUzOusjO4acuC0ic+Irdevs+kg0BjTXCJ6ys=@lists.linux.dev
+X-Gm-Message-State: APuU4Z/p8ozT29uIAtJ0ZW6rILe8Zjd3l9yBwT/7rX9ER0orHeI31jfk
+	w9Jbg9IqXpsXv95k79DbZpFPhyeK0cF4JUIkhar45jDWKWL5Lf6K89jkcJqCGor7n9x+uovjRpW
+	6mxG+aDZw3U8DAQVQHWGcBiKEHaPws045K0hmSVarDX5cxn052aDmpB1lNph+EeQAmKO07KK8LO
+	NWtT1IxT3M9PqmdNmcZcDldTgetXsfidNg5qmzEcmjijqxemARkkSyfatCLjNwXqc12/bTOD8++
+	aR2RLDrcRS7JsMRU7RMjQ==
+X-Gm-Gg: AZFdTZcjpZmZ4HiW1+xG2USXKzU158YHHPPH5TmKg5MNqa7C8ZwDBLwEOXXohT5TVm6
+	sO+ideKuD0tVUW8qHrYEzLqlbeAuc2sfyWzAsy/JD212Z7fqN8dVkDxgdDrCb/o6S+QO6ogp87I
+	dwzz4GhYvPxFRrDAQJVxrsY5HVsvrJCg4RxbKriLlTc7M9g3UO8oSMA/yd7R4Y+KRptImsYTcch
+	5dLlM7/obK18er0PNZ9jnn8pBlIzAXITJpeXoR/tSD73hKZshUBEB/x9unION6rpSLwN+VPUzqp
+	oUfVUhxIw8RJTJJ7ne3QG6033cUQZhVn8zk7jo6Uv+Ti69/sdo+rLX1RT4MS7Goj2Pk13bKD1vB
+	YSCD7SLvBGQmXznfM1n2s6zSlxm7UfBB/+Y1OgFDgnf724tlFKidDw7qXHUWotdyKaBCc3trQjX
+	DHNpcgt5tPYQgeTxTBRi5fMARsTYmj/NduxYL41H5RZQ==
+X-Received: by 2002:a17:90b:388c:b0:3b4:1c0c:6863 with SMTP id 98e67ed59e1d1-3b41c557600mr8985414a91.0.1795378179334;
+        Sun, 22 Nov 2026 12:09:39 -0800 (PST)
+Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-100.dlp.protect.broadcom.com. [144.49.247.100])
+        by smtp-relay.gmail.com with ESMTPS id 98e67ed59e1d1-3b41d23cb9dsm3116894a91.1.2026.11.22.12.09.37
+        for <brcm80211@lists.linux.dev>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 22 Nov 2026 12:09:39 -0800 (PST)
+X-Relaying-Domain: broadcom.com
+X-CFilter-Loop: Reflected
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-93f2373e9b4so295659185a.1
+        for <brcm80211@lists.linux.dev>; Sun, 22 Nov 2026 12:09:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google; t=1795378176; x=1795982976; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=L3EwjgeJ6UtU7zI/nL/aL33LjDXNX3Ej0qdxqErhzoU=;
+        b=RPiwtY10h3MEqrZ8Inqvg+0CpDnl5BSBUGCC5OcB5sog71zBcTZc9vtE0Od0Ukwh2j
+         WnBBCt66Pf1UkiqvnFpWgDkfCKNFQ6xOrgZ6cKj8keIA/7pSLTs7XE3lqNxJgeqxWP18
+         1OUwOmuDBXPCN/jMAtAkLl0LQSS0U8WBg4+TE=
+X-Forwarded-Encrypted: i=1; AL+hErF/xPtY71j4kyhqGWiABQKYptv86u6fGkNhTihK9dtOuKcIIQYh0CniSK6ynKY5quQS04caBqlgVxw=@lists.linux.dev
+X-Received: by 2002:a05:620a:2886:b0:949:44d2:3275 with SMTP id af79cd13be357-949ba9b9893mr1759711085a.21.1795378176472;
+        Sun, 22 Nov 2026 12:09:36 -0800 (PST)
+X-Received: by 2002:a05:620a:2886:b0:949:44d2:3275 with SMTP id af79cd13be357-949ba9b9893mr1759707985a.21.1795378176005;
+        Sun, 22 Nov 2026 12:09:36 -0800 (PST)
+Received: from bld-bun-02.bun.broadcom.net ([192.19.176.227])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-949bb34ac11sm664845385a.14.2026.11.22.12.09.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 22 Nov 2026 12:09:35 -0800 (PST)
+From: Arend van Spriel <arend.vanspriel@broadcom.com>
+To: Andre Eikmeyer <dev@deq.rocks>
+Cc: arend.vanspriel@broadcom.com,
+	linux-wireless@vger.kernel.org,
+	brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com,
+	linux-kernel@vger.kernel.org,
+	Yossef Osman <Yossef.Osman@proton.me>,
+	Aditya Garg <aditya.garg@linux.dev>
+Subject: Re: [PATCH 3/7] wifi: brcmfmac: detect AWDL support of the firmware
+Date: Sun, 22 Nov 2026 21:09:26 +0100
+Message-ID: <20261122200931.2090372-1-arend.vanspriel@broadcom.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20261104151547.70333-4-dev@deq.rocks>
+References: <20261104151547.70333-4-dev@deq.rocks>
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Post: <mailto:brcm80211@lists.linux.dev>
@@ -61,85 +117,38 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:brcm80211+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
 
-brcmf_cfg80211_join_ibss() builds the length of the SET_SSID payload in
-steps. It starts with the SSID record (36 bytes), adds
-BRCMF_ASSOC_PARAMS_FIXED_SIZE (14) when a BSSID is given, and adds
-sizeof(join_params.params_le) (16) when the channel is fixed. With both a
-BSSID and a fixed channel the result is 66, but struct brcmf_join_params
-is 52 bytes (sizes as on x86-64, where __le32 is 4-byte aligned). The
-length is passed unchanged to the protocol layer, which copies that many
-bytes from the on-stack record (brcmf_proto_bcdc_msg(),
-brcmf_msgbuf_tx_ioctl()), so 14 bytes of kernel stack beyond it are sent
-to the firmware.
+On Wed, 4 Nov 2026 16:15:43 +0100, Andre Eikmeyer <dev@deq.rocks> wrote:
+> The Apple firmware of the BCM4364 and BCM4377 runs Apple Wireless
+> Direct Link (AWDL) itself and announces it with "awdl" in its
+> capabilities. Add the feature flag for it.
+>
+> An AWDL interface is created with interface_create version 3 and
+> interface type 2. The host gives the MAC address, the interface index
+> and the BSSID, which the flags 0x2, 0x8 and 0x10 select. Add the
+> definitions for the interface type and the two new flags.
+>
+> The BCM4350 firmware 7.35.180.133 lists "awdl" as well and answers
+> every interface_create, including the version query, with
+> BCME_UNSUPPORTED. Keep the flag only when the firmware reports
+> interface_create version 3.
+>
+> Tested-by: Yossef Osman <Yossef.Osman@proton.me>
+> Tested-by: Aditya Garg <aditya.garg@linux.dev>
+> Signed-off-by: Andre Eikmeyer <dev@deq.rocks>
+> ---
+>  .../broadcom/brcm80211/brcmfmac/feature.c     | 26 +++++++++++++++++++
+>  .../broadcom/brcm80211/brcmfmac/feature.h     |  3 ++-
+>  .../broadcom/brcm80211/brcmfmac/fwil_types.h  |  3 +++
+>  3 files changed, 31 insertions(+), 1 deletion(-)
 
-When the channel is fixed the whole record is in use whether or not a
-BSSID was given, so set the length to sizeof(join_params) in that branch.
-The other three cases (36, 50 and 52 bytes) are unchanged.
+Similar to the previous patch this one hits a conflict with the
+EVENT_MSGS_EXT feature. Rebase needed anyway so this one gets my
+acknowledgement:
 
-The double count dates from the commit that added this calculation: the
-BSSID case counted WL_ASSOC_PARAMS_FIXED_SIZE, and the existing
-wl_ch_to_chanspec(), which that commit called after the BSSID case,
-added WL_ASSOC_PARAMS_FIXED_SIZE plus one chanspec again.
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
 
-Fixes: 69274f020a92 ("staging: brcm80211: Fixed ibss join/leave functionali=
-ty in brcmfmac driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Chad Aldreda <ca@modelmiser.com>
----
-Not run on hardware, and no reproducer was run. Reaching the line
-needs a brcmfmac device in IBSS mode and a join with both a BSSID and
-a fixed frequency:
-  iw dev wlan0 ibss join <ssid> <freq> fixed-freq <bssid>
-The four lengths (36, 50, 52, 66) were checked at compile time against
-the driver's headers on x86-64, and cfg80211.o builds with W=3D1.
-
-Not checked: that firmware accepts 52 bytes in this case. It is the
-length the driver already sends for a fixed channel without a BSSID,
-from the SET_SSID fallback in brcmf_cfg80211_connect() when a channel
-is known, and from the AP start and stop paths.
-
-Also not checked: on msgbuf the same length bounds the copy of the
-firmware's response back into the record (brcmf_msgbuf_query_dcmd()),
-so a response longer than 52 bytes would be written up to 14 bytes
-past it. Whether firmware returns data for SET_SSID is not known here.
-
-The BSSID-only length (50) is left alone to keep this a pure fix.
-
-Based on wireless/main dcf495789037. It also applies unchanged to
-wireless-next/main e1dd8486807c, where the length goes through
-brcmf_set_ssid() (39cae1c203a3) and is still passed on as is when the
-firmware does not use versioned join requests.
-
-Tools: the over-length was flagged by an AI model (Grok 4.7) asked to
-check notes on the driver's firmware interface against the source,
-and confirmed by an AI assistant (Claude Fable 5.2) reading the code.
-The patch, this description, the size check and the build were done
-by that assistant.
-
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/=
-drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-index 46714d871260..9e5955a98051 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-@@ -1901,7 +1901,7 @@ brcmf_cfg80211_join_ibss(struct wiphy *wiphy, struct =
-net_device *ndev,
- =09=09=09join_params.params_le.chanspec_list[0] =3D
- =09=09=09=09cpu_to_le16(chanspec);
- =09=09=09join_params.params_le.chanspec_num =3D cpu_to_le32(1);
--=09=09=09join_params_size +=3D sizeof(join_params.params_le);
-+=09=09=09join_params_size =3D sizeof(join_params);
- =09=09}
-=20
- =09=09/* set channel for starter */
-
-base-commit: dcf495789037ab78d8ddf5844239cf85d92ac5f1
---=20
-2.43.0
-
-
+Regards,
+Arend
