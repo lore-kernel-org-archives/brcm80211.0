@@ -1,49 +1,49 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.216.248.207
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795633382;
-	b=mgo8rENqIBfIN7i0UvX6cVk3wpJz+92DrH+rwk/vyO9sIYawbsc6K3AM4lmQnhMRfMCS
-	 N+MoIwikMlTEySy2j+WpPARxvu0u6pmORXMYVdAD6XAA8D7S6WTeOA8V3qX6bQJE2U0x0
-	 HbqtpD9IzhHON61VtrWolgkY/n5B3qWsS+Vf50oJJC7CnFNxDknrkbCS+nKdX4UjUjLQu
-	 4u5yDwssf7eLp5f9BGDvHUTLVhjyLVzHORx/pksOnki8SNaS7MO0A0b8edEIo8rrYdVYy
-	 f8t6af403IghgQvbPv4WPfxfuIGp28mddI+Qiv35klswsDO6NY6CoiUMtBDPRVqbINg==
+	t=1795633383;
+	b=ggKdwFSP4lUrYBPhbZ3q3dDfwkkr6u+HpD0ppM1Kuoc4HOCsGb9X5OmT2VhHT+d5wtqV
+	 SBLB46+ywlpT4B/rIB/dDvVYjrcRzHtW62zLRQQ7kDr6So17f2FVJffE6q9XweDBVu5Jh
+	 pe1K5qdjA2hJcURGKjJGcSBlZh3XHe0YttVA79MFnT1p5CJzoeRBG67qqA0TM9Xltz9rn
+	 JezLkmz1WxS3bB8BSq56SOASXFL6d8dl9KjOoL2UAhxtFXyiTIULpVecUd25TgE/iv5LP
+	 M96cLQW5KLfMLMCumRUtwXFOr5FalVoNDNuItrvWCmneoH3/E0++4/DhHcL0BrJl44Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795633382;
-	h=DMARC-Filter:From:X-Lima-ML-UUID:DKIM-Signature:To:Cc:Subject:Date:
-	 Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
-	bh=6Gq1kmLUUPURllDqMn29AAwXHIlfU36v0mvAjkNKDL8=;
-	b=19C1HAdzMlxP5HmX/CdBuDj3SBEKjTkHIm58k0w6otpvkUHsBT3CNR0Eo8+k68dS/pAt
-	 bRTWw6boPhpaQLSeVhBReGhEb+ECFMhWL2+RCFkUPYaCRR+1UkVsGE1F7dqymAdJcqEEn
-	 JnbAuXNxBfbOst877mRZ2vzdZAnIBuxonEGL570TImsgZKOV9t49esEJAdSZijN37xk4V
-	 TZV536NessAKdv/OwPLnnG0ZChaeokH/8+arfYyUUZq60rgG4WiXOSZlJ7ytw8M9P4c+W
-	 4ANGALVbYHRk3L97OC3Q5TRumyeSu9yDg9nORQNXY6rkDV/2JuNyHsqjxX0o8kAMn2A==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795633383;
+	h=DMARC-Filter:From:DKIM-Signature:To:Cc:Subject:Date:Message-ID:
+	 X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=f2IKiIgwrwPhZnKxMWhFMgyWeawmFybOA5SI2KKPvfQ=;
+	b=4Y25BO7tmGnRo9dM7Nv++LqaJ7w5KQnOPAx56iyZ0ZzJvMPzKBC5arn0Zjxqysv8vRUe
+	 2LJX/G3Fyo2zLmF7YwEeWgr2O4IynzmTbzN10tENBgtycq433iIKjcndmUAO7CwTRQd04
+	 YcGXXdtsdZO/OfqSNLi+sesdJ6I7bvMgoo/o0EdPkgf69o9rQc88EX8TFwPIRpq36HHrt
+	 t9bZP8xQvfmzeVURFJZPLQ2KrcG+sL0qbJ43Z+gWB2tC8aa9saPeUetZ4ao6DlMrGac6V
+	 bYxCRnzq+qA7TCGZYrU4KCUhtDX/CzYfunvYhizCZlpST52UMkhVVuBaRYj5GnzpMzg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=none header.from=deq.rocks;
 	spf=none smtp.mailfrom=deq.rocks;
-	dkim=pass header.d=deq.rocks header.i=@deq.rocks header.a=rsa-sha256 header.s=securedbylima-20251205 header.b=rArNteL7;
+	dkim=pass header.d=deq.rocks header.i=@deq.rocks header.a=rsa-sha256 header.s=securedbylima-20251205 header.b=iLtJooP+;
 	arc=none smtp.remote-ip=91.216.248.207
 Received: from mx5.mail-out.lima-city.de (mx5.mail-out.lima-city.de [91.216.248.207])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8FB9606A31E
-	for <brcm80211@lists.linux.dev>; Wed, 25 Nov 2026 19:03:00 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A8FB9606A31E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D417606A32A
+	for <brcm80211@lists.linux.dev>; Wed, 25 Nov 2026 19:03:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6D417606A32A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=deq.rocks
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=deq.rocks
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=deq.rocks header.i=@deq.rocks header.a=rsa-sha256 header.s=securedbylima-20251205 header.b=rArNteL7
+	dkim=pass (2048-bit key) header.d=deq.rocks header.i=@deq.rocks header.a=rsa-sha256 header.s=securedbylima-20251205 header.b=iLtJooP+
 From: Andre Eikmeyer <dev@deq.rocks>
-X-Lima-ML-UUID: 787628ee-a6ad-4c9f-bcca-4bd28f4c3f8c
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=deq.rocks;
-	s=securedbylima-20251205; t=1795633377;
-	bh=WPy2k0MFLTp8YZU2P1hH3lTvW/xuVRk96ToXFrcsWOM=;
-	h=From:To:Cc:Subject:Date:From;
-	b=rArNteL7lvZQCQvirZ46crs/V+2osIrdDjE5gN9eC4ic8Lxxi7A7+chpkm7JbVdbk
-	 CYblq4Yb0P2KBgBf0squDA3uJFsG5XEie5JuR7LR7dS3Dd8omLwKuKWf0qXPbbuXac
-	 2ut+s9IpgYgWMuQcm9Z8LB8sx3TC4uZs1797hvCSv/X3S4cl/Mm8e1ryHkBBOuLlfs
-	 u7zTYFx+FWrPmA7T5n4cU0RKFtHfLIL6GfXRl0BgLQ23eqjIMJShtKbp/fILuPcz9G
-	 5kxfscIeGhmNWgvujPrOKsIQgBH4Ik90PwrfKORtzDpcBtrzsX1BiljVcJcmK7FE6H
-	 rqUaIGAlpozQA==
+	s=securedbylima-20251205; t=1795633380;
+	bh=3sGLL6APmhRqO/jkfKMLi1YXNpdQbllVfhOQGjaHsKs=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=iLtJooP+zmWQov9FX+c948FAsvPSKA5SDKKY9oHBgGh3yJHZ40TaoUn6vlR4U6iD5
+	 usgoa6pI+nZPVNdDSB3LM6PfYQrEoasBzJ4LRpsxBmrhozDqjZR5+GbsBuM7WG1bEf
+	 xeyyYYqa5QXH51nku7QiaOkHHoE34FhE5FYfecaMK8nXs0KtC9yPbYOry4sJeVni8U
+	 G0mKTnyR4+hlQ1y6BVPZ4nrHdrdvS4IaxZs67kIx+z6FSLIhsiAAP1eQWyAn9ePkAD
+	 EMxOiqGQwSibECkTPmjNW2ELM07PNRUPD8VwFQCG4hebmFuYl3LS6d4Tz0M8MAAh24
+	 FNnFyhoUsMHyA==
 To: arend.vanspriel@broadcom.com
 Cc: linux-wireless@vger.kernel.org,
 	brcm80211@lists.linux.dev,
@@ -53,11 +53,14 @@ Cc: linux-wireless@vger.kernel.org,
 	Sven Peter <sven@kernel.org>,
 	Janne Grunau <j@jannau.net>,
 	Aditya Garg <aditya.garg@linux.dev>,
-	Andre Eikmeyer <dev@deq.rocks>
-Subject: [PATCH wireless-next v2 0/6] wifi: brcmfmac: AWDL for AirDrop on Apple T2 Macs
-Date: Wed, 25 Nov 2026 20:02:48 +0100
-Message-ID: <20261125190254.176055-1-dev@deq.rocks>
+	Andre Eikmeyer <dev@deq.rocks>,
+	Yossef Osman <Yossef.Osman@proton.me>
+Subject: [PATCH wireless-next v2 1/6] wifi: brcmfmac: move the interface_create definitions to fwil_types.h
+Date: Wed, 25 Nov 2026 20:02:49 +0100
+Message-ID: <20261125190254.176055-2-dev@deq.rocks>
 X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261125190254.176055-1-dev@deq.rocks>
+References: <20261125190254.176055-1-dev@deq.rocks>
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Post: <mailto:brcm80211@lists.linux.dev>
@@ -69,78 +72,124 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This series adds AWDL support to brcmfmac, so Linux on the Apple T2 Macs
-can send and receive files over AirDrop with Apple and latest Google or
-Samsung devices.
+The interface_create iovar structures and flags are firmware interface
+types like the others in fwil_types.h. Move them there so code outside
+cfg80211.c can create firmware interfaces as well.
 
-On these Macs the Apple firmware runs AWDL itself. The host creates an
-AWDL interface and sets its parameters, the firmware keeps the AWDL
-schedule and carries the AWDL frames and data. Election, peer discovery
-and AirDrop run in user space, which talks to the driver through vendor
-commands and events of the Broadcom OUI. As discussed on v1, vendor
-commands are the exception agreed for AWDL, so the vendor header
-becomes ABI with this series.
+Tested-by: Yossef Osman <Yossef.Osman@proton.me>
+Tested-by: Aditya Garg <aditya.garg@linux.dev>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Signed-off-by: Andre Eikmeyer <dev@deq.rocks>
+---
+ .../broadcom/brcm80211/brcmfmac/cfg80211.c    | 42 ------------------
+ .../broadcom/brcm80211/brcmfmac/fwil_types.h  | 43 +++++++++++++++++++
+ 2 files changed, 43 insertions(+), 42 deletions(-)
 
-The user space side is t2-drop, published under GPL license
-
-  https://github.com/kaiT2en/KaiT2en-Fedora/tree/main/apps/t2-drop
-
-Tested on a MacBookPro15,1 (BCM4364, firmware 9.30.514.0.32.5.94) with
-a MacBook Air M4 as peer. AirDrop in both directions with varying file
-sizes up to 2GB.
-v1 ran on the BCM4364 and BCM4377 machines of the T2 Linux community.
-
-Changes in v2:
-- Drop v1 patch 1, wireless-next matches the firmware capabilities as
-  whole words already
-- Rebase on wireless-next, patches 1, 2 and 4 have Arend's Ack
-- Patch 3: remove an AWDL interface that shows up after the interface
-  event timed out, tie the network device to the wiphy device in sysfs
-  and keep its name, keep the AWDL address out of the ARP offload table
-  of the primary interface, kernel-doc for the return values
-- Patch 4: add the AWDL header in brcmf_netdev_start_xmit(), so tx and
-  rx count the bytes of the Ethernet frame, kernel-doc. The MTU stays at
-  1500, the firmware takes full size frames with the added header
-- Patch 5: document where the parameter tables come from and the
-  firmware versions they are used with, fail AWDL_START when awdl,
-  awdl_config or slot_bss are rejected, return firmware errors from
-  SET_FRAMES and SET_SYNC, a quirk in feature.c instead of the chip
-  check, reject AWDL_STOP while a start is queued, AWDL_STOPPED with
-  -ENOLINK when the firmware removes the interface, UNSPEC first in the
-  vendor events
-- Patch 6: abstract event codes for the AWDL events, mapped and
-  registered by the WCC vendor module, log dropped events
-
-v1: https://lore.kernel.org/all/20261104151547.70333-1-dev@deq.rocks/
-
-Andre Eikmeyer (6):
-  wifi: brcmfmac: move the interface_create definitions to fwil_types.h
-  wifi: brcmfmac: detect AWDL support of the firmware
-  wifi: brcmfmac: create and remove the AWDL interface
-  wifi: brcmfmac: add the AWDL data path
-  wifi: brcmfmac: add vendor commands for AWDL
-  wifi: brcmfmac: pass AWDL frames and role changes to user space
-
- .../broadcom/brcm80211/brcmfmac/Makefile      |    3 +-
- .../broadcom/brcm80211/brcmfmac/awdl.c        | 1111 +++++++++++++++++
- .../broadcom/brcm80211/brcmfmac/awdl.h        |  116 ++
- .../broadcom/brcm80211/brcmfmac/cfg80211.c    |   49 +-
- .../broadcom/brcm80211/brcmfmac/core.c        |   82 +-
- .../broadcom/brcm80211/brcmfmac/core.h        |    7 +
- .../broadcom/brcm80211/brcmfmac/feature.c     |   32 +
- .../broadcom/brcm80211/brcmfmac/feature.h     |    8 +-
- .../broadcom/brcm80211/brcmfmac/fweh.c        |   19 +
- .../broadcom/brcm80211/brcmfmac/fweh.h        |    7 +-
- .../broadcom/brcm80211/brcmfmac/fwil_types.h  |   46 +
- .../broadcom/brcm80211/brcmfmac/vendor.c      |   90 ++
- .../broadcom/brcm80211/brcmfmac/vendor.h      |  104 ++
- .../broadcom/brcm80211/brcmfmac/wcc/core.c    |   39 +
- 14 files changed, 1659 insertions(+), 54 deletions(-)
- create mode 100644 drivers/net/wireless/broadcom/brcm80211/brcmfmac/awdl.c
- create mode 100644 drivers/net/wireless/broadcom/brcm80211/brcmfmac/awdl.h
-
-
-base-commit: 18d0bedbb5f0538396cb7f763ed9cd1dd69c5b23
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+index 57689026525e..2035535b753f 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -271,48 +271,6 @@ struct parsed_vndr_ies {
+ 	struct parsed_vndr_ie_info ie_info[VNDR_IE_PARSE_LIMIT];
+ };
+ 
+-#define WL_INTERFACE_CREATE_VER_1		1
+-#define WL_INTERFACE_CREATE_VER_2		2
+-#define WL_INTERFACE_CREATE_VER_3		3
+-#define WL_INTERFACE_CREATE_VER_MAX		WL_INTERFACE_CREATE_VER_3
+-
+-#define WL_INTERFACE_MAC_DONT_USE	0x0
+-#define WL_INTERFACE_MAC_USE		0x2
+-
+-#define WL_INTERFACE_CREATE_STA		0x0
+-#define WL_INTERFACE_CREATE_AP		0x1
+-
+-struct wl_interface_create_v1 {
+-	u16	ver;			/* structure version */
+-	u32	flags;			/* flags for operation */
+-	u8	mac_addr[ETH_ALEN];	/* MAC address */
+-	u32	wlc_index;		/* optional for wlc index */
+-};
+-
+-struct wl_interface_create_v2 {
+-	u16	ver;			/* structure version */
+-	u8	pad1[2];
+-	u32	flags;			/* flags for operation */
+-	u8	mac_addr[ETH_ALEN];	/* MAC address */
+-	u8	iftype;			/* type of interface created */
+-	u8	pad2;
+-	u32	wlc_index;		/* optional for wlc index */
+-};
+-
+-struct wl_interface_create_v3 {
+-	u16 ver;			/* structure version */
+-	u16 len;			/* length of structure + data */
+-	u16 fixed_len;			/* length of structure */
+-	u8 iftype;			/* type of interface created */
+-	u8 wlc_index;			/* optional for wlc index */
+-	u32 flags;			/* flags for operation */
+-	u8 mac_addr[ETH_ALEN];		/* MAC address */
+-	u8 bssid[ETH_ALEN];		/* optional for BSSID */
+-	u8 if_index;			/* interface index request */
+-	u8 pad[3];
+-	u8 data[];			/* Optional for specific data */
+-};
+-
+ static u8 nl80211_band_to_fwil(enum nl80211_band band)
+ {
+ 	switch (band) {
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwil_types.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwil_types.h
+index 37d9414546d5..973598d43368 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwil_types.h
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwil_types.h
+@@ -1375,4 +1375,47 @@ struct brcmf_eventmsgs_ext_le {
+ 	u8 mask[] __counted_by(len);
+ };
+ 
++/* interface_create iovar */
++#define WL_INTERFACE_CREATE_VER_1		1
++#define WL_INTERFACE_CREATE_VER_2		2
++#define WL_INTERFACE_CREATE_VER_3		3
++#define WL_INTERFACE_CREATE_VER_MAX		WL_INTERFACE_CREATE_VER_3
++
++#define WL_INTERFACE_MAC_DONT_USE	0x0
++#define WL_INTERFACE_MAC_USE		0x2
++
++#define WL_INTERFACE_CREATE_STA		0x0
++#define WL_INTERFACE_CREATE_AP		0x1
++
++struct wl_interface_create_v1 {
++	u16	ver;			/* structure version */
++	u32	flags;			/* flags for operation */
++	u8	mac_addr[ETH_ALEN];	/* MAC address */
++	u32	wlc_index;		/* optional for wlc index */
++};
++
++struct wl_interface_create_v2 {
++	u16	ver;			/* structure version */
++	u8	pad1[2];
++	u32	flags;			/* flags for operation */
++	u8	mac_addr[ETH_ALEN];	/* MAC address */
++	u8	iftype;			/* type of interface created */
++	u8	pad2;
++	u32	wlc_index;		/* optional for wlc index */
++};
++
++struct wl_interface_create_v3 {
++	u16 ver;			/* structure version */
++	u16 len;			/* length of structure + data */
++	u16 fixed_len;			/* length of structure */
++	u8 iftype;			/* type of interface created */
++	u8 wlc_index;			/* optional for wlc index */
++	u32 flags;			/* flags for operation */
++	u8 mac_addr[ETH_ALEN];		/* MAC address */
++	u8 bssid[ETH_ALEN];		/* optional for BSSID */
++	u8 if_index;			/* interface index request */
++	u8 pad[3];
++	u8 data[];			/* Optional for specific data */
++};
++
+ #endif /* FWIL_TYPES_H_ */
 -- 
 2.56.0
 
