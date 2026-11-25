@@ -1,101 +1,65 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.214.181
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.216.248.207
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795557059;
-	b=5H2G9ah8FwuSw3NkDigAaii0WXYxzNCUKTZYjJ8LKUdTS/u/IO4bOOKsdSq6WUAc12a1
-	 IxM9Z0q8gHID8bqY8eAB1IUWRwXnl/E0ChuaHSvTUMKBxmE+nx6UK4JVlYbcF1e56mAZ+
-	 B0FIpm0O9/emJwF1F/PCdeT7nl3SoJlndrdm1MIpSURjex4xOn/F+h5t5jihlVPEkOj9Q
-	 YifvbIFzJgqrhvNtam5wOUm/uX4DTS8GyzZvL0daBbjuhI/H9eiqUkmFSSWONVPrNvIcC
-	 8yA1oYZoWTUh65K93BNzKNJ2Z0vrlRADoicCfczI0tbHWMp/8JqCnjgY3CtA6oTjTVA==
+	t=1795620447;
+	b=LTrPix1jxZWRpA2az5EqwdXZ96lsMQHo1/5GJfO2He4aVSRRxlKK8SyB/ZqoBeO9enY+
+	 sSAKpdiPdLR8Btu0CVJT2jJ64dLbLi9PT8pwVK1BKr0tZDpBxqQoiPad7cbL498gUgzs8
+	 ywKc7VvFYmJtE9Ep1DF57ovDNU0eWo9k6Nl0j3yYDJsCXsf1PWiYAaL7C4eG3K+mogREF
+	 OHFNlmo5Tcz2mYEHLGZRHkPe0hnG41PDJxSyltOmIe+6jX8oT2EGcjU/amd83LzERrjBi
+	 krz6Q04K4PTFF6zvHBjdmAzxozKlNVazPrMqONklbrkxv/JmUhyGqLC4yHfpQuKR+5g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795557059;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=o4pGvAMXjcOC4SqD7p4YoLcU2/NkDU3u07H7Y6Y74K8=;
-	b=VfVJ/4oUBRZktI8XKZFAiOvrDNKOlYlobxR+Ceo+YmkTeT+InlO64/C8qYRjGQIvWqEa
-	 EXCXjctCq1uZ13afNe8Z+B9RlbQ4GIiX0R7VcRfUkTtL6LC0lI0s5I/a0BNzIZt0nFAJu
-	 1CWyL6jiuI8JywKnuHpee228Bbq+ArgIjBmDq5l3qhXRXK1/r1uaXcmVZgaXcwWBy/eJE
-	 Q6GALTB+oHtgZA0HyXy358hhPWOrrgS3jiJbvbPLEn4dYRHxUEoOFh9QRyX9JQpYnpQPS
-	 DQPPbs37Y3r9mtIsr7c+OOGiWU3km/YwqxvZyWHrB8AUixfpVcFOf8x66zjRKZPGCVg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620447;
+	h=DMARC-Filter:From:X-Lima-ML-UUID:DKIM-Signature:To:Cc:Subject:Date:
+	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=V1/gDYLW6wZb9SX8ssnkHsT0gTwK/IOErcmdXS0BwVA=;
+	b=KNHjtJcCw4BFekHSc7dMGlQkHvPzvC1hxQzkwzV18EHCrDSmc5pHQaNBcoMWzs4yZa06
+	 VKTE91ZRL2ds5RzPjnABa2q7m/K6eck9dxQ/2uB1zZg73NC5zUB++PESfAe+bt1hGjcPt
+	 IR1c0gNO6v5soU3wiSkDPM//HJwmY29x5nJoBDyCP4c4Bdvi6dB+iZPTKk2lBi4/1m8wS
+	 nUlSZTdn0MjRZYL3i36TCMkmQIMEAYB833rbD09wO99QH66N++ud1ikvFNxx4LHWhKJIM
+	 sPxl8oJBbjyVzd5eBhSFQpj/l+9Dm0yyWjScVvCLGT+MfX7F9jY2WWTaxDmEKVejF3g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=WnnIOgHC;
-	arc=none smtp.remote-ip=209.85.214.181
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=none header.from=deq.rocks;
+	spf=none smtp.mailfrom=deq.rocks;
+	dkim=pass header.d=deq.rocks header.i=@deq.rocks header.a=rsa-sha256 header.s=securedbylima-20251205 header.b=qSaQIqRe;
+	arc=none smtp.remote-ip=91.216.248.207
+Received: from mx5.mail-out.lima-city.de (mx5.mail-out.lima-city.de [91.216.248.207])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58435606A33E
-	for <brcm80211@lists.linux.dev>; Tue, 24 Nov 2026 21:50:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 58435606A33E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF04B606A329
+	for <brcm80211@lists.linux.dev>; Wed, 25 Nov 2026 15:27:25 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DF04B606A329
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=deq.rocks
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=deq.rocks
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=WnnIOgHC
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2f04244c3d0so41292595ad.3
-        for <brcm80211@lists.linux.dev>; Tue, 24 Nov 2026 13:50:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795557059; x=1796161859; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=o4pGvAMXjcOC4SqD7p4YoLcU2/NkDU3u07H7Y6Y74K8=;
-        b=WnnIOgHCQi1jTIdtkSpSZ+1Jcr5jhXnU3bQ15uYonRoVC0W/+wUFUHTbQuTwpGwnC2
-         O0gQHbib2PsFUgoid9EKX03rUrDaLrp65ZG0V0XkeknEcydQgqH5Ka65J5GzwIteUrgy
-         L/pjWH4dHyyAbslkwiK1iDmqSy64ghHiGXz3Dgiq6FV/BJnmLrgbDdztjreYhxc3nb0+
-         ykJct+IoSlljkN4ubdNwm7TLnjtJ/y8RsLyz2yRHpCLUjjzR0CS7XFOWThApn2fD9w2C
-         VL7QpvX8Ve4Zc3+CkfwwN4eXlRo/mtp4jSEVzbIa1jTjAm9CPmnCYWktwFeLZ0L1ZnAz
-         ao6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795557059; x=1796161859;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=o4pGvAMXjcOC4SqD7p4YoLcU2/NkDU3u07H7Y6Y74K8=;
-        b=Wy+3DyFkOYwYkhDtf90Uh+CVP/ktpaerWN1MAYoDcS6XxyCCUDQODbArmy+OmNG/SO
-         zqK7ePMkvClX4l4zZaQe4rLG1gX8XUVdNJErdvHEMet0Tf1G1uT0TbyTXw4hRu95GozX
-         FLXHxbsCsTMZOawLiAqSaY1n/RS3vEljwxMRwsaT/o8YUWnbxWz+pTBsXLeGd/PuNG4g
-         uTcRQMrm4Xk5N3CjtveLbMfQhOmiOneJm32o1dRCmuCF6fMYaino4QVoo4PhrI4yketC
-         GwuxPcy922xCePMZrvMi2HHXd3XQJfb6b90nNYMkslsSAWAyifDgNZZnhfWKhhAa/HQc
-         Fx9A==
-X-Forwarded-Encrypted: i=1; AL+hErG4EnbV5rMQYhgDFD6xnPe+/9sSSp5Wnozhk9iN4jG8vPv2NWtMLQ58jaMR0C0g8Gby5PEIvnTyYsk=@lists.linux.dev
-X-Gm-Message-State: APuU4Z/biyrzLij0EsvnEHSnD8xnc35fCY3Fo5Iva9AGYznKAoenBHYY
-	zUo8Bi0XxPyluStUrC4W3SNY/lGPw5Fgzny7weZFEWIDUHaiW4Zz36bZ
-X-Gm-Gg: AZFdTZd1uPqCy8XwN3rUH4FSqAVccXqM6DFVLbuo2HtxQl3S+y17NimQfyhpBUHQb0U
-	rdxwGuqdNMg7db5aJf9Aqx9zC1+4z6ydlAhHgRDoi3Hjy8yMN7o0UPhuQLOeUKvnNtHFCbX+kkH
-	NR6HqoCEJYHlqXkQDV3HTmxyZyuQ+u9TL5ucbBT5cgKaC3cv2d3oulDzaa8xWO+uygzYMpZqEVO
-	KY6a9nc++Fz+EaZz/fawM6tGH8oFSTjShsEYxSy0oYAjy6t+W2KWesiizXDPicJU9TFKbWo9Y32
-	0kROGGhaq9f/gbnJaSBI+78WVSKn5FmuWWCAzAQ/CdJs6fbr6fhe1rCfeWaaZy64NdUqfV0CjaU
-	5F6VPxVkB9LRfQUlnzJK5yJ0cquNH3czXxLoIVGqknPB4qEbNgHmrm3aM6EsIzAErdsS8gH9qYE
-	64DE/c1JEMKdp1EOMlGcKDroqmVLH4cdfpksXzDSyr3kJokXk2zWWFIoQuw/PjDmP/ljmKv3WLY
-	w8iPgFt4rUXEpcGVL/SV9hbpz96EM9/dv8A2uLsuYI+eubUoHx6G+n5wy1Tv212w7VqBVyVZOL+
-	yRoAFekDgmql2qEKWM4IURawXoJ0hMJlVT7V0S64zUSToJHS1Xam0WsFfx1MLeQYkCkxFg4bm6q
-	UQ2fLIbNlBQHCYDibl/csldINvgi8nDjfPqtlyyZVkJNalut7gzbRGj2Sg49OHdmJuAWDzDib2L
-	Ldv78=
-X-Received: by 2002:a17:902:d2cf:b0:2d9:599e:df95 with SMTP id d9443c01a7336-2f03ef44a68mr172906535ad.3.1795557058757;
-        Tue, 24 Nov 2026 13:50:58 -0800 (PST)
-Received: from ryzen.lan ([2601:644:8000:37f::e34])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2f0742996aesm47764545ad.11.2026.11.24.13.50.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Nov 2026 13:50:57 -0800 (PST)
-From: Rosen Penev <rosenp@gmail.com>
-To: linux-wireless@vger.kernel.org
-Cc: Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Bill Wendling <morbo@google.com>,
-	Justin Stitt <justinstitt@google.com>,
-	brcm80211@lists.linux.dev (open list:BROADCOM BRCM80211 IEEE802.11 WIRELESS DRIVERS),
-	brcm80211-dev-list.pdl@broadcom.com (open list:BROADCOM BRCM80211 IEEE802.11 WIRELESS DRIVERS),
-	llvm@lists.linux.dev (open list:CLANG/LLVM BUILD SUPPORT:Keyword:\b(?i:clang|llvm)\b)
-Subject: [PATCH wireless-next v2 7/7] wifi: brcmsmac: embed brcms_bss_cfg in brcms_c_info
-Date: Tue, 24 Nov 2026 13:50:40 -0800
-Message-ID: <20261124215040.1261999-8-rosenp@gmail.com>
-X-Mailer: git-send-email 2.56.1
-In-Reply-To: <20261124215040.1261999-1-rosenp@gmail.com>
-References: <20261124215040.1261999-1-rosenp@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=deq.rocks header.i=@deq.rocks header.a=rsa-sha256 header.s=securedbylima-20251205 header.b=qSaQIqRe
+From: Andre Eikmeyer <dev@deq.rocks>
+X-Lima-ML-UUID: 4bb23980-4068-4ef8-999b-00135b389ec6
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=deq.rocks;
+	s=securedbylima-20251205; t=1795620436;
+	bh=BG3Xpbm/VBYhCtFJkxJrMmDCsXcQiL6mfZYyEfyy9fk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=qSaQIqRe82QksI6h+Bs9gnzX1QiemZMzGftTlWE8Q99ttGtWcYVItrQwTbhEbvEBQ
+	 xz0ItA6upjnTMhzkmfsYSswFnsMqSeHgU4kX/XFHEsE2f6LJTb1aD1L4lWDXuylrOz
+	 I+AUir4QEOQ/pkZpvvD4cQRsJyRakO17yMA34+MWM1F1mnyAPnZFzH+OBpLpZjn7Fq
+	 WnTnm0zlINT95oVU9C/rsG4quldIrIOpvBXNN0KPeQXb0W5J9/GpLDY774sK9n57kF
+	 xVC8om1f6zIji58GHBojnG/vVxB3vlttwCEEvezKU8p/9s8/2/Xo9CHA7AFvdGgAS6
+	 SPaki5XcSao2A==
+To: arend.vanspriel@broadcom.com
+Cc: linux-wireless@vger.kernel.org,
+	brcm80211@lists.linux.dev,
+	brcm80211-dev-list.pdl@broadcom.com,
+	linux-kernel@vger.kernel.org,
+	=?UTF-8?q?Bla=C5=BE=20Zupan?= <blaz@inlimbo.org>,
+	Andre Eikmeyer <dev@deq.rocks>,
+	Yossef Osman <Yossef.Osman@proton.me>,
+	Aditya Garg <aditya.garg@linux.dev>
+Subject: [PATCH wireless v3] wifi: brcmfmac: keep ARP and ND offload off on Apple BCM4355 and BCM4364
+Date: Wed, 25 Nov 2026 16:27:11 +0100
+Message-ID: <20261125152711.110005-1-dev@deq.rocks>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261118123933.74517-1-dev@deq.rocks>
+References: <20261118123933.74517-1-dev@deq.rocks>
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Post: <mailto:brcm80211@lists.linux.dev>
@@ -105,287 +69,118 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:brcm80211+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-The driver only ever has one BSS configuration, and it has the same
-lifetime as struct brcms_c_info. Embed it directly instead of
-allocating it separately, removing one kzalloc()/kfree() pair and its
-OOM error path.
+brcmfmac enables the firmware's ARP and IPv6 ND offload (ndoe) whenever
+the interface is up and not promiscuous. On the Apple firmware for the
+BCM4355 and BCM4364, ndoe makes downloads collapse.
 
-Move the struct brcms_bss_cfg definition, unchanged, above struct
-brcms_c_info so that it is a complete type there.
+On the BCM4364, IPv6 downloads topped out at 55 Mbit/s on a
+MacBookPro15,1 with the BCM4364/3 and on the MacBookPro16,1 with the
+later revision [1][2]. On the BCM4355 of the MacBookAir8,1, downloads
+fell to about 50 Mbit/s with the offload on and stayed at 300 to 400
+Mbit/s with it off, and the firmware logged errors several times a
+second [3]. The BCM4377 is not affected.
 
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
+macOS enables ARP and ND offload for associated sleep only and clears
+both on wake. ARP offload brings no benefit while awake, and without
+WoWL brcmfmac disconnects on suspend on these Macs, so the offloads are
+never used in sleep either. With ARP offload on, the firmware answers
+from its own host IP table, and the host does not notice when that
+table is stale. brcmfmac already turns both offloads off in promiscuous
+mode and while a soft AP runs.
+
+Keep both off on these chips when the board type is an Apple one,
+which runs the firmware the way macOS does while awake.
+
+[1] https://github.com/t2linux/kernel/issues/34
+[2] https://github.com/t2linux/T2-Debian-and-Ubuntu-Kernel/issues/227
+[3] https://github.com/t2linux/linux-t2-patches/pull/85
+
+Fixes: 52f22fb21764 ("brcmfmac: add neighbor discovery offload ip address table configuration")
+Cc: stable@vger.kernel.org
+Reported-by: Blaž Zupan <blaz@inlimbo.org>
+Closes: https://github.com/t2linux/kernel/issues/34
+Closes: https://github.com/t2linux/T2-Debian-and-Ubuntu-Kernel/issues/227
+Link: https://github.com/t2linux/linux-t2-patches/pull/85
+Tested-by: Yossef Osman <Yossef.Osman@proton.me>
+Tested-by: Aditya Garg <aditya.garg@linux.dev>
+Co-developed-by: Aditya Garg <aditya.garg@linux.dev>
+Signed-off-by: Aditya Garg <aditya.garg@linux.dev>
 Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Signed-off-by: Andre Eikmeyer <dev@deq.rocks>
 ---
- .../broadcom/brcm80211/brcmsmac/main.c        | 48 ++++++-------
- .../broadcom/brcm80211/brcmsmac/main.h        | 68 +++++++++----------
- 2 files changed, 55 insertions(+), 61 deletions(-)
+Changes in v3:
+- Say downloads instead of IPv6 downloads in the comment, the BCM4355
+  loses IPv4 throughput too (Arend)
+- Add Reported-by for the BCM4355 case and Arend's Acked-by
+- v2: https://lore.kernel.org/all/20261118123933.74517-1-dev@deq.rocks/
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.c
-index 422452b8a832..dfd87a10cbf9 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.c
-@@ -418,7 +418,6 @@ static void brcms_c_detach_mfree(struct brcms_c_info *wlc)
- 	if (wlc == NULL)
+Changes in v2:
+- Restrict the quirk to Apple boards with settings->board_type
+- Add the BCM4355 of the MacBookAir8,1 (Aditya)
+- Add Fixes and Cc stable, target wireless
+- Explain why ARP offload stays off as well
+- v1: https://lore.kernel.org/all/20261104151620.70671-1-dev@deq.rocks/
+
+ .../broadcom/brcm80211/brcmfmac/core.c        | 27 +++++++++++++++++++
+ 1 file changed, 27 insertions(+)
+
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
+index a3d662348711..537bcfce087e 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
+@@ -13,6 +13,7 @@
+ #include <net/addrconf.h>
+ #include <net/ieee80211_radiotap.h>
+ #include <net/ipv6.h>
++#include <brcm_hw_ids.h>
+ #include <brcmu_utils.h>
+ #include <brcmu_wifi.h>
+ 
+@@ -93,6 +94,22 @@ struct brcmf_if *brcmf_get_ifp(struct brcmf_pub *drvr, int ifidx)
+ 	return ifp;
+ }
+ 
++static bool brcmf_is_apple_nd_offload_broken(struct brcmf_pub *drvr)
++{
++	const char *board_type = drvr->settings->board_type;
++
++	if (!board_type || !strstarts(board_type, "apple,"))
++		return false;
++
++	switch (drvr->bus_if->chip) {
++	case BRCM_CC_4355_CHIP_ID:
++	case BRCM_CC_4364_CHIP_ID:
++		return true;
++	default:
++		return false;
++	}
++}
++
+ void brcmf_configure_arp_nd_offload(struct brcmf_if *ifp, bool enable)
+ {
+ 	s32 err;
+@@ -103,6 +120,16 @@ void brcmf_configure_arp_nd_offload(struct brcmf_if *ifp, bool enable)
  		return;
-
--	kfree(wlc->bsscfg);
- 	kfree(wlc->pub);
- 	kfree(wlc->stf);
- 	kfree(wlc->hw);
-@@ -458,12 +457,6 @@ brcms_c_attach_malloc(uint unit, uint *err, uint devid)
  	}
- 	wlc->hw->wlc = wlc;
-
--	wlc->bsscfg = kzalloc_obj(*wlc->bsscfg, GFP_ATOMIC);
--	if (wlc->bsscfg == NULL) {
--		*err = 1011;
--		goto fail;
--	}
--
- 	wlc->stf = kzalloc_obj(*wlc->stf, GFP_ATOMIC);
- 	if (wlc->stf == NULL) {
- 		*err = 1017;
-@@ -955,7 +948,7 @@ brcms_b_txstatus(struct brcms_hardware *wlc_hw, bool bound, bool *fatal)
-
- static void brcms_c_tbtt(struct brcms_c_info *wlc)
- {
--	if (wlc->bsscfg->type == BRCMS_TYPE_ADHOC)
-+	if (wlc->bsscfg.type == BRCMS_TYPE_ADHOC)
- 		/*
- 		 * DirFrmQ is now valid...defer setting until end
- 		 * of ATIM window
-@@ -2049,7 +2042,7 @@ void brcms_b_switch_macfreq(struct brcms_hardware *wlc_hw, u8 spurmode)
- void brcms_c_start_station(struct brcms_c_info *wlc, u8 *addr)
- {
- 	memcpy(wlc->pub->cur_etheraddr, addr, sizeof(wlc->pub->cur_etheraddr));
--	wlc->bsscfg->type = BRCMS_TYPE_STATION;
-+	wlc->bsscfg.type = BRCMS_TYPE_STATION;
- }
-
- void brcms_c_start_ap(struct brcms_c_info *wlc, u8 *addr, const u8 *bssid,
-@@ -2058,8 +2051,8 @@ void brcms_c_start_ap(struct brcms_c_info *wlc, u8 *addr, const u8 *bssid,
- 	brcms_c_set_ssid(wlc, ssid, ssid_len);
-
- 	memcpy(wlc->pub->cur_etheraddr, addr, sizeof(wlc->pub->cur_etheraddr));
--	memcpy(wlc->bsscfg->BSSID, bssid, sizeof(wlc->bsscfg->BSSID));
--	wlc->bsscfg->type = BRCMS_TYPE_AP;
-+	memcpy(wlc->bsscfg.BSSID, bssid, sizeof(wlc->bsscfg.BSSID));
-+	wlc->bsscfg.type = BRCMS_TYPE_AP;
-
- 	brcms_b_mctrl(wlc->hw, MCTL_AP | MCTL_INFRA, MCTL_AP | MCTL_INFRA);
- }
-@@ -2067,7 +2060,7 @@ void brcms_c_start_ap(struct brcms_c_info *wlc, u8 *addr, const u8 *bssid,
- void brcms_c_start_adhoc(struct brcms_c_info *wlc, u8 *addr)
- {
- 	memcpy(wlc->pub->cur_etheraddr, addr, sizeof(wlc->pub->cur_etheraddr));
--	wlc->bsscfg->type = BRCMS_TYPE_ADHOC;
-+	wlc->bsscfg.type = BRCMS_TYPE_ADHOC;
-
- 	brcms_b_mctrl(wlc->hw, MCTL_AP | MCTL_INFRA, 0);
- }
-@@ -3669,11 +3662,12 @@ static void brcms_c_set_bssid(struct brcms_bss_cfg *bsscfg)
-
- void brcms_c_set_ssid(struct brcms_c_info *wlc, u8 *ssid, size_t ssid_len)
- {
--	u8 len = min_t(u8, sizeof(wlc->bsscfg->SSID), ssid_len);
--	memset(wlc->bsscfg->SSID, 0, sizeof(wlc->bsscfg->SSID));
-+	u8 len = min_t(u8, sizeof(wlc->bsscfg.SSID), ssid_len);
+ 
++	/* With ND offload on while awake, the Apple firmware for the BCM4355
++	 * and BCM4364 makes downloads drop to low rates. macOS runs ARP and
++	 * ND offload only in sleep, keep both off on these chips.
++	 */
++	if (enable && brcmf_is_apple_nd_offload_broken(ifp->drvr)) {
++		brcmf_dbg(TRACE, "Skip ARP/ND offload enable on Apple BCM%x\n",
++			  ifp->drvr->bus_if->chip);
++		enable = false;
++	}
 +
-+	memset(wlc->bsscfg.SSID, 0, sizeof(wlc->bsscfg.SSID));
-
--	memcpy(wlc->bsscfg->SSID, ssid, len);
--	wlc->bsscfg->SSID_len = len;
-+	memcpy(wlc->bsscfg.SSID, ssid, len);
-+	wlc->bsscfg.SSID_len = len;
- }
-
- static void brcms_b_set_shortslot(struct brcms_hardware *wlc_hw, bool shortslot)
-@@ -3711,7 +3705,7 @@ static void brcms_c_set_home_chanspec(struct brcms_c_info *wlc, u16 chanspec)
- 		wlc->home_chanspec = chanspec;
-
- 		if (wlc->pub->associated)
--			wlc->bsscfg->current_bss.chanspec = chanspec;
-+			wlc->bsscfg.current_bss.chanspec = chanspec;
- 	}
- }
-
-@@ -4918,7 +4912,7 @@ int brcms_c_up(struct brcms_c_info *wlc)
- 		if (status == -ENOMEDIUM) {
- 			if (!mboolisset
- 			    (wlc->pub->radio_disabled, WL_RADIO_HW_DISABLE)) {
--				struct brcms_bss_cfg *bsscfg = wlc->bsscfg;
-+				struct brcms_bss_cfg *bsscfg = &wlc->bsscfg;
- 				mboolset(wlc->pub->radio_disabled,
- 					 WL_RADIO_HW_DISABLE);
- 				if (bsscfg->type == BRCMS_TYPE_STATION ||
-@@ -5320,7 +5314,7 @@ void brcms_c_get_current_rateset(struct brcms_c_info *wlc,
- 	struct brcms_c_rateset *rs;
-
- 	if (wlc->pub->associated)
--		rs = &wlc->bsscfg->current_bss.rateset;
-+		rs = &wlc->bsscfg.current_bss.rateset;
+ 	if (enable)
+ 		mode = BRCMF_ARP_OL_AGENT | BRCMF_ARP_OL_PEER_AUTO_REPLY;
  	else
- 		rs = &wlc->default_bss.rateset;
 
-@@ -5347,7 +5341,7 @@ int brcms_c_set_rateset(struct brcms_c_info *wlc, struct brcm_rateset *rs)
- 	if (wlc->pub->_n_enab & SUPPORT_11N) {
- 		struct brcms_bss_info *mcsset_bss;
- 		if (wlc->pub->associated)
--			mcsset_bss = &wlc->bsscfg->current_bss;
-+			mcsset_bss = &wlc->bsscfg.current_bss;
- 		else
- 			mcsset_bss = &wlc->default_bss;
- 		memcpy(internal_rs.mcs, &mcsset_bss->rateset.mcs[0],
-@@ -7228,7 +7222,7 @@ static void brcms_c_update_beacon_hw(struct brcms_c_info *wlc,
-  */
- void brcms_c_update_beacon(struct brcms_c_info *wlc)
- {
--	struct brcms_bss_cfg *bsscfg = wlc->bsscfg;
-+	struct brcms_bss_cfg *bsscfg = &wlc->bsscfg;
-
- 	if (wlc->pub->up && (bsscfg->type == BRCMS_TYPE_AP ||
- 			     bsscfg->type == BRCMS_TYPE_ADHOC)) {
-@@ -7337,7 +7331,7 @@ brcms_c_bss_update_probe_resp(struct brcms_c_info *wlc,
-
- void brcms_c_update_probe_resp(struct brcms_c_info *wlc, bool suspend)
- {
--	struct brcms_bss_cfg *bsscfg = wlc->bsscfg;
-+	struct brcms_bss_cfg *bsscfg = &wlc->bsscfg;
-
- 	/* update AP or IBSS probe responses */
- 	if (wlc->pub->up && (bsscfg->type == BRCMS_TYPE_AP ||
-@@ -7366,7 +7360,7 @@ brcms_c_set_addrmatch(struct brcms_c_info *wlc, int match_reg_offset,
- {
- 	brcms_b_set_addrmatch(wlc->hw, match_reg_offset, addr);
- 	if (match_reg_offset == RCM_BSSID_OFFSET)
--		memcpy(wlc->bsscfg->BSSID, addr, ETH_ALEN);
-+		memcpy(wlc->bsscfg.BSSID, addr, ETH_ALEN);
- }
-
- /*
-@@ -7698,15 +7692,15 @@ void brcms_c_init(struct brcms_c_info *wlc, bool mute_tx)
- 	brcms_c_bcn_li_upd(wlc);
-
- 	/* write ethernet address to core */
--	brcms_c_set_mac(wlc->bsscfg);
--	brcms_c_set_bssid(wlc->bsscfg);
-+	brcms_c_set_mac(&wlc->bsscfg);
-+	brcms_c_set_bssid(&wlc->bsscfg);
-
- 	/* Update tsf_cfprep if associated and up */
- 	if (wlc->pub->associated && wlc->pub->up) {
- 		u32 bi;
-
- 		/* get beacon period and convert to uS */
--		bi = wlc->bsscfg->current_bss.beacon_period << 10;
-+		bi = wlc->bsscfg.current_bss.beacon_period << 10;
- 		/*
- 		 * update since init path would reset
- 		 * to default value
-@@ -7918,7 +7912,7 @@ brcms_c_attach(struct brcms_info *wl, struct bcma_device *core, uint unit,
- 	 * Complete the wlc default state initializations..
- 	 */
-
--	wlc->bsscfg->wlc = wlc;
-+	wlc->bsscfg.wlc = wlc;
-
- 	wlc->mimoft = FT_HT;
- 	wlc->mimo_40txbw = AUTO;
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.h b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.h
-index 5e2052bd913a..be40a0c008b7 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.h
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/main.h
-@@ -378,6 +378,39 @@ struct brcms_hardware {
- 				 */
- };
-
-+enum brcms_bss_type {
-+	BRCMS_TYPE_STATION,
-+	BRCMS_TYPE_AP,
-+	BRCMS_TYPE_ADHOC,
-+};
-+
-+/*
-+ * BSS configuration state
-+ *
-+ * wlc: wlc to which this bsscfg belongs to.
-+ * type: interface type
-+ * SSID_len: the length of SSID
-+ * SSID: SSID string
-+ *
-+ *
-+ * BSSID: BSSID (associated)
-+ * cur_etheraddr: h/w address
-+ * flags: BSSCFG flags; see below
-+ *
-+ * current_bss: BSS parameters in ASSOCIATED state
-+ *
-+ *
-+ * ID: 'unique' ID of this bsscfg, assigned at bsscfg allocation
-+ */
-+struct brcms_bss_cfg {
-+	struct brcms_c_info *wlc;
-+	enum brcms_bss_type type;
-+	u8 SSID_len;
-+	u8 SSID[IEEE80211_MAX_SSID_LEN];
-+	u8 BSSID[ETH_ALEN];
-+	struct brcms_bss_info current_bss;
-+};
-+
- /*
-  * Principal common driver data structure.
-  *
-@@ -514,7 +547,7 @@ struct brcms_c_info {
-
- 	u16 wme_retries[IEEE80211_NUM_ACS];
-
--	struct brcms_bss_cfg *bsscfg;
-+	struct brcms_bss_cfg bsscfg;
-
- 	struct modulecb modulecb[BRCMS_MAXMODULES];
-
-@@ -583,39 +616,6 @@ struct antsel_info {
- 	struct brcms_antselcfg antcfg_cur; /* current antenna config (auto) */
- };
-
--enum brcms_bss_type {
--	BRCMS_TYPE_STATION,
--	BRCMS_TYPE_AP,
--	BRCMS_TYPE_ADHOC,
--};
--
--/*
-- * BSS configuration state
-- *
-- * wlc: wlc to which this bsscfg belongs to.
-- * type: interface type
-- * SSID_len: the length of SSID
-- * SSID: SSID string
-- *
-- *
-- * BSSID: BSSID (associated)
-- * cur_etheraddr: h/w address
-- * flags: BSSCFG flags; see below
-- *
-- * current_bss: BSS parameters in ASSOCIATED state
-- *
-- *
-- * ID: 'unique' ID of this bsscfg, assigned at bsscfg allocation
-- */
--struct brcms_bss_cfg {
--	struct brcms_c_info *wlc;
--	enum brcms_bss_type type;
--	u8 SSID_len;
--	u8 SSID[IEEE80211_MAX_SSID_LEN];
--	u8 BSSID[ETH_ALEN];
--	struct brcms_bss_info current_bss;
--};
--
- int brcms_c_txfifo(struct brcms_c_info *wlc, uint fifo, struct sk_buff *p);
- int brcms_b_xmtfifo_sz_get(struct brcms_hardware *wlc_hw, uint fifo,
- 			   uint *blocks);
---
-2.56.1
+base-commit: 35c42b20ac87165c054c582380aa0ff0de8aeb4a
+-- 
+2.56.0
 
