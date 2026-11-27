@@ -1,146 +1,98 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.103.66.20
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.174
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795791873;
-	b=BhEWh9MM0BVHjU7Y0jeCl46n8/6vjcPPNuVmuitYNV6qCF/cBEiLv/Z91r8hSD/P+sUT
-	 p+xO8DMtc2jeSjv++ejETcEILSan9QcdX9BEqKhW5Z8ti0C6Jr0vU6L1QUMPO+CW1QBVB
-	 8azlhBKoJlHxLJBdAHrBg9DJE739v7OWigUxh9hd+Nd80OnXwPjb3grFAniQNXvQGXzoH
-	 RLRks4PW7anR3dprmHXr+F01mc/MdR4hlCdPzLGO8/Ozo6KcRZz1o5ObPLUYPaYHV9Srf
-	 VxNmoqoTHwZ57yPaXpiE+w1iYDkhtedGVyGHzq/E+dTfPp+nbjJtCxmFsK6NcJrBrYQ==
+	t=1795793507;
+	b=UniaqA3TdUmCAFhzLERaJI7xKH3AxKpW8SlQqNGfOrdCoM2kvWOpUeRii5ZNBysCdLt7
+	 sGSxFn6/F3ElycTSNaNFWbLRPnIYSnnSBj8InJ0+q/TfjoK7/nho6F2ZuWJ7EjvCw6ahn
+	 R6eRpVwO/ifwnU0K2LIpCMPDG66QjU++d7aSd3XGK9thcDK4/NRiV1FNjXTsv2W7zZHV8
+	 jJFneGpBpV9b0hCCHNkLcg8Ea52y/UUHgpYVtevEeQhjkXUSZK11g8cQaVdSxTUo2p8OJ
+	 hGpARzfRs3P6JM+JmjxDoeMyAl/uUvFj0NdGSrP2yTPcHM/EPnQ9FsKKp3dM5tLdELg==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795791873;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:From:To:CC:Subject:
-	 Thread-Topic:Thread-Index:Date:Message-ID:Accept-Language:
-	 Content-Language:X-MS-Has-Attach:X-MS-TNEF-Correlator:
-	 x-ms-publictraffictype:x-ms-traffictypediagnostic:
-	 x-ms-office365-filtering-correlation-id:x-microsoft-antispam:
-	 x-microsoft-antispam-message-info:
-	 x-ms-exchange-antispam-messagedata-chunkcount:
-	 x-ms-exchange-antispam-messagedata-0:Content-Type:
-	 Content-Transfer-Encoding:MIME-Version:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-AuthAs:X-MS-Exchange-CrossTenant-AuthSource:
-	 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-originalarrivaltime:
-	 X-MS-Exchange-CrossTenant-fromentityheader:
-	 X-MS-Exchange-CrossTenant-id:
-	 X-MS-Exchange-CrossTenant-rms-persistedconsumerorg:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=Payh2j8EHhB3KoOUCJJLm3a0eI9jJYgr+FioCUI3o28=;
-	b=OSnCNadvCg7qMZZt3wJjhDAxKFy4dXgTxYtgYv+h7pdU8VWeuC5ER+4Zv+t4O76Spuzn
-	 XTwUKqyYc6X97wwro3b47x5LxwYv2WtTTmJdreG7JUAusxiGugXZAToaRo2J6qeUNz55O
-	 tMObpjk3Hc+jCasfz/uoUQXeXSJR2BmveowbAihB2nalmrSqluW/fcChqTjnV+QRw226o
-	 svgp6jISSJ/zEUAyUD2SO4Xfx8fDoqndDt5DANtHkXzCsifktrVnYSddEs7Y6EAM3Kdwf
-	 e8KCTEGbhgFxQ+B7NY4JBu8bGPTeXf6tIiOI5mtfx6rX68ZbPs6uNAB1T3YfyDDOwOw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795793507;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type;
+	bh=B0qbJ8g2Vdj9HAdNnwCKwtoZV+3naWX33A2WnJvViLI=;
+	b=GjVeHIlcgC9ZNgyTI9whs3/9Io8VYGsu1SPUp37lqLmeOBIQ3Sz/3jVCSRSB6Rv5vekQ
+	 pmkLarxMODW7+zCb7n1xhKDjh8sSJ3bdzy9Fixm6zhwnQRVjR6YQGfkqXL2mq5DofkT1F
+	 GZZ3GWtlMZPW8pjJ7kSp8kSpXsFjG1OHe8kJl+9CDJEZicboHYUaVMc3WDjCaPjDo1P6g
+	 8oU3d6a87Cw3zn7pLqrnQnTj8QMw22vzAIDe2eNEaDmOtnDF0yRJNnc/qs2pIGClZrmp7
+	 +oCRPfFPCm/F0vwOJjDnzXviCEsh46ZX/kjgN7x5nc2utxhUypSSzcdmdHIJ77i+dOw==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=outlook.jp;
-	spf=pass smtp.mailfrom=outlook.jp;
-	dkim=pass header.d=OUTLOOK.JP header.i=@OUTLOOK.JP header.a=rsa-sha256 header.s=selector1 header.b=hdEOCzwx;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.103.66.20
-Received: from OS0P286CU011.outbound.protection.outlook.com (mail-japanwestazolkn19010020.outbound.protection.outlook.com [52.103.66.20])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=StfgKlxq;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.174
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B6D3606A335
-	for <brcm80211@lists.linux.dev>; Fri, 27 Nov 2026 15:04:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9B6D3606A335
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.jp
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.jp
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AD08606A31F
+	for <brcm80211@lists.linux.dev>; Fri, 27 Nov 2026 15:31:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6AD08606A31F
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=OUTLOOK.JP header.i=@OUTLOOK.JP header.a=rsa-sha256 header.s=selector1 header.b=hdEOCzwx
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=odqLhUMmVFh01qNW7RQfubT4k1hikJh0DPw3dcH/e8WkMsKfBjPrVRikmASWaRL02m11Vxtyx27Ybske2FcaaMe77Zcj+t73lPa49psnWSBvrqQmT1egFENwHftKaACOoa1+4dOFJZC6WPzYxPcMvh55naxSxlNLXoIbnWe5rdzTuBq58vavdobkKB+rrQEUcj7sBo3f4JXkWjelU8q9bli8koiV48b3VaGFvlqU+fbL+rPE9vL1+b1VOYG5FY/TkkczB5YVhH5cQa+AdGMbuOBOUyitMQ/kltpdeCL+GSI2m5CAnDl7vyrfq1zoejSdEemRB9NkS6CjrCs27xuyJg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Payh2j8EHhB3KoOUCJJLm3a0eI9jJYgr+FioCUI3o28=;
- b=LhypPOHbbOewFAH2qJl3rskuQ9LQUwWZNYHEvVgy8bAJhZCBrUnHYU6wlcDSTdihl9QStyLUeQ31WjNUo9nQ156s0Xm6Nr7RqLyZRDYfxspkP2t0OHyh1/ePgBLmpsZLUAwBU8sVUP8gpjo2q1Q8CfWQyHIxjjJwOp8TEAZ8l9j7jbVeUJCYLaBwmoelxI6isvkAc84Fi8uFZGaKpMXD9cK8Tdi+znEYUYjO9M2VzneYW2oaoWCVjvWWUV3G0zph/m/RY845QZIF8MMb4uxA1/Jml1DLILZ34epM1l6Ym6LAckCN3lurSHJ661Bv3VfiINEFSvO+9CkI75MOW+orbg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=OUTLOOK.JP;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Payh2j8EHhB3KoOUCJJLm3a0eI9jJYgr+FioCUI3o28=;
- b=hdEOCzwxDEnoF/slnnumeJbaEoyXoOXeu0vsKrp2p/LVbWumG3PlSLOlUjibe4dtwDGxBElaGjzbvORRNPzve4toG33O9/b9xffdb0LWy6OYqK4Y7ftSi6uXL+5Ws98U5Xmoxk/xvIOtWIFjHDgRMe25CG/a4VX/VqsbUno3fr4IbTTA/6GVUmH6+2fv4wOG+rprnhXV/tozIsIj0xVSfYr+TtuYRDRgWeUZv9tbVkIlBZwD8qlwEnC2Q/4HYx8498SIwTZfZzasNQmnBWusm7ow6VYbSAk6eDSGHlz8eCGA0WDDoEc8aqlYNO7XDp2PaG5bIrx/PXnxQDkTnoZQ4w==
-Received: from OS7PR01MB14363.jpnprd01.prod.outlook.com
- (2603:1096:604:388::11) by OS9PR01MB17828.jpnprd01.prod.outlook.com
- (2603:1096:604:448::7) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.662.10; Fri, 27 Nov
- 2026 15:04:27 +0000
-Received: from OS7PR01MB14363.jpnprd01.prod.outlook.com
- ([fe80::eeff:dfdb:bd3b:591b]) by OS7PR01MB14363.jpnprd01.prod.outlook.com
- ([fe80::eeff:dfdb:bd3b:591b%6]) with mapi id 15.21.0662.004; Fri, 27 Nov 2026
- 15:04:27 +0000
-From: Keisuke Tsukuda <tkdkei@outlook.jp>
-To: "linux-wireless@vger.kernel.org" <linux-wireless@vger.kernel.org>
-CC: "arend.vanspriel@broadcom.com" <arend.vanspriel@broadcom.com>,
-	"brcm80211@lists.linux.dev" <brcm80211@lists.linux.dev>,
-	"brcm80211-dev-list.pdl@broadcom.com" <brcm80211-dev-list.pdl@broadcom.com>,
-	Keisuke Tsukuda <tkdkei@outlook.jp>
-Subject: [PATCH wireless] wifi: brcmfmac: fix allmulti fallback when
- mcast_list is rejected
-Thread-Topic: [PATCH wireless] wifi: brcmfmac: fix allmulti fallback when
- mcast_list is rejected
-Thread-Index: AQHdfoCYaqzni8mB1kmxqv0slUhQfA==
-Date: Fri, 27 Nov 2026 15:04:26 +0000
-Message-ID: <20261127150422.64483-1-tkdkei@outlook.jp>
-Accept-Language: en-US, ja-JP
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: OS7PR01MB14363:EE_|OS9PR01MB17828:EE_
-x-ms-office365-filtering-correlation-id: 80215a93-9bfd-40d9-8ae3-08df4c97baf0
-x-microsoft-antispam:
- BCL:0;ARA:14566002|25010399006|8062599012|8060799015|41001999006|15080799012|25031999004|24021099003|4140399003|39105399006|31061999003|22141099003|38102599003|19110799012|26104999009|3412199025|440099028|102099032|40105399003|1710799026;
-x-microsoft-antispam-message-info:
- =?iso-8859-1?Q?ANIzi5cjdJVZB1I/ntiqN105BJA5hrxWjhODtcCGmKo4wtm+Re8u2a+01K?=
- =?iso-8859-1?Q?aLKGPJG3ic6nnQv9vegwW8lb6+lEK9PvQc9f1dv3pNatfzlcmAA7cotNr8?=
- =?iso-8859-1?Q?d83XIfs9fVAfDkYM98YLldNUe9EAv4qetJfOTw7AkU35AIFFym5jGftga1?=
- =?iso-8859-1?Q?4fdKzpnO3FYjuI0AwRVjzSWxMuPAKitn6qn9pP2jobyQX3O4aXANpIzU3X?=
- =?iso-8859-1?Q?38Ko0lb3gr85GICxICIvMyOXg9iNrCSPF2Bz02afjHhrMwqnnRlWlt/zMJ?=
- =?iso-8859-1?Q?WKYHH9wVLEZRjLoPTdGBj/MmaHDzCquq0VNHB4mbc5qT3xeDyeQu8dgz40?=
- =?iso-8859-1?Q?4PfhbxnPaepgqhucwR/n3b1eP+i69cdDVquy5dHkVU0yf70oo/nMXvyRmW?=
- =?iso-8859-1?Q?LhNe+xqURRuliPyBse4kQczCNcEC+yaU7ORkkILb2kwGobMIlSlfhoQeTZ?=
- =?iso-8859-1?Q?VZxraECB24aAMjjQ3EYeZYRw7zxLJ8Fp06tqlivlnj4+Og5QlvZLMqJpBx?=
- =?iso-8859-1?Q?RqonQVw1HOi/7nK1Y73nVY5aYVf2bwC8Vl6Wh+1h/DUR6DUUe60ejYaHPh?=
- =?iso-8859-1?Q?UQamg5TF0P/NwpTWBQSmbMDX2Z+kDdyZurpqnk8kXWJPGZvzbMGpDxvjPl?=
- =?iso-8859-1?Q?yqUw88I1h7jZ6VrjFapzA+F0m9J0y4BigGRfvqVNS1aSF+mQ7xFpk44gUp?=
- =?iso-8859-1?Q?oSGUKODzC7hleyPZu9n6E7ASHATYPilEBd+mCEAcG+IoN2y/UbpCokt0Cz?=
- =?iso-8859-1?Q?PLol160ZnF7uTtDcOs/nSjpNFhG8jRp6FGc6ILZR+vr228yh97KTPE50zI?=
- =?iso-8859-1?Q?vXPGnvaPjNdt8zQC7quQ7ikdMwHgTVCVwmxx3LVHQ2RhZohWy2BCzsA8Wq?=
- =?iso-8859-1?Q?N5T4I8Ktxa9YI4xx22gJgUwmjhER5iU2lgNcKFY8elIQl/fwCjn2w8JbSq?=
- =?iso-8859-1?Q?Lc+MBR0eL9kjyRLdkcfv7ugtGoArsgKQEcRdD8iu9eCCEBOiMGGSqu8jb9?=
- =?iso-8859-1?Q?Htv2mng6HnjmJjS30Hzona0DZvme37DKHzcqVVcMaCP8AS1pkkNquAdzQp?=
- =?iso-8859-1?Q?PbzptDvSm556OSeSOL6rQfemauh1sawyLMUtPs/kqmszAbNCt7/LeT9lIv?=
- =?iso-8859-1?Q?mHbqwnqA=3D=3D?=
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?iso-8859-1?Q?xMA66Nhdy9AvETnw26oOzfNAP/QYMmojkRwzKBdCuETkd4ZDm3hAV6kdqG?=
- =?iso-8859-1?Q?+tPKZG4JeFCwVnyuyUcK7iOVDDMrjcSeY+WahXbXPTxBgEjtfAWZCZJCgO?=
- =?iso-8859-1?Q?FNe23ajOdkmdzwaMIcwq/+rV8NACHRQreVCwEb77owXKEUIWVsZlz9lhMU?=
- =?iso-8859-1?Q?oNruhJo+qhHyB/ah1+wVoCkF70ckWBeMfsdp/7rQifU/eBDnCbyIz1ateL?=
- =?iso-8859-1?Q?agyVDZ0Loqo0qn15b1pXhJ16iHb/NV27q9R5AQFeNH/TF2dJhtSP9sFRQA?=
- =?iso-8859-1?Q?XlUUvFd33gxbDBdNoAGD7JLZhKFSW+V6A7VejBIiT7GzS6H0r2Fi53ey3B?=
- =?iso-8859-1?Q?LWb+R5EZI+dRxYgBmnG3HjMeOaquSyKO5atT4IkYlyoVBTH+qWJ9YUSI57?=
- =?iso-8859-1?Q?SYiZPCBstiTvH8kF+qFettMCi+wAu4zSN85CT8otTOxF1ir0EsFMDjVWEc?=
- =?iso-8859-1?Q?lZrpIrQ2r/ucsNRtqWUlRKy+AsNCelCBEMvAN/Hgq4a2hdmfaI9Xpp7ghL?=
- =?iso-8859-1?Q?EdUwkdJ/hFqghNhcHiuJliYaOx68qRnO3C7EnLs5Wdzu9e/6xpq2yJb411?=
- =?iso-8859-1?Q?9mw/jzOROiNzA0nWg69IV3u25k1JmNcl0SWDGtUFg/jEHw0iRsnkxYLtuy?=
- =?iso-8859-1?Q?qUkkpfbMaSm25FN6GgkIE55siPShXqWgHSbaTezs4Wjg/nxDu6tP6mroj1?=
- =?iso-8859-1?Q?UjWpZ6K+mogAroXDsZiUqB9RJCnl7s9YGZZtpnDXilDZylolkfIO6r6XXB?=
- =?iso-8859-1?Q?73PbPD+MvR6VabVG1kzyvboKNopZhunHq//lFK+wlIVlQxCdBKLzovkz9t?=
- =?iso-8859-1?Q?VsC0Af1FH0R+4ebv0i2Eh49LkEFvIRf0r9cupFRVycPaN1YiGHZbcIpvyR?=
- =?iso-8859-1?Q?Of/JeS/6aBzM0vPvWi1ZFCpCgMcv0GmEKUZ5hGDHfaimEMuD19yNfbbPN6?=
- =?iso-8859-1?Q?+CEP5hXaa3IZ7ipQGItsGkDnzg6ZeLl+FORFgyVAKq07+k32Vt6T/bF/rX?=
- =?iso-8859-1?Q?B4bdLxauJ6KyqpWieQOPqIeGhV3H3ESIMwae5lAGe59BeZkpGdvm8pvPWc?=
- =?iso-8859-1?Q?Z3tQMeOrRCtjF77jzW42Ka36RDFeJZ0lkP37aEwxZRtqf9YYHSREW1ERjb?=
- =?iso-8859-1?Q?Cr1jvfWUFgdhImHEYXFGWvVoSFRZGTodhxE6Fuqv7kot64KeP3/XilEbzT?=
- =?iso-8859-1?Q?zAZdISQGTvFB8L3ahy/kipyByRkf9F0VLwYn833h+8e+NL9eHcsvfXFj6h?=
- =?iso-8859-1?Q?uzO9Lgn27TAH4WhdpzWxv4nEa0UGHmk+LX7fmx8X0yZonZwo1iImHtfC9j?=
- =?iso-8859-1?Q?AImMfNAI6/Ahi+hkjzt6h+f/1F7PTlKLFkdEnrcFwEQoQI7eB05/SkLY6p?=
- =?iso-8859-1?Q?jzxqwAa3vrs/2mJ59POvvQPXF2iffR5d39wEfKxD1W1sasM3nG5zg=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=StfgKlxq
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-8b4e2ec4b42so43362657b3.0
+        for <brcm80211@lists.linux.dev>; Fri, 27 Nov 2026 07:31:46 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795793505; cv=none;
+        d=google.com; s=arc-20260327;
+        b=hXk4cSr0E7Ie4kKS6T8bQIZrbEDCgxVrasK1cnRRe5rIAl7EG0Qqp4IGnXxzpeoGv+
+         8CQGCSaCUgbTAxqmR3MDA7e8n8/lWTjM5877tEL9dsMoFih6E8c3sjHvg8BZoMqDp2w6
+         DyFa/Bk6TEVWHEHBANhAWTZNmB8d/59IAr3blf9mjF8R5WZrD1u/Ro4/f8oEtUpbbbfF
+         +MYJcO5W+mZd8fgjQN2+LK8irZU5e4YlGClIr+4lzxikBH6zHzfrTBnHuzoIf8rbDQTM
+         WM4/N7WhkZATb/Q/GFHYyPmvQ5ovOnxkipRvARB0JQy7B5CfFIJKIdJNbt9zXtbvQ1k7
+         vhbQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=B0qbJ8g2Vdj9HAdNnwCKwtoZV+3naWX33A2WnJvViLI=;
+        fh=5SRwJBrz5qB6NijkvlfAMwN9X2zPE2mKvHTFV2u/xdQ=;
+        b=Czk8mro14y/9N5RNjosrxwU048KZvZpV2y+S2R+noGkTwAjUNDdNyiozb59ALXSNwD
+         WA3nbV34O08aO1zPpVMOR/DC7h5BxgaC4rEyGDQJOD1lPRl6UU5NTKoRx/jf56dC381C
+         Ecdygq+bItdkIn4URRE/6HQYSPb46WwEBOngtllU3zSQTDH0QgqqGcc+uVNdEdJkO70L
+         TJ6b5lajt/BZAYA7dC1J/JCrKoTzA6nHDuO2Of7EtpcBbkkPZSS2m8dJeRwF4q0RKDvO
+         iPu7Dr4ztwv2LxFcBqh2KeEJxKYwEJvMd1GlKrOAiopFu1HS+sjsloeggFnxzfVmwBHP
+         0Hcg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795793505; x=1796398305; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:mime-version:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=B0qbJ8g2Vdj9HAdNnwCKwtoZV+3naWX33A2WnJvViLI=;
+        b=StfgKlxqlvu+2y+jtqzW0AXdz52rgLHc5fxRbT1Qd/A+LHLrXupi1BJ1FGDMd9r08j
+         gMpxc0fLuCfLFQZiT+ntodXFpdXLUIWSBo6DUNGceyBp3it0UfTsw0nvW8mLJ7kvYZ60
+         mZwtnL94fGOae69hWJ+BjRrcmIFcWvh42IyBg/4/XmvTV0qrI49XEDrBbftqW1Hfa+qO
+         br6UECCftHiT52LgwaH8uzmEwCHKjrNG6VvH0FOsGvyo+9vi/y2pMi4XhganPpE5/vIC
+         2uKcBM3hP7tQgZ7FD2D/mjwgGiArZkddn4jQaEtoGSiN+vMo/eJJw5WnaHy3urBjl2Yd
+         PIjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795793505; x=1796398305;
+        h=content-type:cc:to:subject:message-id:date:from:mime-version
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=B0qbJ8g2Vdj9HAdNnwCKwtoZV+3naWX33A2WnJvViLI=;
+        b=bTtp8XOHr21RHZ7/vU3r3R1bVouCPrKr23SP8Rk4io+i43pJsW4i5/HjR6Ht1ceL99
+         mzq9bteSkJ/mgqFqJGVw7MXp2bf4qiveDMhvIdh7jNlKzR+QEz6EwvyYKOZnYdSbRnta
+         jcM+MPPZULGEO2od6QvRM1Tx19/HHX9QKZI9iisekKDwtDlCgxmWFWK/AgA2yZ83WDtq
+         xNsbjlyxYWimPM1H9D3+w3t5Kg2hl6PqN+Xv2vKY6JVygWhlVEZvjwSLUzbqUcJJ8MlV
+         g1AY/fS4gG3JiRO7t9r6tymPf9OzuywqCiBzDztMHjuRGRq29T6DMxfU/eKzujiTM7Z4
+         hMBg==
+X-Forwarded-Encrypted: i=1; AL+hErGYAPKSwkne6SaL+i2Wxa978Ol8ZYlsXBVT0wD8YP4+r3LTX05x0gUKgxo8QP47NjLjZQYjRNWjT1I=@lists.linux.dev
+X-Gm-Message-State: APuU4Z928z9Gz/VR7MhJh6rbHA+IVGx9vhw+ZM40VFs099mTVdOqfQK0
+	g0VRQjj1XXaEaTbRM2bBxqruHoQPoVGBQnO/+AWBrmyAPDGRZgH3iXQ2AxMpHOvkVxeFUtlPPXH
+	XpsPybo+edF4Tn2CfTZul6cQ3nS+cFdo=
+X-Gm-Gg: AZFdTZcW9Y27NsT7EI1bA6vWqS/6y+Pj8baYx7t+mL+R+7Gnd1mkjbW8FXWC8YSx6an
+	Feor4uR6it7xdZVUPxwHU3Lvr0cVE5BC6RfryHGa0QpUgNp4ReM+oGzooZb3SeJ0HFRbBqUiN7r
+	1iRZQFFGWvJoUbheznYUMtM9lBHZE19N2x7ButkHkd5xGViWmD9GubnXTNG4Sa9MyGiz028AeZO
+	HupktJTgyhMUrQH8b3Xj9fBs+i/k8QE6xvLU3RJkrrvNvz6PG27nT9v7wWhNVHCC10NGJQmzH8/
+	O7SslI4YpG5nbcvd1iJevM7I8YUgiK9O27cvgq58z+cq7LPDVpnQiL6mhvmErXBmp/TbJ0pDhuM
+	mNCRggq1TYhKg5mIy6jmx/+YP9kkHSTtRXs6MKTnQ0JzMGf50XCUvIKMLQMq5kWALEKIk58ZaJm
+	nH7Rn4jP1p3cKJC3R/RcagVxsWUNfGaT9UV29woCO7
+X-Received: by 2002:a05:690c:6982:b0:8b3:bb2f:4101 with SMTP id
+ 00721157ae682-8b5204aa181mr108453437b3.34.1795793505179; Fri, 27 Nov 2026
+ 07:31:45 -0800 (PST)
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Post: <mailto:brcm80211@lists.linux.dev>
@@ -150,77 +102,89 @@ List-Unsubscribe: <mailto:brcm80211+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:brcm80211+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-OriginatorOrg: sct-15-20-9412-3-msonline-outlook-b83fc.templateTenant
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: OS7PR01MB14363.jpnprd01.prod.outlook.com
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: 80215a93-9bfd-40d9-8ae3-08df4c97baf0
-X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Nov 2026 15:04:26.9632
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: OS9PR01MB17828
+From: Collin Rose <collinr@gmail.com>
+Date: Fri, 27 Nov 2026 10:31:34 -0500
+X-Gm-Features: Aa3M54p9EKYq_L9WbiXSSrQ1XaZaTTZu0S9JTeSvbioCYnR5ZVi5HGZBdKcjSO4
+Message-ID: <CA+d3OrdhgXy8Dhfi_V=9sEqU=FK4tDzt4HVgOz9Uqw7OTP+8Jg@mail.gmail.com>
+Subject: [PATCH wireless] wifi: brcmfmac: use legacy MBSS when
+ interface_create is unsupported
+To: arend.vanspriel@broadcom.com
+Cc: linux-wireless@vger.kernel.org, brcm80211@lists.linux.dev, 
+	brcm80211-dev-list.pdl@broadcom.com
+Content-Type: text/plain; charset="UTF-8"
 
-_brcmf_set_multicast_list() uses cnt as both the multicast address count=0A=
-and the number of addresses left to copy into mcast_list. After a=0A=
-complete copy, cnt is zero. If the firmware then rejects the nonempty=0A=
-list, the error path checks this exhausted counter and fails to enable=0A=
-allmulti as a fallback. Multicast traffic for some joined groups can=0A=
-then be lost.=0A=
-=0A=
-Keep the original count for the fallback decision. A rejected empty=0A=
-list still leaves allmulti unchanged.=0A=
-=0A=
-On a Raspberry Pi CM4 (BCM4345/6 SDIO, firmware 7.45.265) running=0A=
-Ubuntu 7.0.0-1023-raspi, the driver reported -EBADE for a 33-address=0A=
-mcast_list update. The last joined group received 0/3 packets with the=0A=
-original module and 3/3 with the patched module, although the list=0A=
-update still failed. The first group received 3/3 in both runs, with=0A=
-IFF_ALLMULTI clear.=0A=
-=0A=
-Fixes: cf2b448852ab ("staging: brcm80211: add fullmac driver")=0A=
-Signed-off-by: Keisuke Tsukuda <tkdkei@outlook.jp>=0A=
----=0A=
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c | 7 ++++---=0A=
- 1 file changed, 4 insertions(+), 3 deletions(-)=0A=
-=0A=
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c b/driv=
-ers/net/wireless/broadcom/brcm80211/brcmfmac/core.c=0A=
-index a3d6623487115..d24725b7b6de9 100644=0A=
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c=0A=
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c=0A=
-@@ -142,7 +142,7 @@ static void _brcmf_set_multicast_list(struct work_struc=
-t *work)=0A=
- 	struct brcmf_pub *drvr =3D ifp->drvr;=0A=
- 	struct net_device *ndev;=0A=
- 	struct netdev_hw_addr *ha;=0A=
--	u32 cmd_value, cnt;=0A=
-+	u32 cmd_value, cnt, mc_count;=0A=
- 	__le32 cnt_le;=0A=
- 	char *buf, *bufp;=0A=
- 	u32 buflen;=0A=
-@@ -156,7 +156,8 @@ static void _brcmf_set_multicast_list(struct work_struc=
-t *work)=0A=
- 	cmd_value =3D (ndev->flags & IFF_ALLMULTI) ? true : false;=0A=
- =0A=
- 	/* Send down the multicast list first. */=0A=
--	cnt =3D netdev_mc_count(ndev);=0A=
-+	mc_count =3D netdev_mc_count(ndev);=0A=
-+	cnt =3D mc_count;=0A=
- 	buflen =3D sizeof(cnt) + (cnt * ETH_ALEN);=0A=
- 	buf =3D kmalloc(buflen, GFP_KERNEL);=0A=
- 	if (!buf)=0A=
-@@ -178,7 +179,7 @@ static void _brcmf_set_multicast_list(struct work_struc=
-t *work)=0A=
- 	err =3D brcmf_fil_iovar_data_set(ifp, "mcast_list", buf, buflen);=0A=
- 	if (err < 0) {=0A=
- 		bphy_err(drvr, "Setting mcast_list failed, %d\n", err);=0A=
--		cmd_value =3D cnt ? true : cmd_value;=0A=
-+		cmd_value =3D mc_count ? true : cmd_value;=0A=
- 	}=0A=
- =0A=
- 	kfree(buf);=0A=
--- =0A=
-2.50.1 (Apple Git-155)=0A=
-=0A=
+Firmware that predates the interface_create iovar, for example BCM43602
+firmware 7.35.177.56 found on bcm53xx routers, cannot answer the version
+query that brcmf_cfg80211_request_ap_if() sends after interface_create
+v1 and v2 have failed:
+
+  brcmfmac: failed to create interface(v1), err=-52
+  brcmfmac: failed to create interface(v2), err=-52
+  brcmfmac: fail to get supported version, err=-52
+
+The function then returns -EOPNOTSUPP and never reaches the bsscfg:ssid
+code a few lines below, which is how this firmware creates an additional
+AP BSS. Before commit 1562bdef9251 that was the only method used, so
+adding a second AP worked. Now the add_virtual_intf call fails with -95,
+and because hostapd configures every BSS of a radio together, it
+disables the whole radio, including the primary AP. A guest or second
+SSID therefore takes the primary network down.
+
+Treat a failed version query like an unsupported version. Set the
+version to 0 so the switch default reports interface_create as
+unsupported, which is what already selects the bsscfg:ssid path.
+Firmware that answers the query takes the same code path as before.
+
+Tested on a SmartRG SR400ac (two BCM43602/1 PCIe radios, firmware
+7.35.177.56) running OpenWrt 25.12.6, which builds this driver from
+backports 6.18.55 on a 6.12.112 kernel. Without the change the second
+AP fails as above and both radios are disabled. With it, the driver
+logs the unsupported version, creates the BSS through bsscfg:ssid, and
+a primary and a second AP stay up together on 2.4 GHz and on 5 GHz.
+
+Fixes: 1562bdef9251 ("brcmfmac: Fix AP interface delete issue")
+Cc: stable@vger.kernel.org
+Signed-off-by: Collin Rose <collinr@gmail.com>
+---
+Notes for reviewers, not for the commit message:
+
+* brcmf_cfg80211_request_sta_if() has the same early return, but it has
+  no legacy fallback to reach, so I left it alone.
+
+* The run above was with the backports copy of the driver on a 6.12
+  kernel, not a mainline build. The changed hunk is identical to the
+  current wireless tree. I have not tested other firmware or chips.
+
+* A change of this shape was first published for a Netgear R8000, which
+  has the same chip and firmware, in patches/861 of
+  https://github.com/88plug/netgear-r8000-plus (GPL-2.0). This is an
+  independent port to the current tree and a re-test on different
+  hardware.
+
+* The downstream OpenWrt pull request carrying the same change is
+  https://github.com/openwrt/openwrt/pull/26697
+
+* If you would rather not print "not support interface create(v0)" at
+  error level for old firmware, I can send a follow-up.
+
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+index 46714d871..87aabb7cd 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -760,7 +760,8 @@ static int brcmf_cfg80211_request_ap_if(struct
+brcmf_if *ifp)
+  &iface_create_ver);
+  if (err) {
+  brcmf_err("fail to get supported version, err=%d\n", err);
+- return -EOPNOTSUPP;
++ /* Old firmware: use the legacy bsscfg:ssid path below. */
++ iface_create_ver = 0;
+  }
+
+  switch (iface_create_ver) {
+-- 
+2.48.1
