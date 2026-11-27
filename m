@@ -1,49 +1,49 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.216.248.212
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795800960;
-	b=MgmBJSRoUmoBwjVPaFJBabOVtUWPHLkY7/i9vzOzIydCsn55umBsMhTTQ8fGt7hm8NGx
-	 1E2cAnlA7SUrA2cHRtR0cGzz68EHKjZ5Fk3VHppXcwsLJs6HJGKRRFmJ9UZZr+2YtlSBP
-	 ouW09b0XEYmk/AhAc2n3Hfrz4C6tKCDMYJUY8gGtYH2k6xqPe5eP34GSdR/cpjBe6jK7s
-	 vPQ/GkoZY4Y0csJo29N4W0jFdtyaTW9+NDiFsBlPhSiXJ1FD5w2+7yxG8OuhitO3BlwSi
-	 n7zcIF2bUzl6C6/3ShXjh4aHewLw76qvdg/zYHSYDDzK7RY0hbuS3ZkZPuC2eXRat1Q==
+	t=1795800961;
+	b=4EQAKrw2DVlZnZlqYrOM/mwpt0XpVBoepbGMqri4GY1CYjIEgdtRKx02xdOvXei0rc/c
+	 LniQ70GjMtSTFRnlUksd5vif+g8rCsSsAjPo8DZfGjFbN2nbfczxhc8ObIdohZ4sd12Bv
+	 IYg6Xap+rIdT1u/al9JVGXohEQBWAr8I9DuaII7nIQprYyJi93GDFCiRbwgvrPuEcMXUL
+	 uwOTqfPEnaPxTVRvO+ZsGgMqPsQX4HYq+OwJab2cFZD/992FhBg0KgTGeLoeJxQ7X1u7z
+	 0+g+ny5br5JcLs9r3vzLEKX4v7Zl72s0r2H3wdofQM5Ve0DxLJJOBsTcVWncn6IK6Zg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795800960;
-	h=DMARC-Filter:From:X-Lima-ML-UUID:DKIM-Signature:To:Cc:Subject:Date:
-	 Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
-	bh=duUjDN5fxT3uLbdNBTlIvjfudAaUyHlLBvOG4MbFSSY=;
-	b=0ypzb3tUfZmjkQdz4bQ3ktEh6m6wfm+q0HtRtdXk6m1DnylqNZ9iKye2j1VOLMA9fViq
-	 cbSGytD5Yd7EIVJ3chuGpUoT9Kx/9iuGWmPPQ3JkWys7tZtG0TZoaLNX5h6cgNL+v3es6
-	 r9ZZKC5tuWiBAGzE913cF33NWb3AZb/fFy8WjEI+1nK+38E7fgYOwVg8yQ+u1MGXhAh5S
-	 qrUFN5W7fFt4cRG2vV40e5yWKX3MYwUdNsqmP9wFYF/zUTqU8udetMkDYwvMFYuYarbHv
-	 IscO1HcNMnzrWN6cki3jKp9NV5128YUGQbB19tHXGE+RZzEW8/oKLFnG7wd31pzExxg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795800961;
+	h=DMARC-Filter:From:DKIM-Signature:To:Cc:Subject:Date:Message-ID:
+	 X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=sxJnaA5r8+pqJwlTwREWQ9u52lC/5QwuG+vW7LNFuFI=;
+	b=KERhrsnz9hNDLafgt2xVhAUMyAlSjXejArcbgjJAr4F/rQ8ovaHbeeddCiGsrp6wEFLg
+	 jbUuAy3rD0wqjEQukN2AJpZULUnrtD/uBcrZCogxkljsk9AlDPnxCrNK+LGKHHjWA4NEK
+	 78PnPSk+iXES6MY1HBh7M9znO87Rb+WaPSoi1IR5fE9FFlZ6HBNUMw4pCbkxs5A3kq2os
+	 ekplrw95WZhzBbmDoUYL8ieDxgFvoEYOqa4NhdrH2X3H+F3eZtbYizL2Xu0ubH+B42nT8
+	 /O0qCI2w2+J01bup7WLjs84dKiDQCP+cjyHiS8FnQ4/ofCjuIlmubFCM+Kf/oyLcDlQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=none header.from=deq.rocks;
 	spf=none smtp.mailfrom=deq.rocks;
-	dkim=pass header.d=deq.rocks header.i=@deq.rocks header.a=rsa-sha256 header.s=securedbylima-20251205 header.b=Xs8KuWlJ;
+	dkim=pass header.d=deq.rocks header.i=@deq.rocks header.a=rsa-sha256 header.s=securedbylima-20251205 header.b=XF8aGEY8;
 	arc=none smtp.remote-ip=91.216.248.212
 Received: from bulk0.mail-out.lima-city.de (bulk0.mail-out.lima-city.de [91.216.248.212])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B0C1606A31C;
-	Fri, 27 Nov 2026 17:35:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0B0C1606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8985606A324;
+	Fri, 27 Nov 2026 17:36:00 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E8985606A324
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=deq.rocks
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=deq.rocks
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=deq.rocks header.i=@deq.rocks header.a=rsa-sha256 header.s=securedbylima-20251205 header.b=Xs8KuWlJ
+	dkim=pass (2048-bit key) header.d=deq.rocks header.i=@deq.rocks header.a=rsa-sha256 header.s=securedbylima-20251205 header.b=XF8aGEY8
 From: Andre Eikmeyer <dev@deq.rocks>
-X-Lima-ML-UUID: 5d882cb8-b7e5-42b8-96d5-d8abe38b4ced
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=deq.rocks;
-	s=securedbylima-20251205; t=1795800956;
-	bh=Y5DFtHB7VMkbjfcMnVp9GefPuYs+p+pahTbIQITFBX0=;
-	h=From:To:Cc:Subject:Date:From;
-	b=Xs8KuWlJVaZxeyZ4c/vPKJ82j6q8N/7TpDrJ5ba6Dz4kHIWTFulqJtduS+mNHLPQ+
-	 YlosfwlGa4864kt2qE9NfO8/1SHYSfPY5bsrJAYjOlnl61Zt8m4R+ZMHEOGG22okgA
-	 mFTm63TNlfekpINZdRTBJudFX6ZlosOWGHt/aREsg66nPwyGWYVwbNBJA6GQn5ubrA
-	 rvi3ab6vlC+WwMxJGqIeuoHdEVhRK2EHh5OcWrXq+eWq0TAza6DAHeraZA8S3248bu
-	 gKNzvtkyYYzAmz/8zJlCCoqzbRl4ix1FnM+tJReJw2yNHONTgO2jHlHVh63NEHSFDb
-	 gD+kIP7A3t8GQ==
+	s=securedbylima-20251205; t=1795800959;
+	bh=YXbjIqGdUWKxMXSjC2GBavJThS3DJuHBVwnFIC6J87Y=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=XF8aGEY8C+uaNpCc0v1g8e2lJ4kUxcm3TxJ1CdVqH0SmPMnXS/kF/HmbN/62mG63I
+	 MXgMsmJB7O+mi2yDcgPgvcv0Mg00PEc7WrStFJrq6PFlgEq6r9gYi1VQ14t9KVUwdX
+	 ZbQ8IzY0xzZaSo6eeV/gtyO/ONHyNMARiGg2HExvBW7KwEEEb3bKq2PmV064Zu2II/
+	 fWfcKYXMIvdQLFJZgmmmH0eu3eNQmxMXBnbB5xAu0uo6z3aDrfWE2D8dWbPa8s3u46
+	 TATY9F4pB/VIu6yB3QexcHdgE1TXIrFKjFMgooSyrT0mOKyWFdoNf/LBK1Tm6QpzIh
+	 6TxcdrwZVP+ow==
 To: arend.vanspriel@broadcom.com
 Cc: linux-wireless@vger.kernel.org,
 	brcm80211@lists.linux.dev,
@@ -55,11 +55,14 @@ Cc: linux-wireless@vger.kernel.org,
 	asahi@lists.linux.dev,
 	sebastian.reichel@collabora.com,
 	Soeren Coremans <sorencoremans@gmail.com>,
-	Andre Eikmeyer <dev@deq.rocks>
-Subject: [PATCH wireless-next v3 0/5] wifi: brcmfmac: pcie: S3 and deep sleep on the T2 Mac chips
-Date: Fri, 27 Nov 2026 18:35:44 +0100
-Message-ID: <20261127173549.29335-1-dev@deq.rocks>
+	Andre Eikmeyer <dev@deq.rocks>,
+	Yossef Osman <Yossef.Osman@proton.me>
+Subject: [PATCH wireless-next v3 1/5] wifi: brcmfmac: pcie: set the state before D0_INFORM on resume
+Date: Fri, 27 Nov 2026 18:35:45 +0100
+Message-ID: <20261127173549.29335-2-dev@deq.rocks>
 X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261127173549.29335-1-dev@deq.rocks>
+References: <20261127173549.29335-1-dev@deq.rocks>
 X-Mailing-List: brcm80211@lists.linux.dev
 List-Id: <brcm80211.lists.linux.dev>
 List-Post: <mailto:brcm80211@lists.linux.dev>
@@ -71,85 +74,48 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-These are follow-ups to Michael Reeves' BCM4388 series, which is now
-in wireless-next.
+With the mailbox on the control ring, D0_INFORM goes through the ring
+write path, which refuses to write while devinfo->state is DOWN.
+brcmf_pcie_pm_leave_D3() sets the state only after D0_INFORM, so every
+hot resume fails and falls back to remove and re-probe:
 
-- Patch 1: D0_INFORM on resume now goes through the control ring,
-  which refuses to write while the PCIe state is DOWN. Set the state
-  first.
-- Patch 2: The BCM4364 halts on the host ready doorbell at init. Skip
-  the doorbell there.
-- Patch 3: The BCM4364 and BCM4377 come back from S3 without firmware.
-  Probe them again.
-- Patch 4: The BCM4377 returns the tx status only once the flowring
-  delete is sent. Do not wait for it before.
-- Patch 5: Add deep sleep for the BCM4364 and BCM4377, so the package
-  reaches PC10.
+  brcmf_pcie_send_mb_data: Failed to send H2D mailbox data (-5)
 
-Patch 3 reuses the existing re-probe in brcmf_pcie_pm_leave_D3().
-"wifi: brcmfmac: pcie: recover from fatal PCIe errors" [3] adds a
-second re-probe after a PCIe error.
+Set the state before D0_INFORM and back to DOWN when the hot resume
+fails.
 
-Both run under the device lock, but a PCIe error during resume can
-still start both. Whichever series lands second should skip the
-re-probe in brcmf_pcie_pm_leave_D3() while in_pci_recovery is set.
+Fixes: a83a99d063a0 ("wifi: brcmfmac: Negotiate PCIe mailbox transport with firmware")
+Tested-by: Yossef Osman <Yossef.Osman@proton.me>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Signed-off-by: Andre Eikmeyer <dev@deq.rocks>
+---
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Patch 5 does not wake a device that is down, so the remove after a
-link reset does not stall.
-
-The Bluetooth function of the BCM4377 gets the same resume handling in
-"Bluetooth: hci_bcm4377: resume after ACPI S3 and ASPM" on
-linux-bluetooth.
-
-Successfully tested with S3 and deep sleep on the BCM4364B2
-(MacBookPro15,1), the BCM4364B3 (MacBookPro16,1) and the BCM4377
-(MacBookAir9,1).
-
-The T2 Linux community runs v2 of this series.
-
-Changes in v3:
-- Rebased on wireless-next, which has Michael's series now
-- Patch 1: add the Fixes tag and Arend's Ack
-- Patch 2: limit it to the BCM4364, B2 and B3, reword the commit
-  message and add the Fixes tag
-- Patch 3: limit it to the BCM4364 and BCM4377
-- Patch 4: keep the wait on all chips but the BCM4377. On the BCM4364B3
-  a tx status came after the delete response once, so it keeps the
-  wait as well. Commit ae13aa2ec885 already resets the counter when a
-  flowring is created
-- Patch 5:
-  - limit it to the BCM4364 and BCM4377 with the mailbox on the
-    control ring
-  - check for the interrupt thread instead of in_irq
-  - handle a deep sleep message that fails to send
-  - wake the device in remove, disable deep sleep under ds_lock and
-    cancel the deassert work right after, before brcmf_detach() frees
-    the rings the work writes to
-  - give up waking a device that is not up
-  - clear ds_suspend when entering D3 fails
-  - DS_INBAND_DW comes on top of DS_NO_OOB_DW, as Broadcom's DHD driver
-    sets it
-
-[1] v2: https://lore.kernel.org/all/20261111120748.23795-1-dev@deq.rocks/
-[2] v1: https://lore.kernel.org/all/20261107154810.89780-1-dev@deq.rocks/
-[3] https://lore.kernel.org/all/20261105215954.184290-1-sorencoremans@gmail.com/
-
-Andre Eikmeyer (5):
-  wifi: brcmfmac: pcie: set the state before D0_INFORM on resume
-  wifi: brcmfmac: pcie: skip the host ready doorbell at init on the
-    BCM4364
-  wifi: brcmfmac: pcie: probe again after a resume through firmware
-  wifi: brcmfmac: msgbuf: do not wait for tx status on the BCM4377
-  wifi: brcmfmac: pcie: support inband device wake and deep sleep
-
- .../broadcom/brcm80211/brcmfmac/commonring.c  |  14 +
- .../broadcom/brcm80211/brcmfmac/commonring.h  |   5 +
- .../broadcom/brcm80211/brcmfmac/msgbuf.c      |  10 +-
- .../broadcom/brcm80211/brcmfmac/pcie.c        | 323 +++++++++++++++++-
- 4 files changed, 344 insertions(+), 8 deletions(-)
-
-
-base-commit: 18d0bedbb5f0538396cb7f763ed9cd1dd69c5b23
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+index 00ecb9c9925..6f329eca2cd 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+@@ -3101,10 +3101,10 @@ static int brcmf_pcie_pm_leave_D3(struct device *dev)
+ 	/* Check if device is still up and running, if so we are ready */
+ 	if (brcmf_pcie_read_pcie32(devinfo, devinfo->reginfo->intmask) != 0) {
+ 		brcmf_dbg(PCIE, "Try to wakeup device....\n");
++		devinfo->state = BRCMFMAC_PCIE_STATE_UP;
+ 		if (brcmf_pcie_send_mb_data(devinfo, BRCMF_H2D_HOST_D0_INFORM))
+ 			goto cleanup;
+ 		brcmf_dbg(PCIE, "Hot resume, continue....\n");
+-		devinfo->state = BRCMFMAC_PCIE_STATE_UP;
+ 		brcmf_pcie_select_core(devinfo, BCMA_CORE_PCIE2);
+ 		brcmf_bus_change_state(bus, BRCMF_BUS_UP);
+ 		brcmf_pcie_intr_enable(devinfo);
+@@ -3114,6 +3114,7 @@ static int brcmf_pcie_pm_leave_D3(struct device *dev)
+ 	}
+ 
+ cleanup:
++	devinfo->state = BRCMFMAC_PCIE_STATE_DOWN;
+ 	brcmf_chip_detach(devinfo->ci);
+ 	devinfo->ci = NULL;
+ 	pdev = devinfo->pdev;
 -- 
 2.56.0
 
